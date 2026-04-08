@@ -3,8 +3,8 @@
 import { useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
 
-// Cambia esta versión para forzar la notificación en los clientes
-const CURRENT_VERSION = 'v1.0.0'
+// Importamos la versión autogenerada por el script deploy.sh
+import { CURRENT_VERSION } from './version'
 
 export function VersionNotifier() {
   const { toast } = useToast()

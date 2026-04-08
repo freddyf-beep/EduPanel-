@@ -9,3 +9,9 @@ version.txt
 CHANGELOG.md
 version.txt
 
+## v1.0.4 - 08/04/2026 12:27
+CHANGELOG.md
+components/edu-panel/version-notifier.tsx
+deploy.sh
+version.txt
+

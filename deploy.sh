@@ -14,6 +14,9 @@ NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 # Guardar nueva version
 echo $NEW_VERSION > $VERSION_FILE
 
+# Actualizar la versión en la app (Next.js)
+echo "export const CURRENT_VERSION = 'v$NEW_VERSION';" > components/edu-panel/version.ts
+
 # Generar changelog con archivos modificados
 echo "## v$NEW_VERSION - $(date '+%d/%m/%Y %H:%M')" >> CHANGELOG.md
 git diff --name-only HEAD >> CHANGELOG.md
