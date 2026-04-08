@@ -5,3 +5,7 @@ CHANGELOG.md
 app/layout.tsx
 version.txt
 
+## v1.0.3 - 08/04/2026 12:04
+CHANGELOG.md
+version.txt
+
