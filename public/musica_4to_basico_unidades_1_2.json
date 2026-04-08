@@ -1,0 +1,376 @@
+[
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En este año, los estudiantes profundizarán en la relación con los instrumentos musicales por medio de la audición, la interpretación y la creación. En 3° básico comenzaron a practicar con un instrumento melódico, lo que se afianzará durante este año. Aquellos estudiantes que quieran y puedan, incursionarán en instrumentos armónicos. Por medio de la audición de músicas de diferentes estilos y la experimentación con material sonoro, se les podrá ampliar el espectro de timbres sin abandonar la voz. La incorporación de la música popular en forma más sistemática será otra característica de este año. La primera unidad se concibe como una presentación de los temas del año, escuchando música y desarrollando las habilidades interpretativas vocales e instrumentales. Los elementos del lenguaje musical y la contextualización están siempre presentes y enriquecen la actividad.",
+      "conocimientos_previos": [
+        "Experiencia en interpretación instrumental y vocal.",
+        "Identificación y diferenciación de cualidades del sonido y algunos elementos del lenguaje musical.",
+        "Rol de la música de acuerdo a la ocasionalidad.",
+        "Experiencias de audición, interpretación y creación musical.",
+        "Experiencias de integración de la música con otras áreas de expresión artística."
+      ],
+      "palabras_clave": [
+        "Timbre",
+        "ostinato",
+        "instrumento de viento",
+        "instrumento de cuerda",
+        "instrumento de percusión",
+        "orquesta"
+      ],
+      "conocimientos": [
+        "Repertorio vocal e instrumental.",
+        "Elementos del lenguaje musical aplicados al repertorio."
+      ],
+      "habilidades": [
+        "Percepción auditiva.",
+        "Ejercitación vocal e instrumental.",
+        "Desarrollo de la memoria auditiva y musical.",
+        "Apreciación auditiva.",
+        "Capacidad de trabajo en equipo."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Reconocer y valorar los diversos estilos y expresiones musicales.",
+        "Reconocer la dimensión espiritual y trascendente del arte y la música para el ser humano.",
+        "Demostrar disposición a participar y colaborar de forma respetuosa en actividades grupales de audición, expresión, reflexión y creación musical."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, reiteraciones, contrastes, variaciones, dinámica, tempo, preguntas-respuestas, secciones A-AB-ABA), y representarlos de distintas formas.",
+          "indicadores": [
+            "Identifican y describen cualidades del sonido en sonidos y músicas.",
+            "Identifican diferencias y similitudes de timbres y los agrupan según criterios acordados.",
+            "Describen variaciones de intensidad en sonidos y músicas.",
+            "Reconocen fuentes sonoras en ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar, mostrando grados crecientes de elaboración, sensaciones, emociones e ideas que les sugiere la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente a partir de música de tradición escrita.",
+            "Relacionan lo escuchado con sensaciones, emociones e ideas.",
+            "Se expresan en forma oral y escrita (reportaje, poema, cuento, entre otros) a partir de los sonidos y la música.",
+            "Escuchan atentamente ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: tradición escrita (docta), tradición oral (folclor, música de pueblos originarios), popular (jazz, rock, fusión, etcétera). Escuchar apreciativamente al menos 20 audiciones de músicas variadas de corta duración al año.",
+          "indicadores": [
+            "Manifiestan interés por escuchar música (piden repetir una audición, hacen preguntas con respecto a ella, piden conocer música parecida, etcétera).",
+            "Aplican lo escuchado en sus interpretaciones.",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Escuchan atentamente, relacionando con otras audiciones.",
+            "Escuchan atentamente ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y a más voces y tocar instrumentos de percusión, melódicos (metalófono, flauta dulce u otros) y/o armónicos (guitarra, teclado, otros).",
+          "indicadores": [
+            "Participan en una variedad de cantos, juegos y versos rítmicos de diversos orígenes.",
+            "Cantan al unísono y a más de una voz.",
+            "Recitan rítmicamente en forma clara y segura.",
+            "Tocan frases simples y/o acompañamientos, haciendo buen uso de su instrumento melódico (sonoridad y articulación, entre otros).",
+            "Incorporan una postura sin tensiones que facilite el uso del instrumento.",
+            "Cantan con naturalidad, evitando forzar la voz y adoptando una postura sin tensiones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Identificar y describir experiencias musicales y sonoras en su propia vida y en la sociedad (celebraciones, reuniones, festividades, situaciones cotidianas, otros).",
+          "indicadores": [
+            "Identifican los sonidos y la música con sus experiencias personales.",
+            "Describen la influencia de la música popular en la sociedad actual.",
+            "Nombran características musicales y de contexto a partir de los ejemplos musicales escuchados e interpretados."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Conociendo instrumentos de la orquesta",
+          "oas_asociados": [1, 2, 3],
+          "descripcion": "Escuchan y ven un video relacionado con instrumentos musicales, como 'Tubby the tuba', 'Piccolo Saxo y compañía' o 'A young person's guide to the orchestra' de Britten. Luego describen sus impresiones a partir de preguntas del docente: ¿Qué sonidos o instrumentos nuevos conocieron? ¿Hay alguno que les gustó especialmente? ¿Qué personalidad tendría cada instrumento si hiciéramos un cuento musical?"
+        },
+        {
+          "nombre": "Taller: Jugando al elástico (elasticófonos)",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los alumnos buscan elásticos de distintos grosores y recipientes que sirvan de caja de resonancia. Construyen 'elasticófonos', exploran la altura, duración y timbre del sonido pulsando el elástico con diferentes tensiones, y buscan modos alternativos de hacerlos sonar (golpear, frotar con un lápiz). Anotan todo el proceso y comparten sus descubrimientos con el curso. El docente los motiva a incorporar estos instrumentos en trabajos de creación."
+        },
+        {
+          "nombre": "Cánones con movimiento corporal",
+          "oas_asociados": [4],
+          "descripcion": "Aprenden un canon con frases bien delimitadas (como 'Fray Jacobo', 'Viva la música' o 'Miau'). Entre todos deciden un movimiento corporal diferente para cada frase. Cuando están seguros, lo cantan a dos voces incorporando los movimientos, de modo que los observadores puedan 'ver' cómo se desplazan las frases musicales."
+        },
+        {
+          "nombre": "Música y poesía: la música en la vida",
+          "oas_asociados": [7],
+          "descripcion": "Escuchan una canción popular que aluda a la música (como 'Quién compra una canción' o 'Sing' de The Carpenters). Reflexionan guiados por el docente sobre la música popular, la canción como género y lo que significa la música para la vida. Cada estudiante redacta un texto personal llamado 'La música y yo'."
+        },
+        {
+          "nombre": "Compartiendo preferencias musicales",
+          "oas_asociados": [7],
+          "descripcion": "Entrevistan a un adulto de su entorno sobre sus preferencias musicales usando preguntas preparadas en clase. Luego redactan un informe que comparten con el curso, haciendo comparaciones sobre gustos musicales según edad y contexto."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Verso rítmico con dinámicas",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "En grupos de seis a ocho integrantes, interpretan un verso rítmico aprendido en tres versiones: primero solo vocal, luego solo instrumental y la tercera en forma mixta. Deben realizar cambios de intensidad en cada repetición (piano, forte, fortissimo).",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Organización.",
+              "Seguridad.",
+              "Precisión rítmica.",
+              "Compromiso.",
+              "Incorporación de juegos de intensidad (dinámica).",
+              "Expresividad.",
+              "Originalidad."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Canon al unísono y a dos voces",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Cantan al unísono alguno de los cánones aprendidos en la unidad, dirigidos por el docente. Si han ensayado con movimiento corporal, lo incluyen. Luego lo cantan en canon a dos voces: un grupo escucha críticamente mientras el otro interpreta.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Seguridad.",
+              "Concentración y compromiso.",
+              "Atención al director.",
+              "Capacidad de mantener su voz frente a la otra melodía."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Escucha activa y expresión",
+          "oas_evaluados": [1, 2, 3],
+          "actividad_evaluacion": "Los estudiantes escuchan una música trabajada durante la unidad (se repite cuantas veces sea necesario). Escriben lo que esa música les sugiere y las cualidades del sonido que pueden identificar, intentando relacionar ambos aspectos.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Incorporan experiencias y conocimientos de las clases.",
+              "Aportan ideas propias.",
+              "Incorporan cualidades del sonido en sus descripciones.",
+              "Incorporan sensaciones, emociones e ideas que les sugiere la música.",
+              "Relacionan cualidades del sonido musical con ideas, sensaciones y sentimientos.",
+              "Claridad de redacción."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": "La construcción del 'elasticófono' proporciona un canal kinestésico y táctil de alta eficacia para estudiantes con déficit atencional, ya que ancla el aprendizaje del timbre y la altura a una experiencia manipulativa concreta. En los cánones, asociar un movimiento corporal distinto a cada frase melódica favorece la internalización de la estructura musical a través de la memoria motriz, facilitando que estudiantes con dificultad de atención sostenida mantengan su parte sin depender solo de la escucha. La actividad de escucha activa con pregunta abierta ('¿qué te sugiere esta música?') elimina la presión de la respuesta correcta, permitiendo que estudiantes con alta actividad mental generen asociaciones diversas y válidas. Para la interpretación instrumental, comenzar con ecos rítmicos breves y dinámicos activa la atención sin requerir períodos largos de concentración pasiva."
+      }
+    }
+  },
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "El objetivo de esta unidad es que, junto con afianzar la interpretación, los alumnos profundicen en el proceso creativo, experimentando con diferentes sonoridades, proponiendo patrones rítmicos y/o melódicos y creando ambientaciones sonoras, entre otros. La interpretación será reforzada con cánones vocales y piezas instrumentales a dos voces. Escucharán abundante música instrumental de todos los géneros y estilos, que podrán apreciar y comprender por medio de la escucha y del intercambio de opiniones. Podrán expresar lo que ellas les sugieran con medios visuales, corporales y literarios, y experimentarán diversos procesos de creación e improvisación musical. Un objetivo importante de la unidad será participar activamente en un cuento musical, que incluso puede involucrar un trabajo más extenso que la unidad y que permitirá la integración con otras asignaturas. La reflexión y los criterios evaluativos de su propio quehacer musical serán una parte importante de esta unidad.",
+      "conocimientos_previos": [
+        "Experiencia en interpretación instrumental y canto a más de una voz.",
+        "Música popular: audición e interpretación.",
+        "Clasificación de instrumentos musicales.",
+        "Identificación de algunos elementos del lenguaje musical."
+      ],
+      "palabras_clave": [
+        "Explorar",
+        "crear",
+        "acompañar",
+        "canon",
+        "introducción",
+        "interludio"
+      ],
+      "conocimientos": [
+        "Timbres instrumentales.",
+        "Repertorio vocal e instrumental.",
+        "Identificación de algunos elementos del lenguaje musical (melodía, ritmo, ostinato)."
+      ],
+      "habilidades": [
+        "Percepción sonora.",
+        "Ejercitación instrumental y vocal.",
+        "Creatividad musical.",
+        "Expresión creativa.",
+        "Capacidad de trabajo en equipo."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar confianza en sí mismos al presentar a otros o compartir su música.",
+        "Reconocer y valorar los diversos estilos y expresiones musicales.",
+        "Demostrar disposición a desarrollar su creatividad por medio de la experimentación, el juego, la imaginación y el pensamiento divergente."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar, mostrando grados crecientes de elaboración, sensaciones, emociones e ideas que les sugiere la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente a partir de música de tradición escrita y popular.",
+            "Relacionan lo escuchado con sensaciones, emociones e ideas en forma clara.",
+            "Se expresan en forma oral y escrita (reportaje, poema, cuento, entre otros) a partir de la música escuchada e interpretada.",
+            "Escuchan atentamente ejemplos musicales y relacionan con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: tradición escrita (docta), tradición oral (folclor, música de pueblos originarios), popular (jazz, rock, fusión, etcétera).",
+          "indicadores": [
+            "Manifiestan interés por escuchar música (piden repetir una audición, hacen preguntas con respecto a ella, piden conocer música parecida, etcétera).",
+            "Aplican lo escuchado en sus interpretaciones.",
+            "Aplican lo escuchado en sus improvisaciones y creaciones.",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Escuchan atentamente, relacionando con otras audiciones.",
+            "Escuchan atentamente ejemplos musicales y relacionan con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y a más voces y tocar instrumentos de percusión, melódicos (metalófono, flauta dulce u otros) y/o armónicos (guitarra, teclado, otros).",
+          "indicadores": [
+            "Participan en una variedad de cantos, juegos y versos rítmicos de diversos orígenes.",
+            "Cantan al unísono y a más de una voz (cánones, quodlibets simples, etcétera).",
+            "Recitan rítmicamente a más de una voz.",
+            "Tocan frases simples y/o acompañamientos, haciendo buen uso de su instrumento melódico (sonoridad y articulación, entre otros).",
+            "Incorporan una postura sin tensiones que facilite el uso del instrumento.",
+            "Cantan con naturalidad, adoptando una postura sin tensiones y cuidando la emisión de la voz (respiración, modulación y uso de resonadores)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Improvisar y crear ideas musicales con diversos medios sonoros con un propósito dado, utilizando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Participan en la preparación de cuentos musicales o ambientaciones musicales.",
+            "Crean acompañamientos rítmicos.",
+            "Improvisan libremente con sus instrumentos melódicos, cuidando la sonoridad.",
+            "Demuestran originalidad en sus propuestas sonoras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Reflexionar sobre sus fortalezas y áreas en que pueden mejorar su audición, su interpretación y su creación.",
+          "indicadores": [
+            "Reconocen aspectos positivos en sus interpretaciones y creaciones musicales.",
+            "Realizan comentarios sobre las interpretaciones musicales propias y de sus compañeros.",
+            "Identifican elementos del lenguaje musical presentes en audiciones, interpretaciones y creaciones.",
+            "Reflexionan en torno a su forma de escuchar."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Imaginando con la música (música descriptiva)",
+          "oas_asociados": [2, 3],
+          "descripcion": "Los estudiantes reciben una hoja en blanco y escuchan una pieza instrumental (como una Danza húngara de Brahms o un movimiento de sinfonía de Haydn). Crean una historia para la música y la plasman de forma creativa (texto, ilustraciones, cómic o combinación). Exponen y explican sus trabajos. El docente contextualiza la obra al finalizar."
+        },
+        {
+          "nombre": "Cuento musical: Los músicos de Bremen",
+          "oas_asociados": [4, 5],
+          "descripcion": "El docente presenta el cuento 'Los músicos de Bremen'. Los estudiantes imitan las onomatopeyas de los animales y las trasladan a la interpretación vocal e instrumental, eligen los momentos clave del cuento para musicalizar y actuar, ensayan, proponen vestuario y escenografía, y presentan. Puede extenderse a un proyecto de más de una sesión, integrando Lenguaje, Artes Visuales y Educación Física."
+        },
+        {
+          "nombre": "Canon con introducción e interludio",
+          "oas_asociados": [4, 5],
+          "descripcion": "Interpretan de forma vocal e instrumental una canción con acompañamiento armónico. Crean una introducción y un interludio propios. Escuchan la resultante y comentan el aporte de estos elementos a la obra. El docente los invita a notar introducciones e interludios en canciones de moda."
+        },
+        {
+          "nombre": "Proyecto de creación sonora: el invierno",
+          "oas_asociados": [5, 8],
+          "descripcion": "En grupos, recrean las sonoridades del invierno (u otro tema) creando secuencias rítmicas y melódicas con voz, cuerpo e instrumentos, utilizando textos u onomatopeyas, organizando la pieza en al menos dos partes con introducción, y superponiendo sonidos para crear textura sonora. Presentan frente al curso y reciben retroalimentación del docente y los compañeros."
+        },
+        {
+          "nombre": "Reseña musical comparativa",
+          "oas_asociados": [8],
+          "descripcion": "Escuchan una canción popular interpretada por diferentes cantantes o grupos (covers). Comentan el timbre de las voces, los instrumentos y las sensaciones que produce cada versión. En parejas o grupos, redactan una reseña musical para una revista especializada en la que invitan a escuchar ambas versiones, destacando cualidades de cada una."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Historia corporal a partir de la música",
+          "oas_evaluados": [2, 3],
+          "actividad_evaluacion": "Los estudiantes escuchan una música seleccionada por el profesor (se sugiere el último movimiento de la Petite Suite de Debussy o la Gavota de la Sinfonía clásica de Prokofiev). En grupos, crean una historia para representarla corporalmente, enfatizando con el movimiento los elementos evidentes del lenguaje musical. Los compañeros que observan redactan un cuento inspirado en lo que escuchan y ven.",
+          "criterios_evaluacion": {
+            "de_la_presentacion_grupal": [
+              "Organización.",
+              "Compromiso.",
+              "Cohesión grupal.",
+              "Expresividad.",
+              "Originalidad.",
+              "Relación con la música.",
+              "Aplicación de ideas y sugerencias de clases."
+            ],
+            "del_relato_escrito": [
+              "Claridad en la redacción.",
+              "Contenido y cohesión interna.",
+              "Relación con lo visto y escuchado.",
+              "Originalidad."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Canción con introducción, interludio y final",
+          "oas_evaluados": [4, 5],
+          "actividad_evaluacion": "En grupos, presentan una canción trabajada durante el año, la interpretan adecuadamente (vocal y/o instrumental) y le crean una introducción, un interludio y un final. Los demás grupos hacen su propia evaluación de la presentación a partir de criterios acordados.",
+          "criterios_evaluacion": {
+            "de_la_interpretacion": [
+              "Organización.",
+              "Cohesión de grupo.",
+              "Presencia de introducción, interludio y final.",
+              "Expresividad y musicalidad.",
+              "Aplicación de técnicas de interpretación instrumental y vocal.",
+              "Aplicación de sugerencias del docente."
+            ],
+            "de_la_creacion": [
+              "Organización.",
+              "Originalidad.",
+              "Congruencia con la canción.",
+              "Sentido musical."
+            ],
+            "de_la_evaluacion_de_los_estudiantes": [
+              "Comentan aplicando sus experiencias y conocimientos.",
+              "Son respetuosos del trabajo ajeno.",
+              "Identifican aspectos musicales al evaluar."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Repertorio semestral a dos voces",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Los estudiantes interpretan con todo el curso parte del repertorio aprendido durante el semestre: cantan a dos voces (quodlibet simple o canon) y tocan sus instrumentos melódicos y de percusión. El profesor graba la evaluación para que sirva de referencia. Cada estudiante redacta un registro personal de autoevaluación.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Atención y compromiso.",
+              "Actitud (interesado, tenso, seguro, entre otros).",
+              "Sigue al director.",
+              "Incorpora sugerencias del docente.",
+              "Aplica técnicas de interpretación entregadas en clases.",
+              "Seguridad musical.",
+              "Musicalidad."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": "El cuento musical 'Los músicos de Bremen' integra simultáneamente la voz, el movimiento, la actuación y los instrumentos, ofreciendo múltiples vías de participación que permiten a estudiantes con déficit atencional encontrar su canal de expresión sin ser excluidos. La creación de la historia para la música descriptiva (sin respuesta correcta) libera la presión evaluativa y activa la imaginación de estudiantes con pensamiento divergente. El proyecto de creación sonora con objetos cotidianos usa el movimiento y el sonido como andamiaje, lo que favorece la autorregulación al dar una tarea concreta y acotada. Para la reflexión (OA 8), los registros escritos breves ('¿qué aprendí?, ¿qué me costó?') son más accesibles que las evaluaciones largas y permiten que estudiantes con dificultades atencionales comuniquen su progreso de forma estructurada. Rotar roles dentro del grupo (director, músico, evaluador) mantiene la novedad y el interés durante períodos más extensos de trabajo."
+      }
+    }
+  }
+]

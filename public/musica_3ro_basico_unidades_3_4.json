@@ -1,0 +1,424 @@
+[
+  {
+    "nivel": "3ro Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad se profundizará en la interpretación y la creación. Los estudiantes ampliarán sus experiencias con más cantidad y variedad de repertorio y se ejercitarán en las técnicas vocales e instrumentales. Serán capaces de autoescucharse y opinar con respecto a sus logros y áreas de crecimiento. Además, podrán observar música integrada a otras expresiones artísticas y valorar su aporte. Las actividades sugeridas ponen en contacto a los alumnos con ejemplos de música en el teatro y en el cine. Algunos de estas expresiones los motivarán a trabajar los sonidos del entorno y su experimentación. Otro de los propósitos es la práctica y el disfrute de repertorio folclórico chileno, marchas, bailes y su contexto. Asimismo, podrán seleccionar y ejercitar la música para compartir con sus pares o la comunidad a final de año.",
+      "conocimientos_previos": [
+        "Técnicas básicas en instrumentos melódicos.",
+        "Experiencias en canto a más de una voz.",
+        "Rol de la música de acuerdo a la ocasionalidad.",
+        "Música de origen o influencia folclórica de Chile y el mundo."
+      ],
+      "palabras_clave": [
+        "Música folclórica",
+        "secciones",
+        "sonidos del entorno",
+        "patrón rítmico"
+      ],
+      "conocimientos": [
+        "Repertorio a escuchar e interpretar.",
+        "Reconocimiento y aplicación de elementos del lenguaje musical.",
+        "Aplicación de técnicas de interpretación y creación."
+      ],
+      "habilidades": [
+        "Percepción auditiva.",
+        "Ejercitación vocal e instrumental.",
+        "Apreciación musical.",
+        "Capacidad de trabajo en equipo.",
+        "Desarrollo de creatividad."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos mediante diversas formas de expresión musical.",
+        "Reconocer y valorar los diversos estilos y expresiones musicales.",
+        "Demostrar disposición a desarrollar su creatividad por medio de la experimentación, el juego, la imaginación y el pensamiento divergente."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, reiteraciones, contrastes, variaciones, dinámica, tempo, preguntas-respuestas, secciones, A-AB-ABA), y representarlos de distintas formas.",
+          "indicadores": [
+            "Describen elementos evidentes del lenguaje musical en forma verbal.",
+            "Representan elementos del lenguaje musical (forma A-B / A-B-A, frases) en forma visual y corporal.",
+            "Representan ritmo y acentuaciones en forma corporal (danzas tradicionales, marchas, etcétera).",
+            "Identifican cambios de tempo y dinámica (intensidad) en forma verbal.",
+            "Identifican una o más voces en músicas interpretadas y escuchadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar, mostrando grados crecientes de elaboración, sensaciones, emociones e ideas que les sugiere la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente a partir de sonidos y músicas variadas.",
+            "Relacionan lo escuchado con sensaciones, emociones e ideas en forma clara y segura.",
+            "Se expresan en forma oral y escrita (narración, poema, cuento, entre otros) a partir de la música de tradición escrita.",
+            "Escuchan atentamente ejemplos musicales, relacionando con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: tradición escrita (docta), tradición oral (folclor, música de pueblos originarios), popular (jazz, rock, fusión, etcétera).",
+          "indicadores": [
+            "Manifiestan interés por escuchar música (piden repetir una audición, hacen preguntas con respecto a ella, piden conocer música parecida, etcétera).",
+            "Aplican lo escuchado en sus interpretaciones.",
+            "Aplican lo escuchado en sus improvisaciones y creaciones.",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Escuchan atentamente, relacionando con otras audiciones.",
+            "Escuchan atentamente ejemplos musicales y relacionan con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar (al unísono y cánones simples, entre otros) y tocar instrumentos de percusión y melódicos (metalófono, flauta dulce u otros).",
+          "indicadores": [
+            "Participan en una variedad de cantos, juegos y versos rítmicos de diversos orígenes.",
+            "Cantan a más de una voz (cánones, quodlibets simples, etcétera).",
+            "Recitan rítmicamente a más de una voz.",
+            "Tocan sonidos, patrones o frases simples, haciendo un buen uso de su instrumento melódico.",
+            "Incorporan una postura sin tensiones que facilite el uso del instrumento.",
+            "Cantan con naturalidad, adoptando una postura sin tensiones y cuidando la emisión de la voz (respiración, modulación y uso de resonadores)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Improvisar y crear ideas musicales con diversos medios sonoros con un propósito dado, utilizando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Proponen ideas musicales a partir de la experimentación sonora.",
+            "Crean acompañamientos rítmicos.",
+            "Improvisan grupalmente a partir de la escucha.",
+            "Demuestran originalidad en sus propuestas sonoras y musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Reflexionar sobre sus fortalezas y áreas en que pueden mejorar en su audición, su interpretación y su creación.",
+          "indicadores": [
+            "Reconocen aspectos positivos de sus interpretaciones y creaciones musicales.",
+            "Realizan comentarios sobre las interpretaciones propias y de sus compañeros aplicando conocimientos adquiridos.",
+            "Comentan aspectos a mejorar en sus interpretaciones y creaciones.",
+            "Reflexionan en torno a su forma de escuchar."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Música de cine y teatro: La novicia rebelde y August Rush",
+          "oas_asociados": [1, 2, 3],
+          "descripcion": "Los estudiantes ven trozos de 'La novicia rebelde': el baile Ländler y el teatro de títeres con canción tirolesa. Comparan con bailes folclóricos chilenos e identifican elementos del lenguaje musical. Luego observan un trozo de 'August Rush': se dirigen a un lugar silencioso a agudizar los oídos, describen todo lo que escuchan en una hoja titulada 'Soy August Rush' y comentan cómo incentivar a otros a tomar conciencia de los sonidos del entorno."
+        },
+        {
+          "nombre": "Canto a dos voces: quodlibets y cánones",
+          "oas_asociados": [4, 5],
+          "descripcion": "Aprenden dos canciones como 'María Moñito' y 'La lora', o cánones como 'Zum gali gali' o 'El viejo Texas'. Las ensayan por separado hasta tenerlas seguras. El curso se divide en dos grupos y las cantan simultáneamente para experimentar la polifonía. Comentan cuándo escuchan mejor las dos voces: al cantar o al escuchar, y si pueden mantener su voz al escuchar la otra."
+        },
+        {
+          "nombre": "Ambientación sonora de pregones con dinámicas",
+          "oas_asociados": [4, 5, 8],
+          "descripcion": "Los estudiantes interpretan pregones conocidos asumiendo el papel del pregonero, con expresión corporal y vestuario. Luego crean ambientaciones sonoras con voz, cuerpo e instrumentos. Trabajan con una secuencia de dinámicas: el ambiente suena de muy lejos (pianissimo), se acerca progresivamente (crescendo), el pregonero se aproxima (decrescendo ambiental, crescendo pregón) y finalmente ambos se alejan hasta el silencio total."
+        },
+        {
+          "nombre": "Canción folclórica internacional con reflexión",
+          "oas_asociados": [3, 4, 8],
+          "descripcion": "Aprenden una canción tradicional de otro país en su idioma original (como 'Sakura' de Japón, 'Old MacDonald' de EEUU o 'Alouette' de Francia). El docente enseña la pronunciación y traduce el texto. La comparan con canciones folclóricas chilenas. Luego comentan los logros: qué lograron, qué les costó, cómo han progresado. En forma individual escriben una carta a un músico que admiren contando todo lo que han aprendido en el año."
+        },
+        {
+          "nombre": "Animales y sus sonidos: improvisación y obra musical",
+          "oas_asociados": [1, 5, 8],
+          "descripcion": "En parejas, escuchan modos de comunicación de animales chilenos en estado salvaje (ballenas, delfines, aves). Analizan un sonido con la 'Tabla de sonidos', buscan un modo de graficarlo y lo trasladan a un instrumento. Buscan otro sonido contrastante y los organizan en una pequeña improvisación. Presentan al curso y comentan fortalezas y áreas de crecimiento. El docente puede enriquecer con la audición de 'Pájaros exóticos' de O. Messiaen."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Presentación de repertorio con autoevaluación",
+          "oas_evaluados": [4, 8],
+          "actividad_evaluacion": "Los estudiantes preparan y presentan una o dos piezas de su repertorio (vocal y/o instrumental). Junto a la interpretación, cada estudiante realiza una autoevaluación escrita que incluye: qué logró en la presentación grupal, qué aprendió durante los ensayos, qué reforzaría si ensayaran nuevamente, cuál fue su aporte al grupo, qué lograron como grupo y qué aspectos necesitarían reforzar.",
+          "criterios_evaluacion": {
+            "de_la_presentacion": [
+              "Compromiso.",
+              "Aplicación de sugerencias de los ensayos.",
+              "Se pueden sobreponer a una equivocación.",
+              "Expresividad y fluidez."
+            ],
+            "de_la_autoevaluacion": [
+              "Claridad.",
+              "Aplicación de elementos del lenguaje musical.",
+              "Aplicación de sugerencias de clases.",
+              "Advierten fortalezas y áreas de crecimiento."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Análisis escrito del papel de la música en una película",
+          "oas_evaluados": [2, 3],
+          "actividad_evaluacion": "Los estudiantes ven un trozo de una película apta para la edad elegida por el docente y explican en forma escrita el papel que cumple la música en ella. Pueden comparar con escenas similares o contrastantes de otras películas vistas en clases.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Claridad de ideas y redacción.",
+              "Elementos del lenguaje musical mencionados.",
+              "Relación de elementos musicales con las imágenes.",
+              "Aplicación de conocimientos y experiencias de las clases.",
+              "Aportes personales.",
+              "Originalidad."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Canción con expresión corporal",
+          "oas_evaluados": [2, 4],
+          "actividad_evaluacion": "Los estudiantes interpretan una canción que ellos mismos eligen, cantándola con expresión corporal. Son libres de trabajarla como quieran, velando porque música, texto y movimiento se ayuden mutuamente en la expresión. Se sugiere presentarla dos veces para que puedan enmendar problemas y el profesor perciba el grado de preparación.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Organización.",
+              "Seguridad.",
+              "Compromiso.",
+              "Expresividad.",
+              "Originalidad.",
+              "Fluidez.",
+              "Calidad interpretativa.",
+              "Coordinación entre música y movimiento.",
+              "Aplicación de conocimientos y experiencias adquiridas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 4: Grafía de forma A-B-A",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Escuchan o cantan una canción con clara forma A-B-A (como 'Hop Hop Hop caballito Hop'). La repiten varias veces. Deben graficar la forma de la canción, fundamentar su proposición y nombrar otra música escuchada o interpretada en clases que tenga la misma forma.",
+          "criterios_evaluacion": {
+            "de_la_propuesta_grafica": [
+              "Claridad.",
+              "Elaboración.",
+              "Relación con la música.",
+              "Originalidad."
+            ],
+            "de_la_fundamentacion_escrita": [
+              "Fundamentación de la propuesta.",
+              "Relación con audiciones anteriores."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": "La actividad 'Soy August Rush' de escucha del entorno en un lugar silencioso rompe la rutina del aula y activa la curiosidad de estudiantes con déficit atencional mediante una experiencia de exploración autónoma y breve. El canto a dos voces con quodlibets aprovecha la memoria de canciones ya conocidas como andamiaje, reduciendo la carga cognitiva de aprender una voz nueva desde cero. La ambientación sonora de pregones con dinámicas en crescendo/decrescendo ofrece una estructura narrativa clara (el pregonero se acerca y se aleja) que ancla la atención en un arco sonoro de inicio-desarrollo-fin, ideal para estudiantes que necesitan contextos concretos. El juego 'El director' con signos convenidos convierte la escucha activa en un juego de reacción rápida, muy eficaz para mantener concentración sostenida. La carta al músico admirado como autoevaluación permite que estudiantes con dificultades de expresión oral comuniquen su progreso de forma escrita y personal, sin presión de tiempo."
+      }
+    }
+  },
+  {
+    "nivel": "3ro Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "El objetivo de la unidad es revisar lo realizado, notando los progresos y ejercitando con énfasis el repertorio que se compartirá con la comunidad escolar a final de año. Como en este año se ha abordado la música folclórica, se puede incursionar en villancicos y tradiciones chilenas y de diferentes partes del mundo. Las actividades sugeridas para estas tradiciones permiten interesantes trabajos de integración con otras asignaturas, como confección de tarjetas de Navidad en Artes Visuales. Junto a los progresos musicales, se pretende que amplíen su visión de las músicas del mundo, desarrollando sus experiencias auditivas y apreciando expresiones que les sean más desconocidas. Asimismo, se espera que adquieran una visión más consciente y crítica de su propio quehacer. Como propósito de término de año e integración de asignaturas, participarán en cuentos musicales y representación de mitos o tradiciones mapuches.",
+      "conocimientos_previos": [
+        "Técnicas básicas en instrumentos melódicos y voz.",
+        "Distinción y diferenciación de cualidades del sonido y algunos elementos del lenguaje musical.",
+        "Aplicación e interacción de la música con medios audiovisuales: cine y video.",
+        "Bailes característicos de Chile y el mundo."
+      ],
+      "palabras_clave": [
+        "Ensayo",
+        "melodía",
+        "conjunto o grupo musical",
+        "coro"
+      ],
+      "conocimientos": [
+        "Repertorio a escuchar e interpretar.",
+        "Reconocimiento y aplicación de elementos del lenguaje musical.",
+        "Aplicación de técnicas de interpretación y creación."
+      ],
+      "habilidades": [
+        "Percepción auditiva.",
+        "Ejercitación vocal e instrumental.",
+        "Apreciación musical.",
+        "Capacidad de trabajo en equipo.",
+        "Desarrollo de creatividad."
+      ],
+      "actitudes": [
+        "Demostrar confianza en sí mismos al presentar a otros o compartir su música.",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos mediante diversas formas de expresión musical.",
+        "Reconocer la dimensión espiritual y trascendente del arte y la música para el ser humano.",
+        "Demostrar disposición a participar y colaborar de forma respetuosa en actividades grupales de audición, expresión y creación musical."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar, mostrando grados crecientes de elaboración, sensaciones, emociones e ideas que les sugiere la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente a partir de música de inspiración folclórica y de tradición escrita.",
+            "Relacionan lo escuchado con sensaciones, emociones e ideas en forma clara y segura.",
+            "Se expresan en forma oral y escrita (narración, poema, cuento, entre otros) a partir de la música de inspiración folclórica y de tradición escrita.",
+            "Escuchan atentamente ejemplos musicales, relacionando con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: tradición escrita (docta), tradición oral (folclor, música de pueblos originarios), popular (jazz, rock, fusión, etcétera).",
+          "indicadores": [
+            "Manifiestan interés por escuchar música (piden repetir una audición, hacen preguntas con respecto a ella, piden conocer música parecida, etcétera).",
+            "Aplican lo escuchado en sus interpretaciones.",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Escuchan atentamente, relacionando con otras audiciones.",
+            "Escuchan atentamente ejemplos musicales y relacionan con otras músicas escuchadas o interpretadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar (al unísono y cánones simples, entre otros) y tocar instrumentos de percusión y melódicos (metalófono, flauta dulce u otros).",
+          "indicadores": [
+            "Participan en una variedad de cantos, juegos y versos rítmicos de diversos orígenes.",
+            "Cantan a más de una voz con mayor seguridad (por ejemplo: mantienen su voz al escuchar la otra).",
+            "Recitan rítmicamente a más de una voz.",
+            "Muestran mayor seguridad y cuidado en la interpretación de su instrumento melódico.",
+            "Incorporan una postura sin tensiones que facilite el uso del instrumento.",
+            "Cantan con naturalidad, adoptando una postura sin tensiones y cuidando la emisión de la voz (respiración, modulación y uso de resonadores)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Improvisar y crear ideas musicales con diversos medios sonoros con un propósito dado, utilizando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Participan en la preparación de cuentos musicales o ambientaciones musicales.",
+            "Crean acompañamientos rítmicos.",
+            "Improvisan grupalmente a partir de la escucha, cuidando la sonoridad de sus instrumentos.",
+            "Demuestran originalidad y seguridad en sus propuestas sonoras y musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Presentar su trabajo musical al curso y la comunidad, en forma individual y grupal, con compromiso y responsabilidad.",
+          "indicadores": [
+            "Cantan y tocan repertorio aprendido, incorporando las indicaciones del director (comienzo, final, tempo, dinámica).",
+            "Respetan la participación de todos al presentar su trabajo musical.",
+            "Incorporan las indicaciones del profesor en sus presentaciones: sonido, dinámicas (intensidades), tempo, silencios, etcétera.",
+            "Participan con responsabilidad en sus presentaciones (traen el material, ensayan sus partes, están concentrados, están listos en el momento indicado)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Reflexionar sobre sus fortalezas y áreas en que pueden mejorar en su audición, su interpretación y su creación.",
+          "indicadores": [
+            "Identifican elementos del lenguaje musical presentes en audiciones, interpretaciones y creaciones.",
+            "Comentan aspectos a mejorar en sus interpretaciones y creaciones.",
+            "Reconocen aspectos positivos de sus interpretaciones y creaciones.",
+            "Realizan comentarios sobre las interpretaciones propias y de sus compañeros aplicando conocimientos adquiridos.",
+            "Reflexionan en torno a su forma de escuchar."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Mito mapuche Treg-Treg y Cai Cai Vilú: polirritmia y representación",
+          "oas_asociados": [4, 5, 6],
+          "descripcion": "Los estudiantes escuchan el mito de Treg-Treg y Cai Cai Vilú y comentan su relación con características geográficas de Chile. El curso acuerda un patrón rítmico para Treg-Treg y otro para Cai-Cai, creando una polirritmia simple inspirada en ritmos mapuches. Se divide en dos grupos, cada uno elige su frase e interpretan ambas simultáneamente. Si hay interés, se arma una presentación narrada con expresión corporal, vestuario y escenografía."
+        },
+        {
+          "nombre": "Cuento musical: Ratón de campo y ratón de ciudad",
+          "oas_asociados": [4, 5, 6],
+          "descripcion": "Escuchan el cuento de Esopo 'Ratón de campo y ratón de ciudad'. El docente sitúa al ratón de campo en un lugar rural chileno y al de ciudad en uno muy poblado. Los estudiantes imaginan y reproducen cómo hablaría cada ratón, qué sonidos ambientales los envolverían y qué música cantarían. Crean una canción para cada ratón con acompañamiento sonoro ambiental. Si continúa el interés, arman un cuento musical para presentar a otros cursos."
+        },
+        {
+          "nombre": "Villancicos del mundo y tarjeta navideña",
+          "oas_asociados": [2, 3, 8],
+          "descripcion": "Escuchan villancicos de diferentes lugares del mundo: uno de tradición folclórica chilena, uno inglés y uno alemán. Describen lo que les sugiere la música aplicando conocimientos adquiridos, analizan los textos y comparan las características musicales de cada región. Hacen una tarjeta de Navidad inspirada en uno de los villancicos. También crean 'refranes navideños' en grupos: eligen un refrán, le incorporan ritmo, melodía y acompañamiento vocal, instrumental y corporal."
+        },
+        {
+          "nombre": "Música mapuche: Friso araucano de C. Isamitt",
+          "oas_asociados": [2, 3],
+          "descripcion": "Escuchan música mapuche vocal e instrumental describiendo sensaciones e identificando instrumentos. Comparan con una canción conocida, atendiendo a instrumentos, elementos del lenguaje musical y las ideas que sugiere. Luego escuchan el 'Friso araucano' de Carlos Isamitt e identifican elementos propios de la música mapuche (ritmos, timbres, giros melódicos) y elementos no mapuches (orquesta, textura polifónica). Eligen entre crear una coreografía grupal o escribir una reseña ilustrada de alguna de las canciones."
+        },
+        {
+          "nombre": "Muestra musical de fin de año para la comunidad",
+          "oas_asociados": [4, 5, 6, 8],
+          "descripcion": "Se dividen en grupos, recuerdan actividades y repertorio del año, y eligen música para pulir y enriquecer con ostinato, introducción, final, texto, coreografía o escenografía. Presentan a sus compañeros como ensayo general. Luego preparan una presentación para la comunidad escolar que incluye movimientos corporales, vestuario y acompañamiento musical. Se elabora un programa con nombres, roles de cada alumno, explicación de la presentación y un dibujo realizado por ellos."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Presentación musical para la comunidad",
+          "oas_evaluados": [4, 6],
+          "actividad_evaluacion": "Los estudiantes preparan canciones o actividades musicales en grupos pequeños para presentarlas a la comunidad escolar. Como paso previo, presentan frente al curso a modo de ensayo general, recordando qué aspectos relevantes no deben olvidar: aplicar lo aprendido, ser expresivos, ponerse de acuerdo para comenzar y terminar.",
+          "criterios_evaluacion": {
+            "como_interpretes": [
+              "Compromiso y entusiasmo.",
+              "Musicalidad.",
+              "Dominio técnico.",
+              "Capacidad de trabajar en equipo."
+            ],
+            "como_auditores": [
+              "Escuchan con atención y respeto.",
+              "Muestran interés por el trabajo de los demás."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Portafolio o registro del trabajo del año",
+          "oas_evaluados": [8],
+          "actividad_evaluacion": "Los estudiantes han realizado un portafolio o registro del trabajo del año en que han juntado comentarios, grabaciones y averiguaciones personales. Los temas pueden ser variados: 'Músicas que me han llamado la atención', 'Nuestros trabajos de creación', 'Mi año musical'. El docente ha orientado este proceso durante el año.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Elección del tema.",
+              "Perseverancia en el trabajo.",
+              "Iniciativa.",
+              "Aportes personales.",
+              "Aplicación de conocimientos y experiencias."
+            ],
+            "del_producto": [
+              "Presentación.",
+              "Cantidad de contenido.",
+              "Calidad de contenido."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Retrato sonoro de personaje de leyenda chilena",
+          "oas_evaluados": [2, 5],
+          "actividad_evaluacion": "En grupos de seis u ocho, escuchan una leyenda o mito chileno y extraen un personaje (marinero del Caleuche, la llorona, la voladora, el millalobo, la pincoya). Dicen su nombre con ritmo y entonación acordes a sus características, crean un ambiente sonoro que describa el lugar donde vive, incorporan el nombre en la ambientación con variaciones, y presentan un 'retrato del personaje en su entorno' con técnica mixta sobre papel kraft.",
+          "criterios_evaluacion": {
+            "del_nombre": [
+              "Originalidad.",
+              "Claridad.",
+              "Fluidez.",
+              "Seguridad.",
+              "Compromiso.",
+              "Expresividad."
+            ],
+            "de_la_ambientacion_sonora": [
+              "Idea general.",
+              "Claridad.",
+              "Fluidez.",
+              "Seguridad.",
+              "Compromiso.",
+              "Expresividad.",
+              "Coordinación del nombre con propuesta de ambientación."
+            ],
+            "de_la_expresion_visual": [
+              "Originalidad.",
+              "Claridad.",
+              "Expresividad.",
+              "Prolijidad."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": "El mito de Treg-Treg y Cai Cai Vilú con polirritmia ofrece una estructura narrativa mítica que ancla el aprendizaje rítmico abstracto en un relato concreto con personajes, lo que activa la memoria narrativa y facilita la retención para estudiantes con déficit atencional. La creación del cuento 'Ratón de campo y ratón de ciudad' con dos ambientes sonoros distintos permite a cada estudiante elegir su rol y nivel de complejidad sonora según sus capacidades. La muestra de fin de año como objetivo real y concreto es el mejor motivador de autorregulación y compromiso sostenido: saber que habrá audiencia externa genera un propósito que supera la necesidad de control externo. El portafolio como evaluación de proceso (en lugar de un examen único) reconoce los distintos ritmos de aprendizaje y permite que estudiantes con dificultades atencionales demuestren sus logros acumulativos en lugar de depender de una sola instancia. El retrato sonoro del personaje de leyenda integra sonido, movimiento y artes visuales simultáneamente, lo que mantiene activos múltiples canales de procesamiento y reduce la monotonía para estudiantes con alta demanda de estimulación."
+      }
+    }
+  }
+]
