@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import 'react-quill-new/dist/quill.snow.css'
 import { AuthProvider } from '@/components/auth/auth-context'
+import { Toaster } from '@/components/ui/toaster'
+import { VersionNotifier } from '@/components/edu-panel/version-notifier'
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -28,6 +30,8 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
+        <Toaster />
+        <VersionNotifier />
       </body>
     </html>
   )
