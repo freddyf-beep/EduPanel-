@@ -854,7 +854,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const verUnidadParams: Record<string, string> = unidadCurricularParam !== unidadParam
     ? { curso: cursoParam, unidad: unidadCurricularParam, unitIdLocal: unidadParam }
     : { curso: cursoParam, unidad: unidadCurricularParam }
-  const contentGridTemplate = isClassesRailCollapsed ? "84px minmax(0, 1fr) minmax(0, 1fr)" : "220px minmax(0, 1fr) minmax(0, 1fr)"
+  const contentGridTemplate = isClassesRailCollapsed ? "84px minmax(0, 1fr)" : "220px minmax(0, 1fr)"
   const actividadesSugeridas = (unidadData?.actividades_sugeridas || []) as ActividadSugerida[]
   const evaluacionesSugeridas = (unidadData?.ejemplos_evaluacion || []) as EjemploEvaluacion[]
 
@@ -872,7 +872,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       className={cn("relative w-full overflow-y-auto h-[calc(100vh-64px)] transition-all", !isResizing && "duration-300")}
       style={{ paddingRight: showCopilot ? copilotWidth : 0 }}
     >
-      <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-6 md:px-8")}>
+      <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-4 md:px-6")}>
           {/* Header — oculto en modo compact */}
           <div className={compact ? "flex items-center justify-between mb-4 flex-wrap gap-2 print:hidden" : "flex items-center justify-between mb-6 flex-wrap gap-3 print:hidden"}>
         <div className="flex items-center gap-3">
@@ -1073,6 +1073,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
             </div>
           </div>
 
+          <div className="flex flex-col xl:flex-row gap-4 items-start">
+            {/* Columna Derecha (Visual): OA, Habilidades, Actitudes */}
+            <div className="flex-[1] min-w-[280px] w-full flex flex-col gap-4 order-2">
+
           {/* OA de esta clase con indicadores */}
           <div className="bg-card border border-border rounded-[14px] px-5 py-4">
             <div className="flex items-center justify-between mb-3">
@@ -1215,10 +1219,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
               ))}
             </div>
           </div>
-        </div>
+            </div>
 
-        {/* ── Panel derecho: editor + recursos ── */}
-        <div className="min-w-0 flex flex-col gap-4 print:w-full">
+            {/* Columna Izquierda (Visual): Editor, Recursos y Sugerencias */}
+            <div className="flex-[2] min-w-[350px] w-full flex flex-col gap-4 order-1">
           {/* Editor de momentos */}
           <div className="bg-card border border-border rounded-[14px] overflow-hidden">
             <div className="flex items-center border-b border-border">
@@ -1483,6 +1487,8 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                 )
               )}
               </div>
+            </div>
+          </div>
             </div>
           </div>
         </div>

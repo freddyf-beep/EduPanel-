@@ -489,7 +489,7 @@ function VerUnidadInner() {
   const actsSel           = actitudes.filter(a => a.seleccionado)
 
   return (
-    <div className="max-w-[1320px] mx-auto">
+    <div className={cn("mx-auto transition-all", activeTab === "actividades" ? "max-w-[1920px]" : "max-w-[1320px]")}>
       {/* Header — diseño original */}
       <div className="flex items-center justify-between mb-7 flex-wrap gap-3.5">
         <div className="flex items-center gap-3">
