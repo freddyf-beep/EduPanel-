@@ -28,3 +28,8 @@ package.json
 tsconfig.json
 version.txt
 
+## v1.0.6 - 09/04/2026 13:00
+CHANGELOG.md
+components/edu-panel/version.ts
+version.txt
+
