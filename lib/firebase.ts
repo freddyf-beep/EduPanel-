@@ -1,6 +1,8 @@
 import { initializeApp, getApps } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check"
+import { getVertexAI } from "@firebase/vertexai"
 
 const firebaseConfig = {
   apiKey:            process.env.NEXT_PUBLIC_FIREBASE_API_KEY            ?? "AIzaSyAPZ0knktdl2TINlaVhBi8-o8o7o9DFVCc",
@@ -12,5 +14,19 @@ const firebaseConfig = {
 }
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+
+// Initialize App Check if we're in the browser
+if (typeof window !== "undefined") {
+  // Omitimos inicializar App Check en localhost por ahora, ya que la clave de reCaptcha
+  // era inventada y bloqueaba la petición (Error 401). 
+  // Borramos cualquier token inválido que se haya cacheado accidentalmente en el navegador.
+  try {
+    window.indexedDB.deleteDatabase("firebase-app-check-database");
+  } catch (e) {}
+}
+
 export const db = getFirestore(app)
 export const auth = getAuth(app)
+
+// Exporta la instancia de Vertex AI preconfigurada
+export const vertexAI = getVertexAI(app)

@@ -12,6 +12,7 @@ import { useAuth } from "@/components/auth/auth-context"
 import { useEffect, useState } from "react"
 import { cargarPerfil, PerfilUsuario } from "@/lib/perfil"
 import { cargarHorarioSemanal } from "@/lib/horario"
+import { CURRENT_VERSION } from "./version"
 
 const mainNavItems = [
   { href: "/",               label: "Inicio",             icon: Home },
@@ -121,6 +122,12 @@ export function Sidebar() {
           </Link>
         ))}
       </div>
+
+      {/* Footer System Version */}
+      <div className="mt-6 text-center text-[10px] text-muted-foreground/50 pb-2">
+        EduPanel {CURRENT_VERSION}
+      </div>
     </aside>
   )
 }
+

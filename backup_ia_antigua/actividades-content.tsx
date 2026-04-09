@@ -7,8 +7,9 @@ import {
   ChevronLeft, Bookmark, Loader2, Check, ArrowRight,
   ChevronDown, ChevronRight, Plus, X, Target,
   Layers, Clipboard, FileText, Monitor, Package,
-  RefreshCw, BookOpen, Calendar, Sparkles, Bot, Blocks,
-  Send, Settings2, Wand2, KeyRound, ChevronUp
+  RefreshCw, BookOpen, Calendar, Sparkles, Mic, MicOff,
+  PanelRightOpen, SlidersHorizontal, RotateCcw, Save,
+  BrainCircuit, Bot, Copy, PencilLine, Blocks
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -21,11 +22,23 @@ import type { ActividadClase, OAEditado, ClaseCronograma, ActividadSugerida, Eje
 import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import {
-  DEFAULT_AI_CONFIG, AI_PROVIDER_OPTIONS, normalizeAiConfig, getProviderMeta,
-  coerceGeneratedLesson, parseJsonResponse, htmlToPlainText,
-  type StoredAiConfig,
+  AI_PROVIDER_OPTIONS,
+  DEFAULT_AI_CONFIG,
+  PROMPT_MODE_LABELS,
+  buildCopilotPrompt,
+  parseJsonResponse,
+  coerceGeneratedLesson,
+  getProviderMeta,
+  htmlToPlainText,
+  normalizeAiConfig,
+  type CopilotMode,
+  type LessonRequestBody,
 } from "@/lib/ai/copilot"
+import { MessageSquare, Settings2, Wand2 } from "lucide-react"
+
 import dynamic from 'next/dynamic'
+import { vertexAI } from "@/lib/firebase"
+import { getGenerativeModel } from "@firebase/vertexai"
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
@@ -211,172 +224,358 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [loadingBanco, setLoadingBanco] = useState(false)
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
 
-  // ── Copiloto IA ──
+  // Copiloto IA State
   const [showCopilot, setShowCopilot] = useState(false)
   const [isClassesRailCollapsed, setIsClassesRailCollapsed] = useState(false)
-  const [chatHistory, setChatHistory] = useState<Array<{ role: "user" | "ai"; text: string }>>([])
-  const [chatInput, setChatInput] = useState("")
-  const [isChatLoading, setIsChatLoading] = useState(false)
-  const [isApplying, setIsApplying] = useState(false)
-  const [showAiSettings, setShowAiSettings] = useState(false)
-  const [aiConfig, setAiConfig] = useState<StoredAiConfig>(DEFAULT_AI_CONFIG)
-  const chatEndRef = useRef<HTMLDivElement>(null)
+  const [showSettings, setShowSettings] = useState(false)
+  const [copilotTab, setCopilotTab] = useState<"chat" | "prompt">("chat")
+  const [promptMode, setPromptMode] = useState<CopilotMode>("crear_inicial")
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([])
+  const [mensajeLocal, setMensajeLocal] = useState("")
+  const [isListening, setIsListening] = useState(false)
+  const [contextoPrevioIA, setContextoPrevioIA] = useState("")
 
-  // Cargar config guardada
+  // BYOK (Bring Your Own Key) Config
+  const [aiConfig, setAiConfig] = useState<any>(DEFAULT_AI_CONFIG)
+  const [savedAiConfig, setSavedAiConfig] = useState<any>(DEFAULT_AI_CONFIG)
+
   useEffect(() => {
     const saved = localStorage.getItem("eduAiConfig")
     if (saved) {
-      try { setAiConfig(normalizeAiConfig(JSON.parse(saved))) } catch {}
+      try {
+        const normalized = normalizeAiConfig(JSON.parse(saved))
+        setAiConfig(normalized)
+        setSavedAiConfig(normalized)
+      } catch (e) {
+        console.error(e)
+      }
     }
   }, [])
 
-  // Scroll al fondo del chat cuando hay mensajes nuevos
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [chatHistory, isChatLoading])
+  const saveAiConfig = (configToSave = aiConfig, legacyToken?: string, legacyPrompt?: string) => {
+    const legacyConfig = typeof configToSave === "string"
+      ? {
+        ...aiConfig,
+        provider: configToSave,
+        token: legacyToken || "",
+        promptExtra: legacyPrompt || aiConfig.promptExtra,
+      }
+      : configToSave
 
-  // Resetear chat al cambiar de clase
-  useEffect(() => {
-    setChatHistory([])
-    setChatInput("")
-    setShowAiSettings(false)
-  }, [cursoParam, unidadParam, selectedClase])
-
-  const saveAiConfig = (cfg: StoredAiConfig) => {
-    setAiConfig(cfg)
-    localStorage.setItem("eduAiConfig", JSON.stringify(cfg))
-    setShowAiSettings(false)
+    const fresh = normalizeAiConfig(legacyConfig)
+    setAiConfig(fresh)
+    setSavedAiConfig(fresh)
+    localStorage.setItem("eduAiConfig", JSON.stringify(fresh))
+    setShowSettings(false)
   }
 
-  const buildLessonPayload = () => {
-    const oasSeleccionados = oasCurriculo.filter(oa => (actividad.oaIds || []).includes(oa.id))
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return
+      const newWidth = document.body.clientWidth - e.clientX
+      if (newWidth > 300 && newWidth < 800) setCopilotWidth(newWidth)
+    }
+    const handleMouseUp = () => setIsResizing(false)
+
+    if (isResizing) {
+      document.addEventListener("mousemove", handleMouseMove)
+      document.addEventListener("mouseup", handleMouseUp)
+    }
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [isResizing])
+
+  // Ref para guardar la instancia de recognition y poder apagarla
+  const recognitionRef = useRef<any>(null)
+
+  const toggleListen = () => {
+    if (isListening) {
+      if (recognitionRef.current) recognitionRef.current.stop()
+      setIsListening(false)
+      return
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert("Tu navegador no soporta el dictado por voz (se recomienda Google Chrome).")
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.lang = "es-CL"
+    recognition.continuous = true
+    recognition.interimResults = true
+
+    recognition.onresult = (event: any) => {
+      let currentResult = ""
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          currentResult += event.results[i][0].transcript + " "
+        }
+      }
+      if (currentResult) {
+        setMensajeLocal(prev => (prev + " " + currentResult).trim())
+      }
+    }
+
+    recognition.onerror = (event: any) => {
+      setIsListening(false)
+      if (event.error === 'not-allowed') {
+        alert("El navegador bloqueó el micrófono. Si estás viendo un aviso de 'Sitio No Seguro', por favor entra explícitamente a http://localhost:3000 para que funcione en tu entorno local.")
+      } else {
+        console.error("Error de micrófono:", event.error)
+      }
+    }
+    recognition.onend = () => setIsListening(false)
+
+    recognition.start()
+    recognitionRef.current = recognition
+    setIsListening(true)
+  }
+
+  // Función unificada para Generar o Refinar o Charlar
+  const buildUnidadPayload = () => {
+    if (!unidadData && !unidadContextoDocente.trim() && !unidadObjetivoDocente.trim()) {
+      return null
+    }
+
     return {
+      nombre_unidad: unidadData?.nombre_unidad || "",
+      proposito: unidadData?.proposito || "",
+      conocimientos: unidadData?.conocimientos || [],
+      conocimientos_previos: unidadData?.conocimientos_previos || [],
+      habilidades: unidadData?.habilidades || [],
+      actitudes: unidadData?.actitudes || [],
+      adecuaciones_dua: unidadData?.adecuaciones_dua || "",
+      contexto_docente: unidadContextoDocente,
+      objetivo_docente: unidadObjetivoDocente,
+    }
+  }
+
+  const buildConversationHistory = (modo: CopilotMode, messageForConversation = "") => {
+    const history = chatHistory
+      .filter((msg) => msg.text.trim())
+      .map((msg) => ({
+        role: msg.role,
+        text: msg.text,
+      }))
+
+    if ((modo === "chat" || modo === "edicion") && messageForConversation.trim()) {
+      history.push({
+        role: "user",
+        text: messageForConversation.trim(),
+      })
+    }
+
+    return history
+  }
+
+  const buildCopilotPayload = (modo: CopilotMode, customMessage: string, messageForConversation = customMessage): LessonRequestBody => {
+    const oasSeleccionados = oasCurriculo.filter(oa => (actividad.oaIds || []).includes(oa.id))
+    const payloadOas = oasSeleccionados.map(oa => ({
+      numero: oa.numero,
+      descripcion: oa.descripcion,
+      indicadores: (oa.indicadores || []).filter(i => i.seleccionado).map(i => ({ texto: i.texto })),
+    }))
+
+    const payload: LessonRequestBody = {
       curso: cursoParam,
       asignatura: ASIGNATURA,
       numeroClase: selectedClase,
-      oas: oasSeleccionados.map(oa => ({
-        numero: oa.numero,
-        descripcion: oa.descripcion,
-        indicadores: (oa.indicadores || []).filter(i => i.seleccionado).map(i => ({ texto: i.texto })),
-      })),
+      oas: payloadOas,
       habilidades: actividad.habilidades || [],
       actitudes: actividad.actitudes || [],
-      unidad: unidadData ? {
-        nombre_unidad: unidadData.nombre_unidad || "",
-        proposito: unidadData.proposito || "",
-        conocimientos: unidadData.conocimientos || [],
-        conocimientos_previos: unidadData.conocimientos_previos || [],
-        habilidades: unidadData.habilidades || [],
-        actitudes: unidadData.actitudes || [],
-        adecuaciones_dua: unidadData.adecuaciones_dua || "",
-        contexto_docente: unidadContextoDocente,
-        objetivo_docente: unidadObjetivoDocente,
-      } : null,
-      claseActual: {
-        objetivo: actividad.objetivo || "",
-        inicio: actividad.inicio || "",
-        desarrollo: actividad.desarrollo || "",
-        cierre: actividad.cierre || "",
-        adecuacion: actividad.adecuacion || "",
-        materiales: actividad.materiales || [],
-        tics: actividad.tics || [],
-      },
+      contextoAnterior: contextoPrevioIA,
+      instruccionesAdicionales: customMessage.trim(),
+      objetivoClase: stripRichText(actividad.objetivo || ""),
       modelProvider: aiConfig.provider,
       customToken: aiConfig.token,
+      customPrompt: aiConfig.promptExtra,
       customModel: aiConfig.model,
       customEndpoint: aiConfig.endpoint,
+      promptOverride: aiConfig.promptOverrides[modo],
+      modo,
+      unidad: buildUnidadPayload(),
+      chatHistory: buildConversationHistory(modo, messageForConversation),
     }
+
+    if (modo !== "crear_inicial") {
+      payload.claseActual = actividad
+    }
+
+    return payload
   }
 
-  // Generar clase inicial (el prompt de 5 pasos, UNA SOLA VEZ)
-  const handleGenerarClase = async () => {
+  const getEffectivePrompt = (modo: CopilotMode, customMessage = "") => (
+    buildCopilotPrompt(buildCopilotPayload(modo, customMessage), modo)
+  )
+
+  const ejecutarAI = async (modo: CopilotMode, customMessage: string) => {
+    const trimmedMessage = customMessage.trim()
+    const hasUserConversation = chatHistory.some((msg) => msg.role === "user" && msg.text.trim())
+    const latestUserInstruction = [...chatHistory]
+      .reverse()
+      .find((msg) => msg.role === "user" && msg.text.trim())
+      ?.text
+      ?.trim() || ""
+
+    if (modo === "chat" && !trimmedMessage) return
+    if (modo === "edicion" && !trimmedMessage && !hasUserConversation) return
+
+    if (!aiConfig.token && aiConfig.provider !== "gemini" && aiConfig.provider !== "firebase-vertex") {
+      alert("Para ese proveedor debes ingresar tu token personal primero.")
+      setShowCopilot(true)
+      setShowSettings(true)
+      setCopilotTab("prompt")
+      return
+    }
+
+
+    if (aiConfig.provider === "compatible" && !aiConfig.endpoint.trim()) {
+      alert("Debes indicar la URL base del endpoint compatible.")
+      setShowCopilot(true)
+      setShowSettings(true)
+      setCopilotTab("prompt")
+      return
+    }
+
     setIsGeneratingAI(true)
+    const instructionForRequest = modo === "edicion"
+      ? (trimmedMessage || latestUserInstruction || "Aplica a la clase actual las mejoras, correcciones y acuerdos conversados en este chat.")
+      : trimmedMessage
+
+    // Add user message to UI immediately para preguntas o edición manual
+    if ((modo === "edicion" || modo === "chat") && trimmedMessage) {
+      setChatHistory(p => [...p, { role: "user", text: trimmedMessage }])
+    }
+    setMensajeLocal("")
+
     try {
-      const res = await fetch("/api/generar-clase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...buildLessonPayload(), modo: "crear_inicial" }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Error al generar")
-      setActividad(prev => ({
-        ...prev,
-        objetivo: data.objetivo || prev.objetivo,
-        inicio: data.inicio || prev.inicio,
-        desarrollo: data.desarrollo || prev.desarrollo,
-        cierre: data.cierre || prev.cierre,
-        materiales: data.materiales?.length ? data.materiales : prev.materiales,
-        tics: data.tics?.length ? data.tics : prev.tics,
-        adecuacion: data.adecuacion || prev.adecuacion,
-      }))
-      setChatHistory([{ role: "ai", text: "✅ He generado una propuesta de clase. Puedes preguntarme cualquier cosa o pedirme que cambie algo." }])
+      const requestPayload = buildCopilotPayload(
+        modo,
+        instructionForRequest,
+        trimmedMessage,
+      )
+      let contextoAnterior = ""
+
+      if (!requestPayload.contextoAnterior && selectedClase > 1) {
+        const prevClase = await cargarActividadClase(cursoParam, unidadParam, selectedClase - 1)
+        if (prevClase && prevClase.desarrollo) {
+          const objetivoAnterior = stripRichText(prevClase.objetivo || "")
+          const desarrolloAnterior = stripRichText(prevClase.desarrollo || "")
+          const cierreAnterior = stripRichText(prevClase.cierre || "")
+          requestPayload.contextoAnterior = [
+            `Clase anterior: ${selectedClase - 1}.`,
+            objetivoAnterior ? `Objetivo: "${objetivoAnterior}".` : "",
+            desarrolloAnterior ? `Desarrollo principal: ${desarrolloAnterior.substring(0, 550)}${desarrolloAnterior.length > 550 ? "..." : ""}` : "",
+            cierreAnterior ? `Cierre: ${cierreAnterior.substring(0, 250)}${cierreAnterior.length > 250 ? "..." : ""}` : "",
+          ].filter(Boolean).join(" ")
+          contextoAnterior = `La clase anterior (${selectedClase - 1}) trató sobre: Objetivo: "${prevClase.objetivo || ''}". Desarrollo: ${prevClase.desarrollo.substring(0, 500)}...`
+        }
+      }
+
+      let data: any = {}
+
+      if (aiConfig.provider === "firebase-vertex") {
+        // Lógica NATIVA CLIENT-SIDE
+        const promptFull = getEffectivePrompt(modo, instructionForRequest)
+        const systemInstruction = promptFull.split("CONTEXTO DE LA CLASE:")[0]?.trim() || "Eres un copiloto pedagógico." // Extraer la parte inicial como systemInstruction si aplica
+        
+        const model = getGenerativeModel(vertexAI, { 
+          model: aiConfig.model || "gemini-2.5-flash",
+          systemInstruction: modo !== 'chat' ? systemInstruction : undefined
+        })
+        
+        const res = await model.generateContent(promptFull)
+        const text = res.response.text()
+
+        if (modo === "chat") {
+          data = { respuestaChat: text }
+        } else {
+          try {
+            const parsed = parseJsonResponse(text)
+            data = coerceGeneratedLesson(parsed)
+            data.explicacionCambios = parsed.explicacion_cambios || parsed.explicacionCambios || "He actualizado la clase."
+          } catch(err) {
+            throw new Error("Respuesta inválida de Vertex AI: " + text)
+          }
+        }
+      } else {
+        // Lógica antigua VÍA BACKEND API
+        const res = await fetch('/api/generar-clase', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestPayload)
+        })
+
+        data = await res.json()
+
+        if (!res.ok) {
+          throw new Error(data.error || "Error en la solicitud a IA")
+        }
+      }
+
+      if (data.promptUsado) {
+        setAiConfig((prev: any) => ({
+          ...prev,
+          promptOverrides: {
+            ...prev.promptOverrides,
+            [modo]: data.promptUsado,
+          },
+        }))
+      }
+
+      if (modo === "chat") {
+        setChatHistory(p => [...p, { role: "ai", text: data.respuestaChat || "No pude generar una respuesta." }])
+        return
+      }
+
+      const nextActividad = {
+        ...actividad,
+        objetivo: data.objetivo || actividad.objetivo,
+        inicio: data.inicio || actividad.inicio,
+        desarrollo: data.desarrollo || actividad.desarrollo,
+        cierre: data.cierre || actividad.cierre,
+        materiales: data.materiales || actividad.materiales,
+        tics: data.tics || actividad.tics,
+        adecuacion: data.adecuacion || actividad.adecuacion,
+      }
+
+      const hasMeaningfulChanges =
+        (nextActividad.objetivo || "") !== (actividad.objetivo || "") ||
+        (nextActividad.inicio || "") !== (actividad.inicio || "") ||
+        (nextActividad.desarrollo || "") !== (actividad.desarrollo || "") ||
+        (nextActividad.cierre || "") !== (actividad.cierre || "") ||
+        (nextActividad.adecuacion || "") !== (actividad.adecuacion || "") ||
+        !listsEqual(nextActividad.materiales || [], actividad.materiales || []) ||
+        !listsEqual(nextActividad.tics || [], actividad.tics || [])
+
+      setActividad(nextActividad)
+
+      if (modo === "edicion") {
+        const aiMessage = data.explicacionCambios || "¡Listo! He re-escrito la clase aplicando tus peticiones. Revisa los cambios."
+        setChatHistory(p => [...p, { role: "ai", text: aiMessage }])
+      } else if (modo === "crear_inicial") {
+        setChatHistory([{ role: "ai", text: "He generado una propuesta inicial para tu clase. ¿Gusta? Puedes pedirme en el chat que explique alguna actividad (botón 'Preguntar'), o decirme cómo mejorarla y pulsar 'Modificar Clase'." }])
+      }
+
+      if (modo === "edicion" && !hasMeaningfulChanges) {
+        setChatHistory((p) => [
+          ...p.slice(0, -1),
+          {
+            role: "ai",
+            text: "Intenté aplicar el cambio, pero la respuesta volvió sin modificaciones reales sobre la clase. Reformula el pedido de forma más directa, por ejemplo: 'cambia solo el objetivo de la clase a...'.",
+          },
+        ])
+      }
+
     } catch (e: any) {
-      setChatHistory([{ role: "ai", text: "❌ Error al generar: " + e.message }])
+      console.error(e)
+      setChatHistory(p => [...p, { role: "ai", text: "❌ Lo siento, encontré un error: " + e.message }])
     } finally {
       setIsGeneratingAI(false)
-    }
-  }
-
-  // Enviar mensaje de chat (conversación libre)
-  const handleSendChat = async () => {
-    const msg = chatInput.trim()
-    if (!msg || isChatLoading) return
-    setChatHistory(prev => [...prev, { role: "user", text: msg }])
-    setChatInput("")
-    setIsChatLoading(true)
-    try {
-      const res = await fetch("/api/generar-clase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...buildLessonPayload(),
-          modo: "chat",
-          instruccionesAdicionales: msg,
-          chatHistory: [...chatHistory, { role: "user", text: msg }],
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Error")
-      setChatHistory(prev => [...prev, { role: "ai", text: data.respuestaChat || "No hubo respuesta." }])
-    } catch (e: any) {
-      setChatHistory(prev => [...prev, { role: "ai", text: "❌ " + e.message }])
-    } finally {
-      setIsChatLoading(false)
-    }
-  }
-
-  // Aplicar cambios a la clase (extrae del historial lo que se acordó)
-  const handleAplicarCambios = async () => {
-    if (chatHistory.length === 0 || isApplying) return
-    setIsApplying(true)
-    try {
-      const res = await fetch("/api/generar-clase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...buildLessonPayload(),
-          modo: "aplicar_cambios",
-          chatHistory,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Error")
-      setActividad(prev => ({
-        ...prev,
-        objetivo: data.objetivo || prev.objetivo,
-        inicio: data.inicio || prev.inicio,
-        desarrollo: data.desarrollo || prev.desarrollo,
-        cierre: data.cierre || prev.cierre,
-        materiales: data.materiales?.length ? data.materiales : prev.materiales,
-        tics: data.tics?.length ? data.tics : prev.tics,
-        adecuacion: data.adecuacion || prev.adecuacion,
-      }))
-      const resumen = data.resumenCambios || "✅ Cambios aplicados a la clase."
-      setChatHistory(prev => [...prev, { role: "ai", text: resumen }])
-    } catch (e: any) {
-      setChatHistory(prev => [...prev, { role: "ai", text: "❌ " + e.message }])
-    } finally {
-      setIsApplying(false)
     }
   }
 
@@ -495,7 +694,46 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     }
   }, [cursoParam, unidadParam, unidadCurricularParam, claseOverride, oasOverride])
 
+  useEffect(() => {
+    let cancelled = false
 
+    if (selectedClase <= 1) {
+      setContextoPrevioIA("")
+      return
+    }
+
+    cargarActividadClase(cursoParam, unidadParam, selectedClase - 1)
+      .then((prevClase) => {
+        if (cancelled || !prevClase) return
+
+        const objetivoAnterior = stripRichText(prevClase.objetivo || "")
+        const desarrolloAnterior = stripRichText(prevClase.desarrollo || "")
+        const cierreAnterior = stripRichText(prevClase.cierre || "")
+
+        const resumen = [
+          `Clase anterior: ${selectedClase - 1}.`,
+          objetivoAnterior ? `Objetivo: "${objetivoAnterior}".` : "",
+          desarrolloAnterior ? `Desarrollo principal: ${desarrolloAnterior.substring(0, 550)}${desarrolloAnterior.length > 550 ? "..." : ""}` : "",
+          cierreAnterior ? `Cierre: ${cierreAnterior.substring(0, 250)}${cierreAnterior.length > 250 ? "..." : ""}` : "",
+        ].filter(Boolean).join(" ")
+
+        setContextoPrevioIA(resumen)
+      })
+      .catch(() => {
+        if (!cancelled) setContextoPrevioIA("")
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [cursoParam, unidadParam, selectedClase])
+
+  useEffect(() => {
+    setChatHistory([])
+    setMensajeLocal("")
+    setCopilotTab("chat")
+    setShowSettings(false)
+  }, [cursoParam, unidadParam, selectedClase])
 
   // Cargar actividad cuando cambia la clase seleccionada
   useEffect(() => {
@@ -623,10 +861,36 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
   const claseData = clases.find(c => c.numero === selectedClase)
 
+  // Validación Copiloto
+  const requisitosCompletos =
+    (actividad.oaIds || []).length > 0 &&
+    (actividad.habilidades || []).length > 0 &&
+    (actividad.actitudes || []).length > 0 &&
+    stripRichText(actividad.objetivo || "").length > 0;
+
+  const hasExistingLessonContent = [
+    stripRichText(actividad.objetivo || ""),
+    stripRichText(actividad.inicio || ""),
+    stripRichText(actividad.desarrollo || ""),
+    stripRichText(actividad.cierre || ""),
+    stripRichText(actividad.adecuacion || ""),
+  ].some(Boolean) || (actividad.materiales || []).length > 0 || (actividad.tics || []).length > 0
+
+  const showCopilotClassMode = hasExistingLessonContent || chatHistory.length > 0
+  const hasUserConversation = chatHistory.some((msg) => msg.role === "user" && msg.text.trim())
+
   const handleOpenCopilot = () => {
+    setShowSettings(false)
+    setCopilotTab("chat")
     setShowCopilot(true)
   }
 
+  const providerMeta = getProviderMeta(aiConfig.provider)
+  const promptPreview = buildCopilotPrompt({ mode: promptMode, mensaje: mensajeLocal, aiConfig } as any, promptMode)
+  const verUnidadParams: Record<string, string> = unidadCurricularParam !== unidadParam
+    ? { curso: cursoParam, unidad: unidadCurricularParam, unitIdLocal: unidadParam }
+    : { curso: cursoParam, unidad: unidadCurricularParam }
+  const contentGridTemplate = isClassesRailCollapsed ? "84px minmax(0, 1fr)" : "220px minmax(0, 1fr)"
   const actividadesSugeridas = (unidadData?.actividades_sugeridas || []) as ActividadSugerida[]
   const evaluacionesSugeridas = (unidadData?.ejemplos_evaluacion || []) as EjemploEvaluacion[]
 
@@ -638,11 +902,6 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   )
 
   const estadoActual = ESTADOS.find(e => e.key === actividad.estado) || ESTADOS[0]
-
-  const verUnidadParams: Record<string, string> = unidadCurricularParam !== unidadParam
-    ? { curso: cursoParam, unidad: unidadCurricularParam, unitIdLocal: unidadParam }
-    : { curso: cursoParam, unidad: unidadCurricularParam }
-  const contentGridTemplate = isClassesRailCollapsed ? "84px minmax(0, 1fr)" : "220px minmax(0, 1fr)"
 
   return (
     <div
@@ -1195,7 +1454,9 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                                   <h4 className="text-[13px] font-bold leading-snug">{item.nombre}</h4>
                                   <button
                                     onClick={() => {
+                                      setMensajeLocal(`Considera esta actividad sugerida del curriculo: ${item.nombre}. Descripcion: ${item.descripcion}`)
                                       setShowCopilot(true)
+                                      setCopilotTab("chat")
                                     }}
                                     className="text-[10px] font-semibold text-primary border border-primary rounded-full px-2 py-1 hover:bg-pink-light transition-colors"
                                   >
@@ -1230,7 +1491,9 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                                   </div>
                                   <button
                                     onClick={() => {
+                                      setMensajeLocal(`Integra una evaluacion inspirada en: ${item.titulo}. Actividad: ${item.actividad_evaluacion}`)
                                       setShowCopilot(true)
+                                      setCopilotTab("chat")
                                     }}
                                     className="text-[10px] font-semibold text-primary border border-primary rounded-full px-2 py-1 hover:bg-pink-light transition-colors"
                                   >
@@ -1321,247 +1584,360 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
           </div>
         )}
 
-        {/* ── Copiloto: panel fijo lateral de pantalla completa ── */}
+        {/* ── Copiloto: panel fijo lateral de pantalla completa (estilo Edge) ── */}
         {showCopilot && (
           <>
-            {/* Overlay en móvil */}
+            {/* Overlay semitransparente solo en móvil */}
             <button
               type="button"
               aria-label="Cerrar copiloto"
               className="fixed inset-0 z-[698] bg-slate-950/30 backdrop-blur-[2px] md:hidden"
               onClick={() => setShowCopilot(false)}
             />
-
+            {/* Panel fijo de pantalla completa — full viewport height */}
             <aside
               style={{ width: copilotWidth }}
               className={cn(
-                "fixed top-0 right-0 z-[699] flex h-screen flex-col border-l border-slate-200/80 bg-white shadow-[-12px_0_40px_rgba(15,23,42,0.07)]",
+                "fixed top-0 right-0 z-[699] flex h-screen flex-col border-l border-slate-200 bg-white shadow-[-4px_0_24px_rgba(15,23,42,0.08)]",
                 !isResizing && "transition-[width] duration-300"
               )}
             >
-              {/* Resizer */}
+              {/* Resizer handle */}
               <div
-                className="absolute left-0 top-0 bottom-0 w-1.5 cursor-col-resize hover:bg-purple-400/30 bg-transparent z-[700] transition-colors"
+                className="absolute left-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-indigo-400/40 bg-transparent z-[700]"
                 onMouseDown={() => setIsResizing(true)}
               />
 
-              {/* Header */}
-              <div className="flex-shrink-0 px-4 py-3.5 border-b border-slate-100 flex items-center justify-between bg-white">
-                <div className="flex items-center gap-2.5">
-                  <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-sm">
-                    <Sparkles className="h-3.5 w-3.5" />
+              {/* Header compacto estilo Edge */}
+              <div className="border-b border-slate-200 bg-white px-4 py-3 flex-shrink-0">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-500 via-indigo-500 to-fuchsia-500 text-white">
+                      <Bot className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-[14px] font-extrabold text-slate-900 leading-none">Copiloto IA</p>
+                      <p className="text-[11px] text-slate-400 leading-tight mt-0.5">{providerMeta.label} · {aiConfig.model}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[13px] font-extrabold text-slate-900 leading-none">Copiloto IA</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">{getProviderMeta(aiConfig.provider).label} · {aiConfig.model}</p>
+                  <div className="flex items-center gap-0.5">
+                    <button
+                      onClick={() => { setCopilotTab("prompt"); setShowSettings(true) }}
+                      className="grid h-8 w-8 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                      title="Configuración"
+                    >
+                      <Settings2 className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => setShowCopilot(false)}
+                      className="grid h-8 w-8 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                      title="Cerrar"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
+
+                <div className="mt-2.5 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
                   <button
-                    onClick={() => setShowAiSettings(v => !v)}
-                    className={cn("grid h-7 w-7 place-items-center rounded-md transition-colors",
-                      showAiSettings ? "bg-violet-100 text-violet-600" : "text-slate-400 hover:bg-slate-100"
+                    onClick={() => setCopilotTab("chat")}
+                    className={cn(
+                      "rounded-lg px-3 py-1.5 text-[12px] font-bold transition-colors",
+                      copilotTab === "chat" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
                     )}
-                    title="Configuración de IA"
                   >
-                    <KeyRound className="h-3.5 w-3.5" />
+                    Chat
                   </button>
                   <button
-                    onClick={() => setShowCopilot(false)}
-                    className="grid h-7 w-7 place-items-center rounded-md text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                    onClick={() => setCopilotTab("prompt")}
+                    className={cn(
+                      "rounded-lg px-3 py-1.5 text-[12px] font-bold transition-colors",
+                      copilotTab === "prompt" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                    )}
                   >
-                    <X className="h-3.5 w-3.5" />
+                    Prompt y motor
                   </button>
                 </div>
               </div>
 
-              {/* Panel de configuración (colapsable) */}
-              {showAiSettings && (
-                <div className="flex-shrink-0 border-b border-slate-100 bg-slate-50 px-4 py-4 space-y-3">
-                  <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tu IA personal (BYOK)</p>
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-500 mb-1 block">Proveedor</label>
-                    <select
-                      value={aiConfig.provider}
-                      onChange={e => {
-                        const p = e.target.value as StoredAiConfig["provider"]
-                        setAiConfig(prev => ({ ...prev, provider: p, model: getProviderMeta(p).defaultModel }))
-                      }}
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold outline-none focus:border-violet-400"
-                    >
-                      {AI_PROVIDER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                    </select>
-                  </div>
-                  {aiConfig.provider !== "public" && (
-                    <>
-                      <div>
-                        <label className="text-[11px] font-semibold text-slate-500 mb-1 block">API Key</label>
-                        <input
-                          type="password"
-                          value={aiConfig.token}
-                          onChange={e => setAiConfig(prev => ({ ...prev, token: e.target.value }))}
-                          placeholder="sk-... / AIza..."
-                          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] outline-none focus:border-violet-400"
-                        />
+              {copilotTab === "prompt" ? (
+                <div className="flex-1 overflow-y-auto bg-slate-50/70 p-5">
+                  <div className="space-y-4">
+                    <div className="rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div className="mb-3 flex items-center gap-2">
+                        <SlidersHorizontal className="h-4 w-4 text-indigo-500" />
+                        <h3 className="text-[13px] font-bold text-slate-900">Proveedor y acceso</h3>
                       </div>
-                      <div>
-                        <label className="text-[11px] font-semibold text-slate-500 mb-1 block">Modelo</label>
-                        <input
-                          value={aiConfig.model}
-                          onChange={e => setAiConfig(prev => ({ ...prev, model: e.target.value }))}
-                          placeholder={getProviderMeta(aiConfig.provider).defaultModel}
-                          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] outline-none focus:border-violet-400"
-                        />
-                      </div>
-                    </>
-                  )}
-                  {aiConfig.provider === "compatible" && (
-                    <div>
-                      <label className="text-[11px] font-semibold text-slate-500 mb-1 block">Endpoint base</label>
-                      <input
-                        value={aiConfig.endpoint}
-                        onChange={e => setAiConfig(prev => ({ ...prev, endpoint: e.target.value }))}
-                        placeholder="https://api.openai.com/v1"
-                        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12px] outline-none focus:border-violet-400"
-                      />
-                    </div>
-                  )}
-                  <div className="rounded-lg bg-slate-100 border border-slate-200 px-3 py-2.5 space-y-1.5">
-                    <p className="text-[10px] text-slate-500 leading-relaxed">{getProviderMeta(aiConfig.provider).helper}</p>
-                    {getProviderMeta(aiConfig.provider).apiKeyUrl && (
-                      <a
-                        href={getProviderMeta(aiConfig.provider).apiKeyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[11px] font-bold text-violet-600 hover:text-violet-700 hover:underline transition-colors"
-                      >
-                        <KeyRound className="w-3 h-3" />
-                        Obtener API key →
-                      </a>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => saveAiConfig(aiConfig)}
-                    className="w-full rounded-lg bg-violet-600 px-3 py-2 text-[12px] font-bold text-white hover:bg-violet-700 transition-colors"
-                  >
-                    Guardar configuración
-                  </button>
-                </div>
-              )}
 
-              {/* Área de mensajes */}
-              <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50/50 space-y-3">
-                {chatHistory.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-center py-8">
-                    {/* Estado vacío: clase generada o no? */}
-                    {[actividad.objetivo, actividad.inicio, actividad.desarrollo, actividad.cierre]
-                      .some(f => stripRichText(f || "").length > 0) ? (
-                      <>
-                        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white mb-4 shadow-lg shadow-violet-200">
-                          <Sparkles className="h-5 w-5" />
-                        </div>
-                        <p className="text-[14px] font-bold text-slate-800">Clase detectada</p>
-                        <p className="text-[12px] text-slate-500 mt-1.5 max-w-[240px] leading-relaxed">
-                          Escríbeme cualquier cosa. ¿Quieres cambiar algo, entender una actividad o explorar otra idea?
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white mb-4 shadow-lg shadow-violet-200">
+                      <label className="mb-1 block text-[11px] font-semibold text-slate-500">Proveedor</label>
+                      <select
+                        value={aiConfig.provider}
+                        onChange={e => {
+                          const nextProvider = e.target.value as typeof aiConfig.provider
+                          const meta = getProviderMeta(nextProvider)
+                          setAiConfig((prev: any) => ({
+                            ...prev,
+                            provider: nextProvider,
+                            model: meta.defaultModel,
+                            endpoint: nextProvider === "compatible" ? prev.endpoint || "https://api.openai.com/v1" : prev.endpoint,
+                          }))
+                        }}
+                        className="mb-3 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[13px] font-semibold outline-none transition-colors focus:border-indigo-400"
+                      >
+                        {AI_PROVIDER_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+
+                      <label className="mb-1 block text-[11px] font-semibold text-slate-500">Modelo</label>
+                      <input
+                        value={aiConfig.model}
+                        onChange={e => setAiConfig((prev: any) => ({ ...prev, model: e.target.value }))}
+                        className="mb-3 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[13px] outline-none transition-colors focus:border-indigo-400"
+                        placeholder={providerMeta.defaultModel}
+                      />
+
+                      {aiConfig.provider === "compatible" && (
+                        <>
+                          <label className="mb-1 block text-[11px] font-semibold text-slate-500">Endpoint base</label>
+                          <input
+                            value={aiConfig.endpoint}
+                            onChange={e => setAiConfig((prev: any) => ({ ...prev, endpoint: e.target.value }))}
+                            className="mb-3 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[13px] outline-none transition-colors focus:border-indigo-400"
+                            placeholder={providerMeta.endpointPlaceholder || "https://api.openai.com/v1"}
+                          />
+                        </>
+                      )}
+
+                      <label className="mb-1 block text-[11px] font-semibold text-slate-500">Token</label>
+                      <input
+                        type="password"
+                        value={aiConfig.token}
+                        onChange={e => setAiConfig((prev: any) => ({ ...prev, token: e.target.value }))}
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[13px] outline-none transition-colors focus:border-indigo-400"
+                        placeholder={aiConfig.provider === "gemini" ? "Opcional si quieres usar la llave del servidor" : "Tu token personal"}
+                      />
+
+                      <p className="mt-2 text-[11px] leading-relaxed text-slate-500">{providerMeta.helper}</p>
+
+                      <div className="mt-4 flex gap-2">
+                        <button
+                          onClick={() => saveAiConfig(aiConfig)}
+                          className="flex-1 rounded-xl bg-slate-900 px-3 py-2 text-[12px] font-bold text-white transition-colors hover:bg-slate-800"
+                        >
+                          <Save className="mr-1 inline h-3.5 w-3.5" /> Guardar
+                        </button>
+                        <button
+                          onClick={() => setAiConfig(savedAiConfig)}
+                          className="rounded-xl border border-slate-200 px-3 py-2 text-[12px] font-bold text-slate-600 transition-colors hover:bg-slate-100"
+                        >
+                          <RotateCcw className="mr-1 inline h-3.5 w-3.5" /> Volver
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div className="mb-3 flex items-center gap-2">
+                        <BrainCircuit className="h-4 w-4 text-fuchsia-500" />
+                        <h3 className="text-[13px] font-bold text-slate-900">Prompt que usa la IA</h3>
+                      </div>
+
+                      <label className="mb-1 block text-[11px] font-semibold text-slate-500">Instrucciones maestras</label>
+                      <textarea
+                        value={aiConfig.promptExtra}
+                        onChange={e => setAiConfig((prev: any) => ({ ...prev, promptExtra: e.target.value }))}
+                        className="mb-3 min-h-[88px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] leading-relaxed outline-none transition-colors focus:border-indigo-400"
+                      />
+
+                      <div className="mb-3 grid grid-cols-3 gap-2 rounded-2xl bg-slate-100 p-1">
+                        {(Object.keys(PROMPT_MODE_LABELS) as CopilotMode[]).map((mode) => (
+                          <button
+                            key={mode}
+                            onClick={() => setPromptMode(mode)}
+                            className={cn(
+                              "rounded-xl px-2 py-2 text-[11px] font-bold transition-colors",
+                              promptMode === mode ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                            )}
+                          >
+                            {PROMPT_MODE_LABELS[mode]}
+                          </button>
+                        ))}
+                      </div>
+
+                      <label className="mb-1 block text-[11px] font-semibold text-slate-500">Prompt editable</label>
+                      <textarea
+                        value={aiConfig.promptOverrides[promptMode] || promptPreview}
+                        onChange={e => {
+                          const nextValue = e.target.value
+                          setAiConfig((prev: any) => ({
+                            ...prev,
+                            promptOverrides: {
+                              ...prev.promptOverrides,
+                              [promptMode]: nextValue,
+                            },
+                          }))
+                        }}
+                        className="min-h-[240px] w-full rounded-2xl border border-slate-200 bg-slate-950 px-3 py-3 font-mono text-[11px] leading-relaxed text-slate-100 outline-none transition-colors focus:border-fuchsia-400"
+                      />
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button
+                          onClick={() => { void navigator.clipboard.writeText(aiConfig.promptOverrides[promptMode] || promptPreview) }}
+                          className="rounded-xl border border-slate-200 px-3 py-2 text-[11px] font-bold text-slate-600 transition-colors hover:bg-slate-100"
+                        >
+                          <Copy className="mr-1 inline h-3.5 w-3.5" /> Copiar
+                        </button>
+                        <button
+                          onClick={() => setAiConfig((prev: any) => ({
+                            ...prev,
+                            promptOverrides: {
+                              ...prev.promptOverrides,
+                              [promptMode]: "",
+                            },
+                          }))}
+                          className="rounded-xl border border-slate-200 px-3 py-2 text-[11px] font-bold text-slate-600 transition-colors hover:bg-slate-100"
+                        >
+                          <RotateCcw className="mr-1 inline h-3.5 w-3.5" /> Usar automatico
+                        </button>
+                        <button
+                          onClick={() => setAiConfig((prev: any) => ({
+                            ...prev,
+                            promptExtra: savedAiConfig.promptExtra,
+                            promptOverrides: {
+                              ...prev.promptOverrides,
+                              [promptMode]: savedAiConfig.promptOverrides[promptMode],
+                            },
+                          }))}
+                          className="rounded-xl border border-slate-200 px-3 py-2 text-[11px] font-bold text-slate-600 transition-colors hover:bg-slate-100"
+                        >
+                          <PencilLine className="mr-1 inline h-3.5 w-3.5" /> Volver al guardado
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="flex-1 overflow-y-auto bg-slate-50 px-4 py-4">
+                    {!showCopilotClassMode ? (
+                      <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+                        <div className="mb-3 grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-sky-500 via-indigo-500 to-fuchsia-500 text-white">
                           <Bot className="h-5 w-5" />
                         </div>
-                        <p className="text-[14px] font-bold text-slate-800">¿Empezamos?</p>
-                        <p className="text-[12px] text-slate-500 mt-1.5 max-w-[240px] leading-relaxed">
-                          Genera la propuesta inicial y luego conversamos para afinarla.
+                        <p className="text-[14px] font-bold text-slate-800">Copiloto IA</p>
+                        <p className="mt-1.5 max-w-[260px] text-[12px] leading-relaxed text-slate-500">
+                          Genera una primera propuesta y luego usa el chat para preguntar o ajustar.
                         </p>
-                        <button
-                          onClick={handleGenerarClase}
-                          disabled={isGeneratingAI}
-                          className="mt-5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 px-5 py-2.5 text-[13px] font-bold text-white shadow-md shadow-violet-200 transition-all hover:opacity-90 disabled:opacity-60"
-                        >
-                          {isGeneratingAI
-                            ? <><Loader2 className="h-4 w-4 animate-spin" /> Generando...</>
-                            : <><Sparkles className="h-4 w-4" /> Generar primera propuesta</>
-                          }
-                        </button>
-                      </>
-                    )}
-                  </div>
-                ) : (
-                  <>
-                    {chatHistory.map((msg, i) => (
-                      <div key={i} className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}>
-                        <div className={cn(
-                          "max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed",
-                          msg.role === "user"
-                            ? "bg-violet-600 text-white rounded-br-sm"
-                            : "bg-white border border-slate-100 text-slate-700 shadow-sm rounded-bl-sm"
-                        )}>
-                          {msg.role === "user" ? (
-                            <p>{msg.text}</p>
-                          ) : (
-                            <div
-                              className="prose prose-sm max-w-none prose-p:my-0.5 prose-ul:my-1 prose-li:my-0 prose-strong:text-slate-900"
-                              dangerouslySetInnerHTML={{ __html: formatChatMessageHtml(msg.text) }}
-                            />
-                          )}
-                        </div>
                       </div>
-                    ))}
-                    {isChatLoading && (
-                      <div className="flex justify-start">
-                        <div className="bg-white border border-slate-100 shadow-sm rounded-2xl rounded-bl-sm px-4 py-3">
-                          <div className="flex gap-1 items-center">
-                            <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                            <span className="w-2 h-2 bg-fuchsia-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                            <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    ) : chatHistory.length === 0 ? (
+                      <div className="flex h-full flex-col justify-center px-2 py-4">
+                        <p className="text-[14px] font-bold text-slate-800">Clase detectada</p>
+                        <p className="mt-1.5 text-[12px] leading-relaxed text-slate-500">
+                          Puedes pedirme ajustes, hacer preguntas pedagógicas o reescribir una parte.
+                        </p>
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-white px-3 py-3">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">Pruebas rápidas</p>
+                          <div className="mt-2 flex flex-col gap-1.5 text-[12px] text-slate-600">
+                            <p>"Mejora el inicio para que sea más breve y activo."</p>
+                            <p>"Reescribe el cierre con un ticket de salida."</p>
+                            <p>"Explica por qué esta secuencia responde a los OA."</p>
                           </div>
                         </div>
                       </div>
+                    ) : (
+                      <div className="flex flex-col gap-3">
+                        {chatHistory.map((msg, i) => (
+                          <div key={i} className={cn("flex flex-col", msg.role === "user" ? "items-end" : "items-start")}>
+                            <div className={cn(
+                              "max-w-[92%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed",
+                              msg.role === "user"
+                                ? "rounded-br-sm bg-indigo-600 text-white"
+                                : "rounded-bl-sm border border-slate-200 bg-white text-slate-700"
+                            )}>
+                              {msg.role === "user" ? (
+                                <p>{msg.text}</p>
+                              ) : (
+                                <div
+                                  className="prose prose-sm max-w-none prose-p:my-0 prose-p:leading-relaxed prose-ul:my-1.5 prose-li:my-0.5 prose-strong:text-slate-900"
+                                  dangerouslySetInnerHTML={{ __html: formatChatMessageHtml(msg.text) }}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                        {isGeneratingAI && (
+                          <div className="max-w-[92%] rounded-2xl rounded-bl-sm border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] text-slate-500">
+                            <Loader2 className="mr-2 inline h-4 w-4 animate-spin text-indigo-500" />
+                            Analizando...
+                          </div>
+                        )}
+                      </div>
                     )}
-                    <div ref={chatEndRef} />
-                  </>
-                )}
-              </div>
+                  </div>
 
-              {/* Footer: input + botón aplicar */}
-              <div className="flex-shrink-0 bg-white border-t border-slate-100 px-3 py-3 space-y-2">
-                {/* Botón Aplicar cambios — solo visible cuando hay mensajes de IA */}
-                {chatHistory.some(m => m.role === "ai") && (
-                  <button
-                    onClick={handleAplicarCambios}
-                    disabled={isApplying}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-[12px] font-bold text-violet-700 transition-colors hover:bg-violet-100 disabled:opacity-60"
-                  >
-                    {isApplying
-                      ? <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Aplicando cambios...</>
-                      : <><Wand2 className="h-3.5 w-3.5" /> Aplicar cambios a la clase</>
-                    }
-                  </button>
-                )}
-
-                {/* Input de chat */}
-                <div className="flex items-end gap-2">
-                  <textarea
-                    value={chatInput}
-                    onChange={e => setChatInput(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSendChat() }
-                    }}
-                    placeholder="Escribe tu mensaje... (Enter para enviar)"
-                    rows={2}
-                    disabled={isChatLoading}
-                    className="flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-[13px] outline-none transition-colors focus:border-violet-400 focus:bg-white disabled:opacity-60"
-                  />
-                  <button
-                    onClick={handleSendChat}
-                    disabled={!chatInput.trim() || isChatLoading}
-                    className="flex-shrink-0 grid h-10 w-10 place-items-center rounded-xl bg-violet-600 text-white shadow-sm transition-all hover:bg-violet-700 disabled:opacity-40"
-                  >
-                    <Send className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+                  <div className="border-t border-slate-200 bg-white px-3 py-3 flex-shrink-0">
+                    {!showCopilotClassMode ? (
+                      <>
+                        <button
+                          onClick={() => ejecutarAI("crear_inicial", "")}
+                          disabled={isGeneratingAI || !requisitosCompletos}
+                          className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-600 px-4 py-2.5 text-[13px] font-bold text-white transition-all hover:opacity-90 disabled:opacity-60"
+                        >
+                          {isGeneratingAI ? <Loader2 className="mr-2 inline h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 inline h-4 w-4" />}
+                          {isGeneratingAI ? "Pensando..." : "Generar primera propuesta"}
+                        </button>
+                        {!requisitosCompletos && (
+                          <p className="mt-2 text-center text-[11px] leading-relaxed text-slate-400">
+                            Completa al menos un OA, una habilidad, una actitud y el objetivo de la clase.
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 pr-1">
+                          <input
+                            type="text"
+                            value={mensajeLocal}
+                            onChange={e => setMensajeLocal(e.target.value)}
+                            onKeyDown={e => {
+                              if (e.key === "Enter") ejecutarAI("chat", mensajeLocal)
+                            }}
+                            placeholder="Ej: detecta incoherencias, explica..."
+                            disabled={isGeneratingAI}
+                            className="flex-1 bg-transparent px-3 py-2.5 text-[13px] outline-none"
+                          />
+                          <button
+                            onClick={toggleListen}
+                            disabled={isGeneratingAI}
+                            className={cn("grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg text-slate-400 transition-colors hover:text-indigo-600", isListening && "text-red-500")}
+                          >
+                            {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          <button
+                            onClick={() => ejecutarAI("chat", mensajeLocal)}
+                            disabled={isGeneratingAI || !mensajeLocal.trim()}
+                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-bold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                          >
+                            <MessageSquare className="mr-1 inline h-3.5 w-3.5" /> Preguntar
+                          </button>
+                          <button
+                            onClick={() => ejecutarAI("edicion", mensajeLocal)}
+                            disabled={isGeneratingAI || (!mensajeLocal.trim() && !hasUserConversation)}
+                            className="rounded-xl bg-slate-900 px-3 py-2 text-[12px] font-bold text-white transition-colors hover:bg-slate-800 disabled:opacity-50"
+                          >
+                            <Wand2 className="mr-1 inline h-3.5 w-3.5" /> Modificar clase
+                          </button>
+                        </div>
+                        <p className="px-0.5 text-[10px] leading-relaxed text-slate-400">
+                          <b className="text-slate-500">Preguntar</b> responde sin tocar la clase. <b className="text-slate-500">Modificar clase</b> aplica el pedido y lo conversado.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </aside>
           </>
         )}
