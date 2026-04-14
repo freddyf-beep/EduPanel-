@@ -11,8 +11,10 @@ import {
 import { cn } from "@/lib/utils"
 import { guardarCronograma, cargarCronograma, cargarPlanCurso } from "@/lib/curriculo"
 import type { ActividadCronograma } from "@/lib/curriculo"
-import { ASIGNATURA, buildUrl, UNIT_COLORS } from "@/lib/shared"
+import { buildUrl, UNIT_COLORS, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
+import { useIsMobile } from "@/components/ui/use-mobile"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 const DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
@@ -60,8 +62,10 @@ function weekNumber(d: Date): number {
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 function CronogramaInner() {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const searchParams   = useSearchParams()
   const cursoParam     = searchParams.get("curso")
+  const isMobile       = useIsMobile()
 
   const hoy            = new Date()
   const [lunesActual, setLunesActual] = useState<Date>(getLunes(hoy))
@@ -112,7 +116,11 @@ function CronogramaInner() {
       }
     }).catch(console.error)
     .finally(() => setLoading(false))
-  }, [cursoFiltro])
+  }, [cursoFiltro, ASIGNATURA])
+
+  useEffect(() => {
+    setViewMode(isMobile ? "list" : "grid")
+  }, [isMobile])
 
   const navSemana = (dir: number) => {
     const d = new Date(lunesActual)
@@ -184,18 +192,18 @@ function CronogramaInner() {
   )
 
   return (
-    <div className="max-w-[1400px] mx-auto">
+    <div className="mx-auto max-w-[1400px]">
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-3.5">
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3.5">
         <div className="flex items-center gap-3">
-          <Link href={buildUrl("/planificaciones", { curso: cursoFiltro })}
+          <Link href={buildUrl("/planificaciones", withAsignatura({ curso: cursoFiltro }, ASIGNATURA))}
             className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors">
             <ChevronLeft className="w-4 h-4" />
           </Link>
           <h1 className="text-[22px] font-extrabold">Cronograma — {ASIGNATURA}</h1>
         </div>
-        <div className="flex gap-2.5 flex-wrap items-center">
+        <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto sm:justify-end">
           <button className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
             <Download className="w-[15px] h-[15px] text-muted-foreground" /> Exportar
           </button>
@@ -206,15 +214,15 @@ function CronogramaInner() {
           {saveStatus === "saved" && <span className="flex items-center gap-1.5 text-[13px] font-semibold text-green-600"><Check className="w-4 h-4" /> Guardado</span>}
           {saveStatus === "error" && <span className="text-[13px] font-semibold text-red-500">Error al guardar</span>}
           <button onClick={handleGuardar} disabled={saving}
-            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-[#d6335e] transition-colors disabled:opacity-60">
+            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-60">
             {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> Guardando…</> : <><Bookmark className="w-[15px] h-[15px]" /> Guardar</>}
           </button>
         </div>
       </div>
 
       {/* Filtros */}
-      <div className="bg-card border border-border rounded-[14px] px-5 py-4 mb-5">
-        <div className="flex flex-wrap items-center gap-6">
+      <div className="mb-5 rounded-[14px] border border-border bg-card px-4 py-4 sm:px-5">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
 
           {/* Filtro por curso */}
           <div className="flex flex-col gap-2">
@@ -241,7 +249,7 @@ function CronogramaInner() {
             </div>
           </div>
 
-          <div className="w-px h-10 bg-border" />
+          <div className="hidden h-10 w-px bg-border lg:block" />
 
           {/* Filtro por unidad */}
           <div className="flex flex-col gap-2">
@@ -266,7 +274,7 @@ function CronogramaInner() {
           </div>
 
           {/* Vista */}
-          <div className="ml-auto flex bg-background border border-border rounded-lg p-1">
+          <div className="flex rounded-lg border border-border bg-background p-1 lg:ml-auto">
             <button onClick={() => setViewMode("grid")}
               className={cn("px-3 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-colors",
                 viewMode === "grid" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
@@ -309,7 +317,9 @@ function CronogramaInner() {
       </div>
 
       {viewMode === "grid" ? (
-        <div className="bg-card border border-border rounded-[14px] overflow-hidden">
+        <div className="overflow-hidden rounded-[14px] border border-border bg-card">
+          <div className="overflow-x-auto">
+            <div className="min-w-[900px]">
 
           {/* Encabezado días con fecha real */}
           <div className="grid grid-cols-5 bg-background border-b border-border">
@@ -381,16 +391,16 @@ function CronogramaInner() {
                         </div>
                         {/* Botón ir a clase */}
                         <Link
-                          href={buildUrl("/ver-unidad", { curso: cursoFiltro, unidad: "unidad_1" })}
+                          href={buildUrl("/ver-unidad", withAsignatura({ curso: cursoFiltro, unidad: "unidad_1" }, ASIGNATURA))}
                           onClick={e => e.stopPropagation()}
-                          className="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 text-[10px] font-bold bg-white/20 hover:bg-white/30 rounded px-1.5 py-0.5 transition-all"
+                          className="flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[10px] font-bold bg-white/20 transition-all hover:bg-white/30 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                         >
                           Ver clase <ArrowRight className="w-2.5 h-2.5" />
                         </Link>
                       </div>
                       <button
                         onClick={e => { e.stopPropagation(); eliminarActividad(act.id) }}
-                        className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 w-4 h-4 rounded bg-white/20 hover:bg-white/40 grid place-items-center transition-all"
+                        className="absolute top-1.5 right-1.5 grid h-4 w-4 place-items-center rounded bg-white/20 transition-all hover:bg-white/40 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                       >
                         <X className="w-2.5 h-2.5" />
                       </button>
@@ -407,7 +417,7 @@ function CronogramaInner() {
                   {/* Botón agregar rápido */}
                   <button
                     onClick={() => { setNuevaAct(p => ({ ...p, dia })); setShowModal(true) }}
-                    className="mt-auto flex items-center justify-center gap-1 text-[11px] text-muted-foreground hover:text-primary hover:bg-background rounded-lg py-1.5 transition-colors opacity-0 hover:opacity-100 group-hover:opacity-100 border border-dashed border-border"
+                    className="mt-auto flex items-center justify-center gap-1 rounded-lg border border-dashed border-border py-1.5 text-[11px] text-muted-foreground transition-colors hover:bg-background hover:text-primary opacity-100 sm:opacity-0 sm:hover:opacity-100 sm:group-hover:opacity-100"
                   >
                     <Plus className="w-3 h-3" /> Agregar
                   </button>
@@ -415,10 +425,12 @@ function CronogramaInner() {
               )
             })}
           </div>
+            </div>
+          </div>
         </div>
       ) : (
         /* Vista lista */
-        <div className="bg-card border border-border rounded-[14px] overflow-hidden">
+        <div className="overflow-x-auto rounded-[14px] border border-border bg-card">
           <table className="w-full">
             <thead>
               <tr className="bg-background">
@@ -433,7 +445,7 @@ function CronogramaInner() {
                   <div className="flex flex-col items-center gap-3 text-muted-foreground">
                     <BookOpen className="w-8 h-8" />
                     <p className="text-[13px]">Sin actividades planificadas para {cursoFiltro}.</p>
-                    <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold px-4 py-2 rounded-full hover:bg-[#d6335e] transition-colors">
+                    <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold px-4 py-2 rounded-full hover:bg-pink-dark transition-colors">
                       <Plus className="w-3.5 h-3.5" /> Agregar primera clase
                     </button>
                   </div>
@@ -445,7 +457,7 @@ function CronogramaInner() {
                     const semLunes = new Date(hoy.getFullYear(), 0, 1 + (act.semana - 1) * 7)
                     const fechaAct = getFechaReal(getLunes(semLunes), act.dia)
                     return (
-                      <tr key={act.id} className="border-b border-border last:border-b-0 hover:bg-[#fafbff] transition-colors">
+                      <tr key={act.id} className="border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors">
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2.5">
                             <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: act.color }} />
@@ -466,7 +478,7 @@ function CronogramaInner() {
                         <td className="px-4 py-3.5 text-[13px]">{act.duracion}</td>
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2">
-                            <Link href={buildUrl("/ver-unidad", { curso: cursoFiltro, unidad: "unidad_1" })}
+                            <Link href={buildUrl("/ver-unidad", withAsignatura({ curso: cursoFiltro, unidad: "unidad_1" }, ASIGNATURA))}
                               className="flex items-center gap-1 text-[11px] font-bold text-primary border border-primary rounded-full px-2.5 py-1 hover:bg-pink-light transition-colors">
                               Ver clase <ArrowRight className="w-3 h-3" />
                             </Link>
@@ -505,8 +517,8 @@ function CronogramaInner() {
 
       {/* Modal agregar actividad */}
       {showModal && (
-        <div className="fixed inset-0 z-[500] bg-black/40 flex items-center justify-center">
-          <div className="bg-card rounded-[18px] p-7 w-[500px] max-w-[95vw] shadow-xl">
+        <div className="fixed inset-0 z-[500] flex items-center justify-center bg-black/40 p-4">
+          <div className="w-[500px] max-w-[95vw] rounded-[18px] bg-card p-5 shadow-xl sm:p-7">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[16px] font-extrabold">Agregar clase planificada</h3>
               <button onClick={() => setShowModal(false)} className="w-7 h-7 rounded-full bg-background grid place-items-center text-muted-foreground hover:bg-border transition-colors">
@@ -520,7 +532,7 @@ function CronogramaInner() {
                   placeholder="Ej: Percusión corporal – ritmos básicos" autoFocus
                   className="w-full border-[1.5px] border-border rounded-[10px] px-3.5 py-2.5 text-[13px] outline-none focus:border-primary" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mb-1.5 block">Tipo</label>
                   <select value={nuevaAct.tipo} onChange={e => setNuevaAct(p => ({ ...p, tipo: e.target.value as any }))}
@@ -538,7 +550,7 @@ function CronogramaInner() {
                   </select>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
                   <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mb-1.5 block">Día</label>
                   <select value={nuevaAct.dia} onChange={e => setNuevaAct(p => ({ ...p, dia: e.target.value }))}
@@ -568,10 +580,10 @@ function CronogramaInner() {
                   {" "}en la semana actual
                 </span>
               </div>
-              <div className="flex justify-end gap-2.5">
+              <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
                 <button onClick={() => setShowModal(false)} className="text-[13px] font-semibold text-muted-foreground px-3.5 py-2 rounded-lg hover:bg-background cursor-pointer border-none bg-none">Cancelar</button>
                 <button onClick={handleAgregarActividad}
-                  className="bg-primary text-primary-foreground border-none rounded-[10px] px-5 py-2.5 text-[13px] font-bold cursor-pointer hover:bg-[#d6335e] transition-colors">
+                  className="bg-primary text-primary-foreground border-none rounded-[10px] px-5 py-2.5 text-[13px] font-bold cursor-pointer hover:bg-pink-dark transition-colors">
                   Agregar
                 </button>
               </div>

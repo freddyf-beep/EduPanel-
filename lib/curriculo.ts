@@ -1,4 +1,9 @@
 import { db, auth } from "@/lib/firebase"
+import {
+  DEFAULT_ASIGNATURA,
+  SUBJECT_FALLBACK_OPTIONS,
+  normalizeKeyPart,
+} from "@/lib/shared"
 
 export function getUid(): string {
   const uid = auth?.currentUser?.uid
@@ -40,8 +45,9 @@ export interface EjemploEvaluacion {
   titulo: string
   oas_evaluados: number[]
   actividad_evaluacion: string
-  criterios_proceso: string[]
-  criterios_presentacion: string[]
+  criterios_evaluacion?: Record<string, string[]>
+  criterios_proceso?: string[]
+  criterios_presentacion?: string[]
 }
 
 export interface Unidad {
@@ -54,10 +60,45 @@ export interface Unidad {
   habilidades: string[]
   actitudes: string[]
   conocimientos_previos: string[]
-  adecuaciones_dua: string
+  adecuaciones_dua: string | { estrategias_neurodiversidad?: string }
   objetivos_aprendizaje?: ObjetivoAprendizaje[]
   actividades_sugeridas?: ActividadSugerida[]
   ejemplos_evaluacion?: EjemploEvaluacion[]
+}
+
+function humanizeCriteriaKey(key: string): string {
+  const normalized = key.replace(/_/g, " ").trim()
+  if (!normalized) return "Criterios"
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1)
+}
+
+export function extractAdecuacionesDuaText(
+  adecuaciones: Unidad["adecuaciones_dua"] | null | undefined
+): string {
+  if (typeof adecuaciones === "string") return adecuaciones
+  return adecuaciones?.estrategias_neurodiversidad || ""
+}
+
+export function getCriteriosEvaluacionSections(
+  ejemplo: EjemploEvaluacion
+): Array<{ titulo: string; criterios: string[] }> {
+  if (ejemplo.criterios_evaluacion && Object.keys(ejemplo.criterios_evaluacion).length > 0) {
+    return Object.entries(ejemplo.criterios_evaluacion)
+      .filter(([, criterios]) => Array.isArray(criterios) && criterios.length > 0)
+      .map(([key, criterios]) => ({
+        titulo: humanizeCriteriaKey(key),
+        criterios,
+      }))
+  }
+
+  const sections: Array<{ titulo: string; criterios: string[] }> = []
+  if (Array.isArray(ejemplo.criterios_proceso) && ejemplo.criterios_proceso.length > 0) {
+    sections.push({ titulo: "Criterios de proceso", criterios: ejemplo.criterios_proceso })
+  }
+  if (Array.isArray(ejemplo.criterios_presentacion) && ejemplo.criterios_presentacion.length > 0) {
+    sections.push({ titulo: "Criterios de presentación", criterios: ejemplo.criterios_presentacion })
+  }
+  return sections
 }
 
 // ─── ID del documento en Firestore ───────────────────────────────────────────
@@ -68,6 +109,70 @@ export function buildDocId(asignatura: string, nivel: string): string {
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_]/g, "")
+}
+
+const DOC_LEVEL_SUFFIXES = [
+  "Párvulos",
+  "1ro Básico",
+  "2do Básico",
+  "3ro Básico",
+  "4to Básico",
+  "5to Básico",
+  "6to Básico",
+  "7mo Básico",
+  "8vo Básico",
+  "1ro Medio",
+  "2do Medio",
+  "3ro Medio",
+  "4to Medio",
+  "NT1-2",
+].map((nivel) => normalizeKeyPart(nivel))
+
+function fallbackLabelFromDocId(docId: string): string | null {
+  for (const suffix of DOC_LEVEL_SUFFIXES) {
+    const levelSuffix = `_${suffix}`
+    if (!docId.endsWith(levelSuffix)) continue
+    const rawSubject = docId.slice(0, -levelSuffix.length)
+    const known = SUBJECT_FALLBACK_OPTIONS.find((subject) => normalizeKeyPart(subject) === rawSubject)
+    if (known) return known
+    return rawSubject
+      .split("_")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ")
+  }
+  return null
+}
+
+export async function getAsignaturasDisponibles(): Promise<string[]> {
+  const snap = await getDocs(collection(db, "curriculo"))
+  const map = new Map<string, string>()
+
+  snap.docs.forEach((docSnap) => {
+    const data = docSnap.data() as { asignatura?: string }
+    const label = data.asignatura || fallbackLabelFromDocId(docSnap.id)
+    if (label) {
+      map.set(normalizeKeyPart(label), label)
+    }
+  })
+
+  SUBJECT_FALLBACK_OPTIONS.forEach((label) => {
+    if (!map.has(normalizeKeyPart(label))) {
+      map.set(normalizeKeyPart(label), label)
+    }
+  })
+
+  const priority = SUBJECT_FALLBACK_OPTIONS.map((label) => normalizeKeyPart(label))
+  return Array.from(map.entries())
+    .sort((a, b) => {
+      const aIndex = priority.indexOf(a[0])
+      const bIndex = priority.indexOf(b[0])
+      if (aIndex !== -1 || bIndex !== -1) {
+        return (aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex) - (bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex)
+      }
+      return a[1].localeCompare(b[1], "es")
+    })
+    .map(([, label]) => label)
 }
 
 // ─── Leer todas las unidades de una asignatura/nivel ─────────────────────────
@@ -612,21 +717,27 @@ export interface ActividadClase {
   updatedAt?: any
 }
 
-export function buildActividadClaseId(curso: string, unidadId: string, numeroClase: number): string {
-  return buildDocId("Música", curso) + "_" + unidadId + "_clase" + numeroClase
+export function buildActividadClaseId(
+  curso: string,
+  unidadId: string,
+  numeroClase: number,
+  asignatura = DEFAULT_ASIGNATURA
+): string {
+  return buildDocId(asignatura, curso) + "_" + unidadId + "_clase" + numeroClase
 }
 
 export async function guardarActividadClase(data: Omit<ActividadClase, "updatedAt">): Promise<void> {
-  const id = buildActividadClaseId(data.curso, data.unidadId, data.numeroClase)
+  const id = buildActividadClaseId(data.curso, data.unidadId, data.numeroClase, data.asignatura)
   await setDoc(userDoc("actividades_clase", id), { ...data, updatedAt: serverTimestamp() })
 }
 
 export async function cargarActividadClase(
   curso: string,
   unidadId: string,
-  numeroClase: number
+  numeroClase: number,
+  asignatura = DEFAULT_ASIGNATURA
 ): Promise<ActividadClase | null> {
-  const id = buildActividadClaseId(curso, unidadId, numeroClase)
+  const id = buildActividadClaseId(curso, unidadId, numeroClase, asignatura)
   const snap = await getDoc(userDoc("actividades_clase", id))
   if (!snap.exists()) return null
   return snap.data() as ActividadClase
@@ -635,12 +746,13 @@ export async function cargarActividadClase(
 export async function cargarTodasActividadesUnidad(
   curso: string,
   unidadId: string,
-  totalClases: number
+  totalClases: number,
+  asignatura = DEFAULT_ASIGNATURA
 ): Promise<Record<number, ActividadClase>> {
   const result: Record<number, ActividadClase> = {}
   await Promise.all(
     Array.from({ length: totalClases }, (_, i) => i + 1).map(async n => {
-      const act = await cargarActividadClase(curso, unidadId, n)
+      const act = await cargarActividadClase(curso, unidadId, n, asignatura)
       if (act) result[n] = act
     })
   )
@@ -663,9 +775,10 @@ export async function cargarBancoActividades(asignatura: string): Promise<Activi
 export async function guardarAnotacion(
   curso: string,
   fecha: string,
-  texto: string
+  texto: string,
+  asignatura = DEFAULT_ASIGNATURA
 ): Promise<void> {
-  const id = buildDocId("Música", curso) + "_anot_" + fecha.replace(/\//g, "-")
+  const id = buildDocId(asignatura, curso) + "_anot_" + fecha.replace(/\//g, "-")
   await setDoc(userDoc("anotaciones", id), {
     curso, fecha, texto, updatedAt: serverTimestamp()
   })
@@ -673,9 +786,10 @@ export async function guardarAnotacion(
 
 export async function cargarAnotacion(
   curso: string,
-  fecha: string
+  fecha: string,
+  asignatura = DEFAULT_ASIGNATURA
 ): Promise<string> {
-  const id = buildDocId("Música", curso) + "_anot_" + fecha.replace(/\//g, "-")
+  const id = buildDocId(asignatura, curso) + "_anot_" + fecha.replace(/\//g, "-")
   const snap = await getDoc(userDoc("anotaciones", id))
   if (!snap.exists()) return ""
   return (snap.data().texto as string) || ""
@@ -684,9 +798,9 @@ export async function cargarAnotacion(
 // ─── Helpers de procesamiento de datos curriculares ───────────────────────────
 
 // Re-export constants for easy parsing in UI
-const DEFAULT_SUBJECT = "Música"
+const DEFAULT_SUBJECT = DEFAULT_ASIGNATURA
 
-export function initOAs(unidad: Unidad): OAEditado[] {
+export function initOAs(unidad: Unidad, asignatura = DEFAULT_SUBJECT): OAEditado[] {
   return (unidad.objetivos_aprendizaje || []).map(oa => ({
     id: buildOfficialOAId(oa.numero),
     numero: oa.numero,
@@ -699,7 +813,7 @@ export function initOAs(unidad: Unidad): OAEditado[] {
       esPropio: false,
     })),
     esPropio: false,
-    tags: [DEFAULT_SUBJECT],
+    tags: [asignatura],
   }))
 }
 
@@ -743,4 +857,86 @@ export function applyPlanSelection<T extends { id: string; seleccionado: boolean
     const key = buildMatrixCellKey(item.id, unitIndex)
     return key in matrix ? { ...item, seleccionado: !!matrix[key] } : item
   })
+}
+
+// ─── Observaciones 360 ─────────────────────────────────────────────────────
+
+export interface Observacion360 {
+  id: string
+  texto: string
+  fecha: string
+  tipo: "academica" | "conductual" | "pie" | "general"
+}
+
+export interface Observaciones360Doc {
+  asignatura: string
+  curso: string
+  estudianteId: string
+  observaciones: Observacion360[]
+  updatedAt?: any
+}
+
+function buildObs360Id(asignatura: string, curso: string, estudianteId: string): string {
+  return `obs_${buildDocId(asignatura, curso)}_${estudianteId}`
+}
+
+export async function cargarObservaciones360(
+  asignatura: string, curso: string, estudianteId: string
+): Promise<Observacion360[]> {
+  const id = buildObs360Id(asignatura, curso, estudianteId)
+  const snap = await getDoc(userDoc("observaciones_360", id))
+  if (!snap.exists()) return []
+  return (snap.data() as Observaciones360Doc).observaciones || []
+}
+
+export async function guardarObservaciones360(
+  asignatura: string, curso: string, estudianteId: string, observaciones: Observacion360[]
+): Promise<void> {
+  const id = buildObs360Id(asignatura, curso, estudianteId)
+  await setDoc(userDoc("observaciones_360", id), {
+    asignatura, curso, estudianteId, observaciones,
+    updatedAt: serverTimestamp(),
+  })
+}
+
+// ---------------------------------------------------------------------------
+// Plantillas de actividades de clase
+// Reutilizan la colección `actividades_clase` con flag esPlantilla: true
+// NOTA: Requiere índice compuesto en Firestore: (asignatura, esPlantilla, creadaEn DESC)
+// Firebase mostrará en consola un enlace directo para crearlo si falta.
+// ---------------------------------------------------------------------------
+
+export interface PlantillaActividad extends ActividadClase {
+  esPlantilla: true
+  nombrePlantilla: string
+}
+
+export async function guardarComoPlantilla(
+  actividad: ActividadClase,
+  nombrePlantilla: string
+): Promise<void> {
+  const id = "plantilla_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7)
+  await setDoc(userDoc("actividades_clase", id), {
+    ...actividad,
+    id,
+    esPlantilla: true,
+    nombrePlantilla: nombrePlantilla.trim(),
+    creadaEn: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  })
+}
+
+export async function cargarPlantillas(asignatura: string): Promise<PlantillaActividad[]> {
+  const q = query(
+    userCol("actividades_clase"),
+    where("asignatura", "==", asignatura),
+    where("esPlantilla", "==", true),
+    orderBy("creadaEn", "desc")
+  )
+  const snap = await getDocs(q)
+  return snap.docs.map(d => d.data() as PlantillaActividad)
+}
+
+export async function eliminarPlantilla(plantillaId: string): Promise<void> {
+  await deleteDoc(userDoc("actividades_clase", plantillaId))
 }

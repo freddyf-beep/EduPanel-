@@ -8,12 +8,7 @@ import {
 } from "firebase/firestore"
 import { Loader2, CheckCircle, AlertTriangle, Database, Trash2 } from "lucide-react"
 
-// Niveles para generar data genérica
-const NIVELES = [
-  "1ro Básico", "2do Básico", "3ro Básico", 
-  "4to Básico", 
-  "5to Básico", "6to Básico", "7mo Básico", "8vo Básico"
-]
+
 
 export default function MigratePage() {
   const { user, loading: authLoading } = useAuth()
@@ -36,7 +31,7 @@ export default function MigratePage() {
       log("🧹 Limpiando colección 'curriculo'...")
       const curSnap = await getDocs(collection(db, "curriculo"))
       for (const d of curSnap.docs) {
-        if (d.id.startsWith("musica_")) {
+        if (d.id.startsWith("musica_") || d.id.startsWith("lenguaje_")) {
           // Limpiar subcolecciones (unidades -> objetivos...)
           const unitsSnap = await getDocs(collection(db, "curriculo", d.id, "unidades"))
           for (const u of unitsSnap.docs) {
@@ -78,43 +73,71 @@ export default function MigratePage() {
       log("✅ Planificaciones y datos curriculares del usuario limpiados.")
 
       // 2. Cargar datos reales desde JSON
-      const nivelesReales = [
-        { id: "1ro_basico", name: "1ro Básico" },
-        { id: "3ro_basico", name: "3ro Básico" },
-        { id: "4to_basico", name: "4to Básico" }
+      const filesToLoad = [
+        // Música (Ya existentes)
+        { name: "Música 1ro Básico (Ud 1-2)", path: "/musica_1ro_basico_unidades_1_2.json", docId: "musica_1ro_basico" },
+        { name: "Música 1ro Básico (Ud 3-4)", path: "/musica_1ro_basico_unidades_3_4.json", docId: "musica_1ro_basico" },
+        { name: "Música 3ro Básico (Ud 1-2)", path: "/musica_3ro_basico_unidades_1_2.json", docId: "musica_3ro_basico" },
+        { name: "Música 3ro Básico (Ud 3-4)", path: "/musica_3ro_basico_unidades_3_4.json", docId: "musica_3ro_basico" },
+        { name: "Música 4to Básico (Ud 1-2)", path: "/musica_4to_basico_unidades_1_2.json", docId: "musica_4to_basico" },
+        { name: "Música 4to Básico (Ud 3-4)", path: "/musica_4to_basico_unidades_3_4.json", docId: "musica_4to_basico" },
+        // Música (Nuevos)
+        { name: "Música 2do Básico", path: "/curriculum/musica_2do_literal_corregido.json", docId: "musica_2do_basico" },
+        { name: "Música 5to Básico", path: "/curriculum/musica_5to.json", docId: "musica_5to_basico" },
+        { name: "Música 6to Básico", path: "/curriculum/musica_6to.json", docId: "musica_6to_basico" },
+        { name: "Música 7mo Básico", path: "/curriculum/musica_7mo.json", docId: "musica_7mo_basico" },
+        { name: "Música 8vo Básico", path: "/curriculum/musica_8vo.json", docId: "musica_8vo_basico" },
+        { name: "Música 1ro Medio", path: "/curriculum/musica_1medio.json", docId: "musica_1ro_medio" },
+        { name: "Música 2do Medio", path: "/curriculum/musica_2medio.json", docId: "musica_2do_medio" },
+        // Lenguaje (Nuevos)
+        { name: "Lenguaje 1ro Básico", path: "/curriculum/lenguaje_1ro.json", docId: "lenguaje_1ro_basico" },
+        { name: "Lenguaje 2do Básico", path: "/curriculum/lenguaje_2do.json", docId: "lenguaje_2do_basico" },
+        { name: "Lenguaje 3ro Básico", path: "/curriculum/lenguaje_3ro.json", docId: "lenguaje_3ro_basico" },
+        { name: "Lenguaje 4to Básico", path: "/curriculum/lenguaje_4to_literal_corregido.json", docId: "lenguaje_4to_basico" },
+        { name: "Lenguaje 5to Básico", path: "/curriculum/lenguaje_5to.json", docId: "lenguaje_5to_basico" },
+        { name: "Lenguaje 6to Básico", path: "/curriculum/lenguaje_6to.json", docId: "lenguaje_6to_basico" },
+        { name: "Lenguaje 7mo Básico", path: "/curriculum/lenguaje_7mo.json", docId: "lenguaje_7mo_basico" },
+        { name: "Lenguaje 8vo Básico", path: "/curriculum/lenguaje_8vo.json", docId: "lenguaje_8vo_basico" }
       ]
 
-      for (const nivelData of nivelesReales) {
-        log(`📂 Cargando ${nivelData.name} de referencia...`)
+      for (const fileDef of filesToLoad) {
+        log(`📂 Cargando ${fileDef.name}...`)
         try {
           const cb = Date.now()
-          const [res1, res2] = await Promise.all([
-            fetch(`/musica_${nivelData.id}_unidades_1_2.json?v=${cb}`),
-            fetch(`/musica_${nivelData.id}_unidades_3_4.json?v=${cb}`)
-          ])
+          const res = await fetch(`${fileDef.path}?v=${cb}`)
           
-          if (!res1.ok || !res2.ok) {
-            log(`⚠️ No se encontraron los JSON de ${nivelData.name}, se saltará.`)
+          if (!res.ok) {
+            log(`⚠️ No se encontró el archivo ${fileDef.name}, se saltará.`)
             continue
           }
           
-          const data1_2 = await res1.json()
-          const data3_4 = await res2.json()
-          const arrData = [...data1_2, ...data3_4]
+          const fileData = await res.json()
+          
+          // Normalizador inteligente para los 3 formatos de JSON encontrados
+          let arrData = []
+          if (Array.isArray(fileData)) {
+            arrData = fileData // Format 1: Arreglo de objetos (Lenguaje)
+          } else if (fileData.unidad && Array.isArray(fileData.unidad)) {
+            arrData = fileData.unidad.map((u: any) => ({ unidad: u })) // Format 2: Objeto con propiedad "unidad" (array) (Música 2do)
+          } else if (fileData.unidades && Array.isArray(fileData.unidades)) {
+            arrData = fileData.unidades.map((u: any) => ({ unidad: u })) // Format 3: Objeto con propiedad "unidades" (array) (Música 5to)
+          } else if (fileData.unidad && !Array.isArray(fileData.unidad)) {
+            arrData = [{ unidad: fileData.unidad }] // Single fallback
+          }
 
-          const docId = `musica_${nivelData.id}`
+          const docId = fileDef.docId
           await setDoc(doc(db, "curriculo", docId), { ready: true })
 
           for (const item of arrData) {
             const u = item.unidad
-            if (!u) continue
+            if (!u || !u.numero_unidad) continue
             const uId = `unidad_${u.numero_unidad}`
             
-            log(`✍️ Guardando Unidad ${u.numero_unidad} - ${nivelData.name}...`)
+            log(`✍️ Guardando Unidad ${u.numero_unidad} - ${fileDef.name}...`)
             
             await setDoc(doc(db, "curriculo", docId, "unidades", uId), {
               numero_unidad: u.numero_unidad,
-              nombre_unidad: u.nombre_unidad,
+              nombre_unidad: u.nombre_unidad || `Unidad ${u.numero_unidad}`,
               proposito: u.proposito || "",
               conocimientos_previos: u.conocimientos_previos || [],
               palabras_clave: u.palabras_clave || [],
@@ -126,7 +149,7 @@ export default function MigratePage() {
 
             if (u.objetivos_aprendizaje) {
               for (const oa of u.objetivos_aprendizaje) {
-                await setDoc(doc(db, "curriculo", docId, "unidades", uId, "objetivos_aprendizaje", `oa_${oa.numero}`), oa)
+                if (oa.numero) await setDoc(doc(db, "curriculo", docId, "unidades", uId, "objetivos_aprendizaje", `oa_${oa.numero}`), oa)
               }
             }
             
@@ -138,53 +161,163 @@ export default function MigratePage() {
               }
             }
             
-            if (u.ejemplos_evaluacion) {
+            // Mapea tanto ejemplos_evaluacion antiguos como evaluaciones nuevas
+            const evaluacionesArray = u.ejemplos_evaluacion || u.evaluaciones || []
+            if (evaluacionesArray.length > 0) {
               let evIndex = 1
-              for (const ev of u.ejemplos_evaluacion) {
+              for (const ev of evaluacionesArray) {
                 await setDoc(doc(db, "curriculo", docId, "unidades", uId, "ejemplos_evaluacion", `ev_${evIndex}`), ev)
                 evIndex++
               }
             }
           }
-          log(`✅ ${nivelData.name} cargado correctamente con datos reales.`)
+          log(`✅ ${fileDef.name} cargado correctamente.`)
         } catch (e: any) {
-          log(`🛑 ERROR CRÍTICO en ${nivelData.name}: ${e.message}`)
-        }
-      }
-
-      // 3. Generar Genéricos
-      log("🧪 Generando datos genéricos para otros niveles...")
-      for (const nivel of NIVELES) {
-        const idGenerico = nivel.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_")
-        if (["1ro_basico", "3ro_basico", "4to_basico"].includes(idGenerico)) continue
-        
-        const docId = ("musica_" + nivel)
-          .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-          .replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "")
-
-        // Asegurar que el documento padre existe
-        await setDoc(doc(db, "curriculo", docId), { ready: true })
-
-        for (let i = 1; i <= 4; i++) {
-          const uId = `unidad_${i}`
-          await setDoc(doc(db, "curriculo", docId, "unidades", uId), {
-            numero_unidad: i,
-            nombre_unidad: `Unidad ${i} de ${nivel}`,
-            proposito: `Este año se verá este contenido en la unidad ${i} del curso ${nivel}`,
-            conocimientos_previos: [], palabras_clave: [], conocimientos: [], habilidades: [], actitudes: [], adecuaciones_dua: ""
-          })
-
-          for (let j = 1; j <= 2; j++) {
-            await setDoc(doc(db, "curriculo", docId, "unidades", uId, "objetivos_aprendizaje", `oa_${j}`), {
-              tipo: "OA", numero: j,
-              descripcion: `OA${j}: Este es el objetivo ${j} del curso ${nivel}`,
-              indicadores: [`Indicador genérico ${j}.1`, `Indicador genérico ${j}.2`]
-            })
-          }
+          log(`🛑 ERROR CRÍTICO en ${fileDef.name}: ${e.message}`)
         }
       }
 
       log("🎊 Proceso completado exitosamente.")
+      setDone(true)
+    } catch (e: any) {
+      log(`❌ Error: ${e.message}`)
+      console.error(e)
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  const handleAddNuevasAsignaturas = async () => {
+    if (!user) return
+    if (!confirm("¿Añadir Educación Física y Parvularia? Esto NO borrará nada de tu currículo actual, solo sumará.")) return
+
+    setRunning(true)
+    setProgress([])
+    log("🚀 Iniciando anexo de nuevas asignaturas...")
+
+    try {
+      const filesToLoad = [
+        { name: "Ed. Física 1ro Básico", path: "/curriculum/educacion_fisica_1ro_literal_corregido.json", docId: "educacion_fisica_1ro_basico" },
+        { name: "Ed. Física 2do Básico", path: "/curriculum/educacion_fisica_2do_literal_corregido.json", docId: "educacion_fisica_2do_basico" },
+        { name: "Ed. Física 3ro Básico", path: "/curriculum/educacion_fisica_3ro_literal_corregido.json", docId: "educacion_fisica_3ro_basico" },
+        { name: "Ed. Física 4to Básico", path: "/curriculum/educacion_fisica_4to_literal_corregido.json", docId: "educacion_fisica_4to_basico" },
+        { name: "Ed. Física 5to Básico", path: "/curriculum/educacion_fisica_5to_literal_corregido.json", docId: "educacion_fisica_5to_basico" },
+        { name: "Ed. Física 6to Básico", path: "/curriculum/educacion_fisica_6to_literal_corregido.json", docId: "educacion_fisica_6to_basico" },
+        { name: "Ed. Física 7mo Básico", path: "/curriculum/educacion_fisica_7mo_literal_corregido.json", docId: "educacion_fisica_7mo_basico" },
+        { name: "Ed. Física 8vo Básico", path: "/curriculum/educacion_fisica_8vo_literal_corregido.json", docId: "educacion_fisica_8vo_basico" },
+        { name: "Parvularia Corporalidad", path: "/curriculum/parvularia_corporalidad_movimiento_niveles.json", docId: "corporalidad_y_movimiento_parvulos", isParvularia: true }
+      ]
+
+      for (const fileDef of filesToLoad) {
+        log(`📂 Cargando ${fileDef.name}...`)
+        try {
+          const cb = Date.now()
+          const res = await fetch(`${fileDef.path}?v=${cb}`)
+          
+          if (!res.ok) {
+            log(`⚠️ No se encontró el archivo ${fileDef.name}, se saltará.`)
+            continue
+          }
+          
+          const fileData = await res.json()
+          const docId = fileDef.docId
+          await setDoc(doc(db, "curriculo", docId), { ready: true })
+
+          if (fileDef.isParvularia) {
+            // Lógica Especial Parvularia: Niveles son Unidades
+            const niveles = fileData.niveles || []
+            let numUnidad = 1
+            for (const n of niveles) {
+              const uId = `unidad_${numUnidad}`
+              log(`✍️ Guardando Nivel Parvularia como Unidad ${numUnidad}...`)
+              
+              await setDoc(doc(db, "curriculo", docId, "unidades", uId), {
+                numero_unidad: numUnidad,
+                nombre_unidad: n.nombre_nivel, // Ej: "Primer Nivel (Sala Cuna)"
+                proposito: fileData.introduccion || "",
+                conocimientos_previos: [],
+                palabras_clave: [],
+                conocimientos: [],
+                habilidades: [],
+                actitudes: [],
+                adecuaciones_dua: ""
+              })
+
+              if (n.objetivos_aprendizaje_transversales) {
+                for (const oa of n.objetivos_aprendizaje_transversales) {
+                  // Agregamos "tipo": "OAT" para distinguirlo
+                  const oaPayload = {
+                    tipo: "OAT",
+                    numero: oa.numero,
+                    descripcion: oa.descripcion,
+                    indicadores: oa.indicadores || []
+                  }
+                  if (oa.numero) await setDoc(doc(db, "curriculo", docId, "unidades", uId, "objetivos_aprendizaje", `oa_${oa.numero}`), oaPayload)
+                }
+              }
+              numUnidad++
+            }
+          } else {
+            // Lógica Normal (Format 1, 2, 3)
+            let arrData = []
+            if (Array.isArray(fileData)) {
+              arrData = fileData // Format 1
+            } else if (fileData.unidad && Array.isArray(fileData.unidad)) {
+              arrData = fileData.unidad.map((u: any) => ({ unidad: u })) // Format 2
+            } else if (fileData.unidades && Array.isArray(fileData.unidades)) {
+              arrData = fileData.unidades.map((u: any) => ({ unidad: u })) // Format 3
+            } else if (fileData.unidad && !Array.isArray(fileData.unidad)) {
+              arrData = [{ unidad: fileData.unidad }]
+            }
+
+            for (const item of arrData) {
+              const u = item.unidad
+              if (!u || !u.numero_unidad) continue
+              const uId = `unidad_${u.numero_unidad}`
+              log(`✍️ Guardando Unidad ${u.numero_unidad} - ${fileDef.name}...`)
+              await setDoc(doc(db, "curriculo", docId, "unidades", uId), {
+                numero_unidad: u.numero_unidad,
+                nombre_unidad: u.nombre_unidad || `Unidad ${u.numero_unidad}`,
+                proposito: u.proposito || "",
+                conocimientos_previos: u.conocimientos_previos || [],
+                palabras_clave: u.palabras_clave || [],
+                conocimientos: u.conocimientos || [],
+                habilidades: u.habilidades || [],
+                actitudes: u.actitudes || [],
+                adecuaciones_dua: u.adecuaciones_dua?.estrategias_neurodiversidad || ""
+              })
+
+              if (u.objetivos_aprendizaje) {
+                for (const oa of u.objetivos_aprendizaje) {
+                  if (oa.numero) await setDoc(doc(db, "curriculo", docId, "unidades", uId, "objetivos_aprendizaje", `oa_${oa.numero}`), oa)
+                }
+              }
+
+              if (u.actividades_sugeridas) {
+                let actIndex = 1
+                for (const act of u.actividades_sugeridas) {
+                  await setDoc(doc(db, "curriculo", docId, "unidades", uId, "actividades_sugeridas", `act_${actIndex}`), act)
+                  actIndex++
+                }
+              }
+
+              const evaluacionesArray = u.ejemplos_evaluacion || u.evaluaciones || []
+              if (evaluacionesArray.length > 0) {
+                let evIndex = 1
+                for (const ev of evaluacionesArray) {
+                  await setDoc(doc(db, "curriculo", docId, "unidades", uId, "ejemplos_evaluacion", `ev_${evIndex}`), ev)
+                  evIndex++
+                }
+              }
+            }
+          }
+          log(`✅ ${fileDef.name} cargado correctamente.`)
+        } catch (e: any) {
+          log(`🛑 ERROR CRÍTICO en ${fileDef.name}: ${e.message}`)
+        }
+      }
+
+      log("🎊 Proceso de Anexo completado exitosamente sin borrar data.")
       setDone(true)
     } catch (e: any) {
       log(`❌ Error: ${e.message}`)
@@ -213,15 +346,15 @@ export default function MigratePage() {
                 <AlertTriangle className="w-5 h-5 text-yellow-600 mr-3 flex-shrink-0" />
                 <div className="text-sm text-yellow-800">
                   <p className="font-bold mb-1">ATENCIÓN: PROCESO CRÍTICO</p>
-                  <p>Esto borrará la data general de Música del sistema para reordenarla por tema y nivel correctamente.</p>
+                  <p>Esto borrará la data general de Música y Lenguaje del sistema para recargar todos los archivos JSON.</p>
                 </div>
               </div>
             </div>
             
             <ul className="text-sm space-y-3 mb-8 px-8 text-muted-foreground list-disc marker:text-border">
-              <li>Borra `curriculo/` (música).</li>
-              <li>Carga datos reales para **1ro, 3ro y 4to Básico**.</li>
-              <li>Crea datos genéricos para los **niveles restantes**.</li>
+              <li>Borra `curriculo/` general de Música y Lenguaje.</li>
+              <li>Inserta dinámicamente Lenguaje (1ro B. a 8vo B.).</li>
+              <li>Inserta dinámicamente Música (1ro B. a 2do M.).</li>
               <li className="text-green-600 font-semibold marker:text-green-500">Tus datos privados (perfil, horario, asistencia) están protegidos.</li>
             </ul>
         </div>
@@ -242,15 +375,26 @@ export default function MigratePage() {
             </a>
           </div>
         ) : (
-          <button 
-            id="btn-migrate"
-            onClick={handleResetAndInitCurriculum}
-            disabled={running}
-            className="w-full py-4 bg-primary hover:bg-pink-600 text-white font-bold rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 shadow-lg"
-          >
-            {running ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
-            {running ? "Procesando..." : "Reiniciar Currículo General"}
-          </button>
+          <div className="space-y-4 w-full">
+            <button 
+              id="btn-migrate"
+              onClick={handleResetAndInitCurriculum}
+              disabled={running}
+              className="w-full py-4 bg-primary hover:bg-pink-600 text-white font-bold rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 shadow-lg"
+            >
+              {running ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
+              {running ? "Procesando Limpieza..." : "Limpiar y Reiniciar Currículo General"}
+            </button>
+
+            <button 
+              onClick={handleAddNuevasAsignaturas}
+              disabled={running}
+              className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 shadow-lg"
+            >
+              {running ? <Loader2 className="w-5 h-5 animate-spin" /> : <Database className="w-5 h-5" />}
+              {running ? "Añadiendo Datos..." : "Añadir Edu. Física y Parvularia (Sin Borrar Nada)"}
+            </button>
+          </div>
         )}
       </div>
     </div>

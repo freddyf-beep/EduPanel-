@@ -4,10 +4,12 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Layers, Loader2 } from "lucide-react"
 import { cargarPlanCurso } from "@/lib/curriculo"
-import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 export function PlanificacionesHub() {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const [cursosData, setCursosData] = useState<Record<string, { total: number; completas: number }>>({})
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -38,20 +40,20 @@ export function PlanificacionesHub() {
       }
     }
     loadCursos()
-  }, [])
+  }, [ASIGNATURA])
 
   return (
-    <div className="max-w-[1320px] mx-auto pt-8 px-10">
+    <div className="mx-auto max-w-[1320px] px-0 pt-2 sm:pt-4 lg:pt-8">
       <div className="flex items-center justify-between mb-7 flex-wrap gap-3.5">
         <h1 className="text-[22px] font-extrabold">Mis planificaciones</h1>
       </div>
       
-      <div className="bg-card border border-border rounded-[14px] p-8 mb-8 text-center flex flex-col items-center">
+      <div className="mb-8 flex flex-col items-center rounded-[14px] border border-border bg-card p-5 text-center sm:p-8">
         <div className="w-16 h-16 bg-pink-light rounded-full flex items-center justify-center mb-4">
           <Layers className="w-8 h-8 text-primary" />
         </div>
         <h2 className="text-lg font-bold mb-2">Conector de Unidades y Matriz Curricular</h2>
-        <p className="text-[14px] text-muted-foreground max-w-xl mx-auto">
+        <p className="mx-auto max-w-xl text-[14px] text-muted-foreground">
           Selecciona un curso para crear sus unidades, asociarlas al currículo oficial y luego distribuirlas en la matriz anual.
         </p>
       </div>
@@ -66,14 +68,14 @@ export function PlanificacionesHub() {
           Configura tu horario en Mi Perfil para ver tus cursos aquí.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 pb-12">
+        <div className="grid grid-cols-1 gap-4 pb-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {cursosDisponibles.map((curso, i) => {
             const info = cursosData[curso] || { total: 0, completas: 0 }
             const coverPct = info.total > 0 ? Math.round((info.completas / info.total) * 100) : 0
             return (
               <Link 
                 key={curso}
-                href={buildUrl("/planificaciones", { curso })} 
+                href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))} 
                 className="bg-card border border-border rounded-[14px] p-5 hover:border-primary hover:shadow-md transition-all group block cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-4">

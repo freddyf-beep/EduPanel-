@@ -9,8 +9,9 @@ import {
 import { cn } from "@/lib/utils"
 import { getUnidadCompleta, guardarPlanificacion, cargarPlanificacion, cargarPlanCurso } from "@/lib/curriculo"
 import type { Unidad, UnidadPlan } from "@/lib/curriculo"
-import { ASIGNATURA, UNIT_COLORS, buildUrl, unidadIdFromIndex } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, unidadIdFromIndex } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 interface MatrizItem {
   id: string
@@ -90,6 +91,7 @@ function CheckCell({ checked, onChange }: { checked: boolean; onChange: () => vo
 }
 
 export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const [activeTab, setActiveTab] = useState<TabKey>("oa")
   const [showDateModal, setShowDateModal] = useState(false)
   const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null)
@@ -175,7 +177,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
       }
     }
     cargar()
-  }, [cursoParam])
+  }, [cursoParam, ASIGNATURA])
 
   const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
@@ -253,10 +255,10 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
     : 0
 
   return (
-    <div className="max-w-[1320px] mx-auto pt-2">
-      <div className="flex items-center justify-between mb-7 flex-wrap gap-3.5">
+    <div className="mx-auto max-w-[1320px] pt-2">
+      <div className="mb-7 flex flex-wrap items-start justify-between gap-3.5">
         <h1 className="text-[22px] font-extrabold">Matriz Curricular – {cursoParam}</h1>
-        <div className="flex gap-2.5 flex-wrap items-center">
+        <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto sm:justify-end">
           <button className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
             <Download className="w-[15px] h-[15px] text-muted-foreground" /> Descargar
           </button>
@@ -273,7 +275,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
           <button
             onClick={() => handleGuardar(false)}
             disabled={saving || planUnits.length === 0 || saveStatus === "saving_silent"}
-            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-[#d6335e] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> Guardando…</> : <><Bookmark className="w-[15px] h-[15px]" /> Guardar matriz</>}
           </button>
@@ -297,7 +299,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
         </div>
       ) : (
         <>
-          <div className="bg-card border border-border rounded-[14px] px-5 py-4 mb-7">
+          <div className="mb-7 rounded-[14px] border border-border bg-card px-4 py-4 sm:px-5">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[13px] font-bold">Cobertura curricular planificada</span>
               <span className="text-[13px] font-bold text-primary">{completadasPct}%</span>
@@ -312,10 +314,10 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
 
           <h2 className="text-[17px] font-extrabold mb-5">Distribuye los elementos curriculares por unidad</h2>
 
-          <div className="flex border-b-2 border-border mb-6">
+          <div className="mb-6 flex overflow-x-auto border-b-2 border-border scrollbar-none">
             {TABS.map(t => (
               <button key={t.key} onClick={() => setActiveTab(t.key)}
-                className={cn("text-[13px] font-semibold px-5 py-2.5 border-b-2 -mb-[2px] transition-colors bg-none cursor-pointer",
+                className={cn("whitespace-nowrap text-[13px] font-semibold px-5 py-2.5 border-b-2 -mb-[2px] transition-colors bg-none cursor-pointer",
                   activeTab === t.key ? "text-primary border-primary" : "text-muted-foreground border-transparent hover:text-foreground"
                 )}>
                 {t.label}
@@ -324,13 +326,14 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
           </div>
 
           <div className="flex items-center gap-3 mb-5">
-            <button className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-full px-[18px] py-2.5 text-[13px] font-bold hover:bg-[#d6335e] transition-colors cursor-pointer">
+            <button className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-full px-[18px] py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors cursor-pointer">
               <Plus className="w-[15px] h-[15px]" /> {BTN_LABELS[activeTab]}
             </button>
           </div>
 
-          <div className="bg-card border border-border rounded-[14px] overflow-hidden mb-12 shadow-sm">
-            <table className="w-full border-collapse">
+          <div className="mb-12 overflow-hidden rounded-[14px] border border-border bg-card shadow-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[760px] border-collapse">
               <thead>
                 <tr className="bg-background">
                   <th className="px-4 py-3 text-xs font-bold text-muted-foreground text-left border-b border-border min-w-[320px]">
@@ -350,7 +353,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
                 {getRows().length === 0 ? (
                   <tr><td colSpan={planUnits.length + 1} className="px-4 py-8 text-center text-[13px] text-muted-foreground">Sin datos curriculares para esta pestaña.</td></tr>
                 ) : getRows().map(row => (
-                  <tr key={row.id} className="hover:bg-[#fafbff] transition-colors">
+                  <tr key={row.id} className="hover:bg-muted/30 transition-colors">
                     {row.left}
                     {planUnits.map((_, i) => (
                       <CheckCell
@@ -363,6 +366,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </>
       )}

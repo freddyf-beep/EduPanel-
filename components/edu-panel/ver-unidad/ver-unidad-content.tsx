@@ -18,10 +18,12 @@ import type {
   Unidad, OAEditado, IndicadorEditado,
   ElementoCurricular, ActividadDocente
 } from "@/lib/curriculo"
-import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
 import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
+import { useIsMobile } from "@/components/ui/use-mobile"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -84,9 +86,9 @@ function ModalOA({ oas, cursoParam, onClose, onChange }: {
           <button onClick={onClose} className="w-7 h-7 rounded-full bg-background grid place-items-center text-muted-foreground hover:bg-border transition-colors"><X className="w-4 h-4" /></button>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
           {/* Columna OA */}
-          <div className="w-[54%] border-r border-border flex flex-col overflow-hidden">
+          <div className="flex w-full flex-col overflow-hidden border-b border-border md:w-[54%] md:border-b-0 md:border-r">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border flex-shrink-0">
               <span className="text-[13px] font-bold">{oas.length} Objetivos de Aprendizaje</span>
               <div className="flex gap-2">
@@ -99,7 +101,7 @@ function ModalOA({ oas, cursoParam, onClose, onChange }: {
                 <textarea value={nuevoOA} onChange={e => setNuevoOA(e.target.value)} placeholder="Nuevo objetivo…" rows={2} autoFocus
                   className="w-full border-[1.5px] border-primary rounded-[8px] px-3 py-2 text-[12px] outline-none resize-none mb-2" />
                 <div className="flex gap-2">
-                  <button onClick={addOA} className="bg-primary text-white text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-[#d6335e]">Crear OA</button>
+                  <button onClick={addOA} className="bg-primary text-white text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-pink-dark">Crear OA</button>
                   <button onClick={() => setShowNewOA(false)} className="text-[11px] text-muted-foreground px-3 py-1.5">Cancelar</button>
                 </div>
               </div>
@@ -297,6 +299,7 @@ function ModalElementos({ titulo, tipo, elementos, cursoParam, onClose, onChange
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 function VerUnidadInner() {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const searchParams = useSearchParams()
   const unidadParam  = searchParams.get("unidad") || "unidad_1"
   const unidadLocalParam = searchParams.get("unitIdLocal") || unidadParam
@@ -331,6 +334,7 @@ function VerUnidadInner() {
   const [pdfPos, setPdfPos]             = useState({ right: 32, bottom: 32 })
   const [isDraggingPdf, setIsDraggingPdf] = useState(false)
   const pdfDragRef = useRef<{ startX: number, startY: number, startRight: number, startBottom: number } | null>(null)
+  const isMobile = useIsMobile()
   
   const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     pdfDragRef.current = { startX: e.clientX, startY: e.clientY, startRight: pdfPos.right, startBottom: pdfPos.bottom }
@@ -376,7 +380,7 @@ function VerUnidadInner() {
         if (!u) { setError("Unidad no encontrada en las bases curriculares de " + nivel); return }
         setUnidad(u)
 
-        const baseOas = mergeOAs(initOAs(u), guardada?.oas || [])
+        const baseOas = mergeOAs(initOAs(u, ASIGNATURA), guardada?.oas || [])
         const baseHabilidades = mergeElementos(initElems(u.habilidades || [], "habilidades"), guardada?.habilidades || [])
         const baseConocimientos = mergeElementos(initElems(u.conocimientos || [], "conocimientos"), guardada?.conocimientos || [])
         const baseActitudes = mergeElementos(initElems(u.actitudes || [], "actitudes"), guardada?.actitudes || [])
@@ -399,7 +403,7 @@ function VerUnidadInner() {
       }
     }
     cargar()
-  }, [cursoParam, unidadParam, unitIndex])
+  }, [cursoParam, unidadParam, unitIndex, ASIGNATURA])
 
   const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
@@ -475,7 +479,7 @@ function VerUnidadInner() {
     <div className="flex flex-col items-center justify-center h-64 gap-4 text-center px-6">
       <AlertCircle className="w-8 h-8 text-amber-500" />
       <p className="text-[14px] text-muted-foreground max-w-md leading-relaxed">{error || "Unidad no encontrada"}</p>
-      <Link href={buildUrl("/planificaciones", { curso: cursoParam })}
+      <Link href={buildUrl("/planificaciones", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
         className="flex items-center gap-2 text-[13px] font-semibold text-primary hover:underline">
         <ArrowRight className="w-4 h-4" /> Ir a Planificaciones para configurar el nivel
       </Link>
@@ -491,16 +495,16 @@ function VerUnidadInner() {
   return (
     <div className={cn("mx-auto transition-all", activeTab === "actividades" ? "max-w-[1920px]" : "max-w-[1320px]")}>
       {/* Header — diseño original */}
-      <div className="flex items-center justify-between mb-7 flex-wrap gap-3.5">
+      <div className="mb-7 flex flex-wrap items-start justify-between gap-3.5">
         <div className="flex items-center gap-3">
-          <Link href={buildUrl("/planificaciones", { curso: cursoParam })}
+          <Link href={buildUrl("/planificaciones", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
             className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors print:hidden">
             <ChevronLeft className="w-4 h-4" />
           </Link>
           <div className="w-3 h-3 rounded-full flex-shrink-0 print:hidden" style={{ background: unitColor }} />
           <h1 className="text-[22px] font-extrabold">{unidad.nombre_unidad} — {cursoParam}</h1>
         </div>
-        <div className="flex gap-2.5 flex-wrap items-center print:hidden">
+        <div className="flex w-full flex-wrap items-center gap-2.5 print:hidden sm:w-auto sm:justify-end">
           <button onClick={() => setShowPdf(true)} className="flex items-center gap-[7px] border-[1.5px] border-primary text-primary rounded-[10px] px-4 py-2.5 text-[13px] font-bold bg-pink-light/30 hover:bg-pink-light/60 transition-colors">
             <FileText className="w-[15px] h-[15px]" /> Programa Oficial
           </button>
@@ -521,14 +525,14 @@ function VerUnidadInner() {
             </span>
           )}
           <button onClick={() => handleGuardar(false)} disabled={saving || saveStatus === "saving_silent"}
-            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-[#d6335e] transition-colors disabled:opacity-60">
+            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-60">
             {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> Guardando…</> : <><Bookmark className="w-[15px] h-[15px]" /> Guardar</>}
           </button>
         </div>
       </div>
 
       {/* Tabs estilo Lirmi */}
-      <div className="flex border-b-2 border-border mb-7 gap-0 print:hidden">
+      <div className="mb-7 flex gap-0 overflow-x-auto border-b-2 border-border print:hidden">
         {([
           { key: "unidad",      label: "Unidad" },
           { key: "cronograma",  label: "Cronograma" },
@@ -538,7 +542,7 @@ function VerUnidadInner() {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={cn(
-              "px-5 py-2.5 text-[13px] font-semibold border-b-2 -mb-[2px] transition-colors bg-none cursor-pointer",
+              "whitespace-nowrap px-5 py-2.5 text-[13px] font-semibold border-b-2 -mb-[2px] transition-colors bg-none cursor-pointer",
               activeTab === tab.key
                 ? "border-primary text-primary"
                 : "border-transparent text-muted-foreground hover:text-foreground"
@@ -582,7 +586,7 @@ function VerUnidadInner() {
       {activeTab === "unidad" && <>
 
       {/* Info Cards — diseño original */}
-      <div className="grid grid-cols-4 gap-4 mb-7">
+      <div className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="bg-card border border-border rounded-[14px] p-4 animate-fade-up" style={{ animationDelay:"0.04s" }}>
           <div className="flex items-center gap-2.5 mb-2.5">
             <div className="w-8 h-8 rounded-lg bg-pink-light grid place-items-center"><Target className="w-4 h-4 text-primary" /></div>
@@ -669,7 +673,7 @@ function VerUnidadInner() {
       </div>
 
       {/* Dos columnas — diseño original */}
-      <div className="grid grid-cols-[1fr_380px] gap-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
 
         {/* Izquierda: Currículo con botones "Ver detalles" */}
         <div>
@@ -786,7 +790,7 @@ function VerUnidadInner() {
             <Calendar className="w-8 h-8 mx-auto mb-3" />
             <p className="text-[13px] mb-4">Las clases de esta unidad se gestionan en el cronograma.</p>
             <button onClick={() => setActiveTab("cronograma")}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-primary-foreground rounded-full text-[13px] font-bold hover:bg-[#d6335e] transition-colors">
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-primary-foreground rounded-full text-[13px] font-bold hover:bg-pink-dark transition-colors">
               Ir a Cronograma de Unidad
             </button>
           </div>
@@ -798,15 +802,19 @@ function VerUnidadInner() {
       {/* Ventana Flotante Programa PDF (Estilo Sticky) */}
       {showPdf && (
         <div 
-          className={cn("fixed z-[600] bg-card border-[2px] border-border rounded-[18px] flex flex-col transition-shadow", isDraggingPdf ? "shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] opacity-95" : "shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] opacity-100")}
-          style={{ right: `${pdfPos.right}px`, bottom: `${pdfPos.bottom}px`, width: "520px", height: "70vh", resize: "both", overflow: "hidden" }}
+          className={cn(
+            "fixed z-[600] border-[2px] border-border bg-card flex flex-col transition-shadow",
+            isMobile ? "inset-3 rounded-[18px]" : "rounded-[18px]",
+            isDraggingPdf ? "shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] opacity-95" : "shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] opacity-100"
+          )}
+          style={isMobile ? { overflow: "hidden" } : { right: `${pdfPos.right}px`, bottom: `${pdfPos.bottom}px`, width: "520px", height: "70vh", resize: "both", overflow: "hidden" }}
         >
           <div 
-            className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur cursor-move touch-none"
-            onPointerDown={handlePdfPointerDown}
-            onPointerMove={handlePdfPointerMove}
-            onPointerUp={handlePdfPointerUp}
-            onPointerCancel={handlePdfPointerUp}
+            className={cn("flex items-center justify-between border-b border-border bg-background/95 px-4 py-3 backdrop-blur", isMobile ? "" : "cursor-move touch-none")}
+            onPointerDown={isMobile ? undefined : handlePdfPointerDown}
+            onPointerMove={isMobile ? undefined : handlePdfPointerMove}
+            onPointerUp={isMobile ? undefined : handlePdfPointerUp}
+            onPointerCancel={isMobile ? undefined : handlePdfPointerUp}
           >
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-pink-light flex items-center justify-center pointer-events-none">

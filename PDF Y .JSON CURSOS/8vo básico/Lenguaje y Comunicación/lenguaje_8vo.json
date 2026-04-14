@@ -1,0 +1,913 @@
+{
+  "nivel": "8° Básico",
+  "asignatura": "Lengua y Literatura",
+  "unidades": [
+    {
+      "numero_unidad": 1,
+      "nombre_unidad": "Epopeya",
+      "proposito": "El propósito de esta unidad es que los estudiantes lean diversos textos con carácter de epopeya para que reflexionen sobre ellos desde diversos puntos de vista. Se espera que complementen sus indagaciones con lecturas de textos no literarios que les ayuden a entender la obra o a profundizar algún tema que les haya llamado la atención, especialmente en el marco del tema “Epopeya”. Con esto se pretende que los alumnos, siempre desde la lectura, el análisis y la interpretación de las obras literarias, conozcan las características de las epopeyas y descubran qué influencias han tenido en la literatura posterior y en la visión de mundo que tenemos hoy. Se busca que ejerciten las estrategias de comprensión para que desarrollen una postura reflexiva frente al texto, identifiquen cuáles son sus dificultades y pongan en práctica acciones que los ayuden a solucionarlas. También se busca que aprendan a resumir y a hacerse preguntas sobre lo leído para profundizar su comprensión de los textos. En escritura, los estudiantes elaboran textos para comunicar lo que han aprendido a partir de sus lecturas literarias y de las investigaciones bibliográficas que han realizado. Para esto, aprenden a procesar y organizar la información recopilada para no hacer una mera reproducción de lo leído, sino una versión propia. Durante esta unidad, siguen profundizando las habilidades referidas al proceso de escritura que han adquirido en años anteriores, y se enfatizan las habilidades de recopilación de información, organización de ideas y evaluación de la pertinencia de la información incorporada. En comunicación oral, los estudiantes usan el diálogo para llevar a cabo diferentes propósitos, especialmente para compartir análisis e interpretaciones de sus lecturas y para comunicar lo aprendido con las investigaciones realizadas. Al dialogar, se espera que tomen conciencia de la manera en que participan en un grupo; en particular, si usan argumentos para fundamentar sus afirmaciones y si son hablantes que muestran apertura a las ideas de otros. 66 LENGUA Y LITERATURA | Programa de Estudio | 8° básico 1",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Manifestar una disposición a reflexionar sobre sí mismo y sobre las",
+        "Valorar la evidencia y la búsqueda de conocimientos que apoyen sus"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o que están en los medios.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita. Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente:",
+            "Explican las causas del o de los conflictos presentes en una obra.",
+            "El o los conflictos de la historia.",
+            "Explican, oralmente o por escrito, por qué un personaje tiene mayor o menor relevancia en el desenlace de la historia.",
+            "Los personajes, su evolución en el relato y su relación con otros personajes.",
+            "Describen a los personajes a partir de lo que dicen, hacen y lo que se dice de ellos.",
+            "La relación de un fragmento de la obra con el total.",
+            "El narrador, distinguiéndolo del autor.",
+            "Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto.",
+            "Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual.",
+            "Explican el o los conflictos de una narración.",
+            "Explican las relaciones que hay entre los personajes, en términos de parentesco, amistad, influencias de uno sobre otro, etc.",
+            "Explican cómo cambia un personaje después de un evento provocado por otro.",
+            "Señalan qué información, importante para entender la obra, se entrega en un fragmento seleccionado por el docente.",
+            "Explican qué relevancia tiene un determinado fragmento en la obra.",
+            "Explican qué temas de la obra se tocan en un determinado fragmento. Epopeya"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: --El o los conflictos de la historia. --Los personajes, su evolución en el relato y su relación con otros personajes. --La relación de un fragmento de la obra con el total. --El narrador, distinguiéndolo del autor. --Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Distinguen al narrador del autor.",
+            "Describen al narrador de la obra a partir de lo que dice, cuánto sabe de lo que está narrando, etc. con atención a los recursos léxicos y",
+            "Identifican en las obras leídas personajes tipo que tienen características constantes en la literatura; por ejemplo: la madrastra en los cuentos infantiles. leídos en el año.",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea.",
+            "Identifican símbolos en la narración y ofrecen una interpretación; por ejemplo: entrar en el bosque podría ser interpretado como enfrentar los propios miedos.",
+            "Mencionan algunos tópicos literarios y sus características y son capaces de identificar algunos pasajes de la narración que aluden a ellos, cuando la obra lo permite.",
+            "Recuentan la historia, evidenciando el orden en que sucedieron los hechos y no necesariamente cómo están presentados en el relato.",
+            "Describen temas en común presentes en dos textos y los explican con ejemplos.",
+            "Usan un ordenador gráfico para comparar dos narraciones.",
+            "Comparan, por escrito o esquemáticamente, dos obras leídas durante el año."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus características y el contexto en el que se enmarcan.",
+          "indicadores": [
+            "Resumen un fragmento de una epopeya leída, usando sus propias palabras.",
+            "Al leer epopeyas, explican por qué una obra leída se clasifica como tal, fundamentando con ejemplos del texto.",
+            "Describen, en términos generales, el contexto en el cual surgió la epopeya leída. Epopeya"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o el total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se plantea en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases.",
+          "indicadores": [
+            "Hacen un resumen de los textos leídos.",
+            "Registran información de los textos no literarios leídos.",
+            "Realizan esquemas para conectar la información de los textos leídos con la obra estudiada en clases.",
+            "Explican cómo la información recopilada contribuye a entender algún aspecto de alguna obra literaria leída."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Aplicar estrategias de comprensión de acuerdo con sus propósitos de lectura: --Resumir. --Formular preguntas. --Analizar los distintos tipos de relaciones que establecen las imágenes o el sonido con el texto escrito (en textos multimodales). --Identificar los elementos del texto que dificultan la comprensión (pérdida de los referentes, vocabulario desconocido, inconsistencias entre la información del texto y los propios conocimientos) y buscar soluciones.",
+          "indicadores": [
+            "Subrayan las ideas principales de un texto y las resumen. Aplicar estrategias de comprensión de acuerdo con sus propósitos de lectura:",
+            "Hacen anotaciones al margen de un texto, extrayendo las ideas principales de cada párrafo.",
+            "Anotan preguntas y comentarios sobre el texto que están leyendo.",
+            "Piden ayuda a otros para comprender un trozo o profundizar una idea leída.",
+            "En discusiones sobre un texto, hacen preguntas sobre lo leído, ya sea para aclarar una idea o para profundizar. Epopeya"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir, con el propósito de explicar un tema, textos de diversos géneros (por ejemplo, artículos, informes, reportajes, etc.) caracterizados por: --Una presentación clara del tema en que se esbozan los aspectos que se abordarán. --La presencia de información de distintas fuentes. --La inclusión de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema. --Una progresión temática clara, con especial atención al empleo de recursos anafóricos. --El uso de imágenes u otros recursos gráficos pertinentes. --Un cierre coherente con las características del género. --El uso de referencias según un formato previamente acordado.",
+          "indicadores": [
+            "Explican, en la introducción, el tema que abordarán en el texto. Escribir, con el propósito de explicar un tema, textos de diversos géneros (por ejemplo, artículos, informes, reportajes, etc.) caracterizados por:",
+            "Incluyen información documentada. que se esbozan los aspectos que se abordarán. distintas fuentes. ejemplos o explicaciones que desarrollen el tema. especial atención al empleo de recursos anafóricos. gráficos pertinentes.",
+            "Organizan el texto, agrupando las ideas en párrafos.",
+            "Cada párrafo trata un aspecto del tema abordado.",
+            "Incluyen ejemplos o descripciones para ilustrar o aclarar una idea.",
+            "Redactan combinando la información que recopilaron en más de una fuente.",
+            "La información es presentada desde una perspectiva propia, sin usar las mismas palabras que el texto investigado.",
+            "Desarrollan las ideas incluidas en sus textos, de manera que el lector comprenda lo que se quiere transmitir.",
+            "Incorporan el uso de anáforas para dar cohesión al texto.",
+            "El texto sigue un orden coherente.",
+            "Incorporan, cuando es pertinente, imágenes que aclaran o contribuyen al tema.",
+            "Cada una de las imágenes o recursos gráficos utilizados tiene directa relación con el tema que se desarrolla. características del género.",
+            "Incluyen, al final del texto, un cierre en el cual resumen el tema que han desarrollado o plantean preguntas sobre aspectos que podrían complementar el tema o reafirman lo dicho en la introducción, etc. previamente acordado.",
+            "Incluyen las referencias, estableciendo al menos el título y el autor de la fuente consultada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en función del contexto, el destinatario y el propósito: --Recopilando información e ideas y organizándolas antes de escribir. --Adecuando el registro, específicamente, el vocabulario (uso de términos técnicos, frases hechas, palabras propias de las redes sociales, términos y expresiones propios del lenguaje hablado), el uso de la persona gramatical, y la estructura del texto al género discursivo, contexto y destinatario. --Incorporando información pertinente. --Asegurando la coherencia y la cohesión del texto. --Cuidando la organización a nivel oracional y textual. --Usando conectores adecuados para unir las secciones que componen el texto y relacionando las ideas dentro de cada párrafo. --Usando un vocabulario variado y preciso. --Reconociendo y corrigiendo usos inadecuados, especialmente de pronombres personales y reflejos, conjugaciones verbales, participios irregulares, y concordancia sujeto–verbo, artículo–sustantivo y sustantivo–adjetivo. --Corrigiendo la ortografía y mejorando la presentación. --Usando eficazmente las herramientas del procesador de textos.",
+          "indicadores": [
+            "Recopilan documentos o páginas de internet que pueden aportar información para su tema. Planificar, escribir, revisar, reescribir y editar sus textos en función del contexto, el destinatario y el propósito: organizándolas antes de escribir.",
+            "Toman apuntes o hacen fichas a partir de los textos que consultan.",
+            "Seleccionan la información que se relaciona directamente con el tema y descartan la que no es pertinente.",
+            "Comentan con otros los temas que desarrollarán y qué información incluirán en sus escritos.",
+            "Organizan sus ideas e información en torno a diferentes categorías o temas, usando organizadores gráficos o esquemas.",
+            "Modifican sus escritos, ya sea a medida que van escribiendo o al final, para incorporar nuevas ideas relevantes.",
+            "Reorganizan los párrafos, si es necesario, para que estos tengan una progresión temática coherente.",
+            "Eliminan información superflua."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "La violencia en las epopeyas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "El profesor y los alumnos leen en voz alta “La muerte de Grendel” de Beowulf y el fragmento de El cantar de los Nibelungos, “Aventura IV: Cómo Sigfrido combatió a los sajones”. Responden por escrito cada una de las siguientes preguntas relacionadas con la representación de la violencia en las epopeyas: >> Describa las escenas que usted considera violentas. >> ¿Con qué fin se utiliza la violencia en las epopeyas? >> En términos de la violencia que se muestra, ¿de qué manera son diferentes las películas de acción de hoy con respecto a las epopeyas? >> ¿Está la violencia asociada a la defensa de valores en nuestra sociedad? ¿Qué opina al respecto? >> ¿Cree que la violencia es una constante en la humanidad?"
+        },
+        {
+          "nombre": "Visión del honor",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Luego de leer El cantar de Roldán, el docente contextualiza: >> En la epopeya que acabamos de leer se nos presenta a dos héroes, Roldán y Oliveros, que son grandes amigos, pero muy diferentes entre sí. En la tirada LXXXIII hay una discusión entre ellos sobre si tocan o no el Olifante. Lean nuevamente ese pasaje y analicen qué posturas tiene cada uno, qué valor le dan al honor y qué están dispuestos a sacrificar por mantenerlo. Luego, comparen a cada uno de los amigos con algún personaje del mundo público o que ustedes conozcan. Finalmente, escriban un texto con las conclusiones a las cuales llegan, agregando una reflexión sobre lo siguiente: a lo largo del tiempo, el orgullo y la visión del honor, ¿siguen siendo importantes para la gente o han perdido valor? 82 LENGUA Y LITERATURA | Programa de Estudio | 8° básico"
+        },
+        {
+          "nombre": "La epopeya y la literatura y el cine de hoy",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "1 Los estudiantes ven un fragmento de El Señor de los Anillos, Las Crónicas de Narnia o alguna otra película de inspiración épica que sea acorde a la edad. El docente explica que alguna gente relaciona esta película con las epopeyas. Les pide que contesten las siguientes preguntas y luego expliquen si consideran o no que la película tiene influencias de las epopeyas. Contestan por escrito: U1 >> Enumere tres características de la epopeya presentes en esta cinta. Dé ejemplos de la cinta para cada característica. >> ¿A qué epopeya que haya leído le recuerda esta película? Explique por qué, usando ejemplos del texto. >> ¿Qué elementos estéticos empleados en la película le recuerdan las epopeyas que ha leído? Describa al menos tres. >> De acuerdo a lo que analizó anteriormente, ¿tiene influencias de las epopeyas esta película? >> A partir de lo discutido hasta ahora, ¿cree que la epopeya es un fenómeno propio de la Edad Media o que trasciende hasta nuestros días? Observaciones al docente El profesor que decida dar como lectura Beowulf, puede sugerir la versión abreviada que hizo J.R.R. Tolkien de esta obra, sobre todo a los alumnos que gustan de la fantasía épica y que admiran al autor inglés. LENGUA Y LITERATURA | Programa de Estudio | 8° básico 83 Objetivo de Aprendizaje OA 3 Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente…"
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 2,
+      "nombre_unidad": "Experiencias del amor",
+      "proposito": "El propósito de esta unidad es que los estudiantes lean una variedad de textos que aborden el tema de las experiencias del amor. En lectura, se busca que analicen e interpreten en clases narraciones y poemas que toquen este tema y que puedan reflexionar, con la guía del docente, sobre las diversas perspectivas y las distintas maneras que el ser humano tiene de experimentar el amor, considerando las características de la época y la cultura. En investigación, se busca que profundicen en diversos aspectos de las obras leídas y que conozcan el contexto en que fueron originadas, para que de esta manera enriquezcan sus interpretaciones. Además, ponen en práctica sus habilidades de búsqueda, manejo y síntesis de la información, y continúan desarrollando las actitudes y habilidades necesarias para favorecer el trabajo en equipo. En esta unidad se enfatiza la comunicación de ideas por medio de la oralidad; los alumnos preparan y presentan exposiciones orales para dar a conocer los hallazgos de sus investigaciones. De esta forma, ejercitarán sus habilidades comunicativas orales, con atención a los requerimientos propios de contextos formales y académicos.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Valorar la evidencia y la búsqueda de conocimientos que apoyen sus",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que",
+        "Trabajar colaborativamente, usando de manera responsable las tecnologías"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o que están en los medios.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita. Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente:",
+            "Explican el o los conflictos de una narración.",
+            "Explican las causas del o de los conflictos presentes en una obra.",
+            "El o los conflictos de la historia.",
+            "Explican, oralmente o por escrito, por qué un personaje tiene mayor o menor relevancia en el desenlace de la historia.",
+            "Los personajes, su evolución en el relato y su relación con otros personajes.",
+            "Describen a los personajes a partir de lo que dicen y hacen, y lo que se dice de ellos.",
+            "La relación de un fragmento de la obra con el total.",
+            "El narrador, distinguiéndolo del autor.",
+            "Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto.",
+            "Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual.",
+            "La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla.",
+            "Explican las relaciones que hay entre los personajes, en términos de parentesco, amistad, influencias de uno sobre otro, etc.",
+            "Explican cómo cambia un personaje después de un evento provocado por otro.",
+            "Señalan qué información, importante para entender la obra, se entrega en un fragmento seleccionado por el docente.",
+            "Explican qué relevancia tiene un determinado fragmento en la obra.",
+            "Explican qué temas de la obra se tocan en un determinado fragmento.",
+            "Distinguen al narrador del autor.",
+            "Describen al narrador de la obra a partir de lo que dice, cuánto sabe de lo que está narrando, etc. Experiencias del amor"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: --El o los conflictos de la historia. --Los personajes, su evolución en el relato y su relación con otros personajes. --La relación de un fragmento de la obra con el total. --El narrador, distinguiéndolo del autor. --Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Identifican en las obras leídas personajes tipo que tienen características constantes en la literatura; por ejemplo: la madrastra en los cuentos infantiles.",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída, y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea.",
+            "Identifican símbolos en la narración y ofrecen una interpretación; por ejemplo: entrar en el bosque podría ser interpretado como enfrentar los propios miedos.",
+            "Mencionan algunos tópicos literarios y sus características, y son capaces de identificar algunos pasajes de la narración que aluden a ellos, cuando la obra lo permite.",
+            "Resumen la historia, evidenciando el orden en que sucedieron los hechos y no necesariamente como están presentados en el relato.",
+            "Describen temas en común presentes en dos textos y los explican con ejemplos.",
+            "Usan un ordenador gráfico para comparar dos narraciones.",
+            "Comparan, por escrito o esquemáticamente, dos obras leídas durante el año."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar los poemas leídos para enriquecer su comprensión, considerando, cuando sea pertinente: --Cómo el lenguaje poético que emplea el autor apela a los sentidos, sugiere estados de ánimo y crea imágenes. --El significado o el efecto que produce el uso de lenguaje figurado en el poema. --El efecto que tiene el uso de repeticiones (de estructuras, sonidos, palabras o ideas) en el poema. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Explican en sus palabras el poema leído, incluyendo los temas que aborda.",
+            "Explican qué elementos ayudan a recrear un estado de ánimo o identifican versos del poema que lo hacen. el autor apela a los sentidos, sugiere estados de ánimo y crea imágenes.",
+            "Explican a qué alude, en términos denotativos y connotativos, un determinado verso. repeticiones (de estructuras, sonidos, palabras o ideas) en el poema. poema o a crear un ambiente determinado.",
+            "Describen el efecto que les produce algún verso en el cual se incorpora",
+            "El significado o el efecto que produce el el uso de lenguaje figurado. uso de lenguaje figurado en el poema.",
+            "Señalan, si los hay, qué elementos sonoros contribuyen al sentido del leídos en el año.",
+            "Describen elementos que tiene en común el poema leído con otra lectura abordada durante el año.",
+            "Describen temas en común presentes en dos textos. Experiencias del amor"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o al total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se plantea en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situación para comunicar temas de su interés: --Presentando información fidedigna y que denota una investigación previa. --Siguiendo una progresión temática clara. --Recapitulando la información más relevante o más compleja para asegurarse de que la audiencia comprenda. --Usando un vocabulario variado y preciso y evitando el uso de muletillas. --Usando conectores adecuados para hilar la presentación. --Usando material visual que apoye lo dicho y se relacione directamente con lo que se explica.",
+          "indicadores": [
+            "Hacen un resumen al principio de la presentación con los temas que abordarán y se ciñen a ellos.",
+            "Organizan su presentación, ordenando los temas de manera que ayuden a cumplir el propósito comunicativo. que denota una investigación previa.",
+            "Exponen casos específicos o ejemplos para ilustrar el tema. clara.",
+            "Hacen una recapitulación cuando se ha entregado mucha información nueva. relevante o más compleja para asegurarse de que la audiencia comprenda.",
+            "Enfatizan con la voz o con elementos gráficos, la información central. la presentación.",
+            "Incorporan material visual que les permite aclarar aspectos puntuales de su presentación.",
+            "Exponen causas o efectos de un hecho o acontecimiento.",
+            "Usan los términos específicos del tema expuesto, explicándolos si es necesario.",
+            "Nombran las fuentes consultadas si se les pide.",
+            "Exponen sin usar muletillas, o haciéndolo en muy contadas ocasiones. y evitando el uso de muletillas.",
+            "Incorporan conectores que les permiten organizar la exposición. dicho y se relacione directamente con lo que se explica.",
+            "Al usar recursos como PowerPoint o Prezi, elaboran diapositivas breves que sinteticen los conceptos centrales.",
+            "El material usado es relevante para aclarar, profundizar o expandir las ideas presentadas y es un aporte para la presentación. Experiencias del amor"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Las mujeres en la Edad Media",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Una vez que los estudiantes han leído algunos fragmentos de obras medievales, como los capítulos de El Decamerón, el docente contextualiza de manera general cómo era la vida de las mujeres en la Edad Media. Puede referir casos excepcionales como Juana de Arco o Hildegarda de Bingen. Responden individualmente por escrito y luego comentan, basándose en los textos leídos, las siguientes preguntas: >> De acuerdo con las obras leídas, ¿podían las mujeres tomar decisiones importantes para sus vidas y/o para sus reinos? >> ¿Qué importancia tienen las mujeres para los héroes medievales? >> ¿Qué esperaba la sociedad de ellas? >> Averigüe un caso de alguna mujer de la Edad Media que haya desafiado las reglas sociales de su época. >> ¿Qué ha cambiado hoy en la vida de la mujer? ¿Qué no ha cambiado? ¿Cuál es su postura al respecto? >> En estas obras ¿cómo es la experiencia femenina del amor? ® Historia, Geografía y Ciencias Sociales OA 10 de 7° básico. LENGUA Y LITERATURA | Programa de Estudio | 8° básico 115"
+        },
+        {
+          "nombre": "El amor es química",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los alumnos leen individualmente o en parejas el artículo “Amor loco, amor químico” de Antonio Muñoz Molina. Previamente, el profesor ha subrayado las palabras o conceptos que considera más difíciles de comprender para sus alumnos, para explicarlas en clases. El docente asiste a los estudiantes si tienen dificultades en la lectura y les recuerda que apliquen las estrategias que trabajaron en la unidad anterior. Luego contestan por escrito las siguientes preguntas: >> ¿De qué se tratan las investigaciones del doctor Young? >> ¿Qué ejemplos literarios entrega el autor del artículo? >> ¿Conoce otros casos en la literatura de amor a primera vista o del uso de pociones de amor? >> ¿Qué es para usted “tener química” con alguien? >> ¿Cree que es necesario recurrir a estos “incentivos” para propiciar el romance? ¿por qué? El profesor pide a algunos estudiantes que compartan sus respuestas con el curso para que los compañeros las complementen y profundicen. Observaciones al docente Puede encontrar el texto “Amor loco, amor químico” de Antonio Muñoz Molina en la revista Muy Interesante (http://www.muyinteresante.es/cultura/arte-cultura/ articulo/amor-loco-amor-quimico)."
+        },
+        {
+          "nombre": "Diversas experiencias del amor",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Al final de la unidad, luego de haber leído y analizado al menos cuatro textos, los estudiantes discuten sobre las diversas maneras en que se presenta el amor romántico en la literatura. El docente guía una discusión para que reflexionen sobre las diferentes visiones del amor, del hombre y de la mujer, cómo lo leído se asemeja o se distancia de sus propias ideas, entre otros aspectos. Puede proponer preguntas como: >> ¿Qué textos, de los leídos en clases, muestran una experiencia amorosa muy diferente a las de la actualidad? ¿En qué radican esas diferencias? ¿A qué se pueden deber? >> ¿Qué elementos en común sobre el amor se aprecian en las obras leídas? Explíquelos e ilustre sus afirmaciones con ejemplos de los textos. >> ¿Qué papeles cumplen hombres y mujeres en la relación amorosa, en los textos leídos? ¿Se aprecian diferencias de roles según cada género? ¿Qué 116 LENGUA Y LITERATURA | Programa de Estudio | 8° básico cosas se mantienen? ¿Qué cosas han cambiado? >> ¿Por qué cree usted que muchos de los grandes amores de la literatura terminan de manera trágica? Fundamente con ejemplos de sus lecturas y compare con aquellas lecturas en que la historia de amor tiene un final positivo. 1 Al final de la actividad, el docente pide a los estudiantes que escriban, individualmente, al menos un párrafo en el que comenten la reflexión más interesante que surgió durante la conversación. Selecciona los mejores comentarios para publicarlos, con permiso del autor, en el diario mural de la sala o en la biblioteca. U2 Objetivo de Aprendizaje OA 3 Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente…"
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 3,
+      "nombre_unidad": "Relatos de misterio",
+      "proposito": "1 En esta unidad, se espera que los estudiantes lean una variedad de textos de misterio. Se busca que, a partir del análisis y la interpretación de los textos seleccionados, los estudiantes conozcan las características de los relatos policiales y de misterio: cómo son sus narradores, cómo se crea el suspenso y qué visión del mundo presentan. Se espera que apliquen estrategias de comprensión en la lectura de textos más complejos, de manera que continúen desarrollando la metacognición y la autonomía para abordar textos complejos. U3 Se propone que, a partir de los temas propuestos para la unidad, los alumnos escriban textos de diversos géneros y que desarrollen su creatividad mediante la escritura, abordando temas propuestos por el docente o por ellos mismos y seleccionando el género que les permita cumplir sus propósitos comunicativos. Además, se espera que continúen fortaleciendo el hábito y el gusto por escribir. Por otra parte, en esta unidad se pone especial atención en el uso de oraciones complejas y los recursos de correferencia, aprendizajes que están indivisiblemente unidos a la escritura, por lo que deben ponerse en práctica durante las tareas de redacción de textos. En comunicación oral, se espera que los estudiantes ejerciten sus habilidades de diálogo, poniendo especial atención en el interlocutor, para asegurar una discusión respetuosa y constructiva, que les permita profundizar en las lecturas realizadas en clases y construir interpretaciones de manera colaborativa.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Manifestar disposición a formarse un pensamiento propio, reflexivo e",
+        "Interesarse por comprender las experiencias e ideas de los demás,",
+        "Valorar las posibilidades que da el discurso hablado y escrito para participar"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o del mundo.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita. Relatos de misterio"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: --El o los conflictos de la historia. --Los personajes, su evolución en el relato y su relación con otros personajes. --La relación de un fragmento de la obra con el total. --El narrador, distinguiéndolo del autor. --Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Explican el o los conflictos de una narración. Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente:",
+            "Explican las causas del o los conflictos presentes en una obra.",
+            "Describen a los personajes a partir de lo que dicen y hacen, y lo que se dice de ellos. el relato y su relación con otros personajes.",
+            "Explican, oralmente o por escrito, por qué un personaje tiene mayor o menor relevancia en el desenlace de la historia.",
+            "Explican las relaciones que hay entre los personajes, en términos de parentesco, amistad, influencias de uno sobre otro, etc. con el total.",
+            "Explican cómo cambia un personaje después de un evento provocado por otro.",
+            "Señalan qué información, importante para entender la obra, se entrega en un fragmento seleccionado por el docente. el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. presentes en el relato y su conexión con el mundo actual.",
+            "Explican qué relevancia tiene un determinado fragmento en la obra.",
+            "Explican qué temas de la obra se tocan en un determinado fragmento.",
+            "Distinguen al narrador del autor.",
+            "Describen al narrador de la obra a partir de lo que dice, cuánto sabe de lo que está narrando, etc.",
+            "Identifican en las obras leídas personajes tipo que tienen características constantes en la literatura; por ejemplo: la madrastra en los cuentos con atención a los recursos léxicos y gramaticales empleados para expresarla. infantiles.",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída, y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea. leídos en el año.",
+            "Identifican símbolos en la narración y ofrecen una interpretación; por ejemplo: entrar en el bosque podría ser interpretado como enfrentar los propios miedos.",
+            "Mencionan algunos tópicos literarios y sus características, y son capaces de identificar algunos pasajes de la narración que aluden a ellos, cuando la obra lo permite.",
+            "Resumen la historia, evidenciando el orden en que sucedieron los hechos y no necesariamente como están presentados en el relato.",
+            "Describen temas en común presentes en dos textos y los explican con ejemplos.",
+            "Usan un ordenador gráfico para comparar dos narraciones.",
+            "Comparan, por escrito o esquemáticamente, dos obras leídas durante el año. Relatos de misterio"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o al total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se plantea en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Aplicar estrategias de comprensión de acuerdo con sus propósitos de lectura: --Resumir. --Formular preguntas. --Analizar los distintos tipos de relaciones que establecen las imágenes o el sonido con el texto escrito (en textos multimodales). --Identificar los elementos del texto que dificultan la comprensión (pérdida de los referentes, vocabulario desconocido, inconsistencias entre la información del texto y los propios conocimientos) y buscar soluciones.",
+          "indicadores": [
+            "Analizan el significado de las imágenes o hacen un breve resumen de lo que en ellas se expresa.",
+            "Relacionan la información presente en las imágenes con el texto en que se encuentran insertas.",
+            "Identifican los elementos sonoros que están presentes en un texto (película, documental, poesía sonora, etc.) y lo relacionan con el texto o diálogo.",
+            "Identifican el párrafo o fragmento del texto que les produce dificultades para comprender. dificultan la comprensión (pérdida de",
+            "Explican qué es lo que no entienden del texto (por ejemplo, “no entiendo inconsistencias entre la información del de quién se habla”, “no entiendo a qué se refiere con esta frase”, etc.) texto y los propios conocimientos) y",
+            "Releen los párrafos anteriores o leen los posteriores para verificar si buscar soluciones. ahí está la información que necesitan.",
+            "Averiguan conceptos o información que no conocen y que es necesaria para entender el texto, y la anotan al margen del texto o en su cuaderno.",
+            "Subrayan las palabras que no comprenden, averiguan su significado y lo anotan al margen del texto. Relatos de misterio"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos géneros (por ejemplo, cuentos, crónicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: --El tema. --El género. --El destinatario.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Caracterización de un detective",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de las lecturas de novelas y cuentos detectivescos, los estudiantes reflexionan en torno a las características de los detectives. Para ello, responden las siguientes preguntas: >> ¿Cuáles son las principales características psicológicas (actitudes, gustos, etc.) de los detectives de los cuentos/novelas leídos/as? ¿Hay diferencias entre ellos? >> Al momento de resolver un misterio, ¿qué diferencia a un detective de un hombre común? >> ¿Cree que un detective utiliza principalmente la lógica, la intuición o ambas para resolver misterios? ¿Por qué? >> ¿En qué situaciones de la vida cotidiana cree que sería útil pensar como un detective? ¿Por qué?"
+        },
+        {
+          "nombre": "Reflexión en torno a las historias de misterio",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Luego de haber leído los relatos de misterio de la unidad, los estudiantes reflexionan en torno a las características comunes que presenta este género. Para ello, responden las siguientes preguntas: >> ¿Cuáles son los elementos (personajes, situaciones, etc.) necesarios en una historia de misterio? Mencione ejemplos de alguno de los textos de la unidad. >> ¿Qué características tienen los misterios de las obras leídas (en la estructura, los personajes, los temas, etc.? Mencione ejemplos de alguno de los textos de la unidad. >> ¿Por qué los detectives de los relatos se esfuerzan en buscar la verdad? >> ¿Cree que el ser humano intenta siempre conocer la verdad de las cosas? ¿Por qué? >> ¿Existe solo una verdad? Explique. LENGUA Y LITERATURA | Programa de Estudio | 8° básico 151"
+        },
+        {
+          "nombre": "La capacidad de observación en la vida cotidiana",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "El docente pide a los estudiantes reflexionar en torno a la capacidad de observación de la que habla Dupin en \"Los crímenes de la calle Morgue\" y que caracteriza a los buenos jugadores. Para ello, los estudiantes deben conversar en grupos sobre los beneficios de la capacidad de observación en la vida cotidiana, haciendo referencia a situaciones concretas en las que esta facultad es beneficiosa. El docente entrega la siguiente lista de preguntas para guiar la reflexión: >> ¿Por qué es importante la capacidad de observación según Dupin? >> ¿En qué situaciones es bueno ser observadores? >> ¿En qué momentos tendemos a poner más atención a nuestro alrededor? ¿Por qué? >> ¿Cuáles son los beneficios de la capacidad de observación? Finalmente, se hace una puesta en común de lo conversado en cada grupo. Objetivo de Aprendizaje OA 3 Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente…"
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 4,
+      "nombre_unidad": "Naturaleza",
+      "proposito": "Esta unidad tiene como centro una mirada a la naturaleza. A partir de la lectura de diversos textos literarios, se busca que el alumno explore las distintas visiones que se tienen de la ella. La interpretación que hagan los estudiantes es crucial para este fin, ya que muchos de los textos contienen símbolos y alegorías que se deben encontrar e interpretar para dar significado al texto. Los estudiantes aprenderán a usar tanto la escritura como el diálogo para reflexionar y dar sentido a sus lecturas. En el proceso de escritura, se enfocan a recopilar información para sustentar sus argumentos y organizarlos antes de escribir, adecuar el registro para que apoye la argumentación y procurar coherencia y cohesión en el texto, tanto a nivel textual como oracional. En comunicación oral, trabajan en la comprensión de textos orales, analizando los textos y las imágenes, y demostrando que comprenden las posturas se exponen.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Manifestar disposición a formarse un pensamiento propio, reflexivo e",
+        "Interesarse por comprender las experiencias e ideas de los demás,",
+        "Valorar la diversidad de perspectivas, creencias y culturas, presentes en"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o que están en los medios.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: --El o los conflictos de la historia. --Los personajes, su evolución en el relato y su relación con otros personajes. --La relación de un fragmento de la obra con el total. --El narrador, distinguiéndolo del autor. --Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Explican el o los conflictos de una narración. Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente:",
+            "Explican las causas del o de los conflictos presentes en una obra.",
+            "Describen a los personajes a partir de lo que dicen y hacen, y lo que se dice de ellos. el relato y su relación con otros personajes,.",
+            "Explican, oralmente o por escrito, por qué un personaje tiene mayor o menor relevancia en el desenlace de la historia.",
+            "Explican las relaciones que hay entre los personajes, en términos de parentesco, amistad, influencias de uno sobre otro, etc. con el total.",
+            "Explican cómo cambia un personaje después de un evento provocado por otro.",
+            "Señalan qué información, importante para entender la obra, se entrega en un fragmento seleccionado por el docente. el avaro, el seductor, la madrastra, etc.), Símbolos y tópicos literarios presentes en el texto. presentes en el relato y su conexión con el mundo actual.",
+            "Explican qué relevancia tiene un determinado fragmento en la obra.",
+            "Explican qué temas de la obra se tocan en un determinado fragmento.",
+            "Distinguen al narrador del autor.",
+            "Describen al narrador de la obra a partir de lo que dice, cuánto sabe de lo que está narrando, etc.",
+            "Identifican en las obras leídas personajes tipo que tienen características constantes en la literatura; por ejemplo: la madrastra en los cuentos con atención a los recursos léxicos y gramaticales empleados para expresarla. infantiles. leídos en el año. Naturaleza",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída, y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea.",
+            "Identifican símbolos en la narración y ofrecen una interpretación; por ejemplo: entrar en el bosque podría ser interpretado como enfrentar los propios miedos.",
+            "Mencionan algunos tópicos literarios y sus características, y son capaces de identificar algunos pasajes de la narración que aluden a ellos, cuando la obra lo permite.",
+            "Resumen la historia, evidenciando el orden en que sucedieron los hechos y no necesariamente como están presentados en el relato.",
+            "Describen temas en común presentes en dos textos y los explican con ejemplos.",
+            "Usan un ordenador gráfico para comparar dos narraciones.",
+            "Comparan, por escrito o esquemáticamente, dos obras leídas durante el año."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar los poemas leídos para enriquecer su comprensión, considerando, cuando sea pertinente: --Cómo el lenguaje poético que emplea el autor apela a los sentidos, sugiere estados de ánimo y crea imágenes. --El significado o el efecto que produce el uso de lenguaje figurado en el poema. --El efecto que tiene el uso de repeticiones (de estructuras, sonidos, palabras o ideas) en el poema. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Explican en sus palabras el poema leído, incluyendo los temas que aborda.",
+            "Explican qué elementos ayudan a recrear un estado de ánimo o identifican versos del poema que lo hacen. el autor apela a los sentidos, sugiere estados de ánimo y crea imágenes.",
+            "Explican a qué alude, en términos denotativos y connotativos, un determinado verso. leídos en el año.",
+            "Describen temas en común presentes en dos textos.",
+            "Describen el efecto que les produce algún verso en el cual se incorpora",
+            "El significado o el efecto que produce el el uso de lenguaje figurado. uso de lenguaje figurado en el poema.",
+            "Señalan, si los hay, qué elementos sonoros contribuyen al sentido del poema o a crear un ambiente determinado. repeticiones (de estructuras, sonidos,",
+            "Describen elementos que tiene en común el poema leído con otra palabras o ideas) en el poema. lectura abordada durante el año Naturaleza"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o al total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se presenta en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Escribir, con el propósito de persuadir, textos breves de diversos géneros (por ejemplo, cartas al director, editoriales, críticas literarias, etc.), caracterizados por: --La presentación de una afirmación referida a temas contingentes o literarios. --La presencia de evidencias e información pertinente. --La mantención de la coherencia temática.",
+          "indicadores": [
+            "Escriben un texto con el fin de persuadir al lector respecto de un tema de interés.",
+            "Usan de manera pertinente la estructura del género elegido para escribir.",
+            "Mencionan su postura frente al tema al principio del texto, y la sustentan con argumentos.",
+            "Usan evidencias e información que se relaciona directamente con los argumentos utilizados.",
+            "Fundamentan su postura usando citas de un texto (literario o no"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Paisajes chilenos y poetas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Luego de leer los poemas de la unidad, el docente invita a los alumnos a reflexionar en torno a la relación entre los paisajes chilenos y la inspiración poética. Para ello, en grupos deben dar al menos tres razones diferentes que respondan a la pregunta: ¿por qué los paisajes pueden ser inspiración de poetas? y luego justificar sus opiniones, respondiendo la siguiente pregunta: ¿en qué partes de los poemas leídos se puede ver la admiración por el paisaje chileno? Luego, cada grupo expone las razones discutidas en el grupo. Finalmente, los estudiantes responden la siguiente pregunta en forma individual: Si tuviera que escribir un poema inspirado en paisajes de Chile, ¿qué paisaje escogería y por qué? Esta actividad también sirve para desarrollar el OA 23. ® Artes Visuales. Observaciones al docente Esta actividad se puede complementar comparando los poemas leídos con cuadros de pintores chilenos, como Onofre Jarpa, Alberto Orrego Luco, Pedro Lira, Ramón Alberto Valenzuela Llanos, Juan Francisco González, entre otros. En el siguiente sitio puede encontrar algunos cuadros de paisajistas chilenos: http://www.marpau.com/portadas/carpetas/intropai.html."
+        },
+        {
+          "nombre": "Paisajes chilenos a través de la mirada de un viajero",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la lectura del capítulo XIV de Viaje de un naturalista alrededor del mundo en el navío S. M. Beagle, los estudiantes analizan las impresiones respecto del paisaje chileno desde el punto de vista de un viajero. Para ello, responden las siguientes preguntas: >> ¿En qué se diferencia la mirada de un viajero como Darwin de la mirada de un habitante del lugar? 184 LENGUA Y LITERATURA | Programa de Estudio | 8° básico >> ¿Qué fenómenos naturales impresionaron a Darwin? ¿Le impresionan a usted también estos fenómenos? ¿Por qué? >> Si fuera un extranjero en Chile, ¿qué lugares, paisajes o personas cree que llamarían su atención? >> Darwin se asombra por diversas características del paisaje chileno, ¿se ha impresionado de la misma manera al ver alguno de los paisajes de Chile? Cuente brevemente su experiencia. >> Cuando ha viajado a otro lugar, ¿qué cosas son las que más llaman su atención? ¿Qué tienen en común estas cosas con aquellas que impresionaron a Charles Darwin? Las preguntas pueden discutirse en grupos, o bien, responderse de manera individual para luego compartirlas con el curso. 1 U4 ® Historia, Geografía y Ciencias Sociales y Ciencias Naturales Observaciones al docente Esta actividad se puede complementar con algún texto sobre Darwin; por ejemplo: la presentación que hace Sofía Correa al libro Darwin en Chile o Darwin en Chile, a cien años de un viaje famoso de Alejandro Fuenzalida. De esta manera los estudiantes pueden leer más sobre el tema. Los textos se puede encontrar en: --http://www.anales.uchile.cl/index.php/ANUC/article/viewFile/2025/1876 --http://www.anales.uchile.cl/index.php/ANUC/article/viewFile/24695/26063 Objetivo de Aprendizaje OA 3 Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente…"
+        },
+        {
+          "nombre": "Construcción del ambiente en “La paz por la fuerza”",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes leen en silencio el cuento “La paz por la fuerza” de Ciro Alegría. Una vez que han terminado, se juntan en parejas para resumir el texto al compañero. Luego contestan las siguientes preguntas: >> ¿Por qué, aunque sucedan pocos acontecimientos en este relato, el autor logra la atención del lector? ¿Qué recursos usa para lograr esa atención? >> En este cuento se describe un ambiente muy sonoro, ¿qué palabras usa el autor para que las imaginemos? LENGUA Y LITERATURA | Programa de Estudio | 8° básico 185 >> ¿Qué palabras del relato dan la idea de fuerza? >> Qué personajes simbolizan fuerza y cuáles simbolizan vulnerabilidad? >> ¿Es este relato un cuento? Fundamenta."
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 5,
+      "nombre_unidad": "La comedia",
+      "proposito": "El propósito de esta unidad es que los estudiantes reflexionen en torno al tema “La comedia” y se introduzcan en el género dramático, a partir de la lectura de buenos ejemplos. A partir de la lectura y el trabajo en clases sobre los textos, podrán conocer las principales características que distinguen al género dramático de otros géneros literarios y, además, podrán identificar y analizar las particularidades de la comedia. La lectura de textos no literarios sobre distintos aspectos relacionados con la comedia teatral y de las comedias mismas permitirá que desarrollen las habilidades de comprensión y la reflexión sobre distintas visiones del mundo que se plasman estos textos. Además, podrán analizar la influencia del contexto en estas visiones y la concepción de la literatura que plasman los autores en estas obras. En escritura, los estudiantes elaboran textos para aclarar lo que han aprendido, aprender sobre temas relacionados con las lecturas y compartir sus aprendizajes con otros. En relación con el proceso de escritura, a pesar de que aplican todas las estrategias que han aprendido, el foco estará puesto en la organización del texto, el vocabulario y los aspectos formales, como la ortografía y la gramática. En comunicación oral, se espera que los estudiantes dialoguen para profundizar en los temas de la unidad y para seguir desarrollando sus habilidades comunicativas. Se busca que tomen conciencia de sus formas de intervenir en la conversación y de relacionarse con el interlocutor. Además, se sitúan críticamente frente a sus propios argumentos y evalúan la fundamentación que usan para sustentar sus opiniones frente al resto. 208 LENGUA Y LITERATURA | Programa de Estudio | 8° básico",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Manifestar disposición a formarse un pensamiento propio, reflexivo e",
+        "Manifestar una disposición a reflexionar sobre sí mismo y sobre las",
+        "Valorar la diversidad de perspectivas, creencias y culturas, presentes en"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o que están en los medios.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Analizar los textos dramáticos leídos o vistos, para enriquecer su comprensión, considerando, cuando sea pertinente: --El conflicto y sus semejanzas con situaciones cotidianas. --Los personajes principales y cómo sus acciones y dichos conducen al desenlace o afectan a otros personajes. --Personajes tipo, símbolos y tópicos literarios. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --Las características del género dramático. --La diferencia entre obra dramática y obra teatral. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Comparan las situaciones presentadas en la obra de teatro con sus propias experiencias. situaciones cotidianas.",
+            "Explican cómo las acciones o dichos de un personaje conducen al desenlace de la obra. sus acciones y dichos conducen al desenlace o afectan a otros personajes.",
+            "Explican cómo las acciones o dichos de un personaje afectan a otro. literarios.",
+            "Identifican en las obras leídas, si estas lo permiten, personajes tipo que tienen características constantes en la literatura; por ejemplo, el avaro o el hipocondriaco.",
+            "Identifican símbolos en la obra y ofrecen una interpretación. presentes en el relato y su conexión con el mundo actual.",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea. dramático.",
+            "Explican cuáles son las características del género dramático. obra teatral. leídos en el año.",
+            "Explican el o los conflictos que tienen los personajes principales de la obra.",
+            "Explican las diferencias entre obra dramática y obra teatral.",
+            "Describen elementos que tiene en común la obra leída con otra lectura abordada durante el año.",
+            "Describen temas en común entre una obra leída y otro texto. La comedia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus características y el contexto en el que se enmarcan.",
+          "indicadores": [
+            "Hacen un recuento de la obra de teatro leída y explican el conflicto central.",
+            "Al leer comedias, explican por qué una obra leída se clasifica como tal, fundamentando con ejemplos del texto.",
+            "Ejemplifican qué elementos de la época en que fue creada la obra se reflejan en la misma."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o el total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se plantea en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases.",
+          "indicadores": [
+            "Hacen un resumen de los textos leídos.",
+            "Registran información de los textos no literarios leídos.",
+            "Realizan esquemas para conectar la información de los textos leídos con la obra estudiada en clases.",
+            "Explican cómo la información recopilada contribuye a la comprensión de algún aspecto de alguna obra literaria leída. La comedia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir, con el propósito de explicar un tema, textos de diversos géneros (por ejemplo, artículos, informes, reportajes, etc.) caracterizados por: --Una presentación clara del tema en que se esbozan los aspectos que se abordarán. --La presencia de información de distintas fuentes. --La inclusión de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema. --Una progresión temática clara, con especial atención al empleo de recursos anafóricos. --El uso de imágenes u otros recursos gráficos pertinentes. --Un cierre coherente con las características del género. --El uso de referencias según un formato previamente acordado.",
+          "indicadores": [
+            "Explican, en la introducción, el tema que abordarán en el texto. Escribir, con el propósito de explicar un tema, textos de diversos géneros (por ejemplo, artículos, informes, reportajes, etc.) caracterizados por:",
+            "Incluyen información documentada. que se esbozan los aspectos que se abordarán.",
+            "Cada párrafo trata un aspecto del tema abordado.",
+            "Incluyen ejemplos o descripciones para ilustrar o aclarar una idea."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Comparar un texto con versiones teatrales del mismo",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "U5 Para ejemplificar las diferencias existentes entre el texto dramático y la obra teatral, el profesor puede usar una de las lecturas sugeridas y contrastarla con fragmentos de dos o tres versiones que se han hecho de ella. Por ejemplo, se lee en clases un trozo de La fierecilla domada de Shakespeare, luego el docente les muestra fragmentos de uno o dos ejemplos de versiones teatrales y cinematográficas que se han hecho del mismo texto. Hacen una comparación a partir de preguntas como: >> ¿Qué diferencias hay entre el texto y la puesta en escena? >> ¿Qué aspectos de la fierecilla se destacan en cada versión? >> ¿Qué elementos del texto dramático no están presentes en la obra teatral? >> ¿Por qué no todas las versiones teatrales de un texto dramático son iguales? ¿Nota alguna influencia del contexto en las diferentes versiones teatrales?"
+        },
+        {
+          "nombre": "Caracterización de un personaje",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "El curso ya ha estudiado las características de la comedia. El profesor pide que cada alumno elija un personaje típico de este género para caracterizarlo y exponerlo brevemente frente a la clase. Se les recuerda que hay arquetipos como el mentiroso, el avaro, el infiel, el arribista, etc. Pueden utilizar personajes de obras que estén leyendo, o bien investigar sobre otras obras. Para esto, revisan fuentes en la biblioteca y solicitan sugerencias al profesor. No se pueden repetir los personajes. La clase siguiente se hacen las presentaciones, en las que los estudiantes representan al personaje elegido, explicando quiénes son y qué los distingue. Al finalizar, comentan ¿cuáles defectos, debilidades o vicios se LENGUA Y LITERATURA | Programa de Estudio | 8° básico 221 repitieron más? ¿De qué manera se exageran y ridiculizan estas personalidades? ¿Qué características de estos personajes se pueden encontrar en nosotros mismos?"
+        },
+        {
+          "nombre": "La avaricia de Harpagón",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "El docente, como parte del análisis del texto completo, lee el siguiente parlamento de Harpagón, protagonista de El avaro de Molière: “¡Devuélveme mi dinero, bandido!... (A sí mismo, cogiéndose del brazo.) ¡Ah, soy yo! Mi ánimo está trastornado; no sé dónde me encuentro, ni quién soy, ni lo que hago. ¡Ay! ¡Mi pobre! ¡Mi pobre dinero! ¡Mi más querido amigo! Me han privado de ti, y, puesto que me has sido arrebatado, he perdido mi sostén, mi consuelo, mi alegría; se ha acabado todo para mí, y ya no tengo nada que hacer en el mundo. Sin ti no puedo vivir. Se acabó; ya no puedo más; me muero; estoy muerto; estoy enterrado. ¿No hay nadie que quiera resucitarme, devolviéndome mi dinero o diciéndome quién lo ha cogido? ¡Eh! ¿Qué decís? No hay nadie. Es preciso que quienquiera que sea el que ha dado el golpe haya acechado el momento con mucho cuidado, y han escogido precisamente el rato en que hablaba yo con el traidor de mi hijo. Salgamos. Voy en busca de la Justicia, y haré que den tormento a todos los de mi casa: a sirvientas, a criados, al hijo, a la hija y también a mí. ¡Cuánta gente reunida! No pongo la mirada en nadie que no suscite mis sospechas, y todos me parecen ser el ladrón. ¡Eh! ¿De qué han hablado ahí? ¿Del que me ha robado? ¿Qué ruido hacen arriba? ¿Está ahí mi ladrón? Por favor, si saben noticias de mi ladrón, suplico que me las digan. ¿No está escondido entre vosotros? Todos me miran y se echan a reír. Ya veréis cómo han tomado parte, sin duda, en el robo de que he sido víctima. ¡Vamos, de prisa, comisarios, alguaciles, prebostes, jueces, tormentos, horcas y verdugos! Quiero hacer colgar a todo el mundo, y si no encuentro mi dinero, me ahorcaré yo mismo después”. Tomando en cuenta este fragmento, los estudiantes contestan las siguientes preguntas para luego discutirlas en conjunto: >> ¿Qué le ha sucedido a Harpagón? >> ¿Por qué todos se ríen de él? ¿Quiénes han organizado este montaje? >> ¿Las riquezas de Harpagón lo hacen feliz? >> ¿Cambiaría la vida cotidiana de Harpagón si este no tuviera dinero? Justifique su respuesta. >> ¿Qué expresiones de este fragmento ridiculizan la forma de ser de Harpagón? >> ¿Cómo nos está mostrando Molière la avaricia? ¿Qué crítica moral hay detrás del actuar del protagonista? >> ¿Qué otras acciones ridiculizan la debilidad de Harpagón en el texto? 222 LENGUA Y LITERATURA | Programa de Estudio | 8° básico >> ¿Por qué cree que una preocupación de Molière es la avaricia? ¿Qué situación política y económica de Francia motivó esta crítica? Investigue. ® Historia, Geografía y Ciencias Sociales."
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 6,
+      "nombre_unidad": "El mundo descabellado",
+      "proposito": "El propósito de esta unidad es que los estudiantes reflexionen en torno al tema “El mundo descabellado”. A partir de los textos, se espera que desarrollen sus habilidades de comprensión y que reflexionen sobre las distintas visiones del mundo expresadas en ellos. También se busca que analicen la influencia del contexto en estas visiones y la concepción de la literatura que plasman los autores en estas obras. En escritura, los estudiantes producen textos para opinar sobre los temas abordados en clases, fundamentándolos a partir de ejemplos y citas de los textos leídos. A pesar de que aplican el proceso de escritura completo, como lo vienen haciendo desde enseñanza básica, el docente focaliza el aprendizaje en la organización y pertinencia de las ideas a nivel textual, la adecuación del registro y la organización a nivel oracional. 2 U6 En comunicación oral, se espera que los estudiantes dialoguen para profundizar en los temas de la unidad y para seguir desarrollando sus habilidades comunicativas. Por esto, la unidad se focaliza en ayudarlos a hacer preguntas durante el diálogo para profundizar en algunos puntos, ampliar la mirada sobre un mismo tema y explorar las ideas expuestas por otros.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Manifestar disposición a formarse un pensamiento propio, reflexivo e",
+        "Interesarse por comprender las experiencias e ideas de los demás,"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno53.",
+          "indicadores": [
+            "Leen una variedad de textos relacionados con un tema de estudio. Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+            "Comparan personajes de las narraciones con personas de su propia vida o que están en los medios.",
+            "Sacan conclusiones de las lecturas que son aplicables a sus propias vidas.",
+            "Hacen referencia a las obras leídas con anterioridad.",
+            "Describen los elementos de una obra que están presentes hoy en nuestra sociedad.",
+            "Se refieren a las obras leídas en situaciones cotidianas, aludiendo a características de ciertos personajes o situaciones que les recuerdan la vida cotidiana.",
+            "Comentan experiencias de los personajes que son distintas a las propias.",
+            "Explican por qué una obra en particular sigue vigente años o siglos después de escrita. El mundo descabellado"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: --El o los conflictos de la historia. --Los personajes, su evolución en el relato y su relación con otros personajes. --La relación de un fragmento de la obra con el total. --El narrador, distinguiéndolo del autor. --Personajes tipo (por ejemplo, el pícaro, el avaro, el seductor, la madrastra, etc.), símbolos y tópicos literarios presentes en el texto. --Los prejuicios, estereotipos y creencias presentes en el relato y su conexión con el mundo actual. --La disposición temporal de los hechos, con atención a los recursos léxicos y gramaticales empleados para expresarla. --Elementos en común con otros textos leídos en el año.",
+          "indicadores": [
+            "Explican el o los conflictos de una narración. Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente:",
+            "Explican las causas del o de los conflictos presentes en una obra.",
+            "Describen a los personajes a partir de lo que dicen y hacen, y lo que se dice de ellos. el relato y su relación con otros personajes,.",
+            "Explican, oralmente o por escrito, por qué un personaje tiene mayor o menor relevancia en el desenlace de la historia.",
+            "Explican las relaciones que hay entre los personajes, en términos de parentesco, amistad, influencias de uno sobre otro, etc. con el total.",
+            "Explican cómo cambia un personaje después de un evento provocado por otro.",
+            "Señalan qué información, importante para entender la obra, se entrega en un fragmento seleccionado por el docente. el avaro, el seductor, la madrastra, etc.), Símbolos y tópicos literarios presentes en el texto. presentes en el relato y su conexión con el mundo actual.",
+            "Explican qué relevancia tiene un determinado fragmento en la obra.",
+            "Explican qué temas de la obra se tocan en un determinado fragmento.",
+            "Distinguen al narrador del autor.",
+            "Describen al narrador de la obra a partir de lo que dice, cuánto sabe de lo que está narrando, etc.",
+            "Identifican en las obras leídas personajes tipo que tienen características constantes en la literatura; por ejemplo: la madrastra en los cuentos con atención a los recursos léxicos y gramaticales empleados para expresarla. infantiles.",
+            "Identifican prejuicios, estereotipos y creencias en la obra leída, y comparan lo que ahí sucede con sus propias vidas o el mundo que los rodea. leídos en el año.",
+            "Identifican símbolos en la narración y ofrecen una interpretación; por ejemplo: entrar en el bosque podría ser interpretado como enfrentar los propios miedos.",
+            "Mencionan algunos tópicos literarios y sus características y son capaces de identificar algunos pasajes de la narración que aluden a ellos, cuando la obra lo permite.",
+            "Resumen la historia, evidenciando el orden en que sucedieron los hechos y no necesariamente como están presentados en el relato.",
+            "Describen temas en común presentes en dos textos y los explican a través de ejemplos.",
+            "Usan un ordenador gráfico para comparar dos narraciones.",
+            "Comparan, por escrito o esquemáticamente, dos obras leídas durante el año. El mundo descabellado"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: --Su experiencia personal y sus conocimientos. --Un dilema presentado en el texto y su postura personal acerca del mismo. --La relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+          "indicadores": [
+            "Ofrecen una interpretación del texto leído que aborda temas que van más allá de lo literal o de un mero resumen. conocimientos.",
+            "Explican y ejemplifican por qué el texto leído se inserta en el tema que está en estudio; por ejemplo: por qué el cuento “El contador de historias” se inserta en el tema del mundo descabellado o por qué el poema “Oda al tiempo” se inserta en el tema de la naturaleza. postura personal acerca del mismo.",
+            "Relacionan el texto con sus propias experiencias y dan sentido a un fragmento o el total de la obra. mundo y el contexto histórico en el que se ambienta y/o en el que fue creada.",
+            "Plantean su postura frente al dilema que se plantea en el texto y fundamentan con ejemplos de él.",
+            "Explican cómo está presente el contexto histórico en el texto y ejemplifican mediante citas.",
+            "Explican cómo algunos elementos del contexto histórico influyen en la obra leída.",
+            "Explican algún aspecto de la obra, considerando el momento histórico en el que se ambienta o fue creada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinión, cartas y discursos, considerando: --La postura del autor y los argumentos e información que la sostienen. --La diferencia entre hecho y opinión. --Con qué intención el autor usa diversos modos verbales. --Su postura personal frente a lo leído y argumentos que la sustentan.",
+          "indicadores": [
+            "Hacen un resumen del texto. Analizar y evaluar textos con finalidad argumentativa, como columnas de opinión, cartas y discursos, considerando:",
+            "Explican cuál es la postura del autor y qué argumentos utiliza para respaldarla. información que la sostienen.",
+            "Explican su postura, y si están de acuerdo o en desacuerdo con lo que se dice en el texto.",
+            "Señalan con qué argumentos están de acuerdo y con cuáles en desacuerdo, y explican por qué. modos verbales. argumentos que la sustentan.",
+            "Para cada argumento de un texto, establecen si es un hecho o una opinión.",
+            "Refutan o reafirman la postura del texto con al menos un argumento nuevo."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Vendrán las lluvias suaves",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "El docente explica brevemente quién es Ray Bradbury y reseña el libro Crónicas Marcianas. Luego explica que leerán el cuento “Vendrán las lluvias suaves”, que pertenece a ese libro. Los estudiantes leen de manera individual el cuento y responden algunas preguntas por escrito. Por ejemplo: >> ¿Qué ha pasado con los habitantes de la casa? Subraye alguna parte del cuento que permita justificar esa conclusión. >> ¿Qué importancia tiene para el cuento que se mencione la hora a cada instante? ¿Cree que daría lo mismo si se omitiera esa información? Explique por qué. >> Lea el siguiente fragmento con detención: 2 “«Las diez y quince». Los rociadores del jardín se convirtieron en fuentes doradas, llenando el aire suave de la mañana de ondas brillantes. El agua golpeaba contra los vidrios de las ventanas, corría por la pared del lado oeste, chamuscado, donde la casa se había quemado en forma pareja y había desaparecido la pintura blanca. Todo el lado occidental de la casa estaba negro, excepto en cinco lugares. Allí la silueta pintada de un hombre cortando el césped. Allá, como en una fotografía, una mujer inclinada, recogiendo flores. Un poco más adelante, sus imágenes quemadas en la madera, en un instante titánico, un niñito con las manos alzadas; un poco más arriba, la imagen de una pelota arrojada, y frente a él una niña, con las manos levantadas como para recibir esa pelota que nunca bajó”. U6 >> ¿Qué se puede inferir de estas imágenes? ¿Qué explica el fragmento acerca del destino de la ciudad y de los habitantes de la casa? >> ¿Por qué el autor dará tanta importancia a la descripción de los avances tecnológicos en el cuento? Luego de responder estas preguntas en sus cuadernos, los estudiantes las discuten, guiados por el profesor. LENGUA Y LITERATURA | Programa de Estudio | 8° básico 255"
+        },
+        {
+          "nombre": "Alicia en el País de las Maravillas",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Luego de leer la novela Alicia en el País de las Maravillas de Lewis Carroll, el docente organiza cuatro grupos y a cada uno le asigna una de las siguientes preguntas: >> ¿Cuál es la principal diferencia entre Alicia y los personajes que habitan el País de las Maravillas? Justifique su respuesta con ejemplos del texto. >> ¿Qué simboliza el hecho de que los reyes del País de las Maravillas sean cartas? >> Reflexione sobre la manera en que los distintos personajes de la novela tratan a Alicia. ¿Por qué cree que tienen estos comportamientos? >> ¿Qué pueden simbolizar los cambios de tamaño que Alicia sufre durante su estadía en el País de las Maravillas? Mientras los grupos construyen sus respuestas, el docente los orienta y les recuerda que usen partes del texto para justificar sus interpretaciones. Luego ponen las respuestas en común para que cada grupo reciba aportes de los demás compañeros. Finalmente, cada grupo escribe en una cartulina la pregunta asignada con su respuesta y la pegan en el muro de la sala, para tenerlas en cuenta al momento de interpretar la novela."
+        },
+        {
+          "nombre": "Algo muy grave va a suceder en este pueblo",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes analizan el cuento de Gabriel García Márquez “Algo muy grave va a suceder en este pueblo” a partir de las siguientes preguntas: >> García Márquez contó este cuento en un congreso de escritores, para referirse a la diferencia entre contar un cuento o escribirlo. Antes de empezar dijo: “Para que vean después cómo cambia cuando lo escriba”. ¿En qué partes del cuento se nota que originalmente esta historia fue relatada de forma oral? Márquelas en el texto. >> ¿Qué fue lo que detonó la huida de los habitantes del pueblo? >> ¿Qué otro motivo, además de advertir a la señora, puede haber tenido el carnicero para sugerirle que llevara dos libras de carne? >> ¿Por qué el calor y el pajarito de la plaza producen tanto alboroto en el pueblo, a pesar de que siempre haya sido un pueblo caluroso y con pajaritos? >> Comente el final del cuento: “Huyen en un tremendo y verdadero pánico, como en un éxodo de guerra, y en medio de ellos va la señora que tuvo el presagio, clamando: −Yo dije que algo muy grave iba a pasar, y me dijeron que estaba loca”. >> ¿Se cumple finalmente el presagio de la señora? Explique por qué. >> ¿Significa esto que la señora tenía razón o estaba equivocada? Justifique su respuesta. Los estudiantes anotan las respuestas en sus cuadernos y luego las discuten con el resto del curso. 256 LENGUA Y LITERATURA | Programa de Estudio | 8° básico"
+        }
+      ],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 7,
+      "nombre_unidad": "Medios de comunicación",
+      "proposito": "El propósito de esta unidad es que los estudiantes reflexionen y hagan una lectura analítica y crítica de textos de los medios de comunicación, tanto orales como escritos. Se busca que se formen una opinión sobre la información que reciben, identifiquen los puntos de vista con que esta se presenta a los lectores, distingan las opiniones y hechos que se incluyen en los textos e infieran cuáles son los objetivos que tienen sus autores. Se espera que aprendan a investigar antes de emitir una opinión, para poder fundamentar sus aseveraciones con documentos e investigación. El propósito es que pongan en práctica sus habilidades de investigación para construir textos argumentativos en los cuales establezcan una postura y la sustenten mediante argumentos adecuadamente documentados. La escritura, al igual que en las unidades anteriores, se plantea desde una perspectiva de proceso, en la que el docente entrega herramientas al estudiante para que sea un escritor reflexivo y aprenda a solucionar autónomamente sus dificultades. 2 U7 En comunicación oral, se espera que los estudiantes desarrollen conciencia de los requerimientos que plantean las diversas situaciones comunicativas, para que puedan usar de manera intencionada los diferentes elementos que configuran los textos orales, de manera de cuidar la relación con otros y lograr sus propósitos.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Valorar las posibilidades que da el discurso hablado y escrito para participar",
+        "Valorar la evidencia y la búsqueda de conocimientos que apoyen sus",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que",
+        "Trabajar colaborativamente, usando de manera responsable las tecnologías"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinión, cartas y discursos, considerando: --La postura del autor y los argumentos e información que la sostienen. --La diferencia entre hecho y opinión. --Con qué intención el autor usa diversos modos verbales. --Su postura personal frente a lo leído y argumentos que la sustentan.",
+          "indicadores": [
+            "Hacen un resumen del texto. Analizar y evaluar textos con finalidad argumentativa, como columnas de opinión, cartas y discursos, considerando:",
+            "Explican cuál es la postura del autor y qué argumentos utiliza para respaldarla. información que la sostienen.",
+            "Identifican el uso de los modos verbales que emplea el autor y explican si es que hay una intención en su uso; por ejemplo: crear dudas, hablar hipotéticamente, etc. modos verbales.",
+            "Explican su postura, y si están de acuerdo o en desacuerdo con lo que se dice en el texto. argumentos que la sustenten.",
+            "Señalan con qué argumentos están de acuerdo y con cuáles en desacuerdo, y explican por qué.",
+            "Para cada argumento de un texto, establecen si es un hecho o una opinión.",
+            "Refutan o reafirman la postura del texto con al menos un argumento nuevo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Analizar y evaluar textos de los medios de comunicación, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: --Los propósitos explícitos e implícitos del texto. --Una distinción entre los hechos y las opiniones expresados. --Presencia de estereotipos y prejuicios. --La suficiencia de información entregada. --El análisis e interpretación de imágenes, gráficos, tablas, mapas o diagramas, y su relación con el texto en el que están insertos. --Similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho.",
+          "indicadores": [
+            "Identifican cuáles son los propósitos que un autor hace explícitos en un texto.",
+            "Mencionan cuáles son los propósitos implícitos que probablemente tiene un texto, argumentando a partir de elementos del mismo.",
+            "Explican por qué una información presente en el texto corresponde a un hecho o una opinión. del texto.",
+            "Identifican estereotipos y prejuicios en la obra y expresan su postura sobre el uso que se hace de ellos. opiniones expresados.",
+            "Señalan si la información entregada por el texto es suficiente para poder adoptar responsablemente una postura frente al tema abordado; en caso de que no sea así, indican qué información adicional requieren. entregada.",
+            "Explican la información que transmiten los elementos gráficos del texto.",
+            "Señalan qué información que está presente en los elementos gráficos no está presente en el texto escrito y por qué es relevante (o superflua). imágenes, gráficos, tablas, mapas o",
+            "Explican la relación entre la información entregada por un elemento diagramas, y su relación con el texto en gráfico y el texto escrito; por ejemplo: “en la línea del tiempo se el que están insertos. agregan los antecedentes que permiten comprender cómo se llegó al hecho sobre el que habla el texto”. en que distintas fuentes presentan un",
+            "Explican las similitudes y diferencias que hay entre la presentación mismo hecho. que hace un texto de un hecho y cómo lo presenta otro. Medios de comunicación"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Escribir, con el propósito de persuadir, textos breves de diversos géneros (por ejemplo, cartas al director, editoriales, críticas literarias, etc.), caracterizados por: --La presentación de una afirmación referida a temas contingentes o literarios. --La presencia de evidencias e información pertinente. --La mantención de la coherencia temática.",
+          "indicadores": [
+            "Escriben textos de diversos géneros con el fin de persuadir al lector respecto de un tema de interés.",
+            "Usan de manera pertinente la estructura del género elegido para escribir.",
+            "Mencionan su postura frente al tema al principio del texto, y la sustentan con argumentos.",
+            "Usan evidencias e información que se relaciona directamente con los argumentos utilizados.",
+            "Fundamentan su postura, usando citas de un texto (literario o no literario), ejemplos, conocimientos previos sobre el tema, etc.",
+            "Escriben textos en los que cada uno de los párrafos contribuye a llevar a cabo el propósito de persuadir.",
+            "Escriben textos en los que cada uno de los párrafos aborda un tema que se relaciona directamente con la postura que se quiere transmitir.",
+            "Escriben textos en los que cada oración contribuye a desarrollar la idea central del párrafo.",
+            "Escriben textos que mantienen y vinculan de modo coherente los temas tratados, sin que se observen rupturas temáticas o incoherencias."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en función del contexto, el destinatario y el propósito: --Recopilando información e ideas y organizándolas antes de escribir. --Adecuando el registro, específicamente, el vocabulario (uso de términos técnicos, frases hechas, palabras propias de las redes sociales, términos y expresiones propios del lenguaje hablado), el uso de la persona gramatical, y la estructura del texto al género discursivo, contexto y destinatario. --Incorporando información pertinente. --Asegurando la coherencia y la cohesión del texto. --Cuidando la organización a nivel oracional y textual. --Usando conectores adecuados para unir las secciones que componen el texto y relacionando las ideas dentro de cada párrafo. --Usando un vocabulario variado y preciso. --Reconociendo y corrigiendo usos inadecuados, especialmente de pronombres personales y reflejos, conjugaciones verbales, participios irregulares, y concordancia sujeto–verbo, artículo–sustantivo y sustantivo–adjetivo. --Corrigiendo la ortografía y mejorando la presentación. --Usando eficazmente las herramientas del procesador de textos.",
+          "indicadores": [
+            "Recopilan documentos o páginas de internet que pueden aportar información para su tema.",
+            "Toman apuntes o hacen fichas a partir de los textos que consultan.",
+            "Seleccionan la información que se relaciona directamente con el tema y descartan la que no es pertinente.",
+            "Comentan con otros los temas que desarrollarán y qué información incluirán en sus escritos.",
+            "Organizan sus ideas e información en torno a diferentes categorías o temas, usando organizadores gráficos o esquemas.",
+            "Emplean un vocabulario pertinente al tema y al destinatario.",
+            "Usan términos técnicos cuando el tema lo requiere.",
+            "Usan un registro y una sintaxis propios de los textos escritos y adecuados al destinatario.",
+            "Emplean la estructura del género que han seleccionado. del texto. Medios de comunicación"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer versiones en audio y apoyos visuales para organizar la lectura y la escritura.",
+          "Permitir respuestas escritas, orales o visuales según la necesidad del estudiante.",
+          "Usar organizadores gráficos y listas de cotejo para planificar, resumir y revisar textos.",
+          "Fragmentar tareas extensas en pasos breves con pausas de autorregulación y uso guiado de tecnología."
+        ]
+      }
+    }
+  ]
+}

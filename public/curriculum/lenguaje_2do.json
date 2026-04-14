@@ -1,0 +1,610 @@
+[
+  {
+    "nivel": "2º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella.",
+        "Demostrar disposición e interés por compartir ideas, experiencias y opiniones con otros.",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita.",
+        "Demostrar respeto por las diversas opiniones y puntos de vista, reconociendo el diálogo como una herramienta de enriquecimiento personal y social."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Leer independientemente y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación; por ejemplo: cuentos folclóricos y de autor; leyendas; otros.",
+          "indicadores": [
+            "Mencionan personajes de las obras leídas.",
+            "Mencionan textos y autores que han leído.",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente.",
+            "Releen los textos que conocen.",
+            "Seleccionan textos para leer por su cuenta.",
+            "Recomiendan textos a otros.",
+            "Manifiestan su preferencia por algún texto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Demostrar comprensión de las narraciones leídas: extrayendo información explícita e implícita; reconstruyendo la secuencia de las acciones en la historia; identificando y describiendo las características físicas y sentimientos de los distintos personajes; recreando, a través de distintas expresiones (dibujos, modelos tridimensionales u otras), el ambiente en el que ocurre la acción; estableciendo relaciones entre el texto y sus propias experiencias; emitiendo una opinión sobre un aspecto de la lectura.",
+          "indicadores": [
+            "Contestan preguntas que aluden a información explícita o implícita.",
+            "Hacen un recuento de la historia oralmente, por escrito o a través de imágenes.",
+            "Caracterizan a los personajes mediante representaciones, dibujos, recortes, etc.",
+            "Describen, dibujan o recrean el lugar donde ocurre el relato.",
+            "Comparan a los personajes con personas que conocen.",
+            "Establecen si están de acuerdo o no con acciones realizadas por los personajes y explican por qué.",
+            "Explican por qué les gusta o no una narración.",
+            "Relacionan información que conocen con la que aparece en el texto.",
+            "Comentan situaciones de sus vidas que se asemejan a algún elemento de la historia."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, notas, instrucciones y artículos informativos) para entretenerse y ampliar su conocimiento del mundo: extrayendo información explícita e implícita; comprendiendo la información que aportan las ilustraciones y los símbolos a un texto; formulando una opinión sobre algún aspecto de la lectura.",
+          "indicadores": [
+            "Explican, oralmente o por escrito, información que han aprendido o descubierto en los textos que leen.",
+            "Contestan, oralmente o por escrito, preguntas que aluden a información explícita o implícita de un texto leído.",
+            "Mencionan información del texto leído que se relaciona con información que han aprendido en otras asignaturas u otros textos.",
+            "Describen las imágenes del texto.",
+            "Mencionan datos que aparecen en las ilustraciones de un texto.",
+            "Evalúan si la imagen de un texto corresponde a la información que aparece en él.",
+            "Cumplen exitosamente la tarea descrita en las instrucciones leídas.",
+            "Expresan opiniones y las justifican, mencionando información extraída de textos leídos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Leer textos significativos que incluyan palabras con hiatos y diptongos, con grupos consonánticos y con combinación ce-ci, que-qui, ge-gi, gue-gui, güe-güi.",
+          "indicadores": [
+            "Leen en voz alta, sin equivocarse, palabras con hiatos y diptongos.",
+            "Leen en voz alta, sin equivocarse, palabras con las combinaciones ce-ci, que-qui, ge-gi, gue-gui, güe-güi."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Desarrollar la curiosidad por las palabras o expresiones que desconocen y adquirir el hábito de averiguar su significado.",
+          "indicadores": [
+            "Identifican qué palabras de un texto no conocen.",
+            "Preguntan a un adulto o un par el significado de una palabra que no comprenden al leerla o escucharla.",
+            "Explican con sus propias palabras el significado de los términos desconocidas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: relacionar la información del texto con sus experiencias y conocimientos; visualizar lo que describe el texto.",
+          "indicadores": [
+            "Explican lo que saben de un tema antes de leer un texto sobre el mismo.",
+            "Relacionan, oralmente o por escrito, algún tema o aspecto del texto con sus experiencias o conocimientos previos.",
+            "Describen o dibujan lo que visualizan a partir de una lectura."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema.",
+          "indicadores": [
+            "Escriben un párrafo sobre un tema.",
+            "Incorporan en sus párrafos descripciones o datos sobre el tema."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Escribir correctamente para facilitar la comprensión por parte del lector, usando de manera apropiada: combinaciones ce-ci, que-qui, ge-gi, gue-gui, güe-güi; r-rr-nr; mayúsculas al iniciar una oración y al escribir sustantivos propios.",
+          "indicadores": [
+            "Escriben correctamente palabras que contienen las combinaciones ce-ci, que-qui, ge-gi, gue-gui, güe-güi.",
+            "Escriben correctamente palabras que contienen: r-rr-nr",
+            "Escriben textos en los que utilizan mayúscula al iniciar una oración y al escribir sustantivos propios.",
+            "Utilizan mayúsculas para escribir sustantivos propios y al iniciar oraciones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Participar activamente en conversaciones grupales sobre textos leídos o escuchados en clases o temas de su interés: manteniendo el foco de la conversación; expresando sus ideas u opiniones; formulando preguntas para aclarar dudas; demostrando interés ante lo escuchado; mostrando empatía frente a situaciones expresadas por otros; respetando turnos.",
+          "indicadores": [
+            "Aportan información que se relaciona con el tema sobre el cual se conversa.",
+            "Hacen comentarios que demuestran empatía por lo que expresa un compañero.",
+            "Expresan desacuerdo frente a opiniones emitidas por otros sin descalificar las ideas ni al emisor.",
+            "Usan expresiones faciales y adoptan posturas que demuestran interés por lo que se dice.",
+            "Esperan que el interlocutor termine una idea para complementar lo dicho."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "2º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse.",
+        "Demostrar empatía hacia los demás, comprendiendo el contexto en el que se sitúan.",
+        "Lenguaje y Comunicación 105 Unidad 2"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Leer independientemente y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación; por ejemplo: poemas",
+          "indicadores": [
+            "cuentos folclóricos y de autor",
+            "fábulas",
+            "otros Mencionan personajes de las obras leídas. Mencionan textos y autores que han leído.",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente.",
+            "Releen textos que ya conocen.",
+            "Seleccionan textos para leer por su cuenta.",
+            "Recomiendan textos a otros.",
+            "Manifiestan su preferencia por algún texto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer habitualmente y disfrutar los mejores poemas de autor y de la tradición oral adecuados a su edad.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, notas, instrucciones y artículos informativos) para entretenerse y ampliar su conocimiento del mundo: extrayendo información explícita e implícita",
+          "indicadores": [
+            "comprendiendo la información que aportan las ilustraciones y los símbolos a un texto",
+            "formulando una opinión sobre algún aspecto de la lectura Dibujan imágenes de poemas que les gusten. Explican versos del poema.",
+            "Subrayan y leen en voz alta versos de los poemas leídos en clases que les gustan.",
+            "Recitan poemas seleccionados por ellos.",
+            "Nombran su poema favorito.",
+            "Nombran autores de poemas que les gustan.",
+            "Escogen poemas para leer a otros.",
+            "Explican, oralmente o por escrito, información que han aprendido o descubierto en los textos que leen.",
+            "Contestan, oralmente o por escrito, preguntas que aluden a información explícita o implícita de los textos.",
+            "Mencionan información del texto leído que se relaciona con información que han aprendido en otras asignaturas u otros textos.",
+            "Describen las imágenes del texto.",
+            "Mencionan datos que aparecen en las ilustraciones de un texto.",
+            "Evalúan si la imagen que aparece en el texto tiene relación con la información que aparece en el texto sobre ella.",
+            "Cumplen exitosamente la tarea descrita en las instrucciones leídas.",
+            "Expresan opiniones y las justifican, mencionando información extraída de textos leídos.",
+            "Lenguaje y Comunicación Unidad 2 i n d i ca d o r es d e evaluac i ó n su g e r i d os 107"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Buscar información sobre un tema en una fuente dada por el docente (página de internet, sección del diario, capítulo de un libro, etc.), para llevar a cabo una investigación.",
+          "indicadores": [
+            "Encuentran información sobre un tema en una fuente. Navegan en la página de internet señalada por el docente para encontrar la información que necesitan.",
+            "Anotan información que les llama la atención.",
+            "Escriben un párrafo para comunicar lo aprendido en la fuente leída."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema.",
+          "indicadores": [
+            "Escriben uno o dos párrafos sobre un tema. Incorporan en sus párrafos descripciones o datos sobre el tema."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Escribir correctamente para facilitar la comprensión por parte del lector, usando de manera apropiada: combinaciones ce-ci, quequi, ge-gi, gue-gui, güe-güi",
+          "indicadores": [
+            "r-rr-nr",
+            "signos de interrogación y exclamación al inicio y final de preguntas y exclamaciones",
+            "punto al finalizar una oración Escriben correctamente palabras que contienen las combinaciones ce-ci, que-qui, ge-gi, gue-gui, güe-güi",
+            "Escriben correctamente palabras que contienen: r-rr-nr",
+            "Identifican palabras con ce-ci, que-qui, ge-gi, gue-gui, güe-güi que están mal escritas.",
+            "Incorporan signos de interrogación al inicio y al final de preguntas.",
+            "Incorporan signos de exclamación al inicio y al final de exclamaciones.",
+            "Escriben oraciones que finalizan con punto.",
+            "108 Programa de Estudio Ú 2º básico i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, relatos, anécdotas, etc.) para obtener información y desarrollar su curiosidad por el mundo: estableciendo conexiones con sus propias experiencias",
+          "indicadores": [
+            "identificando el propósito",
+            "formulando preguntas para obtener información adicional y aclarar dudas",
+            "respondiendo preguntas sobre información explícita e implícita",
+            "formulando una opinión sobre lo escuchado Relacionan algún tema o aspecto del texto con sus experiencias o conocimientos previos u otros textos escuchados o leídos anteriormente.",
+            "Señalan qué aprendieron de los textos escuchados o vistos en clases.",
+            "Identifican el propósito del texto escuchado.",
+            "Formulan preguntas para ampliar sus conocimientos sobre lo que escucharon.",
+            "Responden preguntas, usando de manera pertinente la información escuchada.",
+            "Expresan una opinión sobre algún aspecto de un texto escuchado y dan una razón."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés: presentando información o narrando un evento relacionado con el tema",
+          "indicadores": [
+            "incorporando frases descriptivas que ilustren lo dicho",
+            "utilizando un vocabulario variado",
+            "pronunciando adecuadamente y usando un volumen audible",
+            "manteniendo una postura adecuada Exponen sobre un tema. Describen el objeto o el evento que presentan.",
+            "Expresan al menos dos ideas relacionadas con el tema elegido.",
+            "Expresan las ideas sobre el tema sin hacer digresiones.",
+            "Comunican sus ideas sin recurrir a gestos ni al contexto.",
+            "Incorporan un vocabulario variado en sus intervenciones.",
+            "Incorporan, si es pertinente, palabras aprendidas recientemente.",
+            "Pronuncian cada una de las palabras de manera que todos las comprenden fácilmente.",
+            "Ajustan el volumen de la voz para que escuche toda la audiencia.",
+            "Mantienen una postura formal y hacen contacto visual con quienes los están escuchando.",
+            "Lenguaje y Comunicación Unidad 2 i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 30,
+          "descripcion": "Recitar con entonación y expresión poemas, rimas, canciones, trabalenguas y adivinanzas para fortalecer la confianza en sí mismos, aumentar el vocabulario y desarrollar su capacidad expresiva.",
+          "indicadores": [
+            "Recitan poemas o versos de memoria. Recitan poemas con entonación.",
+            "Pronuncian adecuadamente las palabras.",
+            "109 110 Programa de Estudio Ú 2º básico"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "2º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura.",
+        "Demostrar respeto por las diversas opiniones y puntos de vista, reconociendo el diálogo como una herramienta de enriquecimiento personal y social.",
+        ""
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Leer independientemente y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación; por ejemplo: poemas",
+          "indicadores": [
+            "cuentos folclóricos y de autor",
+            "otros Mencionan personajes de las obras leídas. Mencionan textos y autores que han leído.",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente.",
+            "Releen textos que ya conocen.",
+            "Seleccionan textos para leer por su cuenta.",
+            "Recomiendan textos a otros.",
+            "Manifiestan su preferencia por algún texto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Demostrar comprensión de las narraciones leídas: extrayendo información explícita e implícita",
+          "indicadores": [
+            "reconstruyendo la secuencia de las acciones en la historia",
+            "identificando y describiendo las características físicas y sentimientos de los distintos personajes",
+            "recreando, a través de distintas expresiones (dibujos, modelos tridimensionales u otras), el ambiente en el que ocurre la acción",
+            "estableciendo relaciones entre el texto y sus propias experiencias",
+            "emitiendo una opinión sobre un aspecto de la lectura Contestan preguntas que aluden a información explícita o implícita.",
+            "Hacen un recuento de la historia oralmente, por escrito o a través de imágenes.",
+            "Caracterizan a los personajes mediante representaciones, dibujos, recortes, etc.",
+            "Describen, dibujan o recrean el lugar donde ocurre el relato.",
+            "Comparan a los personajes con personas que conocen.",
+            "Establecen si están de acuerdo o no con acciones realizadas por los personajes y explican por qué.",
+            "Explican por qué les gusta o no una narración.",
+            "Relacionan información que conocen con la que aparece en el texto.",
+            "Comentan situaciones de sus vidas que se asemejan a algún elemento de la historia.",
+            "Lenguaje y Comunicación Unidad 3 i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer habitualmente y disfrutar los mejores poemas de autor y de la tradición oral adecuados a su edad.",
+          "indicadores": [
+            "Dibujan imágenes de poemas que les gusten. Explican versos del poema.",
+            "Subrayan y leen en voz alta versos de los poemas que han sido leídos en clases y que les gustan.",
+            "Recitan poemas seleccionados por ellos.",
+            "Nombran su poema favorito.",
+            "Nombran autores de poemas que les gustan.",
+            "Escogen poemas para leer a otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: hacer preguntas mientras se lee",
+          "indicadores": [
+            "Preguntan el significado de palabras o expresiones que no comprenden.",
+            "Preguntan para ampliar la información leída.",
+            "Formulan preguntas para especular a partir de información del texto, por ejemplo, ¿qué pasaría si…? y responden a partir de información del texto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Escribir creativamente narraciones (experiencias personales, relatos de hechos, cuentos, etc.) que tengan inicio, desarrollo y desenlace.",
+          "indicadores": [
+            "Escriben uno o más párrafos para narrar una experiencia o un evento imaginado.",
+            "Escriben narraciones en las cuales se desarrolla la historia a través de varias acciones.",
+            "Escriben narraciones que tienen un desenlace.",
+            "127 128 Programa de Estudio Ú 2º básico i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Comprender la función de los artículos, sustantivos y adjetivos en textos orales y escritos, y reemplazarlos o combinarlos de diversas maneras para enriquecer o precisar sus producciones.",
+          "indicadores": [
+            "Seleccionan el artículo que concuerda con un sustantivo en un texto.",
+            "Usan adecuadamente los artículos definidos e indefinidos, según el contexto.",
+            "Eligen el artículo (definido o indefinido) que mejor calza con una situación descrita.",
+            "Usan, en sus producciones orales y escritas, sustantivos precisos para nombrar objetos, personas y lugares.",
+            "Sintetizan una frase nominal con un sustantivo. Por ejemplo: reemplazan “El hijo de la hermana de mi mamá” por “mi primo”.",
+            "Precisan un sustantivo, utilizando adjetivos y complementos.",
+            "Buscan sinónimos de los sustantivos usados en sus textos para evitar la repetición o para precisar sus ideas.",
+            "Señalan en un texto qué palabras caracterizan a un objeto, lugar, animal o persona.",
+            "Usan adjetivos para especificar las características de un objeto, animal o persona en una descripción."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Identificar el género y número de las palabras para asegurar la concordancia en sus escritos.",
+          "indicadores": [
+            "Identifican el género y el número de las palabras. Mantienen la concordancia de género y número entre sustantivos y adjetivos. Lenguaje y Comunicación Unidad 3 i n d i ca d o r es d e evaluac i ó n su g e r i d os 129"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Participar activamente en conversaciones grupales sobre textos leídos o escuchados en clases o temas de su interés: manteniendo el foco de la conversación",
+          "indicadores": [
+            "expresando sus ideas u opiniones",
+            "formulando preguntas para aclarar dudas",
+            "demostrando interés ante lo escuchado",
+            "mostrando empatía frente a situaciones expresadas por otros",
+            "respetando turnos Aportan información que se relacionan con el tema sobre el cual se conversa.",
+            "Hacen comentarios que demuestran empatía por lo que expresa un compañero.",
+            "Expresan desacuerdo frente a opiniones expresadas por otros, sin descalificar las ideas ni al emisor.",
+            "Usan expresiones faciales y adoptan posturas que demuestran interés por lo que se dice.",
+            "Esperan que el interlocutor termine una idea para complementar lo dicho."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés: presentando información o narrando un evento relacionado con el tema",
+          "indicadores": [
+            "incorporando frases descriptivas que ilustren lo dicho",
+            "utilizando un vocabulario variado",
+            "pronunciando adecuadamente y usando un volumen audible",
+            "manteniendo una postura adecuada Exponen sobre un tema. Describen el objeto o el evento que presentan.",
+            "Expresan al menos dos ideas relacionadas con el tema elegido.",
+            "Expresan las ideas sobre el tema sin hacer digresiones.",
+            "Comunican sus ideas sin recurrir a gestos ni al contexto.",
+            "Incorporan un vocabulario variado en sus intervenciones.",
+            "Incorporan, si es pertinente, palabras aprendidas recientemente.",
+            "Pronuncian cada una de las palabras de manera que todos las comprenden fácilmente.",
+            "Ajustan el volumen de la voz para que escuche toda la audiencia.",
+            "Mantienen una postura formal y hacen contacto visual con quienes los están escuchando.",
+            "130 Programa de Estudio Ú 2º básico i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 30,
+          "descripcion": "Recitar con entonación y expresión poemas, rimas, canciones, trabalenguas y adivinanzas para fortalecer la confianza en sí mismos, aumentar el vocabulario y desarrollar su capacidad expresiva.",
+          "indicadores": [
+            "Recitan poemas o versos de memoria. Recitan poemas con entonación.",
+            "Pronuncian adecuadamente las palabras.",
+            "Lenguaje y Comunicación Unidad 3"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "2º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita.",
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse.",
+        "Demostrar empatía hacia los demás, comprendiendo el contexto en el que se sitúan.",
+        "Lenguaje y Comunicación 149 Unidad 4"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Leer independientemente y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación; por ejemplo: cuentos folclóricos y de autor",
+          "indicadores": [
+            "leyendas",
+            "otros Mencionan personajes de las obras leídas. Mencionan textos y autores que han leído.",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente.",
+            "Releen textos que ya conocen.",
+            "Seleccionan textos para leer por su cuenta.",
+            "Recomiendan textos a otros.",
+            "Manifiestan su preferencia por algún texto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Demostrar comprensión de las narraciones leídas: extrayendo información explícita e implícita",
+          "indicadores": [
+            "reconstruyendo la secuencia de las acciones en la historia",
+            "identificando y describiendo las características físicas y sentimientos de los distintos personajes",
+            "recreando, a través de distintas expresiones (dibujos, modelos tridimensionales u otras), el ambiente en el que ocurre la acción",
+            "estableciendo relaciones entre el texto y sus propias experiencias",
+            "emitiendo una opinión sobre un aspecto de la lectura Contestan preguntas que aluden a información explícita o implícita.",
+            "Hacen un recuento de la historia oralmente, por escrito o a través de imágenes.",
+            "Caracterizan a los personajes mediante representaciones, dibujos, recortes, etc.",
+            "Describen, dibujan o recrean el lugar donde ocurre el relato.",
+            "Comparan a los personajes con personas que conocen.",
+            "Establecen si están de acuerdo o no con acciones realizadas por los personajes y explican por qué.",
+            "Explican por qué les gusta o no una narración.",
+            "Relacionan información que conocen con la que aparece en el texto.",
+            "Comentan situaciones de sus vidas que se asemejan a algún elemento de la historia.",
+            "Lenguaje y Comunicación Unidad 4 i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, notas, instrucciones y artículos informativos) para entretenerse y ampliar su conocimiento del mundo: extrayendo información explícita e implícita",
+          "indicadores": [
+            "comprendiendo la información que aportan las ilustraciones y los símbolos a un texto",
+            "formulando una opinión sobre algún aspecto de la lectura Explican, oralmente o por escrito, información que han aprendido o descubierto en los textos que leen.",
+            "Contestan, oralmente o por escrito, preguntas que aluden a información explícita o implícita de los textos.",
+            "Mencionan información del texto leído que se relaciona con información que han aprendido en otras asignaturas u otros textos.",
+            "Describen las imágenes del texto.",
+            "Mencionan datos que aparecen en las ilustraciones de un texto.",
+            "Evalúan si la imagen de un texto corresponde a la información que aparece en él.",
+            "Cumplen exitosamente la tarea descrita en las instrucciones leídas.",
+            "Expresan opiniones y las justifican, mencionando información extraída de textos leídos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Escribir creativamente narraciones (experiencias personales, relatos de hechos, cuentos, etc.) que tengan inicio, desarrollo y desenlace.",
+          "indicadores": [
+            "Escriben uno o más párrafos para narrar una experiencia o un evento imaginado.",
+            "Escriben narraciones en las cuales se desarrolla la historia a través de varias acciones.",
+            "Escriben narraciones que tienen un desenlace.",
+            "151 152 Programa de Estudio Ú 2º básico i n d i ca d o r es d e evaluac i ó n su g e r i d os"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, relatos, anécdotas, etc.) para obtener información y desarrollar su curiosidad por el mundo: estableciendo conexiones con sus propias experiencias",
+          "indicadores": [
+            "identificando el propósito",
+            "formulando preguntas para obtener información adicional y aclarar dudas",
+            "respondiendo preguntas sobre información explícita e implícita",
+            "formulando una opinión sobre lo escuchado Relacionan algún tema o aspecto del texto con sus experiencias o conocimientos previos u otros textos escuchados o leídos anteriormente.",
+            "Señalan qué aprendieron de los textos escuchados o vistos en clases.",
+            "Identifican el propósito del texto escuchado.",
+            "Formulan preguntas para ampliar sus conocimientos sobre lo que escucharon.",
+            "Responden preguntas, usando de manera pertinente la información escuchada.",
+            "Expresan una opinión sobre algún aspecto de un texto escuchado y dan una razón."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Disfrutar de la experiencia de asistir a obras de teatro infantiles o representaciones para ampliar sus posibilidades de expresión, desarrollar su creatividad y familiarizarse con el género.",
+          "indicadores": [
+            "Relatan una parte de la obra de teatro infantil vista. Describen, oralmente o por escrito, la parte que más les gustó de una obra de teatro o representación vista.",
+            "Nombran personajes favoritos de una obra de teatro o representación vista.",
+            "Explican qué sintieron en un determinado momento de la obra de teatro o representación vista.",
+            "Lenguaje y Comunicación Unidad 4 i n d i ca d o r es d e evaluac i ó n su g e r i d os 153"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Participar activamente en conversaciones grupales sobre textos leídos o escuchados en clases o temas de su interés: manteniendo el foco de la conversación",
+          "indicadores": [
+            "expresando sus ideas u opiniones",
+            "formulando preguntas para aclarar dudas",
+            "demostrando interés ante lo escuchado",
+            "mostrando empatía frente a situaciones expresadas por otros",
+            "respetando turnos Aportan información que se relaciona con el tema sobre el cual se conversa.",
+            "Hacen comentarios que demuestran empatía por lo que expresa un compañero.",
+            "Expresan desacuerdo frente a opiniones expresadas por otros, sin descalificar las ideas ni al emisor.",
+            "Usan expresiones faciales y adoptan posturas que demuestran interés por lo que se dice.",
+            "Esperan que el interlocutor termine una idea para complementar lo dicho."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 29,
+          "descripcion": "Desempeñar diferentes roles para desarrollar su lenguaje y autoestima, y aprender a trabajar en equipo.",
+          "indicadores": [
+            "Representan un personaje de un texto leído, actuando sus principales características.",
+            "Imitan el lenguaje que usa el personaje que están interpretando.",
+            "Representan partes de textos escuchados o leídos.",
+            "Resuelven los conflictos que se originan al trabajar en grupos.",
+            "Programa de Estudio Ú 2º básico"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  }
+]

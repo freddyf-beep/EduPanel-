@@ -1,24 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { BookOpen, Calendar, ClipboardList, ClipboardCheck, Users, GanttChart, CalendarDays, LayoutGrid, ExternalLink } from "lucide-react"
+import { BookOpen, ClipboardList, ClipboardCheck, Users, GanttChart, CalendarDays, ExternalLink } from "lucide-react"
+import { buildUrl, withAsignatura } from "@/lib/shared"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 const modules = [
   {
     title: "Planificaciones",
-    description: "Gestiona todas tus planificaciones anuales por curso y unidad.",
+    description: "Gestiona tus planificaciones anuales por curso y unidad.",
     href: "/planificaciones",
     icon: BookOpen,
-    color: "#F03E6E",
+    color: "var(--primary)",
     bg: "#FFF0F4",
-  },
-  {
-    title: "Planificación Anual",
-    description: "Distribuye la base curricular a lo largo del año",
-    href: "/planificaciones",
-    icon: Calendar,
-    color: "#3B82F6",
-    bg: "#EFF6FF",
   },
   {
     title: "Ver Unidad",
@@ -71,6 +65,7 @@ const modules = [
 ]
 
 export function ModulosContent() {
+  const { asignatura } = useActiveSubject()
   return (
     <div>
       <div className="mb-7">
@@ -80,13 +75,13 @@ export function ModulosContent() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {modules.map(mod => {
           const Icon = mod.icon
           return (
             <Link
-              key={mod.href}
-              href={mod.href}
+              key={mod.title}
+              href={buildUrl(mod.href, withAsignatura({}, asignatura))}
               className="group bg-card border border-border rounded-[16px] p-5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all"
             >
               <div
@@ -105,7 +100,7 @@ export function ModulosContent() {
       {/* Recursos externos */}
       <div className="mt-8 bg-card border border-border rounded-[16px] p-6">
         <h2 className="text-[15px] font-extrabold mb-4">Recursos externos</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
           {[
             { label: "MINEDUC — Currículum", url: "https://www.curriculumnacional.cl" },
             { label: "Planes y Programas", url: "https://www.curriculumnacional.cl/portal/Planes-y-Programas/" },

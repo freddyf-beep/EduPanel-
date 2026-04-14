@@ -1,0 +1,1015 @@
+[
+  {
+    "nivel": "4º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad se busca seguir desarrollando en los estudiantes la comprensión y el gusto por la lectura de textos narrativos. En escritura, se continúan ejercitando las habilidades de escritura a través de la elaboración de comentarios de las obras leídas, para enriquecer la comprensión de los mismos y compartir impresiones. En este sentido, se espera que los estudiantes escriban usando el proceso de escritura, que se aplica con progresiva autonomía. La edición, que es lo último que hacen los alumnos, se complementa con el aprendizaje del uso de la coma en frases explicativas y en presencia de ciertos conectores. Además, los objetivos apuntan a que los alumnos sean cada vez más conscientes de los mecanismos del lenguaje oral, sus efectos y sus posibilidades, a través de la comprensión de textos orales de variada procedencia, especialmente películas y representaciones teatrales. Por otra parte, también se propone que los estudiantes comiencen a desarrollar el pensamiento crítico analizando los mensajes publicitarios, identificando para qué fueron escritos y a quiénes están dirigidos los mensajes. En producción oral, se espera que avancen en su capacidad de generar diálogos que tiendan a la construcción de conocimientos en conjunto y que monten una obra de teatro o realicen dramatizaciones breves.",
+      "conocimientos_previos": [
+        "Experiencia previa escuchando y leyendo narraciones breves y cuentos",
+        "Conocimiento del alfabeto y manejo básico de ortografía y puntuación",
+        "Comprensión de conceptos básicos sobre personajes, ambientes y secuencias en narraciones"
+      ],
+      "palabras_clave": [
+        "fábulas",
+        "cuentos folclóricos",
+        "leyendas",
+        "mitos",
+        "personajes",
+        "ambiente",
+        "narración",
+        "conectores",
+        "comentario",
+        "lectura"
+      ],
+      "conocimientos": [
+        "Tipos de textos narrativos (fábulas, cuentos folclóricos, leyendas y mitos)",
+        "Elementos de la narración: personajes, ambientes, problema, solución",
+        "Uso de conectores y signos de puntuación en la escritura",
+        "Proceso de escritura: planificación, redacción, revisión y edición"
+      ],
+      "habilidades": [
+        "Leer en voz alta de manera fluida, pronunciando las palabras con precisión, respetando los signos de puntuación y utilizando una entonación y velocidad adecuadas al nivel",
+        "Comprender textos aplicando estrategias como relacionar la información con experiencias previas, releer lo no comprendido, visualizar, recapitular y formular preguntas sobre lo leído",
+        "Leer y familiarizarse con un amplio repertorio de literatura (poemas, cuentos folclóricos y de autor, fábulas, leyendas, mitos, novelas e historietas) para aumentar su conocimiento del mundo y desarrollar la imaginación",
+        "Profundizar la comprensión de narraciones extrayendo información explícita e implícita, determinando consecuencias, describiendo personajes y ambientes, reconociendo problemas y soluciones y expresando opiniones fundamentadas",
+        "Leer independientemente y comprender textos no literarios (cartas, biografías, relatos históricos, instrucciones, libros y artículos informativos, noticias) utilizando organizadores de textos expositivos, interpretando textos discontinuos y comparando información",
+        "Escribir creativamente narraciones (experiencias personales, relatos de hechos, cuentos) con una secuencia lógica de eventos, inicio, desarrollo y desenlace, usando conectores adecuados, descripciones y un lenguaje expresivo para desarrollar la acción",
+        "Escribir, revisar y editar textos para satisfacer un propósito, organizando las ideas en párrafos separados, utilizando conectores apropiados, vocabulario preciso y variado, adecuando el registro al propósito y al destinatario y corrigiendo la ortografía"
+      ],
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita",
+        "Demostrar respeto por las diversas opiniones y puntos de vista, reconociendo el diálogo como una herramienta de enriquecimiento personal y social",
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación; por ejemplo: leyendas y mitos",
+          "indicadores": [
+            "Relacionan situaciones de la vida cotidiana con personajes o acciones de los textos leídos en clases o independientemente",
+            "Mencionan textos y autores que han leído",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente",
+            "Solicitan recomendaciones de textos similares a los leídos en clase",
+            "Seleccionan textos para leer por su cuenta",
+            "Recomiendan textos a otros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Profundizar su comprensión de las narraciones leídas: extrayendo información explícita e implícita; determinando las consecuencias de hechos o acciones; describiendo y comparando a los personajes; describiendo los diferentes ambientes que aparecen en un texto; reconociendo el problema y la solución en una narración; expresando opiniones fundamentadas sobre actitudes y acciones de los personajes; comparando diferentes textos escritos por un mismo autor",
+          "indicadores": [
+            "Aluden, en sus comentarios orales y escritos, a información explícita de un texto",
+            "Contestan, oralmente o por escrito, preguntas que aluden a información implícita del texto",
+            "Explican las consecuencias que tienen las acciones de ciertos personajes",
+            "Explican, oralmente o por escrito, los problemas que enfrentan los personajes y cómo se resuelven",
+            "Comunican qué sentirían ellos si estuviesen en el lugar de determinado personaje mediante comentarios orales o escritos, dramatizaciones, dibujos u otras manifestaciones artísticas",
+            "Describen a los personajes usando información explícita e implícita del texto",
+            "Comparan personajes de diferentes textos en organizadores gráficos, redacciones o comentarios, señalando en qué se parecen y qué diferencias son significativas",
+            "Subrayan en el texto adjetivos o frases que describen el ambiente",
+            "Describen, dibujan o recrean el lugar donde ocurre el relato",
+            "Expresan una postura frente a un hecho, una acción o una actitud de un personaje del texto leído y fundamentan su postura a partir de ejemplos del texto",
+            "Explican por escrito las similitudes que existen entre al menos dos textos escritos por un mismo autor"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: relacionar la información del texto con sus experiencias y conocimientos, releer lo que no fue comprendido, visualizar lo que describe el texto, recapitular",
+          "indicadores": [
+            "Identifican en el texto la información que ya conocían y destacan la información nueva",
+            "Comparan la información que encuentran en textos leídos con sus propios conocimientos sobre el tema",
+            "Detienen su lectura si no entendieron algo y releen el fragmento para tratar de solucionar el problema",
+            "Describen, oralmente o por escrito, lo que visualizan a partir de una lectura",
+            "Hacen una interpretación de un episodio de un texto leído mediante dibujos o actuaciones",
+            "Hacen una recapitulación, oralmente or por escrito, de un texto leído"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, biografías, relatos históricos, instrucciones, libros y artículos informativos, noticias, etc.) para ampliar su conocimiento del mundo y formarse una opinión",
+          "indicadores": [
+            "Relacionan información del texto con sus experiencias y conocimientos",
+            "Explican, oralmente o por escrito, la información que han aprendido o descubierto en los textos que leen",
+            "Aluden a información implícita o explícita de un texto leído al comentar o escribir",
+            "Encuentran información usando títulos, subtítulos, índices o glosarios",
+            "Describen textos discontinuos presentes en un texto leído (imágenes, gráficos, tablas, mapas o diagramas) y explican lo que se comunica por medio de ellos",
+            "Explican, oralmente o por escrito, expresiones en lenguaje figurado",
+            "Comparan, si es pertinente, dos elementos de un texto leído, aplicando criterios dados por el docente",
+            "Responden preguntas como: ¿por qué sucede…?, ¿cuál es la consecuencia de…?, ¿qué sucedería si…? sobre un texto leído",
+            "Expresan una opinión sobre la información leída y la fundamentan"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Escribir creativamente narraciones (experiencias personales, relatos de hechos, cuentos, etc.) que incluyan: una secuencia lógica de eventos, inicio, desarrollo y desenlace, conectores adecuados, descripciones y un lenguaje expresivo para desarrollar la acción",
+          "indicadores": [
+            "Eligen un tema que les interese para escribir un cuento o una leyenda",
+            "Escriben experiencias personales",
+            "Escriben una secuencia de acciones que se suceden de manera lógica",
+            "Estructuran el relato en inicio, desarrollo y desenlace",
+            "Utilizan conectores para ordenar el relato (luego, después, entonces, mientras, por eso, porque)",
+            "Describen personajes, lugares u objetos en el relato",
+            "Usan verbos variados"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Escribir, revisar y editar sus textos para satisfacer un propósito y transmitir sus ideas con claridad. Durante este proceso: organizan las ideas en párrafos separados con punto aparte; utilizan conectores apropiados; emplean un vocabulario preciso y variado; adecuan el registro al propósito del texto y al destinatario; mejoran la redacción del texto a partir de sugerencias de los pares y el docente; corrigen la ortografía y la presentación",
+          "indicadores": [
+            "Escriben hechos que se relacionan unos con otros y siguen un orden lógico",
+            "Separan las ideas en párrafos",
+            "Utilizan conectores para ordenar el relato",
+            "Utilizan un vocabulario expresivo y variado, evitando repeticiones",
+            "Mejoran sus textos agregando datos, adjetivos, descripciones o ejemplos para profundizar las ideas y reescribiendo oraciones que no se comprenden",
+            "Aclaran sus dudas de ortografía a medida que redactan el texto",
+            "Reescriben sus textos corrigiendo la ortografía literal, acentual y puntual",
+            "Agregan ilustraciones y dan un formato atractivo para sus lectores"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Lectura compartida de fábulas y mitos",
+          "oas_asociados": [
+            3,
+            4,
+            2
+          ],
+          "descripcion": "El docente selecciona fábulas y mitos adecuados al nivel y los distribuye entre los grupos de estudiantes. Cada grupo lee su texto en silencio, subrayando palabras o frases que describan a los personajes y ambientes. Luego elaboran una dramatización breve en la que representen el problema y la solución del relato y comparten con el curso sus reflexiones sobre el mensaje de la historia."
+        },
+        {
+          "nombre": "Escritura de un cuento o leyenda personal",
+          "oas_asociados": [
+            12,
+            17
+          ],
+          "descripcion": "Los estudiantes planifican y escriben un cuento o una leyenda basada en una experiencia personal o en su imaginación. Organizan la narración en inicio, desarrollo y desenlace, utilizan conectores adecuados, describen a los personajes y ambientes y emplean un lenguaje expresivo. Después de escribir el borrador, revisan sus textos en parejas, corrigen la ortografía y mejoran la redacción a partir de sugerencias, para luego escribir una versión final ilustrada."
+        },
+        {
+          "nombre": "Análisis y comentario de una lectura no literaria",
+          "oas_asociados": [
+            6,
+            2
+          ],
+          "descripcion": "El docente proporciona un artículo informativo breve o una biografía. Los estudiantes leen el texto de forma independiente, identifican la información explícita e implícita y buscan datos utilizando los títulos y subtítulos. En grupo, responden preguntas como ¿por qué sucedió este hecho?, ¿qué consecuencia tuvo? y comparan lo aprendido con sus conocimientos previos. Finalmente, redactan un comentario personal sobre la lectura, fundamentando su opinión con ejemplos del texto."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Lectura y análisis de narraciones",
+          "oas_evaluados": [
+            3,
+            4
+          ],
+          "actividad_evaluacion": "Cada estudiante selecciona un cuento folclórico o una leyenda de la lista sugerida y realiza una lectura en voz alta frente al grupo, pronunciando con precisión y respetando los signos de puntuación. Luego responde preguntas orales y escritas sobre información explícita e implícita, identifica el problema y la solución del relato, describe a los personajes y ambientes y expresa una opinión fundamentada sobre las acciones de los protagonistas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Lee en voz alta de manera fluida, pronunciando con precisión y respetando los signos de puntuación",
+              "Responde correctamente preguntas de información explícita e implícita del texto",
+              "Describe a los personajes y ambientes utilizando información del texto",
+              "Identifica el problema y la solución del relato y explica las consecuencias de las acciones"
+            ],
+            "de_la_reflexion": [
+              "Expresa una opinión fundamentada sobre las actitudes o acciones de los personajes",
+              "Comparte conexiones personales o experiencias que se relacionen con el texto",
+              "Compara el relato leído con otros textos o autores y fundamenta sus comparaciones"
+            ]
+          }
+        },
+        {
+          "titulo": "Escritura y edición de un cuento",
+          "oas_evaluados": [
+            12,
+            17
+          ],
+          "actividad_evaluacion": "Los estudiantes escriben un cuento original en su cuaderno, siguiendo las etapas del proceso de escritura: planificación, redacción, revisión y edición. Deben organizar las ideas en párrafos, emplear conectores adecuados, utilizar un vocabulario variado y describir personajes y ambientes. Después, revisan el texto con un compañero, aplican las sugerencias recibidas y elaboran la versión final en limpio, corrigiendo ortografía literal y acentual.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Organiza las ideas en párrafos separados y sigue una secuencia lógica de eventos",
+              "Utiliza conectores apropiados para unir las ideas",
+              "Incluye descripciones y un lenguaje expresivo para desarrollar la acción",
+              "Revisa el borrador incorporando sugerencias de pares y del docente"
+            ],
+            "de_la_presentacion": [
+              "Corrige la ortografía y la puntuación en la versión final",
+              "Emplea un vocabulario preciso y variado",
+              "Presenta el cuento con ilustraciones o un formato atractivo"
+            ]
+          }
+        },
+        {
+          "titulo": "Comprensión de textos no literarios",
+          "oas_evaluados": [
+            6,
+            2
+          ],
+          "actividad_evaluacion": "El docente entrega a los estudiantes un texto informativo breve. En forma individual, los estudiantes leen el texto, subrayan información relevante, identifican palabras desconocidas utilizando el glosario o diccionario y responden preguntas de comprensión que incluyen inferencias y explicaciones de causas y consecuencias. Luego, escriben un comentario personal sobre el contenido, relacionándolo con sus conocimientos previos y formulando una opinión fundamentada.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Extrae información explícita e implícita del texto",
+              "Utiliza organizadores de textos expositivos (títulos, subtítulos, glosario) para encontrar información específica",
+              "Interpreta información presentada en gráficos, tablas u otras representaciones",
+              "Responde preguntas que requieren explicar causas, consecuencias o posibles situaciones relacionadas con el texto"
+            ],
+            "de_la_reflexion": [
+              "Relaciona la información del texto con sus experiencias y conocimientos previos",
+              "Escribe un comentario personal que incluya una opinión fundamentada",
+              "Utiliza un vocabulario adecuado y estructura clara en su comentario"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Utilizar audiolibros y lecturas dramatizadas para acompañar la lectura silenciosa, permitiendo que los estudiantes con déficit atencional escuchen el texto mientras siguen la lectura con el dedo o una regla transparente",
+          "Ofrecer herramientas digitales (aplicaciones de dictado o de organización de ideas) para planificar y escribir cuentos, de modo que los estudiantes puedan grabar sus ideas antes de escribirlas y organizar los párrafos mediante esquemas visuales",
+          "Dividir las tareas de lectura y escritura en segmentos cortos, con metas claras y tiempos de trabajo delimitados por un temporizador visual o auditivo, proporcionando descansos activos entre cada segmento",
+          "Incorporar actividades kinestésicas relacionadas con la lectura, como representar escenas mediante gestos o movimientos o crear mapas de historias en el suelo con tarjetas de personajes, ambientes y acciones que los estudiantes puedan mover y reorganizar",
+          "Permitir que los estudiantes presenten sus trabajos de manera multimodal (oral, escrita, audiovisual o con dibujos) para que elijan la forma que mejor se ajuste a sus intereses y fortalezas",
+          "Proporcionar listas de verificación con íconos para que los estudiantes puedan autoevaluar cada etapa de su proceso de escritura y así mantener la atención en los pasos que deben realizar"
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "4º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Leer y familiarizarse con un amplio repertorio de literatura (poemas, cuentos folclóricos y de autor, fábulas) para aumentar el conocimiento del mundo y desarrollar la imaginación; profundizar la comprensión de las narraciones extraendo información explícita e implícita, determinando consecuencias y describiendo personajes y ambientes; comprender poemas e interpretar su lenguaje figurado; escribir cartas, instrucciones, afiches, reportes y noticias para distintos propósitos utilizando formatos adecuados; planificar la escritura estableciendo propósito y destinatario; escribir, revisar y editar textos organizando ideas en párrafos, usando conectores y corrigiendo ortografía; aplicar reglas de ortografía literal y puntual; comprender textos orales (explicaciones, instrucciones, noticias, documentales) formulando preguntas y opinando; expresarse de manera coherente sobre temas de interés usando un vocabulario variado; y recitar poemas con entonación y expresión.",
+      "conocimientos_previos": [
+        "Reconocimiento de elementos de la narración (personajes, ambientes, problema y solución)",
+        "Conocimientos básicos de tipos de textos (literarios y no literarios)",
+        "Uso de vocabulario para describir experiencias y emociones",
+        "Aplicación de normas básicas de ortografía y puntuación"
+      ],
+      "palabras_clave": [
+        "Poema",
+        "Cuento folclórico",
+        "Fábula",
+        "Narración",
+        "Personaje",
+        "Ambiente",
+        "Problema",
+        "Solución",
+        "Carta",
+        "Instrucciones",
+        "Afiche",
+        "Reporte",
+        "Noticia",
+        "Propósito",
+        "Destinatario",
+        "Planificación",
+        "Revisión",
+        "Edición",
+        "Ortografía",
+        "Conectores",
+        "Texto oral",
+        "Opinión"
+      ],
+      "conocimientos": [
+        "Diferencias entre textos literarios y no literarios",
+        "Estrategias de comprensión lectora para extraer información explícita e implícita",
+        "Estructura y formatos de cartas, afiches, instrucciones y reportes",
+        "Proceso de escritura: planificación, redacción, revisión y edición",
+        "Reglas ortográficas (b/v, h, acentuación de palabras agudas, graves, esdrújulas y sobreesdrújulas)",
+        "Identificación del lenguaje figurado en poemas",
+        "Características de la comunicación oral y la expresión coherente"
+      ],
+      "habilidades": [
+        "Leer un repertorio variado de poemas, cuentos y fábulas identificando información explícita e implícita",
+        "Determinar las consecuencias de hechos y describir y comparar personajes y ambientes",
+        "Interpretar el lenguaje figurado de los poemas",
+        "Escribir cartas, instrucciones, afiches y reportes usando formatos adecuados y un vocabulario variado",
+        "Planificar la escritura definiendo propósito y destinatario y generando ideas a partir de lluvia de ideas o investigación",
+        "Revisar y editar textos organizando las ideas en párrafos separados, usando conectores y corrigiendo la ortografía",
+        "Aplicar las reglas de ortografía literal y puntual aprendidas en años anteriores",
+        "Comprender textos orales estableciendo conexiones con experiencias y formulando preguntas para profundizar la comprensión",
+        "Expresarse de manera coherente sobre temas de interés utilizando un vocabulario variado y apoyos visuales",
+        "Recitar poemas con entonación y expresión para fortalecer la confianza y el vocabulario"
+      ],
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura orientada al disfrute y la valoración del conocimiento",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita",
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse",
+        "Demostrar empatía hacia los demás comprendiendo su contexto",
+        "Expresarse de manera coherente y articulada sobre temas de interés utilizando material de apoyo cuando sea pertinente",
+        "Recitar poemas con entonación y expresión para fortalecer la confianza y ampliar el vocabulario"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo y desarrollar su imaginación",
+          "indicadores": [
+            "Leen poemas, cuentos folclóricos y fábulas identificando ideas principales y detalles",
+            "Comentan con sus compañeros los textos leídos destacando sus características"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Profundizar la comprensión de las narraciones leídas extrayendo información explícita e implícita, determinando consecuencias y describiendo personajes y ambientes",
+          "indicadores": [
+            "Identifican información explícita e implícita en los cuentos y fábulas",
+            "Explican las consecuencias de hechos o acciones y describen personajes y ambientes en un texto"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Comprender poemas adecuados al nivel e interpretar el lenguaje figurado presente en ellos",
+          "indicadores": [
+            "Reconocen figuras literarias simples como comparaciones y metáforas",
+            "Explican con sus palabras el significado figurado de un verso"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir cartas, instrucciones, afiches, reportes de una experiencia o noticias para lograr diferentes propósitos usando un formato adecuado",
+          "indicadores": [
+            "Usan un saludo y cierre apropiado al escribir una carta",
+            "Incluyen pasos claros y ordenados al redactar instrucciones",
+            "Organizan información en secciones al elaborar afiches y reportes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Planificar la escritura estableciendo propósito y destinatario y generando ideas a partir de conversaciones, investigaciones o lluvia de ideas",
+          "indicadores": [
+            "Identifican el propósito y destinatario antes de iniciar la escritura",
+            "Anotan ideas surgidas de conversaciones o investigaciones para organizar su texto"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Escribir, revisar y editar textos para satisfacer un propósito y transmitir sus ideas con claridad",
+          "indicadores": [
+            "Organizan las ideas en párrafos separados con punto aparte",
+            "Utilizan conectores apropiados para unir oraciones y párrafos",
+            "Corrigen la ortografía y presentación siguiendo sugerencias de pares y docentes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Escribir correctamente aplicando reglas de ortografía literal y puntual aprendidas en años anteriores, además de palabras con b/v, h de uso frecuente y acentuación",
+          "indicadores": [
+            "Escriben palabras con b y v sin errores usando reglas aprendidas",
+            "Aplican acentos en palabras agudas, graves, esdrújulas y sobreesdrújulas",
+            "Corrigen el uso de h en palabras frecuentes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, noticias, documentales, testimonios) para obtener información y desarrollar su curiosidad",
+          "indicadores": [
+            "Formulan preguntas para aclarar dudas y profundizar la comprensión",
+            "Identifican el propósito de la explicación o instrucción escuchada",
+            "Responden preguntas sobre información explícita e implícita"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés",
+          "indicadores": [
+            "Organizan sus ideas en introducción, desarrollo y cierre al presentar un tema",
+            "Incorporan descripciones y ejemplos que ilustran sus ideas",
+            "Usan un vocabulario variado y gestos acordes a la situación"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 30,
+          "descripcion": "Recitar poemas con entonación y expresión para fortalecer la confianza en sí mismos, aumentar el vocabulario y desarrollar su capacidad expresiva",
+          "indicadores": [
+            "Memorizan y recitan poemas cortos adecuando la entonación",
+            "Usan gestos y ritmo para reforzar la expresión del poema"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Círculo de lectura de cuentos y fábulas",
+          "oas_asociados": [
+            3,
+            4
+          ],
+          "descripcion": "El docente organiza un círculo de lectura donde cada estudiante lee en voz alta un fragmento de un cuento folclórico o una fábula. Luego, en grupo, identifican los personajes, el problema y la solución, y extraen información implícita formulando preguntas como ¿por qué? o ¿qué pasaría si…?."
+        },
+        {
+          "nombre": "Escritura de una carta e instrucciones",
+          "oas_asociados": [
+            14,
+            16,
+            17
+          ],
+          "descripcion": "Los estudiantes planifican y escriben una carta a un familiar explicando cómo se preparan para una presentación en la escuela. Posteriormente redactan instrucciones para realizar una actividad de su interés. Revisan y editan ambos textos con la retroalimentación de sus compañeros."
+        },
+        {
+          "nombre": "Recital de poemas",
+          "oas_asociados": [
+            5,
+            30
+          ],
+          "descripcion": "Cada estudiante selecciona un poema breve, lo memoriza y lo recita frente al curso utilizando entonación, ritmo y gestos para expresar el significado figurado. Antes del recital, investigan las figuras literarias presentes y explican su sentido."
+        },
+        {
+          "nombre": "Comprensión de una noticia oral",
+          "oas_asociados": [
+            23,
+            27
+          ],
+          "descripcion": "El docente reproduce una noticia o documental breve. Los estudiantes escuchan atentamente, anotan ideas principales y formulan preguntas para aclarar dudas. Luego, presentan oralmente un resumen organizado en introducción, desarrollo y cierre, usando material de apoyo si lo consideran necesario."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Análisis de una fábula",
+          "oas_evaluados": [
+            3,
+            4
+          ],
+          "actividad_evaluacion": "Se entrega a los estudiantes una fábula. Deben leerla individualmente, subrayar información explícita e implícita, identificar personajes, ambiente, problema y solución y explicar las consecuencias de las acciones. Luego responden preguntas abiertas sobre los valores presentes en la historia.",
+          "criterios_evaluacion": {
+            "de_la_comprension": [
+              "Identifica correctamente personajes, ambiente, problema y solución de la fábula",
+              "Extrae información explícita e implícita del texto y determina consecuencias de las acciones"
+            ],
+            "de_la_reflexion": [
+              "Responde preguntas abiertas argumentando con elementos del texto",
+              "Relaciona los valores de la fábula con experiencias personales"
+            ]
+          }
+        },
+        {
+          "titulo": "Carta e instrucciones revisadas",
+          "oas_evaluados": [
+            14,
+            16,
+            17,
+            21
+          ],
+          "actividad_evaluacion": "En parejas, los estudiantes intercambian la carta y las instrucciones que escribieron. Revisan la planificación (propósito y destinatario), la estructura, la ortografía y el uso de conectores. Corrigen los errores y entregan una versión final.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Planifica la escritura identificando propósito y destinatario",
+              "Utiliza un formato adecuado y organiza la información de manera lógica",
+              "Aplica reglas ortográficas y conectores de manera correcta"
+            ],
+            "de_la_presentacion": [
+              "Entrega una versión final revisada sin errores de ortografía",
+              "Mejora su texto a partir de la retroalimentación de un compañero"
+            ]
+          }
+        },
+        {
+          "titulo": "Recital de poesía con interpretación",
+          "oas_evaluados": [
+            5,
+            30
+          ],
+          "actividad_evaluacion": "Cada estudiante recita el poema elegido frente al curso, demostrando dominio del texto, entonación adecuada y uso de gestos para expresar su contenido. Luego explica qué figuras literarias identificó y qué significan.",
+          "criterios_evaluacion": {
+            "de_la_presentacion": [
+              "Recita el poema memorizado con buena dicción, entonación y ritmo",
+              "Utiliza gestos y expresiones faciales para transmitir el significado del poema"
+            ],
+            "de_la_comprension": [
+              "Identifica figuras literarias simples y explica su sentido de manera clara",
+              "Relaciona el contenido del poema con sus propias experiencias o emociones"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Proveer versiones auditivas de los textos literarios y permitir la lectura compartida para estudiantes que requieren apoyo en la decodificación",
+          "Usar apoyos visuales como organizadores gráficos y mapas de personajes para facilitar la extracción de información implícita",
+          "Permitir el dictado por voz y el uso de procesadores de texto con corrector ortográfico al escribir cartas e instrucciones",
+          "Ofrecer opciones de presentar las tareas en formato audio o video para estudiantes que se expresan mejor oralmente",
+          "Incorporar juegos de roles y dramatizaciones de fábulas y poemas para canalizar la energía y mantener la atención"
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "4º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "Leer cuentos de autor e historietas para desarrollar la imaginación; profundizar la comprensión de narraciones extrayendo información explícita e implícita y comparando personajes y ambientes; leer independientemente y comprender textos no literarios como cartas, biografías, relatos históricos, instrucciones y artículos informativos usando organizadores de texto (títulos, subtítulos, índice, glosario) para encontrar información específica y comprender gráficos y tablas; aplicar estrategias de comprensión lectora (releer, recapitular, formular preguntas, subrayar información relevante); buscar y clasificar información sobre un tema en diferentes fuentes para una investigación; escribir artículos informativos presentando el tema en una oración y desarrollando una idea central por párrafo con palabras propias; planificar, revisar y editar textos; expresarse oralmente de manera coherente sobre temas de interés y recitar poemas con expresión.",
+      "conocimientos_previos": [
+        "Estructura de cuentos y biografías",
+        "Uso de organizadores de texto como títulos y subtítulos",
+        "Estrategias de comprensión como releer y formular preguntas",
+        "Pasos básicos para investigar un tema en distintas fuentes"
+      ],
+      "palabras_clave": [
+        "Cuento de autor",
+        "Historieta",
+        "Texto no literario",
+        "Biografía",
+        "Relato histórico",
+        "Instrucciones",
+        "Artículo informativo",
+        "Organizadores de texto",
+        "Gráficos",
+        "Tabla",
+        "Resumen",
+        "Investigación"
+      ],
+      "conocimientos": [
+        "Diferencias entre textos narrativos y no literarios",
+        "Uso de índices, glosarios y subtítulos para localizar información",
+        "Interpretación de gráficos, tablas y mapas",
+        "Estrategias de lectura como releer, subrayar y formular preguntas",
+        "Proceso de investigación: definir tema, buscar fuentes, clasificar la información y redactar un informe",
+        "Estructura de un artículo informativo: presentación del tema, desarrollo de ideas con párrafos y cierre"
+      ],
+      "habilidades": [
+        "Leer cuentos de autor e historietas extrayendo información explícita e implícita y comparando personajes y ambientes",
+        "Leer y comprender textos no literarios utilizando organizadores de texto y gráficos para encontrar información específica",
+        "Aplicar estrategias de comprensión lectora (releer, recapitular, subrayar, formular preguntas) durante la lectura",
+        "Buscar y clasificar información en internet, libros, diarios y enciclopedias para una investigación",
+        "Escribir artículos informativos presentando el tema claramente y desarrollándolo por párrafos con sus propias palabras",
+        "Planificar, revisar y editar textos aplicando reglas ortográficas y conectores",
+        "Expresarse de manera coherente sobre un tema de interés organizando ideas en introducción, desarrollo y cierre",
+        "Recitar poemas o fragmentos narrativos con entonación y expresión"
+      ],
+      "actitudes": [
+        "Interés por leer diversos tipos de textos para ampliar su conocimiento del mundo",
+        "Disposición a compartir ideas y opiniones con otros en conversaciones grupales",
+        "Rigor y perseverancia al realizar tareas de investigación",
+        "Respeto por las diversas opiniones y puntos de vista en las discusiones",
+        "Disfrute de la experiencia de investigar y presentar nuevos aprendizajes"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura (cuentos de autor e historietas) para aumentar su conocimiento del mundo y desarrollar su imaginación",
+          "indicadores": [
+            "Leen cuentos y historietas reconociendo elementos narrativos y compartiendo opiniones",
+            "Comparan personajes y ambientes de distintos textos de un mismo autor"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Profundizar la comprensión de las narraciones leídas extrayendo información explícita e implícita y describiendo consecuencias, personajes y ambientes",
+          "indicadores": [
+            "Identifican información implícita en historietas y relatos",
+            "Describen consecuencias de acciones de los personajes y comparan ambientes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, biografías, relatos históricos, instrucciones, libros y artículos informativos, noticias) para ampliar su conocimiento del mundo y formarse una opinión",
+          "indicadores": [
+            "Utilizan títulos, subtítulos, índice y glosario para localizar información específica",
+            "Interpretan información presentada en gráficos, tablas o diagramas",
+            "Formulan preguntas como ¿por qué?, ¿cuál es la consecuencia de…? y fundamentan sus respuestas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora como releer, recapitular, formular preguntas y subrayar información relevante",
+          "indicadores": [
+            "Subrayan información importante y anotan dudas durante la lectura",
+            "Releen para aclarar la comprensión y formulan preguntas que guían la lectura"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Buscar y clasificar información sobre un tema en internet, libros, diarios, revistas y enciclopedias para llevar a cabo una investigación",
+          "indicadores": [
+            "Seleccionan fuentes confiables y distinguen entre información relevante y accesoria",
+            "Organizan la información en categorías antes de redactar un informe"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema presentando el tema en una oración y desarrollando una idea central por párrafo",
+          "indicadores": [
+            "Formulan una oración que presenta el tema claramente",
+            "Desarrollan párrafos con ideas centrales y detalles usando sus propias palabras"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Planificar la escritura estableciendo propósito y destinatario y generando ideas a partir de conversaciones, investigaciones o lluvia de ideas",
+          "indicadores": [
+            "Definen propósito y destinatario de un artículo o informe",
+            "Elaboran esquemas con ideas obtenidas de diversas fuentes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Escribir, revisar y editar textos para satisfacer un propósito y transmitir sus ideas con claridad",
+          "indicadores": [
+            "Revisan la organización en párrafos y corrigen ortografía y conectores",
+            "Mejoran sus textos a partir de la retroalimentación de pares y docentes"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés",
+          "indicadores": [
+            "Organizan presentaciones orales con introducción, desarrollo y conclusión",
+            "Utilizan material de apoyo (carteles, imágenes) para reforzar sus ideas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 30,
+          "descripcion": "Recitar poemas con entonación y expresión para fortalecer la confianza en sí mismos y ampliar el vocabulario",
+          "indicadores": [
+            "Seleccionan y memorizan poemas o fragmentos narrativos",
+            "Recitan con ritmo y entonación adecuados, usando gestos que refuercen el significado"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Lectura guiada de biografías",
+          "oas_asociados": [
+            6,
+            2
+          ],
+          "descripcion": "El docente proporciona biografías breves de personajes históricos o contemporáneos. Los estudiantes leen individualmente, utilizan títulos y subtítulos para ubicar datos específicos, subrayan información relevante y formulan preguntas que serán respondidas en grupo."
+        },
+        {
+          "nombre": "Proyecto de investigación y artículo informativo",
+          "oas_asociados": [
+            9,
+            13,
+            16,
+            17
+          ],
+          "descripcion": "En equipos, eligen un tema de interés (por ejemplo, animales endémicos de Chile). Buscan información en libros, revistas y fuentes digitales, clasifican los datos y redactan un artículo informativo que presenta el tema en una oración inicial y desarrolla ideas por párrafos. Finalmente, revisan y editan el artículo para publicarlo en el periódico escolar."
+        },
+        {
+          "nombre": "Historietas y discusión de consecuencias",
+          "oas_asociados": [
+            3,
+            4
+          ],
+          "descripcion": "Los estudiantes leen una historieta en grupos pequeños. Identifican la información explícita e implícita, discuten las consecuencias de las acciones de los personajes y comparan los ambientes. Luego, realizan una breve representación dramática de una escena."
+        },
+        {
+          "nombre": "Presentación oral con apoyo visual",
+          "oas_asociados": [
+            27,
+            6
+          ],
+          "descripcion": "Después de investigar un tema, cada estudiante organiza una presentación oral en introducción, desarrollo y conclusión. Elabora un cartel o una diapositiva con imágenes y palabras clave para apoyar su exposición y responde preguntas del público usando información precisa."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Informe de investigación y artículo informativo",
+          "oas_evaluados": [
+            9,
+            13,
+            16,
+            17
+          ],
+          "actividad_evaluacion": "En equipos, presentan el artículo informativo elaborado durante el proyecto de investigación, explicando cómo buscaron la información, cómo la clasificaron y cómo estructuraron el texto. El docente evalúa la claridad del tema presentado, la organización de los párrafos, la correcta planificación y la revisión realizada.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Busca y selecciona información relevante de diversas fuentes",
+              "Organiza los datos en categorías y elabora un esquema antes de escribir",
+              "Redacta un artículo con introducción, desarrollo y conclusión usando sus propias palabras"
+            ],
+            "de_la_presentacion": [
+              "Incluye una oración que presenta claramente el tema",
+              "Desarrolla ideas por párrafo con detalles y ejemplos",
+              "Corrige ortografía y conectores y presenta un texto final sin errores"
+            ]
+          }
+        },
+        {
+          "titulo": "Debate sobre un texto no literario",
+          "oas_evaluados": [
+            6,
+            27
+          ],
+          "actividad_evaluacion": "Los estudiantes leen un artículo informativo o noticia y se divide la clase en grupos a favor y en contra de una postura sobre el tema. Cada grupo investiga argumentos para sustentar su posición. Se realiza un debate moderado donde cada participante expone sus argumentos con claridad y respeto.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Comprende el texto y extrae información explícita e implícita para construir sus argumentos",
+              "Respeta turnos de palabra y escucha las opiniones de sus compañeros"
+            ],
+            "de_la_presentacion": [
+              "Argumenta de manera coherente utilizando ejemplos y datos del texto",
+              "Expresa sus ideas con vocabulario variado y gestos apropiados"
+            ]
+          }
+        },
+        {
+          "titulo": "Recitación y análisis de un poema o fragmento narrativo",
+          "oas_evaluados": [
+            3,
+            30
+          ],
+          "actividad_evaluacion": "Cada estudiante selecciona un poema o un fragmento de una narración y lo recita frente a la clase. Posteriormente, responde preguntas sobre la información implícita en el texto y explica el uso de lenguaje figurado.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Recita el texto con fluidez, entonación adecuada y gestos expresivos",
+              "Responde preguntas sobre información implícita demostrando comprensión profunda"
+            ],
+            "de_la_presentacion": [
+              "Identifica y explica figuras literarias presentes en el texto",
+              "Relaciona el contenido del texto con su experiencia personal o con otros textos leídos"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Disponer de audiolibros y herramientas de lectura en voz alta para estudiantes con dificultades lectoras",
+          "Permitir el uso de diagramas, mapas conceptuales y organizadores gráficos para estructurar la información",
+          "Facilitar la escritura mediante procesadores de texto con funciones de predicción de palabras y corrector ortográfico",
+          "Ofrecer oportunidades de presentar los artículos y proyectos en formato audiovisual o mediante presentaciones multimodales",
+          "Utilizar juegos de mesa y apps educativas para practicar estrategias de comprensión lectora de forma lúdica"
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "4º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "Leer y familiarizarse con un repertorio de literatura (cuentos folclóricos, de autor y novelas) para aumentar el conocimiento del mundo y la imaginación; profundizar la comprensión de las narraciones extrayendo información explícita e implícita, determinando consecuencias y comparando personajes y ambientes; leer y comprender textos no literarios (cartas, biografías, relatos históricos, instrucciones, artículos informativos y noticias) utilizando organizadores de texto y comparando información; escribir narraciones creativas (experiencias personales, relatos de hechos, cuentos) que incluyan una secuencia lógica de eventos, inicio, desarrollo, desenlace, conectores adecuados, descripciones y un lenguaje expresivo; comprender la función de verbos y adverbios en textos orales y escritos y usarlos correctamente; comprender textos orales variados y formular opiniones sobre lo escuchado; participar activamente en conversaciones grupales y caracterizar distintos personajes; disfrutar de obras de teatro infantiles para ampliar la creatividad y familiarizarse con el género.",
+      "conocimientos_previos": [
+        "Elementos de la narrativa (estructura de inicio, desarrollo y desenlace)",
+        "Diferencias entre novelas, cuentos folclóricos y cuentos de autor",
+        "Uso de verbos y adverbios en oraciones",
+        "Organizadores textuales para textos expositivos",
+        "Reglas básicas de gramática y ortografía"
+      ],
+      "palabras_clave": [
+        "Cuento folclórico",
+        "Novela",
+        "Secuencia lógica",
+        "Conectores",
+        "Descripción",
+        "Verbo",
+        "Adverbio",
+        "Texto oral",
+        "Opinión",
+        "Personaje",
+        "Teatro",
+        "Conversación"
+      ],
+      "conocimientos": [
+        "Características de cuentos folclóricos, cuentos de autor y novelas",
+        "Estructura narrativa: inicio, desarrollo, desenlace y uso de conectores",
+        "Función de los verbos y adverbios en textos orales y escritos",
+        "Estrategias para comprender textos orales (identificar propósito, formular preguntas, establecer conexiones)",
+        "Elementos del teatro infantil y caracterización de personajes"
+      ],
+      "habilidades": [
+        "Leer cuentos y novelas extrayendo información explícita e implícita y describiendo personajes y ambientes",
+        "Comparar textos escritos por un mismo autor identificando similitudes y diferencias",
+        "Leer y comprender textos no literarios utilizando organizadores de texto y comparando información",
+        "Escribir narraciones creativas con secuencia lógica de eventos, descripciones y lenguaje expresivo",
+        "Usar correctamente verbos y adverbios en la producción oral y escrita",
+        "Comprender textos orales variados formulando preguntas y estableciendo conexiones con experiencias propias",
+        "Participar en conversaciones grupales manteniendo el foco, expresando ideas y mostrando empatía",
+        "Caracterizar personajes para desarrollar su lenguaje y autoestima",
+        "Disfrutar y analizar obras de teatro infantiles"
+      ],
+      "actitudes": [
+        "Interés activo por la lectura, orientado al disfrute y la adquisición de conocimiento",
+        "Disposición a expresarse creativamente por medio de la comunicación oral y escrita",
+        "Rigor y perseverancia en la realización de tareas y trabajos académicos",
+        "Reflexión sobre sí mismo y respeto por diversas opiniones en conversaciones grupales",
+        "Disfrute y valoración de la asistencia a obras de teatro para ampliar sus posibilidades expresivas"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura (cuentos folclóricos, de autor y novelas) para aumentar su conocimiento del mundo y desarrollar su imaginación",
+          "indicadores": [
+            "Leen cuentos y novelas identificando la secuencia de la historia y comentan sus impresiones",
+            "Comparan diferentes textos del mismo autor identificando temas y estilos"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Profundizar la comprensión de las narraciones leídas extrayendo información explícita e implícita y determinando consecuencias de hechos o acciones",
+          "indicadores": [
+            "Describen y comparan personajes y ambientes de distintos textos",
+            "Reconocen el problema y la solución en una narración y explican las consecuencias"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios para ampliar su conocimiento del mundo y formarse una opinión",
+          "indicadores": [
+            "Extraen información explícita e implícita de cartas, biografías y artículos informativos",
+            "Utilizan organizadores de texto (títulos, subtítulos, índice y glosario) para encontrar información específica",
+            "Interpretan gráficos, tablas y mapas incluidos en los textos"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Escribir creativamente narraciones (experiencias personales, relatos de hechos, cuentos) que incluyan una secuencia lógica de eventos, inicio, desarrollo, desenlace, conectores adecuados, descripciones y un lenguaje expresivo",
+          "indicadores": [
+            "Organizan sus narraciones con una estructura clara de inicio, desarrollo y desenlace",
+            "Utilizan conectores temporales y descripciones detalladas para enriquecer la historia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Comprender la función de los verbos en textos orales y escritos y usarlos manteniendo la concordancia con el sujeto",
+          "indicadores": [
+            "Identifican verbos en oraciones y los clasifican según tiempo y persona",
+            "Emplean verbos correctamente conjugados en sus narraciones"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Comprender la función de los adverbios en textos orales y escritos y combinarlos para enriquecer o precisar sus producciones",
+          "indicadores": [
+            "Identifican adverbios de tiempo, lugar y modo en textos leídos",
+            "Sustituyen adverbios por construcciones descriptivas en sus narraciones"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Comprender textos orales para obtener información y desarrollar su curiosidad",
+          "indicadores": [
+            "Formulan preguntas para profundizar la comprensión de textos orales",
+            "Establecen relaciones entre distintos textos escuchados y sus experiencias personales"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Disfrutar de la experiencia de asistir a obras de teatro infantiles o representaciones para ampliar sus posibilidades de expresión, desarrollar su creatividad y familiarizarse con el género",
+          "indicadores": [
+            "Asisten y comentan obras de teatro infantiles destacando personajes y temas",
+            "Incorporan elementos teatrales (voz, gestos) en sus propias representaciones"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Participar activamente en conversaciones grupales sobre textos leídos o temas de interés",
+          "indicadores": [
+            "Mantienen el foco de la conversación y respetan turnos de palabra",
+            "Formulan preguntas y aportan opiniones fundamentadas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 29,
+          "descripcion": "Caracterizar distintos personajes para desarrollar su lenguaje y autoestima y aprender a trabajar en equipo",
+          "indicadores": [
+            "Describen y representan personajes destacando rasgos físicos y psicológicos",
+            "Cooperan con sus compañeros en dramatizaciones y representaciones"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Club de lectura de novelas",
+          "oas_asociados": [
+            3,
+            4
+          ],
+          "descripcion": "Durante la unidad, los estudiantes leen una novela corta seleccionada por la clase. Se reúnen periódicamente para discutir la trama, los personajes y el ambiente, y elaboran un registro de la secuencia de eventos. Al finalizar, comparan la novela con otros cuentos del mismo autor."
+        },
+        {
+          "nombre": "Escritura de cuentos originales",
+          "oas_asociados": [
+            12,
+            19,
+            20
+          ],
+          "descripcion": "Tras analizar la estructura de cuentos folclóricos, los estudiantes planifican y escriben su propio cuento original con inicio, desarrollo y desenlace. Incorporan conectores temporales, descripciones y un lenguaje expresivo utilizando correctamente verbos y adverbios. Luego revisan y editan en grupos."
+        },
+        {
+          "nombre": "Obra de teatro y caracterización de personajes",
+          "oas_asociados": [
+            24,
+            29
+          ],
+          "descripcion": "El curso selecciona una obra de teatro infantil y asigna personajes a cada estudiante. Practican la lectura dramatizada, se disfrazan y preparan la obra para presentarla a otra clase. Después, reflexionan sobre el valor de la cooperación y la expresión creativa."
+        },
+        {
+          "nombre": "Debate y conversación sobre temas de interés",
+          "oas_asociados": [
+            6,
+            23,
+            25
+          ],
+          "descripcion": "Se propone un tema controversial a partir de un artículo o noticia (por ejemplo, el cuidado del agua). Los estudiantes investigan posturas a favor y en contra, organizan sus argumentos y participan en un debate respetando turnos y formulando preguntas para profundizar la discusión."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Narración creativa evaluada",
+          "oas_evaluados": [
+            12,
+            19,
+            20
+          ],
+          "actividad_evaluacion": "Cada estudiante presenta su cuento original ante la clase. El docente evalúa la estructura narrativa (inicio, desarrollo, desenlace), el uso de conectores y descripciones, y la correcta conjugación de verbos y uso de adverbios.",
+          "criterios_evaluacion": {
+            "de_la_produccion": [
+              "Organiza la narración con una secuencia lógica de eventos",
+              "Utiliza conectores temporales y descripciones detalladas",
+              "Conjuga correctamente los verbos y emplea adverbios para precisar la acción"
+            ],
+            "de_la_presentacion": [
+              "Lee su cuento en voz alta con claridad y entonación adecuada",
+              "Muestra creatividad en la historia y mantiene la atención del público"
+            ]
+          }
+        },
+        {
+          "titulo": "Análisis comparativo de textos",
+          "oas_evaluados": [
+            3,
+            4,
+            6
+          ],
+          "actividad_evaluacion": "Los estudiantes comparan un cuento folclórico y un capítulo de una novela del mismo autor. Analizan personajes, ambientes, problemas y soluciones, extraen información explícita e implícita y responden preguntas sobre las diferencias y similitudes en estructura y temática.",
+          "criterios_evaluacion": {
+            "de_la_comprension": [
+              "Identifica y compara personajes, ambientes y conflictos en los dos textos",
+              "Extrae información implícita y explica las consecuencias de las acciones"
+            ],
+            "de_la_reflexion": [
+              "Argumenta sobre las similitudes y diferencias temáticas con ejemplos del texto",
+              "Relaciona los textos con el contexto cultural y con sus experiencias"
+            ]
+          }
+        },
+        {
+          "titulo": "Participación en obra de teatro y conversación grupal",
+          "oas_evaluados": [
+            24,
+            25,
+            29
+          ],
+          "actividad_evaluacion": "Después de presentar la obra de teatro infantil, cada estudiante participa en una conversación grupal sobre el proceso de preparación y actuación. Reflexionan sobre las características de los personajes, el trabajo en equipo y los aprendizajes obtenidos.",
+          "criterios_evaluacion": {
+            "de_la_participacion": [
+              "Participa activamente en la obra de teatro cumpliendo su rol y aportando a la puesta en escena",
+              "Mantiene el foco de la conversación grupal y respeta turnos al hablar"
+            ],
+            "de_la_reflexion": [
+              "Reflexiona sobre el valor del trabajo en equipo y la cooperación",
+              "Describe los rasgos físicos y psicológicos de los personajes caracterizados"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer audiolibros y películas de cuentos y novelas para complementar la lectura",
+          "Permitir el uso de guiones gráficos y storyboard para planificar las narraciones",
+          "Proporcionar plantillas con apartados (inicio, desarrollo, desenlace) para estructurar cuentos",
+          "Organizar debates con roles asignados (moderador, ponente, observador) para facilitar la participación",
+          "Proporcionar disfraces y accesorios sencillos para caracterizar personajes y canalizar la expresividad"
+        ]
+      }
+    }
+  }
+]

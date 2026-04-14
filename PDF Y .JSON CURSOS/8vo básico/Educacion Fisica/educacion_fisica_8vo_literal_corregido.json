@@ -1,0 +1,191 @@
+{
+  "nivel": "8° básico",
+  "asignatura": "Educación Física y Salud",
+  "unidad": [
+    {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "La unidad tiene dos propósitos principales. Primero, se espera que los estudiantes apliquen con más control sus habilidades motrices específicas en al menos en un deporte de colaboración y en uno de oposición/colaboración. Segundo, se espera que sean capaces de trabajar en equipo, tomar decisiones, evaluar las estrategias utilizadas y aplicar reglas y principios específicos de las actividades deportivas.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando:\n> Frecuencia.\n> Intensidad.\n> Tiempo de duración y recuperación.\n> Progresión.\n> Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": [
+            "Evalúan las mejoras que han obtenido en su condición física por medio de un test.",
+            "Desarrollan la condición física, utilizando en su plan de entrenamiento los principios de frecuencia, intensidad, recuperación, progresión, duración y tipo de actividad.",
+            "Practican su plan de entrenamiento y usan ejercicios relacionados con la condición física y asociados a la salud, como la fuerza muscular, la resistencia muscular, la resistencia cardiovascular y la flexibilidad.",
+            "Practican de forma regular actividades físicas que mejoran su condición física.",
+            "Ejecutan acciones motrices de manera individual y en parejas para mejorar su condición física.",
+            "Seleccionan actividades físicas que desarrollan resistencia cardiovascular, fuerza muscular, flexibilidad y velocidad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": [
+            "Participan en una variedad de actividades físicas fuera de su horario escolar; por ejemplo: andan en bicicleta, participan en corridas, entre otras.",
+            "Utilizan los entornos cercanos para realizar actividad física y/o deportiva.",
+            "Utilizan variadas formas para evaluar la intensidad del esfuerzo durante el ejercicio físico.",
+            "Se inscriben y participan en actividades como corridas y cicletadas para evaluar su condición física.",
+            "Evitan consumir drogas, tabaco y alcohol.",
+            "Explican procedimientos y normas que contribuyen a la seguridad personal y la de otros mientras practican actividad física."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Seleccionar, combinar y aplicar con mayor dominio las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos:\n> Un deporte individual (atletismo, gimnasia artística, entre otros).\n> Un deporte de oposición (tenis, bádminton, entre otros).\n> Un deporte de colaboración (escalada, vóleibol duplas, entre otros).\n> Un deporte de oposición/colaboración (básquetbol, hándbol, vóleibol, entre otros).\n> Una danza (folclórica, moderna, entre otras).",
+          "indicadores": [
+            "Ejecutan una vuelta sobre apoyos invertidos.",
+            "Efectúan diferentes saltos en variadas direcciones y alturas.",
+            "Demuestran transiciones entre los movimientos suaves y lentos y los rápidos y fuertes, y en las combinaciones de ellos, en un baile, una coreografía, en acrosport, entre otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar, evaluar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: visualizar los espacios vacíos al momento de ubicar la pelota, desmarcarse del defensa para avanzar en busca del objetivo, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros) en función del resultado y evaluar si la estrategia utilizada fue efectiva, entre otros.",
+          "indicadores": [
+            "Combinan técnicas de manipulación en una variedad de deportes individuales y de oposición; por ejemplo: volea de tenis, saque en bádminton, entre otros.",
+            "Evalúan con sus compañeros si la estrategia utilizada fue efectiva."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar circuitos con tiempos visibles y consignas breves para apoyar la autorregulación.",
+          "Permitir distintas formas de registrar el entrenamiento: tabla, audio, foto o app.",
+          "Ofrecer demostraciones repetidas y ejemplos corporales antes de la ejecución.",
+          "Distribuir el esfuerzo en bloques con recuperación planificada y anticipada."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Se espera que los alumnos comprendan, apliquen y disfruten actividades asociadas al entrenamiento de la condición física, aceptando que sus logros serán pequeños al inicio, pero irán aumentando siempre y cuando la práctica sea regular.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Seleccionar, combinar y aplicar con mayor dominio las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos:\n> Un deporte individual (atletismo, gimnasia artística, entre otros).\n> Un deporte de oposición (tenis, bádminton, entre otros).\n> Un deporte de colaboración (escalada, vóleibol duplas, entre otros).\n> Un deporte de oposición/colaboración (básquetbol, hándbol, vóleibol, entre otros).\n> Una danza (folclórica, moderna, entre otras).",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar, evaluar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: visualizar los espacios vacíos al momento de ubicar la pelota, desmarcarse del defensa para avanzar en busca del objetivo, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros) en función del resultado y evaluar si la estrategia utilizada fue efectiva, entre otros.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Modelar paso a paso el uso de tablas y gráficos para interpretar respuestas corporales.",
+          "Permitir que el seguimiento del esfuerzo físico se haga con apoyos visuales simples.",
+          "Organizar parejas de apoyo para medición, registro y retroalimentación.",
+          "Mantener objetivos de progreso personales y comparaciones centradas en la propia mejora."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "Durante esta unidad se busca que los estudiantes continúen trabajando los principios de entrenamiento y condición física, junto con la aplicación de habilidades motrices específicas y estrategias en deportes y actividades físicas, incorporando autocuidado y promoción de una vida activa.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Seleccionar, combinar y aplicar con mayor dominio las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos:\n> Un deporte individual (atletismo, gimnasia artística, entre otros).\n> Un deporte de oposición (tenis, bádminton, entre otros).\n> Un deporte de colaboración (escalada, vóleibol duplas, entre otros).\n> Un deporte de oposición/colaboración (básquetbol, hándbol, vóleibol, entre otros).\n> Una danza (folclórica, moderna, entre otras).",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar, evaluar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: visualizar los espacios vacíos al momento de ubicar la pelota, desmarcarse del defensa para avanzar en busca del objetivo, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros) en función del resultado y evaluar si la estrategia utilizada fue efectiva, entre otros.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Promover y participar en una variedad de actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo:\n> Promover la práctica regular de actividad física y deportiva.\n> Participar en la organización de una variedad de actividades físicas y/o deportivas que sean de interés personal y de la comunidad.\n> Utilizar estrategias para promover la práctica regular de actividad física; por ejemplo: elaborar afiches o diarios murales, entre otros.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Permitir distintas estrategias de acceso a la tarea: observación previa, práctica guiada y práctica autónoma.",
+          "Usar señales visuales y auditivas para cambios de estación o transición de consignas.",
+          "Promover trabajo cooperativo con roles definidos y rotativos.",
+          "Incorporar opciones de baja sobrecarga sensorial cuando el entorno deportivo sea muy estimulante."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad se espera que los estudiantes asuman liderazgo para promover una vida activa en la comunidad escolar y en su entorno, participando en actividades físicas y/o deportivas de interés personal y colectivo, con foco en seguridad, organización y responsabilidad.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Promover y participar en una variedad de actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo:\n> Promover la práctica regular de actividad física y deportiva.\n> Participar en la organización de una variedad de actividades físicas y/o deportivas que sean de interés personal y de la comunidad.\n> Utilizar estrategias para promover la práctica regular de actividad física; por ejemplo: elaborar afiches o diarios murales, entre otros.",
+          "indicadores": [
+            "Asumen un rol de liderazgo en el entorno escolar para promover una vida activa.",
+            "Promueven la actividad física y se atreven a defender sus planteamientos con ideas fundamentadas.",
+            "Proponen soluciones a los conflictos que se generan en el grupo durante una actividad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando:\n> Frecuencia.\n> Intensidad.\n> Tiempo de duración y recuperación.\n> Progresión.\n> Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Desglosar la organización de eventos o salidas en tareas pequeñas con responsables claros.",
+          "Usar guías visuales para materiales, vestimenta, alimentación e hidratación.",
+          "Permitir ensayos breves de roles de liderazgo antes de la actividad principal.",
+          "Favorecer la toma de decisiones compartida y la resolución de conflictos con apoyos de mediación."
+        ]
+      }
+    }
+  ]
+}

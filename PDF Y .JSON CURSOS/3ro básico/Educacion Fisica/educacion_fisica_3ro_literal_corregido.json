@@ -1,0 +1,757 @@
+{
+  "nivel": "3° Básico",
+  "asignatura": "Educación Física y Salud",
+  "unidad": [
+    {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "La unidad tiene dos propósitos principales. Primero, que los estudiantes combinen habilidades motrices de locomoción, manipulación y estabilidad. Esto incluye, por ejemplo, atrapar objetos mientras corren, desplazarse boteando un balón, saltar y caminar sobre una base a pequeña altura. Segundo, se espera que ejecuten juegos colectivos. Con el apoyo del docente, deberán aplicar diversas estrategias para resolver problemas con relación al espacio, el tiempo y el número de personas. De forma simultánea, se pretende que incorporen normas de higiene, prevención y seguridad y que sean capaces de realizar un calentamiento antes del esfuerzo físico. Asimismo, se espera que ejecuten actividades físicas que desarrollen la resistencia, fuerza, flexibilidad y velocidad, y que describan y registren las respuestas corporales provocadas por el ejercicio físico.",
+      "conocimientos_previos": [
+        "Identificar habilidades motrices básicas de locomoción, manipulación y equilibrio.",
+        "Conocer normas de higiene, prevención y seguridad para la práctica de actividad física.",
+        "Identificar situaciones de riesgo que pueden afectar a la seguridad personal."
+      ],
+      "palabras_clave": [
+        "Calentamiento",
+        "postura",
+        "higiene",
+        "alimentación saludable",
+        "autocuidado",
+        "seguridad",
+        "fatiga",
+        "sudor",
+        "frecuencia cardiaca",
+        "frecuencia respiratoria"
+      ],
+      "conocimientos": [
+        "Resolución de problemas con relación al tiempo y el espacio",
+        "Hábitos de higiene",
+        "Hidratación",
+        "Conductas de autocuidado",
+        "Respuestas corporales asociadas a la actividad física"
+      ],
+      "habilidades": [
+        "Combinar habilidades motrices básicas de locomoción, manipulación y equilibrio en diferentes situaciones.",
+        "Aplicar habilidades motrices básicas para practicar diversos juegos recreativos y pre-deportivos.",
+        "Emplear normas de higiene, prevención y seguridad durante la práctica de actividad física.",
+        "Demostrar situaciones de riesgo que pueden afectar a la seguridad personal."
+      ],
+      "actitudes": [
+        "Demostrar disposición al esfuerzo personal, superación y perseverancia.",
+        "Demostrar disposición a participar de manera activa en la clase.",
+        "Demostrar disposición a mejorar su condición física e interés por practicar actividad física de forma regular."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Practicar actividades físicas, demostrando comportamientos seguros como:\n› participar en actividades de \ncalentamiento en forma apropiada\n› escuchar y seguir instrucciones\n› mantener su posición dentro \nde los límites establecidos \npara la actividad\n› asegurar de que el espacio \nestá libre de obstáculos",
+          "indicadores": [
+            "Ejecutan actividades de calentamiento al inicio de la clase y ejercicios de vuelta a la calma al finalizar la sesión.",
+            "Conocen medidas de prudencia adecuadas en la práctica de ejercicio físico.",
+            "Siguen normas básicas de comportamientos en clases de educación física: moverse en los lugares aptos para la realización de las actividades, escuchar las instrucciones del profesor, no empujarse ni seguir conductas peligrosas para la propia integridad y la de los pares, cuidar el material de trabajo y recogerlo al término de la clase.",
+            "Inician sus actividades sin esperar a ver cómo la realizan sus compañeros.",
+            "Identifican los lugares aptos para la realización de actividad física y descartar aquellos que pueden ser riesgosos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen la condición física por medio de la práctica de ejercicios de resistencia cardiovascular, fuerza, fl exibilidad y velocidad, mejorando sus resultados personales.",
+          "indicadores": [
+            "Ejecutan actividades en las cuales se requiera mantener un esfuerzo durante un tiempo prolongado: saltos, carreras, lanzamientos, etc.",
+            "Utilizan la mayor cantidad de grupos musculares en la ejecución de las actividades propuestas.",
+            "Ejecutan una variedad de actividades que activen grupos musculares necesarios para la práctica de actividad física: brazos, piernas, tronco.",
+            "Ejecutan carreras en distancias determinadas a máxima velocidad.",
+            "Realizan movimientos que impliquen gran amplitud de los segmentos corporales.",
+            "Ejecutan alguna prueba o test para valorar el nivel personal de desarrollo de las cualidades físicas, procurando superar sus marcas personales por medio del entrenamiento."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Describir y registrar las respuestas corporales provocadas por la práctica de actividad física, como aumento de la frecuencia cardiaca y respiratoria.",
+          "indicadores": [
+            "Reconocen algunos cambios que sufre el organismo desde un estado pasivo a la realización de actividad física: cambios de latidos, estado de fatiga, sudor.",
+            "Utilizan distintas formas para medir algunas respuestas orgánicas frente al ejercicio, como frecuencia cardíaca y respiratoria.",
+            "Elaboran una planilla para registrar las respuestas corporales luego de realizar actividad física.",
+            "Realizan un registro de ejercicios y actividades de entrenamiento realizados."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Demostrar capacidad para ejecutar de forma combinada las habilidades motrices básicas de locomoción, manipulación y estabilidad en diferentes direcciones, alturas y niveles, como correr y lanzar un objeto con una mano, caminar sobre una línea y realizar un giro de 180° en un pie.",
+          "indicadores": [
+            "Combinan y usan el máximo de habilidades de desplazamiento, como reptar y correr de forma coordinada, trepar y saltar, caminar, correr y saltar, deslizar y saltar en un pie, saltar con un pie y luego con el otro.",
+            "Aceleran una carrera para alcanzar una mayor altura o distancia en el salto.",
+            "Caminan sobre una viga dibujada o puesta a una altura.",
+            "Ejecutan distintas combinaciones para iniciar y terminar el salto; por ejemplo: saltar con un pie y aterrizar con los pies juntos, saltar a pies juntos y aterrizar con el pie derecho.",
+            "Lanzan y reciben un balón mientras se desplazan.",
+            "Reciben un balón que fue lanzado contra el piso.",
+            "Ruedan un balón entremedio de conos con las manos o los pies.",
+            "Conducen un balón con el pie en zigzag.",
+            "Patean un balón que es lanzado por un compañero.",
+            "Reciben un balón que fue lanzado contra el piso.",
+            "Ejecutan actividades de equilibrio en superficies estables e inestables, procurando desarrollar las nociones de los segmentos corporales en el espacio que permitan moverse en gran variedad de formas: giros, rotaciones, balanceos, colgarse, zigzag, posiciones en el lugar, posiciones invertidas, posiciones en suspensión, posiciones sobre bases reducidas, saltos o aterrizajes o caídas de alturas.",
+            "Demuestran diferentes formas de mantener el equilibrio estático y dinámico; por ejemplo: separan las piernas para aumentar la base de soporte, se agachan para bajar el centro de gravedad, entre otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Ejecutar acciones motrices que presenten una solución a un problema, reconociendo diversos criterios (tiempo, espacio y números de personas), por ejemplo, juegos de uno contra uno, juegos en grupos reducidos y juegos con superioridad numérica.",
+          "indicadores": [
+            "Realizan de forma grupal diferentes tareas motrices asociadas a tiempo, espacio y número de personas.",
+            "Resuelven en forma creativa tareas motrices dadas por el docente: cuentos, historias, representaciones.",
+            "Resuelven problemas motrices con relación al espacio; por ejemplo: logran dar la mayor cantidad de pases con un balón en un espacio reducido.",
+            "Se ordenan según la tarea dada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Practicar actividades físicas en forma segura, demostrando la adquisición de hábitos de higiene, posturales y de vida saludable, como utilizar protección solar, lavarse y cambiarse de ropa después de la clase, hidratarse con agua, comer una colación saludable después de la práctica de actividad física.",
+          "indicadores": [
+            "Señalan aquellos alimentos que aporten más energía y que son más saludables.",
+            "Llevan colaciones que contengan principalmente frutas, lácteos y cereales para el día de la clase de Educación Física y Salud y describen la importancia de estos alimentos en la actividad física.",
+            "Realizan rutinas básicas de higiene al término de la clase: ducharse y cambiarse de ropa después de la práctica del ejercicio físico.",
+            "Señalan conductas de autocuidado frente a la exposición solar, utilizando bloqueadores solares y una ropa adecuada para la práctica de actividad física.",
+            "Guiados por el docente, identifican una razón por la cual la práctica regular de actividad física es importante para la salud.",
+            "Identifican un amplio repertorio de ejercicios que pueden disponer para realizar un calentamiento correcto."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad 1",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Al inicio de la clase, el docente explica algunas actividades que pueden ser ejecutadas como parte de un calentamiento; por ejemplo: una caminata, un juego de persecución, una carrera suave. Luego plantea la siguiente pregunta: ¿por qué es importante realizar un calentamiento antes del ejercicio? Los alumnos pueden responder “porque aumenta la temperatura corporal y es más fácil moverse (mejora el rango de movimiento articular) y prepara al corazón para un esfuerzo mayor”. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Actividad 2",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "El docente explica que harán un calentamiento por medio de un juego. A la señal, los alumnos corren libremente por un espacio delimitado. Al escuchar un aplauso o un silbido, saltan con las manos arriba. Para variar la actividad, se puede aumentar la cantidad de saltos por señal. Seguridad"
+        },
+        {
+          "nombre": "Actividad 3",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "El docente les comenta: \"Usted y sus compañeros de clase van a participar en diferentes actividades físicas juntos este año. Recuerden que, al jugar con otros, es importante mostrar respeto y seguir las reglas.\n› ¿cuáles son algunos ejemplos de mostrar respeto y seguir las reglas en su vida diaria?\n› ¿cómo pueden mostrar respeto a sus compañeros?” (Orientación)"
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "1 Se elabora un circuito de la siguiente manera: se ubican seis conos a una distancia de un metro entre cada uno en zigzag. Luego se traza una línea de tres metros en el suelo. Posteriormente, se señala un trayecto de diez metros con conos. Cada estudiante recorre el trayecto en zigzag, dándole botes a un balón. Luego, camina sobre la línea, manteniendo el control del balón mientras da botes. Y en el espacio delimitado con los conos, trotan lanzando el balón hacia arriba y lo toman con ambas manos. 2 Se delimita un espacio con dos líneas a una distancia de unos seis metros. En parejas, cada estudiante se ubica en una de las líneas. Uno tiene un balón, toma distancia, corre y, antes de su línea, lo lanza hacia el compañero, que debe recibirlo sin salirse de la línea en la cual está ubicado. Cada uno realiza tres intentos. En el Anexo 3 se incluye otra sugerencia de evaluación para el patrón motriz de atajar.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Sortean obstáculos, manteniendo el control del balón en forma continua.",
+              "Mantienen el equilibrio sobre una línea mientras botean el balón.",
+              "Trotan lanzando y recibiendo un balón en forma continua y segura.",
+              "Lanzan un balón en carrera hacia un objetivo determinado.",
+              "Reciben un balón antes que caiga al suelo."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            2
+          ],
+          "actividad_evaluacion": "1 Se forman grupos de ocho estudiantes, cada uno con un número del uno al ocho. A la señal del profesor, se agrupan espacialmente formando el número señalado. Pueden utilizarse sumas, restas y divisiones. 2 Forman grupos de ocho. Cada grupo debe sacar una tarjeta que tiene el nombre de una máquina. Luego los integrantes ejecutan el funcionamiento que la caracteriza. 3 Se forman dos grupos de ocho estudiantes cada uno. Cada grupo se instala en un área con un cesto en el suelo. A la señal, el grupo que tiene un balón se da pases, tratando de no exceder los diez, antes de colocar el balón en el cesto. Si exceden la cantidad de pases, entregan la pelota al otro equipo. El equipo que no tiene el balón trata de recuperarlo, interceptándolo con las manos. Las reglas son: no pueden lanzar el balón al cesto, solo dejarlo; todos los integrantes deben haber tocado la pelota y no pueden quitarla de las manos.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Se agrupan según el orden establecido.",
+              "Resuelven problemas matemáticos.",
+              "Se ordenan según la tarea dada.",
+              "Muestran buena disposición frente a las actividades planteadas.",
+              "Reconocen las distancias con el resto de sus compañeros en relación a sus segmentos corporales."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Anticipar visualmente la secuencia de la clase con apoyos gráficos, estaciones o demostraciones breves para favorecer la comprensión y la autorregulación.",
+          "Ofrecer alternativas de participación motriz y graduar la dificultad de circuitos, desplazamientos y juegos según el nivel de coordinación, resistencia y seguridad de cada estudiante.",
+          "Incorporar pausas activas breves, respiración guiada e hidratación planificada para sostener la atención y evitar sobrecarga física o sensorial.",
+          "Permitir apoyos de pares, señales auditivas y visuales, delimitación clara del espacio y uso de materiales livianos o adaptados para favorecer una participación segura."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "La unidad tiene dos propósitos principales. Primero, que los estudiantes sigan combinando habilidades motrices de locomoción, manipulación y estabilidad. Esto incluye, por ejemplo, lanzar un objeto mientras corre, caminar sobre una línea y realizar un giro en 180°. Segundo, se espera que ejecuten juegos colectivos en los que resuelvan problemas en relación con el espacio, el tiempo y números de personas, aplicando diversas estrategias. También se pretende que incorporen normas de higiene, prevención y seguridad y que sean capaces de realizar un calentamiento antes del e esfuerzo físico; asimismo, que ejecuten actividades físicas que desarrollen la resistencia, la fuerza, la flexibilidad y la velocidad, y que describan y registren las respuestas corporales provocadas por el ejercicio físico.",
+      "conocimientos_previos": [
+        "Identificar las cualidades físicas básicas (resistencia, fuerza, flexibilidad, velocidad).",
+        "Reconocer sus respuestas corporales provocadas por la actividad física.",
+        "Conductas de autocuidado."
+      ],
+      "palabras_clave": [
+        "Frecuencia cardiaca",
+        "fatiga",
+        "frecuencia respiratoria",
+        "resistencia",
+        "fuerza",
+        "flexibilidad",
+        "velocidad",
+        "intensidad moderada",
+        "intensidad vigorosa",
+        "reglas",
+        "normas",
+        "alimentación saludable",
+        "CONOCIMIENTOS",
+        "› Reconocen diferentes niveles de intensidad",
+        "› Reconocen los componentes de la condición física",
+        "› Registran sus respuestas corporales",
+        "› Asocian diferentes tipos de ejercicios a distintas",
+        "respuestas corporales"
+      ],
+      "conocimientos": [
+        "Identificar las cualidades físicas básicas (resistencia, fuerza, flexibilidad, velocidad).",
+        "Reconocer sus respuestas corporales provocadas por la actividad física.",
+        "Conductas de autocuidado."
+      ],
+      "habilidades": [
+        "Usar habilidades motrices básicas para practicar diversos juegos recreativos en su vida cotidiana.",
+        "Explicar las cualidades físicas básicas (resistencia, fuerza, flexibilidad, velocidad).",
+        "Registrar sus respuestas corporales provocadas por el ejercicio físico.",
+        "Utilizar las diferentes habilidades motrices en la resolución de problemas motores originados en situaciones de juego."
+      ],
+      "actitudes": [
+        "Demostrar disposición a mejorar su condición física e interés por practicar actividad física de forma regular.",
+        "Demostrar disposición a participar de manera activa en la clase.",
+        "Demostrar disposición al esfuerzo personal, superación y perseverancia.",
+        "Valorar los efectos positivos de la práctica regular de actividad física hacia la salud."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Practicar actividades físicas, demostrando comportamientos seguros, como:\n› participar en actividades de \ncalentamiento en forma apropiada\n› escuchar y seguir instrucciones\n› mantener su posición dentro \nde los límites establecidos \npara la actividad\n› asegurar de que el espacio \nestá libre de obstáculos",
+          "indicadores": [
+            "Guiados por el docente, dirigen un calentamiento grupal al inicio de la clase.",
+            "Identifican lugares que pueden ser riesgosos para una práctica de actividad física.",
+            "Establecen normas básicas de comportamientos en clases de Educación Física y Salud: moverse en los lugares aptos para la realización de las actividades, escuchar las instrucciones del profesor, no empujarse ni seguir conductas peligrosas para la propia integridad y la de los pares, cuidar el material de trabajo y recogerlo al término de la clase.",
+            "Ponen en práctica medidas de prudencia adecuadas en la práctica de ejercicio físico.",
+            "Guiados por el docente, siguen las reglas establecidas en la clase."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen la condición física por medio de la práctica de ejercicios de resistencia cardiovascular, fuerza, fl exibilidad y velocidad, mejorando sus resultados personales.",
+          "indicadores": [
+            "Ejecutan actividades físicas por medio de circuitos, con el fin de mejorar la resistencia.",
+            "Utilizan diversos grupos musculares en juegos y circuitos motrices.",
+            "Ejecutan actividades físicas que les permitan realizar movimientos lo más rápido posible; por ejemplo: carreras de relevos, juegos de persecución, etc.",
+            "Ejecutan estiramientos pasivos y activos para diferentes grupos musculares.",
+            "Aplican distintos tipos de juegos y/o actividades en forma multilateral para el desarrollo de las cualidades físicas básicas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Describir y registrar las respuestas corporales provocadas por la práctica de actividad física, como aumento de la frecuencia cardiaca y respiratoria.",
+          "indicadores": [
+            "Describen algunos cambios que sufre el organismo desde un estado pasivo a la realización de actividad física: cambios de latidos, estado de fatiga, sudor.",
+            "Usan la frecuencia cardiaca para saber qué tan intenso fue el ejercicio.",
+            "Elaboran una planilla para registrar las respuestas corporales luego de realizar actividad física.",
+            "Realizan un calendario en el que registran las actividades físicas realizadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Demostrar capacidad para ejecutar de forma combinada las habilidades motrices básicas de locomoción, manipulación y estabilidad en diferentes direcciones, alturas y niveles, como correr y lanzar un objeto con una mano, caminar sobre una línea y realizar un giro de 180° en un pie.",
+          "indicadores": [
+            "Se desplazan con una carrera fluida, ejecutando un movimiento cíclico y continuo de los brazos.",
+            "Mantiene el equilibrio de un balón en una mano mientras se desplazan sobre una viga.",
+            "Reciben un balón en el aire que fue lanzado por un compañero desde una posición estática.",
+            "Patean el balón hacia un compañero con la parte interior y exterior del pie.",
+            "Hacen rodar un balón con precisión hacia un punto determinado.",
+            "Golpean un balón en forma continua con una paleta u otro implemento.",
+            "Se desplazan boteando un balón mientras se mueven alrededor de obstáculos.",
+            "Ejecutan la posición invertida.",
+            "Ejecutan giros en 180 grados después de haber realizado una carrera."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Ejecutar acciones motrices que presenten una solución a un problema, reconociendo diversos criterios (tiempo, espacio y números de personas), por ejemplo, juegos de uno contra uno, juegos en grupos reducidos y juegos con superioridad numérica.",
+          "indicadores": [
+            "Resuelven tareas motrices asociadas al tiempo y el espacio.",
+            "Aplican sumas, restas y multiplicaciones en juegos motrices diversos; por ejemplo: calculan distancias, entre otras.",
+            "Resuelven en forma creativa tareas motrices dadas por el docente: cuentos, historias, representaciones.",
+            "Resuelven problemas motrices con relación al espacio; por ejemplo: logran dar la mayor cantidad de pases posible con un balón en un espacio reducido."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Practicar actividades físicas en forma segura, demostrando la adquisición de hábitos de higiene, posturales y de vida saludable, como utilizar protección solar, lavarse y cambiarse de ropa después de la clase, hidratarse con agua, comer una colación saludable después de la práctica de actividad física.",
+          "indicadores": [
+            "Guiados por el docente, diferencian entre una alimentación saludable y una no saludable.",
+            "Elaboran un listado de aquellos alimentos que aportan más energía y son más saludables.",
+            "Se duchan y cambian de ropa después de realizar ejercicio físico.",
+            "Explican aquellas conductas de autocuidado que evitan daños por la exposición solar.",
+            "Identifican y describen una razón por la cual la práctica regular de actividad física es importante para la salud."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad 1",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Al inicio de la clase, el docente les explica que un calentamiento debe incluir actividades físicas de una intensidad menor, como desplazamientos lentos y movimientos de las articulaciones, entre otras. Luego les pregunta:\n› ¿qué otras actividades físicas podemos realizar?\n› ¿cuál es la importancia de un calentamiento?"
+        },
+        {
+          "nombre": "Actividad 2",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Los estudiantes ejecutan un calentamiento que incluye una serie de ejercicios suaves y en forma progresiva, abarcando músculos, articulaciones, ligamentos y órganos durante diez minutos, siguiendo las indicaciones del docente; entre ellos, rotación de brazos, círculos en cadera y tobillos, péndulos de piernas, elongación del miembro inferior, tocando la punta del pie sin doblar rodillas, cruzando una pierna sobre otra, sentados con las piernas separadas y flexionando el tronco."
+        },
+        {
+          "nombre": "Actividad 3",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "El docente recuerda los ejercicios que puede incluir un calentamiento. Luego divide al curso en varios grupos e invita a que cada alumno muestre a su grupo a lo menos tres ejercicios de calentamiento."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "1 Se traza un circuito que tendrá cuatro estaciones. En la primera (a) tendrán que colocarse en una posición de cuatro apoyos como cangrejos invertidos; en la segunda (b) realizarán flexo-extensiones de brazos; en la tercera (c) harán abdominales sobre una colchoneta y en la cuarta (d) efectuarán saltos de forma continua en una distancia de un metro. Cambiarán de estación cada dos minutos. El tiempo para llegar a la siguiente estación será de 45 segundos. 2 Realizan un circuito distribuido por estaciones con tareas como:\n› Salto en la cuerda.\n› Salto a pies juntos en una hilera en zigzag marcadas con conos. (En el Anexo 3 hay otra sugerencia de evaluación para el salto largo).\n› Dos líneas están separadas a cinco metros y en la primera hay cinco pelotitas de papel: los estudiantes deben correr con una pelotita y llevarla lo más rápido posible a la otra línea y así sucesivamente hasta llevar todas las pelotitas. 3 Ejecutan tres ejercicios de elongación muscular y explican el área trabajada.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Mantienen la ejecución de la tarea en el tiempo propuesto por el docente.",
+              "Ejecutan las tareas propuestas, mostrando una actitud positiva y de superación personal.",
+              "Mantienen control muscular en los ejercicios realizados.",
+              "Ejecutan ejercicios de elongación correctamente."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "1 Se forman en hileras de cinco estudiantes y arman un cuadrado. A la señal, el primero de cada hilera corre hacia el grupo que está al frente, le da la mano al primero y se ubica al final. Lo importante es que lo hagan lo más rápido posible. 2 Utilizando el mismo circuito, se desplazan botando un balón con la vista al frente y lo entregan al primero de la hilera para que lo lleve de la misma forma hacia el otro grupo.",
+          "criterios_evaluacion": {
+            "criterios": []
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Anticipar visualmente la secuencia de la clase con apoyos gráficos, estaciones o demostraciones breves para favorecer la comprensión y la autorregulación.",
+          "Ofrecer alternativas de participación motriz y graduar la dificultad de circuitos, desplazamientos y juegos según el nivel de coordinación, resistencia y seguridad de cada estudiante.",
+          "Incorporar pausas activas breves, respiración guiada e hidratación planificada para sostener la atención y evitar sobrecarga física o sensorial.",
+          "Permitir apoyos de pares, señales auditivas y visuales, delimitación clara del espacio y uso de materiales livianos o adaptados para favorecer una participación segura."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "La unidad tiene tres propósitos principales. Primero, que los estudiantes practiquen juegos pre-deportivos en espacios adaptados; deberán aplicar principios generales de juego y utilizar de forma adecuada el espacio. Segundo, que ejecuten secuencias de movimientos de danzas tradicionales, de manera coordinada y por medio de actividades rítmicas y lúdicas. En tercer lugar, se espera que practiquen de forma regular actividades físicas de intensidad moderada a vigorosa, guiados por el docente. También se pretende que incorporen normas de higiene, prevención y seguridad y que sean capaces de realizar un calentamiento antes del esfuerzo ejercicio físico; que ejecuten actividades físicas que desarrollen la resistencia, fuerza, flexibilidad y velocidad, y que describan y registren las respuestas corporales provocadas por el ejercicio físico.",
+      "conocimientos_previos": [
+        "Realizan diferentes pasos y giros a distintos ritmos.",
+        "Representan sensaciones y sentimientos por medio de una acción motriz.",
+        "Nociones generales de juego."
+      ],
+      "palabras_clave": [
+        "Danza tradicional",
+        "tiempo",
+        "espacio",
+        "reglas",
+        "principios",
+        "generales de juego",
+        "ataque y defensa",
+        "seguridad",
+        "CONOCIMIENTOS",
+        "› Danzas nacionales",
+        "› Asocian tiempo-espacio con manipulación de",
+        "objetos",
+        "› Principios generales de juego",
+        "› Componentes de la condición física"
+      ],
+      "conocimientos": [
+        "Realizan diferentes pasos y giros a distintos ritmos.",
+        "Representan sensaciones y sentimientos por medio de una acción motriz.",
+        "Nociones generales de juego."
+      ],
+      "habilidades": [
+        "Usar las habilidades motoras básicas para resolver un problema de carácter lúdico-motriz.",
+        "Utilizar las habilidades motrices básicas en una danza.",
+        "Usar habilidades motoras básicas en juegos de carácter pre-deportivo."
+      ],
+      "actitudes": [
+        "Demostrar disposición al esfuerzo personal, superación y perseverancia.",
+        "Demostrar disposición a participar de manera activa en la clase.",
+        "Demostrar disposición a mejorar su condición física e interés por practicar actividad física de forma regular.",
+        "Promover la participación equitativa de hombres y mujeres en toda actividad física y deporte."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Practicar actividades físicas, demostrando comportamientos seguros como:\n› participar en actividades de \ncalentamiento en forma apropiada\n› escuchar y seguir instrucciones\n› mantener su posición dentro \nde los límites establecidos \npara la actividad\n› asegurar de que el espacio \nestá libre de obstáculos",
+          "indicadores": [
+            "Ejecutan actividades de calentamiento al inicio de la clase y ejercicios de vuelta a la calma al finalizar la sesión en forma autónoma.",
+            "Conocen y ponen en práctica medidas de seguridad adecuadas en la práctica de ejercicio físico.",
+            "Escuchan las instrucciones del profesor antes de realizar la actividad.",
+            "No empujan a sus compañeros mientras practican algún ejercicio físico.",
+            "Identifican los lugares aptos y seguros para la realización de actividad física."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen la condición física por medio de la práctica de ejercicios de resistencia cardiovascular, fuerza, fl exibilidad y velocidad, mejorando sus resultados personales.",
+          "indicadores": [
+            "Ejecutan un ejercicio físico de manera continua, manteniendo el nivel de intensidad moderada a vigorosa.",
+            "Desarrollan la resistencia por medio de circuitos.",
+            "Demuestran ejercicios que desarrollen la condición física.",
+            "Definen los componentes de la condición física."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Describir y registrar las respuestas corporales provocadas por la práctica de actividad física, como aumento de la frecuencia cardiaca y respiratoria.",
+          "indicadores": [
+            "Describen los cambios que sufre el organismo desde un estado pasivo a la realización de actividad física: cansancio muscular y cambios en el tono muscular.",
+            "Usan escalas de percepción desfuerzo para conocer la intensidad del ejercicio físico.",
+            "Comparan resultados anteriores para ver los posibles avances obtenidos con el entrenamiento.",
+            "Realizan un registro de ejercicios y actividades de entrenamiento y logros obtenidos y los comparan con datos anteriores."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Practicar juegos pre-deportivos con reglas y espacios adaptados, aplicando los principios generales de juego, como avanzar y retroceder en bloque, recuperar el balón, acompañar la jugada y la visión periférica.",
+          "indicadores": [
+            "Ejecutan juegos pre-deportivos colectivos con un máximo de tres reglas.",
+            "Reconocen el juego como objeto de diversión y de aprovechamiento del tiempo libre.",
+            "Ejecutan juegos pre-deportivos, utilizando sus principios básicos: acompañar la jugada, utilizar las dimensiones del terreno de juego."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Ejecutar movimientos o elementos de danzas tradicionales de forma coordinada, utilizando actividades rítmicas y lúdicas de forma individual o grupal.",
+          "indicadores": [
+            "Utilizan distintos materiales para realizar secuencias de movimientos simples, que impliquen cambios de dirección en diferentes planos según los cambios de ritmos percibidos.",
+            "Ejecutan pasos básicos de danzas tradicionales en forma coordinada.",
+            "Ejecutan combinaciones simples de movimientos creados por ellos mismos, procurando expresar sensaciones e ideas relacionadas con la naturaleza.",
+            "Utilizan el movimiento y los gestos como medio de expresión de sentimientos y emociones asociadas a diferentes músicas y sonidos.",
+            "Realizan distintos movimientos, procurando llevar el ritmo de una melodía en forma individual y grupal."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Practicar de manera regular y autónoma actividades físicas de intensidad moderada a vigorosa, como saltar la cuerda y caminar hasta el colegio.",
+          "indicadores": [
+            "Practican de manera regular actividades físicas de intensidad moderada a vigorosa; por ejemplo: saltan la cuerda durante el recreo, se trasladan en bicicleta al colegio, entre otras.",
+            "Ejecutan actividades físicas de intensidad moderada a vigorosa por un periodo de 60 minutos al menos cinco veces a la semana.",
+            "Utilizan las dependencias del colegio, plazas y entornos cercanos a sus hogares para practicar ejercicio físico, rutina de actividades, juegos tradicionales y/o deportes, cinco veces a la semana.",
+            "Elaboran un listado de actividades físicas que practican regularmente fuera del colegio.",
+            "Explican con sus palabras los beneficios de la práctica regular de actividad física para la salud.",
+            "Identifican opciones que pueden seleccionar para ser físicamente activos; por ejemplo: caminar a la escuela, jugar al aire libre en vez del usar el computador y subir escaleras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Practicar actividades físicas en forma segura, demostrando la adquisición de hábitos de higiene, posturales y de vida saludable, como utilizar protección solar, lavarse y cambiarse de ropa después de la clase, hidratarse con agua, comer una colación saludable después de la práctica de actividad física.",
+          "indicadores": [
+            "Señalan aquellos alimentos que aporten más energía y que son necesarios para practicar actividad física.",
+            "Describen la importancia de comer una variedad de comida saludable para obtener la energía necesaria para la actividad física; por ejemplo: ayuda a desarrollar los huesos fuertes sanos.",
+            "Realizan rutinas básicas de higiene al término de la clase: ducharse y cambiarse de ropa después del ejercicio físico.",
+            "Señalan conductas de autocuidado frente a la exposición solar, utilizando bloqueadores solares y una ropa adecuada para la actividad física.",
+            "Realizan un listado y describen tres o más beneficios de la práctica regular de actividad física para el corazón, los músculos y los huesos."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad 1",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Al inicio de la clase, el docente les pregunta:\n› ¿qué elementos debe tener un calentamiento?\n› ¿cuál es la importancia del calentamiento?2 Se divide al curso en cuatro grupos que estarán identificados por petos. Uno será el encargado de pillar al resto de los equipos. A la señal, debe atrapar a la mayor cantidad de integrantes de cada grupo. Aquellos que son alcanzados, deben mantenerse en un pie. Un compañero los puede liberar si les toca el pie que está en el aire."
+        },
+        {
+          "nombre": "Actividad 3",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Se ubican libremente en el espacio. Uno debe tener los brazos pegados al cuerpo. A la señal, se desplazan por medio de saltos y el que tiene los brazos junto al cuerpo debe pillar al resto, también saltando. Si alcanza a uno, siguen saltando tomados de las manos. De este modo se va creando un grupo grande hasta que están todos los integrantes del curso. Seguridad"
+        },
+        {
+          "nombre": "Actividad 4",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Guiados con el docente, conversan sobre conductas que evitan riesgos al realizar actividad física; por ejemplo;\n› no empujar a un compañero\n› respetar los espacios delimitados\n› reconocer obstáculos que pueden ser peligrosos5 Al inicio de la actividad, el docente explica lo importante que es mantener un estado de alerta durante las actividades grupales. Luego les pide representen la conducción de un auto solo con las manos, evitando chocar con los demás. Después hacen lo mismo en un espacio más reducido."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "1 Los estudiantes se ubican en parejas en el espacio asignado para la tarea. El docente da el ritmo que deben seguir con un pandero. Un golpe es un paso con la pierna derecha, dos golpes es un paso con la pierna izquierda, tres golpes, avanzar hacia adelante y realizar una vuelta completa. 2 Guiados por el docente, recuerdan algunas danzas practicadas en clases. En grupos, deben elegir una y representarla al curso. La representación debe incluir pasos básicos de la danza, nombre y procedencia. Educación Física y Salud Unidad 3 109",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Reconocen las consignas dadas por el profesor.",
+              "Ejecutan movimientos simples, demostrando memoria coreográfica.",
+              "Ejecutan movimientos simples, procurando mantener control corporal.",
+              "Presentan una danza folclórica al resto del curso, procurando expresar y comunicar ideas y/o sentimientos propios del baile.",
+              "Ejecutan una coreografía grupal, considerando la coordinación, la organización espacial y el seguimiento del ritmo."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "1 Los estudiantes observan la siguiente pirámide. Luego, registran en su cuaderno de Educación Física y Salud aquellas actividades físicas que ellos practican en forma regular y que aportan beneficios a su salud. 110 Cada semana ESTILO DE VIDA SALUDABLE Bebe + agua A diario 2 Guiados por el docente, elaboran su pirámide de actividad física con las actividades que ellos realizan, según el tipo, la frecuencia y la duración. Es importante que las actividades sedentarias estén en el nivel superior de dicha pirámide. 3 Realizan una presentación de sus pirámides frente al curso y comparten sus experiencias respecto de las actividades físicas que ellos realizan.",
+          "criterios_evaluacion": {
+            "criterios": []
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Anticipar visualmente la secuencia de la clase con apoyos gráficos, estaciones o demostraciones breves para favorecer la comprensión y la autorregulación.",
+          "Ofrecer alternativas de participación motriz y graduar la dificultad de circuitos, desplazamientos y juegos según el nivel de coordinación, resistencia y seguridad de cada estudiante.",
+          "Incorporar pausas activas breves, respiración guiada e hidratación planificada para sostener la atención y evitar sobrecarga física o sensorial.",
+          "Permitir apoyos de pares, señales auditivas y visuales, delimitación clara del espacio y uso de materiales livianos o adaptados para favorecer una participación segura."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "La unidad tiene tres objetivos principales. Primero, que los estudiantes practiquen juegos pre-deportivos en espacios especialmente adaptados, aplicando los principios generales de juego. Segundo, que practiquen actividad física con responsabilidad y honestidad; en este sentido, se espera que asuman roles, que respeten las decisiones de la autoridad y que organicen los múltiples aspectos del juego. Tercero, que ejecuten actividades físicas en diversos ambientes naturales para aprovechar los múltiples lugares que ofrece nuestro país. Asimismo, se pretende que mantengan limpios los ambientes naturales que utilizan para practicar actividades físicas y que exhiban una actitud de colaboración y respeto hacia sus compañeros. Además, se busca que consoliden normas de higiene, prevención y seguridad y que sean capaces de realizar de forma autónoma un calentamiento antes del esfuerzo físico; que ejecuten actividades físicas que desarrollen la resistencia, fuerza, flexibilidad y velocidad, y que describan y registren las respuestas corporales provocadas por el ejercicio físico.",
+      "conocimientos_previos": [
+        "Resolver situaciones de juego en grupos, normas básicas de precaución, protección y seguridad en el entorno natural."
+      ],
+      "palabras_clave": [
+        "Liderazgo",
+        "trabajo en equipo",
+        "respeto",
+        "cooperación",
+        "cuidado del medioambiente",
+        "seguridad",
+        "CONOCIMIENTOS",
+        "› Principios generales de juegos",
+        "› Sistemas de juego",
+        "› Entornos naturales donde practicar actividad",
+        "física"
+      ],
+      "conocimientos": [
+        "PREVIOS Resolver situaciones de juego en grupos, normas básicas de precaución, protección y seguridad en el entorno natural."
+      ],
+      "habilidades": [
+        "Combinar habilidades motoras básicas de locomoción, manipulación y equilibrio en diferentes entornos.",
+        "Usar una variedad de entornos y ambientes para la práctica de actividad física.",
+        "Asumir diferentes roles durante la práctica de juegos y actividades físicas.",
+        "Utilizar una variedad de entornos para la práctica regular de actividad física."
+      ],
+      "actitudes": [
+        "Demostrar confianza en sí mismos al practicar actividad física.",
+        "Promover la participación equitativa de hombres y mujeres en toda actividad física y deporte.",
+        "Respetar la diversidad física de las personas, sin discriminar por características como altura, peso, color de piel o pelo, etc.",
+        "Demostrar disposición a trabajar en equipo, colaborar con otros y aceptar consejos y críticas.."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Practicar actividades físicas, demostrando comportamientos seguros como:\n› participar en actividades de \ncalentamiento en forma apropiada\n› escuchar y seguir instrucciones\n› mantener su posición dentro \nde los límites establecidos \npara la actividad\n› asegurar que el espacio está \nlibre de obstáculos",
+          "indicadores": [
+            "En forma autónoma, realizan actividades de calentamiento al inicio de la clase y ejercicios de vuelta a la calma al finalizar la sesión.",
+            "Demuestran conciencia de que las normas de seguridad varían en las diferentes actividades físicas y entornos.",
+            "Evitan conductas peligrosas para la propia integridad y la de los pares.",
+            "No utilizan accesorios que sean peligrosos para sí mismos y sus compañeros, como anillos o aros, entre otros.",
+            "Cuidan el material de trabajo y lo recogen al término de la clase.",
+            "Siguen las reglas establecidas en la clase; por ejemplo: se mantienen ejecutando una tarea durante el tiempo propuesto, participan de forma independiente en un calentamiento."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen la condición física por medio de la práctica de ejercicios de resistencia cardiovascular, fuerza, fl exibilidad y velocidad, mejorando sus resultados personales.",
+          "indicadores": [
+            "Ejecutan actividades que requieren mantener un esfuerzo durante un tiempo prolongado sin intermitencia.",
+            "Participan en una variedad de actividades de tracción y empuje.",
+            "Ejecutan actividades de corta duración que desarrollen la velocidad; por ejemplo: postas y relevos.",
+            "Ejecutan ejercicios de estiramiento muscular de carácter activo para grupos musculares posturales.",
+            "Mencionan la importancia para la salud de participar en actividades físicas en forma regular.",
+            "Realizan alguna prueba o test para comparar su nivel personal de desarrollo de las cualidades físicas con resultados anteriores."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Describir y registrar las respuestas corporales provocadas por la práctica de actividad física, como aumento de la frecuencia cardiaca y respiratoria.",
+          "indicadores": [
+            "Describen y registran los cambios que sufre el organismo desde un estado pasivo a la realización de actividad física, como cansancio general y cambios en el tono muscular.",
+            "Usan métodos como la frecuencia cardiaca para describir las respuestas corporales.",
+            "Registran de forma permanente las respuestas corporales provocadas por la actividad física.",
+            "Comparan las diferentes respuestas corporales provocadas por diversos ejercicios físicos; por ejemplo: cuando realizan una carrera de quince minutos y cuando saltan diez segundos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Practicar juegos pre-deportivos con reglas y espacios adaptados, aplicando los principios generales de juego, como avanzar y retroceder en bloque, recuperar el balón, acompañar la jugada y la visión periférica.",
+          "indicadores": [
+            "Ejecutan juegos pre-deportivos colectivos con un máximo de cuatro reglas.",
+            "Reconocen el juego como objeto de diversión e interacción social.",
+            "Ejecutan juegos pre-deportivos, utilizando sus principios básicos: seguir la jugada, visión periférica, utilizar las dimensiones del terreno de juego, jugar sin implementos.",
+            "Aplican principios generales de juegos en juegos pre-deportivos, como avanzar y retroceder en bloque, recuperar el balón, entre otros.",
+            "Elaboran y aplican estrategias que impliquen ataque y defensa, buscando objetivos: goles, canastas, ensayos, toques de suelo, etc."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Ejecutar actividades físicas y/o lúdicas en diferentes entornos, aplicando medidas para conservar limpios y ordenados los espacios; por ejemplo:\n› jugar en plazas activas\n› jugar un partido en la plaza o \nla playa\n› realizar caminatas en el entorno natural\n› andar en bicicleta en un parque o en un camino rural",
+          "indicadores": [
+            "Utilizan diferentes habilidades motrices de acuerdo a los requerimientos del entorno natural: excursiones, actividades en la playa, etc.",
+            "Ejecutan actividades en el medio natural, procurando sensibilizar a sus compañeros por el respeto y la conservación del medio natural.",
+            "Ejecutan actividades físicas orientadas al desarrollo de habilidades motrices en diferentes entornos; por ejemplo: - actividades en la playa: vóley-playa, fútbol, balonmano, juegos populares, etc. - juegos de orientación, utilizando mapas de la escuela o parques cercanos, carreras de orientación, utilización de brújula, etc. - excursiones de un día de duración - realización de una acampada.",
+            "Utilizan material alternativo para diferentes actividades, como neumáticos, cuerdas, entre otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Practicar actividades físicas y/o juegos colectivos con responsabilidad y honestidad, cumpliendo las reglas, los roles asignados y los principios de un juego limpio.",
+          "indicadores": [
+            "Cumplen las reglas propuestas en el juego.",
+            "Aplican los principios de un juego limpio.",
+            "Cumplen con los roles asignados dentro de un juego.",
+            "Preparan el material necesario para realizar una actividad en la naturaleza, asignando funciones a los participantes y velando para que los líderes respondan de manera responsable a las exigencias de la actividad.",
+            "Intentan cumplir con el objetivo propuesto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Practicar actividades físicas en forma segura, demostrando la adquisición de hábitos de higiene, posturales y de vida saludable, como utilizar protección solar, lavarse y cambiarse de ropa después de la clase, hidratarse con agua, comer una colación saludable después de la práctica de actividad física.",
+          "indicadores": [
+            "Reconocen la capacidad del cuerpo para aumentar el gasto energético, durante el ejercicio físico de intensidad moderada.",
+            "Demuestran saber cuándo es apropiado comer y tomar agua en relación con la práctica de actividad física; por ejemplo: no comer mucho o muy cerca del horario de la práctica de actividad física y tomar agua periódicamente durante la actividad física.",
+            "Se duchan o se lavan las manos y la cara, y se cambian de ropa al término de la clase.",
+            "Realizan un listado y describen tres o más beneficios de la práctica regular de actividad física para el corazón, los músculos y los huesos; por ejemplo: que aumentan la flexibilidad y la resistencia cardiovascular y se fortalecen los huesos."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad 1",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Al inicio de la clase, el docente les pregunta:\n› ¿cuál es el objetivo del calentamiento?\n› ¿cuánto tiempo debe durar el calentamiento?"
+        },
+        {
+          "nombre": "Actividad 2",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Los estudiantes se ubican libremente en el espacio y realizan ejercicios de desplazamientos:\n› caminando, realizan rotación de brazos hacia adelante y luego hacia atrás\n› ejecutan una carrera y, a la señal del docente, se agachan y tocan el suelo\n› saltan por una sucesión de aros y quedan inmóviles"
+        },
+        {
+          "nombre": "Actividad 3",
+          "oas_asociados": [
+            11,
+            9
+          ],
+          "descripcion": "Se ubican en parejas; uno tiene un balón, lo lanza al aire, salta por encima del compañero que está tendido, tira el balón por debajo de las piernas del compañero que se pone de pie e inicia nuevamente la actividad hasta completar cinco veces. Seguridad"
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "1 Los estudiantes salen a la plaza más cercana del colegio (si no hay una cerca, se puede utilizar el patio del colegio). Se traza un circuito con las siguientes tareas motrices:\n› Primera estación: se amarra una cuerda entre dos árboles a unos cincuenta centímetros del piso y los alumnos se arrastran para pasar por debajo.\n› Segunda estación: se pone una cuerda de unos dos metros en el suelo y deben caminar sobre ella sin perder el equilibrio.\n› Tercera estación: corren hacia un cuadrado con diez pelotitas de papel dispersas; las recogen y llegan al punto final, determinado por el docente. 2 Al finalizar la actividad, recogen y cuentan los materiales que se usaron. Además, recogen la basura que dejaron. 3 Explican las medidas que pueden aplicar para mantener los espacios limpios y ordenados.",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Demuestran conductas de cuidado y protección del medio natural.",
+              "Utilizan los recursos que les ofrece el medio natural y realizan el circuito en forma autónoma.",
+              "Participan de manera activa.",
+              "Recogen los materiales utilizados y los guardan en forma ordenada."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            10
+          ],
+          "actividad_evaluacion": "1 Se delimita una mini cancha de unos 6 x 6 metros. Al centro se ubica un elástico a una altura de unos dos metros. En cada lado de la cancha, se instalan tres parejas con un peto, con el cual recibirán una pelota y la lanzarán hacia el otro lado. El pase al equipo contrario puede ser directo o bien luego de pases entre los del mismo grupo. Ganan un punto cuando el equipo contrario no logra tomar el balón con el peto y cae al suelo. 2 Se forman grupos de cinco estudiantes en un lugar al aire libre. Uno de alumnos será el líder (monito mayor) durante unos tres minutos. A la señal, los líderes crearán un circuito por el patio del colegio, realizando diferentes acciones motrices. Los demás deben imitar sus movimientos. Educación Física y Salud Unidad 4 133",
+          "criterios_evaluacion": {
+            "criterios": [
+              "Respetan el turno para realizar la actividad.",
+              "Siguen las normas y reglas de las actividades propuestas por el compañero.",
+              "Presentan buena relación con sus pares y profesores.",
+              "Participan de manera activa en la actividad.",
+              "Ejecutan desplazamientos en pareja de forma coordinada y cooperativa.",
+              "Animan a su compañero a participar activamente en el juego.",
+              "Cumplen las reglas y respetan los espacios establecidos para la actividad.",
+              "Trabajan cooperativamente para lograr el objetivo determinado."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Anticipar visualmente la secuencia de la clase con apoyos gráficos, estaciones o demostraciones breves para favorecer la comprensión y la autorregulación.",
+          "Ofrecer alternativas de participación motriz y graduar la dificultad de circuitos, desplazamientos y juegos según el nivel de coordinación, resistencia y seguridad de cada estudiante.",
+          "Incorporar pausas activas breves, respiración guiada e hidratación planificada para sostener la atención y evitar sobrecarga física o sensorial.",
+          "Permitir apoyos de pares, señales auditivas y visuales, delimitación clara del espacio y uso de materiales livianos o adaptados para favorecer una participación segura."
+        ]
+      }
+    }
+  ]
+}

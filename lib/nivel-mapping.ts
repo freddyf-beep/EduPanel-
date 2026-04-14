@@ -9,6 +9,7 @@ function getUid(): string {
 
 // All possible curriculum levels (reference only)
 export const NIVELES_CURRICULARES = [
+  "Párvulos",
   "1ro Básico",
   "2do Básico",
   "3ro Básico",

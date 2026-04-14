@@ -1,0 +1,305 @@
+[
+  {
+    "nivel": "1º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella.",
+        "Demostrar disposición e interés por compartir con otros, ideas, experiencias y opiniones con otros.",
+        "Reflexionar sobre sí mismo, sus ideas e intereses para comprenderse y valorarse."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Reconocer que los textos escritos transmiten mensajes y que son escritos por alguien para cumplir un propósito.",
+          "indicadores": [
+            "Distinguen entre imagen y texto escrito.",
+            "Indican qué mensaje transmite un texto familiar; por ejemplo, “salida de emergencia”, “no fumar”, etc.",
+            "Identifican palabras familiares; por ejemplo, su nombre o apellido.",
+            "Juegan a leer.",
+            "Siguen con el dedo las líneas de un párrafo mientras escuchan la lectura de ese texto.",
+            "Identifican al autor y título de un libro."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reconocer que las palabras son unidades de significado separadas por espacios en el texto escrito.",
+          "indicadores": [
+            "Diferencian una palabra de una frase u oración.",
+            "Identifican la cantidad de palabras que hay en una oración.",
+            "Identifican la primera y la última letra de una palabra."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Identificar los sonidos que componen las palabras (conciencia fonológica), reconociendo, separando y combinando sus fonemas y sílabas.",
+          "indicadores": [
+            "Identifican un sonido o patrones de sonido en oraciones escuchadas.",
+            "Identifican qué palabras riman entre sí luego de escuchar una estrofa.",
+            "Identifican el sonido inicial y final de las palabras.",
+            "Descomponen palabras en los fonemas que las forman.",
+            "Identifican una palabra luego de escuchar sus fonemas (por ejemplo, la profesora dicta p-a-s-o y los alumnos reconocen la palabra “paso”).",
+            "Descomponen palabras en sílabas.",
+            "Forman palabras a partir de sílabas dadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Leer palabras aisladas y en contexto, aplicando su conocimiento de la correspondencia letra-sonido en diferentes combinaciones: sílaba directa, indirecta o compleja.",
+          "indicadores": [
+            "Nombran las letras estudiadas y reproducen su sonido.",
+            "Nombran palabras que comienzan con una letra determinada.",
+            "Reconocen una letra determinada en textos escritos.",
+            "Leen palabras que contienen una o más vocales y las consonantes en estudio.",
+            "Leen algunas palabras en textos apropiados a su edad.",
+            "Leen algunos nombres familiares y palabras de uso frecuente necesarias para la comprensión de textos, pero cuyas letras se aprenderán posteriormente (por ejemplo, yo, ella, y, que, fue).",
+            "Leen frases cortas.",
+            "Leen textos significativos, aplicando su conocimiento de las cinco vocales y al menos 6 consonantes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Leer textos breves en voz alta para adquirir fluidez: pronunciando cada palabra con precisión, aunque se autocorrijan en algunas ocasiones; leyendo palabra a palabra.",
+          "indicadores": [
+            "Leen con precisión palabras que incluyen las letras aprendidas en esta unidad.",
+            "Leen un listado de palabras o frases cortas haciendo lectura silábica en contadas ocasiones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Experimentar con la escritura para comunicar hechos, ideas y sentimientos, entre otros.",
+          "indicadores": [
+            "Juegan a escribir.",
+            "Escriben la palabra que corresponde a una imagen.",
+            "Escriben listas de palabras.",
+            "Crean mensajes que contienen palabras familiares, partes de palabras y/o palabras con ortografía inventada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, relatos, anécdotas, etc.) para obtener información y desarrollar su curiosidad por el mundo: estableciendo conexiones con sus propias experiencias; visualizando lo que se describe en el texto; formulando preguntas para obtener información adicional y aclarar dudas; respondiendo preguntas abiertas; formulando una opinión sobre lo escuchado.",
+          "indicadores": [
+            "Relacionan lo que han aprendido en otras asignaturas con un texto escuchado en clases.",
+            "Mencionan experiencias de sus vidas que se relacionan con lo que han escuchado.",
+            "Dibujan objetos, eventos y experiencias personales que se relacionan con el texto escuchado.",
+            "Hacen un recuento de partes de un texto escuchado en clases.",
+            "Dibujan elementos descritos en el texto escuchado.",
+            "Formulan preguntas para ampliar la información que aprendieron al escuchar un texto.",
+            "Responden preguntas que hacen referencia a la información de un texto escuchado.",
+            "Siguen instrucciones orales para realizar una tarea.",
+            "Expresan una opinión sobre algún aspecto de un texto escuchado."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Recitar con entonación y expresión poemas, rimas, canciones, trabalenguas y adivinanzas para fortalecer la confianza en sí mismos, aumentar el vocabulario y desarrollar su capacidad expresiva.",
+          "indicadores": [
+            "Recitan poemas, rimas, canciones, trabalenguas y adivinanzas con entonación adecuada.",
+            "Recitan de memoria poemas, versos, rimas, canciones, trabalenguas y adivinanzas."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "1º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar respeto por las diversas opiniones y puntos de vista, reconociendo el diálogo como una herramienta de enriquecimiento personal y social.",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura.",
+        "Lenguaje y Comunicación 107 Unidad 2"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés: presentando información o narrando un evento relacionado con el tema",
+          "indicadores": [
+            "incorporando frases descriptivas que ilustren lo dicho",
+            "utilizando un vocabulario variado",
+            "pronunciando adecuadamente y usando un volumen audible",
+            "manteniendo una postura adecuada Presentan información sobre un objeto o un tema. Relatan experiencias siguiendo una secuencia.",
+            "Describen el objeto o el evento que presentan.",
+            "Comunican sus ideas verbalmente, sin reemplazar palabras por gestos ni elementos del contexto.",
+            "Incorporan un vocabulario variado en sus intervenciones.",
+            "Incorporan, si es pertinente, palabras aprendidas recientemente.",
+            "Hacen contacto visual con la audiencia.",
+            "Evitan movimientos bruscos o constantes al hablar."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Recitar con entonación y expresión poemas, rimas, canciones, trabalenguas y adivinanzas para fortalecer la confianza en sí mismos, aumentar el vocabulario y desarrollar su capacidad expresiva.",
+          "indicadores": [
+            "Recitan poemas, rimas, canciones, trabalenguas y adivinanzas con entonación adecuada.",
+            "Recitan de memoria poemas, versos, rimas, canciones, trabalenguas y adivinanzas.",
+            "111 112 Programa de Estudio Ú 1º básico"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "1º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar empatía hacia los demás, comprendiendo el contexto en el que se sitúan.",
+        "Reflexionar sobre sí mismo, sus ideas e intereses para comprenderse y valorarse.",
+        "Lenguaje y Comunicación 133 Unidad 3"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Expresarse de manera coherente y articulada sobre temas de su interés: presentando información o narrando un evento relacionado con el tema",
+          "indicadores": [
+            "incorporando frases descriptivas que ilustren lo dicho",
+            "utilizando un vocabulario variado",
+            "pronunciando adecuadamente y usando un volumen audible",
+            "manteniendo una postura adecuada Presentan información sobre un objeto o un tema. Relatan experiencias siguiendo una secuencia.",
+            "Describen el objeto o el evento que presentan.",
+            "Comunican sus ideas sin recurrir a gestos ni al contexto.",
+            "Incorporan un vocabulario variado en sus intervenciones.",
+            "Incorporan, si es pertinente, palabras aprendidas recientemente.",
+            "Hacen contacto visual con la audiencia.",
+            "Evitan movimientos bruscos o constantes al hablar.",
+            "137 138 Programa de Estudio Ú 1º básico"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "1º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita.",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura.",
+        "Lenguaje y Comunicación 157 Unidad 4 P oe m a s , canc i one s , a d i v i nan z a s Título Hola que me lleva la ola"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Leer independientemente y comprender textos no literarios escritos con oraciones simples (cartas, notas, instrucciones y artículos informativos) para entretenerse y ampliar su conocimiento del mundo: extrayendo información explícita e implícita",
+          "indicadores": [
+            "formulando una opinión sobre algún aspecto de la lectura Hacen un recuento de la información obtenida de textos breves.",
+            "Localizan información en un texto.",
+            "Subrayan en el texto información solicitada por el docente.",
+            "Contestan, oralmente o por escrito, preguntas que aluden a información explícita o implícita de un texto leído.",
+            "Describen las imágenes del texto.",
+            "Indican qué les gustó de un texto leído."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir oraciones completas para transmitir mensajes.",
+          "indicadores": [
+            "Escriben mensajes a otros. Escriben oraciones sobre sus lecturas.",
+            "Describen por escrito objetos o personas.",
+            "Escriben oraciones comprensibles."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Disfrutar de la experiencia de asistir a obras de teatro infantiles o representaciones para ampliar sus posibilidades de expresión, desarrollar su creatividad y familiarizarse con el género.",
+          "indicadores": [
+            "Describen una parte de una obra de teatro o representación. Nombran a los personajes de una obra de teatro o representación vista.",
+            "Expresan oralmente los sentimientos y emociones que experimentaron durante una obra de teatro infantil o representación vista.",
+            "Expresan qué sentimientos manifestó un personaje en una obra vista"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Desempeñar diferentes roles para desarrollar su lenguaje y autoestima, y aprender a trabajar en equipo.",
+          "indicadores": [
+            "Representan partes de textos escuchados o leídos. Cumplen sus responsabilidades para realizar una representación. Lenguaje y Comunicación Unidad 4"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales y material manipulable para reforzar lectura y escritura.",
+          "Alternar momentos breves de lectura, escucha, movimiento y producción para sostener la atención.",
+          "Permitir diversas formas de respuesta: oral, señalando, con tarjetas, dibujo o escritura.",
+          "Incorporar canciones, ritmo y recursos tecnológicos simples para reforzar conciencia fonológica, vocabulario y motivación."
+        ]
+      }
+    }
+  }
+]

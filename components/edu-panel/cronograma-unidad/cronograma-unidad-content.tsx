@@ -12,8 +12,9 @@ import {
   guardarCronogramaUnidad, cargarCronogramaUnidad,
 } from "@/lib/curriculo"
 import type { OAEditado, ClaseCronograma } from "@/lib/curriculo"
-import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,7 @@ interface Props {
 }
 
 export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, unidadCurricularId }: Props) {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const [clases, setClases]         = useState<ClaseCronograma[]>([])
   const [loading, setLoading]       = useState(true)
   const [saving, setSaving]         = useState(false)
@@ -104,7 +106,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       }
       ignoreNextSaveRef.current = true;
     }).finally(() => setLoading(false))
-  }, [curso, unidadId, totalClases])
+  }, [curso, unidadId, totalClases, ASIGNATURA])
 
   const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
@@ -202,8 +204,8 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   return (
     <div>
       {/* Barra superior */}
-      <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
-        <div className="flex items-center gap-3">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="text-[13px] font-semibold text-muted-foreground">
             Total de clases: <span className="text-foreground font-bold">{clases.length}</span>
           </div>
@@ -215,16 +217,16 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
             <span className="text-[12px] font-semibold text-primary">{cobertura}% cubierto</span>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
           <button
             onClick={handleFechasAuto}
-            className="flex items-center gap-1.5 text-[12px] font-semibold border border-border bg-card rounded-[8px] px-3 py-2 hover:bg-background transition-colors"
+            className="flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border bg-card px-3 py-2 text-[12px] font-semibold transition-colors hover:bg-background sm:w-auto"
           >
             <Calendar className="w-3.5 h-3.5 text-muted-foreground" /> Fechas automáticas
           </button>
           <button
             onClick={() => setShowAutoWarn(true)}
-            className="flex items-center gap-1.5 text-[12px] font-semibold border border-border bg-card rounded-[8px] px-3 py-2 hover:bg-background transition-colors"
+            className="flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border bg-card px-3 py-2 text-[12px] font-semibold transition-colors hover:bg-background sm:w-auto"
           >
             <Shuffle className="w-3.5 h-3.5 text-muted-foreground" /> Autorelleno
           </button>
@@ -241,7 +243,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           <button
             onClick={() => handleGuardar(false)}
             disabled={saving || saveStatus === "saving_silent"}
-            className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-[8px] px-4 py-2 hover:bg-[#d6335e] transition-colors disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-primary px-4 py-2 text-[12px] font-bold text-white transition-colors hover:bg-pink-dark disabled:opacity-60 sm:w-auto"
           >
             {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Bookmark className="w-3.5 h-3.5" />}
             Guardar
@@ -251,18 +253,18 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
 
       {/* Advertencia autorelleno */}
       {showAutoWarn && (
-        <div className="mb-4 bg-amber-50 border border-amber-200 rounded-[12px] p-4 flex items-start gap-3">
+        <div className="mb-4 flex items-start gap-3 rounded-[12px] border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-[13px] font-bold text-amber-900 mb-1">¿Usar autorelleno?</p>
             <p className="text-[12px] text-amber-800 leading-snug mb-3">
               El autorelleno distribuye los OA de forma <strong>aleatoria</strong>, sin intención pedagógica. Se recomienda distribuir manualmente para mejor resultado.
             </p>
-            <div className="flex gap-2">
-              <button onClick={handleAutorelleno} className="bg-amber-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-amber-600">
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <button onClick={handleAutorelleno} className="rounded-lg bg-amber-500 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-amber-600">
                 Autorrellenar igual
               </button>
-              <button onClick={() => setShowAutoWarn(false)} className="text-[11px] text-amber-800 px-3 py-1.5 hover:bg-amber-100 rounded-lg">
+              <button onClick={() => setShowAutoWarn(false)} className="rounded-lg px-3 py-1.5 text-[11px] text-amber-800 hover:bg-amber-100">
                 Cancelar
               </button>
             </div>
@@ -274,7 +276,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       <div className="bg-card border border-border rounded-[14px] overflow-hidden">
 
         {/* Paginación horizontal */}
-        <div className="flex items-center justify-between px-4 py-2 bg-background border-b border-border">
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-background border-b border-border px-4 py-2">
           <button
             onClick={() => setColOffset(o => Math.max(0, o - COLS_VISIBLE))}
             disabled={colOffset === 0}
@@ -296,7 +298,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
 
         {/* Tabla */}
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full min-w-[860px] border-collapse">
             <thead>
               <tr className="bg-background">
                 {/* Header OA column */}
@@ -348,10 +350,14 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                       )}
                       {/* Botón ir a actividad */}
                       <Link
-                        href={buildUrl("/actividades",
-                          unidadCurricularId && unidadCurricularId !== unidadId
-                            ? { curso, unidad: unidadCurricularId, unitIdLocal: unidadId, clase: String(clase.numero) }
-                            : { curso, unidad: unidadId, clase: String(clase.numero) }
+                        href={buildUrl(
+                          "/actividades",
+                          withAsignatura(
+                            unidadCurricularId && unidadCurricularId !== unidadId
+                              ? { curso, unidad: unidadCurricularId, unitIdLocal: unidadId, clase: String(clase.numero) }
+                              : { curso, unidad: unidadId, clase: String(clase.numero) },
+                            ASIGNATURA
+                          )
                         )}
                         className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-primary hover:opacity-70 transition-opacity"
                       >
@@ -371,7 +377,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                 </tr>
               ) : (
                 oasSeleccionados.map((oa, oaIdx) => (
-                  <tr key={oa.id} className="border-b border-border last:border-b-0 hover:bg-[#fafbff] transition-colors">
+                  <tr key={oa.id} className="border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors">
                     {/* Celda OA */}
                     <td className="px-4 py-3 border-r border-border sticky left-0 bg-card z-10">
                       <div className="flex items-start gap-2">
@@ -418,7 +424,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       </div>
 
       {/* Leyenda */}
-      <div className="mt-4 flex items-center gap-4 text-[12px] text-muted-foreground">
+      <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] text-muted-foreground">
         <span>Haz clic en una celda para asignar/quitar un OA de esa clase.</span>
         <span className="flex items-center gap-1.5">
           <div className="w-3.5 h-3.5 rounded-full bg-primary" /> OA asignado

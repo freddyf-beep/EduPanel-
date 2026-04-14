@@ -10,7 +10,7 @@ export default function NotFound() {
         <h1 className="text-[28px] font-extrabold mb-2">Página no encontrada</h1>
         <p className="text-[14px] text-muted-foreground">La página que buscas no existe o fue movida.</p>
       </div>
-      <Link href="/" className="bg-primary text-white font-bold text-[13px] rounded-full px-6 py-3 hover:bg-[#d6335e] transition-colors">
+      <Link href="/" className="bg-primary text-white font-bold text-[13px] rounded-full px-6 py-3 hover:bg-pink-dark transition-colors">
         Volver al inicio
       </Link>
     </div>

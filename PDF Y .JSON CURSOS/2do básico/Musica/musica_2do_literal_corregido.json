@@ -1,0 +1,445 @@
+{
+  "nivel": "2º Básico",
+  "asignatura": "Música",
+  "unidad": [
+    {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "Uno de los objetivos centrales de esta unidad es que los estudiantes puedan conocer y experimentar la sonoridad de diversos objetos e instrumentos musicales por medio de la manipulación y el juego, además de conocer e identificar diversos timbres característicos en músicas de acuerdo a su contexto. Se espera que utilicen estos conocimientos tanto para enriquecer su interpretación musical (vocal e instrumental) como para el trabajo creativo, que se puede manifestar en la manipulación para obtener diversos sonidos con instrumentos de percusión.\n\nLas actividades propuestas tienden a reforzar la integración con otras asignaturas, como Artes Visuales, Historia, Geografía y Ciencias Sociales, y Lenguaje y Comunicación. En esta última se propone el descubrimiento de las posibilidades que ofrece la ejercitación fonética de la voz hablada y su relación con los sonidos y la música.\n\nOtros propósitos de la unidad tienen relación con ejercitación de movimientos corporales sugeridos por la música, la experimentación de diversos sonidos con el propio cuerpo y la importancia del silencio en la música.\n\nEn el cantar y tocar instrumentos, un propósito destacable es la creación de acompañamientos rítmicos sencillos y ostinati, lo que permite que los alumnos continúen experimentando con grafías propias o sugeridas por el docente.\n\nEn relación con la escucha, se recomienda la audición de trozos breves y escogidos de música contemporánea de tradición escrita para ampliar el imaginario sonoro de los estudiantes.",
+      "conocimientos_previos": [
+        "Diversas formas de interactuar con el sonido",
+        "Identificación de sonidos del entorno y sus fuentes sonoras",
+        "Expresión de emociones, sentimientos y gustos por medio de la música",
+        "Juegos y actividades musicales realizados"
+      ],
+      "palabras_clave": [
+        "Instrumentos musicales, silencio, sonido, acompañamiento."
+      ],
+      "conocimientos": [
+        "Interpretación de instrumentos de percusión",
+        "Repertorio interpretado y escuchado",
+        "Identificar cualidades del sonido de diversos objetos e instrumentos musicales",
+        "Incorporar diversos timbres en creaciones e interpretaciones musicales",
+        "Utilizar diversas sonoridades para expresarse musicalmente"
+      ],
+      "habilidades": [
+        "Desarrollo de la percepción sonora",
+        "Ejercitación musical",
+        "Capacidad de trabajo en equipo",
+        "Desarrollo de la memoria auditiva y musical",
+        "Desarrollo de la creatividad",
+        "Interpretación y expresión musical"
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos mediante diversas formas de expresión musical.",
+        "Reconocer y valorar los diversos estilos y expresiones musicales.",
+        "Demostrar disposición a participar y colaborar de forma respetuosa en actividades grupales de audición, expresión y creación musical."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, secciones), y representarlos de distintas formas.",
+          "indicadores": [
+            "Se expresan corporalmente de acuerdo a diversos estímulos sonoros (sonido/silencio, forte/piano, agudo/grave, entre otros).",
+            "Reconocen cualidades evidentes en sonidos y músicas variadas, representándolos de diversas formas (visual y musical).",
+            "Reconocen y diferencian sonidos de diversas fuentes (instrumentos musicales y objetos sonoros).",
+            "Comentan con sus propias palabras los ejemplos musicales escuchados, nombrando cualidades evidentes del sonido (intensidades, altura).",
+            "Clasifican sonidos según criterios personales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar sensaciones, emociones e ideas que les sugieren el sonido y la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente (mímicas, coreografías, expresión libre, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión visual (dibujos, pinturas, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión verbal (oral o escrita) según lo que les sugieren los sonidos y la música.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: › tradición escrita (docta) › tradición oral (folclor, música de pueblos originarios) › popular (jazz, rock, fusión, etc.) (Escuchar apreciativamente al menos 20 músicas variadas de corta duración en el transcurso del año).",
+          "indicadores": [
+            "Manifiestan interés y disposición a escuchar (actitud corporal, no muestran reticencia ante la escucha, comentan con sus compañeros).",
+            "Reflexionan sobre la base de lo escuchado, contestando preguntas como ¿Les pareció que la música era alegre o triste? ¿Por qué habrá hecho el compositor esta música?",
+            "Escuchan con atención, expresando intuitivamente sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Identifican instrumentos, ritmos o melodías conocidas.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y tocar instrumentos de percusión convencionales y no convencionales.",
+          "indicadores": [
+            "Participan en una variedad de canciones, versos rítmicos, rondas y juegos musicales.",
+            "Acompañan libremente canciones aprendidas con percusión corporal (palmas, pies u otros).",
+            "Cantan al unísono.",
+            "Cantan con naturalidad, evitando forzar la voz.",
+            "Reproducen patrones rítmicos.",
+            "Tocan con instrumentos de percusión convencionales y no convencionales.",
+            "Demuestran responsabilidad y cuidado con sus instrumentos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Explorar e improvisar ideas musicales con diversos medios sonoros (la voz, instrumentos convencionales y no convencionales, entre otros), usando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Exploran las posibilidades sonoras de su voz.",
+            "Participan en juegos de imitación y creación musical.",
+            "Improvisan ideas musicales breves (patrones, ostinati, secuencias sonoras).",
+            "Incorporan el silencio y los sonidos descubiertos a sus creaciones e improvisaciones musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Identificar y describir experiencias musicales y sonoras en su propia vida.",
+          "indicadores": [
+            "Comentan acerca de sus propias experiencias sonoras.",
+            "Identifican características relevantes en algunas experiencias musicales (instrumentos, rasgos estilísticos, contexto, entre otros).",
+            "Describen experiencias musicales de su vida."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar apoyos visuales, gestos y objetos manipulables para representar cualidades del sonido y patrones musicales.",
+          "Alternar escucha, movimiento, canto e improvisación en secuencias breves para sostener atención y autorregulación.",
+          "Permitir distintas formas de respuesta: corporal, verbal, dibujo, tarjetas o ejecución musical simple.",
+          "Incorporar grabaciones, audios y tecnología simple para reforzar memoria auditiva y motivación."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "El objetivo de esta unidad es que los estudiantes puedan conocer intenciones expresivas en la música que escuchan e interpretan y las relacionen con los elementos del lenguaje musical. Mediante diversas actividades musicales y de integración con otras áreas, se pretende que aprendan a exteriorizar sensaciones, ideas y/o emociones que les provoca o sugiere la música. Al mismo tiempo, se trabajará con gran énfasis el desarrollo de la creatividad musical.\n\nEn esta unidad se refuerza y amplia el conocimiento y la práctica de partes o secciones en una composición musical sencilla, que ahora pueden ser nítidamente contrastantes, ya sea por cambios rítmicos o de estados de ánimo de las partes. La incorporación de instrumentos confeccionados con elementos caseros permite practicar la experimentación y manipulación de timbres y hacer música con ellos fortalece el trabajo en grupo.",
+      "conocimientos_previos": [
+        "Aplicación de secciones en frases musicales (pregunta-respuesta)",
+        "Ocasionalidad en la música: bailes, cuentos musicales, cantos, entre otros",
+        "Experimentación e improvisación sonora de ideas musicales propias"
+      ],
+      "palabras_clave": [
+        "Escuchar, sonido, silencio, rápido, lento, director."
+      ],
+      "conocimientos": [
+        "Relacionar cualidades del sonido y elementos del lenguaje musical con propósitos expresivos de la música",
+        "Incorporar otras áreas de expresión artística a la música"
+      ],
+      "habilidades": [
+        "Ejercitación musical con la voz, el cuerpo e instrumentos musicales",
+        "Expresión creativa",
+        "Apreciación sonora",
+        "Desarrollo de la memoria auditiva y musical",
+        "Expresión musical"
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar confianza en sí mismos al presentar a otros o compartir su música.",
+        "Reconocer la dimensión espiritual y trascendente del arte y la música para el ser humano.",
+        "Demostrar disposición a desarrollar su creatividad por medio de la experimentación, el juego, la imaginación y el pensamiento divergente."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, secciones), y representarlos de distintas formas.",
+          "indicadores": [
+            "Se expresan corporalmente de acuerdo a diversos estímulos sonoros (sonido/silencio, forte/piano, agudo/grave, entre otros).",
+            "Reconocen cualidades evidentes en sonidos y músicas variadas, representándolos de diversas formas (visual y musical).",
+            "Reconocen y diferencian sonidos de diversas fuentes (instrumentos musicales y objetos sonoros).",
+            "Comentan con sus propias palabras los ejemplos musicales escuchados, nombrando cualidades evidentes del sonido (intensidades, altura).",
+            "Clasifican sonidos según criterios personales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar sensaciones, emociones e ideas que les sugieren el sonido y la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente (mímicas, coreografías, expresión libre, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión visual (dibujos, pinturas, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión verbal (oral o escrita) según lo que les sugieren los sonidos y la música.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas, poniendo énfasis en: › tradición escrita (docta) › tradición oral (folclor, música de pueblos originarios) › popular (jazz, rock, fusión, etc.) (Escuchar apreciativamente al menos 20 músicas variadas de corta duración en el transcurso del año).",
+          "indicadores": [
+            "Manifiestan interés y disposición a escuchar (actitud corporal, no muestran reticencia ante la escucha, comentan con sus compañeros).",
+            "Reflexionan sobre lo escuchado, contestando preguntas como ¿les pareció que la música era alegre o triste?, ¿por qué habrá hecho el compositor esta música?",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Identifican instrumentos, ritmos o melodías conocidas.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y tocar instrumentos de percusión convencionales y no convencionales.",
+          "indicadores": [
+            "Participan en una variedad de canciones, versos rítmicos, rondas y juegos musicales.",
+            "Acompañan canciones aprendidas con patrones rítmicos u ostinati dados, con percusiones convencionales y no convencionales.",
+            "Cantan al unísono, cuidando entradas y finales.",
+            "Cantan con naturalidad, evitando forzar la voz y adoptando una postura sin tensiones.",
+            "Tocan con instrumentos de percusión convencionales y no convencionales.",
+            "Demuestran responsabilidad y cuidado con sus instrumentos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Explorar e improvisar ideas musicales con diversos medios sonoros (la voz, instrumentos convencionales y no convencionales, entre otros), usando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Exploran diversos objetos, descubriendo sus posibilidades sonoras.",
+            "Seleccionan sonidos de acuerdo a propósitos expresivos.",
+            "Proponen ideas musicales breves (patrones, ostinati, secuencias sonoras).",
+            "Incorporan el silencio y los sonidos descubiertos en sus creaciones e improvisaciones musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Presentar su trabajo musical, en forma individual y grupal, compartiendo con el curso y la comunidad.",
+          "indicadores": [
+            "Cantan y tocan repertorio aprendido, incorporando las indicaciones del director (comienzos, finales, tempo, entre otros).",
+            "Respetan la participación de todos al presentar su trabajo musical (esperar turnos, conocer entradas, etcétera).",
+            "Participan con seguridad en su trabajo musical."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar señales visuales y corporales para anticipar cambios de sección, tempo e intensidad.",
+          "Ofrecer instrumentos convencionales y no convencionales para diversificar la participación.",
+          "Permitir ensayo en pequeños grupos y tiempos de práctica graduados antes de presentar al curso.",
+          "Combinar música, dibujo, movimiento y relato para facilitar expresión emocional y motivación."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad, los estudiantes continuarán desarrollando su quehacer musical, integrando elementos expresivos y técnicos que contribuyan a mejorarlo desde la experiencia. Se enfatiza el movimiento corporal y la danza, que pueden ser trabajadas en integración con la asignatura de Educación Física y Salud.\n\nOtro de los propósitos de la unidad es continuar con las relaciones texto-música en canciones infantiles.\n\nLa escucha de músicas de otras culturas y de pueblos originarios propios y del mundo enriquecerá el imaginario sonoro de los alumnos.\n\nComo elemento novedoso, la unidad sugiere actividades con medios audiovisuales como el cine y las bandas sonoras. Además, se invita a los estudiantes a indagar en los gustos musicales propios y los de su entorno familiar y comunal.\n\nAsimismo, pueden experimentar con acompañamientos rítmicos y ostinati, buscando nuevos sonidos o formas de ejecución en los instrumentos de percusión, y con alturas cuando jueguen con instrumentos de placas.",
+      "conocimientos_previos": [
+        "Identificación y aplicación de las cualidades del sonido.",
+        "Diversos modos de expresar la música: corporal, visual y literario."
+      ],
+      "palabras_clave": [
+        "Voz, sonidos corporales, grabación."
+      ],
+      "conocimientos": [
+        "Cantar y tocar variado repertorio musical.",
+        "Incorporar recursos expresivos en la interpretación musical.",
+        "Incorporar otras áreas de expresión artística con la música (visual, corporal, literaria).",
+        "Conocer e interpretar danzas y juegos tradicionales."
+      ],
+      "habilidades": [
+        "Ejercitación musical con la voz, el cuerpo e instrumentos musicales.",
+        "Expresión musical y creativa.",
+        "Comunicación verbal, no verbal y musical."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos, mediante diversas formas de expresión musical.",
+        "Reconocer y valorar los diversos estilos y expresiones musicales.",
+        "Reconocer la dimensión espiritual y trascendente del arte y la música para el ser humano.",
+        "Demostrar disposición a desarrollar su creatividad por medio de la experimentación, el juego, la imaginación y el pensamiento divergente."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, secciones), y representarlos de distintas formas.",
+          "indicadores": [
+            "Se expresan corporalmente de acuerdo a diversos estímulos sonoros.",
+            "Reconocen cualidades evidentes en sonidos y músicas variadas, representándolos de diversas formas (visual y musical).",
+            "Reconocen y diferencian sonidos de diversas fuentes manipuladas de diferentes formas.",
+            "Comentan con sus propias palabras los ejemplos musicales escuchados, reconociendo algún elemento evidente del lenguaje musical.",
+            "Clasifican sonidos según criterios comunes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar sensaciones, emociones e ideas que les sugieren el sonido y la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente (mímicas, coreografías, expresión libre, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión visual (dibujos, pinturas, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión verbal (oral o escrita) según lo que les sugieren los sonidos y la música.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas poniendo énfasis en: › tradición escrita (docta) › tradición oral (folclor, música de pueblos originarios) › popular (jazz, rock, fusión, etc.) (Escuchar apreciativamente al menos 20 músicas variadas de corta duración en el transcurso del año).",
+          "indicadores": [
+            "Manifiestan interés y disposición a escuchar (actitud corporal, no muestran reticencia ante la escucha, comentan con sus compañeros).",
+            "Reflexionan sobre la base de lo escuchado, contestando preguntas como ¿Les pareció que la música era alegre o triste? ¿Por qué habrá hecho el compositor esta música?",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Identifican instrumentos, ritmos o melodías conocidas.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y tocar instrumentos de percusión convencionales y no convencionales.",
+          "indicadores": [
+            "Participan y recuerdan una variedad de canciones, versos rítmicos, rondas y juegos musicales.",
+            "Acompañan con mayor precisión canciones aprendidas con patrones rítmicos u ostinati dados, con percusiones convencionales y no convencionales.",
+            "Cantan al unísono, incorporando las sugerencias del profesor.",
+            "Cantan con naturalidad, evitando forzar la voz y adoptando una postura sin tensiones.",
+            "Reproducen patrones rítmicos con mayor precisión.",
+            "Tocan con instrumentos de percusión convencionales y no convencionales, cuidando su sonoridad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Explorar e improvisar ideas musicales con diversos medios sonoros (la voz, instrumentos convencionales y no convencionales, entre otros), usando las cualidades del sonido y elementos del lenguaje musical.",
+          "indicadores": [
+            "Manipulan diversos objetos con un propósito expresivo.",
+            "Seleccionan sonidos de acuerdo a propósitos expresivos.",
+            "Proponen ideas musicales breves (patrones, ostinati, secuencias sonoras).",
+            "Incorporan el silencio y los sonidos descubiertos en sus creaciones e improvisaciones musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Identificar y describir experiencias musicales y sonoras en su propia vida.",
+          "indicadores": [
+            "Comentan acerca de sus propias experiencias sonoras.",
+            "Identifican características relevantes en algunos ejemplos musicales (instrumentos, rasgos estilísticos, contexto, entre otros).",
+            "Describen experiencias sonoras de su vida."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Incorporar danza, movimiento y gestos para apoyar comprensión y memoria musical.",
+          "Permitir explorar sonido con cuerpo, voz, instrumentos y medios audiovisuales en estaciones breves.",
+          "Usar apoyos visuales para secuencias, entradas y ostinati.",
+          "Aceptar distintas formas de participación: escuchar, moverse, tocar, narrar o dibujar."
+        ]
+      }
+    },
+    {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad los estudiantes continuarán desarrollando su quehacer musical, integrando elementos expresivos y técnicos que contribuyan a mejorar su interpretación musical desde la experiencia y a ampliar su visión de la música en diversos contextos.\n\nOtro propósito es continuar el trabajo con los timbres, ya sea identificando instrumentos y sus posibles características o experimentando con sonidos de materiales diversos, como papeles, madera, bolsas de plástico, etcétera.\n\nEl juego con rimas y versos hablados o cantados, el trabajo de integración sonoro y visual y la participación en cuentos musicales estimularán el desarrollo de la imaginación y la musicalidad. Podrán mostrar su trabajo y compartir sus experiencias con sus pares y comunidad con un variado repertorio.",
+      "conocimientos_previos": [
+        "Identificación de roles en la música por medio de la audición y participación activa: intérprete, director, solo, conjunto.",
+        "Experiencias musicales, utilizando versos rítmicos.",
+        "Experiencias de integración de la música con otras áreas de expresión artística."
+      ],
+      "palabras_clave": [
+        "Música, repertorio musical"
+      ],
+      "conocimientos": [
+        "Cantar y tocar variado repertorio musical.",
+        "Incorporar recursos expresivos en la interpretación musical.",
+        "Incorporar otras áreas de expresión artística con la música (visual, corporal, literaria).",
+        "Conocer e interpretar danzas y juegos tradicionales."
+      ],
+      "habilidades": [
+        "Ejercitación musical con la voz, el cuerpo e instrumentos musicales.",
+        "Expresión musical y creativa.",
+        "Comunicación verbal, no verbal y musical."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar su curiosidad y disfrutar de los sonidos y la música.",
+        "Demostrar confianza en sí mismos al presentar a otros o compartir su música.",
+        "Reconocer la dimensión espiritual y trascendente del arte y la música para el ser humano.",
+        "Demostrar disposición a participar y colaborar de forma respetuosa en actividades grupales de audición, expresión y creación musical."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Escuchar cualidades del sonido (altura, timbre, intensidad, duración) y elementos del lenguaje musical (pulsos, acentos, patrones, secciones), y representarlos de distintas formas.",
+          "indicadores": [
+            "Se expresan corporalmente de acuerdo a diversos estímulos sonoros.",
+            "Reconocen elementos evidentes del lenguaje musical en variados ejemplos, representándolos de diversas formas (visual y musical).",
+            "Reconocen y diferencian sonidos de diversas fuentes manipuladas de diferentes formas.",
+            "Comentan con sus propias palabras los ejemplos musicales escuchados, nombrando y reconociendo algún elemento evidente del lenguaje musical.",
+            "Clasifican sonidos según criterios comunes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Expresar sensaciones, emociones e ideas que les sugieren el sonido y la música escuchada, usando diversos medios expresivos (verbal, corporal, musical, visual).",
+          "indicadores": [
+            "Se expresan corporalmente (mímicas, coreografías, expresión libre, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión visual (dibujos, pinturas, etcétera) según lo que les sugieren los sonidos y la música.",
+            "Utilizan la expresión verbal (oral o escrita) según lo que les sugieren los sonidos y la música.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Escuchar música en forma abundante de diversos contextos y culturas poniendo énfasis en: › tradición escrita (docta) › tradición oral (folclor, música de pueblos originarios) › popular (jazz, rock, fusión, etc.) (Escuchar apreciativamente al menos 20 músicas variadas de corta duración en el transcurso del año).",
+          "indicadores": [
+            "Manifiestan interés y disposición a escuchar (actitud corporal, no muestran reticencia ante la escucha, comentan con sus compañeros).",
+            "Reflexionan sobre la base de lo escuchado, contestando preguntas como ¿Les pareció que la música era alegre o triste? ¿Por qué habrá hecho el compositor esta música?",
+            "Escuchan atentamente, expresando sus impresiones por diferentes medios (verbales, corporales, visuales, musicales).",
+            "Identifican instrumentos, ritmos o melodías conocidas.",
+            "Escuchan atentamente variados ejemplos musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Cantar al unísono y tocar instrumentos de percusión convencionales y no convencionales.",
+          "indicadores": [
+            "Participan y recuerdan una variedad de canciones, versos rítmicos, rondas y juegos musicales.",
+            "Acompañan canciones aprendidas, cuidando la sonoridad de los instrumentos.",
+            "Cantan al unísono, incorporando las sugerencias del profesor.",
+            "Cantan con naturalidad, evitando forzar la voz y adoptando una postura sin tensiones.",
+            "Reproducen patrones rítmicos con mayor precisión.",
+            "Tocan con instrumentos de percecusión convencionales y no convencionales cuidando su sonoridad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Presentar su trabajo musical en forma individual y grupal, compartiendo con el curso y la comunidad.",
+          "indicadores": [
+            "Cantan y tocan repertorio aprendido, incorporando las indicaciones del director (comienzos, finales, tempo, entre otros).",
+            "Respetan la participación de todos al presentar su trabajo musical (esperar turnos, conocer entradas, etcétera).",
+            "Participan con seguridad en su trabajo musical."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [],
+      "evaluaciones": [],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Usar repertorio variado y materiales cotidianos para ampliar acceso sensorial a la música.",
+          "Combinar rima, cuento, imagen y sonido para sostener comprensión y participación.",
+          "Permitir presentaciones graduales: individual, pareja, grupo pequeño y curso completo.",
+          "Incluir grabaciones de ensayo y autoobservación guiada para fortalecer seguridad y autorregulación."
+        ]
+      }
+    }
+  ]
+}

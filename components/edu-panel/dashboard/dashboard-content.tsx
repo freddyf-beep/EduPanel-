@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import Link from "next/link"
 import {
   ArrowRight, Calendar, Check, ChevronLeft, ChevronRight,
   ClipboardCheck, ClipboardList, Clock, LifeBuoy, Loader2,
-  Users, X, BookOpen, Pen, UserCheck, PenLine
+  Users, X, BookOpen, Pen, UserCheck, PenLine, AlertCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { cargarEstadoClases, guardarEstadoClases, cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
@@ -14,8 +14,9 @@ import {
   guardarAnotacion, cargarAnotacion,
 } from "@/lib/curriculo"
 import type { ActividadClase, BloqueLibroClase, EstadoAsistencia } from "@/lib/curriculo"
-import { buildUrl } from "@/lib/shared"
+import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useAuth } from "@/components/auth/auth-context"
+import { useActiveSubject } from "@/hooks/use-active-subject"
 
 const DAYS   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
 const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
@@ -38,6 +39,7 @@ function fechaDD_MM_YYYY(d: Date) {
 type ModalTab = "clase" | "leccionario" | "asistencia" | "firma" | "anotaciones"
 
 export function DashboardContent() {
+  const { asignatura: ASIGNATURA } = useActiveSubject()
   const { user } = useAuth()
   const [currentDate, setCurrentDate]       = useState(new Date())
   const [greeting, setGreeting]             = useState("Buenos días")
@@ -59,6 +61,8 @@ export function DashboardContent() {
   const [unidadModal, setUnidadModal]           = useState("unidad_1")
   const [savingAnotacion, setSavingAnotacion]   = useState(false)
   const [anotacionGuardada, setAnotacionGuardada] = useState(false)
+  const [modalLoadError, setModalLoadError]     = useState(false)
+  const [saveError, setSaveError]               = useState<string | null>(null)
 
   const diaActual    = DAYS[currentDate.getDay()]
   const esDiaLaboral = DIAS_HABILES.includes(diaActual)
@@ -100,6 +104,8 @@ export function DashboardContent() {
     setBloquesLibro([])
     setAnotaciones("")
     setFirmado(false)
+    setModalLoadError(false)
+    setSaveError(null)
 
     const cursoMatch = cls.resumen
 
@@ -114,7 +120,7 @@ export function DashboardContent() {
       // Buscar en cronograma_unidad las unidades activas y encontrar la clase de hoy
       const cronogramas = await Promise.all(
         ["unidad_1","unidad_2","unidad_3"].map(uid =>
-          cargarCronogramaUnidad("Música", cursoMatch, uid).catch(() => null)
+          cargarCronogramaUnidad(ASIGNATURA, cursoMatch, uid).catch(() => null)
         )
       )
       for (const crono of cronogramas) {
@@ -138,9 +144,9 @@ export function DashboardContent() {
       setUnidadModal(unidadId)
 
       const [act, libro, anotTxt] = await Promise.all([
-        cargarActividadClase(cursoMatch, unidadId, claseNum).catch(() => null),
-        cargarLibroClases("Música", cursoMatch, fechaStr).catch(() => null),
-        cargarAnotacion(cursoMatch, fechaStr).catch(() => ""),
+        cargarActividadClase(cursoMatch, unidadId, claseNum, ASIGNATURA).catch(() => null),
+        cargarLibroClases(ASIGNATURA, cursoMatch, fechaStr).catch(() => null),
+        cargarAnotacion(cursoMatch, fechaStr, ASIGNATURA).catch(() => ""),
       ])
       setAnotaciones(anotTxt || "")
       setActividadModal(act)
@@ -162,6 +168,7 @@ export function DashboardContent() {
       }
     } catch (e) {
       console.error(e)
+      setModalLoadError(true)
     } finally {
       setLoadingModal(false)
     }
@@ -188,23 +195,30 @@ export function DashboardContent() {
     const cursoMatch = modalClase.resumen
     const fechaStr = fechaDD_MM_YYYY(currentDate)
     try {
-      await guardarAnotacion(cursoMatch, fechaStr, anotaciones)
+      await guardarAnotacion(cursoMatch, fechaStr, anotaciones, ASIGNATURA)
       setAnotacionGuardada(true)
       setTimeout(() => setAnotacionGuardada(false), 3000)
-    } catch (e) { console.error(e) }
-    finally { setSavingAnotacion(false) }
+    } catch (e) {
+      console.error(e)
+      setSaveError("No se pudo guardar la anotación. Verifica tu conexión.")
+      setTimeout(() => setSaveError(null), 7000)
+    } finally { setSavingAnotacion(false) }
   }
 
   // claseNumeroModal y unidadModal son estados declarados arriba
   const guardarLibro = async () => {
     if (!modalClase) return
     setSavingLibro(true)
+    setSaveError(null)
     const cursoMatch = modalClase.resumen
     const fechaStr = fechaDD_MM_YYYY(currentDate)
     try {
-      await guardarLibroClases("Música", cursoMatch, fechaStr, bloquesLibro)
-    } catch (e) { console.error(e) }
-    finally { setSavingLibro(false) }
+      await guardarLibroClases(ASIGNATURA, cursoMatch, fechaStr, bloquesLibro)
+    } catch (e) {
+      console.error(e)
+      setSaveError("No se pudo guardar el leccionario. Verifica tu conexión.")
+      setTimeout(() => setSaveError(null), 7000)
+    } finally { setSavingLibro(false) }
   }
 
   const firmar = async () => {
@@ -214,7 +228,14 @@ export function DashboardContent() {
     setFirmado(true)
     const cursoMatch = modalClase.resumen
     const fechaStr = fechaDD_MM_YYYY(currentDate)
-    await guardarLibroClases("Música", cursoMatch, fechaStr, updated).catch(console.error)
+    try {
+      await guardarLibroClases(ASIGNATURA, cursoMatch, fechaStr, updated)
+    } catch (e) {
+      console.error(e)
+      setFirmado(false)
+      setSaveError("No se pudo firmar la clase. Intenta nuevamente.")
+      setTimeout(() => setSaveError(null), 7000)
+    }
   }
 
   const toggleClase = async (uid: string) => {
@@ -226,16 +247,45 @@ export function DashboardContent() {
   const formattedDate = `${diaActual} ${currentDate.getDate()} de ${MONTHS[currentDate.getMonth()]} de ${currentDate.getFullYear()}`
   const completadas   = clasesHoy.filter(c => c.completada).length
 
+  // Progreso del año escolar Chile: 1 marzo → 15 diciembre
+  const schoolYearProgress = useMemo(() => {
+    const now = new Date()
+    const year = now.getFullYear()
+    const start = new Date(year, 2, 1)    // 1 marzo
+    const end   = new Date(year, 11, 15)  // 15 diciembre
+    const total   = end.getTime() - start.getTime()
+    const elapsed = Math.max(0, Math.min(total, now.getTime() - start.getTime()))
+    return Math.round((elapsed / total) * 100)
+  }, [])
+
+  // Clases planificadas y completadas en la semana de currentDate
+  const { clasesSemana, completadasSemana } = useMemo(() => {
+    const d = new Date(currentDate)
+    const dayOfWeek = d.getDay() === 0 ? 6 : d.getDay() - 1 // 0=lunes
+    const lunes = new Date(d)
+    lunes.setDate(d.getDate() - dayOfWeek)
+    const viernes = new Date(lunes)
+    viernes.setDate(lunes.getDate() + 4)
+    const diasSemana = DIAS_HABILES.map((dia, i) => {
+      const dd = new Date(lunes)
+      dd.setDate(lunes.getDate() + i)
+      return dia
+    })
+    const clasesSemana = horarioSemanal.filter(c => diasSemana.includes(c.dia) && c.tipo === "clase").length
+    const completadasSemana = horarioSemanal.filter(c => diasSemana.includes(c.dia) && c.tipo === "clase" && !!estado[c.uid]).length
+    return { clasesSemana, completadasSemana }
+  }, [horarioSemanal, estado, currentDate])
+
   const quickActions = [
-    { label: "Mis planificaciones", href: "/planificaciones", icon: BookOpen },
-    { label: "Libro de clases",     href: "/libro-clases",        icon: ClipboardList },
-    { label: "Calificaciones",      href: "/calificaciones",      icon: ClipboardCheck },
-    { label: "Perfil 360",          href: "/perfil-360",          icon: Users },
-    { label: "Centro de ayuda",     href: "/soporte",             icon: LifeBuoy },
+    { label: "Mis planificaciones", href: buildUrl("/planificaciones", withAsignatura({}, ASIGNATURA)), icon: BookOpen },
+    { label: "Libro de clases",     href: buildUrl("/libro-clases", withAsignatura({}, ASIGNATURA)),    icon: ClipboardList },
+    { label: "Calificaciones",      href: buildUrl("/calificaciones", withAsignatura({}, ASIGNATURA)),  icon: ClipboardCheck },
+    { label: "Perfil 360",          href: buildUrl("/perfil-360", withAsignatura({}, ASIGNATURA)),      icon: Users },
+    { label: "Centro de ayuda",     href: buildUrl("/soporte", withAsignatura({}, ASIGNATURA)),         icon: LifeBuoy },
   ]
 
   const stats = [
-    { label: "Clases hoy",  value: clasesHoy.filter(c => c.tipo === "clase").length, bg: "#FFF0F4", fg: "#F03E6E" },
+    { label: "Clases hoy",  value: clasesHoy.filter(c => c.tipo === "clase").length, bg: "var(--primary-light)", fg: "var(--primary)" },
     { label: "Completadas", value: completadas,                                       bg: "#F0FDF4", fg: "#22C55E" },
     { label: "Pendientes",  value: clasesHoy.filter(c => !c.completada).length,       bg: "#FEF3C7", fg: "#F59E0B" },
   ]
@@ -249,7 +299,7 @@ export function DashboardContent() {
   ]
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col gap-6 xl:flex-row">
 
       {/* ── Columna principal ── */}
       <div className="min-w-0 flex-1">
@@ -260,7 +310,7 @@ export function DashboardContent() {
           {esDiaLaboral ? `Tienes ${clasesHoy.length} bloques hoy.` : "Hoy no hay clases programadas."}
         </p>
 
-        <div className="mb-5 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 animate-fade-up">
+        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 animate-fade-up">
           {quickActions.map(item => {
             const Icon = item.icon
             return (
@@ -273,6 +323,46 @@ export function DashboardContent() {
               </Link>
             )
           })}
+        </div>
+
+        {/* Métricas del año escolar */}
+        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3 animate-fade-up">
+          {/* Progreso del año */}
+          <div className="rounded-[14px] border border-border bg-card p-4">
+            <p className="text-[11px] font-semibold text-muted-foreground mb-1.5">Año escolar {new Date().getFullYear()}</p>
+            <div className="flex items-end justify-between mb-2">
+              <span className="text-[22px] font-extrabold text-primary">{schoolYearProgress}%</span>
+              <span className="text-[11px] text-muted-foreground">mar → dic</span>
+            </div>
+            <div className="h-2 w-full rounded-full bg-border overflow-hidden">
+              <div
+                className="h-full rounded-full bg-primary transition-all duration-700"
+                style={{ width: `${schoolYearProgress}%` }}
+              />
+            </div>
+          </div>
+          {/* Clases esta semana */}
+          <div className="rounded-[14px] border border-border bg-card p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-pink-light grid place-items-center flex-shrink-0">
+              <Calendar className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-muted-foreground">Clases esta semana</p>
+              <p className="text-[22px] font-extrabold leading-tight">
+                {clasesSemana > 0 ? `${completadasSemana}/${clasesSemana}` : "—"}
+              </p>
+            </div>
+          </div>
+          {/* Completadas */}
+          <div className="rounded-[14px] border border-border bg-card p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-green-50 grid place-items-center flex-shrink-0">
+              <Check className="h-5 w-5 text-green-600" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold text-muted-foreground">Completadas hoy</p>
+              <p className="text-[22px] font-extrabold leading-tight">{completadas}/{clasesHoy.length || 0}</p>
+            </div>
+          </div>
         </div>
 
         <div className="mb-5 flex flex-wrap items-center gap-2.5 animate-fade-up">
@@ -291,7 +381,7 @@ export function DashboardContent() {
             </button>
           </div>
           <button onClick={() => setShowHorario(v => !v)}
-            className="ml-auto flex items-center gap-1.5 rounded-[10px] bg-pink-light px-3.5 py-2 text-xs font-bold text-primary">
+            className="flex items-center gap-1.5 rounded-[10px] bg-pink-light px-3.5 py-2 text-xs font-bold text-primary sm:ml-auto">
             <Clock className="h-3.5 w-3.5" />
             {showHorario ? "Ver hoy" : "Ver horario semanal"}
           </button>
@@ -302,7 +392,9 @@ export function DashboardContent() {
             <Loader2 className="w-4 h-4 animate-spin" /><span className="text-[13px]">Cargando…</span>
           </div>
         ) : showHorario ? (
-          <div className="bg-card border border-border rounded-[14px] overflow-hidden animate-fade-up">
+          <div className="overflow-hidden rounded-[14px] border border-border bg-card animate-fade-up">
+            <div className="overflow-x-auto">
+            <div className="min-w-[760px]">
             <div className="grid grid-cols-5 bg-background">
               {DIAS_HABILES.map(d => (
                 <div key={d} className={cn("px-3 py-2.5 text-center text-xs font-bold uppercase tracking-wide border-r border-border last:border-r-0",
@@ -325,6 +417,8 @@ export function DashboardContent() {
                 )
               })}
             </div>
+            </div>
+            </div>
           </div>
         ) : (
           <div className="flex flex-col gap-2.5">
@@ -335,7 +429,7 @@ export function DashboardContent() {
             )}
             {clasesHoy.map((cls, i) => (
               <div key={cls.uid}
-                className="flex items-center gap-4 rounded-[14px] border border-border bg-card p-4 px-5 transition-all hover:shadow-[0_2px_14px_rgba(0,0,0,0.06)] hover:-translate-y-px animate-fade-up"
+                className="flex flex-col items-start gap-4 rounded-[14px] border border-border bg-card p-4 px-5 transition-all hover:-translate-y-px hover:shadow-[0_2px_14px_rgba(0,0,0,0.06)] animate-fade-up sm:flex-row sm:items-center"
                 style={{ animationDelay: `${0.05*(i+1)}s` }}>
                 <button onClick={() => toggleClase(cls.uid)}
                   className={cn("grid h-7 w-7 flex-shrink-0 place-items-center rounded-full border-2 transition-colors",
@@ -353,7 +447,7 @@ export function DashboardContent() {
                   {cls.horaInicio} – {cls.horaFin}
                 </div>
                 <button onClick={() => abrirModal(cls)}
-                  className="flex flex-shrink-0 items-center gap-1.5 rounded-[10px] bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition-all hover:bg-[#d6335e]">
+                  className="flex flex-shrink-0 items-center gap-1.5 rounded-[10px] bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition-all hover:bg-pink-dark">
                   Ver <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -363,7 +457,7 @@ export function DashboardContent() {
       </div>
 
       {/* ── Columna lateral ── */}
-      <div className="w-[280px] flex-shrink-0">
+      <div className="w-full flex-shrink-0 xl:w-[280px]">
         <div className="mb-4 grid gap-3 animate-fade-up">
           {stats.map(stat => (
             <div key={stat.label} className="rounded-[14px] border border-border bg-card p-4">
@@ -393,11 +487,11 @@ export function DashboardContent() {
             onClick={e => e.stopPropagation()}>
 
             {/* Header modal */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-border px-4 py-4 sm:px-6">
+              <div className="min-w-0">
+                <div className="mb-1 flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full" style={{ background: modalClase.color }} />
-                  <h2 className="text-[15px] font-extrabold">
+                  <h2 className="text-[15px] font-extrabold leading-tight">
                     {modalClase.resumen} — {DAYS[currentDate.getDay()]} {currentDate.getDate()} {MONTHS[currentDate.getMonth()]} {currentDate.getFullYear()}
                   </h2>
                 </div>
@@ -424,15 +518,37 @@ export function DashboardContent() {
             </div>
 
             {/* Body */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+              {/* Error banner de saves */}
+              {saveError && (
+                <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-[13px] font-semibold text-red-600">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {saveError}
+                  <button onClick={() => setSaveError(null)} className="ml-auto text-red-400 hover:text-red-600" aria-label="Cerrar error">
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
               {loadingModal ? (
                 <div className="flex items-center gap-3 text-muted-foreground py-8 justify-center">
                   <Loader2 className="w-5 h-5 animate-spin" /><span>Cargando…</span>
                 </div>
 
+              ) : modalLoadError ? (
+                <div className="flex flex-col items-center gap-3 py-12 text-center">
+                  <AlertCircle className="w-10 h-10 text-red-400" />
+                  <p className="text-[14px] font-bold text-foreground">No se pudo cargar la clase</p>
+                  <p className="text-[12px] text-muted-foreground">Revisa tu conexión e intenta abrirla nuevamente.</p>
+                  <button onClick={() => { setModalLoadError(false); abrirModal(modalClase!) }}
+                    className="mt-2 rounded-[10px] bg-primary px-5 py-2 text-[13px] font-bold text-white hover:bg-pink-dark transition-colors">
+                    Reintentar
+                  </button>
+                </div>
+
               ) : modalTab === "clase" ? (
                 /* ── Tab Clase ── */
-                <div className="grid grid-cols-[1fr_210px] gap-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_210px]">
                   <div>
                     {actividadModal ? (
                       <div className="flex flex-col gap-4">
@@ -471,8 +587,8 @@ export function DashboardContent() {
                       <div className="flex flex-col items-center gap-4 py-8 text-muted-foreground">
                         <BookOpen className="w-10 h-10" />
                         <p className="text-[13px]">Esta clase aún no tiene actividad planificada.</p>
-                        <a href={buildUrl("/actividades", { curso: modalClase.resumen, unidad: unidadModal, clase: String(claseNumeroModal) })}
-                          className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-full px-5 py-2.5 hover:bg-[#d6335e] transition-colors">
+                        <a href={buildUrl("/actividades", withAsignatura({ curso: modalClase.resumen, unidad: unidadModal, clase: String(claseNumeroModal) }, ASIGNATURA))}
+                          className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-full px-5 py-2.5 hover:bg-pink-dark transition-colors">
                           Planificar ahora <ArrowRight className="w-3.5 h-3.5" />
                         </a>
                       </div>
@@ -496,10 +612,10 @@ export function DashboardContent() {
               ) : modalTab === "leccionario" ? (
                 /* ── Tab Leccionario ── */
                 <div>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <p className="text-[13px] font-semibold">Registro del leccionario para esta clase</p>
                     <button onClick={guardarLibro} disabled={savingLibro}
-                      className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-[8px] px-4 py-2 hover:bg-[#d6335e] transition-colors disabled:opacity-60">
+                      className="flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-primary px-4 py-2 text-[12px] font-bold text-white transition-colors hover:bg-pink-dark disabled:opacity-60 sm:w-auto">
                       {savingLibro ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                       Guardar
                     </button>
@@ -530,10 +646,10 @@ export function DashboardContent() {
               ) : modalTab === "asistencia" ? (
                 /* ── Tab Asistencia ── */
                 <div>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <p className="text-[13px] font-semibold">Asistencia — {formattedDate}</p>
                     <button onClick={guardarLibro} disabled={savingLibro}
-                      className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-[8px] px-4 py-2 hover:bg-[#d6335e] transition-colors disabled:opacity-60">
+                      className="flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-primary px-4 py-2 text-[12px] font-bold text-white transition-colors hover:bg-pink-dark disabled:opacity-60 sm:w-auto">
                       {savingLibro ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                       Guardar
                     </button>
@@ -551,7 +667,7 @@ export function DashboardContent() {
                       ) : (
                         <div className="flex flex-col gap-1.5">
                           {/* Resumen */}
-                          <div className="flex gap-3 mb-2 text-[11px]">
+                          <div className="mb-2 flex flex-wrap gap-2 text-[11px]">
                             {ESTADOS_ASISTENCIA.map(e => {
                               const count = bloque.asistencia.filter(a => a.estado === e.key).length
                               return count > 0 ? (
@@ -605,7 +721,7 @@ export function DashboardContent() {
                         </p>
                       </div>
                       <button onClick={firmar}
-                        className="flex items-center gap-2 bg-primary text-white font-bold text-[14px] rounded-full px-8 py-3 hover:bg-[#d6335e] transition-colors">
+                        className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-3 text-[14px] font-bold text-white transition-colors hover:bg-pink-dark sm:w-auto">
                         <PenLine className="w-4 h-4" /> Firmar clase
                       </button>
                     </>
@@ -615,12 +731,12 @@ export function DashboardContent() {
               ) : (
                 /* ── Tab Anotaciones ── */
                 <div>
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                     <p className="text-[13px] text-muted-foreground">Notas personales sobre esta clase. Solo visibles para ti.</p>
                     <button
                       onClick={handleGuardarAnotacion}
                       disabled={savingAnotacion}
-                      className="flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold rounded-[8px] px-4 py-2 hover:bg-[#d6335e] transition-colors disabled:opacity-60"
+                      className="flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-primary px-4 py-2 text-[12px] font-bold text-white transition-colors hover:bg-pink-dark disabled:opacity-60 sm:w-auto"
                     >
                       {savingAnotacion
                         ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Guardando…</>

@@ -1,0 +1,715 @@
+[
+  {
+    "nivel": "5º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "Los objetivos de esta unidad buscan fomentar la curiosidad, ampliar el conocimiento de mundo, mejorar la habilidad de análisis y ampliar el vocabulario por medio de la lectura de cuentos folclóricos y de autor, historietas y textos no literarios. La comprensión de los textos se complementa con la enseñanza de estrategias de lectura como relacionar la información con conocimientos previos, releer y formular preguntas sobre lo que se lee. Por otra parte, se espera que los estudiantes comiencen a evaluar críticamente textos de diversa procedencia, determinando quién es el emisor, qué quiere lograr en el lector y cuál es el destinatario del texto. Además, los alumnos comienzan a evaluar también si un texto les proporciona información relevante y suficiente para contestar a una determinada pregunta. Como complemento a esto y como una manera de fortalecer el desarrollo de las habilidades de investigación de los estudiantes, se espera que aprendan a buscar textos en diferentes soportes que les aporten información sobre un tema determinado y que sinteticen la información más relevante. En escritura, se pretende que los alumnos escriban artículos informativos estructurados en introducción, desarrollo y conclusión, y en los cuales reúnan la información que han recolectado en diversas lecturas. Para lograr lo anterior, es necesario que aprendan estrategias para planificar, escribir, revisar y editar sus textos. Finalmente, el eje de oralidad presenta una oportunidad para mejorar la comprensión oral de textos de manera que luego utilicen la información en sus investigaciones.",
+      "conocimientos_previos": [
+        "Experiencia con narraciones y poemas de cursos anteriores",
+        "Identificación de signos de puntuación básicos",
+        "Conocimiento de estructuras narrativas (inicio, desarrollo, desenlace)"
+      ],
+      "palabras_clave": [
+        "lectura",
+        "narraciones",
+        "poemas",
+        "análisis",
+        "opiniones",
+        "elementos literarios"
+      ],
+      "conocimientos": [
+        "Estrategias de comprensión lectora (resumir, predecir, inferir)",
+        "Elementos de la narración: personajes, ambiente, conflicto y trama",
+        "Reconocimiento de recursos literarios básicos (comparaciones, personificación)"
+      ],
+      "habilidades": [
+        "Leer en voz alta y silenciosa comprendiendo información explícita e implícita",
+        "Resumir textos literarios de manera coherente",
+        "Identificar temas y mensajes en narraciones y poemas",
+        "Expresar opiniones sobre personajes y hechos, justificándolas con ejemplos"
+      ],
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a través de ella.",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura.",
+        "Demostrar disposición e interés por expresarse de manera creativa a través de las diversas formas de expresión escrita."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo, desarrollar su imaginación y reconocer su valor social y cultural; por ejemplo: cuentos folclóricos y de autor, historietas y otros.",
+          "indicadores": [
+            "Relacionan situaciones de la vida cotidiana con personajes o acciones de los textos leídos en clases o independientemente.",
+            "Mencionan textos y autores que han leído y los temas que abordan.",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente.",
+            "Relacionan las imágenes del texto con lo que sucede en la historia.",
+            "Solicitan recomendaciones de textos similares a los leídos en clase.",
+            "Seleccionan textos para leer por su cuenta.",
+            "Recomiendan textos a otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar aspectos relevantes de narraciones leídas para profundizar su comprensión: interpretando el lenguaje figurado presente en el texto; expresando opiniones sobre las actitudes y acciones de los personajes y fundamentándolas con ejemplos del texto; determinando las consecuencias de hechos o acciones; describiendo el ambiente y las costumbres representadas en el texto; explicando las características físicas y sicológicas de los personajes que son relevantes para el desarrollo de la historia; comparando textos de autores diferentes y justificando su preferencia por alguno.",
+          "indicadores": [
+            "Explican, oralmente o por escrito, expresiones de un texto leído que usen lenguaje figurado.",
+            "Relacionan aspectos del texto con sus experiencias y conocimientos.",
+            "Expresan, oralmente o por escrito, una postura frente a la acción de un personaje y la fundamentan con ejemplos del texto.",
+            "Explican qué consecuencia tiene determinada acción para un personaje.",
+            "Describen o recrean visualmente el lugar donde ocurre el relato.",
+            "Comparan sus costumbres con las de los personajes.",
+            "Explican, oralmente o por escrito, los problemas a los cuales se enfrentan los personajes y cómo se resuelven.",
+            "Describen a los personajes de acuerdo con las actitudes que toman en el relato y sus reacciones frente a los problemas.",
+            "Explican qué sentirían ellos si estuviesen en el lugar del personaje.",
+            "Comparan, en un organizador gráfico, cuentos que tratan un mismo tema, pero escritos por diferentes autores."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Comprender poemas adecuados al nivel e interpretar su lenguaje figurado y emociones.",
+          "indicadores": [
+            "Reconoce imágenes poéticas como metáforas y personificaciones",
+            "Recita poemas utilizando entonación y expresión",
+            "Explica cómo el ritmo y la rima contribuyen al significado del poema"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Círculo de lectura literaria",
+          "oas_asociados": [
+            3,
+            4
+          ],
+          "descripcion": "Los estudiantes leen un cuento o leyenda y luego participan en un círculo de discusión para analizar personajes, ambientes y mensajes."
+        },
+        {
+          "nombre": "Taller de poesía",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los alumnos escuchan distintos poemas, identifican recursos literarios y escriben un poema breve imitando un recurso figurado."
+        },
+        {
+          "nombre": "Historias encadenadas",
+          "oas_asociados": [
+            3,
+            4
+          ],
+          "descripcion": "En grupos, los estudiantes escriben conjuntamente una narración prolongando la historia iniciada por otro, cuidando la coherencia y el uso de conectores."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Informe literario",
+          "oas_evaluados": [
+            3,
+            4
+          ],
+          "actividad_evaluacion": "Cada estudiante elabora un informe sobre una obra leída, describiendo sus personajes, ambiente y secuencia de acciones, y presentando su opinión personal.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Rescata información explícita e implícita de la obra",
+              "Organiza la información de manera coherente en el informe",
+              "Utiliza citas de la obra para fundamentar su opinión"
+            ],
+            "de_la_presentacion": [
+              "Presenta el informe de forma clara y ordenada",
+              "Explica oralmente su informe demostrando seguridad y dominio del contenido"
+            ]
+          }
+        },
+        {
+          "titulo": "Recital poético",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Los estudiantes preparan y recitan un poema ante el curso, cuidando la entonación, el ritmo y la expresión de emociones. Luego escriben un breve comentario interpretativo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Selecciona un poema adecuado a su nivel",
+              "Practica la recitación respetando pausas y énfasis",
+              "Identifica recursos figurados y explica su significado en un comentario escrito"
+            ],
+            "de_la_presentacion": [
+              "Recita con claridad y expresividad",
+              "Adopta una postura corporal que transmita confianza"
+            ]
+          }
+        },
+        {
+          "titulo": "Dramatización del cuento",
+          "oas_evaluados": [
+            3,
+            4
+          ],
+          "actividad_evaluacion": "Por equipos, los alumnos adaptan un cuento leído en una obra corta, asignan roles y ensayan su representación para compartirla con el curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Respetan la estructura básica del cuento al adaptarlo",
+              "Colaboran en equipo asignando y cumpliendo roles",
+              "Memorizan y representan diálogos con entonación adecuada"
+            ],
+            "de_la_presentacion": [
+              "Muestran creatividad en la puesta en escena",
+              "Coordinan movimientos y voces para mantener la atención del público"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Proveer audiolibros y versiones dramatizadas de las obras para facilitar la comprensión.",
+          "Permitir que los estudiantes expresen sus opiniones mediante dibujos, murales o dramatizaciones en vez de textos escritos.",
+          "Incorporar lectura guiada con apoyo de imágenes para reforzar el seguimiento de la historia.",
+          "Ofrecer un ambiente tranquilo y rutinas estructuradas para la realización de los informes literarios."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "5º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Desarrollar la capacidad de comprender y producir textos expositivos. Los estudiantes leen cartas, biografías, reportajes y artículos informativos; buscan información en distintas fuentes; identifican ideas principales y detalles; determinan el significado de palabras mediante contextos y morfemas; y escriben artículos propios.",
+      "conocimientos_previos": [
+        "Uso básico de organizadores de texto: títulos, subtítulos, índices y glosarios",
+        "Comprensión de la diferencia entre hechos y opiniones",
+        "Conocimiento de las funciones de prefijos y sufijos en palabras"
+      ],
+      "palabras_clave": [
+        "textos expositivos",
+        "investigación",
+        "biografías",
+        "reportajes",
+        "artículos",
+        "prefijos",
+        "sufijos"
+      ],
+      "conocimientos": [
+        "Estrategias de búsqueda en bibliotecas y en internet",
+        "Estructura de los textos expositivos (introducción, desarrollo, conclusión)",
+        "Claves contextuales y morfológicas para inferir el significado de palabras"
+      ],
+      "habilidades": [
+        "Leer y comprender textos informativos extrayendo información explícita e implícita",
+        "Investigar un tema seleccionando y organizando información de diferentes fuentes",
+        "Usar mapas conceptuales para organizar ideas",
+        "Escribir artículos informativos con una organización clara y vocabulario preciso"
+      ],
+      "actitudes": [
+        "Demostrar interés y disfrute por la lectura de distintas obras",
+        "Participar con rigor y perseverancia en las actividades de lectura y escritura",
+        "Escuchar y respetar las opiniones de los demás en discusiones literarias"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios para ampliar el conocimiento del mundo y formarse una opinión, utilizando organizadores de texto y extrayendo información explícita e implícita.",
+          "indicadores": [
+            "Identifica la idea principal y los detalles de un artículo",
+            "Resume un texto expositivo usando sus propias palabras",
+            "Relaciona la información del texto con su conocimiento previo"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Buscar información sobre un tema en libros, internet, diarios, revistas, enciclopedias y atlas para desarrollar una investigación.",
+          "indicadores": [
+            "Selecciona fuentes confiables y registra información relevante",
+            "Organiza los datos en tablas o esquemas",
+            "Comunica oralmente o por escrito lo investigado"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Determinar el significado de palabras desconocidas usando claves contextuales y el conocimiento de raíces, prefijos y sufijos.",
+          "indicadores": [
+            "Identifica la raíz, prefijo y sufijo de una palabra",
+            "Utiliza el contexto para deducir significados",
+            "Registra y explica nuevas palabras en un glosario personal"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema, organizando ideas en párrafos y usando un vocabulario técnico preciso.",
+          "indicadores": [
+            "Selecciona un tema e investiga subtemas relacionados",
+            "Elabora un bosquejo con introducción, desarrollo y conclusión",
+            "Incluye citas de sus fuentes y explica su relevancia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Escribir correctamente aplicando reglas ortográficas (plurales, combinaciones ge-gi, je-ji, terminaciones cito-cita) para facilitar la comprensión del lector.",
+          "indicadores": [
+            "Aplica reglas ortográficas al revisar su borrador",
+            "Utiliza un diccionario o corrector para confirmar dudas",
+            "Corrige y mejora su texto en base a la retroalimentación recibida"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Exploradores de datos",
+          "oas_asociados": [
+            6,
+            9
+          ],
+          "descripcion": "Los estudiantes eligen un tema de actualidad, investigan en distintas fuentes y elaboran un informe expositivo en un mural digital."
+        },
+        {
+          "nombre": "Juego de prefijos y sufijos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Mediante tarjetas de raíces, prefijos y sufijos, los alumnos forman palabras nuevas y explican su significado."
+        },
+        {
+          "nombre": "Redacción de artículos",
+          "oas_asociados": [
+            14,
+            22
+          ],
+          "descripcion": "Tras investigar un tema de su interés, los estudiantes escriben un artículo informativo respetando la estructura de introducción, desarrollo y conclusión y aplican las reglas ortográficas estudiadas."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Proyecto de investigación",
+          "oas_evaluados": [
+            9,
+            14
+          ],
+          "actividad_evaluacion": "En grupos, realizan una investigación sobre un fenómeno natural o cultural. Deben buscar información en al menos tres fuentes y presentar sus hallazgos en un informe y una exposición oral.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Seleccionan y citan fuentes confiables",
+              "Registran y organizan los datos en esquemas",
+              "Desarrollan un informe coherente con introducción, desarrollo y conclusión"
+            ],
+            "de_la_presentacion": [
+              "Exponen con claridad usando apoyos visuales",
+              "Responden preguntas del público demostrando dominio del tema"
+            ]
+          }
+        },
+        {
+          "titulo": "Glosario personal",
+          "oas_evaluados": [
+            10,
+            22
+          ],
+          "actividad_evaluacion": "Cada estudiante crea un glosario con 20 palabras nuevas encontradas durante la unidad. Debe registrar la palabra, identificar sus morfemas y explicar su significado.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifica correctamente la raíz, el prefijo y el sufijo de cada palabra",
+              "Infiere el significado utilizando pistas contextuales",
+              "Escribe definiciones claras y concisas"
+            ],
+            "de_la_presentacion": [
+              "Ordena alfabéticamente su glosario",
+              "Aplica normas ortográficas en cada registro"
+            ]
+          }
+        },
+        {
+          "titulo": "Artículo informativo final",
+          "oas_evaluados": [
+            14,
+            22
+          ],
+          "actividad_evaluacion": "Tras una fase de revisión, los estudiantes entregan su artículo final incorporando la retroalimentación del profesor y pares. Deben publicar el texto en un boletín de clase.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Integra sugerencias de mejora en la estructura y contenido",
+              "Corrige errores ortográficos y de puntuación",
+              "Utiliza un vocabulario específico del tema investigado"
+            ],
+            "de_la_presentacion": [
+              "Diseña un boletín de manera atractiva y legible",
+              "Incluye imágenes o gráficos que apoyan la información"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Proveer buscadores infantiles y bibliotecas digitales accesibles para la investigación.",
+          "Ofrecer plantillas de organización (tablas, esquemas) para facilitar la planificación de artículos.",
+          "Permitir el uso de software de voz a texto para estudiantes con dificultades de escritura.",
+          "Brindar retroalimentación individual y oportunidades de corrección en etapas tempranas del proceso de escritura."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "5º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "Desarrollar la capacidad de analizar textos argumentativos y producir argumentos propios. Los estudiantes evalúan mensajes publicitarios y textos de opinión, identifican la intención del emisor y aprenden a dialogar de manera respetuosa y a fundamentar sus ideas.",
+      "conocimientos_previos": [
+        "Comprensión de textos informativos y literarios",
+        "Identificación de hechos y opiniones",
+        "Conocimiento básico de debate y participación en conversaciones de grupo"
+      ],
+      "palabras_clave": [
+        "argumentación",
+        "publicidad",
+        "emisor",
+        "receptor",
+        "intención",
+        "diálogo"
+      ],
+      "conocimientos": [
+        "Componentes del texto argumentativo: tesis, argumentos y evidencia",
+        "Estrategias persuasivas en la publicidad (emisor, receptor, mensaje)",
+        "Normas de diálogo y debate (respeto, escucha activa, turnos)"
+      ],
+      "habilidades": [
+        "Identificar la intención de un emisor y la audiencia de un mensaje",
+        "Analizar críticamente argumentos en textos y publicidad",
+        "Participar en debates formulando y sustentando sus opiniones",
+        "Producir textos argumentativos organizados y coherentes"
+      ],
+      "actitudes": [
+        "Demostrar respeto por opiniones diferentes",
+        "Expresar con claridad sus ideas y escuchar activamente",
+        "Colaborar en la búsqueda de acuerdos en conversaciones grupales"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Evaluar críticamente mensajes publicitarios identificando al emisor, su intención y a quién está dirigido el mensaje.",
+          "indicadores": [
+            "Señala quién emite un mensaje publicitario y cuál es su propósito",
+            "Identifica la audiencia objetivo del mensaje",
+            "Justifica sus conclusiones con evidencias del anuncio"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Apreciar obras de teatro, películas o representaciones discutiendo aspectos relevantes de la historia y recursos escénicos.",
+          "indicadores": [
+            "Describe la trama y los personajes de una obra teatral o película",
+            "Explica cómo la voz, la gestualidad y los efectos sonoros transmiten emociones",
+            "Analiza el impacto de la escenografía y la iluminación en la audiencia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Dialogar para compartir y desarrollar ideas y buscar acuerdos manteniendo el foco en el tema y mostrando respeto.",
+          "indicadores": [
+            "Participa en conversaciones manteniendo el tema central",
+            "Complementa ideas de otros y acepta sugerencias",
+            "Fundamenta su postura con argumentos y evidencia"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 28,
+          "descripcion": "Expresarse de manera clara y efectiva en exposiciones orales sobre temas de interés, presentando ideas coherentes y usando un vocabulario variado y preciso.",
+          "indicadores": [
+            "Planifica su exposición con introducción, desarrollo y cierre",
+            "Incluye ejemplos y datos que fundamentan su planteamiento",
+            "Utiliza un vocabulario adecuado al público y al tema"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Análisis de anuncios",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "Los estudiantes traen anuncios publicitarios de revistas o internet, identifican al emisor, la audiencia y la intención, y comparten sus conclusiones en grupo."
+        },
+        {
+          "nombre": "Cine foro",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "Después de ver una obra teatral filmada o una película, la clase discute los temas, personajes y recursos escénicos usados para provocar emociones."
+        },
+        {
+          "nombre": "Mesa de debate",
+          "oas_asociados": [
+            27,
+            28
+          ],
+          "descripcion": "Se plantea un tema de interés social y los estudiantes se dividen en grupos para argumentar a favor y en contra, siguiendo normas de diálogo y turnos."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Desmontando un anuncio",
+          "oas_evaluados": [
+            25
+          ],
+          "actividad_evaluacion": "En equipos, los alumnos analizan un anuncio publicitario de manera sistemática, presentan al curso quién es el emisor, cuál es su objetivo y a quién se dirige, y justifican sus conclusiones.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Analiza elementos visuales y verbales del anuncio",
+              "Identifica y explica la intención del emisor",
+              "Determina la audiencia objetivo y fundamenta su selección"
+            ],
+            "de_la_presentacion": [
+              "Estructura la exposición de manera lógica",
+              "Utiliza un vocabulario crítico y técnico"
+            ]
+          }
+        },
+        {
+          "titulo": "Reseña teatral",
+          "oas_evaluados": [
+            26,
+            28
+          ],
+          "actividad_evaluacion": "Cada estudiante asiste a una representación teatral (en vivo o grabada) y elabora una reseña describiendo la trama, destacando actuaciones, escenografía, sonidos e iluminación, y explicando su impacto en la audiencia.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Resume la historia y caracteriza a los personajes",
+              "Analiza la actuación y los recursos escénicos",
+              "Explica la intención del montaje y su efecto en el público"
+            ],
+            "de_la_presentacion": [
+              "Organiza la reseña con introducción, desarrollo y conclusión",
+              "Redacta usando vocabulario variado y técnico"
+            ]
+          }
+        },
+        {
+          "titulo": "Debate académico",
+          "oas_evaluados": [
+            27,
+            28
+          ],
+          "actividad_evaluacion": "En un debate moderado, cada alumno presenta argumentos sobre un tema actual, responde contraargumentos y cierra su intervención resumiendo su postura.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Formula argumentos claros y fundamentados",
+              "Respeta las normas del debate y los turnos de palabra",
+              "Responde con pertinencia a los argumentos opuestos"
+            ],
+            "de_la_presentacion": [
+              "Habla con seguridad y tono adecuado",
+              "Utiliza ejemplos y datos para reforzar sus ideas"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Ofrecer ejemplos visuales y audiovisuales de anuncios y obras para apoyar la comprensión.",
+          "Proporcionar fichas de análisis con preguntas guía para desglosar los mensajes publicitarios.",
+          "Permitir la expresión de argumentos mediante distintos medios: oral, escrito, grabado.",
+          "Asignar roles en debates (moderador, relator) para que todos participen según sus fortalezas."
+        ]
+      }
+    }
+  },
+  {
+    "nivel": "5º Básico",
+    "asignatura": "Lenguaje y Comunicación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "Aplicar lo aprendido en unidades anteriores para desarrollar proyectos creativos y expresivos. Los estudiantes leen y escriben obras dramáticas, crean cuentos y poemas, investigan temas de interés y participan en presentaciones artísticas, fortaleciendo la confianza, la colaboración y el respeto.",
+      "conocimientos_previos": [
+        "Conocimiento básico de obras dramáticas y teatrales",
+        "Experiencia en escritura de narraciones y poemas",
+        "Uso de herramientas de investigación y presentación"
+      ],
+      "palabras_clave": [
+        "proyecto",
+        "drama",
+        "escritura creativa",
+        "investigación",
+        "presentación",
+        "colaboración"
+      ],
+      "conocimientos": [
+        "Elementos del guion teatral (acotaciones, diálogos, escenas)",
+        "Estructura del cuento y de la poesía narrativa",
+        "Técnicas de presentación (voz, postura, gestualidad)",
+        "Procedimientos de investigación y comunicación efectiva"
+      ],
+      "habilidades": [
+        "Escribir guiones y adaptar narraciones para teatro o radio",
+        "Crear cuentos y poemas basados en investigaciones",
+        "Investigar temas culturales o científicos y exponerlos creativamente",
+        "Cooperar en proyectos artísticos asumiendo distintos roles"
+      ],
+      "actitudes": [
+        "Respetar la diversidad de habilidades y talentos al trabajar en grupo",
+        "Demostrar responsabilidad y honestidad al cumplir los acuerdos y tareas",
+        "Valorar el esfuerzo de sus compañeros y brindar retroalimentación constructiva"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Comprender y disfrutar versiones completas de obras literarias narradas o leídas por un adulto (leyendas, mitos, narraciones de tradición oral), identificando sus elementos y valor cultural.",
+          "indicadores": [
+            "Escucha atentamente una obra narrada y reconoce sus personajes y ambiente",
+            "Identifica el mensaje o moraleja de la obra",
+            "Relaciona el relato con la cultura de origen y con su propia realidad"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, noticias, entrevistas, testimonios) para obtener información y desarrollar su curiosidad por el mundo.",
+          "indicadores": [
+            "Responde a preguntas sobre lo escuchado indicando información explícita",
+            "Formula preguntas para aclarar ideas y profundizar la comprensión",
+            "Relaciona lo escuchado con otros textos y experiencias personales"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 31,
+          "descripcion": "Producir textos orales planificados de diverso tipo (exposiciones, dramatizaciones) para desarrollar su capacidad expresiva y confianza.",
+          "indicadores": [
+            "Planifica su presentación organizando ideas en introducción, desarrollo y conclusión",
+            "Utiliza una voz adecuada y gestos que apoyan el mensaje",
+            "Incluye recursos creativos como dramatizaciones o música"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 29,
+          "descripcion": "Incorporar de manera pertinente en sus intervenciones orales el vocabulario nuevo extraído de textos escuchados o leídos.",
+          "indicadores": [
+            "Registra palabras nuevas en un cuaderno de vocabulario",
+            "Utiliza las palabras nuevas en sus presentaciones y debates",
+            "Explica el significado de las palabras nuevas a sus compañeros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 30,
+          "descripcion": "Escribir creativamente narraciones, guiones y poemas basados en investigaciones o temas de interés.",
+          "indicadores": [
+            "Planifica su texto determinando propósito y destinatario",
+            "Organiza el contenido con coherencia y utiliza vocabulario variado",
+            "Revisa y edita su texto con apoyo de sus pares y docentes"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Taller de guiones y teatro",
+          "oas_asociados": [
+            23,
+            31
+          ],
+          "descripcion": "Los estudiantes adaptan una leyenda o mito a un guion teatral, crean diálogos y escenas y la representan frente al curso."
+        },
+        {
+          "nombre": "Feria de proyectos",
+          "oas_asociados": [
+            24,
+            29,
+            30
+          ],
+          "descripcion": "Cada grupo investiga un tema cultural o científico y presenta sus hallazgos mediante cuentos, poemas o maquetas en una feria abierta a la comunidad educativa."
+        },
+        {
+          "nombre": "Recital dramatizado",
+          "oas_asociados": [
+            31,
+            29
+          ],
+          "descripcion": "Se organiza un recital en el que los estudiantes recitan poemas o cuentos creados por ellos mismos acompañados de música y movimientos, utilizando vocabulario nuevo."
+        }
+      ],
+      "evaluaciones": [
+        {
+          "titulo": "Obra teatral original",
+          "oas_evaluados": [
+            23,
+            31
+          ],
+          "actividad_evaluacion": "Los grupos presentan una obra adaptada o creada por ellos basada en un relato tradicional. Deben elaborar el guion, ensayar y presentar la obra ante la comunidad educativa.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Adapta el relato respetando su estructura y mensaje",
+              "Planifica la puesta en escena con roles y ensayos",
+              "Utiliza voz, gestualidad y escenografía para transmitir emociones"
+            ],
+            "de_la_presentacion": [
+              "Cumple con el tiempo establecido y mantiene la atención del público",
+              "Integra vocabulario nuevo y lo explica de manera contextual",
+              "Trabaja en equipo mostrando responsabilidad y respeto"
+            ]
+          }
+        },
+        {
+          "titulo": "Proyecto de investigación creativa",
+          "oas_evaluados": [
+            24,
+            30,
+            29
+          ],
+          "actividad_evaluacion": "Cada equipo realiza una investigación sobre un tema de interés, luego escribe un cuento o poema basado en sus hallazgos y lo presenta en la feria de proyectos.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Busca y registra información relevante en fuentes variadas",
+              "Planifica y escribe un texto creativo coherente",
+              "Revisa su texto incorporando retroalimentación"
+            ],
+            "de_la_presentacion": [
+              "Recita o lee su texto con entonación y ritmo adecuados",
+              "Utiliza vocabulario nuevo de forma pertinente",
+              "Explica la relación entre la investigación y el texto creado"
+            ]
+          }
+        },
+        {
+          "titulo": "Recital creativo",
+          "oas_evaluados": [
+            31,
+            29
+          ],
+          "actividad_evaluacion": "Los estudiantes presentan en un recital su propio poema o cuento acompañado de música, danza u otra forma de arte escénico, demostrando confianza y expresión.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Planifica su presentación integrando un elemento artístico",
+              "Ensaya la recitación cuidando el ritmo, la voz y los gestos",
+              "Incorpora palabras nuevas y explica su significado al público"
+            ],
+            "de_la_presentacion": [
+              "Muestra seguridad y control escénico",
+              "Respeta a sus compañeros y se interesa por sus presentaciones"
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {
+        "estrategias_neurodiversidad": [
+          "Permitir la elección de roles en proyectos según las fortalezas de cada estudiante (escritor, actor, diseñador, investigador)",
+          "Ofrecer herramientas multimedia (p. ej., tablets, cámaras) para documentar y presentar sus proyectos",
+          "Utilizar arte terapia y movimiento para ayudar a los estudiantes a canalizar emociones y aumentar la autoconfianza",
+          "Proporcionar un ambiente estructurado con rutinas claras y apoyo visual durante la preparación de las presentaciones"
+        ]
+      }
+    }
+  }
+]

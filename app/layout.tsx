@@ -27,6 +27,15 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={`${plusJakarta.variable} font-sans antialiased`} suppressHydrationWarning>
+        {/* Script anti-flash: aplica color y dark mode en <html> ANTES de pintar nada */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          try {
+            var c = localStorage.getItem('edu-color') || 'pink';
+            var d = localStorage.getItem('edu-dark') === 'true';
+            document.documentElement.setAttribute('data-color', c);
+            document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+          } catch(e) {}
+        `}} />
         <AuthProvider>
           {children}
         </AuthProvider>

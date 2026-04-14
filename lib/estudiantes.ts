@@ -5,6 +5,10 @@ import { getAuth } from "firebase/auth"
 export interface Estudiante {
   id: string
   nombre: string
+  pie?: boolean
+  pieDiagnostico?: string
+  pieEspecialista?: string
+  pieNotas?: string
 }
 
 export async function cargarEstudiantes(curso: string): Promise<Estudiante[]> {
