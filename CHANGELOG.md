@@ -78,3 +78,8 @@ package-lock.json
 package.json
 tsconfig.json
 
+## v1.0.7 - 14/04/2026 00:26
+CHANGELOG.md
+components/edu-panel/version.ts
+version.txt
+
