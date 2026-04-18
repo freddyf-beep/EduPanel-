@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import {
   buildCopilotPrompt,
   cleanText,
+  coerceDestiledLesson,
   coerceGeneratedLesson,
   getProviderMeta,
   parseJsonResponse,
@@ -197,13 +198,23 @@ export async function POST(req: Request) {
       })
     }
 
-    // Modos crear_inicial y aplicar_cambios: respuesta en JSON
+    // Modo destilar_simple: solo devuelve los 3 momentos en formato narrativo simple
+    if (mode === "destilar_simple") {
+      const parsed = parseJsonResponse(rawText || "{}")
+      const destiled = coerceDestiledLesson(parsed)
+      return NextResponse.json(destiled)
+    }
+
+    // Modos crear_inicial, aplicar_cambios y estructurar_notebook_lm:
+    // respuesta en JSON con artefactos pedagógicos en el shape GeneratedLesson.
+    // (estructurar_notebook_lm además rellena solo un subconjunto según tipoContenido
+    //  y devuelve resumen_cambios con qué secciones pobló desde NotebookLM.)
     const parsed = parseJsonResponse(rawText || "{}")
     const lesson = coerceGeneratedLesson(parsed)
 
     return NextResponse.json({
       ...lesson,
-      // Solo aplicar_cambios devuelve resumen_cambios
+      // aplicar_cambios y estructurar_notebook_lm devuelven resumen_cambios
       resumenCambios: typeof parsed.resumen_cambios === "string"
         ? cleanText(parsed.resumen_cambios)
         : undefined,
@@ -223,6 +234,7 @@ export async function POST(req: Request) {
 function normalizeProviderError(provider: AIProvider, message: string): string {
   const n = message.toLowerCase()
 
+  // Errores específicos de proveedor
   if (provider === "anthropic" && n.includes("credit balance is too low")) {
     return "Tu API key de Anthropic es válida pero no tiene créditos. Recarga en console.anthropic.com → Plans & Billing."
   }
@@ -234,6 +246,23 @@ function normalizeProviderError(provider: AIProvider, message: string): string {
   }
   if (provider === "openai" && n.includes("invalid_api_key")) {
     return "La API key de OpenAI no es válida. Verifica en platform.openai.com."
+  }
+
+  // Errores genéricos transversales
+  if (n.includes("rate limit") || n.includes("too many requests") || n.includes("quota exceeded") || n.includes("429")) {
+    return "Alcanzaste el límite de solicitudes del proveedor. Espera unos minutos o cambia de proveedor en Configuración de IA."
+  }
+  if (n.includes("timeout") || n.includes("timed out")) {
+    return "El proveedor tardó demasiado en responder. Reintenta o prueba con otro modelo más rápido."
+  }
+  if (n.includes("failed to fetch") || n.includes("econnrefused") || n.includes("network")) {
+    return "No se pudo conectar con el proveedor. Revisa tu conexión a internet."
+  }
+  if ((n.includes("context") && (n.includes("too long") || n.includes("length") || n.includes("token"))) || n.includes("maximum context")) {
+    return "La conversación es demasiado larga para el modelo. Abre una clase nueva o reduce el historial del chat."
+  }
+  if (n.includes("safety") || n.includes("blocked")) {
+    return "El modelo bloqueó la respuesta por filtros de seguridad. Reformula tu indicación o prueba con otro proveedor."
   }
 
   return message
