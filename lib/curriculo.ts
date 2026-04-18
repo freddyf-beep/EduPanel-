@@ -695,6 +695,18 @@ export async function cargarCronogramaUnidad(
 
 // ─── Actividad de Clase (planificación diaria) ────────────────────────────────
 
+// Artefactos pedagógicos del método de Freddy (opcionales, generados por la IA)
+export interface AnalisisBloomClase {
+  categoria: string
+  nivelGeneral: "BAJO" | "MEDIO" | "ALTO"
+  justificacion: string
+}
+
+export interface IndicadorEvaluacionClase {
+  dimension: "saber" | "saber_hacer" | "ser"
+  texto: string
+}
+
 export interface ActividadClase {
   id: string                    // "{curso}_{unidadId}_clase{N}"
   asignatura: string
@@ -714,6 +726,20 @@ export interface ActividadClase {
   tics: string[]
   estado: "no_planificada" | "planificada" | "realizada"
   sincronizada: boolean
+  // Artefactos pedagógicos generados por la IA (método 6-pasos de Freddy)
+  analisisBloom?: AnalisisBloomClase                    // Paso 1: análisis Bloom del OA
+  indicadoresEvaluacion?: IndicadorEvaluacionClase[]    // Paso 3: 3-5 indicadores saber/saber hacer/ser
+  actividadEvaluacion?: string                          // Paso 4: actividad formativa (HTML)
+  // Versión "rica" detallada (MBE/Bloom/estrategias explícitas). Se muestra en tab Adecuación.
+  // Los campos `inicio`/`desarrollo`/`cierre` de arriba contienen la versión "simple" estilo DOCX oficial.
+  inicioDetallado?: string
+  desarrolloDetallado?: string
+  cierreDetallado?: string
+  // Subconjunto de indicadores del currículum ministerial que aplican a ESTA clase.
+  // Key = oa.id ("OA1", "PROP_1"). Value = array de IndicadorEditado.id.
+  // Ausencia del oaId = "no ha elegido" → fallback: usa TODOS los indicadores seleccionados
+  // a nivel unidad (comportamiento previo, backward-compat con clases antiguas).
+  indicadoresPorOa?: Record<string, string[]>
   updatedAt?: any
 }
 
@@ -939,4 +965,107 @@ export async function cargarPlantillas(asignatura: string): Promise<PlantillaAct
 
 export async function eliminarPlantilla(plantillaId: string): Promise<void> {
   await deleteDoc(userDoc("actividades_clase", plantillaId))
+}
+
+// ---------------------------------------------------------------------------
+// Snapshots NotebookLM
+// Biblioteca reutilizable global. El profesor trabaja en NotebookLM (fuera de
+// EduPanel), pega el resultado aquí, y se guarda con código único para aplicar
+// a cualquier clase/unidad/planificación después.
+//
+// Colección: users/{uid}/notebooklm_snapshots/{id}
+// NOTA: Requiere índice compuesto en Firestore: (asignatura, creadoEn DESC).
+// Firebase mostrará en consola un enlace directo para crearlo si falta.
+// ---------------------------------------------------------------------------
+
+export type NotebookLmTipo =
+  | "clase_completa"
+  | "rubrica"
+  | "analisis_bloom"
+  | "indicadores"
+  | "evaluacion"
+  | "otro"
+
+export interface NotebookLmSnapshot {
+  id: string
+  codigo: string                           // legible: "NB_MUS_4B_001"
+  titulo: string
+  tipo: NotebookLmTipo
+  asignatura: string
+  nivel?: string
+  textoOriginal: string                    // lo pegado de NotebookLM (raw)
+  textoEstructurado?: Record<string, any>  // cache del resultado de estructuración IA
+  fuentes?: string[]
+  creadoEn?: any                           // serverTimestamp
+  ultimoUso?: any
+  vecesUsado: number
+}
+
+function buildSnapshotCodigo(asignatura: string, nivel: string | undefined, correlativo: number): string {
+  const asg = normalizeKeyPart(asignatura).slice(0, 4).toUpperCase() || "GEN"
+  const niv = nivel
+    ? normalizeKeyPart(nivel).replace(/[^a-z0-9]/g, "").slice(0, 3).toUpperCase()
+    : ""
+  const corr = String(correlativo).padStart(3, "0")
+  return nivel ? `NB_${asg}_${niv}_${corr}` : `NB_${asg}_${corr}`
+}
+
+export async function guardarSnapshotNotebookLm(
+  input: Omit<NotebookLmSnapshot, "id" | "codigo" | "vecesUsado" | "creadoEn">
+): Promise<NotebookLmSnapshot> {
+  const id = "nb_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7)
+  // Correlativo basado en la cantidad de snapshots existentes para la asignatura
+  const existentes = await cargarSnapshotsNotebookLm(input.asignatura)
+  const correlativo = existentes.length + 1
+  const codigo = buildSnapshotCodigo(input.asignatura, input.nivel, correlativo)
+
+  const data: NotebookLmSnapshot = {
+    id,
+    codigo,
+    titulo: input.titulo.trim() || "Snapshot sin título",
+    tipo: input.tipo,
+    asignatura: input.asignatura,
+    nivel: input.nivel,
+    textoOriginal: input.textoOriginal,
+    textoEstructurado: input.textoEstructurado,
+    fuentes: input.fuentes,
+    vecesUsado: 0,
+  }
+
+  await setDoc(userDoc("notebooklm_snapshots", id), {
+    ...data,
+    creadoEn: serverTimestamp(),
+  })
+
+  return data
+}
+
+export async function cargarSnapshotsNotebookLm(
+  asignatura?: string,
+  tipo?: NotebookLmTipo
+): Promise<NotebookLmSnapshot[]> {
+  const constraints: any[] = []
+  if (asignatura) constraints.push(where("asignatura", "==", asignatura))
+  if (tipo) constraints.push(where("tipo", "==", tipo))
+  constraints.push(orderBy("creadoEn", "desc"))
+
+  const q = query(userCol("notebooklm_snapshots"), ...constraints)
+  const snap = await getDocs(q)
+  return snap.docs.map(d => d.data() as NotebookLmSnapshot)
+}
+
+export async function eliminarSnapshotNotebookLm(id: string): Promise<void> {
+  await deleteDoc(userDoc("notebooklm_snapshots", id))
+}
+
+export async function incrementarUsoSnapshot(id: string): Promise<void> {
+  const ref = userDoc("notebooklm_snapshots", id)
+  const existing = await getDoc(ref)
+  if (!existing.exists()) return
+  const data = existing.data() as NotebookLmSnapshot
+  await setDoc(ref, {
+    ...data,
+    vecesUsado: (data.vecesUsado || 0) + 1,
+    ultimoUso: serverTimestamp(),
+  })
 }
