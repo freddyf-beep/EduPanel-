@@ -97,3 +97,8 @@ package-lock.json
 package.json
 version.txt
 
+## v1.0.9 - 23/04/2026 14:40
+CHANGELOG.md
+components/edu-panel/version.ts
+version.txt
+
