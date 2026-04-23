@@ -102,3 +102,8 @@ CHANGELOG.md
 components/edu-panel/version.ts
 version.txt
 
+## v1.0.10 - 23/04/2026 14:44
+CHANGELOG.md
+components/edu-panel/version.ts
+version.txt
+
