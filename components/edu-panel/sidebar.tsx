@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   Home, BookOpen, LayoutGrid, Calendar, ClipboardCheck,
-  Users, Music, ClipboardList, LifeBuoy, CalendarDays, UserCircle
+  Users, Music, ClipboardList, LifeBuoy, CalendarDays, UserCircle, LayoutList
 } from "lucide-react"
 import { buildUrl } from "@/lib/shared"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,7 @@ const toolsNavItems = [
   { href: "/cronograma",          label: "Cronograma",          icon: CalendarDays },
   { href: "/libro-clases",        label: "Libro de clases",     icon: ClipboardList },
   { href: "/calificaciones",      label: "Calificaciones",      icon: ClipboardCheck },
+  { href: "/rubricas",            label: "Rúbricas",            icon: LayoutList },
   { href: "/perfil-360",          label: "Perfil 360",          icon: Users },
   { href: "/soporte",             label: "Ayuda",               icon: LifeBuoy },
   { href: "/perfil",              label: "Mi Perfil",           icon: UserCircle },

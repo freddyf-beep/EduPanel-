@@ -1,18 +1,189 @@
 "use client"
 
 import { useAuth } from "@/components/auth/auth-context"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { cargarPerfil, guardarPerfil, PerfilUsuario } from "@/lib/perfil"
 import { cargarHorarioSemanal, guardarHorarioSemanal, ClaseHorario } from "@/lib/horario"
-import { cargarEstudiantes, guardarEstudiantes, Estudiante } from "@/lib/estudiantes"
-import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked } from "lucide-react"
+import { cargarEstudiantes, compareEstudiantes, guardarEstudiantes, Estudiante } from "@/lib/estudiantes"
+import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked, AlertCircle, Upload } from "lucide-react"
 import { cargarNivelMapping, guardarNivelMapping, NIVELES_CURRICULARES, type NivelMapping } from "@/lib/nivel-mapping"
-import { useActiveSubject } from "@/hooks/use-active-subject"
 import { cn } from "@/lib/utils"
+
+type ImportEstudiantesFeedback = {
+  type: "idle" | "success" | "error"
+  message: string
+}
+
+type ImportEstudianteData = {
+  nombre: string
+  orden?: number
+  matchKeys: string[]
+}
+
+function toCleanString(value: unknown): string {
+  return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : ""
+}
+
+function joinNameParts(parts: unknown[]): string {
+  return parts.map(toCleanString).filter(Boolean).join(" ").trim()
+}
+
+function buildStudentMatchKey(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*,\s*/g, ", ")
+    .trim()
+}
+
+function getImportedStudentNames(item: unknown): string[] {
+  if (typeof item === "string") {
+    const direct = toCleanString(item)
+    return direct ? [direct] : []
+  }
+
+  if (!item || typeof item !== "object") {
+    return []
+  }
+
+  const row = item as Record<string, unknown>
+  const directName = [
+    row.nombre,
+    row.name,
+    row.estudiante,
+    row.student,
+    row.alumno,
+    row.fullName,
+    row.full_name,
+  ].map(toCleanString).find(Boolean)
+
+  if (directName) {
+    return [directName]
+  }
+
+  const nombres = joinNameParts([
+    row.nombre1,
+    row.nombre2,
+    row.nombres,
+    row.firstName,
+    row.first_name,
+  ])
+  const apellidos = joinNameParts([
+    row.apellido1,
+    row.apellido2,
+    row.apellidos,
+    row.lastName,
+    row.last_name,
+  ])
+
+  const candidates = [
+    nombres && apellidos ? `${nombres} ${apellidos}` : "",
+    nombres && apellidos ? `${apellidos}, ${nombres}` : "",
+    nombres && apellidos ? `${apellidos} ${nombres}` : "",
+    nombres || apellidos,
+  ]
+
+  const seen = new Set<string>()
+  return candidates.filter((candidate) => {
+    const cleaned = toCleanString(candidate)
+    if (!cleaned) return false
+    const key = buildStudentMatchKey(cleaned)
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
+function getStoredStudentMatchKeys(nombre: string): string[] {
+  const cleaned = toCleanString(nombre)
+  if (!cleaned) return []
+
+  const candidates = [cleaned]
+  const parts = cleaned.split(",").map((part) => toCleanString(part)).filter(Boolean)
+  if (parts.length === 2) {
+    candidates.push(`${parts[1]} ${parts[0]}`)
+    candidates.push(`${parts[0]} ${parts[1]}`)
+  }
+
+  const seen = new Set<string>()
+  return candidates
+    .map(buildStudentMatchKey)
+    .filter((key) => {
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+}
+
+function parseImportedStudentOrder(item: unknown): number | undefined {
+  if (!item || typeof item !== "object") {
+    return undefined
+  }
+
+  const row = item as Record<string, unknown>
+  const raw = [row.numero, row.orden, row.order, row.index, row.n]
+    .find((value) => value !== undefined && value !== null && value !== "")
+
+  if (raw === undefined) {
+    return undefined
+  }
+
+  const parsed = typeof raw === "number" ? raw : Number(raw)
+  if (!Number.isFinite(parsed)) {
+    return undefined
+  }
+
+  const normalized = Math.trunc(parsed)
+  return normalized >= 1 ? normalized : undefined
+}
+
+function extractImportedStudents(payload: unknown): ImportEstudianteData[] {
+  const source = Array.isArray(payload)
+    ? payload
+    : payload && typeof payload === "object"
+      ? ["estudiantes", "alumnos", "students", "data", "items"]
+          .map((key) => (payload as Record<string, unknown>)[key])
+          .find(Array.isArray) || []
+      : []
+
+  if (!Array.isArray(source)) {
+    return []
+  }
+
+  const seen = new Set<string>()
+  const estudiantes: ImportEstudianteData[] = []
+
+  for (const item of source) {
+    const nombres = getImportedStudentNames(item)
+    if (nombres.length === 0) continue
+
+    const matchKeys = nombres.map(buildStudentMatchKey)
+    if (matchKeys.some((key) => seen.has(key))) continue
+    matchKeys.forEach((key) => seen.add(key))
+    estudiantes.push({
+      nombre: nombres[0],
+      orden: parseImportedStudentOrder(item),
+      matchKeys,
+    })
+  }
+
+  return estudiantes
+}
+
+function getNextStudentOrder(estudiantes: Estudiante[]): number {
+  const max = estudiantes.reduce((currentMax, estudiante) => {
+    const orden = typeof estudiante.orden === "number" && Number.isFinite(estudiante.orden)
+      ? estudiante.orden
+      : 0
+    return Math.max(currentMax, orden)
+  }, 0)
+
+  return max + 1
+}
 
 export function PerfilContent() {
   const { user } = useAuth()
-  const { asignatura } = useActiveSubject()
   const [activeTab, setActiveTab] = useState<"datos" | "horario" | "estudiantes" | "niveles">("datos")
   const [loading, setLoading] = useState(true)
 
@@ -51,11 +222,40 @@ export function PerfilContent() {
   const [estudiantes, setEstudiantes] = useState<Estudiante[]>([])
   const [loadingEstudiantes, setLoadingEstudiantes] = useState(false)
   const [savingEstudiantes, setSavingEstudiantes] = useState(false)
-  const [savedEstudiantes, setSavedEstudiantes] = useState(false)
+  const [saveStatusEstudiantes, setSaveStatusEstudiantes] = useState<"idle" | "saving" | "saved" | "error">("idle")
   const [nuevoNombreEstudiante, setNuevoNombreEstudiante] = useState("")
   const [expandedPie, setExpandedPie] = useState<string | null>(null)
+  const [importingEstudiantesJson, setImportingEstudiantesJson] = useState(false)
+  const [importEstudiantesFeedback, setImportEstudiantesFeedback] = useState<ImportEstudiantesFeedback>({ type: "idle", message: "" })
+  const ignoreNextSaveEstudiantesRef = useRef(true)
+  const autoSaveEstudiantesTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const saveStatusEstudiantesTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const importEstudiantesInputRef = useRef<HTMLInputElement | null>(null)
+  const importEstudiantesFeedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const cursosDisponibles = Array.from(new Set(horario.map(h => h.resumen)))
+  const estudiantesOrdenados = useMemo(() => [...estudiantes].sort(compareEstudiantes), [estudiantes])
+
+  const clearAutoSaveEstudiantesTimeout = () => {
+    if (autoSaveEstudiantesTimeoutRef.current) {
+      clearTimeout(autoSaveEstudiantesTimeoutRef.current)
+      autoSaveEstudiantesTimeoutRef.current = null
+    }
+  }
+
+  const clearSaveStatusEstudiantesTimeout = () => {
+    if (saveStatusEstudiantesTimeoutRef.current) {
+      clearTimeout(saveStatusEstudiantesTimeoutRef.current)
+      saveStatusEstudiantesTimeoutRef.current = null
+    }
+  }
+
+  const clearImportEstudiantesFeedbackTimeout = () => {
+    if (importEstudiantesFeedbackTimeoutRef.current) {
+      clearTimeout(importEstudiantesFeedbackTimeoutRef.current)
+      importEstudiantesFeedbackTimeoutRef.current = null
+    }
+  }
 
   useEffect(() => {
     Promise.all([cargarPerfil(), cargarHorarioSemanal(), cargarNivelMapping()])
@@ -76,11 +276,29 @@ export function PerfilContent() {
 
   useEffect(() => {
     if (!cursoEstudiantes) return
+    ignoreNextSaveEstudiantesRef.current = true
+    clearAutoSaveEstudiantesTimeout()
+    clearSaveStatusEstudiantesTimeout()
+    clearImportEstudiantesFeedbackTimeout()
+    setSaveStatusEstudiantes("idle")
+    setImportEstudiantesFeedback({ type: "idle", message: "" })
     setLoadingEstudiantes(true)
     cargarEstudiantes(cursoEstudiantes)
       .then(setEstudiantes)
+      .catch((error) => {
+        console.error("Error cargando estudiantes", error)
+        setEstudiantes([])
+      })
       .finally(() => setLoadingEstudiantes(false))
   }, [cursoEstudiantes])
+
+  useEffect(() => {
+    return () => {
+      clearAutoSaveEstudiantesTimeout()
+      clearSaveStatusEstudiantesTimeout()
+      clearImportEstudiantesFeedbackTimeout()
+    }
+  }, [])
 
   const handleChangePerfil = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setPerfil({ ...perfil, [e.target.name]: e.target.value })
@@ -144,6 +362,159 @@ export function PerfilContent() {
     } catch (error) { console.error(error) } 
     finally { setSavingHorario(false) }
   }
+
+  const handleSaveEstudiantes = async (isAutoSave = false) => {
+    if (!cursoEstudiantes) return
+
+    clearAutoSaveEstudiantesTimeout()
+    clearSaveStatusEstudiantesTimeout()
+    setSaveStatusEstudiantes("saving")
+
+    if (!isAutoSave) {
+      setSavingEstudiantes(true)
+    }
+
+    try {
+      await guardarEstudiantes(cursoEstudiantes, estudiantes)
+      setSaveStatusEstudiantes("saved")
+      saveStatusEstudiantesTimeoutRef.current = setTimeout(() => {
+        setSaveStatusEstudiantes("idle")
+      }, 2000)
+    } catch (error) {
+      console.error("Error guardando estudiantes", error)
+      setSaveStatusEstudiantes("error")
+    } finally {
+      if (!isAutoSave) {
+        setSavingEstudiantes(false)
+      }
+    }
+  }
+
+  const handleUpdateEstudianteOrden = (estudianteId: string, rawValue: string) => {
+    const parsed = Number(rawValue)
+    const nextOrden = rawValue === ""
+      ? undefined
+      : Number.isFinite(parsed)
+        ? Math.max(1, Math.trunc(parsed))
+        : undefined
+
+    setEstudiantes((prev) => prev.map((estudiante) =>
+      estudiante.id === estudianteId ? { ...estudiante, orden: nextOrden } : estudiante
+    ))
+  }
+
+  const handleImportEstudiantesJson = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.currentTarget
+    const file = input.files?.[0]
+    if (!file) return
+
+    setImportingEstudiantesJson(true)
+    clearImportEstudiantesFeedbackTimeout()
+    setImportEstudiantesFeedback({ type: "idle", message: "" })
+
+    try {
+      const raw = await file.text()
+      const payload = JSON.parse(raw)
+      const importedStudents = extractImportedStudents(payload)
+
+      if (importedStudents.length === 0) {
+        throw new Error("El JSON no contiene estudiantes reconocibles.")
+      }
+
+      const existingByKey = new Map<string, Estudiante>()
+      for (const estudiante of estudiantes) {
+        for (const key of getStoredStudentMatchKeys(estudiante.nombre)) {
+          existingByKey.set(key, estudiante)
+        }
+      }
+      const nextEstudiantes = [...estudiantes]
+      const baseTs = Date.now()
+      let nextOrder = getNextStudentOrder(estudiantes)
+      let agregados = 0
+      let actualizados = 0
+
+      for (const importedStudent of importedStudents) {
+        const existing = importedStudent.matchKeys
+          .map((key) => existingByKey.get(key))
+          .find((student): student is Estudiante => Boolean(student))
+
+        if (existing) {
+          const needsNameUpdate = existing.nombre !== importedStudent.nombre
+          const needsOrderUpdate = importedStudent.orden !== undefined && importedStudent.orden !== existing.orden
+          if (needsNameUpdate || needsOrderUpdate) {
+            const index = nextEstudiantes.findIndex((student) => student.id === existing.id)
+            if (index !== -1) {
+              const updated = {
+                ...existing,
+                nombre: importedStudent.nombre,
+                orden: importedStudent.orden ?? existing.orden,
+              }
+              nextEstudiantes[index] = updated
+              for (const key of [...importedStudent.matchKeys, ...getStoredStudentMatchKeys(updated.nombre)]) {
+                existingByKey.set(key, updated)
+              }
+              actualizados += 1
+            }
+          }
+          continue
+        }
+
+        const nuevo: Estudiante = {
+          id: `est_${baseTs}_${agregados}`,
+          nombre: importedStudent.nombre,
+          orden: importedStudent.orden ?? nextOrder,
+        }
+        nextEstudiantes.push(nuevo)
+        for (const key of [...importedStudent.matchKeys, ...getStoredStudentMatchKeys(nuevo.nombre)]) {
+          existingByKey.set(key, nuevo)
+        }
+        agregados += 1
+
+        if (importedStudent.orden === undefined) {
+          nextOrder += 1
+        } else {
+          nextOrder = Math.max(nextOrder, importedStudent.orden + 1)
+        }
+      }
+
+      setEstudiantes(nextEstudiantes)
+
+      setImportEstudiantesFeedback({
+        type: "success",
+        message:
+          agregados > 0 || actualizados > 0
+            ? `Se agregaron ${agregados} estudiantes${actualizados > 0 ? ` y se actualizaron ${actualizados} estudiantes existentes` : ""}.`
+            : "El JSON se leyo bien, pero no habia cambios para aplicar.",
+      })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "No se pudo leer el archivo JSON."
+      setImportEstudiantesFeedback({ type: "error", message })
+    } finally {
+      setImportingEstudiantesJson(false)
+      input.value = ""
+      importEstudiantesFeedbackTimeoutRef.current = setTimeout(() => {
+        setImportEstudiantesFeedback({ type: "idle", message: "" })
+      }, 7000)
+    }
+  }
+
+  useEffect(() => {
+    if (loadingEstudiantes || !cursoEstudiantes) return
+    if (ignoreNextSaveEstudiantesRef.current) {
+      ignoreNextSaveEstudiantesRef.current = false
+      return
+    }
+
+    clearAutoSaveEstudiantesTimeout()
+    setSaveStatusEstudiantes("saving")
+    autoSaveEstudiantesTimeoutRef.current = setTimeout(() => {
+      void handleSaveEstudiantes(true)
+    }, 2500)
+
+    return () => {
+      clearAutoSaveEstudiantesTimeout()
+    }
+  }, [estudiantes, cursoEstudiantes, loadingEstudiantes])
 
   if (loading) {
     return (
@@ -359,9 +730,33 @@ export function PerfilContent() {
 
           {activeTab === "estudiantes" && (
             <div className="animate-in fade-in slide-in-from-bottom-2">
-              <h3 className="text-[16px] font-extrabold mb-2 flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" /> Estudiantes por Curso
-              </h3>
+              <div className="mb-2 flex flex-wrap items-center gap-3">
+                <h3 className="text-[16px] font-extrabold flex items-center gap-2">
+                  <Users className="w-5 h-5 text-primary" /> Estudiantes por Curso
+                </h3>
+                {saveStatusEstudiantes === "saving" && (
+                  <span className="flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" /> Guardando...
+                  </span>
+                )}
+                {saveStatusEstudiantes === "saved" && (
+                  <span className="flex items-center gap-1.5 text-[12px] font-semibold text-green-600">
+                    <CheckCircle className="w-3.5 h-3.5" /> Guardado
+                  </span>
+                )}
+                {saveStatusEstudiantes === "error" && (
+                  <span className="flex items-center gap-1.5 text-[12px] font-semibold text-status-red-text">
+                    <AlertCircle className="w-3.5 h-3.5" /> Error al guardar
+                  </span>
+                )}
+              </div>
+
+              {saveStatusEstudiantes === "error" && (
+                <div className="mb-4 flex items-start gap-2 rounded-xl border border-status-red-border bg-status-red-bg px-4 py-3 text-[12px] font-medium text-status-red-text">
+                  <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                  <span>No se pudo guardar automaticamente. Revisa tu conexion y usa &quot;Guardar Estudiantes&quot; para reintentar.</span>
+                </div>
+              )}
               <p className="text-[13px] text-muted-foreground mb-6">Añade los estudiantes a cada curso para llevar la asistencia y calificaciones.</p>
               
               <div className="mb-5 flex flex-wrap gap-4">
@@ -383,13 +778,59 @@ export function PerfilContent() {
                 </div>
               ) : (
                 <div className="space-y-4">
+                  <input
+                    ref={importEstudiantesInputRef}
+                    type="file"
+                    accept=".json,application/json"
+                    onChange={handleImportEstudiantesJson}
+                    className="hidden"
+                  />
+
+                  <div className="rounded-xl border border-border bg-muted/20 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="space-y-1">
+                        <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Importar desde JSON</p>
+                        <p className="text-[12px] text-muted-foreground">
+                          Acepta arrays de nombres o archivos como tu JSON de Gemini con campos como <code>numero</code>, <code>nombre1</code>, <code>nombre2</code>, <code>apellido1</code> y <code>apellido2</code>. Tambien puede actualizar el numero de lista si el alumno ya existe.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => importEstudiantesInputRef.current?.click()}
+                        disabled={importingEstudiantesJson}
+                        className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-4 text-[13px] font-bold text-foreground transition-colors hover:border-primary hover:text-primary sm:w-auto"
+                      >
+                        {importingEstudiantesJson ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                        {importingEstudiantesJson ? "Leyendo JSON..." : "Importar JSON"}
+                      </button>
+                    </div>
+
+                    {importEstudiantesFeedback.type !== "idle" && (
+                      <div className={cn(
+                        "mt-3 flex items-start gap-2 rounded-lg border px-3 py-2 text-[12px] font-medium",
+                        importEstudiantesFeedback.type === "success"
+                          ? "border-status-blue-border bg-status-blue-bg text-status-blue-text"
+                          : "border-status-red-border bg-status-red-bg text-status-red-text"
+                      )}>
+                        {importEstudiantesFeedback.type === "success"
+                          ? <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                          : <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />}
+                        <span>{importEstudiantesFeedback.message}</span>
+                      </div>
+                    )}
+                  </div>
+
                   <form onSubmit={e => {
                       e.preventDefault()
                       if (!nuevoNombreEstudiante.trim()) return
-                      setEstudiantes([...estudiantes, { id: `est_${Date.now()}`, nombre: nuevoNombreEstudiante.trim() }])
+                      setEstudiantes(prev => [...prev, {
+                        id: `est_${Date.now()}`,
+                        nombre: nuevoNombreEstudiante.trim(),
+                        orden: getNextStudentOrder(prev),
+                      }])
                       setNuevoNombreEstudiante("")
                     }} className="flex flex-col gap-2 sm:flex-row">
-                    <input type="text" value={nuevoNombreEstudiante} onChange={e => setNuevoNombreEstudiante(e.target.value)} placeholder="Nombre del estudiante (Ej: Tapia, Juan)" className="flex-1 h-10 rounded-lg border border-border px-3 text-[13px] outline-none" />
+                    <input type="text" value={nuevoNombreEstudiante} onChange={e => setNuevoNombreEstudiante(e.target.value)} placeholder="Nombre del estudiante (Ej: Juan Tapia)" className="flex-1 h-10 rounded-lg border border-border px-3 text-[13px] outline-none" />
                     <button type="submit" className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 text-white transition-colors hover:bg-slate-800 sm:w-auto">
                       <Plus className="w-4 h-4" /> Añadir
                     </button>
@@ -401,13 +842,23 @@ export function PerfilContent() {
                     </div>
                   ) : (
                     <div className="border border-border rounded-xl overflow-hidden bg-background">
-                      {estudiantes.map((est, i) => {
+                      {estudiantesOrdenados.map((est) => {
                         const isPieExpanded = est.pie && expandedPie === est.id
                         return (
                           <div key={est.id} className="border-b border-border last:border-b-0">
                             <div className="flex items-center justify-between p-3 group hover:bg-muted/30 transition-colors">
                               <div className="flex items-center gap-3 min-w-0">
-                                <span className="text-[11px] font-bold text-muted-foreground w-6 text-right flex-shrink-0">{i + 1}.</span>
+                                <div className="flex w-[58px] flex-shrink-0 flex-col gap-1">
+                                  <label className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">N°</label>
+                                  <input
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value={est.orden ?? ""}
+                                    onChange={(e) => handleUpdateEstudianteOrden(est.id, e.target.value)}
+                                    className="h-8 rounded-lg border border-border bg-background px-2 text-center text-[12px] font-bold outline-none focus:border-primary"
+                                  />
+                                </div>
                                 <span className="text-[13px] font-medium text-foreground truncate">{est.nombre}</span>
                                 {est.pie && (
                                   <span className="flex-shrink-0 rounded bg-status-pie-bg px-1.5 py-0.5 text-[9px] font-bold text-status-pie-text border border-status-pie-border">
@@ -418,8 +869,7 @@ export function PerfilContent() {
                               <div className="flex items-center gap-1">
                                 <button
                                   onClick={() => {
-                                    const updated = estudiantes.map(e => e.id === est.id ? { ...e, pie: !e.pie } : e)
-                                    setEstudiantes(updated)
+                                    setEstudiantes(prev => prev.map(e => e.id === est.id ? { ...e, pie: !e.pie } : e))
                                   }}
                                   title={est.pie ? "Quitar PIE" : "Marcar como PIE"}
                                   className={cn(
@@ -440,7 +890,7 @@ export function PerfilContent() {
                                     {isPieExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                                   </button>
                                 )}
-                                <button onClick={() => setEstudiantes(estudiantes.filter(e => e.id !== est.id))} className="p-1 text-muted-foreground transition-all hover:text-red-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100">
+                                <button onClick={() => setEstudiantes(prev => prev.filter(e => e.id !== est.id))} className="p-1 text-muted-foreground transition-all hover:text-red-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100">
                                   <Trash2 className="w-4 h-4" />
                                 </button>
                               </div>
@@ -451,7 +901,7 @@ export function PerfilContent() {
                                   <label className="text-[10px] font-bold uppercase text-muted-foreground">Diagnóstico</label>
                                   <select
                                     value={est.pieDiagnostico || ""}
-                                    onChange={e => setEstudiantes(estudiantes.map(x => x.id === est.id ? { ...x, pieDiagnostico: e.target.value } : x))}
+                                    onChange={e => setEstudiantes(prev => prev.map(x => x.id === est.id ? { ...x, pieDiagnostico: e.target.value } : x))}
                                     className="h-8 rounded-lg border border-border bg-background px-2 text-[12px] outline-none"
                                   >
                                     <option value="">-- Seleccionar --</option>
@@ -472,7 +922,7 @@ export function PerfilContent() {
                                   <input
                                     type="text"
                                     value={est.pieEspecialista || ""}
-                                    onChange={e => setEstudiantes(estudiantes.map(x => x.id === est.id ? { ...x, pieEspecialista: e.target.value } : x))}
+                                    onChange={e => setEstudiantes(prev => prev.map(x => x.id === est.id ? { ...x, pieEspecialista: e.target.value } : x))}
                                     placeholder="Nombre del especialista"
                                     className="h-8 rounded-lg border border-border bg-background px-2 text-[12px] outline-none"
                                   />
@@ -481,7 +931,7 @@ export function PerfilContent() {
                                   <label className="text-[10px] font-bold uppercase text-muted-foreground">Notas de adecuación</label>
                                   <textarea
                                     value={est.pieNotas || ""}
-                                    onChange={e => setEstudiantes(estudiantes.map(x => x.id === est.id ? { ...x, pieNotas: e.target.value } : x))}
+                                    onChange={e => setEstudiantes(prev => prev.map(x => x.id === est.id ? { ...x, pieNotas: e.target.value } : x))}
                                     placeholder="Adecuaciones curriculares, adaptaciones, observaciones..."
                                     rows={2}
                                     className="rounded-lg border border-border bg-background px-2 py-1.5 text-[12px] outline-none resize-none"
@@ -496,19 +946,9 @@ export function PerfilContent() {
                   )}
 
                   <div className="pt-4 flex flex-wrap items-center gap-4">
-                    <button onClick={async () => {
-                      setSavingEstudiantes(true)
-                      setSavedEstudiantes(false)
-                      try {
-                        await guardarEstudiantes(cursoEstudiantes, estudiantes)
-                        setSavedEstudiantes(true)
-                        setTimeout(() => setSavedEstudiantes(false), 3000)
-                      } catch (error) { console.error(error) }
-                      finally { setSavingEstudiantes(false) }
-                    }} disabled={savingEstudiantes} className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-white hover:bg-opacity-90 sm:w-auto">
+                    <button type="button" onClick={() => void handleSaveEstudiantes(false)} disabled={savingEstudiantes} className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-white hover:bg-opacity-90 sm:w-auto">
                       {savingEstudiantes ? <Loader2 className="w-4 h-4 animate-spin" /> : "Guardar Estudiantes"}
                     </button>
-                    {savedEstudiantes && <span className="text-green-600 font-bold text-[13px] flex items-center gap-1.5 animate-in fade-in"><CheckCircle className="w-4 h-4" /> Guardado exitosamente</span>}
                   </div>
                 </div>
               )}

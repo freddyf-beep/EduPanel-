@@ -13,6 +13,7 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 interface EstudianteCalif {
   id: string
   name: string
+  orden?: number
   notas: Record<string, string>
   hasPie: boolean
   pieDiagnostico?: string
@@ -73,6 +74,7 @@ export function CalificacionesContent() {
           return {
             id: est.id,
             name: est.nombre,
+            orden: est.orden,
             notas: old ? old.notas : {},
             hasPie: est.pie === true,
             pieDiagnostico: est.pieDiagnostico || "",
@@ -91,6 +93,7 @@ export function CalificacionesContent() {
         const initial: EstudianteCalif[] = estDocs.map((est) => ({
           id: est.id,
           name: est.nombre,
+          orden: est.orden,
           notas: {},
           hasPie: est.pie === true,
           pieDiagnostico: est.pieDiagnostico || "",
@@ -255,7 +258,7 @@ export function CalificacionesContent() {
     const rows = estudiantes.map((e, i) => {
       const prom = calcPromedio(e.notas)
       return [
-        String(i + 1),
+        String(e.orden ?? i + 1),
         e.name,
         e.hasPie ? "Sí" : "No",
         ...evaluaciones.map(ev => e.notas[ev.id] || ""),
@@ -512,7 +515,7 @@ export function CalificacionesContent() {
                     "border-b border-border transition-colors last:border-b-0 hover:bg-muted/30",
                     estudiante.hasPie && "bg-status-pie-bg/30"
                   )}>
-                    <td className="px-4 py-3 text-[13px] text-muted-foreground">{idx + 1}</td>
+                    <td className="px-4 py-3 text-[13px] text-muted-foreground">{estudiante.orden ?? idx + 1}</td>
                     <td className="px-4 py-3 text-[13px]">
                       <span className="font-medium">{estudiante.name}</span>
                       {estudiante.hasPie && (
@@ -542,9 +545,21 @@ export function CalificacionesContent() {
                     ))}
                     {periodo === "anual" && Object.keys(tendencias).length > 0 && (
                       <td className="px-4 py-3 text-center">
-                        {tendencias[estudiante.id] === "up"   && <TrendingUp   className="inline h-4 w-4 text-status-green-text" title="Mejorando" />}
-                        {tendencias[estudiante.id] === "down" && <TrendingDown className="inline h-4 w-4 text-status-red-text"   title="Bajando" />}
-                        {tendencias[estudiante.id] === "flat" && <Minus        className="inline h-4 w-4 text-muted-foreground" title="Estable" />}
+                        {tendencias[estudiante.id] === "up" && (
+                          <span title="Mejorando">
+                            <TrendingUp className="inline h-4 w-4 text-status-green-text" />
+                          </span>
+                        )}
+                        {tendencias[estudiante.id] === "down" && (
+                          <span title="Bajando">
+                            <TrendingDown className="inline h-4 w-4 text-status-red-text" />
+                          </span>
+                        )}
+                        {tendencias[estudiante.id] === "flat" && (
+                          <span title="Estable">
+                            <Minus className="inline h-4 w-4 text-muted-foreground" />
+                          </span>
+                        )}
                         {!tendencias[estudiante.id]           && <span className="text-muted-foreground text-[12px]">—</span>}
                       </td>
                     )}

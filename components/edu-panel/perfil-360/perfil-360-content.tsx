@@ -8,14 +8,15 @@ import {
 import { cn } from "@/lib/utils"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { cargarHorarioSemanal } from "@/lib/horario"
-import { cargarEstudiantes, Estudiante } from "@/lib/estudiantes"
+import { cargarEstudiantes, compareEstudiantes } from "@/lib/estudiantes"
 import { listarLibroClasesCurso, userDoc, cargarObservaciones360, guardarObservaciones360 } from "@/lib/curriculo"
-import type { LibroClasesGuardado, Observacion360 } from "@/lib/curriculo"
+import type { Observacion360 } from "@/lib/curriculo"
 import { getDoc } from "firebase/firestore"
 
 interface EstudianteVista {
   id: string
   nombre: string
+  orden?: number
   promedio: number | null
   promedioClase: number | null
   porcentajeAsistencia: number | null
@@ -110,62 +111,39 @@ export function Perfil360Content() {
     ]).then(([libros, califSnap, estDocs]) => {
       const calif = califSnap.exists() ? califSnap.data() : null
       const mapa = new Map<string, EstudianteVista>()
-      const pieData = new Map(estDocs.map(e => [e.nombre, e]))
+      for (const est of estDocs) {
+        mapa.set(est.nombre, {
+          id: est.id,
+          nombre: est.nombre,
+          orden: est.orden,
+          promedio: null,
+          promedioClase: null,
+          porcentajeAsistencia: null,
+          asistencia: { presente: 0, ausente: 0, atraso: 0, retirado: 0 },
+          pie: est.pie === true,
+          pieDiagnostico: est.pieDiagnostico || "",
+          pieEspecialista: est.pieEspecialista || "",
+          pieNotas: est.pieNotas || "",
+          notas: {},
+        })
+      }
 
-      // Calificaciones
       if (calif?.estudiantes?.length) {
         for (const est of calif.estudiantes) {
-          const pieInfo = pieData.get(est.name)
-          mapa.set(est.name, {
-            id: String(est.id),
-            nombre: est.name,
-            promedio: calcPromedio(est.notas),
-            promedioClase: null,
-            porcentajeAsistencia: null,
-            asistencia: { presente: 0, ausente: 0, atraso: 0, retirado: 0 },
-            pie: pieInfo?.pie === true,
-            pieDiagnostico: pieInfo?.pieDiagnostico || "",
-            pieEspecialista: pieInfo?.pieEspecialista || "",
-            pieNotas: pieInfo?.pieNotas || "",
-            notas: est.notas || {},
-          })
+          const vista = mapa.get(est.name)
+          if (!vista) continue
+          vista.notas = est.notas || {}
+          vista.promedio = calcPromedio(vista.notas)
         }
       }
 
-      // Estudiantes sin calificaciones pero con data PIE
-      for (const est of estDocs) {
-        if (!mapa.has(est.nombre)) {
-          mapa.set(est.nombre, {
-            id: est.id,
-            nombre: est.nombre,
-            promedio: null,
-            promedioClase: null,
-            porcentajeAsistencia: null,
-            asistencia: { presente: 0, ausente: 0, atraso: 0, retirado: 0 },
-            pie: est.pie === true,
-            pieDiagnostico: est.pieDiagnostico || "",
-            pieEspecialista: est.pieEspecialista || "",
-            pieNotas: est.pieNotas || "",
-            notas: {},
-          })
-        }
-      }
-
-      // Asistencia
       for (const libro of libros) {
         for (const bloque of libro.bloques) {
           for (const a of bloque.asistencia) {
-            if (!mapa.has(a.nombre)) {
-              const pieInfo = pieData.get(a.nombre)
-              mapa.set(a.nombre, {
-                id: a.id, nombre: a.nombre, promedio: null, promedioClase: null,
-                porcentajeAsistencia: null, asistencia: { presente: 0, ausente: 0, atraso: 0, retirado: 0 },
-                pie: pieInfo?.pie === true, pieDiagnostico: pieInfo?.pieDiagnostico || "",
-                pieEspecialista: pieInfo?.pieEspecialista || "", pieNotas: pieInfo?.pieNotas || "",
-                notas: {},
-              })
+            const vista = mapa.get(a.nombre)
+            if (vista) {
+              vista.asistencia[a.estado] += 1
             }
-            mapa.get(a.nombre)!.asistencia[a.estado] += 1
           }
         }
       }
@@ -182,9 +160,13 @@ export function Perfil360Content() {
           : null
       }
 
-      const lista = Array.from(mapa.values()).sort((a, b) => a.nombre.localeCompare(b.nombre))
+      const lista = Array.from(mapa.values()).sort(compareEstudiantes)
       setEstudiantes(lista)
-      setSelectedId((prev) => prev || lista[0]?.id || "")
+      setSelectedId((prev) => lista.some((est) => est.id === prev) ? prev : (lista[0]?.id || ""))
+    }).catch((error) => {
+      console.error("Error cargando perfil 360", error)
+      setEstudiantes([])
+      setSelectedId("")
     }).finally(() => setLoading(false))
   }, [curso, ASIGNATURA])
 
@@ -238,7 +220,7 @@ export function Perfil360Content() {
           <select value={selectedId} onChange={(e) => setSelectedId(e.target.value)} className="w-full rounded-[10px] border border-border px-3.5 py-2.5 text-[13px] font-semibold bg-background sm:min-w-[260px]">
             {estudiantes.map((e) => (
               <option key={e.id} value={e.id}>
-                {e.nombre}{e.pie ? " (PIE)" : ""}
+                {e.orden != null ? `${e.orden}. ` : ""}{e.nombre}{e.pie ? " (PIE)" : ""}
               </option>
             ))}
           </select>

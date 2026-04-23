@@ -32,6 +32,10 @@ export function normalizeKeyPart(value: string): string {
     .replace(/[^a-z0-9_]/g, "")
 }
 
+export function buildCursoId(curso: string): string {
+  return normalizeKeyPart(curso)
+}
+
 export function withAsignatura<T extends Record<string, string | null | undefined>>(
   params: T,
   asignatura: string

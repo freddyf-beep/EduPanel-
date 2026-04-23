@@ -83,3 +83,17 @@ CHANGELOG.md
 components/edu-panel/version.ts
 version.txt
 
+## v1.0.8 - 23/04/2026 14:21
+.claude/settings.local.json
+CHANGELOG.md
+components/edu-panel/calificaciones/calificaciones-content.tsx
+components/edu-panel/perfil-360/perfil-360-content.tsx
+components/edu-panel/perfil/perfil-content.tsx
+components/edu-panel/sidebar.tsx
+components/edu-panel/version.ts
+lib/estudiantes.ts
+lib/shared.ts
+package-lock.json
+package.json
+version.txt
+
