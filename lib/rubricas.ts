@@ -356,9 +356,13 @@ export function buildEvaluacionId(rubricaId: string): string {
 
 // ─── Nota chilena ─────────────────────────────────────────────────────────────
 
-export function calcularNota(puntaje: number, puntajeMax: number): number {
+export function calcularNota(puntaje: number, puntajeMax: number, exigencia = 0.6): number {
   if (puntajeMax <= 0) return 1.0
-  const nota = 1 + (6 * puntaje) / puntajeMax
+  const porcentaje = Math.min(1, Math.max(0, puntaje / puntajeMax))
+  const exigenciaNormalizada = Math.min(0.95, Math.max(0.05, exigencia))
+  const nota = porcentaje < exigenciaNormalizada
+    ? 1 + (3 * porcentaje) / exigenciaNormalizada
+    : 4 + (3 * (porcentaje - exigenciaNormalizada)) / (1 - exigenciaNormalizada)
   return Math.round(Math.min(7, Math.max(1, nota)) * 10) / 10
 }
 

@@ -107,8 +107,12 @@ CHANGELOG.md
 components/edu-panel/version.ts
 version.txt
 
-## v1.0.11 - 23/04/2026 21:45
+## v1.0.11 - 23/04/2026 23:45
 CHANGELOG.md
-components/edu-panel/version.ts
-version.txt
+app/api/export-rubrica/route.ts
+app/api/import-rubrica/route.ts
+components/edu-panel/rubricas/evaluacion-view.tsx
+components/edu-panel/rubricas/resultados-view.tsx
+components/edu-panel/rubricas/rubricas-hub.tsx
+lib/rubricas.ts
 

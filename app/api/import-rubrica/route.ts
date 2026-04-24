@@ -3,6 +3,7 @@ import mammoth from "mammoth"
 import JSZip from "jszip"
 import { parsearTextoRubrica } from "@/app/api/parse-rubrica/route"
 import { normalizeKeyPart } from "@/lib/shared"
+import { calcularNota } from "@/lib/rubricas"
 import type { RubricaTemplate, EvaluacionRubrica, GrupoEvaluacion, EstudianteEvaluacion } from "@/lib/rubricas"
 
 function uid() {
@@ -134,7 +135,7 @@ export async function POST(req: NextRequest) {
             return s + pts * (c.ponderacion ?? 1)
           }, 0), 0
         )
-        const nota = Math.round(Math.min(7, Math.max(1, 1 + (6 * puntaje) / puntajeMaximo)) * 10) / 10
+        const nota = calcularNota(puntaje, puntajeMaximo, 0.6)
 
         estudiantesGrupo.push({
           estudianteId,

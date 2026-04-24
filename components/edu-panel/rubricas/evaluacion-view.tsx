@@ -29,6 +29,11 @@ const NIVEL_OPCIONES = [
   { valor: 1, label: "PL*", titulo: "Por lograr",            color: "bg-red-500 text-white border-red-500" },
 ] as const
 
+const exigenciaEstudiante = (estudiante?: Pick<EstudianteEvaluacion, "hasPie"> | null) =>
+  estudiante?.hasPie ? 0.5 : 0.6
+
+const normalizeName = (value: string) => value.trim().toLocaleLowerCase("es")
+
 export function EvaluacionView({ rubricaId }: Props) {
   const router = useRouter()
   const { asignatura } = useActiveSubject()
@@ -102,9 +107,26 @@ export function EvaluacionView({ rubricaId }: Props) {
 
   // Sincronizar alumnos que se agregaron al curso después de crear la evaluación
   function sincronizarAlumnos(ev: EvaluacionRubrica, alumnos: Estudiante[]): EvaluacionRubrica {
-    const todosEnGrupos = new Set(ev.grupos.flatMap(g => g.estudiantes.map(e => e.estudianteId)))
+    const alumnosPorId = new Map(alumnos.map(alumno => [alumno.id, alumno]))
+    const alumnosPorNombre = new Map(alumnos.map(alumno => [normalizeName(alumno.nombre), alumno]))
+    const gruposActualizados = ev.grupos.map(grupo => ({
+      ...grupo,
+      estudiantes: grupo.estudiantes.map(est => {
+        const alumnoPerfil = alumnosPorId.get(est.estudianteId) ?? alumnosPorNombre.get(normalizeName(est.nombre))
+        if (!alumnoPerfil) return est
+        const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica?.partes ?? [])
+        const hasPie = alumnoPerfil.pie ?? false
+        return {
+          ...est,
+          nombre: alumnoPerfil.nombre || est.nombre,
+          hasPie,
+          nota: rubrica ? calcularNota(puntaje, rubrica.puntajeMaximo, hasPie ? 0.5 : 0.6) : est.nota,
+        }
+      }),
+    }))
+    const todosEnGrupos = new Set(gruposActualizados.flatMap(g => g.estudiantes.map(e => e.estudianteId)))
     const sinAsignar = alumnos.filter(a => !todosEnGrupos.has(a.id))
-    if (sinAsignar.length === 0) return ev
+    if (sinAsignar.length === 0) return { ...ev, grupos: gruposActualizados }
     // Agregar sin asignar al primer grupo
     const nuevosEst: EstudianteEvaluacion[] = sinAsignar.map(a => ({
       estudianteId: a.id,
@@ -116,7 +138,7 @@ export function EvaluacionView({ rubricaId }: Props) {
     }))
     return {
       ...ev,
-      grupos: ev.grupos.map((g, i) =>
+      grupos: gruposActualizados.map((g, i) =>
         i === 0 ? { ...g, estudiantes: [...g.estudiantes, ...nuevosEst] } : g
       ),
     }
@@ -124,6 +146,14 @@ export function EvaluacionView({ rubricaId }: Props) {
 
   const updateEvaluacion = (fn: (ev: EvaluacionRubrica) => EvaluacionRubrica) => {
     setEvaluacion(prev => prev ? fn(prev) : prev)
+  }
+
+  const findGrupoIndexByNombre = (nombre: string) => {
+    if (!evaluacion) return -1
+    const nombreNormalizado = nombre.trim().toLowerCase()
+    return evaluacion.grupos.findIndex(
+      grupo => grupo.nombre.trim().toLowerCase() === nombreNormalizado
+    )
   }
 
   const updateEstudiante = (
@@ -155,7 +185,7 @@ export function EvaluacionView({ rubricaId }: Props) {
       }
       const rubr = rubrica!
       const puntaje = calcularPuntajeEstudiante(puntajes, rubr.partes)
-      const nota = calcularNota(puntaje, rubr.puntajeMaximo)
+      const nota = calcularNota(puntaje, rubr.puntajeMaximo, exigenciaEstudiante(e))
       const criteriosTotal = rubr.partes.reduce((a, p) => a + p.criterios.length, 0)
       const completado = Object.keys(puntajes).length === criteriosTotal
       return { ...e, puntajes, nota, completado }
@@ -185,6 +215,27 @@ export function EvaluacionView({ rubricaId }: Props) {
         estudiantes: [],
       }
       return { ...ev, grupos: [...ev.grupos, nuevoGrupo] }
+    })
+  }
+
+  const asegurarGrupoAusentes = () => {
+    const grupoExistenteIdx = findGrupoIndexByNombre("Ausentes")
+    if (grupoExistenteIdx >= 0) {
+      setGrupoActivo(grupoExistenteIdx)
+      setAlumnoActivo(evaluacion?.grupos[grupoExistenteIdx]?.estudiantes[0]?.estudianteId ?? null)
+      return
+    }
+
+    updateEvaluacion(ev => {
+      const nuevoGrupo: GrupoEvaluacion = {
+        id: `grupo_ausentes_${Date.now()}`,
+        nombre: "Ausentes",
+        estudiantes: [],
+      }
+      const grupos = [...ev.grupos, nuevoGrupo]
+      setGrupoActivo(grupos.length - 1)
+      setAlumnoActivo(null)
+      return { ...ev, grupos }
     })
   }
 
@@ -365,6 +416,14 @@ export function EvaluacionView({ rubricaId }: Props) {
 
         {/* Botón agregar grupo */}
         <button
+          onClick={asegurarGrupoAusentes}
+          title="Crear o abrir el grupo de ausentes"
+          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 whitespace-nowrap transition-colors flex-shrink-0"
+        >
+          <AlertCircle className="w-3.5 h-3.5" />
+          Ausentes
+        </button>
+        <button
           onClick={agregarGrupo}
           title="Agregar nuevo grupo"
           className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-dashed border-border hover:border-primary/50 hover:text-primary text-muted-foreground whitespace-nowrap transition-colors flex-shrink-0"
@@ -390,7 +449,7 @@ export function EvaluacionView({ rubricaId }: Props) {
             {evaluacion.grupos.flatMap(grupo =>
               grupo.estudiantes.map(est => {
                 const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
-                const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+                const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
                 const descargando = exportandoAlumno === est.estudianteId
                 return (
                   <div
@@ -444,7 +503,7 @@ export function EvaluacionView({ rubricaId }: Props) {
           )}
           {grupoActualObj?.estudiantes.map(est => {
               const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
-              const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+              const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
               return (
                 <button
                   key={est.estudianteId}
@@ -516,10 +575,15 @@ export function EvaluacionView({ rubricaId }: Props) {
                 </div>
                 <div className="text-right">
                   <p className="text-[20px] font-extrabold text-foreground">
-                    {calcularNota(calcularPuntajeEstudiante(alumnoObj.puntajes, rubrica.partes), rubrica.puntajeMaximo).toFixed(1)}
+                    {calcularNota(
+                      calcularPuntajeEstudiante(alumnoObj.puntajes, rubrica.partes),
+                      rubrica.puntajeMaximo,
+                      exigenciaEstudiante(alumnoObj)
+                    ).toFixed(1)}
                   </p>
                   <p className="text-[11px] text-muted-foreground">
                     {calcularPuntajeEstudiante(alumnoObj.puntajes, rubrica.partes)}/{rubrica.puntajeMaximo} pts
+                    {alumnoObj.hasPie ? " · escala 50%" : " · escala 60%"}
                   </p>
                 </div>
               </div>
@@ -663,7 +727,7 @@ export function EvaluacionView({ rubricaId }: Props) {
           <div className="p-1.5 space-y-0.5">
             {todosLosAlumnosEnGrupos.map(est => {
               const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
-              const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+              const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
               const aprobado = nota >= 4.0
               return (
                 <div

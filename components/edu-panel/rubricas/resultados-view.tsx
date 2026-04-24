@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLin
 import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
+import { cargarEstudiantes } from "@/lib/estudiantes"
 import {
   cargarRubrica, cargarEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
@@ -15,6 +16,11 @@ import {
 interface Props {
   rubricaId: string
 }
+
+const exigenciaEstudiante = (estudiante: Pick<EstudianteEvaluacion, "hasPie">) =>
+  estudiante.hasPie ? 0.5 : 0.6
+
+const normalizeName = (value: string) => value.trim().toLocaleLowerCase("es")
 
 export function ResultadosView({ rubricaId }: Props) {
   const router = useRouter()
@@ -28,10 +34,29 @@ export function ResultadosView({ rubricaId }: Props) {
 
   useEffect(() => {
     Promise.all([cargarRubrica(rubricaId), cargarEvaluacion(rubricaId)])
-      .then(([r, ev]) => {
+      .then(async ([r, ev]) => {
         if (!r) { setError("Rúbrica no encontrada"); return }
         setRubrica(r)
-        setEvaluacion(ev)
+        if (!ev) {
+          setEvaluacion(ev)
+          return
+        }
+
+        const alumnos = await cargarEstudiantes(r.curso)
+        const alumnosPorId = new Map(alumnos.map(alumno => [alumno.id, alumno]))
+        const alumnosPorNombre = new Map(alumnos.map(alumno => [normalizeName(alumno.nombre), alumno]))
+        setEvaluacion({
+          ...ev,
+          grupos: ev.grupos.map(grupo => ({
+            ...grupo,
+            estudiantes: grupo.estudiantes.map(est => {
+              const alumnoPerfil = alumnosPorId.get(est.estudianteId) ?? alumnosPorNombre.get(normalizeName(est.nombre))
+              return alumnoPerfil
+                ? { ...est, nombre: alumnoPerfil.nombre || est.nombre, hasPie: alumnoPerfil.pie ?? false }
+                : est
+            }),
+          })),
+        })
       })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
@@ -81,7 +106,7 @@ export function ResultadosView({ rubricaId }: Props) {
   const notasConDatos = todosEstudiantes
     .map(e => {
       const puntaje = calcularPuntajeEstudiante(e.puntajes, rubrica.partes)
-      const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+      const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(e))
       return { ...e, puntaje, nota }
     })
     .sort((a, b) => b.nota - a.nota)
@@ -230,7 +255,7 @@ export function ResultadosView({ rubricaId }: Props) {
                   {evaluacion.grupos.flatMap(grupo =>
                     grupo.estudiantes.map(est => {
                       const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
-                      const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+                      const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
                       const aprobado = nota >= 4.0
                       return (
                         <tr key={est.estudianteId} className="border-b border-border hover:bg-muted/30">

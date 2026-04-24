@@ -32,12 +32,26 @@ function detectLogoType(logoBase64?: string): "jpg" | "png" {
   return "jpg"
 }
 
-function calcNota(puntaje: number, max: number): number {
-  return libCalcNota(puntaje, max)
+function exigenciaEstudiante(est?: Pick<EstudianteEvaluacion, "hasPie">): number {
+  return est?.hasPie ? 0.5 : 0.6
+}
+
+function calcNota(puntaje: number, max: number, est?: Pick<EstudianteEvaluacion, "hasPie">): number {
+  return libCalcNota(puntaje, max, exigenciaEstudiante(est))
 }
 
 function calcPuntaje(puntajes: Record<string, number>, partes: RubricaTemplate["partes"]): number {
   return calcularPuntajeEstudiante(puntajes, partes)
+}
+
+function safeFilename(value: string): string {
+  const normalized = value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w.-]+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_+|_+$/g, "")
+  return normalized || "rubrica"
 }
 
 function celda(text: string, opts?: {
@@ -343,7 +357,7 @@ function generarDocEstudiante(
   logoBase64?: string
 ): (Paragraph | Table)[] {
   const puntaje = calcPuntaje(est.puntajes, rubrica.partes)
-  const nota = calcNota(puntaje, rubrica.puntajeMaximo)
+  const nota = calcNota(puntaje, rubrica.puntajeMaximo, est)
 
   const elementos: (Paragraph | Table)[] = cabeceraEscuela({
     rubrica,
@@ -370,6 +384,7 @@ function generarDocEstudiante(
         new TextRun({ text: `     Nota Final: `, bold: true, size: 22, font: "Calibri" }),
         new TextRun({ text: nota.toFixed(1), bold: true, size: 24, font: "Calibri",
           color: nota >= 4.0 ? "375623" : "9C0006" }),
+        new TextRun({ text: `     Exigencia: ${est.hasPie ? "50% PIE" : "60%"}`, size: 18, font: "Calibri" }),
       ],
     }),
   )
@@ -425,7 +440,7 @@ export async function POST(req: NextRequest) {
         sections: [{ properties: { page: { margin: pageMargin } }, children: elements }],
       })
       const buf = await Packer.toBuffer(doc)
-      const filename = `rubrica_${alumnoEst.nombre.replace(/\s+/g, "_")}.docx`
+      const filename = `${safeFilename(`rubrica_${alumnoEst.nombre}`)}.docx`
       return new NextResponse(buf, {
         headers: {
           "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -466,7 +481,7 @@ export async function POST(req: NextRequest) {
           }),
           ...grupo.estudiantes.map(est => {
             const pts = calcPuntaje(est.puntajes, rubrica.partes)
-            const nota = calcNota(pts, rubrica.puntajeMaximo)
+            const nota = calcNota(pts, rubrica.puntajeMaximo, est)
             return new TableRow({
               children: [
                 celda(est.nombre + (est.hasPie ? " [PIE]" : ""), { width: 40, size: 9 }),
@@ -500,7 +515,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(buf, {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "Content-Disposition": `attachment; filename="rubrica_${rubrica.nombre}_grupos.docx"`,
+        "Content-Disposition": `attachment; filename="${safeFilename(`rubrica_${rubrica.nombre}_grupos`)}.docx"`,
       },
     })
   } catch (err) {
