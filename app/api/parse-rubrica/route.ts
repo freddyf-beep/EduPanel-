@@ -57,12 +57,26 @@ function extraerMeta(lineas: string[]): MetaRubrica {
     if (!linea) continue
 
     if (/Asignatura:/i.test(linea)) {
-      const asignatura = linea.match(/Asignatura:\s*(.+?)(?=\s+Nivel:|$)/i)
-      const nivel = linea.match(/Nivel:\s*(.+?)(?=\s+Unidad:|$)/i)
-      const unidad = linea.match(/Unidad:\s*(.+)$/i)
-      if (asignatura) meta.asignatura = asignatura[1].trim()
-      if (nivel) meta.nivel = nivel[1].trim()
-      if (unidad) meta.unidad = unidad[1].trim()
+      if (linea.includes("|")) {
+        // Formato con separador "|": "Asignatura: Música | Nivel: 3° Básico | Tema: ..."
+        const parts = linea.split("|").map(p => p.trim())
+        for (const part of parts) {
+          if (/^Asignatura:\s*/i.test(part))
+            meta.asignatura = part.replace(/^Asignatura:\s*/i, "").trim()
+          else if (/^Nivel:\s*/i.test(part))
+            meta.nivel = part.replace(/^Nivel:\s*/i, "").trim()
+          else if (/^(?:Unidad|Tema):\s*/i.test(part))
+            meta.unidad = part.replace(/^(?:Unidad|Tema):\s*/i, "").trim()
+        }
+      } else {
+        // Formato con espacios: "Asignatura: X   Nivel: Y   Unidad: Z"
+        const asignatura = linea.match(/Asignatura:\s*(.+?)(?=\s+Nivel:|$)/i)
+        const nivel      = linea.match(/Nivel:\s*(.+?)(?=\s+(?:Unidad|Tema):|$)/i)
+        const unidad     = linea.match(/(?:Unidad|Tema):\s*(.+)$/i)
+        if (asignatura) meta.asignatura = asignatura[1].trim()
+        if (nivel)      meta.nivel      = nivel[1].trim()
+        if (unidad)     meta.unidad     = unidad[1].trim()
+      }
       continue
     }
 
@@ -77,8 +91,8 @@ function extraerMeta(lineas: string[]): MetaRubrica {
   }
 
   if (!meta.nombre && meta.asignatura && meta.nivel) {
-    const unidadLabel = meta.unidad ? `${meta.unidad} — ` : ""
-    meta.nombre = `Rúbrica ${unidadLabel}${meta.asignatura} ${meta.nivel}`.trim()
+    const unidadLabel = meta.unidad ? ` — ${meta.unidad}` : ""
+    meta.nombre = `Rúbrica ${meta.asignatura} ${meta.nivel}${unidadLabel}`.trim()
   }
 
   return meta

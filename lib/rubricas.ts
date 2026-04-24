@@ -3,7 +3,11 @@ import {
   doc, getDoc, getDocs, setDoc, deleteDoc,
   collection, query, orderBy, serverTimestamp
 } from "firebase/firestore"
-import { getUnidadCompleta, getUnidades } from "@/lib/curriculo"
+import {
+  getUnidadCompleta, getUnidades,
+  initOAs, mergeOAs, cargarVerUnidad,
+  type OAEditado,
+} from "@/lib/curriculo"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
 
 // ─── Helpers Firestore ────────────────────────────────────────────────────────
@@ -78,12 +82,16 @@ export interface RubricaTemplate {
   unidadNombre?: string
   usaPonderaciones?: boolean   // cuando true, cada criterio puede tener ponderacion != 1
   metadatosCurriculares?: RubricaMetadatosCurriculares
+  oas?: OAEditado[]            // OAs editables estilo /planificaciones
   gruposConfig?: RubricaGrupoConfig[]
   partes: RubricaParte[]
   puntajeMaximo: number
   createdAt?: unknown
   updatedAt?: unknown
 }
+
+// Re-export para que componentes puedan importar desde un solo lugar
+export type { OAEditado } from "@/lib/curriculo"
 
 export interface EstudianteEvaluacion {
   estudianteId: string
@@ -236,6 +244,37 @@ export async function resolverMetadatosCurricularesRubrica(
     unidadNombre: unidadCompleta.nombre_unidad || rubrica.unidadNombre,
     resolvedFromDatabase: true,
   }
+}
+
+// Carga los OAs de una rúbrica desde el currículum y los merge con los edits guardados en ver_unidad
+export async function cargarOAsParaRubrica(
+  asignatura: string,
+  curso: string,
+  unidadId: string,
+  oasExistentes?: OAEditado[]
+): Promise<OAEditado[]> {
+  const nivel = getCurriculoNivel(curso)
+  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
+  if (!unidad) return oasExistentes ?? []
+
+  // OAs base del ministerio
+  const base = initOAs(unidad, asignatura)
+
+  // OAs guardados en /ver-unidad (si el profe ya trabajó esa unidad)
+  let verUnidadOas: OAEditado[] = []
+  try {
+    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
+    verUnidadOas = guardada?.oas ?? []
+  } catch {
+    // si no existe ver_unidad, no pasa nada
+  }
+
+  // Merge: currículum base ← ver_unidad ← edits propios de la rúbrica
+  const mergedConVerUnidad = mergeOAs(base, verUnidadOas)
+  if (oasExistentes && oasExistentes.length > 0) {
+    return mergeOAs(mergedConVerUnidad, oasExistentes)
+  }
+  return mergedConVerUnidad
 }
 
 export function gruposConfigPorDefecto(count = 4): RubricaGrupoConfig[] {

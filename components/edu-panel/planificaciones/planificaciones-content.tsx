@@ -348,7 +348,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
             for (const oa of verUnidad.oas) {
               if (!oa.seleccionado) continue
               const label = `${oa.codigo || ""}: ${oa.descripcion || ""}`.trim()
-              if (oa.tipo === "basal" || !oa.tipo) oasBasales.push(label)
+              if ((oa.tipo as string) === "basal" || !oa.tipo) oasBasales.push(label)
               else oasComplementarios.push(label)
             }
           }

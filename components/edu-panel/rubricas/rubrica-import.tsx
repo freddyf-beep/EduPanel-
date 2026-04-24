@@ -29,12 +29,15 @@ import {
   calcularPuntajeMaximo,
   metadatosCurricularesVacios,
   resolverMetadatosCurricularesRubrica,
+  cargarOAsParaRubrica,
   parseCurricularRefsInput,
   type RubricaTemplate,
   type RubricaParte,
   type CriterioRubrica,
   type RubricaCurriculoResolucion,
+  type OAEditado,
 } from "@/lib/rubricas"
+import { RubricaOAEditor } from "./rubrica-oa-editor"
 
 interface Props {
   mode?: "blank" | "import"
@@ -47,40 +50,14 @@ const NIVEL_LABELS = [
   { key: "porLograr", label: "Por lograr", puntos: 1, color: "text-red-600" },
 ] as const
 
-const CRITERIOS_GRID_TEMPLATE = "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 56px"
-const CRITERIOS_MIN_WIDTH = "1320px"
+const CRITERIOS_GRID_TEMPLATE = "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 100px"
+const CRITERIOS_MIN_WIDTH = "1360px"
 
 function textListsEqual(a: string[], b: string[]) {
   if (a.length !== b.length) return false
   return a.every((item, index) => item === b[index])
 }
 
-function MetadataList({
-  title,
-  items,
-  emptyMessage,
-}: {
-  title: string
-  items: string[]
-  emptyMessage: string
-}) {
-  return (
-    <div className="space-y-2 rounded-[12px] border border-border bg-background/80 p-4">
-      <div className="text-[12px] font-semibold text-muted-foreground">{title}</div>
-      {items.length === 0 ? (
-        <p className="text-[12px] text-muted-foreground">{emptyMessage}</p>
-      ) : (
-        <div className="max-h-64 space-y-2 overflow-y-auto pr-1">
-          {items.map((item, index) => (
-            <p key={`${title}-${index}`} className="text-[12px] leading-5 text-foreground whitespace-pre-wrap">
-              {item}
-            </p>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
 
 export function RubricaImport({ mode = "import" }: Props) {
   const router = useRouter()
@@ -99,10 +76,12 @@ export function RubricaImport({ mode = "import" }: Props) {
   const [partesExpandidas, setPartesExpandidas] = useState<Set<string>>(new Set())
   const [curriculoResolucion, setCurriculoResolucion] = useState<RubricaCurriculoResolucion | null>(null)
   const [curriculoCargando, setCurriculoCargando] = useState(false)
+  const [oasCargando, setOasCargando] = useState(false)
   const [oaInputs, setOaInputs] = useState<Record<string, string>>({})
   const fileInputRef = useRef<HTMLInputElement>(null)
   const ignoreFirstSave = useRef(true)
   const curriculoRequestRef = useRef(0)
+  const oasRequestRef = useRef(0)
   // Selector de unidad curricular
   const [nivelMapping, setNivelMapping] = useState<NivelMapping>({})
   const [unidadesDisponibles, setUnidadesDisponibles] = useState<Unidad[]>([])
@@ -163,9 +142,29 @@ export function RubricaImport({ mode = "import" }: Props) {
     cargarNivelMapping().then(setNivelMapping).catch(console.error)
   }, [])
 
+  // Busca el nivel curricular haciendo match fuzzy cuando el nombre del curso es largo
+  const resolverNivelDeCurso = useCallback((cursoNombre: string): string | null => {
+    if (!cursoNombre || !nivelMapping) return null
+    // 1. Exacto
+    if (nivelMapping[cursoNombre]) return nivelMapping[cursoNombre]
+    // 2. Prefijo: "3° Básico | Tema: ..." → buscar key "3° Básico" o "3°" en el mapping
+    const keyPrefijo = Object.keys(nivelMapping).find(k =>
+      cursoNombre.startsWith(k) || k.startsWith(cursoNombre)
+    )
+    if (keyPrefijo) return nivelMapping[keyPrefijo]
+    // 3. Mismo número de grado
+    const grado = cursoNombre.match(/^(\d+)\s*[°º]/)?.[1]
+    if (grado) {
+      const keyGrado = Object.keys(nivelMapping).find(k => k.match(/^(\d+)\s*[°º]/)?.[1] === grado)
+      if (keyGrado) return nivelMapping[keyGrado]
+    }
+    return null
+  }, [nivelMapping])
+
   // Cargar unidades del currículum cuando cambia el curso o la asignatura
   useEffect(() => {
-    const nivel = rubrica ? nivelMapping[rubrica.curso] : nivelMapping[curso]
+    const cursoActual = rubrica?.curso ?? curso
+    const nivel = resolverNivelDeCurso(cursoActual)
     if (!nivel || !asignatura) {
       setUnidadesDisponibles([])
       return
@@ -175,7 +174,26 @@ export function RubricaImport({ mode = "import" }: Props) {
       .then(setUnidadesDisponibles)
       .catch(() => setUnidadesDisponibles([]))
       .finally(() => setCargandoUnidades(false))
-  }, [rubrica?.curso, curso, asignatura, nivelMapping])
+  }, [rubrica?.curso, curso, asignatura, resolverNivelDeCurso])
+
+  // Cargar OAs interactivos cuando cambia la unidad seleccionada
+  useEffect(() => {
+    if (!rubrica?.unidadId || !asignatura) return
+    const uid  = rubrica.unidadId
+    const reqId = ++oasRequestRef.current
+    setOasCargando(true)
+    cargarOAsParaRubrica(asignatura, rubrica.curso, uid, rubrica.oas)
+      .then(oas => {
+        if (oasRequestRef.current !== reqId) return
+        setRubrica(prev => {
+          if (!prev || prev.unidadId !== uid) return prev
+          return { ...prev, oas }
+        })
+      })
+      .catch(console.error)
+      .finally(() => { if (oasRequestRef.current === reqId) setOasCargando(false) })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rubrica?.unidadId, asignatura])
 
   useEffect(() => {
     if (!curso) return
@@ -280,10 +298,30 @@ export function RubricaImport({ mode = "import" }: Props) {
       if (!res.ok) throw new Error(await res.text())
 
       const data = await res.json()
+
+      // Intentar resolver el curso extraído del Word contra los cursos reales del schedule
+      const cursoParsed: string = data.curso || ""
+      const cursoResuelto = (() => {
+        if (!cursoParsed) return rubrica.curso
+        // 1. Coincidencia exacta
+        if (cursos.includes(cursoParsed)) return cursoParsed
+        // 2. Prefijo: "3° Básico" → "3° Básico | Tema: ..."  o viceversa
+        const prefijo = cursos.find(c => c.startsWith(cursoParsed) || cursoParsed.startsWith(c))
+        if (prefijo) return prefijo
+        // 3. Mismo número de grado: "3° Básico" → "3°"
+        const grado = cursoParsed.match(/^(\d+)\s*[°º]/)?.[1]
+        if (grado) {
+          const porGrado = cursos.find(c => c.match(/^(\d+)\s*[°º]/)?.[1] === grado)
+          if (porGrado) return porGrado
+        }
+        // 4. Fallback: mantener el curso actual seleccionado
+        return rubrica.curso
+      })()
+
       const rubricaBase: RubricaTemplate = {
         ...rubrica,
         nombre: data.nombre || rubrica.nombre,
-        curso: data.curso || rubrica.curso,
+        curso: cursoResuelto,
         unidadNombre: data.unidadNombre || rubrica.unidadNombre,
         metadatosCurriculares: data.metadatosCurriculares || rubrica.metadatosCurriculares,
         partes: data.partes?.length ? data.partes : rubrica.partes,
@@ -398,6 +436,20 @@ export function RubricaImport({ mode = "import" }: Props) {
     })
   }
 
+  const moverCriterio = (parteOrigenId: string, criterioId: string, parteDestinoId: string) => {
+    updateRubrica(current => {
+      const origen = current.partes.find(p => p.id === parteOrigenId)
+      const criterio = origen?.criterios.find(c => c.id === criterioId)
+      if (!criterio || !origen) return current
+      const partes = current.partes.map(p => {
+        if (p.id === parteOrigenId) return { ...p, criterios: p.criterios.filter(c => c.id !== criterioId) }
+        if (p.id === parteDestinoId) return { ...p, criterios: [...p.criterios, criterio] }
+        return p
+      })
+      return { ...current, partes, puntajeMaximo: calcularPuntajeMaximo(partes) }
+    })
+  }
+
   const updateCriterio = (
     parteId: string,
     criterioId: string,
@@ -453,13 +505,6 @@ export function RubricaImport({ mode = "import" }: Props) {
       </div>
     )
   }
-
-  const metadatos = curriculoResolucion?.metadatosCurriculares ?? rubrica.metadatosCurriculares ?? metadatosCurricularesVacios()
-  const fuenteCurricular = curriculoCargando
-    ? "Buscando OA e indicadores en la base curricular..."
-    : curriculoResolucion?.resolvedFromDatabase
-      ? "Datos sincronizados desde la base curricular."
-      : "No hubo coincidencia exacta en la base; se muestra el contenido importado del Word."
 
   return (
     <div className="mx-auto w-full max-w-[96rem] space-y-6">
@@ -544,6 +589,7 @@ export function RubricaImport({ mode = "import" }: Props) {
                     ...current,
                     unidadNombre: e.target.value || undefined,
                     unidadId: unidadSel?.id || undefined,
+                    oas: undefined,  // limpiar OAs para recargar los de la nueva unidad
                   }))
                 }}
                 className="w-full rounded-[10px] border border-border bg-background px-3 py-2 text-[13px] text-foreground"
@@ -615,45 +661,28 @@ export function RubricaImport({ mode = "import" }: Props) {
       </div>
 
       <div className="space-y-4 rounded-[14px] border border-border bg-card p-5">
-        <div className="space-y-2">
+        <div className="flex items-center justify-between">
           <div>
             <h2 className="text-[14px] font-bold text-foreground">Objetivos e indicadores</h2>
-            <p className="mt-1 text-[12px] text-muted-foreground">{fuenteCurricular}</p>
+            <p className="mt-0.5 text-[12px] text-muted-foreground">
+              {oasCargando
+                ? "Cargando OA desde la base curricular..."
+                : rubrica.unidadId
+                  ? "Haz clic en los puntos para seleccionar/deseleccionar OA e indicadores."
+                  : "Selecciona una unidad para cargar los OA automáticamente, o agrega uno propio."}
+            </p>
           </div>
-
-          <div className="rounded-[10px] bg-muted/30 px-3 py-2 text-[12px] text-muted-foreground">
-            {curriculoCargando ? (
-              <span className="inline-flex items-center gap-2">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Sincronizando con la base curricular...
-              </span>
-            ) : (
-              <span>
-                {curriculoResolucion?.resolvedFromDatabase
-                  ? "Estos datos vienen de la base curricular asociada a la unidad."
-                  : "Quedan visibles como referencia, pero ya no hace falta editarlos manualmente aqui."}
-              </span>
-            )}
-          </div>
+          {curriculoCargando && (
+            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+          )}
         </div>
 
-        <div className="grid gap-3 xl:grid-cols-3">
-          <MetadataList
-            title="Objetivos de aprendizaje"
-            items={metadatos.objetivos}
-            emptyMessage="No hay objetivos cargados para esta rubrica."
-          />
-          <MetadataList
-            title="Indicadores"
-            items={metadatos.indicadores}
-            emptyMessage="No hay indicadores cargados para esta rubrica."
-          />
-          <MetadataList
-            title="Objetivos transversales"
-            items={metadatos.objetivosTransversales}
-            emptyMessage="No hay objetivos transversales cargados para esta rubrica."
-          />
-        </div>
+        <RubricaOAEditor
+          oas={rubrica.oas ?? []}
+          onChange={(oas: OAEditado[]) => updateRubrica(current => ({ ...current, oas }))}
+          asignatura={rubrica.asignatura || asignatura}
+          cargando={oasCargando}
+        />
       </div>
 
       {mode === "import" && !rubricaIdParam && (
@@ -756,9 +785,9 @@ export function RubricaImport({ mode = "import" }: Props) {
               <div className="space-y-3 p-4">
                 {(() => {
                   const gridTemplate = rubrica.usaPonderaciones
-                    ? "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 80px 56px"
+                    ? "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 80px 100px"
                     : CRITERIOS_GRID_TEMPLATE
-                  const minWidth = rubrica.usaPonderaciones ? "1420px" : CRITERIOS_MIN_WIDTH
+                  const minWidth = rubrica.usaPonderaciones ? "1460px" : CRITERIOS_MIN_WIDTH
                   return (
                 <>
                 <div className="overflow-x-auto pb-2">
@@ -775,7 +804,7 @@ export function RubricaImport({ mode = "import" }: Props) {
                     {rubrica.usaPonderaciones && (
                       <span className="text-purple-600">Pond.</span>
                     )}
-                    <span className="text-right">Accion</span>
+                    <span className="text-right">Mover / Borrar</span>
                   </div>
                 </div>
 
@@ -843,11 +872,30 @@ export function RubricaImport({ mode = "import" }: Props) {
                         </div>
                       )}
 
-                      <div className="flex items-start justify-center pt-1">
+                      <div className="flex flex-col items-center gap-1.5 pt-1">
+                        {rubrica.partes.length > 1 && (
+                          <select
+                            value=""
+                            onChange={e => {
+                              if (e.target.value) moverCriterio(parte.id, criterio.id, e.target.value)
+                            }}
+                            title="Mover criterio a otra parte"
+                            className="w-full rounded-[6px] border border-border bg-background px-1 py-1 text-[10px] text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          >
+                            <option value="">Mover a...</option>
+                            {rubrica.partes
+                              .filter(p => p.id !== parte.id)
+                              .map((p, pi) => (
+                                <option key={p.id} value={p.id}>
+                                  {p.nombre || `Parte ${pi + 1}`}
+                                </option>
+                              ))}
+                          </select>
+                        )}
                         <button
                           onClick={() => eliminarCriterio(parte.id, criterio.id)}
                           title="Eliminar criterio"
-                          className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-red-200 bg-red-50 text-red-500 transition-colors hover:bg-red-100"
+                          className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-red-200 bg-red-50 text-red-500 transition-colors hover:bg-red-100"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

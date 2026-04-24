@@ -1,11 +1,36 @@
 import { NextRequest, NextResponse } from "next/server"
+import { readFileSync, existsSync } from "fs"
+import { join } from "path"
 import {
   Document, Paragraph, TextRun, Table, TableRow, TableCell,
   AlignmentType, WidthType, BorderStyle, Packer,
-  convertInchesToTwip, HeadingLevel,
+  convertInchesToTwip, HeadingLevel, ImageRun,
 } from "docx"
 import type { RubricaTemplate, EvaluacionRubrica, EstudianteEvaluacion } from "@/lib/rubricas"
 import { calcularPuntajeEstudiante, calcularNota as libCalcNota } from "@/lib/rubricas"
+
+// ─── Logo escuela ─────────────────────────────────────────────────────────────
+function cargarLogo(logoBase64?: string): Buffer | null {
+  // Preferir el logo del perfil del usuario (base64 desde Firestore)
+  if (logoBase64) {
+    try {
+      const base64Data = logoBase64.includes(",") ? logoBase64.split(",")[1] : logoBase64
+      return Buffer.from(base64Data, "base64")
+    } catch { /* silencioso */ }
+  }
+  // Fallback: logo del filesystem
+  try {
+    const logoPath = join(process.cwd(), "public", "logo-escuela.jpg")
+    if (existsSync(logoPath)) return readFileSync(logoPath)
+  } catch { /* silencioso */ }
+  return null
+}
+
+// Detecta si un data URL es PNG o JPEG
+function detectLogoType(logoBase64?: string): "jpg" | "png" {
+  if (logoBase64?.includes("image/png")) return "png"
+  return "jpg"
+}
 
 function calcNota(puntaje: number, max: number): number {
   return libCalcNota(puntaje, max)
@@ -155,10 +180,58 @@ function seccionParte(
 
 // ─── Generar documento por estudiante ─────────────────────────────────────────
 function bloquesCurriculares(rubrica: RubricaTemplate): Paragraph[] {
+  const bloques: Paragraph[] = []
+
+  // ── Usar rubrica.oas si existe (lista editable por el profe) ──────────────
+  if (rubrica.oas && rubrica.oas.length > 0) {
+    const oasSelec = rubrica.oas.filter(o => o.seleccionado)
+    const oasRegulares = oasSelec.filter(o => o.tipo !== "oat")
+    const oasTransversales = oasSelec.filter(o => o.tipo === "oat")
+
+    if (oasRegulares.length > 0) {
+      bloques.push(new Paragraph({
+        children: [new TextRun({ text: "Objetivos de Aprendizaje (OA) e Indicadores de Evaluación:", bold: true, size: 20, font: "Calibri" })],
+      }))
+      for (const oa of oasRegulares) {
+        const etiqueta = oa.esPropio ? "OA Propio" : `OA ${oa.numero}`
+        bloques.push(new Paragraph({
+          children: [
+            new TextRun({ text: `${etiqueta}: `, bold: true, size: 18, font: "Calibri" }),
+            new TextRun({ text: oa.descripcion, size: 18, font: "Calibri" }),
+          ],
+        }))
+        const indsSelec = oa.indicadores.filter(i => i.seleccionado)
+        if (indsSelec.length > 0) {
+          bloques.push(new Paragraph({
+            children: [new TextRun({ text: `Indicadores: ${indsSelec.map(i => i.texto).join(" ")  }`, size: 17, font: "Calibri", italics: true })],
+          }))
+        }
+      }
+      bloques.push(new Paragraph({ text: "" }))
+    }
+
+    if (oasTransversales.length > 0) {
+      bloques.push(new Paragraph({
+        children: [new TextRun({ text: "Objetivos de Aprendizaje de Actitud (OAA) Transversales evaluados:", bold: true, size: 20, font: "Calibri" })],
+      }))
+      for (const oa of oasTransversales) {
+        const etiqueta = oa.esPropio ? "OAA" : `OAA ${oa.numero}`
+        bloques.push(new Paragraph({
+          children: [
+            new TextRun({ text: `${etiqueta}: `, bold: true, size: 18, font: "Calibri" }),
+            new TextRun({ text: oa.descripcion, size: 18, font: "Calibri" }),
+          ],
+        }))
+      }
+      bloques.push(new Paragraph({ text: "" }))
+    }
+
+    return bloques
+  }
+
+  // ── Fallback: metadatosCurriculares (sistema anterior) ───────────────────
   const metadatos = rubrica.metadatosCurriculares
   if (!metadatos) return []
-
-  const bloques: Paragraph[] = []
 
   const pushSection = (titulo: string, values: string[]) => {
     if (!values?.length) return
@@ -168,11 +241,9 @@ function bloquesCurriculares(rubrica: RubricaTemplate): Paragraph[] {
       })
     )
     values.forEach(value => {
-      bloques.push(
-        new Paragraph({
-          children: [new TextRun({ text: `• ${value}`, size: 18, font: "Calibri" })],
-        })
-      )
+      bloques.push(new Paragraph({
+        children: [new TextRun({ text: `• ${value}`, size: 18, font: "Calibri" })],
+      }))
     })
     bloques.push(new Paragraph({ text: "" }))
   }
@@ -184,33 +255,104 @@ function bloquesCurriculares(rubrica: RubricaTemplate): Paragraph[] {
   return bloques
 }
 
+function cabeceraEscuela(opts: {
+  rubrica: RubricaTemplate
+  alumnoNombre?: string
+  grupoNombre?: string
+  profesorNombre?: string
+  colegio?: string
+  logoBase64?: string
+}): (Paragraph | Table)[] {
+  const { rubrica, alumnoNombre, grupoNombre, profesorNombre = "", colegio = "", logoBase64 } = opts
+  const logo = cargarLogo(logoBase64)
+  const logoType = detectLogoType(logoBase64)
+  const elementos: (Paragraph | Table)[] = []
+
+  // Logo
+  if (logo) {
+    elementos.push(
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [
+          new ImageRun({
+            data: logo,
+            transformation: { width: 68, height: 94 },
+            type: logoType,
+          }),
+        ],
+      })
+    )
+  }
+
+  // Título y escuela
+  elementos.push(
+    new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({ text: "RÚBRICA DE EVALUACIÓN", bold: true, size: 32, font: "Calibri" })],
+    }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({ text: colegio, bold: true, size: 24, font: "Calibri" })],
+    })
+  )
+
+  // Profesor + metadata
+  const metaLinea1 = profesorNombre ? `Profesor/a: ${profesorNombre}` : ""
+  const metaLinea2 = [
+    `Asignatura: ${rubrica.asignatura}`,
+    `Nivel: ${rubrica.curso}`,
+    rubrica.unidadNombre ? `Unidad: ${rubrica.unidadNombre}` : "",
+  ].filter(Boolean).join("   ")
+
+  if (metaLinea1) {
+    elementos.push(
+      new Paragraph({
+        children: [new TextRun({ text: metaLinea1, size: 20, font: "Calibri" })],
+      })
+    )
+  }
+  elementos.push(
+    new Paragraph({
+      children: [new TextRun({ text: metaLinea2, size: 20, font: "Calibri" })],
+    })
+  )
+
+  // Grupo y alumno (si aplica)
+  if (alumnoNombre) {
+    const grupoTexto = grupoNombre ? `${grupoNombre}   ` : ""
+    elementos.push(
+      new Paragraph({
+        children: [new TextRun({
+          text: `${grupoTexto}Nombre: ${alumnoNombre}`,
+          bold: true, size: 22, font: "Calibri",
+        })],
+      })
+    )
+  }
+
+  elementos.push(new Paragraph({ text: "" }))
+  return elementos
+}
+
 function generarDocEstudiante(
   rubrica: RubricaTemplate,
   est: EstudianteEvaluacion,
-  grupoNombre: string
+  grupoNombre: string,
+  profesorNombre?: string,
+  colegio?: string,
+  logoBase64?: string
 ): (Paragraph | Table)[] {
   const puntaje = calcPuntaje(est.puntajes, rubrica.partes)
   const nota = calcNota(puntaje, rubrica.puntajeMaximo)
 
-  const elementos: (Paragraph | Table)[] = [
-    new Paragraph({
-      heading: HeadingLevel.HEADING_1,
-      children: [new TextRun({ text: "RÚBRICA DE EVALUACIÓN", bold: true, size: 32, font: "Calibri" })],
-    }),
-    new Paragraph({
-      children: [new TextRun({
-        text: `Asignatura: ${rubrica.asignatura}   Curso: ${rubrica.curso}`,
-        size: 20, font: "Calibri",
-      })],
-    }),
-    new Paragraph({
-      children: [new TextRun({
-        text: `${grupoNombre}   Nombre: ${est.nombre}${est.hasPie ? "  [PIE]" : ""}`,
-        bold: true, size: 22, font: "Calibri",
-      })],
-    }),
-    new Paragraph({ text: "" }),
-  ]
+  const elementos: (Paragraph | Table)[] = cabeceraEscuela({
+    rubrica,
+    alumnoNombre: `${est.nombre}${est.hasPie ? "  [PIE]" : ""}`,
+    grupoNombre,
+    profesorNombre,
+    colegio,
+    logoBase64,
+  })
 
   elementos.push(...bloquesCurriculares(rubrica))
 
@@ -249,23 +391,54 @@ function generarDocEstudiante(
 // ─── POST /api/export-rubrica ─────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
-    const { rubrica, evaluacion }: { rubrica: RubricaTemplate; evaluacion: EvaluacionRubrica } = await req.json()
+    const body: {
+      rubrica: RubricaTemplate
+      evaluacion: EvaluacionRubrica
+      modo?: "grupo" | "alumno"
+      estudianteId?: string
+      profesorNombre?: string
+      colegio?: string
+      logoBase64?: string
+    } = await req.json()
+    const { rubrica, evaluacion, modo = "grupo", estudianteId, profesorNombre, colegio, logoBase64 } = body
 
+    const pageMargin = {
+      top: convertInchesToTwip(0.8),
+      bottom: convertInchesToTwip(0.8),
+      left: convertInchesToTwip(0.8),
+      right: convertInchesToTwip(0.8),
+    }
+
+    // ── Modo "por alumno": generar doc individual ────────────────────────────
+    if (modo === "alumno" && estudianteId) {
+      let alumnoEst: EstudianteEvaluacion | undefined
+      let grupoNombre = ""
+      for (const grupo of evaluacion.grupos) {
+        const found = grupo.estudiantes.find(e => e.estudianteId === estudianteId)
+        if (found) { alumnoEst = found; grupoNombre = grupo.nombre; break }
+      }
+      if (!alumnoEst) {
+        return NextResponse.json({ error: "Alumno no encontrado" }, { status: 404 })
+      }
+      const elements = generarDocEstudiante(rubrica, alumnoEst, grupoNombre, profesorNombre, colegio, logoBase64)
+      const doc = new Document({
+        sections: [{ properties: { page: { margin: pageMargin } }, children: elements }],
+      })
+      const buf = await Packer.toBuffer(doc)
+      const filename = `rubrica_${alumnoEst.nombre.replace(/\s+/g, "_")}.docx`
+      return new NextResponse(buf, {
+        headers: {
+          "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "Content-Disposition": `attachment; filename="${filename}"`,
+        },
+      })
+    }
+
+    // ── Modo "por grupo" (default) ───────────────────────────────────────────
     const secciones: (Paragraph | Table)[] = [
-      new Paragraph({
-        heading: HeadingLevel.HEADING_1,
-        children: [new TextRun({ text: rubrica.nombre, bold: true, size: 36, font: "Calibri" })],
-      }),
-      new Paragraph({
-        children: [new TextRun({
-          text: `${rubrica.asignatura} · ${rubrica.curso} · ${rubrica.puntajeMaximo} pts máx`,
-          size: 22, font: "Calibri", italics: true,
-        })],
-      }),
-      new Paragraph({ text: "" }),
+      ...cabeceraEscuela({ rubrica, profesorNombre, colegio, logoBase64 }),
+      ...bloquesCurriculares(rubrica),
     ]
-
-    secciones.push(...bloquesCurriculares(rubrica))
 
     // Resumen por grupo
     for (const grupo of evaluacion.grupos) {
@@ -273,7 +446,6 @@ export async function POST(req: NextRequest) {
 
       secciones.push(
         new Paragraph({
-          heading: HeadingLevel.HEADING_2,
           children: [new TextRun({ text: grupo.nombre, bold: true, size: 28, font: "Calibri" })],
         }),
         new Paragraph({ text: "" }),
@@ -310,37 +482,25 @@ export async function POST(req: NextRequest) {
 
       secciones.push(tablaResumen, new Paragraph({ text: "" }))
 
-      // Detalle individual
+      // Detalle individual (una rúbrica completa por alumno)
       for (const est of grupo.estudiantes) {
-        secciones.push(...generarDocEstudiante(rubrica, est, grupo.nombre))
+        secciones.push(...generarDocEstudiante(rubrica, est, grupo.nombre, profesorNombre, colegio, logoBase64))
+        // Separador visual entre alumnos
         secciones.push(new Paragraph({
-          pageBreakBefore: false,
           children: [new TextRun({ text: "", break: 1 })],
         }))
       }
     }
 
     const doc = new Document({
-      sections: [{
-        properties: {
-          page: {
-            margin: {
-              top: convertInchesToTwip(0.8),
-              bottom: convertInchesToTwip(0.8),
-              left: convertInchesToTwip(0.8),
-              right: convertInchesToTwip(0.8),
-            },
-          },
-        },
-        children: secciones,
-      }],
+      sections: [{ properties: { page: { margin: pageMargin } }, children: secciones }],
     })
 
     const buf = await Packer.toBuffer(doc)
     return new NextResponse(buf, {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "Content-Disposition": `attachment; filename="rubrica_${rubrica.nombre}.docx"`,
+        "Content-Disposition": `attachment; filename="rubrica_${rubrica.nombre}_grupos.docx"`,
       },
     })
   } catch (err) {

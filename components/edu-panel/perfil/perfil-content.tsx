@@ -2,10 +2,10 @@
 
 import { useAuth } from "@/components/auth/auth-context"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { cargarPerfil, guardarPerfil, PerfilUsuario } from "@/lib/perfil"
+import { cargarPerfil, guardarPerfil, PerfilUsuario, cargarInfoColegio, guardarInfoColegio, InfoColegio } from "@/lib/perfil"
 import { cargarHorarioSemanal, guardarHorarioSemanal, ClaseHorario } from "@/lib/horario"
 import { cargarEstudiantes, compareEstudiantes, guardarEstudiantes, Estudiante } from "@/lib/estudiantes"
-import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked, AlertCircle, Upload } from "lucide-react"
+import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked, AlertCircle, Upload, School, X } from "lucide-react"
 import { cargarNivelMapping, guardarNivelMapping, NIVELES_CURRICULARES, type NivelMapping } from "@/lib/nivel-mapping"
 import { cn } from "@/lib/utils"
 
@@ -184,7 +184,7 @@ function getNextStudentOrder(estudiantes: Estudiante[]): number {
 
 export function PerfilContent() {
   const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState<"datos" | "horario" | "estudiantes" | "niveles">("datos")
+  const [activeTab, setActiveTab] = useState<"datos" | "horario" | "estudiantes" | "niveles" | "colegio">("datos")
   const [loading, setLoading] = useState(true)
 
   // Perfil state
@@ -193,6 +193,12 @@ export function PerfilContent() {
   const [perfil, setPerfil] = useState<PerfilUsuario>({
     tipoProfesor: "", especialidad: "", estudios: "", biografia: ""
   })
+
+  // Colegio state
+  const [infoColegio, setInfoColegio] = useState<InfoColegio>({ nombre: "" })
+  const [savingColegio, setSavingColegio] = useState(false)
+  const [savedColegio, setSavedColegio] = useState(false)
+  const logoInputRef = useRef<HTMLInputElement | null>(null)
 
   // Horario state
   const [savingHorario, setSavingHorario] = useState(false)
@@ -258,11 +264,12 @@ export function PerfilContent() {
   }
 
   useEffect(() => {
-    Promise.all([cargarPerfil(), cargarHorarioSemanal(), cargarNivelMapping()])
-      .then(([pData, hData, mapping]) => {
+    Promise.all([cargarPerfil(), cargarHorarioSemanal(), cargarNivelMapping(), cargarInfoColegio()])
+      .then(([pData, hData, mapping, colegioData]) => {
         if (pData) setPerfil(pData)
         if (hData) setHorario(hData)
         if (mapping) setNivelMapping(mapping)
+        if (colegioData) setInfoColegio(colegioData)
       })
       .catch(console.error)
       .finally(() => setLoading(false))
@@ -350,6 +357,44 @@ export function PerfilContent() {
       setEditingUid(null)
       setNuevoBloque({ ...nuevoBloque, resumen: "" })
     }
+  }
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const maxMB = 1
+    if (file.size > maxMB * 1024 * 1024) {
+      alert(`El logo no debe superar ${maxMB} MB`)
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = ev => {
+      // Comprimir con canvas a max 300×300 para no saturar Firestore
+      const img = new Image()
+      img.onload = () => {
+        const maxPx = 300
+        const scale = Math.min(1, maxPx / Math.max(img.width, img.height))
+        const canvas = document.createElement("canvas")
+        canvas.width = Math.round(img.width * scale)
+        canvas.height = Math.round(img.height * scale)
+        canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height)
+        const base64 = canvas.toDataURL("image/jpeg", 0.85)
+        setInfoColegio(prev => ({ ...prev, logoBase64: base64 }))
+      }
+      img.src = ev.target?.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleSaveColegio = async () => {
+    setSavingColegio(true)
+    setSavedColegio(false)
+    try {
+      await guardarInfoColegio(infoColegio)
+      setSavedColegio(true)
+      setTimeout(() => setSavedColegio(false), 3000)
+    } catch (err) { console.error(err) }
+    finally { setSavingColegio(false) }
   }
 
   const handleSaveHorario = async () => {
@@ -561,6 +606,13 @@ export function PerfilContent() {
             activeTab === "niveles" ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:bg-background")}
         >
           <BookMarked className="w-4 h-4" /> Niveles Curriculares
+        </button>
+        <button
+          onClick={() => setActiveTab("colegio")}
+          className={cn("flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-bold whitespace-nowrap transition-colors",
+            activeTab === "colegio" ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:bg-background")}
+        >
+          <School className="w-4 h-4" /> Mi Colegio
         </button>
       </div>
 
@@ -1013,6 +1065,97 @@ export function PerfilContent() {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Tab: Mi Colegio */}
+          {activeTab === "colegio" && (
+            <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6">
+              <div>
+                <h3 className="text-[16px] font-extrabold mb-1 flex items-center gap-2">
+                  <School className="w-5 h-5 text-primary" /> Información del Colegio
+                </h3>
+                <p className="text-[13px] text-muted-foreground">
+                  Estos datos aparecen en el encabezado de los Word exportados desde Rúbricas.
+                </p>
+              </div>
+
+              {/* Logo */}
+              <div className="space-y-2">
+                <label className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
+                  Logo del colegio
+                </label>
+                <div className="flex items-start gap-4">
+                  {infoColegio.logoBase64 ? (
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={infoColegio.logoBase64}
+                        alt="Logo colegio"
+                        className="h-24 w-auto rounded-[10px] border border-border object-contain bg-muted/20 p-1"
+                      />
+                      <button
+                        onClick={() => setInfoColegio(prev => ({ ...prev, logoBase64: undefined }))}
+                        title="Quitar logo"
+                        className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-[10px] border-2 border-dashed border-border bg-muted/20 text-muted-foreground">
+                      <School className="h-8 w-8 opacity-30" />
+                    </div>
+                  )}
+                  <div className="space-y-2">
+                    <input
+                      ref={logoInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleLogoUpload}
+                    />
+                    <button
+                      onClick={() => logoInputRef.current?.click()}
+                      className="flex items-center gap-1.5 rounded-[10px] border border-border px-4 py-2 text-[13px] font-medium hover:bg-muted/60 transition-colors"
+                    >
+                      <Upload className="h-4 w-4" />
+                      {infoColegio.logoBase64 ? "Cambiar logo" : "Subir logo"}
+                    </button>
+                    <p className="text-[11px] text-muted-foreground">
+                      PNG o JPG, máx 1 MB. Se comprimirá automáticamente.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Nombre del colegio */}
+              <div className="space-y-1.5">
+                <label className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
+                  Nombre del colegio
+                </label>
+                <input
+                  type="text"
+                  value={infoColegio.nombre}
+                  onChange={e => setInfoColegio(prev => ({ ...prev, nombre: e.target.value }))}
+                  placeholder="Ej: Escuela Andrew Jackson"
+                  className="w-full h-11 bg-background border border-border rounded-xl px-4 text-[13px] font-medium outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                <button
+                  onClick={handleSaveColegio}
+                  disabled={savingColegio}
+                  className="flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-white hover:opacity-90 disabled:opacity-60"
+                >
+                  {savingColegio ? <Loader2 className="w-4 h-4 animate-spin" /> : "Guardar"}
+                </button>
+                {savedColegio && (
+                  <span className="flex items-center gap-1.5 text-green-600 font-bold text-[13px] animate-in fade-in">
+                    <CheckCircle className="w-4 h-4" /> Guardado
+                  </span>
+                )}
+              </div>
             </div>
           )}
 

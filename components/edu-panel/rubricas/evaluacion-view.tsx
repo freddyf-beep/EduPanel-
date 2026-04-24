@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2
+  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
 import { cargarHorarioSemanal } from "@/lib/horario"
+import { auth } from "@/lib/firebase"
+import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
 import {
   cargarRubrica, cargarEvaluacion, guardarEvaluacion, nuevaEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
@@ -38,6 +40,9 @@ export function EvaluacionView({ rubricaId }: Props) {
   const [alumnoActivo, setAlumnoActivo] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [guardandoExport, setGuardandoExport] = useState(false)
+  const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
+  const [panelAlumno, setPanelAlumno] = useState(false)
+  const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
   const [error, setError] = useState("")
   const [parteActivaIdx, setParteActivaIdx] = useState(0)
   const ignoreFirstSave = useRef(true)
@@ -46,11 +51,13 @@ export function EvaluacionView({ rubricaId }: Props) {
   useEffect(() => {
     const cargar = async () => {
       try {
-        const [r, ev, horario] = await Promise.all([
+        const [r, ev, horario, colegio] = await Promise.all([
           cargarRubrica(rubricaId),
           cargarEvaluacion(rubricaId),
           cargarHorarioSemanal(),
+          cargarInfoColegio(),
         ])
+        if (colegio) setInfoColegio(colegio)
 
         if (!r) { setError("Rúbrica no encontrada"); return }
         setRubrica(r)
@@ -169,30 +176,87 @@ export function EvaluacionView({ rubricaId }: Props) {
     }))
   }
 
-  const handleExportarWord = async () => {
+  const agregarGrupo = () => {
+    updateEvaluacion(ev => {
+      const nextNum = ev.grupos.length + 1
+      const nuevoGrupo: GrupoEvaluacion = {
+        id: `grupo_${nextNum}_${Date.now()}`,
+        nombre: `Grupo ${nextNum}`,
+        estudiantes: [],
+      }
+      return { ...ev, grupos: [...ev.grupos, nuevoGrupo] }
+    })
+  }
+
+  const eliminarGrupo = (grupoIdx: number) => {
+    if (!evaluacion) return
+    const grupo = evaluacion.grupos[grupoIdx]
+    if (!grupo) return
+    // Mover estudiantes del grupo eliminado al Grupo 1 (índice 0), si los hay
+    updateEvaluacion(ev => {
+      const estudiantesMover = ev.grupos[grupoIdx]?.estudiantes ?? []
+      const gruposNuevos = ev.grupos
+        .filter((_, i) => i !== grupoIdx)
+        .map((g, i) => (i === 0 ? { ...g, estudiantes: [...g.estudiantes, ...estudiantesMover] } : g))
+      return { ...ev, grupos: gruposNuevos }
+    })
+    // Ajustar el grupo activo si quedó fuera de rango
+    setGrupoActivo(prev => Math.min(prev, evaluacion.grupos.length - 2))
+    setAlumnoActivo(null)
+  }
+
+  const handleExportarGrupo = async () => {
     if (!rubrica || !evaluacion) return
     setGuardandoExport(true)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
     try {
-      // Guardar primero
       await guardarEvaluacion(evaluacion)
-      // Llamar API de exportación
       const res = await fetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rubrica, evaluacion }),
+        body: JSON.stringify({ rubrica, evaluacion, modo: "grupo", profesorNombre, colegio, logoBase64 }),
       })
       if (!res.ok) throw new Error("Error al generar el Word")
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
-      a.download = `rubrica_${rubrica.nombre}_${rubrica.curso}.docx`.replace(/\s+/g, "_")
+      a.download = `rubrica_${rubrica.nombre}_${rubrica.curso}_grupos.docx`.replace(/\s+/g, "_")
       a.click()
       URL.revokeObjectURL(url)
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error al exportar")
     } finally {
       setGuardandoExport(false)
+    }
+  }
+
+  const handleExportarAlumno = async (estudianteId: string, nombreAlumno: string) => {
+    if (!rubrica || !evaluacion) return
+    setExportandoAlumno(estudianteId)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
+    try {
+      const res = await fetch("/api/export-rubrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rubrica, evaluacion, modo: "alumno", estudianteId, profesorNombre, colegio, logoBase64 }),
+      })
+      if (!res.ok) throw new Error("Error al generar el Word")
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `rubrica_${nombreAlumno.replace(/\s+/g, "_")}.docx`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al exportar")
+    } finally {
+      setExportandoAlumno(null)
     }
   }
 
@@ -233,12 +297,24 @@ export function EvaluacionView({ rubricaId }: Props) {
           <p className="text-[12px] text-muted-foreground">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
         </div>
         <button
-          onClick={handleExportarWord}
+          onClick={handleExportarGrupo}
           disabled={guardandoExport}
+          title="Descargar un Word con todos los grupos"
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
         >
           {guardandoExport ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          Exportar Word
+          Por grupo
+        </button>
+        <button
+          onClick={() => setPanelAlumno(p => !p)}
+          className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] transition-colors ${
+            panelAlumno
+              ? "bg-amber-100 text-amber-800 border border-amber-300"
+              : "border border-border hover:bg-muted/60"
+          }`}
+        >
+          <Download className="w-3.5 h-3.5" />
+          Por alumno
         </button>
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
@@ -249,30 +325,106 @@ export function EvaluacionView({ rubricaId }: Props) {
       </div>
 
       {/* Tabs de grupos */}
-      <div className="flex gap-1 mb-3 overflow-x-auto flex-shrink-0 pb-1">
+      <div className="flex gap-1 mb-3 overflow-x-auto flex-shrink-0 pb-1 items-center">
         {evaluacion.grupos.map((grupo, gi) => {
           const completados = grupo.estudiantes.filter(e => e.completado).length
+          const esActivo = grupoActivo === gi
           return (
-            <button
-              key={grupo.id}
-              onClick={() => { setGrupoActivo(gi); setAlumnoActivo(grupo.estudiantes[0]?.estudianteId ?? null) }}
-              className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] whitespace-nowrap transition-colors ${
-                grupoActivo === gi
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-border hover:bg-muted/60"
-              }`}
-            >
-              <Users className="w-3.5 h-3.5" />
-              {grupo.nombre}
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                grupoActivo === gi ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
-              }`}>
-                {completados}/{grupo.estudiantes.length}
-              </span>
-            </button>
+            <div key={grupo.id} className="relative flex-shrink-0 group/tab">
+              <button
+                onClick={() => { setGrupoActivo(gi); setAlumnoActivo(grupo.estudiantes[0]?.estudianteId ?? null) }}
+                className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] whitespace-nowrap transition-colors pr-6 ${
+                  esActivo
+                    ? "bg-primary text-primary-foreground"
+                    : "border border-border hover:bg-muted/60"
+                }`}
+              >
+                <Users className="w-3.5 h-3.5" />
+                {grupo.nombre}
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                  esActivo ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                }`}>
+                  {completados}/{grupo.estudiantes.length}
+                </span>
+              </button>
+              {/* Botón eliminar grupo (visible al hacer hover, solo si hay >1 grupos) */}
+              {evaluacion.grupos.length > 1 && (
+                <button
+                  onClick={e => { e.stopPropagation(); eliminarGrupo(gi) }}
+                  title={grupo.estudiantes.length > 0 ? `Eliminar "${grupo.nombre}" y mover sus alumnos al Grupo 1` : `Eliminar "${grupo.nombre}"`}
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 flex h-4 w-4 items-center justify-center rounded-full opacity-0 group-hover/tab:opacity-100 transition-opacity ${
+                    esActivo ? "bg-white/20 hover:bg-white/40 text-white" : "bg-muted hover:bg-red-100 hover:text-red-500 text-muted-foreground"
+                  }`}
+                >
+                  <X className="w-2.5 h-2.5" />
+                </button>
+              )}
+            </div>
           )
         })}
+
+        {/* Botón agregar grupo */}
+        <button
+          onClick={agregarGrupo}
+          title="Agregar nuevo grupo"
+          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-dashed border-border hover:border-primary/50 hover:text-primary text-muted-foreground whitespace-nowrap transition-colors flex-shrink-0"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          Grupo
+        </button>
       </div>
+
+      {/* Panel "Exportar por alumno" */}
+      {panelAlumno && (
+        <div className="flex-shrink-0 overflow-y-auto border border-amber-200 rounded-[14px] bg-amber-50/60 mb-3 max-h-72">
+          <div className="sticky top-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center justify-between">
+            <div>
+              <p className="text-[13px] font-bold text-amber-900">Exportar por alumno</p>
+              <p className="text-[11px] text-amber-700">Descarga una rúbrica individual para cada alumno.</p>
+            </div>
+            <button onClick={() => setPanelAlumno(false)} className="p-1 rounded hover:bg-amber-100 text-amber-700">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <div className="p-3 space-y-1">
+            {evaluacion.grupos.flatMap(grupo =>
+              grupo.estudiantes.map(est => {
+                const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
+                const nota = calcularNota(puntaje, rubrica.puntajeMaximo)
+                const descargando = exportandoAlumno === est.estudianteId
+                return (
+                  <div
+                    key={est.estudianteId}
+                    className="flex items-center gap-3 px-3 py-2 bg-white rounded-[10px] border border-amber-100"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[12px] font-medium text-foreground truncate">
+                        {est.nombre}
+                        {est.hasPie && <span className="ml-1.5 text-[9px] bg-blue-100 text-blue-700 rounded px-1 font-medium">PIE</span>}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">{grupo.nombre} · {puntaje}/{rubrica.puntajeMaximo} pts</p>
+                    </div>
+                    <span className={`text-[13px] font-bold tabular-nums w-8 text-right ${nota >= 4.0 ? "text-green-600" : "text-red-500"}`}>
+                      {nota.toFixed(1)}
+                    </span>
+                    <button
+                      onClick={() => handleExportarAlumno(est.estudianteId, est.nombre)}
+                      disabled={descargando}
+                      className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-[8px] transition-colors disabled:opacity-50 flex-shrink-0"
+                    >
+                      {descargando ? <Loader2 className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
+                      Descargar
+                    </button>
+                  </div>
+                )
+              })
+            )}
+            {evaluacion.grupos.every(g => g.estudiantes.length === 0) && (
+              <p className="text-[12px] text-muted-foreground text-center py-4">No hay alumnos en ningún grupo.</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Layout principal: alumnos | criterios | scoreboard */}
       <div className="flex gap-3 flex-1 min-h-0 overflow-hidden">

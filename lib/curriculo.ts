@@ -316,6 +316,7 @@ export interface IndicadorEditado {
 export interface OAEditado {
   id: string           // "OA1", "OA2", ... o "PROP_1" para propios
   numero?: number      // para OA del ministerio
+  tipo?: "oa" | "oat"  // "oat" = objetivo transversal de actitud
   descripcion: string  // puede ser editada
   seleccionado: boolean
   indicadores: IndicadorEditado[]
@@ -804,6 +805,7 @@ export function initOAs(unidad: Unidad, asignatura = DEFAULT_SUBJECT): OAEditado
   return (unidad.objetivos_aprendizaje || []).map(oa => ({
     id: buildOfficialOAId(oa.numero),
     numero: oa.numero,
+    tipo: String(oa.tipo || "").toUpperCase() === "OAT" ? "oat" : "oa",
     descripcion: oa.descripcion,
     seleccionado: true,
     indicadores: (oa.indicadores || []).map((ind, i) => ({
