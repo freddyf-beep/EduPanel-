@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import {
+  AI_PROVIDER_OPTIONS,
   buildCopilotPrompt,
   cleanText,
   coerceGeneratedLesson,
@@ -9,6 +10,10 @@ import {
   type AIProvider,
   type LessonRequestBody,
 } from "@/lib/ai/copilot"
+
+class ProviderConfigError extends Error {
+  status = 400
+}
 
 // ─── Helpers para leer respuestas ─────────────────────────────────────────────
 
@@ -38,18 +43,30 @@ function extractAnthropicText(data: Record<string, any> | null): string {
 
 // ─── Llamadas a los proveedores ───────────────────────────────────────────────
 
-async function callGemini(body: LessonRequestBody, prompt: string, expectsJson: boolean) {
+function resolveProvider(raw: string): AIProvider {
+  return AI_PROVIDER_OPTIONS.some(option => option.value === raw) ? raw as AIProvider : "public"
+}
+
+async function callGemini(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal, provider: AIProvider = "gemini") {
   const model = cleanText(body.customModel) || getProviderMeta("gemini").defaultModel
-  const token = cleanText(body.customToken) || process.env.GEMINI_API_KEY
+  const token = provider === "public"
+    ? cleanText(process.env.GEMINI_API_KEY)
+    : cleanText(body.customToken) || cleanText(process.env.GEMINI_API_KEY)
 
   if (!token) {
-    throw new Error("No hay API key de Gemini configurada. Ve a Configuración de IA en tu perfil.")
+    const error = new ProviderConfigError(
+      provider === "public"
+        ? "EduPanel Público no está configurado en este servidor: falta GEMINI_API_KEY en .env.local. Mientras tanto usa Gemini con tu API key personal en Configuración de IA."
+        : "No hay API key de Gemini configurada. Ingresa una API key personal o configura GEMINI_API_KEY en .env.local."
+    )
+    throw error
   }
 
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
     {
       method: "POST",
+      signal,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -70,13 +87,17 @@ async function callGemini(body: LessonRequestBody, prompt: string, expectsJson: 
   return extractGeminiText(json) || rawText
 }
 
-async function callOpenAI(body: LessonRequestBody, prompt: string, expectsJson: boolean) {
-  const token = cleanText(body.customToken)
-  if (!token) throw new Error("Debes ingresar tu API key de OpenAI en la configuración de IA.")
+async function callOpenAI(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
+  const token = cleanText(body.customToken) || cleanText(process.env.OPENAI_API_KEY)
+  if (!token) {
+    const error = new ProviderConfigError("Debes ingresar tu API key de OpenAI en la configuración de IA o configurar OPENAI_API_KEY en .env.local.")
+    throw error
+  }
 
   const model = cleanText(body.customModel) || getProviderMeta("openai").defaultModel
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
+    signal,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -98,14 +119,18 @@ async function callOpenAI(body: LessonRequestBody, prompt: string, expectsJson: 
   return extractOpenAIText(json) || rawText
 }
 
-async function callAnthropic(body: LessonRequestBody, prompt: string, expectsJson: boolean) {
-  const token = cleanText(body.customToken)
-  if (!token) throw new Error("Debes ingresar tu API key de Anthropic en la configuración de IA.")
+async function callAnthropic(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
+  const token = cleanText(body.customToken) || cleanText(process.env.ANTHROPIC_API_KEY)
+  if (!token) {
+    const error = new ProviderConfigError("Debes ingresar tu API key de Anthropic en la configuración de IA o configurar ANTHROPIC_API_KEY en .env.local.")
+    throw error
+  }
 
   const model = cleanText(body.customModel) || getProviderMeta("anthropic").defaultModel
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
+    signal,
     headers: {
       "Content-Type": "application/json",
       "x-api-key": token,
@@ -128,18 +153,25 @@ async function callAnthropic(body: LessonRequestBody, prompt: string, expectsJso
   return extractAnthropicText(json) || rawText
 }
 
-async function callCompatible(body: LessonRequestBody, prompt: string, expectsJson: boolean) {
+async function callCompatible(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
   const token = cleanText(body.customToken)
-  if (!token) throw new Error("Debes ingresar un token para usar el endpoint compatible.")
+  if (!token) {
+    const error = new ProviderConfigError("Debes ingresar un token para usar el endpoint compatible.")
+    throw error
+  }
 
   const endpoint = cleanText(body.customEndpoint)
-  if (!endpoint) throw new Error("Debes indicar la URL base del endpoint compatible.")
+  if (!endpoint) {
+    const error = new ProviderConfigError("Debes indicar la URL base del endpoint compatible.")
+    throw error
+  }
 
   const model = cleanText(body.customModel) || getProviderMeta("compatible").defaultModel
   const base = endpoint.replace(/\/+$/, "")
 
   const response = await fetch(`${base}/chat/completions`, {
     method: "POST",
+    signal,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -166,13 +198,20 @@ async function generateText(
   body: LessonRequestBody,
   prompt: string,
   expectsJson: boolean,
+  signal?: AbortSignal,
 ): Promise<string> {
-  if (provider === "openai") return callOpenAI(body, prompt, expectsJson)
-  if (provider === "anthropic") return callAnthropic(body, prompt, expectsJson)
-  if (provider === "groq") return callCompatible({ ...body, customEndpoint: "https://api.groq.com/openai/v1" }, prompt, expectsJson)
-  if (provider === "compatible") return callCompatible(body, prompt, expectsJson)
+  if (provider === "openai") return callOpenAI(body, prompt, expectsJson, signal)
+  if (provider === "anthropic") return callAnthropic(body, prompt, expectsJson, signal)
+  if (provider === "groq") {
+    return callCompatible({
+      ...body,
+      customToken: cleanText(body.customToken) || cleanText(process.env.GROQ_API_KEY),
+      customEndpoint: "https://api.groq.com/openai/v1"
+    }, prompt, expectsJson, signal)
+  }
+  if (provider === "compatible") return callCompatible(body, prompt, expectsJson, signal)
   // 'public' y 'gemini' usan callGemini
-  return callGemini(body, prompt, expectsJson) 
+  return callGemini(body, prompt, expectsJson, signal, provider)
 }
 
 // ─── Handler principal ────────────────────────────────────────────────────────
@@ -183,12 +222,12 @@ export async function POST(req: Request) {
   try {
     const body = (await req.json()) as LessonRequestBody
     const mode = resolveMode(body.modo)
-    provider = (cleanText(body.modelProvider) || "gemini") as AIProvider
+    provider = resolveProvider(cleanText(body.modelProvider) || "public")
 
     const prompt = buildCopilotPrompt(body, mode)
     const expectsJson = mode !== "chat"
 
-    const rawText = await generateText(provider, body, prompt, expectsJson)
+    const rawText = await generateText(provider, body, prompt, expectsJson, req.signal)
 
     // Modo chat: respuesta libre en texto
     if (mode === "chat") {
@@ -209,12 +248,17 @@ export async function POST(req: Request) {
         : undefined,
     })
   } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      return NextResponse.json({ error: "Generación cancelada." }, { status: 499 })
+    }
+
     console.error("[generar-clase] Error:", error)
 
     const rawMessage = error instanceof Error ? error.message : "Error interno del servidor"
     const message = normalizeProviderError(provider, rawMessage)
 
-    return NextResponse.json({ error: message }, { status: 500 })
+    const status = error instanceof ProviderConfigError ? error.status : 500
+    return NextResponse.json({ error: message }, { status })
   }
 }
 

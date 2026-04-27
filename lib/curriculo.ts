@@ -704,7 +704,7 @@ export interface ActividadClase {
   numeroClase: number
   fecha: string
   oaIds: string[]               // OA asignados a esta clase
-  objetivo: string              // objetivo redactado por el docente
+  objetivo: string              // objetivo redactado por el docente (versión recomendada)
   inicio: string                // rich text
   desarrollo: string            // rich text (lo que va al leccionario)
   cierre: string                // rich text
@@ -716,6 +716,15 @@ export interface ActividadClase {
   estado: "no_planificada" | "planificada" | "realizada"
   sincronizada: boolean
   updatedAt?: any
+  // Metodología Freddy — todos opcionales (backward compat con clases antiguas)
+  contextoProfesor?: string
+  analisisBloom?: import("./ai/copilot").AnalisisBloom[]
+  objetivoMultinivel?: import("./ai/copilot").ObjetivoMultinivel
+  indicadoresEvaluacion?: import("./ai/copilot").IndicadorEvaluacion[]
+  actividadEvaluacion?: import("./ai/copilot").ActividadEvaluacion
+  desarrolloFormal?: { inicio: string; desarrollo: string; cierre: string }
+  // Filtro per-class de indicadores (subset de los marcados en la unidad)
+  indicadoresPorOa?: Record<string, string[]>
 }
 
 export function buildActividadClaseId(
@@ -742,6 +751,16 @@ export async function cargarActividadClase(
   const snap = await getDoc(userDoc("actividades_clase", id))
   if (!snap.exists()) return null
   return snap.data() as ActividadClase
+}
+
+export async function eliminarActividadClase(
+  curso: string,
+  unidadId: string,
+  numeroClase: number,
+  asignatura = DEFAULT_ASIGNATURA
+): Promise<void> {
+  const id = buildActividadClaseId(curso, unidadId, numeroClase, asignatura)
+  await deleteDoc(userDoc("actividades_clase", id))
 }
 
 export async function cargarTodasActividadesUnidad(

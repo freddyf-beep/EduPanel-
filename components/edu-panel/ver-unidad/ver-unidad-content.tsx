@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils"
 import {
   getUnidadCompleta, guardarVerUnidad, cargarVerUnidad, guardarPlanificacion, cargarPlanificacion, buildMatrixCellKey, buildOfficialOAId, buildOfficialElementoId, emptyMatrizSeleccion,
-  initOAs, initElems, mergeOAs, mergeElementos, applyPlanSelection
+  initOAs, initElems, mergeOAs, mergeElementos, applyPlanSelection, cargarActividadClase
 } from "@/lib/curriculo"
 import type {
   Unidad, OAEditado, IndicadorEditado,
@@ -78,7 +78,7 @@ function ModalOA({ oas, cursoParam, onClose, onChange }: {
   return (
     <div className="fixed inset-0 z-[600] bg-black/50 flex items-center justify-center p-4">
       <div className="bg-card rounded-[18px] shadow-2xl w-full max-w-[780px] h-[70vh] flex flex-col">
-        <div className="flex items-center justify-between px-7 py-5 border-b border-border flex-shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-7 py-4 sm:py-5 border-b border-border flex-shrink-0">
           <div>
             <h2 className="text-[17px] font-extrabold">{cursoParam}: Objetivos de Aprendizaje & Indicadores</h2>
             <p className="text-[12px] text-muted-foreground mt-0.5">Selecciona, edita o crea OA e indicadores propios.</p>
@@ -205,7 +205,7 @@ function ModalOA({ oas, cursoParam, onClose, onChange }: {
           </div>
         </div>
 
-        <div className="flex items-center justify-between px-7 py-4 border-t border-border flex-shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-7 py-3 sm:py-4 border-t border-border flex-shrink-0">
           <span className="text-[12px] text-muted-foreground">{oas.filter(o => o.seleccionado).length}/{oas.length} OA seleccionados</span>
           <button onClick={onClose} className="bg-green-500 text-white font-bold text-[13px] px-6 py-2.5 rounded-[10px] hover:bg-green-600 transition-colors">Listo</button>
         </div>
@@ -236,7 +236,7 @@ function ModalElementos({ titulo, tipo, elementos, cursoParam, onClose, onChange
   return (
     <div className="fixed inset-0 z-[600] bg-black/50 flex items-center justify-center p-4">
       <div className="bg-card rounded-[18px] shadow-2xl w-full max-w-[500px] h-[65vh] flex flex-col">
-        <div className="flex items-center justify-between px-7 py-5 border-b border-border flex-shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-7 py-4 sm:py-5 border-b border-border flex-shrink-0">
           <div>
             <h2 className="text-[17px] font-extrabold">{cursoParam}: {titulo}</h2>
             <p className="text-[12px] text-muted-foreground mt-0.5">Selecciona, edita o crea elementos propios.</p>
@@ -289,7 +289,7 @@ function ModalElementos({ titulo, tipo, elementos, cursoParam, onClose, onChange
             </div>
           ))}
         </div>
-        <div className="flex justify-end px-7 py-4 border-t border-border flex-shrink-0">
+        <div className="flex justify-end px-4 sm:px-7 py-3 sm:py-4 border-t border-border flex-shrink-0">
           <button onClick={onClose} className="bg-green-500 text-white font-bold text-[13px] px-6 py-2.5 rounded-[10px] hover:bg-green-600">Listo</button>
         </div>
       </div>
@@ -329,6 +329,7 @@ function VerUnidadInner() {
   const [showModal, setShowModal]       = useState(false)
   const [showNuevaAct, setShowNuevaAct] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [downloadingDocx, setDownloadingDocx] = useState(false)
   const [activeTab, setActiveTab]       = useState<"unidad"|"cronograma"|"actividades">("unidad")
   const [showPdf, setShowPdf]           = useState(false)
   const [pdfPos, setPdfPos]             = useState({ right: 32, bottom: 32 })
@@ -455,6 +456,82 @@ function VerUnidadInner() {
     }
   }
 
+  const handleDescargarDocx = async () => {
+    if (downloadingDocx) return
+    setDownloadingDocx(true)
+    try {
+      const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
+      const clasesExport = []
+
+      for (let claseNum = 1; claseNum <= clases; claseNum++) {
+        const actividad = await cargarActividadClase(cursoParam, unidadLocalParam, claseNum, ASIGNATURA).catch(() => null)
+        if (!actividad) continue
+        const tieneContenido = actividad.objetivo || actividad.inicio || actividad.desarrollo || actividad.cierre
+        if (!tieneContenido) continue
+        const oasOcupados = (oas || [])
+          .filter(oa => (actividad.oaIds || []).includes(oa.id))
+          .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+        const indicadores = (oas || [])
+          .filter(oa => (actividad.oaIds || []).includes(oa.id))
+          .flatMap(oa => {
+            const selectedIds = actividad.indicadoresPorOa?.[oa.id]
+            return (oa.indicadores || [])
+              .filter(ind => ind.seleccionado)
+              .filter(ind => !selectedIds || selectedIds.includes(ind.id))
+              .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
+          })
+
+        clasesExport.push({
+          numero: claseNum,
+          oasOcupados,
+          indicadores,
+          objetivo: htmlToPlainTextForExport(actividad.objetivo || ""),
+          inicio: htmlToPlainTextForExport(actividad.inicio || ""),
+          actividadInicio: "",
+          desarrollo: htmlToPlainTextForExport(actividad.desarrollo || ""),
+          cierre: htmlToPlainTextForExport(actividad.cierre || ""),
+          recursos: actividad.materiales || [],
+          tics: actividad.tics || [],
+          criteriosEvaluacion: [],
+        })
+      }
+
+      const res = await fetch("/api/export-planificacion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nivel: nivelAsignado || cursoParam,
+          asignatura: ASIGNATURA,
+          unidades: [{
+            numero: unitIndex + 1,
+            nombre: unidad?.nombre_unidad || `Unidad ${unitIndex + 1}`,
+            oasBasales: oas.filter(oa => oa.seleccionado && oa.tipo !== "oat").map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()),
+            oasComplementarios: oas.filter(oa => oa.seleccionado && oa.tipo === "oat").map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()),
+            clases: clasesExport,
+          }],
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || "No se pudo generar el Word.")
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `Planificacion_${ASIGNATURA}_${cursoParam}_${unidadLocalParam}.docx`.replace(/\s+/g, "_")
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error(error)
+      alert(error instanceof Error ? error.message : "No se pudo descargar el documento.")
+    } finally {
+      setDownloadingDocx(false)
+    }
+  }
+
   const agregarActividad = () => {
     if (!nuevaAct.nombre.trim()) return
     setActividades(prev => [...prev, { id: `act_${Date.now()}`, ...nuevaAct, estado: "pendiente" }])
@@ -495,23 +572,26 @@ function VerUnidadInner() {
   return (
     <div className={cn("mx-auto transition-all", activeTab === "actividades" ? "max-w-[1920px]" : "max-w-[1320px]")}>
       {/* Header — diseño original */}
-      <div className="mb-7 flex flex-wrap items-start justify-between gap-3.5">
-        <div className="flex items-center gap-3">
+      <div className="mb-5 sm:mb-7 flex flex-wrap items-start justify-between gap-3.5">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <Link href={buildUrl("/planificaciones", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
-            className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors print:hidden">
+            className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors print:hidden flex-shrink-0">
             <ChevronLeft className="w-4 h-4" />
           </Link>
           <div className="w-3 h-3 rounded-full flex-shrink-0 print:hidden" style={{ background: unitColor }} />
-          <h1 className="text-[22px] font-extrabold">{unidad.nombre_unidad} — {cursoParam}</h1>
+          <h1 className="text-[18px] sm:text-[22px] font-extrabold truncate">{unidad.nombre_unidad} — {cursoParam}</h1>
         </div>
-        <div className="flex w-full flex-wrap items-center gap-2.5 print:hidden sm:w-auto sm:justify-end">
-          <button onClick={() => setShowPdf(true)} className="flex items-center gap-[7px] border-[1.5px] border-primary text-primary rounded-[10px] px-4 py-2.5 text-[13px] font-bold bg-pink-light/30 hover:bg-pink-light/60 transition-colors">
-            <FileText className="w-[15px] h-[15px]" /> Programa Oficial
+        <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 print:hidden sm:w-auto sm:justify-end">
+          <button onClick={() => setShowPdf(true)} className="flex items-center gap-[7px] border-[1.5px] border-primary text-primary rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-bold bg-pink-light/30 hover:bg-pink-light/60 transition-colors">
+            <FileText className="w-[15px] h-[15px]" />
+            <span className="hidden sm:inline">Programa Oficial</span>
+            <span className="sm:hidden">Programa</span>
           </button>
-          <button onClick={() => window.print()} className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
-            <Download className="w-[15px] h-[15px] text-muted-foreground" /> Descargar
+          <button onClick={handleDescargarDocx} disabled={downloadingDocx} className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-semibold bg-card hover:bg-background transition-colors disabled:opacity-60">
+            {downloadingDocx ? <Loader2 className="w-[15px] h-[15px] animate-spin text-muted-foreground" /> : <Download className="w-[15px] h-[15px] text-muted-foreground" />}
+            Descargar Word
           </button>
-          <button className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
+          <button className="hidden sm:flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
             <MessageCircle className="w-[15px] h-[15px] text-muted-foreground" /> Retroalimentación
           </button>
           {saveStatus === "saving_silent" && (

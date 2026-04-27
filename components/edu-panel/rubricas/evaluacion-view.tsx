@@ -334,18 +334,18 @@ export function EvaluacionView({ rubricaId }: Props) {
   const todosLosAlumnosEnGrupos = evaluacion.grupos.flatMap(g => g.estudiantes)
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] gap-0">
+    <div className="flex flex-col min-h-[calc(100vh-8rem)] lg:h-[calc(100vh-8rem)] gap-0">
       {/* Header fijo */}
-      <div className="flex items-center gap-3 mb-4 flex-shrink-0">
+      <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 sm:gap-3 flex-shrink-0">
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
-          className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors"
+          className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors flex-shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-[18px] font-extrabold text-foreground truncate">{rubrica.nombre}</h1>
-          <p className="text-[12px] text-muted-foreground">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
+        <div className="flex-1 min-w-0 order-first sm:order-none w-full sm:w-auto">
+          <h1 className="text-[16px] sm:text-[18px] font-extrabold text-foreground truncate">{rubrica.nombre}</h1>
+          <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
         </div>
         <button
           onClick={handleExportarGrupo}
@@ -354,7 +354,8 @@ export function EvaluacionView({ rubricaId }: Props) {
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
         >
           {guardandoExport ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          Por grupo
+          <span className="hidden sm:inline">Por grupo</span>
+          <span className="sm:hidden">Grupo</span>
         </button>
         <button
           onClick={() => setPanelAlumno(p => !p)}
@@ -365,13 +366,15 @@ export function EvaluacionView({ rubricaId }: Props) {
           }`}
         >
           <Download className="w-3.5 h-3.5" />
-          Por alumno
+          <span className="hidden sm:inline">Por alumno</span>
+          <span className="sm:hidden">Alumno</span>
         </button>
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 ml-auto sm:ml-0"
         >
-          Ver resultados
+          <span className="hidden sm:inline">Ver resultados</span>
+          <span className="sm:hidden">Resultados</span>
         </button>
       </div>
 
@@ -486,18 +489,18 @@ export function EvaluacionView({ rubricaId }: Props) {
       )}
 
       {/* Layout principal: alumnos | criterios | scoreboard */}
-      <div className="flex gap-3 flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-3 flex-1 min-h-0 lg:overflow-hidden">
 
         {/* Panel izquierdo: lista de alumnos del grupo */}
-        <div className="w-44 flex-shrink-0 overflow-y-auto border border-border rounded-[14px] bg-card">
-          <div className="sticky top-0 bg-card border-b border-border px-3 py-2">
+        <div className="w-full lg:w-44 lg:flex-shrink-0 lg:overflow-y-auto border border-border rounded-[14px] bg-card">
+          <div className="lg:sticky lg:top-0 bg-card border-b border-border px-3 py-2">
             <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">
               {grupoActualObj?.nombre} ({grupoActualObj?.estudiantes.length})
             </p>
           </div>
-          <div className="p-1.5 space-y-0.5">
+          <div className="flex lg:block overflow-x-auto lg:overflow-x-visible p-1.5 gap-1.5 lg:gap-0 lg:space-y-0.5">
             {grupoActualObj?.estudiantes.length === 0 && (
-            <div className="px-3 py-4 text-[11px] text-muted-foreground text-center">
+            <div className="w-full px-3 py-4 text-[11px] text-muted-foreground text-center">
               Grupo vacío. Mueve alumnos desde otros grupos o agrega estudiantes en Mi Perfil.
             </div>
           )}
@@ -508,10 +511,10 @@ export function EvaluacionView({ rubricaId }: Props) {
                 <button
                   key={est.estudianteId}
                   onClick={() => setAlumnoActivo(est.estudianteId)}
-                  className={`w-full text-left px-2.5 py-2 rounded-[8px] transition-colors ${
+                  className={`flex-shrink-0 lg:flex-shrink lg:w-full min-w-[140px] lg:min-w-0 text-left px-2.5 py-2 rounded-[8px] transition-colors ${
                     alumnoActivo === est.estudianteId
                       ? "bg-primary/10 border border-primary/30"
-                      : "hover:bg-muted/50"
+                      : "hover:bg-muted/50 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-1">
@@ -534,7 +537,7 @@ export function EvaluacionView({ rubricaId }: Props) {
 
             {/* Mover alumno entre grupos */}
             {alumnoObj && evaluacion.grupos.length > 1 && (
-              <div className="pt-2 px-1">
+              <div className="hidden lg:block pt-2 px-1">
                 <p className="text-[10px] text-muted-foreground mb-1">Mover a:</p>
                 <div className="flex flex-wrap gap-1">
                   {evaluacion.grupos.map((g, gi) =>
@@ -558,7 +561,7 @@ export function EvaluacionView({ rubricaId }: Props) {
         </div>
 
         {/* Panel central: criterios del alumno activo */}
-        <div className="flex-1 overflow-y-auto border border-border rounded-[14px] bg-card">
+        <div className="flex-1 min-h-[400px] lg:min-h-0 lg:overflow-y-auto border border-border rounded-[14px] bg-card">
           {!alumnoObj ? (
             <div className="flex items-center justify-center h-full text-muted-foreground text-[13px]">
               Selecciona un alumno
@@ -642,7 +645,7 @@ export function EvaluacionView({ rubricaId }: Props) {
                                 </span>
                               )}
                             </p>
-                            <div className="grid grid-cols-4 gap-1.5">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                               {NIVEL_OPCIONES.map(nivel => {
                                 const desc = criterio.niveles[
                                   nivel.valor === 4 ? "logrado" :
@@ -719,8 +722,8 @@ export function EvaluacionView({ rubricaId }: Props) {
           )}
         </div>
 
-        {/* Panel derecho: scoreboard del grupo */}
-        <div className="w-40 flex-shrink-0 overflow-y-auto border border-border rounded-[14px] bg-card">
+        {/* Panel derecho: scoreboard del grupo (oculto en móvil) */}
+        <div className="hidden lg:block w-40 flex-shrink-0 overflow-y-auto border border-border rounded-[14px] bg-card">
           <div className="sticky top-0 bg-card border-b border-border px-3 py-2">
             <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Notas</p>
           </div>

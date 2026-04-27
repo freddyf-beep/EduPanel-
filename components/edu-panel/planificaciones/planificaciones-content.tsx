@@ -323,14 +323,11 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
     if (units.length === 0 || downloading) return
     setDownloading(true)
     try {
-      const { cargarVerUnidad, cargarActividadClase, cargarPlanificacion } = await import("@/lib/curriculo")
+      const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
       const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
 
       // Resolver nivel curricular
       const nivelCurricular = nivelMapping[curso] || "Sin nivel configurado"
-
-      // Cargar planificación (OAs seleccionados por unidad)
-      const planDoc = await cargarPlanificacion(ASIGNATURA, curso).catch(() => null)
 
       // Armar datos de cada unidad
       const unidadesExport = await Promise.all(
@@ -340,40 +337,51 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
           // Ver unidad (OAs editados, indicadores)
           const verUnidad = await cargarVerUnidad(ASIGNATURA, curso, unidadId).catch(() => null)
 
-          // OAs basales y complementarios desde la planificación
-          const oasPlan = planDoc?.unidades?.[unidadId] || {}
+          // OAs basales y complementarios desde la unidad editada
           const oasBasales: string[] = []
           const oasComplementarios: string[] = []
           if (verUnidad?.oas) {
             for (const oa of verUnidad.oas) {
               if (!oa.seleccionado) continue
-              const label = `${oa.codigo || ""}: ${oa.descripcion || ""}`.trim()
-              if ((oa.tipo as string) === "basal" || !oa.tipo) oasBasales.push(label)
-              else oasComplementarios.push(label)
+              const label = `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()
+              if (oa.tipo === "oat") oasComplementarios.push(label)
+              else oasBasales.push(label)
             }
           }
 
           // Cargar actividades de clase (hasta 30 clases)
           const clasesExport = []
           for (let claseNum = 1; claseNum <= 30; claseNum++) {
-            const actividad = await cargarActividadClase(ASIGNATURA, curso, unidadId, claseNum).catch(() => null)
+            const actividad = await cargarActividadClase(curso, unidadId, claseNum, ASIGNATURA).catch(() => null)
             if (!actividad) break
             // Solo exportar si tiene algún contenido relevante
             const tieneContenido = actividad.objetivo || actividad.inicio || actividad.desarrollo || actividad.cierre
             if (!tieneContenido) break
+            const oasOcupados = (verUnidad?.oas || [])
+              .filter(oa => (actividad.oaIds || []).includes(oa.id))
+              .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+            const indicadores = (verUnidad?.oas || [])
+              .filter(oa => (actividad.oaIds || []).includes(oa.id))
+              .flatMap(oa => {
+                const selectedIds = actividad.indicadoresPorOa?.[oa.id]
+                return (oa.indicadores || [])
+                  .filter(ind => ind.seleccionado)
+                  .filter(ind => !selectedIds || selectedIds.includes(ind.id))
+                  .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
+              })
 
             clasesExport.push({
               numero: claseNum,
-              oasOcupados: actividad.oasSeleccionados?.map((oa: any) => `${oa.codigo || ""}: ${oa.descripcion || ""}`.trim()) || [],
-              indicadores: actividad.indicadores || [],
-              objetivo: actividad.objetivo || "",
+              oasOcupados,
+              indicadores,
+              objetivo: htmlToPlainTextForExport(actividad.objetivo || ""),
               inicio: htmlToPlainTextForExport(actividad.inicio || ""),
               actividadInicio: "",
               desarrollo: htmlToPlainTextForExport(actividad.desarrollo || ""),
               cierre: htmlToPlainTextForExport(actividad.cierre || ""),
               recursos: actividad.materiales || [],
               tics: actividad.tics || [],
-              criteriosEvaluacion: actividad.criteriosEvaluacion || [],
+              criteriosEvaluacion: [],
             })
           }
 
@@ -419,9 +427,9 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
-        <h1 className="text-[22px] font-extrabold animate-fade-up">Mis Planificaciones</h1>
-        <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto sm:justify-end">
+      <div className="mb-5 sm:mb-6 flex flex-wrap items-start justify-between gap-3">
+        <h1 className="text-[18px] sm:text-[22px] font-extrabold animate-fade-up">Mis Planificaciones</h1>
+        <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 sm:w-auto sm:justify-end">
           {saveStatus === "saving_silent" && (
             <span className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground animate-pulse">
               Guardando...
@@ -442,7 +450,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
             disabled={saving || units.length === 0 || saveStatus === "saving_silent"}
             className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-5 py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> Guardando…</> : <><Bookmark className="w-[15px] h-[15px]" /> Guardar mis cambios</>}
+            {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> <span className="hidden sm:inline">Guardando…</span></> : <><Bookmark className="w-[15px] h-[15px]" /> <span className="hidden sm:inline">Guardar mis cambios</span><span className="sm:hidden">Guardar</span></>}
           </button>
         </div>
       </div>

@@ -203,9 +203,9 @@ export function Perfil360Content() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-[22px] font-extrabold">Perfil 360 del estudiante</h1>
-        <p className="text-[13px] text-muted-foreground mt-1">Vista consolidada de asistencia, rendimiento y observaciones.</p>
+      <div className="mb-5 sm:mb-6">
+        <h1 className="text-[18px] sm:text-[22px] font-extrabold">Perfil 360 del estudiante</h1>
+        <p className="text-[12px] sm:text-[13px] text-muted-foreground mt-1">Vista consolidada de asistencia, rendimiento y observaciones.</p>
       </div>
 
       <div className="bg-card border border-border rounded-[14px] p-5 mb-5 flex flex-wrap gap-4 items-end">

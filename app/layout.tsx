@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import 'react-quill-new/dist/quill.snow.css'
@@ -13,10 +13,22 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: 'swap',
 })
 
+export const viewport: Viewport = {
+  themeColor: '#f43f5e',
+}
+
 export const metadata: Metadata = {
   title: 'EduPanel',
-  description: 'Plataforma de planificación educativa para profesores',
-  icons: { icon: '/icon.svg' },
+  description: 'Plataforma inteligente de planificación docente.',
+  appleWebApp: {
+    capable: true,
+    title: 'EduPanel',
+    statusBarStyle: 'default',
+  },
+  icons: { 
+    icon: '/icon.svg',
+    apple: '/logos/logo-3.png'
+  },
 }
 
 export default function RootLayout({

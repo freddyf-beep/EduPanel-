@@ -508,19 +508,19 @@ export function RubricaImport({ mode = "import" }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-[96rem] space-y-6">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
-          className="rounded-[10px] p-2 transition-colors hover:bg-muted/60"
+          className="rounded-[10px] p-2 transition-colors hover:bg-muted/60 flex-shrink-0"
         >
           <ArrowLeft className="h-4 w-4" />
         </button>
 
-        <div className="flex-1">
-          <h1 className="text-[20px] font-extrabold text-foreground">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-[17px] sm:text-[20px] font-extrabold text-foreground truncate">
             {rubricaIdParam ? "Editar rubrica" : mode === "blank" ? "Nueva rubrica" : "Importar desde Word"}
           </h1>
-          <p className="text-[12px] text-muted-foreground">
+          <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">
             {guardadoOk ? "Guardado" : "Los cambios se guardan automaticamente"}
           </p>
         </div>
@@ -528,10 +528,11 @@ export function RubricaImport({ mode = "import" }: Props) {
         <button
           onClick={handleGuardar}
           disabled={guardando}
-          className="flex items-center gap-1.5 rounded-[10px] bg-primary px-4 py-2 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+          className="flex items-center gap-1.5 rounded-[10px] bg-primary px-3 sm:px-4 py-2 text-[12px] sm:text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50 flex-shrink-0"
         >
           {guardando ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-          Guardar y salir
+          <span className="hidden sm:inline">Guardar y salir</span>
+          <span className="sm:hidden">Guardar</span>
         </button>
       </div>
 

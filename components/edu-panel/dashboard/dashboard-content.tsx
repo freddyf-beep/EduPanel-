@@ -47,6 +47,10 @@ export function DashboardContent() {
   const [horarioSemanal, setHorarioSemanal] = useState<ClaseHorario[]>([])
   const [loading, setLoading]               = useState(true)
   const [showHorario, setShowHorario]       = useState(false)
+  const [selectedDay, setSelectedDay]       = useState(() => {
+    const d = new Date()
+    return DIAS_HABILES.includes(DAYS[d.getDay()]) ? DAYS[d.getDay()] : "Lunes"
+  })
 
   // Modal
   const [modalClase, setModalClase]         = useState<ClaseHorario | null>(null)
@@ -393,6 +397,38 @@ export function DashboardContent() {
           </div>
         ) : showHorario ? (
           <div className="overflow-hidden rounded-[14px] border border-border bg-card animate-fade-up">
+            {/* Vista móvil: tabs por día */}
+            <div className="sm:hidden">
+              <div className="flex border-b border-border bg-background">
+                {DIAS_HABILES.map(d => (
+                  <button key={d} onClick={() => setSelectedDay(d)}
+                    className={cn("flex-1 py-2.5 text-[11px] font-bold uppercase tracking-wide transition-colors border-b-2 -mb-[2px]",
+                      selectedDay === d
+                        ? "text-primary border-primary"
+                        : d === diaActual
+                        ? "text-primary/60 border-transparent"
+                        : "text-muted-foreground border-transparent"
+                    )}>
+                    {d.slice(0, 3)}
+                  </button>
+                ))}
+              </div>
+              <div className="min-h-[120px] p-3 flex flex-col gap-2">
+                {getClasesDelDia(selectedDay).map(c => (
+                  <div key={c.uid} className="rounded-[12px] p-3 text-white text-[12px]" style={{ background: c.color }}>
+                    <div className="font-bold">{c.resumen}</div>
+                    <div className="opacity-90 mt-0.5">{c.horaInicio} – {c.horaFin}</div>
+                  </div>
+                ))}
+                {getClasesDelDia(selectedDay).length === 0 && (
+                  <div className="flex flex-1 items-center justify-center text-[12px] text-muted-foreground py-6">
+                    Sin clases este día
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Vista desktop: grid de 5 columnas */}
+            <div className="hidden sm:block">
             <div className="overflow-x-auto">
             <div className="min-w-[760px]">
             <div className="grid grid-cols-5 bg-background">
@@ -416,6 +452,7 @@ export function DashboardContent() {
                   </div>
                 )
               })}
+            </div>
             </div>
             </div>
             </div>

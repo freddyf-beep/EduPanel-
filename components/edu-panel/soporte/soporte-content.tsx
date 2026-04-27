@@ -14,13 +14,13 @@ const flujo = [
 export function SoporteContent() {
   return (
     <div>
-      <div className="mb-7">
-        <h1 className="text-[22px] font-extrabold">Centro de ayuda</h1>
-        <p className="text-[13px] text-muted-foreground mt-1">Guía de uso y flujo de trabajo de EduPanel.</p>
+      <div className="mb-5 sm:mb-7">
+        <h1 className="text-[18px] sm:text-[22px] font-extrabold">Centro de ayuda</h1>
+        <p className="text-[12px] sm:text-[13px] text-muted-foreground mt-1">Guía de uso y flujo de trabajo de EduPanel.</p>
       </div>
 
       {/* Flujo de trabajo */}
-      <div className="bg-card border border-border rounded-[16px] p-6 mb-5">
+      <div className="bg-card border border-border rounded-[16px] p-4 sm:p-6 mb-5">
         <h2 className="text-[15px] font-extrabold mb-4">Flujo de planificación</h2>
         <div className="flex flex-col gap-3">
           {flujo.map((paso, i) => (
@@ -40,7 +40,7 @@ export function SoporteContent() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-card border border-border rounded-[16px] p-6">
+        <div className="bg-card border border-border rounded-[16px] p-4 sm:p-6">
           <div className="w-11 h-11 rounded-xl bg-pink-light text-primary grid place-items-center mb-4">
             <BookOpen className="w-5 h-5" />
           </div>
@@ -53,7 +53,7 @@ export function SoporteContent() {
           </ul>
         </div>
 
-        <div className="bg-card border border-border rounded-[16px] p-6">
+        <div className="bg-card border border-border rounded-[16px] p-4 sm:p-6">
           <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 grid place-items-center mb-4">
             <Clock3 className="w-5 h-5" />
           </div>
@@ -65,7 +65,7 @@ export function SoporteContent() {
           </ul>
         </div>
 
-        <div className="bg-card border border-border rounded-[16px] p-6">
+        <div className="bg-card border border-border rounded-[16px] p-4 sm:p-6">
           <div className="w-11 h-11 rounded-xl bg-green-50 text-green-700 grid place-items-center mb-4">
             <LifeBuoy className="w-5 h-5" />
           </div>
@@ -78,7 +78,7 @@ export function SoporteContent() {
           </ul>
         </div>
 
-        <div className="bg-card border border-border rounded-[16px] p-6">
+        <div className="bg-card border border-border rounded-[16px] p-4 sm:p-6">
           <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center mb-4">
             <MessageSquare className="w-5 h-5" />
           </div>

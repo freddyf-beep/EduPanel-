@@ -195,26 +195,28 @@ function CronogramaInner() {
     <div className="mx-auto max-w-[1400px]">
 
       {/* Header */}
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-3.5">
-        <div className="flex items-center gap-3">
+      <div className="mb-5 sm:mb-6 flex flex-wrap items-start justify-between gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <Link href={buildUrl("/planificaciones", withAsignatura({ curso: cursoFiltro }, ASIGNATURA))}
-            className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors">
+            className="w-8 h-8 border-[1.5px] border-border rounded-lg bg-card grid place-items-center text-muted-foreground hover:bg-background transition-colors flex-shrink-0">
             <ChevronLeft className="w-4 h-4" />
           </Link>
-          <h1 className="text-[22px] font-extrabold">Cronograma — {ASIGNATURA}</h1>
+          <h1 className="text-[18px] sm:text-[22px] font-extrabold truncate">Cronograma — {ASIGNATURA}</h1>
         </div>
-        <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto sm:justify-end">
-          <button className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 sm:w-auto sm:justify-end">
+          <button className="hidden sm:flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
             <Download className="w-[15px] h-[15px] text-muted-foreground" /> Exportar
           </button>
           <button onClick={() => setShowModal(true)}
-            className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-4 py-2.5 text-[13px] font-semibold bg-card hover:bg-background transition-colors">
-            <Plus className="w-[15px] h-[15px] text-muted-foreground" /> Agregar clase
+            className="flex items-center gap-[7px] border-[1.5px] border-border rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-semibold bg-card hover:bg-background transition-colors">
+            <Plus className="w-[15px] h-[15px] text-muted-foreground" />
+            <span className="hidden sm:inline">Agregar clase</span>
+            <span className="sm:hidden">Agregar</span>
           </button>
           {saveStatus === "saved" && <span className="flex items-center gap-1.5 text-[13px] font-semibold text-green-600"><Check className="w-4 h-4" /> Guardado</span>}
           {saveStatus === "error" && <span className="text-[13px] font-semibold text-red-500">Error al guardar</span>}
           <button onClick={handleGuardar} disabled={saving}
-            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-[18px] py-2.5 text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-60">
+            className="flex items-center gap-[7px] bg-primary text-primary-foreground border-none rounded-[10px] px-3 sm:px-[18px] py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-bold hover:bg-pink-dark transition-colors disabled:opacity-60">
             {saving ? <><Loader2 className="w-[15px] h-[15px] animate-spin" /> Guardando…</> : <><Bookmark className="w-[15px] h-[15px]" /> Guardar</>}
           </button>
         </div>
@@ -317,6 +319,7 @@ function CronogramaInner() {
       </div>
 
       {viewMode === "grid" ? (
+        <div className="scroll-hint-x rounded-[14px]">
         <div className="overflow-hidden rounded-[14px] border border-border bg-card">
           <div className="overflow-x-auto">
             <div className="min-w-[900px]">
@@ -428,10 +431,12 @@ function CronogramaInner() {
             </div>
           </div>
         </div>
+        </div>
       ) : (
         /* Vista lista */
+        <div className="scroll-hint-x rounded-[14px]">
         <div className="overflow-x-auto rounded-[14px] border border-border bg-card">
-          <table className="w-full">
+          <table className="w-full min-w-[760px]">
             <thead>
               <tr className="bg-background">
                 {["Actividad","Tipo","Unidad","Día","Fecha","Hora","Duración",""].map(h => (
@@ -494,6 +499,7 @@ function CronogramaInner() {
               )}
             </tbody>
           </table>
+        </div>
         </div>
       )}
 

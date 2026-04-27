@@ -218,7 +218,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
   const getRows = () => {
     if (activeTab === "oa") return oaItems.map(o => ({
       id: o.id, left: (
-        <td className="px-4 py-3 text-left align-top max-w-[380px] border-b border-border">
+        <td className="sticky left-0 z-10 bg-card px-4 py-3 text-left align-top min-w-[200px] max-w-[260px] border-b border-r border-border">
           <div className="flex items-start gap-2 mb-1">
             <div className="mt-1 h-[9px] w-[9px] flex-shrink-0 rounded-full" style={{ background: o.color }} />
             <span className="font-bold text-[13px]">{o.code}</span>
@@ -229,21 +229,21 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
     }))
     if (activeTab === "habilidades") return habItems.map(h => ({
       id: h.id, left: (
-        <td className="px-4 py-3 text-left align-top max-w-[380px] border-b border-border">
+        <td className="sticky left-0 z-10 bg-card px-4 py-3 text-left align-top min-w-[200px] max-w-[260px] border-b border-r border-border">
           <div className="text-[13px] font-semibold leading-snug">{h.text}</div>
         </td>
       ), checked: habChecked, setter: setHabChecked
     }))
     if (activeTab === "conocimientos") return conItems.map(c => ({
       id: c.id, left: (
-        <td className="px-4 py-3 text-left align-top max-w-[380px] border-b border-border">
+        <td className="sticky left-0 z-10 bg-card px-4 py-3 text-left align-top min-w-[200px] max-w-[260px] border-b border-r border-border">
           <div className="text-[13px] font-semibold leading-snug">{c.text}</div>
         </td>
       ), checked: conChecked, setter: setConChecked
     }))
     return actItems.map(a => ({
       id: a.id, left: (
-        <td className="px-4 py-3 text-left align-top max-w-[380px] border-b border-border">
+        <td className="sticky left-0 z-10 bg-card px-4 py-3 text-left align-top min-w-[200px] max-w-[260px] border-b border-r border-border">
           <div className="text-[13px] font-semibold leading-snug">{a.text}</div>
         </td>
       ), checked: actChecked, setter: setActChecked
@@ -331,12 +331,13 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
             </button>
           </div>
 
-          <div className="mb-12 overflow-hidden rounded-[14px] border border-border bg-card shadow-sm">
+          <div className="mb-12 scroll-hint-x rounded-[14px]">
+          <div className="overflow-hidden rounded-[14px] border border-border bg-card shadow-sm">
             <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] border-collapse">
+            <table className="w-full min-w-[640px] border-collapse">
               <thead>
                 <tr className="bg-background">
-                  <th className="px-4 py-3 text-xs font-bold text-muted-foreground text-left border-b border-border min-w-[320px]">
+                  <th className="sticky left-0 z-10 bg-background px-4 py-3 text-xs font-bold text-muted-foreground text-left border-b border-r border-border min-w-[200px]">
                     {TABS.find(t => t.key === activeTab)?.label}
                   </th>
                   {planUnits.map((u, i) => (
@@ -367,6 +368,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
               </tbody>
             </table>
             </div>
+          </div>
           </div>
         </>
       )}

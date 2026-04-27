@@ -286,29 +286,29 @@ export function LibroClasesContent() {
                     <div className="flex gap-1.5">
                       <button
                         onClick={() => setBulkAttendance(bloque.id, "presente")}
-                        className="rounded-[8px] border border-green-300 bg-status-green-bg px-2.5 py-1 text-[11px] font-bold text-status-green-text transition-colors hover:brightness-95"
+                        className="rounded-[8px] border border-green-300 bg-status-green-bg px-3 py-2 text-[11px] font-bold text-status-green-text transition-colors hover:brightness-95"
                         title="Marcar todos presentes"
                       >Todos P</button>
                       <button
                         onClick={() => setBulkAttendance(bloque.id, "ausente")}
-                        className="rounded-[8px] border border-red-300 bg-status-red-bg px-2.5 py-1 text-[11px] font-bold text-status-red-text transition-colors hover:brightness-95"
+                        className="rounded-[8px] border border-red-300 bg-status-red-bg px-3 py-2 text-[11px] font-bold text-status-red-text transition-colors hover:brightness-95"
                         title="Marcar todos ausentes"
                       >Todos A</button>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     {bloque.asistencia.map((est) => {
                       const state = ESTADOS.find((item) => item.key === est.estado)!
                       const isPie = pieMap.get(est.id)?.pie
                       return (
-                        <button key={est.id} onClick={() => toggleAsistencia(bloque.id, est.id)} className="w-full rounded-[12px] border border-border px-3 py-2.5 flex items-center justify-between hover:bg-background transition-colors text-left">
+                        <button key={est.id} onClick={() => toggleAsistencia(bloque.id, est.id)} className="w-full min-h-[48px] rounded-[12px] border border-border px-3 py-3 flex items-center justify-between hover:bg-background transition-colors text-left">
                           <span className="text-[13px] font-medium flex items-center gap-1.5">
                             {est.nombre}
                             {isPie && (
                               <span className="rounded bg-status-pie-bg px-1.5 py-0.5 text-[9px] font-bold text-status-pie-text border border-status-pie-border">PIE</span>
                             )}
                           </span>
-                          <span className={cn("px-2.5 py-1 rounded-full text-[11px] font-bold flex-shrink-0", state.cls)}>{state.label}</span>
+                          <span className={cn("px-2.5 py-1.5 rounded-full text-[11px] font-bold flex-shrink-0", state.cls)}>{state.label}</span>
                         </button>
                       )
                     })}

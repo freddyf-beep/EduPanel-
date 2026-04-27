@@ -297,12 +297,13 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
         </div>
 
         {/* Tabla */}
+        <div className="scroll-hint-x rounded-[14px]">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[860px] border-collapse">
+          <table className="w-full min-w-[640px] border-collapse">
             <thead>
               <tr className="bg-background">
                 {/* Header OA column */}
-                <th className="px-4 py-3 text-left text-[11px] font-bold text-muted-foreground uppercase tracking-wide border-b border-r border-border min-w-[220px] sticky left-0 bg-background z-10">
+                <th className="px-4 py-3 text-left text-[11px] font-bold text-muted-foreground uppercase tracking-wide border-b border-r border-border min-w-[180px] sticky left-0 bg-background z-10">
                   OA / Objetivo
                 </th>
                 {/* Header clases */}
@@ -420,6 +421,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
               )}
             </tbody>
           </table>
+        </div>
         </div>
       </div>
 

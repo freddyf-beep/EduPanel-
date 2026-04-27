@@ -44,8 +44,8 @@ export function PlanificacionesHub() {
 
   return (
     <div className="mx-auto max-w-[1320px] px-0 pt-2 sm:pt-4 lg:pt-8">
-      <div className="flex items-center justify-between mb-7 flex-wrap gap-3.5">
-        <h1 className="text-[22px] font-extrabold">Mis planificaciones</h1>
+      <div className="flex items-center justify-between mb-5 sm:mb-7 flex-wrap gap-3.5">
+        <h1 className="text-[18px] sm:text-[22px] font-extrabold">Mis planificaciones</h1>
       </div>
       
       <div className="mb-8 flex flex-col items-center rounded-[14px] border border-border bg-card p-5 text-center sm:p-8">

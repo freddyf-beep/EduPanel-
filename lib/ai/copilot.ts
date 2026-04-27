@@ -6,8 +6,60 @@
 //  • aplicar_cambios → extrae del chat qué cambiar y lo aplica como JSON
 // ═══════════════════════════════════════════════════════════════════════════
 
-export type CopilotMode = "crear_inicial" | "chat" | "aplicar_cambios"
+export type CopilotMode =
+  | "crear_inicial"
+  | "chat"
+  | "aplicar_cambios"
+  | "freddy_detallado"
+  | "regenerar_bloom"
+  | "regenerar_indicadores"
 export type AIProvider = "public" | "gemini" | "openai" | "anthropic" | "groq" | "compatible"
+
+export const PROMPT_MODE_LABELS: Record<CopilotMode, string> = {
+  crear_inicial: "Crear inicial",
+  chat: "Conversar",
+  aplicar_cambios: "Aplicar cambios",
+  freddy_detallado: "Detallado pedagógico",
+  regenerar_bloom: "Regenerar Bloom",
+  regenerar_indicadores: "Regenerar indicadores",
+}
+
+// ─── Tipos pedagógicos (metodología Freddy) ──────────────────────────────────
+
+export type NivelBloom = "BAJO" | "MEDIO" | "ALTO"
+export type CategoriaBloom = "Recordar" | "Comprender" | "Aplicar" | "Analizar" | "Evaluar" | "Crear"
+export type DimensionAprendizaje = "saber" | "saber_hacer" | "ser"
+export type TipoEvaluacion = "diagnostica" | "formativa" | "sumativa"
+
+export interface AnalisisBloom {
+  oaId: string
+  categoria: CategoriaBloom
+  nivel: NivelBloom
+  justificacion: string
+  verbosSugeridos: string[]
+}
+
+export interface ObjetivoMultinivel {
+  basico: string
+  intermedio: string
+  avanzado: string
+  recomendado: "basico" | "intermedio" | "avanzado"
+}
+
+export interface IndicadorEvaluacion {
+  id: string
+  texto: string
+  dimension: DimensionAprendizaje
+  nivelBloom: NivelBloom
+  oaId: string
+}
+
+export interface ActividadEvaluacion {
+  tipo: TipoEvaluacion
+  descripcion: string
+  criterios: string[]
+  alineacionMBE: string[]
+}
 
 // ─── Interfaces ───────────────────────────────────────────────────────────────
 
@@ -16,6 +68,8 @@ export interface StoredAiConfig {
   token: string
   model: string
   endpoint: string // solo para el proveedor "compatible"
+  promptExtra?: string
+  promptOverrides: Partial<Record<CopilotMode, string>>
 }
 
 export interface OAInput {
@@ -56,6 +110,10 @@ export interface LessonRequestBody {
   curso?: string
   asignatura?: string
   numeroClase?: number
+  totalClasesUnidad?: number
+  nivelCurricular?: string
+  duracionMinutos?: number
+  contextoProfesor?: string
   oas?: OAInput[]
   habilidades?: string[]
   actitudes?: string[]
@@ -65,11 +123,19 @@ export interface LessonRequestBody {
   claseActual?: ClaseInput | null
   unidad?: UnitInput | null
   chatHistory?: ChatTurnInput[]
+  estadoActual?: {
+    analisisBloom?: AnalisisBloom[]
+    objetivoMultinivel?: ObjetivoMultinivel
+    indicadoresEvaluacion?: IndicadorEvaluacion[]
+    actividadEvaluacion?: ActividadEvaluacion
+  }
   // BYOK
   modelProvider?: string
   customToken?: string
   customModel?: string
   customEndpoint?: string
+  customPrompt?: string
+  promptOverride?: string
 }
 
 export interface GeneratedLesson {
@@ -80,6 +146,10 @@ export interface GeneratedLesson {
   materiales: string[]
   tics: string[]
   adecuacion: string
+  analisisBloom?: AnalisisBloom[]
+  objetivoMultinivel?: ObjetivoMultinivel
+  indicadoresEvaluacion?: IndicadorEvaluacion[]
+  actividadEvaluacion?: ActividadEvaluacion
 }
 
 // ─── Configuración por defecto ────────────────────────────────────────────────
@@ -89,6 +159,8 @@ export const DEFAULT_AI_CONFIG: StoredAiConfig = {
   token: "",
   model: "gemini-2.0-flash",
   endpoint: "https://api.openai.com/v1",
+  promptExtra: "",
+  promptOverrides: {},
 }
 
 export const AI_PROVIDER_OPTIONS: Array<{
@@ -103,7 +175,7 @@ export const AI_PROVIDER_OPTIONS: Array<{
     value: "public",
     label: "EduPanel Público (Gratis)",
     defaultModel: "gemini-2.0-flash",
-    helper: "No requiere API key. Usa nuestra cuota compartida gratuita.",
+    helper: "No pide API key al docente cuando el servidor tiene GEMINI_API_KEY configurada. En local, si falta esa variable, usa Gemini con tu key personal.",
   },
   {
     value: "groq",
@@ -222,6 +294,84 @@ export function parseJsonResponse(text: string): Record<string, unknown> {
   }
 }
 
+function coerceAnalisisBloom(raw: unknown): AnalisisBloom[] | undefined {
+  if (!Array.isArray(raw)) return undefined
+  const validCategorias: CategoriaBloom[] = ["Recordar", "Comprender", "Aplicar", "Analizar", "Evaluar", "Crear"]
+  const validNiveles: NivelBloom[] = ["BAJO", "MEDIO", "ALTO"]
+  const out: AnalisisBloom[] = []
+  for (const item of raw) {
+    if (!item || typeof item !== "object") continue
+    const r = item as Record<string, unknown>
+    const oaId = cleanText(r.oaId)
+    if (!oaId) continue
+    const categoria = validCategorias.includes(r.categoria as CategoriaBloom) ? (r.categoria as CategoriaBloom) : "Comprender"
+    const nivel = validNiveles.includes(r.nivel as NivelBloom) ? (r.nivel as NivelBloom) : "MEDIO"
+    out.push({
+      oaId,
+      categoria,
+      nivel,
+      justificacion: cleanText(r.justificacion),
+      verbosSugeridos: normalizeList(r.verbosSugeridos),
+    })
+  }
+  return out.length > 0 ? out : undefined
+}
+
+function coerceObjetivoMultinivel(raw: unknown): ObjetivoMultinivel | undefined {
+  if (!raw || typeof raw !== "object") return undefined
+  const r = raw as Record<string, unknown>
+  const basico = cleanText(r.basico)
+  const intermedio = cleanText(r.intermedio)
+  const avanzado = cleanText(r.avanzado)
+  if (!basico && !intermedio && !avanzado) return undefined
+  const recomendadoRaw = cleanText(r.recomendado).toLowerCase()
+  const recomendado: ObjetivoMultinivel["recomendado"] =
+    recomendadoRaw === "basico" || recomendadoRaw === "intermedio" || recomendadoRaw === "avanzado"
+      ? recomendadoRaw
+      : "intermedio"
+  return { basico, intermedio, avanzado, recomendado }
+}
+
+function coerceIndicadoresEvaluacion(raw: unknown): IndicadorEvaluacion[] | undefined {
+  if (!Array.isArray(raw)) return undefined
+  const validDim: DimensionAprendizaje[] = ["saber", "saber_hacer", "ser"]
+  const validNiv: NivelBloom[] = ["BAJO", "MEDIO", "ALTO"]
+  const out: IndicadorEvaluacion[] = []
+  raw.forEach((item, idx) => {
+    if (!item || typeof item !== "object") return
+    const r = item as Record<string, unknown>
+    const texto = cleanText(r.texto)
+    if (!texto) return
+    const dimRaw = cleanText(r.dimension).toLowerCase().replace(/\s|-/g, "_")
+    const dimension = validDim.includes(dimRaw as DimensionAprendizaje) ? (dimRaw as DimensionAprendizaje) : "saber"
+    const nivelBloom = validNiv.includes(r.nivelBloom as NivelBloom) ? (r.nivelBloom as NivelBloom) : "MEDIO"
+    out.push({
+      id: cleanText(r.id) || `IND_${Date.now()}_${idx}`,
+      texto,
+      dimension,
+      nivelBloom,
+      oaId: cleanText(r.oaId),
+    })
+  })
+  return out.length > 0 ? out : undefined
+}
+
+function coerceActividadEvaluacion(raw: unknown): ActividadEvaluacion | undefined {
+  if (!raw || typeof raw !== "object") return undefined
+  const r = raw as Record<string, unknown>
+  const descripcion = cleanText(r.descripcion)
+  if (!descripcion) return undefined
+  const tipoRaw = cleanText(r.tipo).toLowerCase()
+  const tipo: TipoEvaluacion =
+    tipoRaw === "diagnostica" || tipoRaw === "sumativa" ? tipoRaw : "formativa"
+  return {
+    tipo,
+    descripcion,
+    criterios: normalizeList(r.criterios),
+    alineacionMBE: normalizeList(r.alineacionMBE),
+  }
+}
+
 export function coerceGeneratedLesson(raw: Record<string, unknown>): GeneratedLesson {
   return {
     objetivo: htmlToPlainText(raw.objetivo),
@@ -231,11 +381,24 @@ export function coerceGeneratedLesson(raw: Record<string, unknown>): GeneratedLe
     materiales: normalizeList(raw.materiales),
     tics: normalizeList(raw.tics),
     adecuacion: ensureHtmlBlock(raw.adecuacion, "<p>Sin sugerencias de adecuación por ahora.</p>"),
+    analisisBloom: coerceAnalisisBloom(raw.analisisBloom),
+    objetivoMultinivel: coerceObjetivoMultinivel(raw.objetivoMultinivel),
+    indicadoresEvaluacion: coerceIndicadoresEvaluacion(raw.indicadoresEvaluacion),
+    actividadEvaluacion: coerceActividadEvaluacion(raw.actividadEvaluacion),
   }
 }
 
 export function resolveMode(rawMode: string | undefined): CopilotMode {
-  if (rawMode === "chat" || rawMode === "aplicar_cambios" || rawMode === "crear_inicial") return rawMode
+  if (
+    rawMode === "chat" ||
+    rawMode === "aplicar_cambios" ||
+    rawMode === "crear_inicial" ||
+    rawMode === "freddy_detallado" ||
+    rawMode === "regenerar_bloom" ||
+    rawMode === "regenerar_indicadores"
+  ) {
+    return rawMode
+  }
   return "crear_inicial"
 }
 
@@ -249,6 +412,11 @@ export function normalizeAiConfig(input: unknown): StoredAiConfig {
     token: cleanText(raw.token),
     model: cleanText(raw.model) || getProviderMeta(provider).defaultModel,
     endpoint: cleanText(raw.endpoint) || DEFAULT_AI_CONFIG.endpoint,
+    promptExtra: cleanText(raw.promptExtra),
+    promptOverrides:
+      raw.promptOverrides && typeof raw.promptOverrides === "object"
+        ? raw.promptOverrides
+        : {},
   }
 }
 
@@ -306,65 +474,295 @@ function formatChatHistory(history: ChatTurnInput[] = []): string {
   const turns = history
     .map((t) => ({ role: t.role === "ai" ? "Asistente" : "Profesor", text: clipText(htmlToPlainText(t.text), 600) }))
     .filter((t) => t.text)
-    .slice(-12)
+    .slice(-24)
   if (turns.length === 0) return "No hay conversación previa."
   return turns.map((t) => `[${t.role}]: ${t.text}`).join("\n")
 }
 
+function sugerirNivelBloom(numeroClase: number, totalClases: number): { nivel: NivelBloom; recomendado: ObjetivoMultinivel["recomendado"] } {
+  const total = Math.max(totalClases, 1)
+  const ratio = numeroClase / total
+  if (ratio <= 0.34) return { nivel: "BAJO", recomendado: "basico" }
+  if (ratio <= 0.67) return { nivel: "MEDIO", recomendado: "intermedio" }
+  return { nivel: "ALTO", recomendado: "avanzado" }
+}
+
+const FREDDY_PROMPTS_OFICIALES = `
+PROMPT 1: Analisis del objetivo curricular.
+Rol: Actua como un asesor pedagogico experto en el curriculum escolar chileno y en la Taxonomia de Bloom revisada (Anderson y Krathwohl).
+Accion: Analiza el nivel taxonomico de la habilidad del objetivo curricular.
+Formato: categoria cognitiva, descripcion de la categoria, justificacion pedagogica, nivel cognitivo general (bajo, medio o alto) y razon de la clasificacion.
+
+PROMPT 2: Formulacion del objetivo de clase.
+Rol: Actua como especialista en diseno curricular y planificacion de clases en el sistema educativo chileno.
+Accion: Formula un objetivo de clase para un OA curricular, considerando nivel cognitivo, una habilidad, un conocimiento especifico y una actitud explicita.
+Formato: conocimiento, habilidad, actitud y objetivo final claro, preciso y centrado en el aprendizaje.
+
+PROMPT 3: Formulacion de indicadores de evaluacion.
+Rol: Actua como asesor pedagogico experto en evaluacion para el aprendizaje en el sistema escolar chileno.
+Accion: Disena indicadores derivados del objetivo de clase.
+Formato: minimo 3 y maximo 5 indicadores con verbo observable + contenido + condicion/contexto, cubriendo saber, saber hacer y ser.
+
+PROMPT 4: Diseno de una actividad de evaluacion alineada al monitoreo del aprendizaje.
+Rol: Actua como asesor pedagogico experto en curriculum escolar chileno, evaluacion formativa y Marco para la Buena Ensenanza.
+Accion: Disena una actividad de evaluacion alineada al OA, objetivo e indicadores, factible de aplicar, diversa en evidencias y alineada a MBE 4.1, 4.2 y 9.2.
+
+PROMPT 5: Omitido en el documento de Freddy.
+
+PROMPT 6: Diseno de una clase.
+Rol: Actua como asesor pedagogico experto en curriculum escolar chileno, evaluacion formativa y Marco para la Buena Ensenanza.
+Accion: Disena una clase completa en base al objetivo anterior.
+Formato: inicio con activacion de conocimientos previos, desarrollo activo y participativo, cierre con reflexion o aplicacion, evaluacion diagnostica/formativa/sumativa, estrategias didacticas activas, retroalimentacion y caracterizacion de estudiantes.
+`.trim()
+
+const OBJETIVO_CLASE_FREDDY = `
+REGLA FREDDY PARA EL OBJETIVO DE CLASE:
+El objetivo NO es un resumen de toda la clase. Debe ser una sola oracion precisa con esta formula:
+VERBO + CONTENIDO + CONTEXTO.
+
+- VERBO: un solo verbo cognitivo Bloom en infinitivo, acorde al nivel.
+  Basico: identificar, reconocer, describir, distinguir.
+  Intermedio: clasificar, relacionar, representar, aplicar.
+  Avanzado: crear, evaluar, argumentar, elaborar.
+- CONTENIDO: la materia concreta que se aprende. No copies el OA completo. Extrae el nucleo disciplinar de los OA e indicadores seleccionados.
+  Ejemplos de contenido: duracion del sonido; sonidos largos y cortos; cualidades del sonido; figuras musicales simples.
+- CONTEXTO: como se aprendera o demostrara. Normalmente comienza con "a traves de", "mediante" o "por medio de" y resume la estrategia real de la clase.
+  Ejemplos de contexto: escucha guiada; movimiento corporal; guia visual; juego musical; representacion visual o verbal.
+- Extension: idealmente 12 a 24 palabras; maximo 32 palabras.
+- No incluyas actitudes, evaluacion, MBE, materiales, listas de actividades ni varias acciones encadenadas.
+- No uses mas de un verbo principal. Si aparecen varias acciones, deja solo la accion cognitiva central.
+
+Ejemplos correctos:
+- Identificar sonidos largos y cortos a traves de la escucha guiada y la representacion visual.
+- Relacionar la duracion del sonido con figuras musicales simples mediante juegos de escucha y movimiento corporal.
+
+Ejemplo incorrecto:
+- Identificar sonidos largos y cortos mediante guias, dibujos, expresion oral, figuras musicales, participando con respeto y completando actividades.
+`.trim()
+
 // ═══════════════════════════════════════════════════════════════════════════
-// PROMPT 1: CREACIÓN INICIAL
-// Se llama UNA SOLA VEZ cuando la clase está vacía.
-// Devuelve JSON estructurado con todos los campos de la clase.
+// PROMPT 1: CREACIÓN INICIAL — metodología 6 pasos Freddy
+// Estructura objetivo personalizada: VERBO + CONTENIDO + CONTEXTO
+// Genera análisis Bloom + objetivo multinivel + indicadores + actividad eval +
+// inicio/desarrollo/cierre en una sola pasada (un round-trip).
 // ═══════════════════════════════════════════════════════════════════════════
 function buildCrearInicialPrompt(body: LessonRequestBody): string {
   const curso = cleanText(body.curso) || "curso no especificado"
   const asignatura = cleanText(body.asignatura) || "la asignatura"
+  const nivelCurricular = cleanText(body.nivelCurricular) || curso
   const habilidades = normalizeList(body.habilidades)
   const actitudes = normalizeList(body.actitudes)
   const continuity = cleanText(body.contextoAnterior)
   const teacherPrompt = cleanText(body.instruccionesAdicionales)
+  const contextoProfesor = cleanText(body.contextoProfesor) || teacherPrompt
+  const numeroClase = body.numeroClase ?? 1
+  const totalClases = body.totalClasesUnidad ?? 8
+  const duracion = body.duracionMinutos ?? 90
+  const sugerencia = sugerirNivelBloom(numeroClase, totalClases)
 
-  return `Actúa como un asesor pedagógico experto en el currículo escolar chileno, diseño didáctico innovador y la Taxonomía de Bloom revisada.
+  return `Eres un asesor pedagógico chileno especializado en el currículum oficial Mineduc y la Taxonomía de Bloom revisada. Acompañas al profesor Freddy Figueroa siguiendo su metodología de 6 pasos.
 
-DATOS DE ENTRADA:
+BASE OFICIAL DE LOS PROMPTS DE FREDDY:
+${FREDDY_PROMPTS_OFICIALES}
+
+INSTRUCCIONES MAESTRAS DEL PROFESOR:
+${cleanText(body.customPrompt) || "Sin instrucciones maestras adicionales."}
+
+CONTEXTO DE LA CLASE:
 - Asignatura: ${asignatura}
-- Curso: ${curso}
-- Número de clase: ${body.numeroClase ?? "sin número"}
-- OA curriculares:
+- Curso: ${curso} (nivel curricular: ${nivelCurricular})
+- Clase ${numeroClase} de ${totalClases} → progresión Bloom sugerida: nivel ${sugerencia.nivel} (recomendado: ${sugerencia.recomendado})
+- Duración: ${duracion} minutos
+- OA seleccionados:
 ${formatOAs(body.oas)}
 - Habilidades priorizadas: ${habilidades.length > 0 ? habilidades.join("; ") : "No especificadas."}
 - Actitudes priorizadas: ${actitudes.length > 0 ? actitudes.join("; ") : "No especificadas."}
-- Contexto de unidad:
+- Contexto de la unidad:
 ${formatUnitContext(body.unidad)}
 - Continuidad con clase anterior: ${continuity || "Primera clase de la unidad."}
-- Indicaciones específicas del profesor: ${teacherPrompt || "Ninguna."}
+- IDEA / CONTEXTO DEL PROFESOR (clave — todo gira en torno a esto): "${contextoProfesor || "(sin idea explícita)"}"
 
-PROCESO INTERNO OBLIGATORIO (realiza estos 5 pasos antes de escribir la respuesta):
-PASO 1: Analiza el nivel taxonómico de los OA (Bloom revisado). Determina qué habilidad cognitiva predomina.
-PASO 2: Formula el objetivo de clase: Habilidad + Contenido específico + Actitud explícita.
-PASO 3: Diseña 3 a 5 indicadores de evaluación: Verbo observable + Contenido + Condición o contexto.
-PASO 4: Diseña una actividad de evaluación formativa lúdica e innovadora que recoja evidencia del aprendizaje.
-PASO 5: Diseña los momentos de la clase con un gancho motivacional, actividades dinámicas y recursos atractivos.
+${OBJETIVO_CLASE_FREDDY}
 
-CRITERIOS DE CALIDAD:
-- El inicio debe activar conocimientos previos y abrir el propósito.
-- El desarrollo debe estar secuenciado paso a paso, con acciones del docente y del estudiante.
-- El cierre debe incluir síntesis y evidencia breve del aprendizaje.
-- La evaluación formativa debe estar integrada dentro del desarrollo o el cierre.
-- Materiales y TICs deben ser concretos y breves.
-- La adecuación debe ser específica y útil para el contexto PIE/DUA.
-- Usa solo HTML simple: <p>, <ul>, <li>, <b>, <br/>. No uses títulos redundantes como "Inicio:" dentro del campo inicio.
-- Sé altamente creativo: propón dinámicas atractivas, metodologías activas y recursos memorables.
+EJECUTA EN ORDEN LOS 6 PASOS DE LA METODOLOGÍA FREDDY:
 
-FORMATO DE RESPUESTA (solo JSON puro, sin texto adicional):
+PASO 1 — Análisis taxonómico Bloom de cada OA:
+Para CADA OA seleccionado, identifica:
+- categoría cognitiva (una de: Recordar / Comprender / Aplicar / Analizar / Evaluar / Crear)
+- nivel BAJO / MEDIO / ALTO
+- justificación pedagógica breve (1-2 líneas)
+- 5 a 8 verbos observables sugeridos para ese nivel
+
+PASO 2 — Objetivo de clase MULTINIVEL (estructura VERBO + CONTENIDO + CONTEXTO):
+Redacta TRES versiones del mismo objetivo, una por cada nivel Bloom:
+- "basico" — verbo cognitivo de nivel BAJO (recordar/comprender)
+- "intermedio" — verbo cognitivo de nivel MEDIO (aplicar/analizar)
+- "avanzado" — verbo cognitivo de nivel ALTO (evaluar/crear)
+Cada versión debe usar:
+  • Verbo: cognitivo Bloom apropiado al nivel
+  • Contenido: materia concreta de la clase, derivada de los OA/indicadores marcados
+  • Contexto: forma concreta de trabajo tomada de la idea del profesor "${contextoProfesor || "(usa el contexto curricular)"}"
+IMPORTANTE: las 3 versiones deben ser objetivos breves y precisos. No redactes un objetivo narrativo largo. No mezcles contenido con contexto: el contenido responde "que materia aprenden" y el contexto responde "como lo aprenderan o demostraran".
+Marca como "recomendado" la versión "${sugerencia.recomendado}" salvo que el contexto del profesor exija otro nivel.
+
+PASO 3 — Indicadores de evaluación (3 a 5):
+Cada indicador con estructura: Verbo observable + Contenido + Condición/contexto.
+Cubre las 3 dimensiones del aprendizaje:
+- "saber" (conceptual)
+- "saber_hacer" (procedimental)
+- "ser" (actitudinal)
+Asocia cada indicador a su oaId y al nivelBloom correspondiente.
+
+PASO 4 — Actividad de evaluación formativa:
+Diseña UNA actividad alineada al Marco para la Buena Enseñanza (MBE 4.1, 4.2 y 9.2). Incluye:
+- tipo: "formativa" (también puede ser "diagnostica" si es clase 1, o "sumativa" si es la última)
+- descripción narrativa de la actividad
+- 3-4 criterios observables
+- alineación MBE (lista de códigos)
+
+PASO 5 — (omitido en metodología Freddy)
+
+PASO 6 — Diseño de la clase (Inicio / Desarrollo / Cierre):
+Construye la clase en torno a la idea del profesor. Cada momento debe respetar:
+- INICIO: gancho motivacional + activación de conocimientos previos + presentación del propósito
+- DESARROLLO: secuencia paso a paso con acciones del docente y del estudiante, integrando la actividad de evaluación formativa
+- CIERRE: síntesis + metacognición breve + evidencia del aprendizaje + retroalimentación
+Materiales y TICs concretos. Adecuación PIE/DUA específica.
+
+CRITERIOS DE CALIDAD OBLIGATORIOS:
+- El campo "objetivo" final = exactamente la versión marcada por objetivoMultinivel.recomendado.
+- El objetivo final y cada objetivo multinivel deben obedecer estrictamente VERBO + CONTENIDO + CONTEXTO, en una sola frase de maximo 32 palabras.
+- El CONTENIDO debe ser la materia especifica de la clase, no el OA completo ni la actividad. El CONTEXTO debe ser la estrategia/metodologia concreta.
+- Sé altamente creativo y didáctico — propón dinámicas atractivas, metodologías activas, recursos memorables.
+- Usa solo HTML simple en inicio/desarrollo/cierre/adecuacion: <p>, <ul>, <li>, <b>, <br/>.
+- NO uses títulos redundantes ("Inicio:", "Desarrollo:") dentro de los campos.
+- "objetivo" y los 3 niveles del objetivoMultinivel son TEXTO PLANO (sin HTML).
+
+FORMATO DE RESPUESTA (solo JSON puro, sin texto adicional, sin code-fences):
 {
-  "objetivo": "",
-  "inicio": "",
-  "desarrollo": "",
-  "cierre": "",
-  "materiales": [],
-  "tics": [],
-  "adecuacion": ""
+  "analisisBloom": [
+    { "oaId": "OA1", "categoria": "Comprender", "nivel": "MEDIO", "justificacion": "...", "verbosSugeridos": ["..."] }
+  ],
+  "objetivoMultinivel": {
+    "basico": "...",
+    "intermedio": "...",
+    "avanzado": "...",
+    "recomendado": "${sugerencia.recomendado}"
+  },
+  "objetivo": "(igual a la versión recomendada)",
+  "indicadoresEvaluacion": [
+    { "id": "IND_1", "texto": "...", "dimension": "saber", "nivelBloom": "MEDIO", "oaId": "OA1" }
+  ],
+  "actividadEvaluacion": {
+    "tipo": "formativa",
+    "descripcion": "...",
+    "criterios": ["...", "..."],
+    "alineacionMBE": ["4.1", "4.2", "9.2"]
+  },
+  "inicio": "<p>...</p>",
+  "desarrollo": "<p>...</p>",
+  "cierre": "<p>...</p>",
+  "materiales": ["..."],
+  "tics": ["..."],
+  "adecuacion": "<p>...</p>"
+}`
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PROMPT FREDDY DETALLADO — versión expandida para tab Adec. curricular
+// Igual al crear_inicial pero los 3 momentos vienen ENRIQUECIDOS con
+// activación de conocimientos previos, modelado/práctica guiada/práctica
+// autónoma, síntesis + metacognición + retroalimentación formativa.
+// ═══════════════════════════════════════════════════════════════════════════
+function buildFreddyDetalladoPrompt(body: LessonRequestBody): string {
+  const base = buildCrearInicialPrompt(body)
+  return base.replace(
+    "PASO 6 — Diseño de la clase (Inicio / Desarrollo / Cierre):",
+    `PASO 6 — Diseño de la clase EN VERSIÓN PEDAGÓGICA FORMAL EXTENDIDA (formato Freddy detallado):
+
+INICIO debe contener explícitamente:
+  (a) gancho motivacional alineado al contexto del profesor
+  (b) activación de conocimientos previos (qué pregunta concreta hace el docente)
+  (c) presentación del propósito de aprendizaje (cómo lo enuncia)
+  (d) caracterización breve de los estudiantes y posibles barreras de acceso
+
+DESARROLLO debe contener explícitamente y en este orden:
+  (a) MODELADO — el docente muestra/ejemplifica
+  (b) PRÁCTICA GUIADA — el docente acompaña al curso
+  (c) PRÁCTICA AUTÓNOMA — los estudiantes aplican
+  (d) integración de la actividad de evaluación formativa con criterios observables
+  (e) adecuaciones DUA específicas (representación / acción / motivación)
+
+CIERRE debe contener explícitamente:
+  (a) síntesis de los aprendizajes
+  (b) pregunta METACOGNITIVA concreta para los estudiantes
+  (c) evidencia breve recogida del aprendizaje
+  (d) retroalimentación formativa hacia el grupo y proyección a la próxima clase
+
+Cada momento debe ser un párrafo (o lista) extenso, formal, redactado para una planificación oficial Mineduc. Usa HTML simple: <p>, <ul>, <li>, <b>.`
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PROMPT REGENERAR BLOOM — solo el objetivoMultinivel + analisisBloom
+// ═══════════════════════════════════════════════════════════════════════════
+function buildRegenerarBloomPrompt(body: LessonRequestBody): string {
+  const numeroClase = body.numeroClase ?? 1
+  const totalClases = body.totalClasesUnidad ?? 8
+  const sugerencia = sugerirNivelBloom(numeroClase, totalClases)
+  const contextoProfesor = cleanText(body.contextoProfesor) || cleanText(body.instruccionesAdicionales)
+
+  return `Eres un asesor pedagógico chileno experto en Bloom revisado. Reescribe SOLO el análisis Bloom y las 3 versiones multinivel del objetivo de clase.
+
+CONTEXTO:
+- Asignatura: ${cleanText(body.asignatura) || "asignatura"}
+- Curso: ${cleanText(body.curso) || "curso"}
+- Clase ${numeroClase} de ${totalClases} → recomendado: ${sugerencia.recomendado}
+- OA: ${formatOAs(body.oas)}
+- Idea del profesor: "${contextoProfesor || "(sin idea explícita)"}"
+
+${OBJETIVO_CLASE_FREDDY}
+
+Reescribe las 3 versiones como objetivos breves. El contenido debe ser la materia especifica de la clase; el contexto debe ser la forma concreta de trabajo. El campo recomendado debe mantenerse en "${sugerencia.recomendado}" salvo que el profesor pida explicitamente otro nivel.
+
+FORMATO (solo JSON):
+{
+  "analisisBloom": [
+    { "oaId": "...", "categoria": "...", "nivel": "...", "justificacion": "...", "verbosSugeridos": ["..."] }
+  ],
+  "objetivoMultinivel": {
+    "basico": "...", "intermedio": "...", "avanzado": "...",
+    "recomendado": "${sugerencia.recomendado}"
+  }
+}`
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PROMPT REGENERAR INDICADORES — solo indicadoresEvaluacion + actividadEvaluacion
+// ═══════════════════════════════════════════════════════════════════════════
+function buildRegenerarIndicadoresPrompt(body: LessonRequestBody): string {
+  const objetivoActual =
+    body.estadoActual?.objetivoMultinivel?.[body.estadoActual.objetivoMultinivel.recomendado] ||
+    cleanText(body.objetivoClase)
+
+  return `Eres un asesor pedagógico chileno. Diseña SOLO los indicadores de evaluación y la actividad de evaluación formativa para esta clase.
+
+CONTEXTO:
+- OA: ${formatOAs(body.oas)}
+- Objetivo de la clase: ${objetivoActual || "(no definido aún)"}
+- Idea del profesor: "${cleanText(body.contextoProfesor) || cleanText(body.instruccionesAdicionales) || "(sin idea explícita)"}"
+
+INDICADORES (3-5): Verbo observable + Contenido + Condición. Cubre saber/saber_hacer/ser.
+ACTIVIDAD EVAL: tipo formativa, alineación MBE 4.1/4.2/9.2, 3-4 criterios.
+
+FORMATO (solo JSON):
+{
+  "indicadoresEvaluacion": [
+    { "id": "IND_1", "texto": "...", "dimension": "saber", "nivelBloom": "MEDIO", "oaId": "..." }
+  ],
+  "actividadEvaluacion": {
+    "tipo": "formativa", "descripcion": "...", "criterios": ["..."], "alineacionMBE": ["4.1","4.2","9.2"]
+  }
 }`
 }
 
@@ -418,13 +816,15 @@ ${formatClaseActual(body.claseActual)}
 CONVERSACIÓN COMPLETA:
 ${formatChatHistory(body.chatHistory)}
 
+${OBJETIVO_CLASE_FREDDY}
+
 INSTRUCCIONES ESTRICTAS:
 1. Lee la conversación y determina qué campos de la clase el profesor quiso cambiar.
 2. Aplica SOLO esos cambios. Si un campo no fue discutido, devuélvelo idéntico a la clase actual.
 3. No inventes cambios que no fueron pedidos.
 4. No escribas explicaciones dentro de los campos de la clase. Solo el contenido didáctico.
 5. Usa HTML simple en inicio, desarrollo, cierre y adecuacion: <p>, <ul>, <li>, <b>, <br/>.
-6. El campo "objetivo" debe ser texto plano, sin HTML.
+6. El campo "objetivo" debe ser texto plano, sin HTML. Si lo modificas, debe seguir estrictamente VERBO + CONTENIDO + CONTEXTO y no superar 32 palabras.
 7. El campo "resumen_cambios" debe ser un mensaje breve y conversacional para el profesor (ej: "¡Listo! Modifiqué el inicio para que sea más breve y dinámico.").
 
 FORMATO DE RESPUESTA (solo JSON puro, sin texto adicional):
@@ -443,7 +843,12 @@ FORMATO DE RESPUESTA (solo JSON puro, sin texto adicional):
 // ─── Punto de entrada principal ───────────────────────────────────────────────
 
 export function buildCopilotPrompt(body: LessonRequestBody, mode: CopilotMode): string {
+  const override = cleanText(body.promptOverride)
+  if (override) return override
   if (mode === "crear_inicial") return buildCrearInicialPrompt(body)
   if (mode === "aplicar_cambios") return buildAplicarCambiosPrompt(body)
+  if (mode === "freddy_detallado") return buildFreddyDetalladoPrompt(body)
+  if (mode === "regenerar_bloom") return buildRegenerarBloomPrompt(body)
+  if (mode === "regenerar_indicadores") return buildRegenerarIndicadoresPrompt(body)
   return buildChatPrompt(body)
 }

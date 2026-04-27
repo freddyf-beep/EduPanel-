@@ -30,7 +30,12 @@ const toolsNavItems = [
   { href: "/perfil",              label: "Mi Perfil",           icon: UserCircle },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  mobile?: boolean;
+  onNavigate?: () => void;
+}
+
+export function Sidebar({ mobile, onNavigate }: SidebarProps) {
   const pathname = usePathname()
   const { user } = useAuth()
   const [perfil, setPerfil] = useState<PerfilUsuario | null>(null)
@@ -57,6 +62,7 @@ export function Sidebar() {
     return (
       <Link
         href={href}
+        onClick={onNavigate}
         className={cn(
           "flex items-center gap-2.5 rounded-[10px] px-3 py-2 text-[13px] font-medium transition-colors",
           isActive
@@ -71,7 +77,10 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="sticky top-[58px] flex h-[calc(100vh-58px)] w-[220px] flex-shrink-0 flex-col overflow-y-auto border-r border-border bg-card px-3 py-5">
+    <aside className={cn(
+      "flex flex-shrink-0 flex-col overflow-y-auto border-border bg-card px-3 py-5",
+      mobile ? "h-full w-full" : "hidden lg:flex sticky top-[58px] h-[calc(100vh-58px)] w-[220px] border-r"
+    )}>
       {/* Perfil */}
       <div className="mb-4 flex flex-col items-center gap-2 border-b border-border px-3 pb-5 pt-2">
         {user?.photoURL ? (
@@ -111,6 +120,7 @@ export function Sidebar() {
           <Link
             key={curso.nombre}
             href={buildUrl("/planificaciones", { curso: curso.nombre })}
+            onClick={onNavigate}
             className={cn(
               "flex items-center gap-2.5 rounded-[10px] px-3 py-1.5 text-[12px] font-medium transition-colors",
               pathname.includes(`curso=${encodeURIComponent(curso.nombre)}`)

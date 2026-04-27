@@ -478,12 +478,13 @@ export function CalificacionesContent() {
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-b-2xl border border-t-0 border-border bg-card animate-fade-up">
+        <div className="scroll-hint-x rounded-b-2xl border border-t-0 border-border animate-fade-up">
+          <div className="overflow-x-auto bg-card rounded-b-2xl">
           <table className="w-full border-collapse" style={{ minWidth: `${300 + evaluacionesFiltradas.length * 90}px` }}>
             <thead>
               <tr className="bg-background">
                 <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-muted-foreground w-8">N°</th>
-                <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-muted-foreground min-w-[200px]">Estudiante</th>
+                <th className="sticky left-0 z-10 bg-background whitespace-nowrap border-b border-r border-border px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-muted-foreground min-w-[180px]">Estudiante</th>
                 {evaluacionesFiltradas.map(ev => (
                   <th key={ev.id} className="whitespace-nowrap border-b border-border px-4 py-3 text-center">
                     <div className="inline-flex items-center gap-1">
@@ -516,7 +517,7 @@ export function CalificacionesContent() {
                     estudiante.hasPie && "bg-status-pie-bg/30"
                   )}>
                     <td className="px-4 py-3 text-[13px] text-muted-foreground">{estudiante.orden ?? idx + 1}</td>
-                    <td className="px-4 py-3 text-[13px]">
+                    <td className="sticky left-0 z-10 bg-card border-r border-border px-4 py-3 text-[13px]">
                       <span className="font-medium">{estudiante.name}</span>
                       {estudiante.hasPie && (
                         <span className="ml-2 inline-block rounded bg-status-pie-bg px-1.5 py-0.5 align-middle text-[10px] font-bold text-status-pie-text border border-status-pie-border">
@@ -574,6 +575,7 @@ export function CalificacionesContent() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

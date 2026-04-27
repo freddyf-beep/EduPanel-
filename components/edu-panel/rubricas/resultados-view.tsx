@@ -144,16 +144,16 @@ export function ResultadosView({ rubricaId }: Props) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
-          className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors"
+          className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors flex-shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <div className="flex-1">
-          <h1 className="text-[20px] font-extrabold text-foreground">Resultados</h1>
-          <p className="text-[12px] text-muted-foreground">{rubrica.nombre} · {rubrica.curso}</p>
+        <div className="flex-1 min-w-0 order-first sm:order-none w-full sm:w-auto">
+          <h1 className="text-[18px] sm:text-[20px] font-extrabold text-foreground">Resultados</h1>
+          <p className="text-[12px] text-muted-foreground truncate">{rubrica.nombre} · {rubrica.curso}</p>
         </div>
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "evaluacion", rubricaId }, asignatura)))}
@@ -165,10 +165,11 @@ export function ResultadosView({ rubricaId }: Props) {
         <button
           onClick={handleExportarWord}
           disabled={exportando}
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 disabled:opacity-50 ml-auto sm:ml-0"
         >
           {exportando ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          Exportar Word
+          <span className="hidden sm:inline">Exportar Word</span>
+          <span className="sm:hidden">Word</span>
         </button>
       </div>
 
@@ -211,39 +212,42 @@ export function ResultadosView({ rubricaId }: Props) {
           </div>
 
           {/* Promedio por criterio */}
-          <div className="bg-card border border-border rounded-[14px] p-5">
+          <div className="bg-card border border-border rounded-[14px] p-4 sm:p-5">
             <h2 className="text-[14px] font-bold text-foreground mb-3">Promedio por criterio</h2>
-            <div className="space-y-2">
+            <div className="space-y-3 sm:space-y-2">
               {criterioStats.map(cs => (
-                <div key={cs.nombre} className="flex items-center gap-3">
+                <div key={cs.nombre} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] text-muted-foreground truncate">{cs.parte}</p>
+                    <p className="text-[11px] text-muted-foreground truncate">{cs.parte}</p>
                     <p className="text-[13px] font-medium text-foreground truncate">{cs.nombre}</p>
                   </div>
-                  <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary rounded-full transition-all"
-                      style={{ width: `${(cs.promedio / 4) * 100}%` }}
-                    />
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 sm:flex-initial sm:w-32 h-2 bg-muted rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-primary rounded-full transition-all"
+                        style={{ width: `${(cs.promedio / 4) * 100}%` }}
+                      />
+                    </div>
+                    <span className="text-[12px] font-semibold tabular-nums w-8 text-right flex-shrink-0">
+                      {cs.promedio.toFixed(1)}
+                    </span>
                   </div>
-                  <span className="text-[12px] font-semibold tabular-nums w-8 text-right">
-                    {cs.promedio.toFixed(1)}
-                  </span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Tabla de alumnos */}
+          <div className="scroll-hint-x rounded-[14px]">
           <div className="bg-card border border-border rounded-[14px] overflow-hidden">
-            <div className="px-5 py-3 border-b border-border">
+            <div className="px-4 sm:px-5 py-3 border-b border-border">
               <h2 className="text-[14px] font-bold text-foreground">Notas por alumno</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-[12px]">
+              <table className="w-full text-[12px] min-w-[640px]">
                 <thead>
                   <tr className="border-b border-border bg-muted/20">
-                    <th className="text-left px-4 py-2.5 font-semibold text-muted-foreground">Alumno</th>
+                    <th className="sticky left-0 z-10 bg-muted/20 text-left px-4 py-2.5 font-semibold text-muted-foreground border-r border-border min-w-[160px]">Alumno</th>
                     <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Grupo</th>
                     <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Puntaje</th>
                     <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Nota</th>
@@ -259,7 +263,7 @@ export function ResultadosView({ rubricaId }: Props) {
                       const aprobado = nota >= 4.0
                       return (
                         <tr key={est.estudianteId} className="border-b border-border hover:bg-muted/30">
-                          <td className="px-4 py-2.5 font-medium text-foreground">
+                          <td className="sticky left-0 z-10 bg-card border-r border-border px-4 py-2.5 font-medium text-foreground">
                             {est.nombre}
                             {est.hasPie && (
                               <span className="ml-1.5 text-[9px] bg-blue-100 text-blue-700 rounded px-1 font-medium">PIE</span>
@@ -286,6 +290,7 @@ export function ResultadosView({ rubricaId }: Props) {
                 </tbody>
               </table>
             </div>
+          </div>
           </div>
         </>
       )}

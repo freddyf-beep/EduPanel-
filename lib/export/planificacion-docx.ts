@@ -97,6 +97,12 @@ function sectionHeader(text: string): Paragraph {
   })
 }
 
+function unidadTitle(unidad: UnidadExport): string {
+  const nombre = (unidad.nombre || "").trim()
+  if (/^unidad\b/i.test(nombre)) return nombre
+  return `Unidad ${unidad.numero} — ${nombre || "Sin nombre"}`
+}
+
 // Tabla de rúbrica de evaluación
 function rubricTable(
   criterios: Array<{ criterio: string; logrado: string; parcial: string; proximo: string }>
@@ -171,8 +177,7 @@ export function generarPlanificacionDocx(data: ExportData): Document {
 
   // Por cada unidad
   for (const unidad of data.unidades) {
-    children.push(subtitle(`Unidad ${String(unidad.numero).padStart(2, "0")}`))
-    children.push(subtitle(unidad.nombre || "Sin nombre"))
+    children.push(subtitle(unidadTitle(unidad)))
     children.push(spacer())
 
     // Objetivos basales
@@ -307,11 +312,21 @@ export function htmlToPlainTextForExport(html: string): string {
     .replace(/<\/li>/gi, "\n")
     .replace(/<li>/gi, "- ")
     .replace(/<[^>]+>/g, "")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&mdash;/g, "—")
+    .replace(/&ndash;/g, "–")
+    .replace(/&hellip;/g, "…")
+    .replace(/&ldquo;/g, "“")
+    .replace(/&rdquo;/g, "”")
+    .replace(/&lsquo;/g, "‘")
+    .replace(/&rsquo;/g, "’")
     .replace(/\n{3,}/g, "\n\n")
     .trim()
 }

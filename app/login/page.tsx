@@ -20,9 +20,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
       <div className="max-w-md w-full bg-card rounded-[20px] shadow-xl p-8 text-center border border-border">
-        <div className="w-16 h-16 bg-pink-light text-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <BookOpen className="w-8 h-8" />
-        </div>
+        <img src="/logos/logo-3.png" alt="EduPanel" className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-sm object-contain" />
         <h1 className="text-2xl font-extrabold mb-2">Bienvenido a EduPanel</h1>
         <p className="text-muted-foreground mb-8">Inicia sesión para gestionar tus clases y planificaciones.</p>
 
