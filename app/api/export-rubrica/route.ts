@@ -409,7 +409,7 @@ export async function POST(req: NextRequest) {
     const body: {
       rubrica: RubricaTemplate
       evaluacion: EvaluacionRubrica
-      modo?: "grupo" | "alumno"
+      modo?: "grupo" | "alumno" | "listado"
       estudianteId?: string
       profesorNombre?: string
       colegio?: string
@@ -441,6 +441,91 @@ export async function POST(req: NextRequest) {
       })
       const buf = await Packer.toBuffer(doc)
       const filename = `${safeFilename(`rubrica_${alumnoEst.nombre}`)}.docx`
+      return new NextResponse(buf, {
+        headers: {
+          "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "Content-Disposition": `attachment; filename="${filename}"`,
+        },
+      })
+    }
+
+    // ── Modo "listado": tabla única con todos los alumnos ───────────────────
+    if (modo === "listado") {
+      const header = cabeceraEscuela({ rubrica, profesorNombre, colegio, logoBase64 })
+
+      // Tabla de alumnos
+      const filas: TableRow[] = [
+        new TableRow({
+          tableHeader: true,
+          children: [
+            celda("Grupo",      { bold: true, bg: "D9D9D9", width: 20, size: 9 }),
+            celda("Alumno",     { bold: true, bg: "D9D9D9", width: 40, size: 9 }),
+            celda("PIE",        { bold: true, bg: "D9D9D9", width: 8,  centro: true, size: 9 }),
+            celda("Puntaje",    { bold: true, bg: "D9D9D9", width: 17, centro: true, size: 9 }),
+            celda("Nota",       { bold: true, bg: "D9D9D9", width: 15, centro: true, size: 9 }),
+          ],
+        }),
+      ]
+
+      for (const grupo of evaluacion.grupos) {
+        for (const est of grupo.estudiantes) {
+          const pts  = calcPuntaje(est.puntajes, rubrica.partes)
+          const nota = calcNota(pts, rubrica.puntajeMaximo, est)
+          filas.push(
+            new TableRow({
+              children: [
+                celda(grupo.nombre,                    { width: 20, size: 9 }),
+                celda(est.nombre,                      { width: 40, size: 9 }),
+                celda(est.hasPie ? "✓" : "",           { width: 8,  centro: true, size: 9 }),
+                celda(`${pts} / ${rubrica.puntajeMaximo}`, { width: 17, centro: true, size: 9 }),
+                celda(nota.toFixed(1),                 {
+                  width: 15, centro: true, bold: true, size: 10,
+                  color: nota >= 4.0 ? "375623" : "9C0006",
+                }),
+              ],
+            })
+          )
+        }
+      }
+
+      const tablaListado = new Table({
+        width: { size: 100, type: WidthType.PERCENTAGE },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        borders: {
+          top:    { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+          bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+          left:   { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+          right:  { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+        } as any,
+        rows: filas,
+      })
+
+      // Totales globales al pie
+      const todosLosEst = evaluacion.grupos.flatMap(g => g.estudiantes)
+      const promedio = todosLosEst.length
+        ? todosLosEst.reduce((sum, e) => {
+            const n = calcNota(calcPuntaje(e.puntajes, rubrica.partes), rubrica.puntajeMaximo, e)
+            return sum + n
+          }, 0) / todosLosEst.length
+        : 0
+      const aprobados = todosLosEst.filter(e =>
+        calcNota(calcPuntaje(e.puntajes, rubrica.partes), rubrica.puntajeMaximo, e) >= 4.0
+      ).length
+
+      const resumen = new Paragraph({
+        children: [
+          new TextRun({ text: `Total: ${todosLosEst.length} alumnos`, size: 18, font: "Calibri" }),
+          new TextRun({ text: `   ·   Promedio: ${promedio.toFixed(1)}`, bold: true, size: 18, font: "Calibri" }),
+          new TextRun({ text: `   ·   Aprobados: ${aprobados}/${todosLosEst.length}`, size: 18, font: "Calibri" }),
+        ],
+      })
+
+      const elements = [...header, tablaListado, new Paragraph({ text: "" }), resumen]
+      const doc = new Document({
+        sections: [{ properties: { page: { margin: pageMargin } }, children: elements }],
+      })
+      const buf = await Packer.toBuffer(doc)
+      const filename = `${safeFilename(`lista_notas_${rubrica.nombre}_${rubrica.curso}`)}.docx`
       return new NextResponse(buf, {
         headers: {
           "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

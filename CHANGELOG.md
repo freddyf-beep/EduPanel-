@@ -109,8 +109,9 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
-## v1.0.12 - 28/04/2026 15:00
+## v1.0.12 - 28/04/2026 15:58
 CHANGELOG.md
+app/api/export-rubrica/route.ts
 components/edu-panel/rubricas/evaluacion-view.tsx
-lib/rubricas.ts
+components/edu-panel/rubricas/resultados-view.tsx
 

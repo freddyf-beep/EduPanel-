@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
-import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, List } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes } from "@/lib/estudiantes"
+import { auth } from "@/lib/firebase"
+import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
 import {
   cargarRubrica, cargarEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
@@ -31,6 +33,12 @@ export function ResultadosView({ rubricaId }: Props) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [exportando, setExportando] = useState(false)
+  const [exportandoListado, setExportandoListado] = useState(false)
+  const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
+
+  useEffect(() => {
+    cargarInfoColegio().then(c => { if (c) setInfoColegio(c) }).catch(() => {})
+  }, [])
 
   useEffect(() => {
     Promise.all([cargarRubrica(rubricaId), cargarEvaluacion(rubricaId)])
@@ -83,6 +91,33 @@ export function ResultadosView({ rubricaId }: Props) {
       setError(e instanceof Error ? e.message : "Error")
     } finally {
       setExportando(false)
+    }
+  }
+
+  const handleExportarListado = async () => {
+    if (!rubrica || !evaluacion) return
+    setExportandoListado(true)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
+    try {
+      const res = await fetch("/api/export-rubrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rubrica, evaluacion, modo: "listado", profesorNombre, colegio, logoBase64 }),
+      })
+      if (!res.ok) throw new Error("Error al generar Word")
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `lista_notas_${rubrica.nombre}_${rubrica.curso}.docx`.replace(/\s+/g, "_")
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al exportar listado")
+    } finally {
+      setExportandoListado(false)
     }
   }
 
@@ -163,9 +198,19 @@ export function ResultadosView({ rubricaId }: Props) {
           Evaluar
         </button>
         <button
+          onClick={handleExportarListado}
+          disabled={exportandoListado}
+          title="Descargar Word con el listado de notas de todos los alumnos"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50 ml-auto sm:ml-0"
+        >
+          {exportandoListado ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <List className="w-3.5 h-3.5" />}
+          <span className="hidden sm:inline">Lista notas</span>
+          <span className="sm:hidden">Lista</span>
+        </button>
+        <button
           onClick={handleExportarWord}
           disabled={exportando}
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 disabled:opacity-50 ml-auto sm:ml-0"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 disabled:opacity-50"
         >
           {exportando ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
           <span className="hidden sm:inline">Exportar Word</span>

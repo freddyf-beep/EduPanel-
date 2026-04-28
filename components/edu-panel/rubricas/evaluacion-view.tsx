@@ -49,6 +49,7 @@ export function EvaluacionView({ rubricaId }: Props) {
   const [guardandoManual, setGuardandoManual] = useState(false)
   const [guardadoOk, setGuardadoOk] = useState(false)
   const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
+  const [exportandoListado, setExportandoListado] = useState(false)
   const [panelAlumno, setPanelAlumno] = useState(false)
   const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
   const [error, setError] = useState("")
@@ -333,6 +334,33 @@ export function EvaluacionView({ rubricaId }: Props) {
     }
   }
 
+  const handleExportarListado = async () => {
+    if (!rubrica || !evaluacion) return
+    setExportandoListado(true)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
+    try {
+      const res = await fetch("/api/export-rubrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rubrica, evaluacion, modo: "listado", profesorNombre, colegio, logoBase64 }),
+      })
+      if (!res.ok) throw new Error("Error al generar el Word")
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `lista_notas_${rubrica.nombre}_${rubrica.curso}.docx`.replace(/\s+/g, "_")
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al exportar listado")
+    } finally {
+      setExportandoListado(false)
+    }
+  }
+
   const handleHojaImprimible = () => {
     if (!rubrica || !evaluacion) return
     abrirHojaEvaluacionImprimible({
@@ -423,6 +451,16 @@ export function EvaluacionView({ rubricaId }: Props) {
           <Download className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Por alumno</span>
           <span className="sm:hidden">Alumno</span>
+        </button>
+        <button
+          onClick={handleExportarListado}
+          disabled={exportandoListado}
+          title="Descargar Word con el listado de notas de todos los alumnos"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
+        >
+          {exportandoListado ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+          <span className="hidden sm:inline">Lista notas</span>
+          <span className="sm:hidden">Lista</span>
         </button>
         <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
