@@ -12,7 +12,8 @@ import {
 import { cn } from "@/lib/utils"
 import {
   getUnidadCompleta, guardarVerUnidad, cargarVerUnidad, guardarPlanificacion, cargarPlanificacion, buildMatrixCellKey, buildOfficialOAId, buildOfficialElementoId, emptyMatrizSeleccion,
-  initOAs, initElems, mergeOAs, mergeElementos, applyPlanSelection, cargarActividadClase
+  initOAs, initElems, mergeOAs, mergeElementos, applyPlanSelection, cargarActividadClase,
+  cargarCronogramaUnidad, guardarCronogramaUnidad
 } from "@/lib/curriculo"
 import type {
   Unidad, OAEditado, IndicadorEditado,
@@ -28,11 +29,13 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 // ─── Modal OA + Indicadores (estilo Lirmi) ────────────────────────────────────
-function ModalOA({ oas, cursoParam, onClose, onChange }: {
+function ModalOA({ oas, cursoParam, onClose, onChange, onDelOACascade }: {
   oas: OAEditado[]
   cursoParam: string
   onClose: () => void
   onChange: (v: OAEditado[]) => void
+  /** Callback opcional: limpia referencias del oaId borrado en cronograma + actividades */
+  onDelOACascade?: (oaId: string) => Promise<void> | void
 }) {
   const [sel, setSel]           = useState<OAEditado | null>(oas[0] || null)
   const [editOA, setEditOA]     = useState<string | null>(null)
@@ -71,7 +74,17 @@ function ModalOA({ oas, cursoParam, onClose, onChange }: {
     upd([...oas, nw]); setSel(nw); setNuevoOA(""); setShowNewOA(false)
   }
 
-  const delOA  = (id: string) => { const n = oas.filter(o => o.id !== id); upd(n); setSel(n[0] || null) }
+  const delOA  = (id: string) => {
+    const n = oas.filter(o => o.id !== id)
+    upd(n)
+    setSel(n[0] || null)
+    // Cascade: limpiar referencias en cronograma_unidad y actividades_clase
+    if (onDelOACascade) {
+      Promise.resolve(onDelOACascade(id)).catch(err => {
+        console.warn("[ModalOA] No pude limpiar referencias en cascade:", err)
+      })
+    }
+  }
   const delInd = (oaId: string, indId: string) =>
     upd(oas.map(o => o.id === oaId ? { ...o, indicadores: o.indicadores.filter(i => i.id !== indId) } : o))
 
@@ -419,6 +432,18 @@ function VerUnidadInner() {
     }, 2500)
     return () => clearTimeout(timer);
   }, [descripcion, contextoDocente, objetivoDocente, horas, clases, oas, habilidades, conocimientos, actitudes, actividades])
+
+  // ── Warn al salir con cambios sin guardar ──
+  useEffect(() => {
+    const isDirty = saveStatus === "saving_silent" || saving
+    if (!isDirty) return
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = "Tienes cambios sin guardar. ¿Seguro que quieres salir?"
+    }
+    window.addEventListener("beforeunload", handler)
+    return () => window.removeEventListener("beforeunload", handler)
+  }, [saveStatus, saving])
 
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -928,7 +953,22 @@ function VerUnidadInner() {
       )}
 
       {/* Modales de currículo */}
-      {modalOA  && <ModalOA oas={oas} cursoParam={cursoParam} onClose={() => setModalOA(false)} onChange={setOas} />}
+      {modalOA  && <ModalOA oas={oas} cursoParam={cursoParam} onClose={() => setModalOA(false)} onChange={setOas}
+        onDelOACascade={async (oaId) => {
+          // Limpiar referencia del OA borrado en cronograma_unidad
+          try {
+            const cron = await cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam)
+            if (cron && (cron.clases || []).some(c => (c.oaIds || []).includes(oaId))) {
+              const clasesLimpias = (cron.clases || []).map(c => ({
+                ...c, oaIds: (c.oaIds || []).filter(x => x !== oaId)
+              }))
+              await guardarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam, cron.totalClases || clasesLimpias.length, clasesLimpias)
+            }
+          } catch (e) {
+            console.warn("[verUnidad] No pude limpiar cronograma tras borrar OA:", e)
+          }
+        }}
+      />}
       {modalHab && <ModalElementos titulo="Habilidades" tipo="hab" elementos={habilidades} cursoParam={cursoParam} onClose={() => setModalHab(false)} onChange={setHabilidades} />}
       {modalCon && <ModalElementos titulo="Conocimientos" tipo="con" elementos={conocimientos} cursoParam={cursoParam} onClose={() => setModalCon(false)} onChange={setConocimientos} />}
       {modalAct && <ModalElementos titulo="Actitudes" tipo="act" elementos={actitudes} cursoParam={cursoParam} onClose={() => setModalAct(false)} onChange={setActitudes} />}

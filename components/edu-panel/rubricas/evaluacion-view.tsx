@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X
+  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer
 } from "lucide-react"
+import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
@@ -311,6 +312,16 @@ export function EvaluacionView({ rubricaId }: Props) {
     }
   }
 
+  const handleHojaImprimible = () => {
+    if (!rubrica || !evaluacion) return
+    abrirHojaEvaluacionImprimible({
+      rubrica,
+      evaluacion,
+      colegio: infoColegio,
+      profesorNombre: auth?.currentUser?.displayName ?? "",
+    })
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40 gap-2 text-muted-foreground text-[13px]">
@@ -347,6 +358,15 @@ export function EvaluacionView({ rubricaId }: Props) {
           <h1 className="text-[16px] sm:text-[18px] font-extrabold text-foreground truncate">{rubrica.nombre}</h1>
           <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
         </div>
+        <button
+          onClick={handleHojaImprimible}
+          title="Abrir hoja imprimible en blanco para marcar a mano durante la clase"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
+        >
+          <Printer className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Hoja en blanco</span>
+          <span className="sm:hidden">Hoja</span>
+        </button>
         <button
           onClick={handleExportarGrupo}
           disabled={guardandoExport}

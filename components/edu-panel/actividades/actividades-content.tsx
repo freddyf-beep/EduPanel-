@@ -1027,6 +1027,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         desarrolloFormal: actividad.desarrolloFormal,
         indicadoresPorOa: actividad.indicadoresPorOa,
       })
+      ignoreNextSaveRef.current = true
       setActividad(p => ({ ...p, estado: "planificada" }))
       setSaveStatus("saved")
       setTimeout(() => setSaveStatus("idle"), 3000)
@@ -1705,15 +1706,15 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                       <div className="flex flex-col gap-3">
                         <div>
                           <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1 block">Inicio</label>
-                          <RichArea value={actividad.inicio || ""} onChange={v => setActividad(p => ({ ...p, inicio: v }))} placeholder="¿Cómo empezará la clase?" rows={6} />
+                          <RichArea key="inicio" value={actividad.inicio || ""} onChange={v => setActividad(p => ({ ...p, inicio: v }))} placeholder="¿Cómo empezará la clase?" rows={6} />
                         </div>
                         <div>
                           <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1 block">Desarrollo</label>
-                          <RichArea value={actividad.desarrollo || ""} onChange={v => setActividad(p => ({ ...p, desarrollo: v }))} placeholder="Actividades principales de la clase…" rows={12} />
+                          <RichArea key="desarrollo" value={actividad.desarrollo || ""} onChange={v => setActividad(p => ({ ...p, desarrollo: v }))} placeholder="Actividades principales de la clase…" rows={12} />
                         </div>
                         <div>
                           <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-1 block">Cierre</label>
-                          <RichArea value={actividad.cierre || ""} onChange={v => setActividad(p => ({ ...p, cierre: v }))} placeholder="¿Cómo cerrará la clase?" rows={6} />
+                          <RichArea key="cierre" value={actividad.cierre || ""} onChange={v => setActividad(p => ({ ...p, cierre: v }))} placeholder="¿Cómo cerrará la clase?" rows={6} />
                         </div>
                       </div>
                     ) : (
@@ -1725,7 +1726,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                               Espacio para registrar adecuaciones curriculares de esta sesión (PIE/DUA).
                             </p>
                           </div>
-                          <RichArea value={actividad.adecuacion || ""} onChange={v => setActividad(p => ({ ...p, adecuacion: v }))} placeholder="Redactar adecuaciones curriculares..." rows={8} />
+                          <RichArea key="adecuacion" value={actividad.adecuacion || ""} onChange={v => setActividad(p => ({ ...p, adecuacion: v }))} placeholder="Redactar adecuaciones curriculares..." rows={8} />
                         </div>
 
                         <div className="rounded-[12px] border border-border bg-card p-4">

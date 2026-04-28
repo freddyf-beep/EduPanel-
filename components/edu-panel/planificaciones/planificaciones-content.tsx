@@ -200,6 +200,18 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
     return () => clearTimeout(timer);
   }, [units])
 
+  // ── Warn al salir con cambios sin guardar ──
+  useEffect(() => {
+    const isDirty = saveStatus === "saving_silent" || saving
+    if (!isDirty) return
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = "Tienes cambios sin guardar. ¿Seguro que quieres salir?"
+    }
+    window.addEventListener("beforeunload", handler)
+    return () => window.removeEventListener("beforeunload", handler)
+  }, [saveStatus, saving])
+
   // ── Guardar plan ──────────────────────────────────────────────────────────
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -353,10 +365,10 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
           const clasesExport = []
           for (let claseNum = 1; claseNum <= 30; claseNum++) {
             const actividad = await cargarActividadClase(curso, unidadId, claseNum, ASIGNATURA).catch(() => null)
-            if (!actividad) break
+            if (!actividad) continue
             // Solo exportar si tiene algún contenido relevante
             const tieneContenido = actividad.objetivo || actividad.inicio || actividad.desarrollo || actividad.cierre
-            if (!tieneContenido) break
+            if (!tieneContenido) continue
             const oasOcupados = (verUnidad?.oas || [])
               .filter(oa => (actividad.oaIds || []).includes(oa.id))
               .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())

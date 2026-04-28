@@ -109,32 +109,11 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
-## v1.0.12 - 27/04/2026 10:31
+## v1.0.12 - 28/04/2026 10:08
 CHANGELOG.md
-app/api/generar-clase/route.ts
-app/globals.css
-app/layout.tsx
-app/login/page.tsx
 components/edu-panel/actividades/actividades-content.tsx
-components/edu-panel/calificaciones/calificaciones-content.tsx
-components/edu-panel/cronograma-unidad/cronograma-unidad-content.tsx
-components/edu-panel/cronograma/cronograma-content.tsx
-components/edu-panel/dashboard/dashboard-content.tsx
-components/edu-panel/libro-clases/libro-clases-content.tsx
-components/edu-panel/perfil-360/perfil-360-content.tsx
 components/edu-panel/planificaciones/planificaciones-content.tsx
-components/edu-panel/planificaciones/planificaciones-hub.tsx
-components/edu-panel/planificaciones/planificaciones-matriz.tsx
 components/edu-panel/rubricas/evaluacion-view.tsx
-components/edu-panel/rubricas/resultados-view.tsx
-components/edu-panel/rubricas/rubrica-import.tsx
-components/edu-panel/sidebar.tsx
-components/edu-panel/soporte/soporte-content.tsx
 components/edu-panel/ver-unidad/ver-unidad-content.tsx
-components/edu-panel/version.ts
-lib/ai/copilot.ts
 lib/curriculo.ts
-lib/export/planificacion-docx.ts
-public/icon.svg
-version.txt
 

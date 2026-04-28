@@ -23,6 +23,28 @@ import {
   collection, query, orderBy, serverTimestamp, where
 } from "firebase/firestore"
 
+// ─── Helper: filtrar undefined recursivamente antes de setDoc ────────────────
+// Firestore rechaza undefined silenciosamente. Esto preserva FieldValue
+// (serverTimestamp), Timestamps, y filtra arrays/objetos anidados.
+function stripUndefined<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map(stripUndefined).filter(v => v !== undefined) as unknown as T
+  }
+  if (value && typeof value === "object" && !(value instanceof Date)) {
+    // Preservar FieldValue (serverTimestamp, increment, etc.) tal cual
+    if ((value as any)._methodName !== undefined) return value
+    // Preservar Firestore Timestamp tal cual
+    if (typeof (value as any).toDate === "function") return value
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === undefined) continue
+      out[k] = stripUndefined(v)
+    }
+    return out as T
+  }
+  return value
+}
+
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
 export interface ObjetivoAprendizaje {
@@ -273,13 +295,13 @@ export async function guardarPlanificacion(
   }
 ): Promise<void> {
   const planId = buildPlanId(asignatura, curso)
-  await setDoc(userDoc("planificaciones", planId), {
+  await setDoc(userDoc("planificaciones", planId), stripUndefined({
     asignatura,
     curso,
     fechas,
     matriz,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 // ─── Cargar planificación guardada ───────────────────────────────────────────
@@ -357,11 +379,11 @@ export async function guardarVerUnidad(
   data: Omit<VerUnidadGuardada, "updatedAt">
 ): Promise<void> {
   const id = buildVerUnidadId(asignatura, curso, unidadId)
-  await setDoc(userDoc("ver_unidad", id), {
+  await setDoc(userDoc("ver_unidad", id), stripUndefined({
     asignatura, curso, unidadId,
     ...data,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 export async function cargarVerUnidad(
@@ -400,12 +422,12 @@ export async function guardarBancoCurricular(
   data: Omit<BancoCurricular, "updatedAt" | "asignatura" | "nivel">
 ): Promise<void> {
   const id = buildDocId(asignatura, nivel)
-  await setDoc(userDoc("banco_curricular", id), {
+  await setDoc(userDoc("banco_curricular", id), stripUndefined({
     asignatura,
     nivel,
     ...data,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 // ─── Tipos para Cronograma ────────────────────────────────────────────────────
@@ -433,11 +455,11 @@ export async function guardarCronograma(
   actividades: ActividadCronograma[]
 ): Promise<void> {
   const id = "crono_" + buildDocId(asignatura, nivel)
-  await setDoc(userDoc("cronogramas", id), {
+  await setDoc(userDoc("cronogramas", id), stripUndefined({
     asignatura, nivel,
     actividades,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 export async function cargarCronograma(
@@ -484,10 +506,10 @@ export async function guardarPlanCurso(
   units: UnidadPlan[]
 ): Promise<void> {
   const id = buildPlanCursoId(asignatura, curso)
-  await setDoc(userDoc("planificaciones_curso", id), {
+  await setDoc(userDoc("planificaciones_curso", id), stripUndefined({
     asignatura, curso, units,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 export async function cargarPlanCurso(
@@ -541,10 +563,10 @@ export async function guardarLibroClases(
   bloques: BloqueLibroClase[]
 ): Promise<void> {
   const id = buildLibroClaseId(asignatura, curso, fecha)
-  await setDoc(userDoc("libro_clases", id), {
+  await setDoc(userDoc("libro_clases", id), stripUndefined({
     asignatura, curso, fecha, bloques,
     updatedAt: serverTimestamp(),
-  })
+  }))
 }
 
 export async function cargarLibroClases(
@@ -677,10 +699,10 @@ export async function guardarCronogramaUnidad(
   clases: ClaseCronograma[]
 ): Promise<void> {
   const id = buildCronogramaUnidadId(asignatura, curso, unidadId)
-  await setDoc(userDoc("cronograma_unidad", id), {
+  await setDoc(userDoc("cronograma_unidad", id), stripUndefined({
     asignatura, curso, unidadId, totalClases, clases,
     updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 export async function cargarCronogramaUnidad(
@@ -738,7 +760,11 @@ export function buildActividadClaseId(
 
 export async function guardarActividadClase(data: Omit<ActividadClase, "updatedAt">): Promise<void> {
   const id = buildActividadClaseId(data.curso, data.unidadId, data.numeroClase, data.asignatura)
-  await setDoc(userDoc("actividades_clase", id), { ...data, updatedAt: serverTimestamp() })
+  // Firestore rechaza valores undefined — eliminarlos antes de setDoc
+  const clean = Object.fromEntries(
+    Object.entries({ ...data, updatedAt: serverTimestamp() }).filter(([, v]) => v !== undefined)
+  )
+  await setDoc(userDoc("actividades_clase", id), clean)
 }
 
 export async function cargarActividadClase(
@@ -799,9 +825,9 @@ export async function guardarAnotacion(
   asignatura = DEFAULT_ASIGNATURA
 ): Promise<void> {
   const id = buildDocId(asignatura, curso) + "_anot_" + fecha.replace(/\//g, "-")
-  await setDoc(userDoc("anotaciones", id), {
+  await setDoc(userDoc("anotaciones", id), stripUndefined({
     curso, fecha, texto, updatedAt: serverTimestamp()
-  })
+  }))
 }
 
 export async function cargarAnotacion(
@@ -843,20 +869,35 @@ export function initElems(lista: string[], tipo: "habilidades" | "conocimientos"
 }
 
 export function mergeOAs(base: OAEditado[], saved: OAEditado[] = []): OAEditado[] {
-  const own = saved.filter((oa) => oa.esPropio === true)  // strict: only truly user-created OAs
-  const byId = new Map(saved.map((oa) => [oa.id, oa]))
+  const baseIds = new Set(base.map((oa) => oa.id))
+  const savedById = new Map(saved.map((oa) => [oa.id, oa]))
+
+  // 1) OAs oficiales: base con overrides del saved (descripción, seleccionado, indicadores editados)
   const mergedBase = base.map((oa) => {
-    const existing = byId.get(oa.id)
+    const existing = savedById.get(oa.id)
     if (!existing) return oa
     return {
       ...oa,
       descripcion: existing.descripcion || oa.descripcion,
       seleccionado: existing.seleccionado,
-      indicadores: oa.indicadores.map((ind) => existing.indicadores.find((x) => x.id === ind.id) || ind).concat(existing.indicadores.filter((x) => x.esPropio)),
+      // Indicadores: tomar override de saved si existe, sino mantener oficial; agregar los propios al final
+      indicadores: oa.indicadores
+        .map((ind) => existing.indicadores.find((x) => x.id === ind.id) || ind)
+        .concat(existing.indicadores.filter((x) => x.esPropio)),
     }
   })
-  // Deduplicate by id: mergedBase takes priority over own (own are user-created extras)
-  const combined = [...mergedBase, ...own]
+
+  // 2) OAs guardados que NO están en la base oficial actual:
+  //    - Pueden ser OAs propios del usuario (esPropio: true)
+  //    - O OAs oficiales que fueron removidos de la base oficial (cambio Mineduc)
+  //    En ambos casos PRESERVAR — marcar esPropio: true si no lo era para visibilizar
+  const huerfanos = saved.filter((oa) => !baseIds.has(oa.id)).map((oa) => ({
+    ...oa,
+    esPropio: true, // si no está en base oficial, lo tratamos como propio del usuario
+  }))
+
+  // Deduplicate por id por si acaso
+  const combined = [...mergedBase, ...huerfanos]
   const seen = new Set<string>()
   return combined.filter((oa) => {
     if (seen.has(oa.id)) return false
@@ -914,10 +955,10 @@ export async function guardarObservaciones360(
   asignatura: string, curso: string, estudianteId: string, observaciones: Observacion360[]
 ): Promise<void> {
   const id = buildObs360Id(asignatura, curso, estudianteId)
-  await setDoc(userDoc("observaciones_360", id), {
+  await setDoc(userDoc("observaciones_360", id), stripUndefined({
     asignatura, curso, estudianteId, observaciones,
     updatedAt: serverTimestamp(),
-  })
+  }))
 }
 
 // ---------------------------------------------------------------------------
@@ -937,14 +978,14 @@ export async function guardarComoPlantilla(
   nombrePlantilla: string
 ): Promise<void> {
   const id = "plantilla_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7)
-  await setDoc(userDoc("actividades_clase", id), {
+  await setDoc(userDoc("actividades_clase", id), stripUndefined({
     ...actividad,
     id,
     esPlantilla: true,
     nombrePlantilla: nombrePlantilla.trim(),
     creadaEn: serverTimestamp(),
     updatedAt: serverTimestamp(),
-  })
+  }))
 }
 
 export async function cargarPlantillas(asignatura: string): Promise<PlantillaActividad[]> {
