@@ -109,11 +109,8 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
-## v1.0.12 - 28/04/2026 10:08
+## v1.0.12 - 28/04/2026 15:00
 CHANGELOG.md
-components/edu-panel/actividades/actividades-content.tsx
-components/edu-panel/planificaciones/planificaciones-content.tsx
 components/edu-panel/rubricas/evaluacion-view.tsx
-components/edu-panel/ver-unidad/ver-unidad-content.tsx
-lib/curriculo.ts
+lib/rubricas.ts
 

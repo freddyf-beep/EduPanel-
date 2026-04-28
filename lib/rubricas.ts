@@ -412,17 +412,20 @@ export async function cargarRubrica(id: string): Promise<RubricaTemplate | null>
 }
 
 // Firestore rechaza campos con valor `undefined`. Este helper los elimina.
-function stripUndefined(obj: Record<string, unknown>): Record<string, unknown> {
-  const out: Record<string, unknown> = {}
-  for (const [k, v] of Object.entries(obj)) {
-    if (v === undefined) continue
-    if (v !== null && typeof v === "object" && !Array.isArray(v) && !(v as object).constructor?.name?.includes("Timestamp")) {
-      out[k] = stripUndefined(v as Record<string, unknown>)
-    } else {
-      out[k] = v
-    }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function stripUndefined(value: any): any {
+  if (Array.isArray(value)) {
+    return value.map(stripUndefined)
   }
-  return out
+  if (value !== null && typeof value === "object" && !(value?.constructor?.name?.includes("Timestamp"))) {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === undefined) continue
+      out[k] = stripUndefined(v)
+    }
+    return out
+  }
+  return value
 }
 
 export async function guardarRubrica(rubrica: RubricaTemplate): Promise<void> {
@@ -460,10 +463,11 @@ export async function cargarEvaluacion(
 
 export async function guardarEvaluacion(evaluacion: EvaluacionRubrica): Promise<void> {
   const { id, ...data } = evaluacion
-  await setDoc(userDoc("rubricas_evaluaciones", id), {
+  const payload = stripUndefined({
     ...data,
     updatedAt: serverTimestamp(),
   })
+  await setDoc(userDoc("rubricas_evaluaciones", id), payload)
 }
 
 // ─── Plantillas vacías ────────────────────────────────────────────────────────

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer
+  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save
 } from "lucide-react"
 import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -46,6 +46,8 @@ export function EvaluacionView({ rubricaId }: Props) {
   const [alumnoActivo, setAlumnoActivo] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [guardandoExport, setGuardandoExport] = useState(false)
+  const [guardandoManual, setGuardandoManual] = useState(false)
+  const [guardadoOk, setGuardadoOk] = useState(false)
   const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
   const [panelAlumno, setPanelAlumno] = useState(false)
   const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
@@ -101,7 +103,11 @@ export function EvaluacionView({ rubricaId }: Props) {
     if (!evaluacion) return
     if (ignoreFirstSave.current) { ignoreFirstSave.current = false; return }
     const t = setTimeout(async () => {
-      try { await guardarEvaluacion(evaluacion) } catch (e) { console.error(e) }
+      try {
+        await guardarEvaluacion(evaluacion)
+        setGuardadoOk(true)
+        setTimeout(() => setGuardadoOk(false), 1800)
+      } catch (e) { console.error(e) }
     }, 2500)
     return () => clearTimeout(t)
   }, [evaluacion])
@@ -257,6 +263,21 @@ export function EvaluacionView({ rubricaId }: Props) {
     setAlumnoActivo(null)
   }
 
+  const handleGuardarAhora = async () => {
+    if (!evaluacion) return
+    setGuardandoManual(true)
+    setError("")
+    try {
+      await guardarEvaluacion(evaluacion)
+      setGuardadoOk(true)
+      setTimeout(() => setGuardadoOk(false), 2500)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al guardar")
+    } finally {
+      setGuardandoManual(false)
+    }
+  }
+
   const handleExportarGrupo = async () => {
     if (!rubrica || !evaluacion) return
     setGuardandoExport(true)
@@ -358,6 +379,20 @@ export function EvaluacionView({ rubricaId }: Props) {
           <h1 className="text-[16px] sm:text-[18px] font-extrabold text-foreground truncate">{rubrica.nombre}</h1>
           <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
         </div>
+        <button
+          onClick={handleGuardarAhora}
+          disabled={guardandoManual}
+          title="Guardar la evaluacion ahora"
+          className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] transition-colors disabled:opacity-50 ${
+            guardadoOk
+              ? "border border-green-300 bg-green-50 text-green-700"
+              : "border border-border hover:bg-muted/60"
+          }`}
+        >
+          {guardandoManual ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : guardadoOk ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
+          <span className="hidden sm:inline">{guardadoOk ? "Guardado" : "Guardar"}</span>
+          <span className="sm:hidden">{guardadoOk ? "OK" : "Guardar"}</span>
+        </button>
         <button
           onClick={handleHojaImprimible}
           title="Abrir hoja imprimible en blanco para marcar a mano durante la clase"
