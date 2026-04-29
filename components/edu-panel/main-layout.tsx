@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Header } from "./header"
 import { Sidebar } from "./sidebar"
 import { ProtectedRoute } from "@/components/auth/protected-route"
+import { CommandPalette } from "@/components/global/command-palette"
 import {
   Sheet,
   SheetContent,
@@ -30,6 +31,7 @@ export function MainLayout({ children, noPadding }: MainLayoutProps) {
             {children}
           </main>
         </div>
+        <CommandPalette />
 
         <Sheet open={mobileSidebarOpen} onOpenChange={setMobileSidebarOpen}>
           <SheetContent side="left" className="w-[88vw] max-w-[320px] p-0">

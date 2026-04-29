@@ -1,14 +1,18 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo } from "react"
-import { Download, Plus, Bookmark, Info, Loader2, Check, X, AlertCircle, TrendingUp, TrendingDown, Minus, ChevronDown, ChevronUp, BarChart3 } from "lucide-react"
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts"
+import Link from "next/link"
+import { Download, Plus, Bookmark, Info, Loader2, Check, X, AlertCircle, TrendingUp, TrendingDown, Minus, ChevronDown, ChevronUp, BarChart3, MessageSquare } from "lucide-react"
+import { BarChart, Bar, XAxis, YAxis, Tooltip as ChartTooltip, Cell, ResponsiveContainer } from "recharts"
 import { cn } from "@/lib/utils"
-import { userDoc } from "@/lib/curriculo"
+import { cargarVerUnidadesCurso, userDoc } from "@/lib/curriculo"
 import { setDoc, getDoc, serverTimestamp } from "firebase/firestore"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { buildUrl, withAsignatura } from "@/lib/shared"
+import { contarObservacionesPorEstudiante, type ResumenObservacionesEstudiante } from "@/lib/observaciones"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface EstudianteCalif {
   id: string
@@ -24,6 +28,15 @@ interface Evaluacion {
   label: string
   tipo: "sumativa" | "formativa"
   periodo: "s1" | "s2"
+  oaIds?: string[]
+  unidadId?: string
+}
+
+interface OaOpcion {
+  id: string
+  label: string
+  descripcion: string
+  unidadId: string
 }
 
 function buildId(asignatura: string, curso: string) {
@@ -47,6 +60,9 @@ export function CalificacionesContent() {
   const [saveStatus, setSaveStatus]             = useState<"idle" | "saving_silent" | "saved" | "error">("idle")
   const [showAddEval, setShowAddEval]           = useState(false)
   const [newEvalLabel, setNewEvalLabel]         = useState("")
+  const [observacionesResumen, setObservacionesResumen] = useState<Record<string, ResumenObservacionesEstudiante>>({})
+  const [oaOpciones, setOaOpciones] = useState<OaOpcion[]>([])
+  const [newEvalOaIds, setNewEvalOaIds] = useState<string[]>([])
 
   // Cargar cursos disponibles
   useEffect(() => {
@@ -87,6 +103,8 @@ export function CalificacionesContent() {
           label: ev.label,
           tipo: ev.tipo || "sumativa",
           periodo: ev.periodo || "s1",
+          oaIds: Array.isArray(ev.oaIds) ? ev.oaIds : [],
+          unidadId: ev.unidadId,
         }))
         setEvaluaciones(evals.length > 0 ? evals : [{ id: "n1", label: "N1", tipo: "sumativa", periodo: "s1" }])
       } else {
@@ -107,6 +125,41 @@ export function CalificacionesContent() {
       setLoading(false)
       ignoreNextSaveRef.current = true
     })
+  }, [curso, ASIGNATURA])
+
+  useEffect(() => {
+    if (!curso) {
+      setOaOpciones([])
+      return
+    }
+    cargarVerUnidadesCurso(ASIGNATURA, curso)
+      .then((unidades) => {
+        const opciones: OaOpcion[] = []
+        Object.entries(unidades).forEach(([unidadId, unidad]) => {
+          ;(unidad.oas || [])
+            .filter((oa) => oa.seleccionado)
+            .forEach((oa) => {
+              opciones.push({
+                id: oa.id,
+                label: oa.numero ? `OA ${oa.numero}` : oa.id,
+                descripcion: oa.descripcion,
+                unidadId,
+              })
+            })
+        })
+        setOaOpciones(opciones)
+      })
+      .catch(() => setOaOpciones([]))
+  }, [curso, ASIGNATURA])
+
+  useEffect(() => {
+    if (!curso) {
+      setObservacionesResumen({})
+      return
+    }
+    contarObservacionesPorEstudiante(ASIGNATURA, curso)
+      .then(setObservacionesResumen)
+      .catch(() => setObservacionesResumen({}))
   }, [curso, ASIGNATURA])
 
   const ignoreNextSaveRef = useRef(true)
@@ -163,16 +216,26 @@ export function CalificacionesContent() {
   const agregarEvaluacion = () => {
     if (!newEvalLabel.trim()) return
     const id = "eval_" + Date.now()
+    const unidadIds = new Set(oaOpciones.filter((oa) => newEvalOaIds.includes(oa.id)).map((oa) => oa.unidadId))
     const nuevaEval: Evaluacion = {
       id,
       label: newEvalLabel.trim(),
       tipo: activeTab === "sumativas" ? "sumativa" : "formativa",
       periodo: periodo === "anual" ? "s1" : periodo,
+      oaIds: newEvalOaIds,
+      unidadId: unidadIds.size === 1 ? Array.from(unidadIds)[0] : undefined,
     }
     setEvaluaciones(prev => [...prev, nuevaEval])
     setEstudiantes(prev => prev.map(e => ({ ...e, notas: { ...e.notas, [id]: "" } })))
     setNewEvalLabel("")
+    setNewEvalOaIds([])
     setShowAddEval(false)
+  }
+
+  const toggleNewEvalOa = (oaId: string) => {
+    setNewEvalOaIds((prev) =>
+      prev.includes(oaId) ? prev.filter((id) => id !== oaId) : [...prev, oaId]
+    )
   }
 
   const eliminarEvaluacion = (evalId: string) => {
@@ -405,7 +468,7 @@ export function CalificacionesContent() {
                     <BarChart data={estadisticas.buckets} barCategoryGap="20%">
                       <XAxis dataKey="rango" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
                       <YAxis hide allowDecimals={false} />
-                      <Tooltip
+                      <ChartTooltip
                         formatter={(val: number) => [`${val} estudiante${val !== 1 ? "s" : ""}`, ""]}
                         labelFormatter={(l: string) => `Notas ${l}`}
                         contentStyle={{ fontSize: 12, borderRadius: 8 }}
@@ -518,7 +581,25 @@ export function CalificacionesContent() {
                   )}>
                     <td className="px-4 py-3 text-[13px] text-muted-foreground">{estudiante.orden ?? idx + 1}</td>
                     <td className="sticky left-0 z-10 bg-card border-r border-border px-4 py-3 text-[13px]">
-                      <span className="font-medium">{estudiante.name}</span>
+                      <span className="inline-flex flex-wrap items-center gap-1.5">
+                        <span className="font-medium">{estudiante.name}</span>
+                        {observacionesResumen[estudiante.id] && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                href={buildUrl("/perfil-360", withAsignatura({ curso, alumno: estudiante.id }, ASIGNATURA))}
+                                className="inline-flex items-center gap-1 rounded-full border border-status-blue-border bg-status-blue-bg px-1.5 py-0.5 text-[10px] font-bold text-status-blue-text transition-colors hover:brightness-95"
+                              >
+                                <MessageSquare className="h-3 w-3" />
+                                {observacionesResumen[estudiante.id].total}
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-[260px]">
+                              <span>{observacionesResumen[estudiante.id].ultimaFecha}: {observacionesResumen[estudiante.id].ultimoExtracto}</span>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+                      </span>
                       {estudiante.hasPie && (
                         <span className="ml-2 inline-block rounded bg-status-pie-bg px-1.5 py-0.5 align-middle text-[10px] font-bold text-status-pie-text border border-status-pie-border">
                           PIE{estudiante.pieDiagnostico ? ` · ${estudiante.pieDiagnostico}` : ""}
@@ -593,8 +674,44 @@ export function CalificacionesContent() {
               className="mb-4 w-full rounded-[10px] border-[1.5px] border-primary px-3.5 py-2.5 text-[13px] font-semibold outline-none focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_10%,transparent)]"
               autoFocus
             />
+            {oaOpciones.length > 0 && (
+              <div className="mb-4 rounded-[12px] border border-border bg-background p-3">
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-bold uppercase text-muted-foreground">OAs vinculados</span>
+                  {newEvalOaIds.length > 0 && (
+                    <button
+                      onClick={() => setNewEvalOaIds([])}
+                      className="text-[11px] font-semibold text-primary hover:underline"
+                    >
+                      Limpiar
+                    </button>
+                  )}
+                </div>
+                <div className="flex max-h-36 flex-wrap gap-1.5 overflow-y-auto">
+                  {oaOpciones.map((oa) => {
+                    const active = newEvalOaIds.includes(oa.id)
+                    return (
+                      <button
+                        key={`${oa.unidadId}-${oa.id}`}
+                        type="button"
+                        onClick={() => toggleNewEvalOa(oa.id)}
+                        title={oa.descripcion}
+                        className={cn(
+                          "rounded-full border px-2.5 py-1 text-[11px] font-bold transition-colors",
+                          active
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border bg-card text-muted-foreground hover:border-primary hover:text-primary"
+                        )}
+                      >
+                        {oa.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
             <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-              <button onClick={() => setShowAddEval(false)} className="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted-foreground hover:bg-background transition-colors">Cancelar</button>
+              <button onClick={() => { setShowAddEval(false); setNewEvalOaIds([]) }} className="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted-foreground hover:bg-background transition-colors">Cancelar</button>
               <button onClick={agregarEvaluacion} className="rounded-[10px] bg-primary px-5 py-2.5 text-[13px] font-bold text-white hover:bg-pink-dark transition-colors">Agregar</button>
             </div>
           </div>

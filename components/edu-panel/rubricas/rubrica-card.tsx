@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { BarChart2, Edit2, Trash2, Users } from "lucide-react"
+import { BarChart2, Copy, Edit2, Trash2, Users } from "lucide-react"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { eliminarRubrica, type RubricaTemplate } from "@/lib/rubricas"
 
@@ -10,9 +10,10 @@ interface Props {
   rubrica: RubricaTemplate
   asignatura: string
   onEliminar: (id: string) => void
+  onDuplicar?: (rubrica: RubricaTemplate) => void
 }
 
-export function RubricaCard({ rubrica, asignatura, onEliminar }: Props) {
+export function RubricaCard({ rubrica, asignatura, onEliminar, onDuplicar }: Props) {
   const router = useRouter()
   const [confirmando, setConfirmando] = useState(false)
   const [eliminando, setEliminando] = useState(false)
@@ -102,6 +103,15 @@ export function RubricaCard({ rubrica, asignatura, onEliminar }: Props) {
           <Edit2 className="w-3.5 h-3.5" />
           Editar
         </button>
+        {onDuplicar && (
+          <button
+            onClick={() => onDuplicar(rubrica)}
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
+          >
+            <Copy className="w-3.5 h-3.5" />
+            Duplicar
+          </button>
+        )}
         <button
           onClick={handleEliminar}
           disabled={eliminando}

@@ -8,6 +8,7 @@ import {
   initOAs, mergeOAs, cargarVerUnidad,
   type OAEditado,
 } from "@/lib/curriculo"
+import { cargarEstudiantes } from "@/lib/estudiantes"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
 
 // ─── Helpers Firestore ────────────────────────────────────────────────────────
@@ -352,6 +353,186 @@ export function buildRubricaId(asignatura: string, curso: string, nombre: string
 
 export function buildEvaluacionId(rubricaId: string): string {
   return `eval_${rubricaId}`
+}
+
+function buildCalificacionesId(asignatura: string, curso: string): string {
+  return ("calif_" + asignatura + "_" + curso)
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "")
+}
+
+function periodoActual(): "s1" | "s2" {
+  return new Date().getMonth() <= 6 ? "s1" : "s2"
+}
+
+function exigenciaParaEstudiante(estudiante: Pick<EstudianteEvaluacion, "hasPie">): number {
+  return estudiante.hasPie ? 0.5 : 0.6
+}
+
+function normalizarNota(value: unknown): string {
+  if (value === undefined || value === null) return ""
+  const str = String(value).trim()
+  if (!str) return ""
+  const num = Number.parseFloat(str.replace(",", "."))
+  return Number.isFinite(num) ? num.toFixed(1) : str
+}
+
+function oaIdsDesdeRubrica(rubrica: RubricaTemplate): string[] {
+  const ids = new Set<string>()
+
+  ;(rubrica.oas || [])
+    .filter(oa => oa.seleccionado)
+    .forEach(oa => ids.add(oa.id))
+
+  rubrica.partes.forEach(parte => {
+    parte.oasVinculados.forEach(ref => {
+      const match = ref.match(/\bOA\s*(\d+)\b/i)
+      if (match) ids.add(`OA${match[1]}`)
+      else if (ref.trim()) ids.add(ref.trim())
+    })
+  })
+
+  return Array.from(ids)
+}
+
+export interface SincronizarCalificacionesOptions {
+  sobrescribir?: boolean
+}
+
+export interface SincronizarCalificacionesResultado {
+  evaluacionId: string
+  notasSincronizadas: number
+  estudiantesSinNota: number
+  evaluacionExistia: boolean
+  requiereConfirmacion: boolean
+  conflictos: Array<{ estudianteId: string; nombre: string; anterior: string; nueva: string }>
+}
+
+export async function sincronizarConCalificaciones(
+  rubrica: RubricaTemplate,
+  evaluacion: EvaluacionRubrica,
+  opciones: SincronizarCalificacionesOptions = {},
+): Promise<SincronizarCalificacionesResultado> {
+  const evaluacionId = buildEvaluacionId(rubrica.id)
+  const calificacionesId = buildCalificacionesId(rubrica.asignatura, rubrica.curso)
+  const snap = await getDoc(userDoc("calificaciones", calificacionesId))
+  const data = snap.exists() ? snap.data() : {}
+
+  const estudiantesBase: any[] = Array.isArray(data.estudiantes) ? data.estudiantes : []
+  const evaluacionesBase: any[] = Array.isArray(data.evaluaciones) ? data.evaluaciones : []
+  const evaluacionExistia = evaluacionesBase.some(ev => ev.id === evaluacionId)
+
+  const notasCalculadas = new Map<string, { nombre: string; nota: string }>()
+  let estudiantesSinNota = 0
+
+  evaluacion.grupos.flatMap(grupo => grupo.estudiantes).forEach(estudiante => {
+    const tienePuntajes = Object.keys(estudiante.puntajes || {}).length > 0
+    if (!tienePuntajes && !estudiante.completado) {
+      estudiantesSinNota += 1
+      return
+    }
+
+    const puntaje = calcularPuntajeEstudiante(estudiante.puntajes || {}, rubrica.partes)
+    const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaParaEstudiante(estudiante)).toFixed(1)
+    notasCalculadas.set(estudiante.estudianteId, { nombre: estudiante.nombre, nota })
+  })
+
+  const estudiantesRoster = await cargarEstudiantes(rubrica.curso).catch(() => [])
+  const estudiantesMap = new Map<string, any>()
+
+  estudiantesRoster.forEach((est, index) => {
+    estudiantesMap.set(est.id, {
+      id: est.id,
+      name: est.nombre,
+      orden: est.orden ?? index + 1,
+      notas: {},
+      hasPie: est.pie === true,
+      pieDiagnostico: est.pieDiagnostico || "",
+    })
+  })
+
+  estudiantesBase.forEach(est => {
+    if (!est?.id) return
+    const existing = estudiantesMap.get(est.id)
+    estudiantesMap.set(est.id, {
+      ...existing,
+      ...est,
+      name: est.name || existing?.name || est.nombre || "",
+      notas: { ...(existing?.notas || {}), ...(est.notas || {}) },
+    })
+  })
+
+  notasCalculadas.forEach(({ nombre }, estudianteId) => {
+    if (!estudiantesMap.has(estudianteId)) {
+      estudiantesMap.set(estudianteId, {
+        id: estudianteId,
+        name: nombre,
+        notas: {},
+        hasPie: false,
+      })
+    }
+  })
+
+  const conflictos: SincronizarCalificacionesResultado["conflictos"] = []
+  notasCalculadas.forEach(({ nombre, nota }, estudianteId) => {
+    const estudiante = estudiantesMap.get(estudianteId)
+    const anterior = normalizarNota(estudiante?.notas?.[evaluacionId])
+    if (anterior && anterior !== nota) {
+      conflictos.push({ estudianteId, nombre, anterior, nueva: nota })
+    }
+  })
+
+  if (conflictos.length > 0 && !opciones.sobrescribir) {
+    return {
+      evaluacionId,
+      notasSincronizadas: notasCalculadas.size,
+      estudiantesSinNota,
+      evaluacionExistia,
+      requiereConfirmacion: true,
+      conflictos,
+    }
+  }
+
+  notasCalculadas.forEach(({ nota }, estudianteId) => {
+    const estudiante = estudiantesMap.get(estudianteId)
+    if (!estudiante) return
+    estudiantesMap.set(estudianteId, {
+      ...estudiante,
+      notas: { ...(estudiante.notas || {}), [evaluacionId]: nota },
+    })
+  })
+
+  const evaluacionCalificaciones = {
+    id: evaluacionId,
+    label: rubrica.nombre || evaluacion.rubricaNombre || "Rubrica",
+    tipo: "sumativa" as const,
+    periodo: periodoActual(),
+    unidadId: rubrica.unidadId,
+    oaIds: oaIdsDesdeRubrica(rubrica),
+  }
+
+  const evaluacionesActualizadas = evaluacionExistia
+    ? evaluacionesBase.map(ev => ev.id === evaluacionId ? { ...ev, ...evaluacionCalificaciones } : ev)
+    : [...evaluacionesBase, evaluacionCalificaciones]
+
+  await setDoc(userDoc("calificaciones", calificacionesId), stripUndefined({
+    asignatura: rubrica.asignatura,
+    curso: rubrica.curso,
+    estudiantes: Array.from(estudiantesMap.values()).sort((a, b) => (a.orden ?? 999) - (b.orden ?? 999)),
+    evaluaciones: evaluacionesActualizadas,
+    updatedAt: serverTimestamp(),
+  }), { merge: true })
+
+  return {
+    evaluacionId,
+    notasSincronizadas: notasCalculadas.size,
+    estudiantesSinNota,
+    evaluacionExistia,
+    requiereConfirmacion: false,
+    conflictos,
+  }
 }
 
 // ─── Nota chilena ─────────────────────────────────────────────────────────────

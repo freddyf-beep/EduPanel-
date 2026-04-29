@@ -3,16 +3,29 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
-import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, List } from "lucide-react"
+import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, List, Send } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { auth } from "@/lib/firebase"
 import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
+import { toast } from "@/hooks/use-toast"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import {
   cargarRubrica, cargarEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
-  type RubricaTemplate, type EvaluacionRubrica, type EstudianteEvaluacion
+  sincronizarConCalificaciones,
+  type RubricaTemplate, type EvaluacionRubrica, type EstudianteEvaluacion,
+  type SincronizarCalificacionesResultado,
 } from "@/lib/rubricas"
 
 interface Props {
@@ -34,6 +47,9 @@ export function ResultadosView({ rubricaId }: Props) {
   const [error, setError] = useState("")
   const [exportando, setExportando] = useState(false)
   const [exportandoListado, setExportandoListado] = useState(false)
+  const [sincronizandoCalif, setSincronizandoCalif] = useState(false)
+  const [syncPendiente, setSyncPendiente] = useState<SincronizarCalificacionesResultado | null>(null)
+  const [confirmSyncOpen, setConfirmSyncOpen] = useState(false)
   const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
 
   useEffect(() => {
@@ -121,6 +137,33 @@ export function ResultadosView({ rubricaId }: Props) {
     }
   }
 
+  const handleSincronizarCalificaciones = async (sobrescribir = false) => {
+    if (!rubrica || !evaluacion) return
+    setSincronizandoCalif(true)
+    try {
+      const resultado = await sincronizarConCalificaciones(rubrica, evaluacion, { sobrescribir })
+      if (resultado.requiereConfirmacion) {
+        setSyncPendiente(resultado)
+        setConfirmSyncOpen(true)
+        return
+      }
+
+      setSyncPendiente(null)
+      toast({
+        title: "Calificaciones actualizadas",
+        description: `${resultado.notasSincronizadas} notas sincronizadas desde la rubrica.`,
+      })
+    } catch (e) {
+      toast({
+        title: "No se pudo sincronizar",
+        description: e instanceof Error ? e.message : "Intentalo nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setSincronizandoCalif(false)
+    }
+  }
+
   if (loading) return (
     <div className="flex items-center justify-center h-40 gap-2 text-muted-foreground text-[13px]">
       <Loader2 className="w-4 h-4 animate-spin" /> Cargando resultados...
@@ -178,6 +221,37 @@ export function ResultadosView({ rubricaId }: Props) {
 
   return (
     <div className="space-y-6">
+      <AlertDialog open={confirmSyncOpen} onOpenChange={setConfirmSyncOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Sobrescribir notas existentes</AlertDialogTitle>
+            <AlertDialogDescription>
+              Ya hay {syncPendiente?.conflictos.length || 0} notas distintas en calificaciones para esta rubrica.
+              Si continuas, EduPanel reemplazara esas notas con los resultados actuales de la rubrica.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          {syncPendiente && (
+            <div className="max-h-44 overflow-y-auto rounded-lg border border-border bg-muted/30 p-3 text-[12px]">
+              {syncPendiente.conflictos.slice(0, 8).map(conflicto => (
+                <div key={conflicto.estudianteId} className="flex items-center justify-between gap-3 py-1">
+                  <span className="font-medium text-foreground">{conflicto.nombre}</span>
+                  <span className="text-muted-foreground">{conflicto.anterior} {"->"} {conflicto.nueva}</span>
+                </div>
+              ))}
+              {syncPendiente.conflictos.length > 8 && (
+                <p className="pt-2 text-muted-foreground">+{syncPendiente.conflictos.length - 8} cambios mas</p>
+              )}
+            </div>
+          )}
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={() => handleSincronizarCalificaciones(true)}>
+              Sobrescribir y sincronizar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Header */}
       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <button
@@ -196,6 +270,16 @@ export function ResultadosView({ rubricaId }: Props) {
         >
           <Users className="w-3.5 h-3.5" />
           Evaluar
+        </button>
+        <button
+          onClick={() => handleSincronizarCalificaciones(false)}
+          disabled={!evaluacion || sincronizandoCalif || todosEstudiantes.length === 0}
+          title="Enviar las notas calculadas a Calificaciones"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-primary text-primary rounded-[10px] hover:bg-pink-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {sincronizandoCalif ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+          <span className="hidden sm:inline">Sincronizar calificaciones</span>
+          <span className="sm:hidden">Sync notas</span>
         </button>
         <button
           onClick={handleExportarListado}

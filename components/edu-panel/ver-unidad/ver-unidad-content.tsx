@@ -23,6 +23,7 @@ import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
 import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
+import { TermometroUnidad } from "@/components/edu-panel/ver-unidad/termometro-unidad"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 
@@ -727,6 +728,8 @@ function VerUnidadInner() {
           <div className="text-sm font-semibold">{horas} horas · {clases} clases</div>
         </div>
       </div>
+
+      <TermometroUnidad asignatura={ASIGNATURA} curso={cursoParam} unidadId={unidadLocalParam} oas={oas} />
 
       {/* Propósito — diseño original */}
       <div className="bg-card border border-border rounded-[14px] p-5 mb-7 animate-fade-up" style={{ animationDelay:"0.2s" }}>

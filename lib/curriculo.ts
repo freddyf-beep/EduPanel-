@@ -442,6 +442,10 @@ export interface ActividadCronograma {
   duracion: string
   unidad: string
   color: string
+  /** Curso al que pertenece (solo se llena en vista "Todos los cursos", no se persiste). */
+  cursoOrigen?: string
+  /** ID del evento en Google Calendar si está sincronizado (Fase E3). */
+  googleEventId?: string
 }
 
 export interface CronogramaGuardado {
@@ -714,6 +718,57 @@ export async function cargarCronogramaUnidad(
   const snap = await getDoc(userDoc("cronograma_unidad", id))
   if (!snap.exists()) return null
   return snap.data() as CronogramaUnidadData
+}
+
+function normalizarFechaClase(fecha: string): string {
+  if (!fecha) return ""
+  if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    const [year, month, day] = fecha.split("-")
+    return `${day}/${month}/${year}`
+  }
+  return fecha.trim()
+}
+
+export async function obtenerOAsActivosDelDia(
+  asignatura: string,
+  curso: string,
+  fecha: string,
+): Promise<Array<OAEditado & { unidadId?: string }>> {
+  const fechaObjetivo = normalizarFechaClase(fecha)
+  const verUnidades = await cargarVerUnidadesCurso(asignatura, curso)
+  const entries = Object.entries(verUnidades)
+  if (!entries.length) return []
+
+  const cronogramas = await Promise.all(
+    entries.map(async ([unidadId]) => [unidadId, await cargarCronogramaUnidad(asignatura, curso, unidadId)] as const)
+  )
+
+  const oaIdsPorUnidad = new Map<string, Set<string>>()
+  cronogramas.forEach(([unidadId, cronograma]) => {
+    const clase = (cronograma?.clases || []).find((item) => normalizarFechaClase(item.fecha) === fechaObjetivo)
+    if (clase?.oaIds?.length) {
+      oaIdsPorUnidad.set(unidadId, new Set(clase.oaIds))
+    }
+  })
+
+  const sugeridos: Array<OAEditado & { unidadId?: string }> = []
+  entries.forEach(([unidadId, unidad]) => {
+    const ids = oaIdsPorUnidad.get(unidadId)
+    if (!ids?.size) return
+    ;(unidad.oas || [])
+      .filter((oa) => ids.has(oa.id))
+      .forEach((oa) => sugeridos.push({ ...oa, unidadId }))
+  })
+
+  if (sugeridos.length > 0) return sugeridos
+
+  return entries
+    .flatMap(([unidadId, unidad]) => (unidad.oas || [])
+      .filter((oa) => oa.seleccionado)
+      .slice(0, 2)
+      .map((oa) => ({ ...oa, unidadId }))
+    )
+    .slice(0, 4)
 }
 
 // ─── Actividad de Clase (planificación diaria) ────────────────────────────────

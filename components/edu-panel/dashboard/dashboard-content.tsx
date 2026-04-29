@@ -17,6 +17,7 @@ import type { ActividadClase, BloqueLibroClase, EstadoAsistencia } from "@/lib/c
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useAuth } from "@/components/auth/auth-context"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { ResumenSemanal } from "@/components/edu-panel/dashboard/resumen-semanal"
 
 const DAYS   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
 const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
@@ -313,6 +314,8 @@ export function DashboardContent() {
         <p className="mb-6 text-[13px] text-muted-foreground animate-fade-up">
           {esDiaLaboral ? `Tienes ${clasesHoy.length} bloques hoy.` : "Hoy no hay clases programadas."}
         </p>
+
+        <ResumenSemanal asignatura={ASIGNATURA} horario={horarioSemanal} fecha={currentDate} />
 
         <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 animate-fade-up">
           {quickActions.map(item => {

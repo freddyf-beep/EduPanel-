@@ -109,9 +109,24 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
-## v1.0.12 - 28/04/2026 15:58
+## v1.0.12 - 29/04/2026 15:11
 CHANGELOG.md
-app/api/export-rubrica/route.ts
-components/edu-panel/rubricas/evaluacion-view.tsx
+app/perfil-360/page.tsx
+components/auth/auth-context.tsx
+components/edu-panel/calificaciones/calificaciones-content.tsx
+components/edu-panel/cronograma-unidad/cronograma-unidad-content.tsx
+components/edu-panel/cronograma/cronograma-content.tsx
+components/edu-panel/dashboard/dashboard-content.tsx
+components/edu-panel/libro-clases/libro-clases-content.tsx
+components/edu-panel/main-layout.tsx
+components/edu-panel/perfil-360/perfil-360-content.tsx
+components/edu-panel/perfil/perfil-content.tsx
 components/edu-panel/rubricas/resultados-view.tsx
+components/edu-panel/rubricas/rubrica-card.tsx
+components/edu-panel/rubricas/rubrica-import.tsx
+components/edu-panel/rubricas/rubrica-oa-editor.tsx
+components/edu-panel/rubricas/rubricas-hub.tsx
+components/edu-panel/ver-unidad/ver-unidad-content.tsx
+lib/curriculo.ts
+lib/rubricas.ts
 

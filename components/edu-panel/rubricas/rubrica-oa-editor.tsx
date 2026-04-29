@@ -44,6 +44,7 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
   const [showNewOA, setShowNewOA]   = useState(false)
   const [newOAText, setNewOAText]   = useState("")
   const [newOATipo, setNewOATipo]   = useState<"oa" | "oat">("oa")
+  const [newOANumero, setNewOANumero] = useState("")
 
   const update = (newOAs: OAEditado[]) => onChange(newOAs)
 
@@ -106,6 +107,7 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
   const addOA = () => {
     const texto = newOAText.trim()
     if (!texto) return
+    const parsedNum = parseInt(newOANumero.trim(), 10)
     const nw: OAEditado = {
       id: `PROP_${Date.now()}`,
       tipo: newOATipo,
@@ -114,9 +116,12 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
       indicadores: [],
       esPropio: true,
       tags: [asignatura],
+      ...(Number.isFinite(parsedNum) && parsedNum > 0 ? { numero: parsedNum } : {}),
     }
     update([...oas, nw])
+    setExpandedOAs(prev => new Set([...prev, nw.id]))
     setNewOAText("")
+    setNewOANumero("")
     setNewOATipo("oa")
     setShowNewOA(false)
   }
@@ -183,8 +188,12 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
                 <div className="mb-0.5 flex items-center gap-2">
                   <span className="text-[11px] font-bold" style={{ color }}>
                     {oa.tipo === "oat"
-                      ? (oa.esPropio ? "OAA" : `OAA ${oa.numero}`)
-                      : (oa.esPropio ? "OA Propio" : `OA ${oa.numero}`)}
+                      ? (oa.esPropio
+                        ? (oa.numero ? `OAA ${oa.numero} Propio` : "OAA Propio")
+                        : `OAA ${oa.numero}`)
+                      : (oa.esPropio
+                        ? (oa.numero ? `OA ${oa.numero} Propio` : "OA Propio")
+                        : `OA ${oa.numero}`)}
                   </span>
                   <span className="text-[10px] text-muted-foreground">{asignatura}</span>
                   {oa.tipo === "oat" && (
@@ -228,19 +237,19 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
                   <p className="text-[12px] leading-snug text-foreground">{oa.descripcion}</p>
                 )}
 
-                {/* Contador de indicadores (expandible) */}
-                {indTotal > 0 && (
-                  <button
-                    onClick={() => toggleExpand(oa.id)}
-                    className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold transition-opacity hover:opacity-70"
-                    style={{ color }}
-                  >
-                    {isExpanded
-                      ? <ChevronDown className="h-3 w-3" />
-                      : <ChevronRight className="h-3 w-3" />}
-                    {indSelec}/{indTotal} indicadores
-                  </button>
-                )}
+                {/* Contador de indicadores (expandible) — siempre visible para poder agregar */}
+                <button
+                  onClick={() => toggleExpand(oa.id)}
+                  className="mt-1.5 flex items-center gap-1 text-[11px] font-semibold transition-opacity hover:opacity-70"
+                  style={{ color }}
+                >
+                  {isExpanded
+                    ? <ChevronDown className="h-3 w-3" />
+                    : <ChevronRight className="h-3 w-3" />}
+                  {indTotal > 0
+                    ? `${indSelec}/${indTotal} indicadores`
+                    : "Agregar indicadores"}
+                </button>
               </div>
 
               {/* Acciones: editar / eliminar */}
@@ -293,7 +302,13 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
                         className="mt-0.5 flex-shrink-0 text-[10px] font-bold"
                         style={{ color }}
                       >
-                        {oa.esPropio ? "Propio" : `OA ${oa.numero}`}
+                        {oa.tipo === "oat"
+                          ? (oa.esPropio
+                            ? (oa.numero ? `OAA ${oa.numero} Propio` : "OAA Propio")
+                            : `OAA ${oa.numero}`)
+                          : (oa.esPropio
+                            ? (oa.numero ? `OA ${oa.numero} Propio` : "OA Propio")
+                            : `OA ${oa.numero}`)}
                       </span>
 
                       {/* Texto del indicador */}
@@ -398,6 +413,19 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
               </button>
             </div>
           </div>
+          <div className="flex items-center gap-2">
+            <label className="text-[11px] font-semibold text-muted-foreground">
+              {newOATipo === "oat" ? "Numero OAA" : "Numero OA"} (opcional)
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={newOANumero}
+              onChange={e => setNewOANumero(e.target.value)}
+              placeholder={newOATipo === "oat" ? "Ej: 3" : "Ej: 5"}
+              className="w-20 rounded-[8px] border border-border bg-background px-2 py-1.5 text-[12px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/30"
+            />
+          </div>
           <textarea
             autoFocus
             value={newOAText}
@@ -416,7 +444,7 @@ export function RubricaOAEditor({ oas, onChange, asignatura = "Música", cargand
               Agregar {newOATipo === "oat" ? "OAA" : "OA"}
             </button>
             <button
-              onClick={() => { setShowNewOA(false); setNewOATipo("oa") }}
+              onClick={() => { setShowNewOA(false); setNewOATipo("oa"); setNewOANumero("") }}
               className="flex-1 rounded-[8px] border border-border py-1.5 text-[12px] font-medium hover:bg-muted/60"
             >
               Cancelar

@@ -1,13 +1,16 @@
 "use client"
 
-import { useEffect, useMemo, useCallback, useState, useRef } from "react"
-import { BookOpen, Bookmark, Check, ClipboardList, Loader2, ShieldCheck, UserRound, Wand2 } from "lucide-react"
+import { useEffect, useMemo, useState, useRef } from "react"
+import { BookOpen, Bookmark, Check, ClipboardList, Loader2, MessageSquare, ShieldCheck, UserRound, Wand2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
 import { Estudiante, cargarEstudiantes } from "@/lib/estudiantes"
-import { cargarLibroClases, guardarLibroClases, cargarCronograma, cargarVerUnidadesCurso } from "@/lib/curriculo"
-import type { BloqueLibroClase, EstadoAsistencia, ActividadDocente } from "@/lib/curriculo"
+import { cargarLibroClases, guardarLibroClases, cargarCronograma, cargarVerUnidadesCurso, obtenerOAsActivosDelDia } from "@/lib/curriculo"
+import type { BloqueLibroClase, EstadoAsistencia } from "@/lib/curriculo"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { buildUrl, normalizeKeyPart, withAsignatura } from "@/lib/shared"
+import { contarObservacionesPorEstudiante, type ResumenObservacionesEstudiante } from "@/lib/observaciones"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 const ESTADOS: { key: EstadoAsistencia; label: string; cls: string }[] = [
   { key: "presente", label: "P", cls: "bg-status-green-bg text-status-green-text" },
@@ -66,6 +69,8 @@ export function LibroClasesContent() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<"idle"|"saving_silent"|"saved"|"error">("idle")
+  const [observacionesResumen, setObservacionesResumen] = useState<Record<string, ResumenObservacionesEstudiante>>({})
+  const [oaSugeridosPorBloque, setOaSugeridosPorBloque] = useState<Record<string, Array<{ id: string; numero?: number; descripcion: string; unidadId?: string }>>>({})
 
   useEffect(() => {
     cargarHorarioSemanal().then(hData => {
@@ -92,6 +97,16 @@ export function LibroClasesContent() {
         ignoreNextSaveRef.current = true;
       })
   }, [curso, fecha, ASIGNATURA])
+
+  useEffect(() => {
+    if (!curso) {
+      setObservacionesResumen({})
+      return
+    }
+    contarObservacionesPorEstudiante(ASIGNATURA, curso)
+      .then(setObservacionesResumen)
+      .catch(() => setObservacionesResumen({}))
+  }, [curso, ASIGNATURA])
 
   const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
@@ -180,13 +195,24 @@ export function LibroClasesContent() {
   }
 
   const autocompletar = async (bloqueId: string) => {
-    const [crono, verUnidades] = await Promise.all([
+    const [crono, verUnidades, oasSugeridos] = await Promise.all([
       cargarCronograma(ASIGNATURA, curso),
       cargarVerUnidadesCurso(ASIGNATURA, curso),
+      obtenerOAsActivosDelDia(ASIGNATURA, curso, fecha),
     ])
     const fechaDate = new Date(`${fecha}T12:00:00`)
     const semana = weekNumber(fechaDate)
     const dia = diaNombre(fecha)
+
+    setOaSugeridosPorBloque(prev => ({
+      ...prev,
+      [bloqueId]: oasSugeridos.slice(0, 4).map(oa => ({
+        id: oa.id,
+        numero: oa.numero,
+        descripcion: oa.descripcion,
+        unidadId: oa.unidadId,
+      })),
+    }))
 
     setBloques((prev) => prev.map((bloque) => {
       if (bloque.id !== bloqueId) return bloque
@@ -194,14 +220,15 @@ export function LibroClasesContent() {
         .filter((item) => item.semana === semana && item.dia === dia)
         .sort((a, b) => Math.abs(minutesFromHHMM(a.hora) - minutesFromHHMM(bloque.horaInicio)) - Math.abs(minutesFromHHMM(b.hora) - minutesFromHHMM(bloque.horaInicio)))[0]
 
-      const unidadKey = planned?.unidad?.toLowerCase().replace(/\s+/g, "_")
+      const unidadKey = planned?.unidad ? normalizeKeyPart(planned.unidad) : ""
       const unidad = unidadKey ? verUnidades[unidadKey] : undefined
       const oaSeleccionado = unidad?.oas?.find((oa) => oa.seleccionado)
       const actividadPlanificada = unidad?.actividades?.find((act) => act.fecha === fecha) || unidad?.actividades?.[0]
+      const oaSugerido = oasSugeridos[0]
 
       return {
         ...bloque,
-        objetivo: bloque.objetivo || oaSeleccionado?.descripcion || planned?.nombre || "Desarrollar y ejercitar los objetivos planificados para el bloque.",
+        objetivo: bloque.objetivo || oaSeleccionado?.descripcion || oaSugerido?.descripcion || planned?.nombre || "Desarrollar y ejercitar los objetivos planificados para el bloque.",
         actividad: bloque.actividad || actividadPlanificada?.nombre || planned?.nombre || "Inicio, desarrollo y cierre registrados desde EduPanel para su trazabilidad pedagógica.",
       }
     }))
@@ -273,6 +300,20 @@ export function LibroClasesContent() {
                   <div className="flex items-center gap-2 mb-3"><ClipboardList className="w-4 h-4 text-primary" /><h3 className="text-[13px] font-bold">Leccionario</h3></div>
                   <label className="text-[11px] font-semibold text-muted-foreground block mb-1.5">Objetivo</label>
                   <textarea value={bloque.objetivo} onChange={(e) => setBloques((prev) => prev.map((b) => b.id === bloque.id ? { ...b, objetivo: e.target.value } : b))} rows={2} className="w-full rounded-[10px] border border-border px-3 py-2.5 text-[13px] mb-3 outline-none focus:border-primary" />
+                  {oaSugeridosPorBloque[bloque.id]?.length > 0 && (
+                    <div className="mb-3 flex flex-wrap items-center gap-1.5 rounded-[10px] border border-status-blue-border bg-status-blue-bg/60 px-3 py-2">
+                      <span className="text-[11px] font-bold text-status-blue-text">OAs sugeridos del dia</span>
+                      {oaSugeridosPorBloque[bloque.id].map((oa) => (
+                        <span
+                          key={`${oa.unidadId || "u"}-${oa.id}`}
+                          title={oa.descripcion}
+                          className="rounded-full bg-card px-2 py-0.5 text-[10px] font-bold text-status-blue-text border border-status-blue-border"
+                        >
+                          {oa.numero ? `OA ${oa.numero}` : oa.id}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <label className="text-[11px] font-semibold text-muted-foreground block mb-1.5">Actividad</label>
                   <textarea value={bloque.actividad} onChange={(e) => setBloques((prev) => prev.map((b) => b.id === bloque.id ? { ...b, actividad: e.target.value } : b))} rows={4} className="w-full rounded-[10px] border border-border px-3 py-2.5 text-[13px] outline-none focus:border-primary" />
                   <button onClick={() => setBloques((prev) => prev.map((b) => b.id === bloque.id ? { ...b, firmado: !b.firmado } : b))} className={cn("mt-4 flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13px] font-bold", bloque.firmado ? "bg-status-green-bg text-status-green-text border border-status-green-border" : "bg-card border border-primary text-primary")}>
@@ -300,12 +341,41 @@ export function LibroClasesContent() {
                     {bloque.asistencia.map((est) => {
                       const state = ESTADOS.find((item) => item.key === est.estado)!
                       const isPie = pieMap.get(est.id)?.pie
+                      const obs = observacionesResumen[est.id]
                       return (
                         <button key={est.id} onClick={() => toggleAsistencia(bloque.id, est.id)} className="w-full min-h-[48px] rounded-[12px] border border-border px-3 py-3 flex items-center justify-between hover:bg-background transition-colors text-left">
                           <span className="text-[13px] font-medium flex items-center gap-1.5">
                             {est.nombre}
                             {isPie && (
                               <span className="rounded bg-status-pie-bg px-1.5 py-0.5 text-[9px] font-bold text-status-pie-text border border-status-pie-border">PIE</span>
+                            )}
+                            {obs && (
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={(event) => {
+                                      event.stopPropagation()
+                                      window.location.href = buildUrl("/perfil-360", withAsignatura({ curso, alumno: est.id }, ASIGNATURA))
+                                    }}
+                                    onKeyDown={(event) => {
+                                      if (event.key === "Enter" || event.key === " ") {
+                                        event.preventDefault()
+                                        event.stopPropagation()
+                                        window.location.href = buildUrl("/perfil-360", withAsignatura({ curso, alumno: est.id }, ASIGNATURA))
+                                      }
+                                    }}
+                                    className="inline-flex items-center gap-1 rounded-full border border-status-blue-border bg-status-blue-bg px-1.5 py-0.5 text-[10px] font-bold text-status-blue-text transition-colors hover:brightness-95"
+                                  >
+                                    <MessageSquare className="h-3 w-3" />
+                                    {obs.total}
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-[260px]">
+                                  <span>{obs.ultimaFecha}: {obs.ultimoExtracto}</span>
+                                </TooltipContent>
+                              </Tooltip>
                             )}
                           </span>
                           <span className={cn("px-2.5 py-1.5 rounded-full text-[11px] font-bold flex-shrink-0", state.cls)}>{state.label}</span>

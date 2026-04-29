@@ -5,7 +5,7 @@ import Link from "next/link"
 import {
   ChevronLeft, ChevronRight, Loader2, Check,
   Bookmark, Shuffle, Copy, ArrowRight, Calendar,
-  AlertTriangle, Plus, Trash2
+  AlertTriangle, ListOrdered, Sparkles
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -69,6 +69,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   const [saveStatus, setSaveStatus] = useState<"idle"|"saving_silent"|"saved"|"error">("idle")
   const [colOffset, setColOffset]   = useState(0)          // paginación horizontal
   const [showAutoWarn, setShowAutoWarn] = useState(false)  // advertencia autorelleno
+  const [autoRellenando, setAutoRellenando] = useState(false)
   const [editFecha, setEditFecha]   = useState<number|null>(null)
   const [fechaTemp, setFechaTemp]   = useState("")
   const [horarioBase, setHorarioBase] = useState<ClaseHorario[]>([])
@@ -143,16 +144,71 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
     }))
   }
 
-  // Autorelleno aleatorio
-  const handleAutorelleno = () => {
+  const aplicarDistribucion = (distribucion: Array<{ clase: number; oaIds: string[] }>) => {
+    const byClase = new Map(distribucion.map((item) => [item.clase, item.oaIds]))
+    setClases(prev => prev.map(c => ({ ...c, oaIds: byClase.get(c.numero) || c.oaIds })))
     setShowAutoWarn(false)
+  }
+
+  const distribucionAleatoria = () => {
     const oaSelec = oas.filter(o => o.seleccionado)
-    if (oaSelec.length === 0) return
-    const nuevasClases = clases.map((c, i) => ({
-      ...c,
-      oaIds: [oaSelec[i % oaSelec.length].id]
-    }))
-    setClases(nuevasClases)
+    return clases.map((c, i) => ({ clase: c.numero, oaIds: oaSelec.length ? [oaSelec[i % oaSelec.length].id] : [] }))
+  }
+
+  const distribucionCurricular = () => {
+    const oaSelec = [...oas.filter(o => o.seleccionado)].sort((a, b) => (a.numero ?? 999) - (b.numero ?? 999))
+    if (oaSelec.length === 0) return []
+
+    const clasesEnsenanza = totalClases > 2 ? totalClases - 1 : totalClases
+    const oasPorClase = Math.max(1, Math.ceil(oaSelec.length / clasesEnsenanza))
+    const distribucion: Array<{ clase: number; oaIds: string[] }> = []
+
+    for (let i = 0; i < totalClases; i++) {
+      if (i >= clasesEnsenanza) {
+        const cierre = oaSelec.slice(Math.max(0, oaSelec.length - Math.max(2, oasPorClase))).map(oa => oa.id)
+        distribucion.push({ clase: i + 1, oaIds: cierre })
+        continue
+      }
+      const start = i * oasPorClase
+      const bloque = oaSelec.slice(start, start + oasPorClase)
+      distribucion.push({ clase: i + 1, oaIds: bloque.length ? bloque.map(oa => oa.id) : [oaSelec[oaSelec.length - 1].id] })
+    }
+
+    return distribucion
+  }
+
+  const handleAutorelleno = async (modo: "aleatorio" | "curricular" | "ia") => {
+    if (modo === "aleatorio") {
+      aplicarDistribucion(distribucionAleatoria())
+      return
+    }
+    if (modo === "curricular") {
+      aplicarDistribucion(distribucionCurricular())
+      return
+    }
+
+    setAutoRellenando(true)
+    try {
+      const oaSelec = oas.filter(o => o.seleccionado)
+      const res = await fetch("/api/distribuir-oas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          asignatura: ASIGNATURA,
+          curso,
+          totalClases,
+          oas: oaSelec.map(oa => ({ id: oa.id, numero: oa.numero, descripcion: oa.descripcion })),
+        }),
+      })
+      if (!res.ok) throw new Error("IA no disponible")
+      const data = await res.json()
+      if (!Array.isArray(data.distribucion)) throw new Error("Respuesta IA invalida")
+      aplicarDistribucion(data.distribucion)
+    } catch {
+      aplicarDistribucion(distribucionCurricular())
+    } finally {
+      setAutoRellenando(false)
+    }
   }
 
   // Fechas automáticas
@@ -256,18 +312,30 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
         <div className="mb-4 flex items-start gap-3 rounded-[12px] border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
-            <p className="text-[13px] font-bold text-amber-900 mb-1">¿Usar autorelleno?</p>
+            <p className="text-[13px] font-bold text-amber-900 mb-1">Elige estrategia de autorelleno</p>
             <p className="text-[12px] text-amber-800 leading-snug mb-3">
-              El autorelleno distribuye los OA de forma <strong>aleatoria</strong>, sin intención pedagógica. Se recomienda distribuir manualmente para mejor resultado.
+              Puedes usar el modo rapido, distribuir por progresion curricular o pedir una propuesta didactica con IA. Si la IA no esta disponible, EduPanel usara el modo curricular.
             </p>
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <button onClick={handleAutorelleno} className="rounded-lg bg-amber-500 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-amber-600">
-                Autorrellenar igual
+            <div className="grid gap-2 sm:grid-cols-3">
+              <button onClick={() => handleAutorelleno("curricular")} className="rounded-lg bg-amber-500 px-3 py-2 text-left text-[11px] font-bold text-white hover:bg-amber-600">
+                <span className="flex items-center gap-1.5"><ListOrdered className="h-3.5 w-3.5" /> Curricular</span>
+                <span className="mt-0.5 block text-[10px] font-medium text-white/80">Recomendado</span>
               </button>
-              <button onClick={() => setShowAutoWarn(false)} className="rounded-lg px-3 py-1.5 text-[11px] text-amber-800 hover:bg-amber-100">
-                Cancelar
+              <button onClick={() => handleAutorelleno("ia")} disabled={autoRellenando || oasSeleccionados.length <= 5 || totalClases <= 5} className="rounded-lg border border-amber-300 bg-white px-3 py-2 text-left text-[11px] font-bold text-amber-900 hover:bg-amber-100 disabled:opacity-50">
+                <span className="flex items-center gap-1.5">
+                  {autoRellenando ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+                  IA didactica
+                </span>
+                <span className="mt-0.5 block text-[10px] font-medium text-amber-700">Para unidades largas</span>
+              </button>
+              <button onClick={() => handleAutorelleno("aleatorio")} className="rounded-lg border border-amber-300 bg-white px-3 py-2 text-left text-[11px] font-bold text-amber-900 hover:bg-amber-100">
+                <span className="flex items-center gap-1.5"><Shuffle className="h-3.5 w-3.5" /> Aleatorio</span>
+                <span className="mt-0.5 block text-[10px] font-medium text-amber-700">Rapido</span>
               </button>
             </div>
+            <button onClick={() => setShowAutoWarn(false)} className="mt-2 rounded-lg px-3 py-1.5 text-[11px] text-amber-800 hover:bg-amber-100">
+              Cancelar
+            </button>
           </div>
         </div>
       )}

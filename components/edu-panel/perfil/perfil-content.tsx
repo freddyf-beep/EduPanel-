@@ -8,6 +8,15 @@ import { cargarEstudiantes, compareEstudiantes, guardarEstudiantes, Estudiante }
 import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked, AlertCircle, Upload, School, X } from "lucide-react"
 import { cargarNivelMapping, guardarNivelMapping, NIVELES_CURRICULARES, type NivelMapping } from "@/lib/nivel-mapping"
 import { cn } from "@/lib/utils"
+import {
+  desconectarGoogleCalendar,
+  getGoogleCalendarToken,
+  isGoogleCalendarAutosyncEnabled,
+  isGoogleCalendarConnected,
+  setGoogleCalendarAutosync,
+  sincronizarCronogramasGoogle,
+} from "@/lib/google-calendar"
+import { DEFAULT_ASIGNATURA, SUBJECT_STORAGE_KEY } from "@/lib/shared"
 
 type ImportEstudiantesFeedback = {
   type: "idle" | "success" | "error"
@@ -183,9 +192,14 @@ function getNextStudentOrder(estudiantes: Estudiante[]): number {
 }
 
 export function PerfilContent() {
-  const { user } = useAuth()
+  const { user, signInWithGoogleCalendar } = useAuth()
   const [activeTab, setActiveTab] = useState<"datos" | "horario" | "estudiantes" | "niveles" | "colegio">("datos")
   const [loading, setLoading] = useState(true)
+  const [calendarConnected, setCalendarConnected] = useState(false)
+  const [calendarAutosync, setCalendarAutosyncState] = useState(true)
+  const [connectingCalendar, setConnectingCalendar] = useState(false)
+  const [syncingCalendar, setSyncingCalendar] = useState(false)
+  const [calendarMessage, setCalendarMessage] = useState<string | null>(null)
 
   // Perfil state
   const [savingPerfil, setSavingPerfil] = useState(false)
@@ -276,6 +290,11 @@ export function PerfilContent() {
   }, [])
 
   useEffect(() => {
+    setCalendarConnected(isGoogleCalendarConnected())
+    setCalendarAutosyncState(isGoogleCalendarAutosyncEnabled())
+  }, [])
+
+  useEffect(() => {
     if (!cursoEstudiantes && cursosDisponibles.length > 0) {
       setCursoEstudiantes(cursosDisponibles[0])
     }
@@ -321,6 +340,61 @@ export function PerfilContent() {
       setTimeout(() => setSavedPerfil(false), 3000)
     } catch (error) { console.error(error) } 
     finally { setSavingPerfil(false) }
+  }
+
+  const handleConnectCalendar = async () => {
+    setConnectingCalendar(true)
+    setCalendarMessage(null)
+    try {
+      await signInWithGoogleCalendar()
+      setCalendarConnected(true)
+      setCalendarAutosyncState(isGoogleCalendarAutosyncEnabled())
+      setCalendarMessage("Google Calendar conectado.")
+    } catch (error) {
+      console.error(error)
+      setCalendarMessage("No se pudo conectar Google Calendar.")
+    } finally {
+      setConnectingCalendar(false)
+    }
+  }
+
+  const handleDisconnectCalendar = () => {
+    desconectarGoogleCalendar()
+    setCalendarConnected(false)
+    setCalendarMessage("Google Calendar desconectado.")
+  }
+
+  const handleToggleCalendarAutosync = (enabled: boolean) => {
+    setGoogleCalendarAutosync(enabled)
+    setCalendarAutosyncState(enabled)
+  }
+
+  const handleSyncCalendarNow = async () => {
+    const token = getGoogleCalendarToken()
+    if (!token) {
+      setCalendarConnected(false)
+      setCalendarMessage("Reconecta Google Calendar para sincronizar.")
+      return
+    }
+
+    setSyncingCalendar(true)
+    setCalendarMessage(null)
+    try {
+      const asignatura = typeof window !== "undefined"
+        ? window.localStorage.getItem(SUBJECT_STORAGE_KEY) || DEFAULT_ASIGNATURA
+        : DEFAULT_ASIGNATURA
+      const res = await sincronizarCronogramasGoogle({
+        accessToken: token,
+        asignatura,
+        year: new Date().getFullYear(),
+      })
+      setCalendarMessage(`Sincronizado: ${res.creados} nuevos, ${res.actualizados} actualizados, ${res.eliminados} eliminados.`)
+    } catch (error) {
+      console.error(error)
+      setCalendarMessage("No se pudo sincronizar. Reconecta Google Calendar e intenta de nuevo.")
+    } finally {
+      setSyncingCalendar(false)
+    }
   }
 
   const handleAddOrEditBloque = (e: React.FormEvent) => {
@@ -681,6 +755,61 @@ export function PerfilContent() {
                   {savedPerfil && <span className="text-green-600 font-bold text-[13px] flex items-center gap-1.5 animate-in fade-in"><CheckCircle className="w-4 h-4" /> Guardado</span>}
                 </div>
               </form>
+
+              <div className="mt-7 rounded-xl border border-border bg-background p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-wide text-muted-foreground">
+                      <Calendar className="h-4 w-4" /> Integraciones
+                    </p>
+                    <h4 className="mt-1 text-[15px] font-extrabold text-foreground">Google Calendar</h4>
+                    <p className="mt-1 max-w-[560px] text-[12px] leading-relaxed text-muted-foreground">
+                      Envia solo tus actividades de EduPanel a tu calendario principal. No lee ni modifica otros eventos.
+                    </p>
+                  </div>
+                  <span className={cn(
+                    "w-fit rounded-full px-3 py-1 text-[11px] font-extrabold",
+                    calendarConnected ? "bg-green-50 text-green-700 border border-green-200" : "bg-muted text-muted-foreground border border-border"
+                  )}>
+                    {calendarConnected ? "Conectado" : "Desconectado"}
+                  </span>
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  {calendarConnected ? (
+                    <button type="button" onClick={handleDisconnectCalendar}
+                      className="rounded-lg border border-border px-4 py-2 text-[12px] font-bold text-muted-foreground hover:bg-card">
+                      Desconectar
+                    </button>
+                  ) : (
+                    <button type="button" onClick={handleConnectCalendar} disabled={connectingCalendar}
+                      className="flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-[12px] font-bold text-white hover:bg-slate-800 disabled:opacity-70">
+                      {connectingCalendar && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                      Conectar Google Calendar
+                    </button>
+                  )}
+
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-[12px] font-bold text-foreground">
+                    <input
+                      type="checkbox"
+                      checked={calendarAutosync}
+                      disabled={!calendarConnected}
+                      onChange={e => handleToggleCalendarAutosync(e.target.checked)}
+                      className="h-4 w-4"
+                    />
+                    Sync automatico al guardar cronograma
+                  </label>
+
+                  <button type="button" onClick={handleSyncCalendarNow} disabled={!calendarConnected || syncingCalendar}
+                    className="flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-[12px] font-bold text-primary hover:bg-pink-light disabled:opacity-60">
+                    {syncingCalendar && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                    Sincronizar ahora
+                  </button>
+                </div>
+                {calendarMessage && (
+                  <p className="mt-3 text-[12px] font-semibold text-muted-foreground">{calendarMessage}</p>
+                )}
+              </div>
             </div>
           )}
 

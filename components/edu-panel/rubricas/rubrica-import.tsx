@@ -13,8 +13,10 @@ import {
   ArrowLeft,
   AlertCircle,
   Loader2,
+  CheckCircle2,
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { toast } from "@/hooks/use-toast"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
@@ -50,8 +52,8 @@ const NIVEL_LABELS = [
   { key: "porLograr", label: "Por lograr", puntos: 1, color: "text-red-600" },
 ] as const
 
-const CRITERIOS_GRID_TEMPLATE = "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 100px"
-const CRITERIOS_MIN_WIDTH = "1360px"
+const CRITERIOS_GRID_TEMPLATE = "minmax(260px, 1.2fr) repeat(4, minmax(180px, 1fr)) 100px"
+const CRITERIOS_MIN_WIDTH = "1110px"
 
 function textListsEqual(a: string[], b: string[]) {
   if (a.length !== b.length) return false
@@ -69,7 +71,7 @@ export function RubricaImport({ mode = "import" }: Props) {
   const [curso, setCurso] = useState("")
   const [rubrica, setRubrica] = useState<RubricaTemplate | null>(null)
   const [guardando, setGuardando] = useState(false)
-  const [guardadoOk, setGuardadoOk] = useState(false)
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle")
   const [error, setError] = useState("")
   const [importing, setImporting] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -80,6 +82,7 @@ export function RubricaImport({ mode = "import" }: Props) {
   const [oaInputs, setOaInputs] = useState<Record<string, string>>({})
   const fileInputRef = useRef<HTMLInputElement>(null)
   const ignoreFirstSave = useRef(true)
+  const autoSaveRunRef = useRef(0)
   const curriculoRequestRef = useRef(0)
   const oasRequestRef = useRef(0)
   // Selector de unidad curricular
@@ -229,21 +232,46 @@ export function RubricaImport({ mode = "import" }: Props) {
     if (!rubrica) return
     if (ignoreFirstSave.current) {
       ignoreFirstSave.current = false
+      setSaveStatus("idle")
       return
     }
 
+    const runId = ++autoSaveRunRef.current
+    setSaveStatus(prev => prev === "saving" ? prev : "idle")
     const timer = setTimeout(async () => {
+      setSaveStatus("saving")
       try {
         await guardarRubrica(rubrica)
-        setGuardadoOk(true)
-        setTimeout(() => setGuardadoOk(false), 2000)
+        if (autoSaveRunRef.current === runId) {
+          setSaveStatus("saved")
+        }
       } catch (saveError) {
         console.error(saveError)
+        if (autoSaveRunRef.current === runId) {
+          setSaveStatus("error")
+          toast({
+            title: "No se pudo autoguardar",
+            description: saveError instanceof Error ? saveError.message : "Intentalo nuevamente.",
+            variant: "destructive",
+          })
+        }
       }
     }, 2500)
 
     return () => clearTimeout(timer)
   }, [rubrica])
+
+  useEffect(() => {
+    if (saveStatus !== "saving") return
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ""
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
+  }, [saveStatus])
 
   useEffect(() => {
     if (!rubrica) return
@@ -477,13 +505,22 @@ export function RubricaImport({ mode = "import" }: Props) {
   const handleGuardar = async () => {
     if (!rubrica) return
     setGuardando(true)
+    setSaveStatus("saving")
     setError("")
 
     try {
       await guardarRubrica(rubrica)
+      setSaveStatus("saved")
       router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Error al guardar")
+      const message = saveError instanceof Error ? saveError.message : "Error al guardar"
+      setSaveStatus("error")
+      setError(message)
+      toast({
+        title: "No se pudo guardar",
+        description: message,
+        variant: "destructive",
+      })
     } finally {
       setGuardando(false)
     }
@@ -520,9 +557,28 @@ export function RubricaImport({ mode = "import" }: Props) {
           <h1 className="text-[17px] sm:text-[20px] font-extrabold text-foreground truncate">
             {rubricaIdParam ? "Editar rubrica" : mode === "blank" ? "Nueva rubrica" : "Importar desde Word"}
           </h1>
-          <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">
-            {guardadoOk ? "Guardado" : "Los cambios se guardan automaticamente"}
-          </p>
+          <div
+            className={`flex items-center gap-1.5 truncate text-[11px] sm:text-[12px] ${
+              saveStatus === "saved"
+                ? "text-green-600"
+                : saveStatus === "error"
+                  ? "text-red-600"
+                  : "text-muted-foreground"
+            }`}
+          >
+            {saveStatus === "saving" && <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin" />}
+            {saveStatus === "saved" && <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />}
+            {saveStatus === "error" && <AlertCircle className="h-3.5 w-3.5 shrink-0" />}
+            <span className="truncate">
+              {saveStatus === "saving"
+                ? "Guardando..."
+                : saveStatus === "saved"
+                  ? "Guardado"
+                  : saveStatus === "error"
+                    ? "Error al guardar"
+                    : "Los cambios se guardan automaticamente"}
+            </span>
+          </div>
         </div>
 
         <button
@@ -786,17 +842,17 @@ export function RubricaImport({ mode = "import" }: Props) {
               <div className="space-y-3 p-4">
                 {(() => {
                   const gridTemplate = rubrica.usaPonderaciones
-                    ? "minmax(260px, 1.2fr) repeat(4, minmax(240px, 1fr)) 80px 100px"
+                    ? "minmax(260px, 1.2fr) repeat(4, minmax(180px, 1fr)) 80px 100px"
                     : CRITERIOS_GRID_TEMPLATE
-                  const minWidth = rubrica.usaPonderaciones ? "1460px" : CRITERIOS_MIN_WIDTH
+                  const minWidth = rubrica.usaPonderaciones ? "1210px" : CRITERIOS_MIN_WIDTH
                   return (
                 <>
                 <div className="overflow-x-auto pb-2">
                   <div
-                    className="grid gap-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground"
+                    className="mb-2 grid gap-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground"
                     style={{ gridTemplateColumns: gridTemplate, minWidth }}
                   >
-                    <span>Criterio</span>
+                    <span className="sticky left-0 z-10 bg-card py-1">Criterio</span>
                     {NIVEL_LABELS.map(nivel => (
                       <span key={nivel.key} className={nivel.color}>
                         {nivel.label} ({nivel.puntos})
@@ -807,9 +863,8 @@ export function RubricaImport({ mode = "import" }: Props) {
                     )}
                     <span className="text-right">Mover / Borrar</span>
                   </div>
-                </div>
 
-                <div className="space-y-3 overflow-x-auto pb-2">
+                  <div className="space-y-3">
                   {parte.criterios.map(criterio => (
                     <div
                       key={criterio.id}
@@ -821,7 +876,7 @@ export function RubricaImport({ mode = "import" }: Props) {
                         onChange={e => updateCriterio(parte.id, criterio.id, current => ({ ...current, nombre: e.target.value }))}
                         placeholder="Nombre del criterio"
                         rows={3}
-                        className="rounded-[8px] border border-border bg-background px-2 py-1.5 text-[12px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                        className="sticky left-0 z-10 rounded-[8px] border border-border bg-background px-2 py-1.5 text-[12px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
 
                       {NIVEL_LABELS.map(nivel => (
@@ -903,6 +958,7 @@ export function RubricaImport({ mode = "import" }: Props) {
                       </div>
                     </div>
                   ))}
+                  </div>
                 </div>
 
                 <button

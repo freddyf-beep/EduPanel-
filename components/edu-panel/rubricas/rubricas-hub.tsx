@@ -7,6 +7,7 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import {
+  buildRubricaId,
   cargarRubricas,
   guardarRubrica,
   guardarEvaluacion,
@@ -15,6 +16,14 @@ import {
   type EvaluacionRubrica,
 } from "@/lib/rubricas"
 import { guardarEstudiantes, cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { RubricaCard } from "./rubrica-card"
 
 interface ImportZipPreview {
@@ -137,6 +146,9 @@ export function RubricasHub() {
   const [guardandoZip, setGuardandoZip] = useState(false)
   const [errorImport, setErrorImport] = useState("")
   const [zipPreview, setZipPreview] = useState<ImportZipPreview | null>(null)
+  const [duplicarRubrica, setDuplicarRubrica] = useState<RubricaTemplate | null>(null)
+  const [duplicarCurso, setDuplicarCurso] = useState("")
+  const [duplicando, setDuplicando] = useState(false)
   const zipInputRef = useRef<HTMLInputElement>(null)
 
   // Cargar cursos del horario
@@ -168,6 +180,51 @@ export function RubricasHub() {
 
   const handleEliminar = (id: string) => {
     setRubricas(prev => prev.filter(r => r.id !== id))
+  }
+
+  const abrirDuplicar = (rubrica: RubricaTemplate) => {
+    const cursoSugerido = cursos.find(c => c !== rubrica.curso) ?? (rubrica.curso || curso)
+    setDuplicarRubrica(rubrica)
+    setDuplicarCurso(cursoSugerido)
+    setErrorImport("")
+  }
+
+  const cerrarDuplicar = () => {
+    if (duplicando) return
+    setDuplicarRubrica(null)
+    setDuplicarCurso("")
+  }
+
+  const handleDuplicar = async () => {
+    if (!duplicarRubrica || !duplicarCurso) return
+    setDuplicando(true)
+    setErrorImport("")
+
+    try {
+      const copiaBase = JSON.parse(JSON.stringify(duplicarRubrica)) as RubricaTemplate
+      const nombreBase = copiaBase.nombre?.trim() || "Rubrica"
+      const copia: RubricaTemplate = {
+        ...copiaBase,
+        id: buildRubricaId(copiaBase.asignatura, duplicarCurso, nombreBase),
+        nombre: nombreBase.endsWith("(copia)") ? nombreBase : `${nombreBase} (copia)`,
+        curso: duplicarCurso,
+        createdAt: undefined,
+        updatedAt: undefined,
+      }
+
+      await guardarRubrica(copia)
+
+      if (duplicarCurso === curso) {
+        setRubricas(prev => [copia, ...prev.filter(r => r.id !== copia.id)])
+      }
+
+      setDuplicarRubrica(null)
+      setDuplicarCurso("")
+    } catch (err) {
+      setErrorImport(err instanceof Error ? err.message : "Error al duplicar rubrica")
+    } finally {
+      setDuplicando(false)
+    }
   }
 
   const handleImportarZip = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -263,8 +320,58 @@ export function RubricasHub() {
     }
   }
 
+  const cursosDestino = cursos.length > 0
+    ? cursos
+    : [curso || duplicarRubrica?.curso || ""].filter(Boolean)
+
   return (
     <div className="space-y-6">
+      <Dialog open={!!duplicarRubrica} onOpenChange={open => { if (!open) cerrarDuplicar() }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Duplicar rubrica</DialogTitle>
+            <DialogDescription>
+              Elige el curso donde se guardara una copia independiente.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2">
+            <label className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+              Curso destino
+            </label>
+            <select
+              value={duplicarCurso}
+              onChange={e => setDuplicarCurso(e.target.value)}
+              className="w-full rounded-[10px] border border-border bg-background px-3 py-2 text-[13px] text-foreground outline-none focus:ring-1 focus:ring-primary/30"
+            >
+              {cursosDestino.map(c => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <DialogFooter>
+            <button
+              onClick={cerrarDuplicar}
+              disabled={duplicando}
+              className="rounded-[10px] border border-border px-4 py-2 text-[13px] font-medium transition-colors hover:bg-muted/60 disabled:opacity-50"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleDuplicar}
+              disabled={!duplicarCurso || duplicando}
+              className="flex items-center justify-center gap-1.5 rounded-[10px] bg-primary px-4 py-2 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {duplicando ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+              Duplicar
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <input ref={zipInputRef} type="file" accept=".zip" className="hidden" onChange={handleImportarZip} />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -472,6 +579,7 @@ export function RubricasHub() {
               rubrica={rubrica}
               asignatura={asignatura}
               onEliminar={handleEliminar}
+              onDuplicar={abrirDuplicar}
             />
           ))}
         </div>

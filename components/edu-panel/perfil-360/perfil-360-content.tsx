@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import {
   Activity, BookOpen, ClipboardCheck, Loader2, UserRound, Users,
-  Plus, MessageSquare, TrendingUp, ShieldCheck, ChevronDown, ChevronUp
+  Plus, MessageSquare, TrendingUp, ShieldCheck, ChevronDown, ChevronUp, Target, AlertTriangle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -12,6 +13,7 @@ import { cargarEstudiantes, compareEstudiantes } from "@/lib/estudiantes"
 import { listarLibroClasesCurso, userDoc, cargarObservaciones360, guardarObservaciones360 } from "@/lib/curriculo"
 import type { Observacion360 } from "@/lib/curriculo"
 import { getDoc } from "firebase/firestore"
+import { evaluarAlumno } from "@/lib/alertas"
 
 interface EstudianteVista {
   id: string
@@ -26,6 +28,13 @@ interface EstudianteVista {
   pieEspecialista: string
   pieNotas: string
   notas: Record<string, string>
+}
+
+interface EvaluacionPerfil {
+  id: string
+  label: string
+  oaIds?: string[]
+  unidadId?: string
 }
 
 function buildCalifId(asignatura: string, curso: string) {
@@ -74,10 +83,14 @@ function MiniSparkline({ notas }: { notas: Record<string, string> }) {
 
 export function Perfil360Content() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
+  const searchParams = useSearchParams()
+  const cursoParam = searchParams.get("curso")
+  const alumnoParam = searchParams.get("alumno")
   const [curso, setCurso] = useState("")
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [estudiantes, setEstudiantes] = useState<EstudianteVista[]>([])
+  const [evaluacionesCalif, setEvaluacionesCalif] = useState<EvaluacionPerfil[]>([])
   const [selectedId, setSelectedId] = useState<string>("")
 
   // Observaciones
@@ -89,7 +102,7 @@ export function Perfil360Content() {
 
   // Secciones colapsables
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    resumen: true, asistencia: true, observaciones: true, pie: true
+    resumen: true, asistencia: true, observaciones: true, rendimientoOa: true, pie: true
   })
   const toggleSection = (key: string) => setExpandedSections(prev => ({ ...prev, [key]: !prev[key] }))
 
@@ -97,9 +110,9 @@ export function Perfil360Content() {
     cargarHorarioSemanal().then(hData => {
       const unique = Array.from(new Set(hData.map(h => h.resumen)))
       setCursosDisponibles(unique)
-      if (unique.length > 0) setCurso(unique[0])
+      if (unique.length > 0) setCurso(cursoParam && unique.includes(cursoParam) ? cursoParam : unique[0])
     })
-  }, [])
+  }, [cursoParam])
 
   useEffect(() => {
     if (!curso) return
@@ -110,6 +123,12 @@ export function Perfil360Content() {
       cargarEstudiantes(curso),
     ]).then(([libros, califSnap, estDocs]) => {
       const calif = califSnap.exists() ? califSnap.data() : null
+      setEvaluacionesCalif(Array.isArray(calif?.evaluaciones) ? calif.evaluaciones.map((ev: any) => ({
+        id: ev.id,
+        label: ev.label || ev.id,
+        oaIds: Array.isArray(ev.oaIds) ? ev.oaIds : [],
+        unidadId: ev.unidadId,
+      })) : [])
       const mapa = new Map<string, EstudianteVista>()
       for (const est of estDocs) {
         mapa.set(est.nombre, {
@@ -162,7 +181,10 @@ export function Perfil360Content() {
 
       const lista = Array.from(mapa.values()).sort(compareEstudiantes)
       setEstudiantes(lista)
-      setSelectedId((prev) => lista.some((est) => est.id === prev) ? prev : (lista[0]?.id || ""))
+      setSelectedId((prev) => {
+        if (alumnoParam && lista.some((est) => est.id === alumnoParam)) return alumnoParam
+        return lista.some((est) => est.id === prev) ? prev : (lista[0]?.id || "")
+      })
     }).catch((error) => {
       console.error("Error cargando perfil 360", error)
       setEstudiantes([])
@@ -196,6 +218,37 @@ export function Perfil360Content() {
   }
 
   const seleccionado = useMemo(() => estudiantes.find((e) => e.id === selectedId) || null, [estudiantes, selectedId])
+
+  const rendimientoPorOA = useMemo(() => {
+    if (!seleccionado) return []
+    const acc = new Map<string, { oaId: string; suma: number; total: number; evaluaciones: string[] }>()
+    evaluacionesCalif.forEach((evaluacion) => {
+      if (!evaluacion.oaIds?.length) return
+      const nota = Number.parseFloat(seleccionado.notas[evaluacion.id])
+      if (!Number.isFinite(nota)) return
+      evaluacion.oaIds.forEach((oaId) => {
+        const current = acc.get(oaId) || { oaId, suma: 0, total: 0, evaluaciones: [] }
+        current.suma += nota
+        current.total += 1
+        current.evaluaciones.push(evaluacion.label)
+        acc.set(oaId, current)
+      })
+    })
+    return Array.from(acc.values())
+      .map((item) => ({ ...item, promedio: Number((item.suma / item.total).toFixed(1)) }))
+      .sort((a, b) => a.oaId.localeCompare(b.oaId, "es", { numeric: true }))
+  }, [evaluacionesCalif, seleccionado])
+
+  const alertas = useMemo(() => {
+    if (!seleccionado) return []
+    return evaluarAlumno({
+      promedio: seleccionado.promedio,
+      porcentajeAsistencia: seleccionado.porcentajeAsistencia,
+      pie: seleccionado.pie,
+      notas: seleccionado.notas,
+      observaciones,
+    })
+  }, [observaciones, seleccionado])
 
   const delta = seleccionado?.promedio != null && seleccionado?.promedioClase != null
     ? Number((seleccionado.promedio - seleccionado.promedioClase).toFixed(1))
@@ -295,6 +348,31 @@ export function Perfil360Content() {
 
           {/* Panel derecho — Secciones */}
           <div className="flex flex-col gap-4">
+            {alertas.length > 0 && (
+              <div className="grid gap-3">
+                {alertas.map((alerta) => (
+                  <div key={alerta.id} className={cn(
+                    "rounded-[14px] border bg-card p-4",
+                    alerta.severidad === "alta" ? "border-status-red-border border-t-4" : "border-status-amber-border border-t-4"
+                  )}>
+                    <div className="flex items-start gap-3">
+                      <div className={cn(
+                        "mt-0.5 rounded-lg p-2",
+                        alerta.severidad === "alta" ? "bg-status-red-bg text-status-red-text" : "bg-status-amber-bg text-status-amber-text"
+                      )}>
+                        <AlertTriangle className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-[14px] font-extrabold">{alerta.titulo}</h3>
+                        <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground">{alerta.detalle}</p>
+                        <p className="mt-2 text-[12px] font-semibold text-foreground">{alerta.accion}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Asistencia */}
             <div className="bg-card border border-border rounded-[16px] overflow-hidden">
               <button onClick={() => toggleSection("asistencia")} className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/20 transition-colors">
@@ -324,6 +402,52 @@ export function Perfil360Content() {
                       )
                     })}
                   </div>
+                </div>
+              )}
+            </div>
+
+            {/* Rendimiento por OA */}
+            <div className="bg-card border border-border rounded-[16px] overflow-hidden">
+              <button onClick={() => toggleSection("rendimientoOa")} className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/20 transition-colors">
+                <h3 className="text-[15px] font-extrabold flex items-center gap-2">
+                  <Target className="w-4 h-4 text-primary" /> Rendimiento por OA
+                  {rendimientoPorOA.length > 0 && (
+                    <span className="text-[11px] font-semibold text-muted-foreground bg-background border border-border rounded-full px-2 py-0.5">{rendimientoPorOA.length}</span>
+                  )}
+                </h3>
+                {expandedSections.rendimientoOa ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+              </button>
+              {expandedSections.rendimientoOa && (
+                <div className="px-5 pb-5">
+                  {rendimientoPorOA.length === 0 ? (
+                    <p className="text-[13px] text-muted-foreground">Aun no hay evaluaciones vinculadas a OAs para este estudiante.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {rendimientoPorOA.map((item) => {
+                        const color = item.promedio < 4
+                          ? "bg-status-red-text"
+                          : item.promedio < 5.5
+                            ? "bg-status-amber-text"
+                            : "bg-status-green-text"
+                        return (
+                          <div key={item.oaId} className="rounded-[12px] border border-border bg-background p-3">
+                            <div className="mb-2 flex items-center justify-between gap-3">
+                              <div className="min-w-0">
+                                <div className="text-[13px] font-bold">{item.oaId}</div>
+                                <div className="truncate text-[11px] text-muted-foreground">{item.evaluaciones.join(", ")}</div>
+                              </div>
+                              <span className={cn("text-[15px] font-extrabold", item.promedio < 4 ? "text-status-red-text" : item.promedio < 5.5 ? "text-status-amber-text" : "text-status-green-text")}>
+                                {item.promedio.toFixed(1)}
+                              </span>
+                            </div>
+                            <div className="h-2 overflow-hidden rounded-full bg-muted">
+                              <div className={cn("h-full rounded-full", color)} style={{ width: `${Math.min(100, Math.max(0, (item.promedio / 7) * 100))}%` }} />
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

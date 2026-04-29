@@ -3,11 +3,13 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import { guardarGoogleCalendarToken } from "@/lib/google-calendar"
 
 interface AuthContextType {
   user: User | null
   loading: boolean
   signInWithGoogle: () => Promise<void>
+  signInWithGoogleCalendar: () => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -27,10 +29,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
+    provider.addScope("profile")
+    provider.addScope("email")
     try {
       await signInWithPopup(auth, provider)
     } catch (error) {
       console.error("Error signing in with Google", error)
+      throw error
+    }
+  }
+
+  const signInWithGoogleCalendar = async () => {
+    const provider = new GoogleAuthProvider()
+    provider.addScope("profile")
+    provider.addScope("email")
+    provider.addScope("https://www.googleapis.com/auth/calendar.events")
+    provider.setCustomParameters({ prompt: "consent" })
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      if (!credential?.accessToken) {
+        throw new Error("No se recibio token de Google Calendar")
+      }
+      guardarGoogleCalendarToken(credential.accessToken)
+    } catch (error) {
+      console.error("Error connecting Google Calendar", error)
       throw error
     }
   }
@@ -45,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithGoogleCalendar, logout }}>
       {children}
     </AuthContext.Provider>
   )
