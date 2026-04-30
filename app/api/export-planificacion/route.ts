@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Packer } from "docx"
 import { generarPlanificacionDocx, type ExportData } from "@/lib/export/planificacion-docx"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
 
 export async function POST(req: NextRequest) {
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
   try {
     const data: ExportData = await req.json()
 

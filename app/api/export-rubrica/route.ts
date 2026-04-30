@@ -8,6 +8,7 @@ import {
 } from "docx"
 import type { RubricaTemplate, EvaluacionRubrica, EstudianteEvaluacion } from "@/lib/rubricas"
 import { calcularPuntajeEstudiante, calcularNota as libCalcNota } from "@/lib/rubricas"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
 
 // ─── Logo escuela ─────────────────────────────────────────────────────────────
 function cargarLogo(logoBase64?: string): Buffer | null {
@@ -405,6 +406,8 @@ function generarDocEstudiante(
 
 // ─── POST /api/export-rubrica ─────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
   try {
     const body: {
       rubrica: RubricaTemplate

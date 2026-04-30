@@ -6,15 +6,17 @@ import { useEffect } from "react"
 import { Loader2 } from "lucide-react"
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth()
+  const { user, loading, blockedByAllowlist } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
-    if (!loading && !user && pathname !== "/login") {
-      router.push("/login")
+    if (!loading) {
+      if ((!user || blockedByAllowlist) && pathname !== "/login") {
+        router.push("/login")
+      }
     }
-  }, [user, loading, router, pathname])
+  }, [user, loading, blockedByAllowlist, router, pathname])
 
   if (loading) {
     return (
@@ -27,7 +29,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!user && pathname !== "/login") {
+  if ((!user || blockedByAllowlist) && pathname !== "/login") {
     return null
   }
 

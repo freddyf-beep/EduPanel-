@@ -6,6 +6,7 @@ import type {
   CriterioRubrica,
   RubricaMetadatosCurriculares,
 } from "@/lib/rubricas"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
 
 // Parser del Word de rúbrica
 // Estructura objetivo:
@@ -478,6 +479,8 @@ export function parsearTextoRubrica(texto: string): ParsedData {
 // Retorna: RubricaTemplate parcial, sin id, listo para edición/guardado.
 
 export async function POST(req: NextRequest) {
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
   try {
     const formData = await req.formData()
     const file = formData.get("file") as File | null

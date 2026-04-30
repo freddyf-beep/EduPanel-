@@ -2,11 +2,14 @@
 
 import { useState } from "react"
 import { useAuth } from "@/components/auth/auth-context"
+import { ProtectedRoute } from "@/components/auth/protected-route"
 import { db } from "@/lib/firebase"
 import { 
   collection, getDocs, doc, setDoc, deleteDoc 
 } from "firebase/firestore"
 import { Loader2, CheckCircle, AlertTriangle, Database, Trash2 } from "lucide-react"
+
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfiguea@gmail.com").toLowerCase()
 
 
 
@@ -329,7 +332,23 @@ export default function MigratePage() {
 
   if (authLoading) return <div className="p-8">Cargando...</div>
 
+  const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL
+  if (!isAdmin) {
+    return (
+      <ProtectedRoute>
+        <div className="min-h-screen bg-slate-50 p-8 flex flex-col items-center justify-center">
+          <div className="max-w-xl w-full bg-white rounded-2xl shadow-xl p-8 text-center border border-slate-200">
+            <AlertTriangle className="mx-auto mb-4 h-10 w-10 text-yellow-600" />
+            <h1 className="text-xl font-bold text-slate-900">Acceso restringido</h1>
+            <p className="mt-2 text-sm text-slate-600">Esta herramienta de migracion solo esta disponible para el administrador.</p>
+          </div>
+        </div>
+      </ProtectedRoute>
+    )
+  }
+
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-slate-50 p-8 flex flex-col items-center">
       <div className="max-w-xl w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="flex items-center gap-3 mb-6 border-b pb-4">
@@ -398,5 +417,6 @@ export default function MigratePage() {
         )}
       </div>
     </div>
+    </ProtectedRoute>
   )
 }

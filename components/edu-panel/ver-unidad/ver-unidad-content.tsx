@@ -21,6 +21,7 @@ import type {
 } from "@/lib/curriculo"
 import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
+import { apiFetch } from "@/lib/api-client"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
 import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
 import { TermometroUnidad } from "@/components/edu-panel/ver-unidad/termometro-unidad"
@@ -522,7 +523,7 @@ function VerUnidadInner() {
         })
       }
 
-      const res = await fetch("/api/export-planificacion", {
+      const res = await apiFetch("/api/export-planificacion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -15,6 +15,7 @@ import type { UnidadPlan, Unidad } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, guardarNivelMapping, getNivelesDisponibles, NivelMapping } from "@/lib/nivel-mapping"
+import { apiFetch } from "@/lib/api-client"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 
 const COLORS = ["#F59E0B","#3B82F6","#EF4444","#22C55E","#8B5CF6","#F03E6E","#06B6D4","#D97706"]
@@ -413,7 +414,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
         unidades: unidadesExport,
       }
 
-      const res = await fetch("/api/export-planificacion", {
+      const res = await apiFetch("/api/export-planificacion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(exportData),

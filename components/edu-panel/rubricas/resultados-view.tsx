@@ -9,6 +9,7 @@ import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { auth } from "@/lib/firebase"
 import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
+import { apiFetch } from "@/lib/api-client"
 import { toast } from "@/hooks/use-toast"
 import {
   AlertDialog,
@@ -90,7 +91,7 @@ export function ResultadosView({ rubricaId }: Props) {
     if (!rubrica || !evaluacion) return
     setExportando(true)
     try {
-      const res = await fetch("/api/export-rubrica", {
+      const res = await apiFetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rubrica, evaluacion }),
@@ -117,7 +118,7 @@ export function ResultadosView({ rubricaId }: Props) {
     const colegio = infoColegio?.nombre ?? ""
     const logoBase64 = infoColegio?.logoBase64
     try {
-      const res = await fetch("/api/export-rubrica", {
+      const res = await apiFetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rubrica, evaluacion, modo: "listado", profesorNombre, colegio, logoBase64 }),
@@ -414,6 +415,7 @@ export function ResultadosView({ rubricaId }: Props) {
                           </td>
                         </tr>
                       )
+
                     })
                   )}
                 </tbody>

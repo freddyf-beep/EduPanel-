@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    // Habilitado temporalmente: el proyecto tiene errores de tipo heredados
-    // que no bloquean el runtime. Remover progresivamente al migrar a tipado estricto.
-    ignoreBuildErrors: true,
+    // Build estricto: si TS falla, el build falla. Antes estaba en true para
+    // ocultar errores heredados — todos arreglados al 2026-04-29 (alfa cerrada).
+    ignoreBuildErrors: false,
   },
   images: {
     unoptimized: true,

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
 
 interface OaInput {
   id: string
@@ -44,6 +45,8 @@ function normalizeDistribution(raw: unknown, totalClases: number, validIds: Set<
 }
 
 export async function POST(req: Request) {
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
   try {
     const body = await req.json()
     const oas = Array.isArray(body.oas) ? body.oas as OaInput[] : []

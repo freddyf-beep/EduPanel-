@@ -10,6 +10,29 @@ import {
   type AIProvider,
   type LessonRequestBody,
 } from "@/lib/ai/copilot"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
+
+/**
+ * Rate limiting in-memory por uid.
+ * 30 generaciones por hora por usuario. Suficiente para alfa cerrada.
+ * Para escalar, migrar a Upstash Redis o equivalente.
+ */
+const RATE_LIMIT_PER_HOUR = 30
+const rateBuckets = new Map<string, { count: number; resetAt: number }>()
+
+function checkRateLimit(uid: string): { ok: boolean; retryAfter?: number } {
+  const now = Date.now()
+  const bucket = rateBuckets.get(uid)
+  if (!bucket || bucket.resetAt < now) {
+    rateBuckets.set(uid, { count: 1, resetAt: now + 60 * 60 * 1000 })
+    return { ok: true }
+  }
+  if (bucket.count >= RATE_LIMIT_PER_HOUR) {
+    return { ok: false, retryAfter: Math.ceil((bucket.resetAt - now) / 1000) }
+  }
+  bucket.count++
+  return { ok: true }
+}
 
 class ProviderConfigError extends Error {
   status = 400
@@ -217,6 +240,20 @@ async function generateText(
 // ─── Handler principal ────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  // 1) Auth: Bearer token de Firebase + allowlist obligatorios
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
+  const auth = authCheck.auth
+
+  // 2) Rate limit por uid (30/h)
+  const rl = checkRateLimit(auth.uid)
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Demasiadas solicitudes. Intenta de nuevo en una hora." },
+      { status: 429, headers: rl.retryAfter ? { "Retry-After": String(rl.retryAfter) } : {} }
+    )
+  }
+
   let provider: AIProvider = "gemini"
 
   try {

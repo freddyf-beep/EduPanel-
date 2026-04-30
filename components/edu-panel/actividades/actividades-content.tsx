@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense, useRef, useMemo } from "react"
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import DOMPurify from "isomorphic-dompurify"
 import {
   ChevronLeft, Bookmark, Loader2, Check, ArrowRight,
   ChevronDown, ChevronRight, Plus, X, Target,
@@ -25,6 +26,7 @@ import {
 import type { ActividadClase, OAEditado, ClaseCronograma, ActividadSugerida, EjemploEvaluacion } from "@/lib/curriculo"
 import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
+import { apiFetch } from "@/lib/api-client"
 import {
   DEFAULT_AI_CONFIG, AI_PROVIDER_OPTIONS, normalizeAiConfig, getProviderMeta,
   buildCopilotPrompt, htmlToPlainText, PROMPT_MODE_LABELS,
@@ -81,14 +83,21 @@ function formatInlineHtml(text: string) {
     .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
 }
 
+function sanitizeChatHtml(html: string) {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ["p", "ul", "ol", "li", "b", "strong", "em", "br"],
+    ALLOWED_ATTR: [],
+  })
+}
+
 function formatChatMessageHtml(text: string) {
   const source = text.trim()
   if (!source) return "<p></p>"
-  if (/<(p|ul|ol|li|b|strong|em|br)\b/i.test(source)) return source
+  if (/<(p|ul|ol|li|b|strong|em|br)\b/i.test(source)) return sanitizeChatHtml(source)
 
   const paragraphs = source.split(/\n{2,}/).map(block => block.trim()).filter(Boolean)
 
-  return paragraphs.map((block) => {
+  const html = paragraphs.map((block) => {
     const lines = block.split("\n").map(line => line.trim()).filter(Boolean)
     const isList = lines.every(line => /^([-*•]|\d+\.)\s+/.test(line))
 
@@ -98,6 +107,8 @@ function formatChatMessageHtml(text: string) {
 
     return `<p>${lines.map(line => formatInlineHtml(line)).join("<br/>")}</p>`
   }).join("")
+
+  return sanitizeChatHtml(html)
 }
 
 // ─── Simple Rich Text Area ────────────────────────────────────────────────────
@@ -606,7 +617,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     generationAbortRef.current = controller
     setIsGeneratingAI(true)
     try {
-      const res = await fetch("/api/generar-clase", {
+      const res = await apiFetch("/api/generar-clase", {
         method: "POST",
         signal: controller.signal,
         headers: { "Content-Type": "application/json" },
@@ -716,7 +727,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     setChatInput("")
     setIsChatLoading(true)
     try {
-      const res = await fetch("/api/generar-clase", {
+      const res = await apiFetch("/api/generar-clase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -741,7 +752,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     if (chatHistory.length === 0 || isApplying) return
     setIsApplying(true)
     try {
-      const res = await fetch("/api/generar-clase", {
+      const res = await apiFetch("/api/generar-clase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

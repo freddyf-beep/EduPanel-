@@ -12,6 +12,7 @@ import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { auth } from "@/lib/firebase"
 import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
+import { apiFetch } from "@/lib/api-client"
 import {
   cargarRubrica, cargarEvaluacion, guardarEvaluacion, nuevaEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
@@ -287,7 +288,7 @@ export function EvaluacionView({ rubricaId }: Props) {
     const logoBase64 = infoColegio?.logoBase64
     try {
       await guardarEvaluacion(evaluacion)
-      const res = await fetch("/api/export-rubrica", {
+      const res = await apiFetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rubrica, evaluacion, modo: "grupo", profesorNombre, colegio, logoBase64 }),
@@ -314,7 +315,7 @@ export function EvaluacionView({ rubricaId }: Props) {
     const colegio = infoColegio?.nombre ?? ""
     const logoBase64 = infoColegio?.logoBase64
     try {
-      const res = await fetch("/api/export-rubrica", {
+      const res = await apiFetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rubrica, evaluacion, modo: "alumno", estudianteId, profesorNombre, colegio, logoBase64 }),
@@ -341,7 +342,7 @@ export function EvaluacionView({ rubricaId }: Props) {
     const colegio = infoColegio?.nombre ?? ""
     const logoBase64 = infoColegio?.logoBase64
     try {
-      const res = await fetch("/api/export-rubrica", {
+      const res = await apiFetch("/api/export-rubrica", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rubrica, evaluacion, modo: "listado", profesorNombre, colegio, logoBase64 }),

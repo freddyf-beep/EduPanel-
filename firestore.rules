@@ -1,0 +1,50 @@
+rules_version = '2';
+
+// Reglas de seguridad para EduPanel - alfa cerrada.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'freddyfiguea@gmail.com';
+    }
+
+    // Datos privados del docente.
+    match /users/{uid}/{document=**} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // Curriculo Mineduc: lectura para usuarios autenticados, escritura solo admin.
+    match /curriculo/{asignaturaNivel}/{document=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Allowlist: cada usuario solo puede consultar su propio doc por email.
+    match /allowlist/{email} {
+      allow get: if isSignedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email.lower() == email;
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Invitaciones: administradas solo por API server-side/admin.
+    match /invitaciones/{codigo} {
+      allow read, write: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

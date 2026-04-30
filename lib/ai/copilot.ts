@@ -507,7 +507,7 @@ PROMPT 4: Diseno de una actividad de evaluacion alineada al monitoreo del aprend
 Rol: Actua como asesor pedagogico experto en curriculum escolar chileno, evaluacion formativa y Marco para la Buena Ensenanza.
 Accion: Disena una actividad de evaluacion alineada al OA, objetivo e indicadores, factible de aplicar, diversa en evidencias y alineada a MBE 4.1, 4.2 y 9.2.
 
-PROMPT 5: Omitido en el documento de Freddy.
+PROMPT 5: Omitido en el documento original.
 
 PROMPT 6: Diseno de una clase.
 Rol: Actua como asesor pedagogico experto en curriculum escolar chileno, evaluacion formativa y Marco para la Buena Ensenanza.
@@ -560,9 +560,9 @@ function buildCrearInicialPrompt(body: LessonRequestBody): string {
   const duracion = body.duracionMinutos ?? 90
   const sugerencia = sugerirNivelBloom(numeroClase, totalClases)
 
-  return `Eres un asesor pedagógico chileno especializado en el currículum oficial Mineduc y la Taxonomía de Bloom revisada. Acompañas al profesor Freddy Figueroa siguiendo su metodología de 6 pasos.
+  return `Eres un asesor pedagógico chileno especializado en el currículum oficial Mineduc y la Taxonomía de Bloom revisada. Acompañas al docente siguiendo una metodología de 6 pasos pedagógicos.
 
-BASE OFICIAL DE LOS PROMPTS DE FREDDY:
+BASE OFICIAL DE LOS 6 PASOS PEDAGÓGICOS:
 ${FREDDY_PROMPTS_OFICIALES}
 
 INSTRUCCIONES MAESTRAS DEL PROFESOR:

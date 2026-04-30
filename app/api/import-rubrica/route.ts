@@ -5,6 +5,7 @@ import { parsearTextoRubrica } from "@/app/api/parse-rubrica/route"
 import { normalizeKeyPart } from "@/lib/shared"
 import { calcularNota } from "@/lib/rubricas"
 import type { RubricaTemplate, EvaluacionRubrica, GrupoEvaluacion, EstudianteEvaluacion } from "@/lib/rubricas"
+import { verifyAllowedUser } from "@/lib/auth/verify-token"
 
 function uid() {
   return `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
@@ -27,6 +28,8 @@ function nombreEstudianteDeArchivo(path: string): string {
 // Retorna: { rubrica: RubricaTemplate, evaluacion: EvaluacionRubrica, estudiantes: [] }
 
 export async function POST(req: NextRequest) {
+  const authCheck = await verifyAllowedUser(req)
+  if (!authCheck.ok) return authCheck.response
   try {
     const formData = await req.formData()
     const file = formData.get("file") as File | null

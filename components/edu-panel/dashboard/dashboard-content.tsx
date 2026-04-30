@@ -747,7 +747,7 @@ export function DashboardContent() {
                       <div className="text-center">
                         <p className="text-[15px] font-bold text-green-600 mb-1">Clase firmada</p>
                         <p className="text-[13px] text-muted-foreground">
-                          Freddy Figueroa · {formattedDate}
+                          {user?.displayName ?? "Docente"} · {formattedDate}
                         </p>
                       </div>
                     </>

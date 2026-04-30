@@ -20,6 +20,7 @@ import { toast } from "@/hooks/use-toast"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
+import { apiFetch } from "@/lib/api-client"
 import { getUnidades } from "@/lib/curriculo"
 import type { Unidad } from "@/lib/curriculo"
 import {
@@ -322,7 +323,7 @@ export function RubricaImport({ mode = "import" }: Props) {
     try {
       const formData = new FormData()
       formData.append("file", file)
-      const res = await fetch("/api/parse-rubrica", { method: "POST", body: formData })
+      const res = await apiFetch("/api/parse-rubrica", { method: "POST", body: formData })
       if (!res.ok) throw new Error(await res.text())
 
       const data = await res.json()

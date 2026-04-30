@@ -16,6 +16,7 @@ import {
   type EvaluacionRubrica,
 } from "@/lib/rubricas"
 import { guardarEstudiantes, cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
+import { apiFetch } from "@/lib/api-client"
 import {
   Dialog,
   DialogContent,
@@ -236,7 +237,7 @@ export function RubricasHub() {
     try {
       const formData = new FormData()
       formData.append("file", file)
-      const res = await fetch("/api/import-rubrica", { method: "POST", body: formData })
+      const res = await apiFetch("/api/import-rubrica", { method: "POST", body: formData })
       if (!res.ok) throw new Error(await res.text())
 
       const data = await res.json()

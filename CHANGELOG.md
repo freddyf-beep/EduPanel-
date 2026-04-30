@@ -36,7 +36,7 @@ version.txt
 ## v1.0.7 - 14/04/2026 00:22
 PDF/18i_Niveles_de_la_taxonomia_de_Bloom.pdf
 PDF/PROMPTS para planificaciones(1).docx
-PDF/Planificaciones_Freddy_Figueroa(1).docx
+PDF/Planificaciones_formato_oficial.docx
 PDF/programa_musica_4to_basico.pdf
 README.md
 app/actividades/page.tsx
@@ -108,25 +108,4 @@ components/edu-panel/version.ts
 version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
-
-## v1.0.12 - 29/04/2026 15:11
-CHANGELOG.md
-app/perfil-360/page.tsx
-components/auth/auth-context.tsx
-components/edu-panel/calificaciones/calificaciones-content.tsx
-components/edu-panel/cronograma-unidad/cronograma-unidad-content.tsx
-components/edu-panel/cronograma/cronograma-content.tsx
-components/edu-panel/dashboard/dashboard-content.tsx
-components/edu-panel/libro-clases/libro-clases-content.tsx
-components/edu-panel/main-layout.tsx
-components/edu-panel/perfil-360/perfil-360-content.tsx
-components/edu-panel/perfil/perfil-content.tsx
-components/edu-panel/rubricas/resultados-view.tsx
-components/edu-panel/rubricas/rubrica-card.tsx
-components/edu-panel/rubricas/rubrica-import.tsx
-components/edu-panel/rubricas/rubrica-oa-editor.tsx
-components/edu-panel/rubricas/rubricas-hub.tsx
-components/edu-panel/ver-unidad/ver-unidad-content.tsx
-lib/curriculo.ts
-lib/rubricas.ts
 

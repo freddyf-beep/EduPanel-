@@ -17,6 +17,7 @@ import {
   sincronizarCronogramasGoogle,
 } from "@/lib/google-calendar"
 import { DEFAULT_ASIGNATURA, SUBJECT_STORAGE_KEY } from "@/lib/shared"
+import { toast } from "@/hooks/use-toast"
 
 type ImportEstudiantesFeedback = {
   type: "idle" | "success" | "error"
@@ -252,6 +253,10 @@ export function PerfilContent() {
   const saveStatusEstudiantesTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const importEstudiantesInputRef = useRef<HTMLInputElement | null>(null)
   const importEstudiantesFeedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Para detectar cambios de curso y flushear el autosave pendiente del curso anterior.
+  const previousCursoEstudiantesRef = useRef<string | null>(null)
+  // Snapshot de los estudiantes actuales — usado por el flush sincrono al cambiar de curso.
+  const estudiantesActualesRef = useRef<Estudiante[]>([])
 
   const cursosDisponibles = Array.from(new Set(horario.map(h => h.resumen)))
   const estudiantesOrdenados = useMemo(() => [...estudiantes].sort(compareEstudiantes), [estudiantes])
@@ -300,7 +305,34 @@ export function PerfilContent() {
     }
   }, [cursosDisponibles, cursoEstudiantes])
 
+  // Mantener un snapshot vivo de los estudiantes para que el flush sincrono
+  // (al cambiar de curso) siempre tenga la version mas reciente.
   useEffect(() => {
+    estudiantesActualesRef.current = estudiantes
+  }, [estudiantes])
+
+  useEffect(() => {
+    // FIX race condition: si veniamos editando otro curso y habia autosave
+    // pendiente, guardarlo de golpe ANTES de cargar los nuevos estudiantes.
+    // Sin esto, el cargarEstudiantes del nuevo curso pisa el estado y el
+    // autosave pendiente del curso anterior nunca se ejecuta = perdida de datos.
+    const cursoAnterior = previousCursoEstudiantesRef.current
+    const teniaAutosavePendiente = autoSaveEstudiantesTimeoutRef.current !== null
+    if (cursoAnterior && cursoAnterior !== cursoEstudiantes && teniaAutosavePendiente) {
+      clearAutoSaveEstudiantesTimeout()
+      const snapshotEstudiantes = estudiantesActualesRef.current
+      // Fire-and-forget pero con manejo de error visible al usuario
+      void guardarEstudiantes(cursoAnterior, snapshotEstudiantes).catch((err) => {
+        console.error(`Error guardando estudiantes del curso ${cursoAnterior} antes de cambiar`, err)
+        toast({
+          title: `No se pudieron guardar los cambios de ${cursoAnterior}`,
+          description: "Vuelve a ese curso para reintentar.",
+          variant: "destructive",
+        })
+      })
+    }
+    previousCursoEstudiantesRef.current = cursoEstudiantes ?? null
+
     if (!cursoEstudiantes) return
     ignoreNextSaveEstudiantesRef.current = true
     clearAutoSaveEstudiantesTimeout()
@@ -338,7 +370,15 @@ export function PerfilContent() {
       await guardarPerfil(perfil)
       setSavedPerfil(true)
       setTimeout(() => setSavedPerfil(false), 3000)
-    } catch (error) { console.error(error) } 
+    } catch (error) {
+      console.error(error)
+      setSavedPerfil(false)
+      toast({
+        title: "Error al guardar el perfil",
+        description: error instanceof Error ? error.message : "Reintenta en unos segundos.",
+        variant: "destructive",
+      })
+    }
     finally { setSavingPerfil(false) }
   }
 
@@ -399,8 +439,15 @@ export function PerfilContent() {
 
   const handleAddOrEditBloque = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!nuevoBloque.resumen || !nuevoBloque.horaInicio || !nuevoBloque.horaFin) return
-    
+    if (!nuevoBloque.resumen || !nuevoBloque.horaInicio || !nuevoBloque.horaFin) {
+      toast({
+        title: "Faltan datos",
+        description: "Completa curso, hora de inicio y hora de termino antes de agregar el bloque.",
+        variant: "destructive",
+      })
+      return
+    }
+
     if (editingUid) {
       setHorario(prev => prev.map(c => c.uid === editingUid ? { ...nuevoBloque, uid: editingUid } as ClaseHorario : c))
       setEditingUid(null)
@@ -408,7 +455,7 @@ export function PerfilContent() {
       const id = `${nuevoBloque.dia.toLowerCase().substring(0,3)}-${nuevoBloque.resumen.replace(/\s+/g,"").toLowerCase()}-${Date.now()}`
       setHorario(prev => [...prev, { ...nuevoBloque, uid: id } as ClaseHorario])
     }
-    
+
     setNuevoBloque({ ...nuevoBloque, resumen: "" })
   }
 
@@ -467,7 +514,15 @@ export function PerfilContent() {
       await guardarInfoColegio(infoColegio)
       setSavedColegio(true)
       setTimeout(() => setSavedColegio(false), 3000)
-    } catch (err) { console.error(err) }
+    } catch (err) {
+      console.error(err)
+      setSavedColegio(false)
+      toast({
+        title: "Error al guardar la información del colegio",
+        description: err instanceof Error ? err.message : "Reintenta en unos segundos.",
+        variant: "destructive",
+      })
+    }
     finally { setSavingColegio(false) }
   }
 
@@ -478,7 +533,15 @@ export function PerfilContent() {
       await guardarHorarioSemanal(horario)
       setSavedHorario(true)
       setTimeout(() => setSavedHorario(false), 3000)
-    } catch (error) { console.error(error) } 
+    } catch (error) {
+      console.error(error)
+      setSavedHorario(false)
+      toast({
+        title: "Error al guardar el horario",
+        description: error instanceof Error ? error.message : "Reintenta en unos segundos.",
+        variant: "destructive",
+      })
+    }
     finally { setSavingHorario(false) }
   }
 
@@ -502,6 +565,16 @@ export function PerfilContent() {
     } catch (error) {
       console.error("Error guardando estudiantes", error)
       setSaveStatusEstudiantes("error")
+      // Notificar al usuario explicitamente y resetear el estado a idle
+      // despues de 5s para no dejar el indicador atrapado en "error".
+      toast({
+        title: "No se pudieron guardar los estudiantes",
+        description: error instanceof Error ? error.message : "Reintenta en unos segundos. Tus cambios siguen en pantalla.",
+        variant: "destructive",
+      })
+      saveStatusEstudiantesTimeoutRef.current = setTimeout(() => {
+        setSaveStatusEstudiantes("idle")
+      }, 5000)
     } finally {
       if (!isAutoSave) {
         setSavingEstudiantes(false)
@@ -1003,7 +1076,14 @@ export function PerfilContent() {
 
                   <form onSubmit={e => {
                       e.preventDefault()
-                      if (!nuevoNombreEstudiante.trim()) return
+                      if (!nuevoNombreEstudiante.trim()) {
+                        toast({
+                          title: "Falta el nombre",
+                          description: "Escribe el nombre del estudiante antes de anadirlo.",
+                          variant: "destructive",
+                        })
+                        return
+                      }
                       setEstudiantes(prev => [...prev, {
                         id: `est_${Date.now()}`,
                         nombre: nuevoNombreEstudiante.trim(),

@@ -14,6 +14,7 @@ import {
 import type { OAEditado, ClaseCronograma } from "@/lib/curriculo"
 import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
+import { apiFetch } from "@/lib/api-client"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -190,7 +191,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
     setAutoRellenando(true)
     try {
       const oaSelec = oas.filter(o => o.seleccionado)
-      const res = await fetch("/api/distribuir-oas", {
+      const res = await apiFetch("/api/distribuir-oas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
