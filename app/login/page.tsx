@@ -16,11 +16,13 @@ function getApiErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function LoginPage() {
-  const { user, signInWithGoogle, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
+  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
   const router = useRouter()
   const [inviteCode, setInviteCode] = useState("")
   const [redeeming, setRedeeming] = useState(false)
   const [redeemError, setRedeemError] = useState("")
+  const [signInError, setSignInError] = useState("")
+  const [signingIn, setSigningIn] = useState(false)
   const [redeemSuccess, setRedeemSuccess] = useState(false)
 
   useEffect(() => {
@@ -46,6 +48,18 @@ export default function LoginPage() {
       setRedeemError(getApiErrorMessage(error, "Error al canjear el codigo"))
     } finally {
       setRedeeming(false)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    setSigningIn(true)
+    setSignInError("")
+    try {
+      await signInWithGoogle()
+    } catch (error) {
+      setSignInError(getApiErrorMessage(error, "No se pudo iniciar sesion con Google."))
+    } finally {
+      setSigningIn(false)
     }
   }
 
@@ -97,6 +111,13 @@ export default function LoginPage() {
                   </button>
                 </div>
                 {redeemError && <p className="text-red-500 text-xs font-semibold">{redeemError}</p>}
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="mt-2 text-left text-xs font-semibold text-amber-800 underline hover:text-amber-950"
+                >
+                  Cambiar cuenta de Google
+                </button>
               </div>
             )}
           </div>
@@ -104,11 +125,19 @@ export default function LoginPage() {
 
         {!user && (
           <button
-            onClick={signInWithGoogle}
-            className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2"
+            onClick={handleGoogleSignIn}
+            disabled={signingIn}
+            className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
           >
-            Iniciar sesion con Google
+            {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            {signingIn ? "Conectando..." : "Iniciar sesion con Google"}
           </button>
+        )}
+
+        {signInError && (
+          <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-left text-xs font-semibold text-red-600">
+            {signInError}
+          </p>
         )}
 
         <p className="mt-6 text-[12px] text-muted-foreground leading-relaxed">
