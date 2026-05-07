@@ -10,13 +10,15 @@ import {
   Loader2, Check, BookOpen, Layers, Link2, AlertCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { guardarPlanCurso, cargarPlanCurso, getAsignaturasDisponibles, getUnidades } from "@/lib/curriculo"
+import { guardarPlanCurso, cargarPlanCurso, getAsignaturasDisponibles, getUnidades, eliminarUnidadCompleta, cargarCronogramaUnidad } from "@/lib/curriculo"
 import type { UnidadPlan, Unidad } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, guardarNivelMapping, getNivelesDisponibles, NivelMapping } from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { FormatoDescargaModal, type FormatoDescarga, type SemestreDescarga } from "./formato-descarga-modal"
+import type { InfoColegio } from "@/lib/perfil"
 
 const COLORS = ["#F59E0B","#3B82F6","#EF4444","#22C55E","#8B5CF6","#F03E6E","#06B6D4","#D97706"]
 const MAX_UNIDADES = 12
@@ -107,9 +109,13 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
   const [selectedType, setSelectedType] = useState<UnitType | null>(null)
   const [dpUnit, setDpUnit]             = useState<UnidadPlan | null>(null)
   const [deactUnit, setDeactUnit]       = useState<UnidadPlan | null>(null)
+  const [deactDeleting, setDeactDeleting] = useState(false)
   const [divideUnit, setDivideUnit]     = useState<UnidadPlan | null>(null)
   const [renameUnit, setRenameUnit]     = useState<UnidadPlan | null>(null)
   const [renameVal, setRenameVal]       = useState("")
+
+  // Cobertura de fechas por unidad: cuántas clases tienen fecha asignada vs total
+  const [coberturaPorUnidad, setCoberturaPorUnidad] = useState<Record<number, { asignadas: number; total: number }>>({})
 
   // Drag
   const [dragId, setDragId]             = useState<number | null>(null)
@@ -185,6 +191,30 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
     const currentParams = Object.fromEntries(searchParams.entries())
     router.replace(buildUrl(pathname, withAsignatura(currentParams, newSubject)))
   }
+
+  // ── Cargar cobertura de fechas para cada unidad activa ──
+  useEffect(() => {
+    if (!curso || units.length === 0) {
+      setCoberturaPorUnidad({})
+      return
+    }
+    let cancelled = false
+    Promise.all(
+      units.map(async u => {
+        const crono = await cargarCronogramaUnidad(ASIGNATURA, curso, String(u.id)).catch(() => null)
+        if (!crono) return [u.id, { asignadas: 0, total: 0 }] as const
+        const total = crono.totalClases || crono.clases.length
+        const asignadas = crono.clases.filter(c => c.fecha && c.fecha.trim()).length
+        return [u.id, { asignadas, total }] as const
+      })
+    ).then(results => {
+      if (cancelled) return
+      const map: Record<number, { asignadas: number; total: number }> = {}
+      results.forEach(([id, val]) => { map[id] = val })
+      setCoberturaPorUnidad(map)
+    })
+    return () => { cancelled = true }
+  }, [units, curso, ASIGNATURA])
 
 
   const ignoreNextSaveRef = useRef(true);
@@ -282,12 +312,24 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
     showToast("Fechas guardadas ✓")
   }
 
-  const deactivate = () => {
-    if (!deactUnit) return
-    const name = deactUnit.name
-    setUnits(prev => prev.filter(u => u.id !== deactUnit.id))
-    setDeactUnit(null)
-    showToast(`"${name}" eliminada`)
+  const deactivate = async () => {
+    if (!deactUnit || deactDeleting) return
+    const unit = deactUnit
+    const name = unit.name
+    setDeactDeleting(true)
+    try {
+      // Borra ver_unidad, cronograma_unidad y todas las actividades_clase asociadas.
+      // unidadId en Firestore = String(unit.id) (ID local del usuario, ej. "1", "2")
+      await eliminarUnidadCompleta(ASIGNATURA, curso, String(unit.id))
+      setUnits(prev => prev.filter(u => u.id !== unit.id))
+      setDeactUnit(null)
+      showToast(`"${name}" y todos sus datos eliminados`)
+    } catch (e) {
+      console.error("Error eliminando unidad:", e)
+      showToast(`Error al eliminar "${name}"`)
+    } finally {
+      setDeactDeleting(false)
+    }
   }
 
   const divide = (nameA: string, nameB: string) => {
@@ -330,44 +372,137 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
 
   const completadas = units.filter(u => u.start && u.end).length
 
-  const [downloading, setDownloading] = useState(false)
+  const [downloading, setDownloading]       = useState(false)
+  const [showFormatoModal, setShowFormatoModal] = useState(false)
+  const [colegioInfo, setColegioInfo] = useState<InfoColegio | null>(null)
 
-  const handleDescargar = async () => {
+  useEffect(() => {
+    import("@/lib/perfil").then(({ cargarInfoColegio }) =>
+      cargarInfoColegio().then(setColegioInfo).catch(() => {})
+    )
+  }, [])
+
+  const handleDescargar = async (formato: FormatoDescarga, semestre: SemestreDescarga, usarEncabezado: boolean) => {
     if (units.length === 0 || downloading) return
     setDownloading(true)
+    setShowFormatoModal(false)
     try {
       const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
-      const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
 
-      // Resolver nivel curricular
       const nivelCurricular = nivelMapping[curso] || "Sin nivel configurado"
 
-      // Armar datos de cada unidad
+      const encabezado = usarEncabezado && colegioInfo ? {
+        logoIzqBase64: colegioInfo.logoBase64,
+        textoIzq:      colegioInfo.encabezadoTextoIzq,
+        logoDerBase64: colegioInfo.logoDerBase64,
+        textoDer:      colegioInfo.encabezadoTextoDer,
+      } : undefined
+
+      // Helper: ver-unidad guarda con String(unit.id) como ID local;
+      // probamos también el formato heredado "unidad_N" y unidadCurricularId por si hay datos antiguos.
+      const cargarVerUnidadConFallback = async (unit: typeof units[number], idx: number) => {
+        const ids = [
+          String(unit.id),
+          unit.id ? `unidad_${unit.id}` : null,
+          unit.unidadCurricularId,
+          unidadIdFromIndex(idx),
+        ].filter(Boolean) as string[]
+        for (const id of ids) {
+          const v = await cargarVerUnidad(ASIGNATURA, curso, id).catch(() => null)
+          if (v) return v
+        }
+        return null
+      }
+
+      if (formato === "tabla") {
+        // Ruta rápida: solo necesita verUnidad por unidad (sin cargar clases)
+        const unidadesExport = await Promise.all(
+          units.map(async (unit, idx) => {
+            const verUnidad = await cargarVerUnidadConFallback(unit, idx)
+
+            const oasBasales: string[] = []
+            const oasTransversales: string[] = []
+            const indicadoresPorOa: Record<string, string[]> = {}
+
+            if (verUnidad?.oas) {
+              for (const oa of verUnidad.oas) {
+                if (!oa.seleccionado) continue
+                const label = `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()
+                if (oa.tipo === "oat") {
+                  oasTransversales.push(label)
+                } else {
+                  oasBasales.push(label)
+                  const inds = (oa.indicadores || [])
+                    .filter(ind => ind.seleccionado)
+                    .map(ind => ind.texto)
+                  if (inds.length > 0) indicadoresPorOa[label] = inds
+                }
+              }
+            }
+
+            return {
+              numero: idx + 1,
+              nombre: unit.name || `Unidad ${idx + 1}`,
+              oasBasales,
+              oasTransversales,
+              clases: [],
+              start: unit.start ? unit.start : undefined,
+              end:   unit.end   ? unit.end   : undefined,
+              indicadoresPorOa,
+            }
+          })
+        )
+
+        const exportData = {
+          formato: "tabla" as const,
+          semestre,
+          nivel: nivelCurricular,
+          asignatura: ASIGNATURA,
+          unidades: unidadesExport,
+          encabezado,
+        }
+
+        const res = await apiFetch("/api/export-planificacion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(exportData),
+        })
+        if (!res.ok) throw new Error("Error al generar el documento")
+        const blob = await res.blob()
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url
+        const suf = semestre === 1 ? "_S1" : semestre === 2 ? "_S2" : ""
+        a.download = `PlanAnual_${ASIGNATURA}${suf}_${new Date().getFullYear()}.docx`
+        a.click()
+        URL.revokeObjectURL(url)
+        setToast("Planificación descargada exitosamente")
+        return
+      }
+
+      // ── Ruta detallada (formato original) ──
+      const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
+
       const unidadesExport = await Promise.all(
         units.map(async (unit, idx) => {
-          const unidadId = unit.id ? `unidad_${unit.id}` : unidadIdFromIndex(idx)
+          const unidadId = String(unit.id)
+          const verUnidad = await cargarVerUnidadConFallback(unit, idx)
 
-          // Ver unidad (OAs editados, indicadores)
-          const verUnidad = await cargarVerUnidad(ASIGNATURA, curso, unidadId).catch(() => null)
-
-          // OAs basales y complementarios desde la unidad editada
           const oasBasales: string[] = []
-          const oasComplementarios: string[] = []
+          const oasTransversales: string[] = []
           if (verUnidad?.oas) {
             for (const oa of verUnidad.oas) {
               if (!oa.seleccionado) continue
               const label = `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()
-              if (oa.tipo === "oat") oasComplementarios.push(label)
+              if (oa.tipo === "oat") oasTransversales.push(label)
               else oasBasales.push(label)
             }
           }
 
-          // Cargar actividades de clase (hasta 30 clases)
           const clasesExport = []
           for (let claseNum = 1; claseNum <= 30; claseNum++) {
             const actividad = await cargarActividadClase(curso, unidadId, claseNum, ASIGNATURA).catch(() => null)
             if (!actividad) continue
-            // Solo exportar si tiene algún contenido relevante
             const tieneContenido = actividad.objetivo || actividad.inicio || actividad.desarrollo || actividad.cierre
             if (!tieneContenido) continue
             const oasOcupados = (verUnidad?.oas || [])
@@ -382,18 +517,15 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
                   .filter(ind => !selectedIds || selectedIds.includes(ind.id))
                   .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
               })
-
             clasesExport.push({
-              numero: claseNum,
-              oasOcupados,
-              indicadores,
-              objetivo: htmlToPlainTextForExport(actividad.objetivo || ""),
-              inicio: htmlToPlainTextForExport(actividad.inicio || ""),
+              numero: claseNum, oasOcupados, indicadores,
+              objetivo:       htmlToPlainTextForExport(actividad.objetivo || ""),
+              inicio:         htmlToPlainTextForExport(actividad.inicio || ""),
               actividadInicio: "",
-              desarrollo: htmlToPlainTextForExport(actividad.desarrollo || ""),
-              cierre: htmlToPlainTextForExport(actividad.cierre || ""),
+              desarrollo:     htmlToPlainTextForExport(actividad.desarrollo || ""),
+              cierre:         htmlToPlainTextForExport(actividad.cierre || ""),
               recursos: actividad.materiales || [],
-              tics: actividad.tics || [],
+              tics:     actividad.tics || [],
               criteriosEvaluacion: [],
             })
           }
@@ -402,13 +534,14 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
             numero: idx + 1,
             nombre: unit.name || `Unidad ${idx + 1}`,
             oasBasales,
-            oasComplementarios,
+            oasTransversales,
             clases: clasesExport,
           }
         })
       )
 
       const exportData = {
+        formato: "detallado" as const,
         nivel: nivelCurricular,
         asignatura: ASIGNATURA,
         unidades: unidadesExport,
@@ -419,7 +552,6 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(exportData),
       })
-
       if (!res.ok) throw new Error("Error al generar el documento")
 
       const blob = await res.blob()
@@ -443,6 +575,13 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
       <div className="mb-5 sm:mb-6 flex flex-wrap items-start justify-between gap-3">
         <h1 className="text-[18px] sm:text-[22px] font-extrabold animate-fade-up">Mis Planificaciones</h1>
         <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 sm:w-auto sm:justify-end">
+          <Link
+            href={buildUrl("/planificaciones-v2", withAsignatura({ curso }, ASIGNATURA))}
+            className="flex items-center gap-1.5 rounded-[10px] border border-dashed border-primary/50 bg-pink-light/40 px-3 py-2 text-[12px] font-bold text-primary hover:bg-pink-light transition-colors"
+            title="Probar el nuevo diseño en pruebas"
+          >
+            ✨ Probar nuevo diseño
+          </Link>
           {saveStatus === "saving_silent" && (
             <span className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground animate-pulse">
               Guardando...
@@ -539,7 +678,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
           </div>
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
             <button
-              onClick={handleDescargar}
+              onClick={() => setShowFormatoModal(true)}
               disabled={units.length === 0 || downloading}
               className="flex items-center gap-2 rounded-[10px] border-[1.5px] border-primary bg-card px-4 py-2 text-[13px] font-semibold text-primary hover:bg-pink-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               title="Descargar planificación en formato Word (.docx)"
@@ -674,6 +813,30 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
                   </div>
                 )}
 
+                {/* Cobertura de fechas (cuántas clases tienen fecha asignada) */}
+                {(() => {
+                  const cob = coberturaPorUnidad[u.id]
+                  if (!cob || cob.total === 0) return null
+                  const pct = Math.round((cob.asignadas / cob.total) * 100)
+                  const colorBar = pct === 100 ? "bg-green-500" : pct >= 50 ? "bg-amber-400" : "bg-red-400"
+                  const colorText = pct === 100 ? "text-green-700" : pct >= 50 ? "text-amber-700" : "text-red-600"
+                  return (
+                    <div className="mt-1 flex flex-col gap-1 rounded-lg bg-background px-3 py-1.5">
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="text-muted-foreground flex items-center gap-1">
+                          <Calendar className="h-3 w-3" /> Fechas asignadas
+                        </span>
+                        <span className={cn("font-bold", colorText)}>
+                          {cob.asignadas}/{cob.total} ({pct}%)
+                        </span>
+                      </div>
+                      <div className="h-1.5 w-full rounded-full bg-border/50 overflow-hidden">
+                        <div className={cn("h-full transition-all", colorBar)} style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                  )
+                })()}
+
                 {/* Links */}
                 <div className="flex flex-col gap-0.5 mt-2">
                   <div className="flex items-center justify-between px-3 py-2 text-[12px] font-medium text-muted-foreground border border-dashed border-border rounded-lg bg-background/50 mb-1">
@@ -792,13 +955,32 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
 
       {/* Eliminar */}
       {deactUnit && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/40" onClick={() => setDeactUnit(null)}>
-          <div className="w-[360px] max-w-[96vw] rounded-[16px] bg-card p-5 shadow-2xl sm:p-6" onClick={e => e.stopPropagation()}>
-            <h3 className="mb-2 text-[15px] font-extrabold">Eliminar {deactUnit.name}</h3>
-            <p className="mb-5 text-[13px] text-muted-foreground">Esta unidad se eliminará de la planificación de {curso}.</p>
+        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/40" onClick={() => !deactDeleting && setDeactUnit(null)}>
+          <div className="w-[440px] max-w-[96vw] rounded-[16px] bg-card p-5 shadow-2xl sm:p-6" onClick={e => e.stopPropagation()}>
+            <h3 className="mb-2 text-[15px] font-extrabold text-red-600">Eliminar {deactUnit.name} definitivamente</h3>
+            <p className="mb-3 text-[13px] text-muted-foreground">
+              Esta acción <b className="text-foreground">no se puede deshacer</b>. Se eliminarán de {curso}:
+            </p>
+            <ul className="mb-5 space-y-1 text-[12.5px] text-muted-foreground list-disc list-inside">
+              <li>La planificación detallada (Ver unidad)</li>
+              <li>El cronograma de clases con sus fechas</li>
+              <li><b className="text-foreground">Todas las clases planificadas</b> de esta unidad</li>
+            </ul>
             <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-              <button onClick={() => setDeactUnit(null)} className="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted-foreground hover:bg-background transition-colors">Cancelar</button>
-              <button onClick={deactivate} className="rounded-[10px] bg-red-500 px-5 py-2.5 text-[13px] font-bold text-white hover:bg-red-600 transition-colors">Eliminar</button>
+              <button
+                onClick={() => setDeactUnit(null)}
+                disabled={deactDeleting}
+                className="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted-foreground hover:bg-background transition-colors disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={deactivate}
+                disabled={deactDeleting}
+                className="rounded-[10px] bg-red-500 px-5 py-2.5 text-[13px] font-bold text-white hover:bg-red-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {deactDeleting ? "Eliminando..." : "Sí, eliminar todo"}
+              </button>
             </div>
           </div>
         </div>
@@ -842,6 +1024,15 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
           </div>
         </div>
       )}
+
+      {/* Selector de formato de descarga */}
+      <FormatoDescargaModal
+        open={showFormatoModal}
+        downloading={downloading}
+        onClose={() => setShowFormatoModal(false)}
+        tieneEncabezado={!!colegioInfo?.encabezadoHabilitado}
+        onDescargar={handleDescargar}
+      />
 
       {/* Toast */}
       {toast && (

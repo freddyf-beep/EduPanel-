@@ -1,24 +1,43 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Packer } from "docx"
 import { generarPlanificacionDocx, type ExportData } from "@/lib/export/planificacion-docx"
+import { generarPlanificacionTablaDocx, type ExportDataTabla } from "@/lib/export/planificacion-tabla"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+
+type ExportPayload = (ExportData | ExportDataTabla) & {
+  formato?: "detallado" | "tabla"
+}
 
 export async function POST(req: NextRequest) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
   try {
-    const data: ExportData = await req.json()
+    const payload: ExportPayload = await req.json()
 
-    if (!data.asignatura || !data.nivel || !Array.isArray(data.unidades)) {
+    if (!payload.asignatura || !payload.nivel || !Array.isArray(payload.unidades)) {
       return NextResponse.json({ error: "Datos inválidos" }, { status: 400 })
     }
 
-    const doc    = generarPlanificacionDocx(data)
-    const buffer = await Packer.toBuffer(doc)
+    const formato = payload.formato ?? "detallado"
+    const year    = new Date().getFullYear()
+    let filename: string
 
-    const filename = `Planificacion_${data.asignatura}_${data.nivel}_${new Date().getFullYear()}.docx`
-      .replace(/\s+/g, "_")
-      .replace(/[^a-zA-Z0-9_.-]/g, "")
+    const doc =
+      formato === "tabla"
+        ? generarPlanificacionTablaDocx(payload as ExportDataTabla)
+        : generarPlanificacionDocx(payload as ExportData)
+
+    if (formato === "tabla") {
+      const s = (payload as ExportDataTabla).semestre
+      const sufijo = s === 1 ? "_S1" : s === 2 ? "_S2" : ""
+      filename = `PlanAnual_${payload.asignatura}${sufijo}_${year}.docx`
+    } else {
+      filename = `Planificacion_${payload.asignatura}_${payload.nivel}_${year}.docx`
+    }
+
+    filename = filename.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_.-]/g, "")
+
+    const buffer = await Packer.toBuffer(doc)
 
     return new NextResponse(buffer, {
       status: 200,

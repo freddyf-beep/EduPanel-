@@ -11,6 +11,16 @@ export function userDoc(col: string, id: string) {
   return doc(db, "users", getUid(), col, id)
 }
 
+export type TipoHorario =
+  | "clase"           // bloque académico de un curso (requiere resumen=curso)
+  | "taller"          // taller académico
+  | "consejo"         // consejo de profesores
+  | "orientacion"     // hora de orientación / jefatura
+  | "almuerzo"        // bloque libre - almuerzo
+  | "planificacion"   // bloque libre - tiempo de planificación del docente
+  | "recreo"          // bloque libre - recreo
+  | "libre"           // bloque libre genérico
+
 export interface ClaseHorario {
   uid: string
   resumen: string
@@ -18,13 +28,51 @@ export interface ClaseHorario {
   horaInicio: string
   horaFin: string
   color: string
-  tipo: "clase" | "taller" | "consejo" | "orientacion"
+  tipo: TipoHorario
   hasta?: string
 }
 
 export interface HorarioGuardado {
   clases: ClaseHorario[]
   updatedAt?: any
+}
+
+/** Tipos que NO representan una clase de un curso (no requieren carga académica). */
+const TIPOS_LIBRES: TipoHorario[] = ["almuerzo", "planificacion", "recreo", "libre"]
+
+export function esTipoLibre(tipo: TipoHorario): boolean {
+  return TIPOS_LIBRES.includes(tipo)
+}
+
+export function agruparHorarioPorCurso(clases: ClaseHorario[]): Map<string, ClaseHorario[]> {
+  const ordenDias: Record<string, number> = { Lunes: 1, Martes: 2, Miércoles: 3, Jueves: 4, Viernes: 5 }
+  const grupos = new Map<string, ClaseHorario[]>()
+  clases.forEach(clase => {
+    // Bloques libres (almuerzo, planificación, etc.) no se agrupan como curso.
+    if (esTipoLibre(clase.tipo)) return
+    const key = clase.resumen.trim()
+    if (!key) return
+    grupos.set(key, [...(grupos.get(key) || []), clase])
+  })
+  grupos.forEach((items, key) => {
+    grupos.set(key, [...items].sort((a, b) => (ordenDias[a.dia] ?? 99) - (ordenDias[b.dia] ?? 99) || a.horaInicio.localeCompare(b.horaInicio)))
+  })
+  return grupos
+}
+
+function horaToMinutos(hora: string): number {
+  const [h, m] = hora.split(":").map(Number)
+  return (h || 0) * 60 + (m || 0)
+}
+
+export function colisionaConHorario(clases: ClaseHorario[], nuevo: ClaseHorario, ignorarUid?: string): ClaseHorario | null {
+  const inicio = horaToMinutos(nuevo.horaInicio)
+  const fin = horaToMinutos(nuevo.horaFin)
+  return clases.find(clase => {
+    if (ignorarUid && clase.uid === ignorarUid) return false
+    if (clase.dia !== nuevo.dia) return false
+    return inicio < horaToMinutos(clase.horaFin) && fin > horaToMinutos(clase.horaInicio)
+  }) || null
 }
 
 // ─── Horario Dinámico del Profesor ───

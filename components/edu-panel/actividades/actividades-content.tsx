@@ -12,7 +12,7 @@ import {
   RefreshCw, BookOpen, Calendar, Sparkles, Bot, Blocks,
   Send, Settings2, Wand2, KeyRound, ChevronUp, Mic, MicOff,
   PanelRightOpen, SlidersHorizontal, RotateCcw, BrainCircuit, Copy,
-  Save, PencilLine, Trash2
+  Save, PencilLine, Trash2, Paperclip, UploadCloud, ExternalLink
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
@@ -21,9 +21,9 @@ import {
   cargarCronogramaUnidad, cargarVerUnidad,
   guardarLibroClases, cargarLibroClases,
   getUnidadCompleta, initOAs, mergeOAs, cargarBancoActividades,
-  eliminarActividadClase
+  eliminarActividadClase, buildActividadClaseId
 } from "@/lib/curriculo"
-import type { ActividadClase, OAEditado, ClaseCronograma, ActividadSugerida, EjemploEvaluacion } from "@/lib/curriculo"
+import type { ActividadClase, ArchivoAdjunto, OAEditado, ClaseCronograma, ActividadSugerida, EjemploEvaluacion } from "@/lib/curriculo"
 import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
@@ -33,6 +33,9 @@ import {
   parseJsonResponse, coerceGeneratedLesson,
   type CopilotMode, type StoredAiConfig,
 } from "@/lib/ai/copilot"
+import { IaModal } from "@/components/edu-panel/actividades/ia-modal"
+import { ImportWordModal } from "@/components/edu-panel/actividades/import-word-modal"
+import { eliminarArchivoClase, formatoTamaño, subirArchivoClase } from "@/lib/storage"
 import dynamic from 'next/dynamic'
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
@@ -355,7 +358,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [selectedClase, setSelectedClase] = useState(claseParam)
   const [actividad, setActividad] = useState<Partial<ActividadClase>>({
     estado: "no_planificada", inicio: "", desarrollo: "", cierre: "",
-    adecuacion: "", objetivo: "", oaIds: [], habilidades: [], actitudes: [], materiales: [], tics: [], sincronizada: false
+    adecuacion: "", objetivo: "", oaIds: [], habilidades: [], actitudes: [], materiales: [], tics: [], archivos: [], sincronizada: false
   })
   const [unidadData, setUnidadData] = useState<any>(null)
   const [unidadDataStatus, setUnidadDataStatus] = useState<string | null>(null)
@@ -375,14 +378,19 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [tabSugerencias, setTabSugerencias] = useState<"actividades" | "evaluaciones">("actividades")
   const [nuevoMaterial, setNuevoMaterial] = useState("")
   const [nuevoTic, setNuevoTic] = useState("")
+  const [subiendoArchivo, setSubiendoArchivo] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
+  const [dragArchivoActivo, setDragArchivoActivo] = useState(false)
   const [showEstadoMenu, setShowEstadoMenu] = useState(false)
   const [showBancoModal, setShowBancoModal] = useState(false)
+  const [showImportWordModal, setShowImportWordModal] = useState(false)
   const [bancoActividades, setBancoActividades] = useState<ActividadClase[]>([])
   const [loadingBanco, setLoadingBanco] = useState(false)
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [ideaInicial, setIdeaInicial] = useState("")
 
   // ── Copiloto IA ──
+  const [showIaModal, setShowIaModal] = useState(false)
   const [showCopilot, setShowCopilot] = useState(false)
   const [isClassesRailCollapsed, setIsClassesRailCollapsed] = useState(false)
   const [chatHistory, setChatHistory] = useState<Array<{ role: "user" | "ai"; text: string }>>([])
@@ -401,6 +409,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const chatEndRef = useRef<HTMLDivElement>(null)
   const generationAbortRef = useRef<AbortController | null>(null)
   const recognitionRef = useRef<any>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   // Cargar config guardada
   useEffect(() => {
@@ -659,11 +668,11 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   }
 
   // Enviar mensaje de chat (conversación libre)
-  const handleImportarRespuestaExterna = () => {
-    const rawInput = externalJsonInput.trim()
+  const aplicarRespuestaExterna = (raw: string, options?: { closeExternalImport?: boolean }) => {
+    const rawInput = raw.trim()
     if (!rawInput) {
       setExternalImportError("Pega el JSON que te entrego tu IA.")
-      return
+      return false
     }
 
     try {
@@ -706,7 +715,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       applyGeneratedLesson(importedData)
       setExternalJsonInput("")
       setExternalImportError("")
-      setShowExternalImport(false)
+      if (options?.closeExternalImport ?? true) setShowExternalImport(false)
       setChatHistory(prev => [
         ...prev,
         { role: "ai", text: "Importe la respuesta externa y complete la clase con el JSON pegado." },
@@ -715,9 +724,15 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         title: "Respuesta importada",
         description: "La clase se completo con el JSON pegado.",
       })
+      return true
     } catch (e: any) {
       setExternalImportError(e?.message || "No pude leer ese JSON.")
+      return false
     }
+  }
+
+  const handleImportarRespuestaExterna = () => {
+    aplicarRespuestaExterna(externalJsonInput)
   }
 
   const handleSendChat = async () => {
@@ -869,6 +884,20 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     setShowBancoModal(false)
   }
 
+  const importarDesdeWord = (payload: Partial<Record<"objetivo" | "inicio" | "desarrollo" | "cierre" | "materiales" | "tics" | "adecuacion", string | string[]>>) => {
+    setActividad(prev => ({
+      ...prev,
+      objetivo: typeof payload.objetivo === "string" && payload.objetivo.trim() ? htmlToPlainText(payload.objetivo) : prev.objetivo,
+      inicio: typeof payload.inicio === "string" && payload.inicio.trim() ? payload.inicio : prev.inicio,
+      desarrollo: typeof payload.desarrollo === "string" && payload.desarrollo.trim() ? payload.desarrollo : prev.desarrollo,
+      cierre: typeof payload.cierre === "string" && payload.cierre.trim() ? payload.cierre : prev.cierre,
+      adecuacion: typeof payload.adecuacion === "string" && payload.adecuacion.trim() ? payload.adecuacion : prev.adecuacion,
+      materiales: Array.isArray(payload.materiales) && payload.materiales.length ? payload.materiales : prev.materiales,
+      tics: Array.isArray(payload.tics) && payload.tics.length ? payload.tics : prev.tics,
+    }))
+    toast({ title: "Word importado", description: "Revisa la clase y guarda los ajustes finales." })
+  }
+
   // Cargar cronograma + currículo
   useEffect(() => {
     let cancelled = false
@@ -978,7 +1007,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
           inicio: "", desarrollo: "", cierre: "", adecuacion: "",
           objetivo: "",
           oaIds: claseData?.oaIds || [],
-          habilidades: [], actitudes: [], materiales: [], tics: [], sincronizada: false,
+          habilidades: [], actitudes: [], materiales: [], tics: [], archivos: [], sincronizada: false,
         })
       }
       // Marcar que acabamos de cargar explícitamente para evitar autosave falso
@@ -1028,6 +1057,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         actitudes: actividad.actitudes || [],
         materiales: actividad.materiales || [],
         tics: actividad.tics || [],
+        archivos: actividad.archivos || [],
         estado: actividad.estado || "planificada",
         sincronizada: actividad.sincronizada || false,
         contextoProfesor: actividad.contextoProfesor || "",
@@ -1057,6 +1087,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       actividad.adecuacion,
       ...(actividad.materiales || []),
       ...(actividad.tics || []),
+      ...(actividad.archivos || []).map(archivo => archivo.nombre),
     ].some(value => stripRichText(String(value || "")).length > 0)
 
     if (!tieneContenido) return
@@ -1068,6 +1099,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
     setDeleting(true)
     try {
+      await Promise.allSettled((actividad.archivos || []).map(archivo => eliminarArchivoClase(archivo.storagePath)))
       await eliminarActividadClase(cursoParam, unidadParam, selectedClase, ASIGNATURA)
       const claseData = clases.find(c => c.numero === selectedClase)
       ignoreNextSaveRef.current = true
@@ -1083,6 +1115,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         actitudes: [],
         materiales: [],
         tics: [],
+        archivos: [],
         sincronizada: false,
       })
       setChatHistory([])
@@ -1138,6 +1171,55 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     }
   }
 
+  const actividadClaseId = buildActividadClaseId(cursoParam, unidadParam, selectedClase, ASIGNATURA)
+
+  const handleSubirArchivos = async (files: FileList | File[]) => {
+    const selectedFiles = Array.from(files)
+    if (selectedFiles.length === 0 || subiendoArchivo) return
+    setSubiendoArchivo(true)
+    try {
+      for (const file of selectedFiles) {
+        const progressKey = `${file.name}_${file.lastModified}`
+        setUploadProgress(prev => ({ ...prev, [progressKey]: 0 }))
+        const adjunto = await subirArchivoClase(actividadClaseId, file, progress => {
+          setUploadProgress(prev => ({ ...prev, [progressKey]: progress }))
+        })
+        setActividad(prev => ({ ...prev, archivos: [...(prev.archivos || []), adjunto] }))
+        setUploadProgress(prev => {
+          const next = { ...prev }
+          delete next[progressKey]
+          return next
+        })
+      }
+      toast({ title: "Archivo adjuntado", description: "Quedo disponible en la clase." })
+    } catch (error) {
+      toast({
+        title: "No se pudo subir",
+        description: error instanceof Error ? error.message : "Intenta nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setSubiendoArchivo(false)
+      if (fileInputRef.current) fileInputRef.current.value = ""
+    }
+  }
+
+  const handleEliminarArchivo = async (archivo: ArchivoAdjunto) => {
+    try {
+      await eliminarArchivoClase(archivo.storagePath)
+      setActividad(prev => ({
+        ...prev,
+        archivos: (prev.archivos || []).filter(item => item.id !== archivo.id),
+      }))
+    } catch (error) {
+      toast({
+        title: "No se pudo eliminar",
+        description: error instanceof Error ? error.message : "Intenta nuevamente.",
+        variant: "destructive",
+      })
+    }
+  }
+
   const setEstado = (est: ActividadClase["estado"]) => {
     setActividad(p => ({ ...p, estado: est }))
     setShowEstadoMenu(false)
@@ -1163,6 +1245,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     })
     return base
   }, [actividad.indicadoresEvaluacion])
+  const iaModalRequestBody = useMemo(() => {
+    return buildLessonPayload(promptMode, chatInput)
+  }, [promptMode, chatInput, actividad, aiConfig, oasCurriculo, unidadData, unidadContextoDocente, unidadObjetivoDocente, clases.length, nivelCurricular])
+  const hasConfiguredProvider = aiConfig.provider === "public" || !!aiConfig.token
   const promptPreview = useMemo(() => {
     try {
       return buildCopilotPrompt(buildLessonPayload(promptMode, chatInput), promptMode)
@@ -1187,6 +1273,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     actividad.adecuacion,
     ...(actividad.materiales || []),
     ...(actividad.tics || []),
+    ...(actividad.archivos || []).map(archivo => archivo.nombre),
   ].some(value => stripRichText(String(value || "")).length > 0)
 
   const verUnidadParams: Record<string, string> = unidadCurricularParam !== unidadParam
@@ -1199,6 +1286,29 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       className={cn("relative w-full overflow-y-auto h-[calc(100vh-64px)] transition-all md:pr-[var(--copilot-pr)]", !isResizing && "duration-300")}
       style={{ ["--copilot-pr" as never]: showCopilot ? `${copilotWidth}px` : "0px" }}
     >
+      <IaModal
+        open={showIaModal}
+        onOpenChange={setShowIaModal}
+        requestBody={iaModalRequestBody}
+        mode={promptMode}
+        hasConfiguredProvider={hasConfiguredProvider}
+        isGenerating={isGeneratingAI}
+        onApplyExternalJson={async rawJson => {
+          const ok = aplicarRespuestaExterna(rawJson, { closeExternalImport: false })
+          if (!ok) throw new Error(externalImportError || "No pude aplicar ese JSON.")
+        }}
+        onGenerateIntegrated={handleGenerarClase}
+        onOpenIntegratedChat={handleOpenCopilot}
+        onConfigureProvider={() => {
+          setShowCopilot(true)
+          setShowAiSettings(true)
+        }}
+      />
+      <ImportWordModal
+        open={showImportWordModal}
+        onOpenChange={setShowImportWordModal}
+        onImport={importarDesdeWord}
+      />
       <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-3 sm:px-4 md:px-6")}>
         {/* Header — oculto en modo compact */}
         <div className={compact ? "flex items-center justify-between mb-4 flex-wrap gap-2 print:hidden" : "flex items-center justify-between mb-5 sm:mb-6 flex-wrap gap-2 sm:gap-3 print:hidden"}>
@@ -1212,7 +1322,6 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
             <div className="min-w-0 flex-1">
               <p className="text-[11px] text-muted-foreground truncate">
                 <Link href={buildUrl("/planificaciones", { curso: cursoParam })} className="hover:text-primary">Mis planificaciones</Link>
-                {" "}/ <Link href={buildUrl("/ver-unidad", verUnidadParams)} className="hover:text-primary">Unidad</Link>
               </p>
               <h1 className="text-[16px] sm:text-[20px] font-extrabold leading-tight truncate">
                 Actividades · {ASIGNATURA} – {cursoParam}
@@ -1363,11 +1472,17 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                       <BookOpen className="w-3.5 h-3.5" /> Banco de Clases
                     </button>
                     <button
-                      onClick={handleOpenCopilot}
+                      onClick={() => setShowImportWordModal(true)}
+                      className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:bg-pink-light px-2 py-1 rounded transition-colors"
+                    >
+                      <FileText className="w-3.5 h-3.5" /> Importar Word
+                    </button>
+                    <button
+                      onClick={() => setShowIaModal(true)}
                       className="flex items-center gap-1.5 text-[11px] font-bold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90 px-3 py-1.5 rounded-full transition-opacity shadow-sm"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-white" />
-                      Copiloto IA
+                      Asistente IA
                     </button>
                   </div>
                 </div>
@@ -1926,6 +2041,100 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                             <Plus className="w-4 h-4" />
                           </button>
                         </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="bg-card border border-border rounded-[14px] overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-border bg-background px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <Paperclip className="h-4 w-4 text-primary" />
+                      <h3 className="text-[13px] font-bold">Archivos adjuntos</h3>
+                      <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
+                        {(actividad.archivos || []).length}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={subiendoArchivo}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-[11px] font-bold hover:bg-muted/60 disabled:opacity-50"
+                    >
+                      {subiendoArchivo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />}
+                      Adjuntar
+                    </button>
+                  </div>
+                  <div className="p-4">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      className="hidden"
+                      multiple
+                      accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp4,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,video/mp4"
+                      onChange={e => { if (e.target.files) void handleSubirArchivos(e.target.files) }}
+                    />
+                    <div
+                      onDragOver={e => {
+                        e.preventDefault()
+                        setDragArchivoActivo(true)
+                      }}
+                      onDragLeave={() => setDragArchivoActivo(false)}
+                      onDrop={e => {
+                        e.preventDefault()
+                        setDragArchivoActivo(false)
+                        void handleSubirArchivos(e.dataTransfer.files)
+                      }}
+                      className={cn(
+                        "mb-3 rounded-[12px] border border-dashed px-4 py-5 text-center transition-colors",
+                        dragArchivoActivo ? "border-primary bg-pink-light/30" : "border-border bg-background"
+                      )}
+                    >
+                      <UploadCloud className="mx-auto mb-2 h-5 w-5 text-muted-foreground" />
+                      <p className="text-[12px] font-semibold text-foreground">Arrastra archivos aqui</p>
+                      <p className="text-[11px] text-muted-foreground">PDF, DOCX, PPTX, JPG, PNG o MP4 · max. 25 MB</p>
+                    </div>
+                    {Object.entries(uploadProgress).map(([key, progress]) => (
+                      <div key={key} className="mb-2 rounded-lg border border-border bg-background px-3 py-2">
+                        <div className="mb-1 flex items-center justify-between gap-3 text-[11px] font-semibold text-muted-foreground">
+                          <span className="truncate">{key.replace(/_\d+$/, "")}</span>
+                          <span>{progress}%</span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                          <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                    {(actividad.archivos || []).length === 0 ? (
+                      <p className="text-[12px] text-muted-foreground">Sin adjuntos para esta clase.</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {(actividad.archivos || []).map(archivo => (
+                          <div key={archivo.id} className="flex items-center gap-3 rounded-lg bg-background px-3 py-2 text-[12px]">
+                            <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate font-semibold text-foreground">{archivo.nombre}</p>
+                              <p className="text-[10px] text-muted-foreground">{formatoTamaño(archivo.tamaño)} · {archivo.tipo || "archivo"}</p>
+                            </div>
+                            <a
+                              href={archivo.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-card hover:text-primary"
+                              title="Abrir archivo"
+                            >
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => void handleEliminarArchivo(archivo)}
+                              className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-red-50 hover:text-red-500"
+                              title="Eliminar archivo"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>

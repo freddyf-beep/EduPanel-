@@ -12,6 +12,11 @@ export interface PerfilUsuario {
 export interface InfoColegio {
   nombre: string          // Ej: "Escuela Andrew Jackson"
   logoBase64?: string     // Imagen en base64 (data:image/jpeg;base64,...)
+  // ── Encabezado opcional para exportaciones (planificación tabla, pruebas, guías) ──
+  encabezadoHabilitado?: boolean    // si está activo, los exports lo aplican
+  encabezadoTextoIzq?: string       // texto multi-línea (separar con \n)
+  encabezadoTextoDer?: string       // texto multi-línea
+  logoDerBase64?: string            // logo del lado derecho (opcional)
   updatedAt?: any
 }
 
@@ -43,6 +48,31 @@ export async function cargarInfoColegio(): Promise<InfoColegio | null> {
 export async function guardarInfoColegio(info: Omit<InfoColegio, "updatedAt">): Promise<void> {
   await setDoc(doc(db, "users", getUid(), "perfil_info", "colegio"), {
     ...info,
+    updatedAt: serverTimestamp()
+  })
+}
+
+// ─── Preferencias del usuario (asignaturas habilitadas, etc.) ───────────────
+
+export interface PreferenciasUsuario {
+  /**
+   * Asignaturas que el docente quiere ver en el switcher de asignatura.
+   * Si es undefined o []: mostrar todas las disponibles (compatibilidad
+   * hacia atrás con usuarios sin configuración).
+   */
+  asignaturasHabilitadas?: string[]
+  updatedAt?: any
+}
+
+export async function cargarPreferencias(): Promise<PreferenciasUsuario | null> {
+  const snap = await getDoc(doc(db, "users", getUid(), "perfil_info", "preferencias"))
+  if (!snap.exists()) return null
+  return snap.data() as PreferenciasUsuario
+}
+
+export async function guardarPreferencias(pref: Omit<PreferenciasUsuario, "updatedAt">): Promise<void> {
+  await setDoc(doc(db, "users", getUid(), "perfil_info", "preferencias"), {
+    ...pref,
     updatedAt: serverTimestamp()
   })
 }

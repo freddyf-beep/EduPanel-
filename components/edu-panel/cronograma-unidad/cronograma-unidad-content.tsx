@@ -19,29 +19,69 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const DIAS_MAP: Record<string, number> = { Lunes:1, Martes:2, "Miércoles":3, Jueves:4, Viernes:5 }
 const MESES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
 
-// Genera fechas automáticas a partir del horario ICS del curso
-function generarFechasAutomaticas(curso: string, totalClases: number, horarioBase: ClaseHorario[]): string[] {
-  const entry = horarioBase.find(h =>
-    h.resumen === curso || h.resumen.replace("°","").trim() === curso.replace("°","").trim()
-  )
-  if (!entry) return Array(totalClases).fill("")
+function normalizarCursoHorario(value: string): string {
+  return value
+    .replace("°", "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+}
 
-  const diaSemana = DIAS_MAP[entry.dia] || 1
+function diaSemanaIndex(dia: string): number {
+  const key = dia
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+  const map: Record<string, number> = { lunes: 1, martes: 2, miercoles: 3, jueves: 4, viernes: 5 }
+  return map[key] ?? 1
+}
+
+function fechaInputToDate(fechaInicio?: string): Date {
+  if (!fechaInicio) return new Date()
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(fechaInicio)) {
+    const [day, month, year] = fechaInicio.split("/").map(Number)
+    if (!year || !month || !day) return new Date()
+    return new Date(year, month - 1, day)
+  }
+  const [year, month, day] = fechaInicio.split("-").map(Number)
+  if (!year || !month || !day) return new Date()
+  return new Date(year, month - 1, day)
+}
+
+function fechaDDMMYYYY(d: Date): string {
+  const dd = String(d.getDate()).padStart(2, "0")
+  const mm = String(d.getMonth() + 1).padStart(2, "0")
+  return `${dd}/${mm}/${d.getFullYear()}`
+}
+
+// Genera fechas automáticas usando todos los bloques semanales del curso.
+function generarFechasAutomaticas(curso: string, totalClases: number, horarioBase: ClaseHorario[], fechaInicio?: string): string[] {
+  const cursoNormalizado = normalizarCursoHorario(curso)
+  const bloques = horarioBase
+    .filter(h => normalizarCursoHorario(h.resumen) === cursoNormalizado)
+    .sort((a, b) => diaSemanaIndex(a.dia) - diaSemanaIndex(b.dia) || a.horaInicio.localeCompare(b.horaInicio))
+  if (!bloques.length) return Array(totalClases).fill("")
+
+  const bloquesPorDia = new Map<number, ClaseHorario[]>()
+  bloques.forEach(bloque => {
+    const dia = diaSemanaIndex(bloque.dia)
+    bloquesPorDia.set(dia, [...(bloquesPorDia.get(dia) || []), bloque])
+  })
+
   const fechas: string[] = []
-  const hoy = new Date()
-  // Buscar el primer día de ese día de semana desde hoy
-  let d = new Date(hoy)
-  while (d.getDay() !== diaSemana) d.setDate(d.getDate() + 1)
+  const d = fechaInputToDate(fechaInicio)
 
-  for (let i = 0; i < totalClases; i++) {
-    const dd = String(d.getDate()).padStart(2,"0")
-    const mm = String(d.getMonth()+1).padStart(2,"0")
-    const yy = d.getFullYear()
-    fechas.push(`${dd}/${mm}/${yy}`)
-    d.setDate(d.getDate() + 7) // siguiente semana mismo día
+  while (fechas.length < totalClases) {
+    const bloquesDia = bloquesPorDia.get(d.getDay()) || []
+    for (let i = 0; i < bloquesDia.length; i++) {
+      if (fechas.length >= totalClases) break
+      fechas.push(fechaDDMMYYYY(d))
+    }
+    d.setDate(d.getDate() + 1)
   }
   return fechas
 }
@@ -50,6 +90,10 @@ function formatFechaCorta(f: string): string {
   if (!f) return ""
   const [d, m] = f.split("/")
   return `${parseInt(d)} ${MESES[parseInt(m)-1]}`
+}
+
+function primeraFechaClase(clases: ClaseCronograma[]): string {
+  return (clases.find(clase => clase.fecha?.trim())?.fecha || "").trim()
 }
 
 // ─── Componente ───────────────────────────────────────────────────────────────
@@ -74,6 +118,8 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   const [editFecha, setEditFecha]   = useState<number|null>(null)
   const [fechaTemp, setFechaTemp]   = useState("")
   const [horarioBase, setHorarioBase] = useState<ClaseHorario[]>([])
+  const [fechaInicioUnidad, setFechaInicioUnidad] = useState("")
+  const [autoFechaMensaje, setAutoFechaMensaje] = useState("")
 
   const COLS_VISIBLE = 7  // columnas visibles a la vez
 
@@ -214,8 +260,25 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
 
   // Fechas automáticas
   const handleFechasAuto = () => {
-    const fechas = generarFechasAutomaticas(curso, totalClases, horarioBase)
+    const fechaDesdeClase = primeraFechaClase(clases)
+    const fechaBase = fechaDesdeClase || fechaInicioUnidad
+
+    if (!fechaBase) {
+      setAutoFechaMensaje("Agrega una fecha en alguna clase o escribe una fecha de inicio para calcular.")
+      return
+    }
+
+    const fechas = generarFechasAutomaticas(curso, totalClases, horarioBase, fechaBase)
+    if (!fechas.some(Boolean)) {
+      setAutoFechaMensaje("No encontre bloques de este curso en tu horario semanal.")
+      return
+    }
+
     setClases(prev => prev.map((c, i) => ({ ...c, fecha: fechas[i] || "" })))
+    setAutoFechaMensaje(fechaDesdeClase
+      ? `Fechas recalculadas desde la primera fecha escrita: ${fechaDesdeClase}.`
+      : "Fechas calculadas desde la fecha de inicio manual."
+    )
   }
 
   // Duplicar clase
@@ -250,6 +313,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   ).length
   const cobertura = oasSeleccionados.length > 0
     ? Math.round((oaConClase / oasSeleccionados.length) * 100) : 0
+  const primeraFechaConfigurada = primeraFechaClase(clases)
 
   if (loading) return (
     <div className="flex items-center justify-center h-48 gap-3 text-muted-foreground">
@@ -266,6 +330,9 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           <div className="text-[13px] font-semibold text-muted-foreground">
             Total de clases: <span className="text-foreground font-bold">{clases.length}</span>
           </div>
+          <div className="text-[12px] font-medium text-muted-foreground">
+            Base fechas: <span className="font-bold text-foreground">{primeraFechaConfigurada || fechaInicioUnidad || "pendiente"}</span>
+          </div>
           {/* Cobertura */}
           <div className="flex items-center gap-2 bg-background border border-border rounded-full px-3 py-1.5">
             <div className="h-2 w-16 rounded-full bg-border overflow-hidden">
@@ -275,11 +342,18 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           </div>
         </div>
         <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+          <input
+            type="date"
+            value={fechaInicioUnidad}
+            onChange={e => setFechaInicioUnidad(e.target.value)}
+            title="Fecha de inicio de la unidad"
+            className="h-9 w-full rounded-[8px] border border-border bg-card px-3 text-[12px] font-medium text-foreground outline-none transition-colors focus:border-primary sm:w-auto"
+          />
           <button
             onClick={handleFechasAuto}
             className="flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border bg-card px-3 py-2 text-[12px] font-semibold transition-colors hover:bg-background sm:w-auto"
           >
-            <Calendar className="w-3.5 h-3.5 text-muted-foreground" /> Fechas automáticas
+            <Calendar className="w-3.5 h-3.5 text-muted-foreground" /> Calcular fechas desde mi horario
           </button>
           <button
             onClick={() => setShowAutoWarn(true)}
@@ -307,6 +381,16 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           </button>
         </div>
       </div>
+      {autoFechaMensaje && (
+        <div className={cn(
+          "mb-4 rounded-[10px] border px-3 py-2 text-[12px] font-medium",
+          autoFechaMensaje.startsWith("Agrega") || autoFechaMensaje.startsWith("No encontre")
+            ? "border-amber-200 bg-amber-50 text-amber-800"
+            : "border-green-200 bg-green-50 text-green-800"
+        )}>
+          {autoFechaMensaje}
+        </div>
+      )}
 
       {/* Advertencia autorelleno */}
       {showAutoWarn && (

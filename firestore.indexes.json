@@ -1,0 +1,15 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "actividades_clase",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "fecha", "order": "ASCENDING" },
+        { "fieldPath": "curso", "order": "ASCENDING" },
+        { "fieldPath": "asignatura", "order": "ASCENDING" },
+        { "fieldPath": "numeroClase", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

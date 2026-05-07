@@ -13,7 +13,7 @@ export function PlanificacionesDetail({ curso }: { curso: string }) {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Pestañas de control general (fuera del Header del contenido interno para no romper su layout) */}
-      <div className="sticky top-[58px] z-10 border-b border-border bg-background px-4 pt-3 sm:px-5 lg:px-10 lg:pt-6">
+      <div className="sticky top-0 z-10 border-b border-border bg-background px-4 pt-3 sm:px-5 lg:px-10 lg:pt-6">
         <div className="mx-auto flex max-w-[1320px] items-end gap-4 overflow-x-auto scrollbar-none sm:gap-6">
           {/* Back link */}
           <Link

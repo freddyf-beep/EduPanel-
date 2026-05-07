@@ -118,6 +118,8 @@ export interface EvaluacionRubrica {
   curso: string
   grupos: GrupoEvaluacion[]
   puntajeMaximo: number
+  bloqueada?: boolean
+  bloqueadaEn?: unknown
   updatedAt?: unknown
 }
 
@@ -598,7 +600,13 @@ function stripUndefined(value: any): any {
   if (Array.isArray(value)) {
     return value.map(stripUndefined)
   }
-  if (value !== null && typeof value === "object" && !(value?.constructor?.name?.includes("Timestamp"))) {
+  if (
+    value !== null &&
+    typeof value === "object" &&
+    (value as any)._methodName === undefined &&
+    typeof (value as any).toDate !== "function" &&
+    !(value?.constructor?.name?.includes("Timestamp"))
+  ) {
     const out: Record<string, unknown> = {}
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
       if (v === undefined) continue

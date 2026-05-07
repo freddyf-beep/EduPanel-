@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
-import { ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, List, Send } from "lucide-react"
+import { ArrowLeft, Download, CheckCircle2, AlertCircle, Loader2, List, Send, Printer, Lock, BookOpen, ChevronDown } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes } from "@/lib/estudiantes"
@@ -11,6 +11,8 @@ import { auth } from "@/lib/firebase"
 import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
 import { apiFetch } from "@/lib/api-client"
 import { toast } from "@/hooks/use-toast"
+import { abrirRubricaPlantillaImprimible } from "@/lib/export/hoja-evaluacion-pdf"
+import { abrirResultadosIndividualesImprimible } from "@/lib/export/resultados-individuales-pdf"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +23,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   cargarRubrica, cargarEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
@@ -48,6 +57,8 @@ export function ResultadosView({ rubricaId }: Props) {
   const [error, setError] = useState("")
   const [exportando, setExportando] = useState(false)
   const [exportandoListado, setExportandoListado] = useState(false)
+  const [exportandoGrupo, setExportandoGrupo] = useState(false)
+  const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
   const [sincronizandoCalif, setSincronizandoCalif] = useState(false)
   const [syncPendiente, setSyncPendiente] = useState<SincronizarCalificacionesResultado | null>(null)
   const [confirmSyncOpen, setConfirmSyncOpen] = useState(false)
@@ -138,6 +149,79 @@ export function ResultadosView({ rubricaId }: Props) {
     }
   }
 
+  const handleExportarGrupo = async () => {
+    if (!rubrica || !evaluacion) return
+    setExportandoGrupo(true)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
+    try {
+      const res = await apiFetch("/api/export-rubrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rubrica, evaluacion, modo: "grupo", profesorNombre, colegio, logoBase64 }),
+      })
+      if (!res.ok) throw new Error("Error al generar el Word")
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `rubrica_${rubrica.nombre}_${rubrica.curso}_grupos.docx`.replace(/\s+/g, "_")
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al exportar")
+    } finally {
+      setExportandoGrupo(false)
+    }
+  }
+
+  const handleExportarAlumno = async (estudianteId: string, nombreAlumno: string) => {
+    if (!rubrica || !evaluacion) return
+    setExportandoAlumno(estudianteId)
+    const profesorNombre = auth?.currentUser?.displayName ?? ""
+    const colegio = infoColegio?.nombre ?? ""
+    const logoBase64 = infoColegio?.logoBase64
+    try {
+      const res = await apiFetch("/api/export-rubrica", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rubrica, evaluacion, modo: "alumno", estudianteId, profesorNombre, colegio, logoBase64 }),
+      })
+      if (!res.ok) throw new Error("Error al generar el Word")
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `rubrica_${nombreAlumno.replace(/\s+/g, "_")}.docx`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al exportar")
+    } finally {
+      setExportandoAlumno(null)
+    }
+  }
+
+  const handleResultadosIndividuales = () => {
+    if (!rubrica || !evaluacion) return
+    abrirResultadosIndividualesImprimible({
+      rubrica,
+      evaluacion,
+      colegio: infoColegio,
+      profesorNombre: auth?.currentUser?.displayName ?? "",
+    })
+  }
+
+  const handleVerPlantilla = () => {
+    if (!rubrica) return
+    abrirRubricaPlantillaImprimible({
+      rubrica,
+      colegio: infoColegio,
+      profesorNombre: auth?.currentUser?.displayName ?? "",
+    })
+  }
+
   const handleSincronizarCalificaciones = async (sobrescribir = false) => {
     if (!rubrica || !evaluacion) return
     setSincronizandoCalif(true)
@@ -181,6 +265,7 @@ export function ResultadosView({ rubricaId }: Props) {
   const todosEstudiantes: EstudianteEvaluacion[] = evaluacion
     ? evaluacion.grupos.flatMap(g => g.estudiantes)
     : []
+  const bloqueada = !!evaluacion?.bloqueada
 
   const notasConDatos = todosEstudiantes
     .map(e => {
@@ -262,43 +347,68 @@ export function ResultadosView({ rubricaId }: Props) {
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div className="flex-1 min-w-0 order-first sm:order-none w-full sm:w-auto">
-          <h1 className="text-[18px] sm:text-[20px] font-extrabold text-foreground">Resultados</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-[18px] sm:text-[20px] font-extrabold text-foreground">Resultados</h1>
+            {bloqueada && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-800">
+                <Lock className="h-3 w-3" />
+                Finalizada
+              </span>
+            )}
+          </div>
           <p className="text-[12px] text-muted-foreground truncate">{rubrica.nombre} · {rubrica.curso}</p>
         </div>
         <button
-          onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "evaluacion", rubricaId }, asignatura)))}
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60"
+          onClick={handleResultadosIndividuales}
+          disabled={!evaluacion || todosEstudiantes.length === 0}
+          title="Abrir resultados individuales compactos para imprimir o guardar como PDF"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 disabled:opacity-50"
         >
-          <Users className="w-3.5 h-3.5" />
-          Evaluar
+          <Printer className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Resultados individuales</span>
+          <span className="sm:hidden">Resultados</span>
         </button>
         <button
-          onClick={() => handleSincronizarCalificaciones(false)}
-          disabled={!evaluacion || sincronizandoCalif || todosEstudiantes.length === 0}
-          title="Enviar las notas calculadas a Calificaciones"
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-primary text-primary rounded-[10px] hover:bg-pink-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleVerPlantilla}
+          disabled={!rubrica}
+          title="Ver la rúbrica completa con criterios y descriptores (sin alumnos)"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
         >
-          {sincronizandoCalif ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">Sincronizar calificaciones</span>
-          <span className="sm:hidden">Sync notas</span>
+          <BookOpen className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Ver rúbrica</span>
+          <span className="sm:hidden">Rúbrica</span>
         </button>
-        <button
-          onClick={handleExportarListado}
-          disabled={exportandoListado}
-          title="Descargar Word con el listado de notas de todos los alumnos"
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50 ml-auto sm:ml-0"
-        >
-          {exportandoListado ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <List className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">Lista notas</span>
-          <span className="sm:hidden">Lista</span>
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              disabled={(exportandoGrupo || exportandoListado) || !evaluacion || todosEstudiantes.length === 0}
+              className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
+            >
+              {exportandoGrupo || exportandoListado ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+              <span className="hidden sm:inline">Exportaciones</span>
+              <span className="sm:hidden">Exportar</span>
+              <ChevronDown className="w-3 h-3" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuLabel className="text-[11px]">Word</DropdownMenuLabel>
+            <DropdownMenuItem onClick={handleExportarGrupo} disabled={exportandoGrupo || !evaluacion || todosEstudiantes.length === 0}>
+              <Download className="w-3.5 h-3.5" />
+              Ver grupos
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleExportarListado} disabled={exportandoListado}>
+              <List className="w-3.5 h-3.5" />
+              Lista de notas
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <button
           onClick={handleExportarWord}
-          disabled={exportando}
+          disabled={exportando || !evaluacion}
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 disabled:opacity-50"
         >
           {exportando ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">Exportar Word</span>
+          <span className="hidden sm:inline">Word completo</span>
           <span className="sm:hidden">Word</span>
         </button>
       </div>
@@ -374,7 +484,7 @@ export function ResultadosView({ rubricaId }: Props) {
               <h2 className="text-[14px] font-bold text-foreground">Notas por alumno</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-[12px] min-w-[640px]">
+              <table className="w-full text-[12px] min-w-[700px]">
                 <thead>
                   <tr className="border-b border-border bg-muted/20">
                     <th className="sticky left-0 z-10 bg-muted/20 text-left px-4 py-2.5 font-semibold text-muted-foreground border-r border-border min-w-[160px]">Alumno</th>
@@ -383,6 +493,7 @@ export function ResultadosView({ rubricaId }: Props) {
                     <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Nota</th>
                     <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Estado</th>
                     <th className="text-left px-3 py-2.5 font-semibold text-muted-foreground">Observaciones</th>
+                    <th className="text-center px-3 py-2.5 font-semibold text-muted-foreground">Word</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -391,6 +502,7 @@ export function ResultadosView({ rubricaId }: Props) {
                       const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
                       const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
                       const aprobado = nota >= 4.0
+                      const descargandoEste = exportandoAlumno === est.estudianteId
                       return (
                         <tr key={est.estudianteId} className="border-b border-border hover:bg-muted/30">
                           <td className="sticky left-0 z-10 bg-card border-r border-border px-4 py-2.5 font-medium text-foreground">
@@ -413,6 +525,16 @@ export function ResultadosView({ rubricaId }: Props) {
                           <td className="px-3 py-2.5 text-muted-foreground max-w-[200px] truncate">
                             {est.observaciones || "—"}
                           </td>
+                          <td className="px-3 py-2.5 text-center">
+                            <button
+                              onClick={() => handleExportarAlumno(est.estudianteId, est.nombre)}
+                              disabled={descargandoEste}
+                              title={`Descargar rúbrica individual de ${est.nombre}`}
+                              className="inline-flex items-center justify-center w-7 h-7 rounded-[8px] border border-border hover:bg-muted/60 transition-colors disabled:opacity-50"
+                            >
+                              {descargandoEste ? <Loader2 className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
+                            </button>
+                          </td>
                         </tr>
                       )
 
@@ -422,6 +544,26 @@ export function ResultadosView({ rubricaId }: Props) {
               </table>
             </div>
           </div>
+          </div>
+
+          <div className="bg-card border border-border rounded-[14px] p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-[14px] font-bold text-foreground">Enviar notas a Calificaciones</h2>
+                <p className="mt-0.5 text-[12px] text-muted-foreground">
+                  Sincroniza el listado del curso cuando ya revisaste los resultados.
+                </p>
+              </div>
+              <button
+                onClick={() => handleSincronizarCalificaciones(false)}
+                disabled={!evaluacion || sincronizandoCalif || todosEstudiantes.length === 0}
+                title="Enviar las notas calculadas a Calificaciones"
+                className="flex items-center justify-center gap-1.5 rounded-[10px] border border-primary px-3 py-2 text-[12px] font-medium text-primary transition-colors hover:bg-pink-light disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {sincronizandoCalif ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                Sincronizar calificaciones
+              </button>
+            </div>
           </div>
         </>
       )}

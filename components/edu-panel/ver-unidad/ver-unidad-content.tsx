@@ -533,7 +533,7 @@ function VerUnidadInner() {
             numero: unitIndex + 1,
             nombre: unidad?.nombre_unidad || `Unidad ${unitIndex + 1}`,
             oasBasales: oas.filter(oa => oa.seleccionado && oa.tipo !== "oat").map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()),
-            oasComplementarios: oas.filter(oa => oa.seleccionado && oa.tipo === "oat").map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()),
+            oasTransversales: oas.filter(oa => oa.seleccionado && oa.tipo === "oat").map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()),
             clases: clasesExport,
           }],
         }),

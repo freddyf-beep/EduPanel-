@@ -42,7 +42,7 @@ export interface UnidadExport {
   numero: number
   nombre: string
   oasBasales: string[]         // ["MU02 OA 01: Descripción...", ...]
-  oasComplementarios: string[]
+  oasTransversales: string[]
   clases: ClaseExport[]
 }
 
@@ -189,12 +189,12 @@ export function generarPlanificacionDocx(data: ExportData): Document {
     }
     children.push(spacer())
 
-    // Complementarios
-    children.push(sectionHeader("Complementarios:"))
-    if (unidad.oasComplementarios.length > 0) {
-      for (const oa of unidad.oasComplementarios) children.push(listItem(oa))
+    // Objetivos Transversales (OAT)
+    children.push(sectionHeader("Objetivos Transversales (OAT):"))
+    if (unidad.oasTransversales.length > 0) {
+      for (const oa of unidad.oasTransversales) children.push(listItem(oa))
     } else {
-      children.push(subtitle("(Sin objetivos complementarios definidos)"))
+      children.push(subtitle("(Sin objetivos transversales definidos)"))
     }
     children.push(spacer())
 

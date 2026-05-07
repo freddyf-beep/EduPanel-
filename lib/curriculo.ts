@@ -20,7 +20,7 @@ export function userCol(col: string) {
 }
 import {
   doc, getDoc, getDocs, setDoc, deleteDoc,
-  collection, query, orderBy, serverTimestamp, where
+  collection, query, orderBy, serverTimestamp, where, limit
 } from "firebase/firestore"
 
 // ─── Helper: filtrar undefined recursivamente antes de setDoc ────────────────
@@ -354,6 +354,13 @@ export interface ElementoCurricular {
   esPropio?: boolean
 }
 
+export interface EstrategiaEvaluacionUnidad {
+  id: string
+  nombre: string
+  instrumento: string
+  ponderacion: number | null
+}
+
 export interface VerUnidadGuardada {
   descripcion: string
   contextoDocente: string
@@ -365,6 +372,9 @@ export interface VerUnidadGuardada {
   conocimientos: ElementoCurricular[]
   actitudes: ElementoCurricular[]
   actividades: ActividadDocente[]
+  conocimientosPrevios?: string
+  recursosMaterialesUnidad?: string[]
+  estrategiasEvaluacion?: EstrategiaEvaluacionUnidad[]
   updatedAt?: any
 }
 
@@ -383,7 +393,7 @@ export async function guardarVerUnidad(
     asignatura, curso, unidadId,
     ...data,
     updatedAt: serverTimestamp()
-  }))
+  }), { merge: true })
 }
 
 export async function cargarVerUnidad(
@@ -771,6 +781,25 @@ export async function obtenerOAsActivosDelDia(
     .slice(0, 4)
 }
 
+export async function buscarActividadPorFecha(
+  asignatura: string,
+  curso: string,
+  fechaStr: string,
+): Promise<ActividadClase | null> {
+  const fechaObjetivo = normalizarFechaClase(fechaStr)
+  const q = query(
+    userCol("actividades_clase"),
+    where("fecha", "==", fechaObjetivo),
+    where("curso", "==", curso),
+    where("asignatura", "==", asignatura),
+    orderBy("numeroClase"),
+    limit(1)
+  )
+  const snap = await getDocs(q)
+  if (snap.empty) return null
+  return snap.docs[0].data() as ActividadClase
+}
+
 // ─── Actividad de Clase (planificación diaria) ────────────────────────────────
 
 export interface ActividadClase {
@@ -790,6 +819,7 @@ export interface ActividadClase {
   actitudes: string[]
   materiales: string[]
   tics: string[]
+  archivos?: ArchivoAdjunto[]
   estado: "no_planificada" | "planificada" | "realizada"
   sincronizada: boolean
   updatedAt?: any
@@ -804,6 +834,39 @@ export interface ActividadClase {
   indicadoresPorOa?: Record<string, string[]>
 }
 
+export interface ArchivoAdjunto {
+  id: string
+  nombre: string
+  url: string
+  storagePath: string
+  tipo: string
+  tamaño: number
+  subidoEn: number
+}
+
+async function sincronizarFechaCronograma(actividad: Pick<ActividadClase, "asignatura" | "curso" | "unidadId" | "numeroClase" | "fecha">): Promise<void> {
+  const cronograma = await cargarCronogramaUnidad(actividad.asignatura, actividad.curso, actividad.unidadId)
+  if (!cronograma?.clases?.length) return
+
+  const fechaNormalizada = normalizarFechaClase(actividad.fecha)
+  let huboCambios = false
+  const clases = cronograma.clases.map(clase => {
+    if (clase.numero !== actividad.numeroClase) return clase
+    if (normalizarFechaClase(clase.fecha) === fechaNormalizada) return clase
+    huboCambios = true
+    return { ...clase, fecha: fechaNormalizada }
+  })
+
+  if (!huboCambios) return
+  await guardarCronogramaUnidad(
+    actividad.asignatura,
+    actividad.curso,
+    actividad.unidadId,
+    cronograma.totalClases,
+    clases
+  )
+}
+
 export function buildActividadClaseId(
   curso: string,
   unidadId: string,
@@ -815,11 +878,16 @@ export function buildActividadClaseId(
 
 export async function guardarActividadClase(data: Omit<ActividadClase, "updatedAt">): Promise<void> {
   const id = buildActividadClaseId(data.curso, data.unidadId, data.numeroClase, data.asignatura)
+  const prevSnap = await getDoc(userDoc("actividades_clase", id)).catch(() => null)
+  const fechaAnterior = prevSnap?.exists() ? normalizarFechaClase((prevSnap.data() as Partial<ActividadClase>).fecha || "") : null
   // Firestore rechaza valores undefined — eliminarlos antes de setDoc
   const clean = Object.fromEntries(
     Object.entries({ ...data, updatedAt: serverTimestamp() }).filter(([, v]) => v !== undefined)
   )
   await setDoc(userDoc("actividades_clase", id), clean)
+  if (normalizarFechaClase(data.fecha) !== fechaAnterior) {
+    await sincronizarFechaCronograma(data)
+  }
 }
 
 export async function cargarActividadClase(
@@ -842,6 +910,42 @@ export async function eliminarActividadClase(
 ): Promise<void> {
   const id = buildActividadClaseId(curso, unidadId, numeroClase, asignatura)
   await deleteDoc(userDoc("actividades_clase", id))
+}
+
+/**
+ * Elimina TODOS los datos de una unidad: ver_unidad, cronograma_unidad y todas
+ * sus actividades_clase. Útil cuando el docente quiere eliminar una unidad
+ * completa para empezar de cero.
+ *
+ * Idempotente: si algún documento no existe, lo ignora silenciosamente.
+ */
+export async function eliminarUnidadCompleta(
+  asignatura: string,
+  curso: string,
+  unidadId: string,
+): Promise<{ actividadesEliminadas: number }> {
+  const cronograma = await cargarCronogramaUnidad(asignatura, curso, unidadId).catch(() => null)
+  const totalClases = cronograma?.totalClases ?? cronograma?.clases?.length ?? 0
+
+  const verUnidadId = buildVerUnidadId(asignatura, curso, unidadId)
+  const cronogramaId = buildCronogramaUnidadId(asignatura, curso, unidadId)
+
+  const tareas: Promise<unknown>[] = [
+    deleteDoc(userDoc("ver_unidad", verUnidadId)).catch(() => null),
+    deleteDoc(userDoc("cronograma_unidad", cronogramaId)).catch(() => null),
+  ]
+
+  // Eliminar todas las actividades de la unidad (1 a totalClases).
+  // Si totalClases === 0, igualmente intentamos hasta una cota razonable
+  // por si quedaron actividades huérfanas sin cronograma.
+  const cotaMax = Math.max(totalClases, 30)
+  for (let n = 1; n <= cotaMax; n++) {
+    const actId = buildActividadClaseId(curso, unidadId, n, asignatura)
+    tareas.push(deleteDoc(userDoc("actividades_clase", actId)).catch(() => null))
+  }
+
+  await Promise.all(tareas)
+  return { actividadesEliminadas: cotaMax }
 }
 
 export async function cargarTodasActividadesUnidad(

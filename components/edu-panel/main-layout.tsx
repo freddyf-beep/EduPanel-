@@ -27,7 +27,7 @@ export function MainLayout({ children, noPadding }: MainLayoutProps) {
         <Header onOpenMenu={() => setMobileSidebarOpen(true)} />
         <div className="flex flex-1 lg:min-h-0 lg:overflow-hidden">
           <Sidebar />
-          <main className={`min-w-0 flex-1 overflow-x-hidden ${noPadding ? "" : "px-4 py-4 sm:px-5 sm:py-5 lg:p-8"}`}>
+          <main className={`min-w-0 flex-1 overflow-x-hidden overflow-y-auto ${noPadding ? "" : "px-4 py-4 sm:px-5 sm:py-5 lg:p-8"}`}>
             {children}
           </main>
         </div>

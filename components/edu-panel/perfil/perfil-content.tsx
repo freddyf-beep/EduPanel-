@@ -2,8 +2,17 @@
 
 import { useAuth } from "@/components/auth/auth-context"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { cargarPerfil, guardarPerfil, PerfilUsuario, cargarInfoColegio, guardarInfoColegio, InfoColegio } from "@/lib/perfil"
-import { cargarHorarioSemanal, guardarHorarioSemanal, ClaseHorario } from "@/lib/horario"
+import { cargarPerfil, guardarPerfil, PerfilUsuario, cargarInfoColegio, guardarInfoColegio, InfoColegio, cargarPreferencias, guardarPreferencias } from "@/lib/perfil"
+import { getAsignaturasDisponibles } from "@/lib/curriculo"
+import { agruparHorarioPorCurso, cargarHorarioSemanal, colisionaConHorario, guardarHorarioSemanal, ClaseHorario, esTipoLibre } from "@/lib/horario"
+
+// Etiqueta default por tipo de bloque libre
+const ETIQUETA_TIPO_LIBRE: Record<string, string> = {
+  almuerzo: "Almuerzo",
+  planificacion: "Planificación",
+  recreo: "Recreo",
+  libre: "Bloque libre",
+}
 import { cargarEstudiantes, compareEstudiantes, guardarEstudiantes, Estudiante } from "@/lib/estudiantes"
 import { Loader2, UserCircle, Briefcase, GraduationCap, FileText, CheckCircle, Calendar, Plus, Trash2, Clock, Users, Pencil, RefreshCw, ChevronDown, ChevronUp, BookMarked, AlertCircle, Upload, School, X } from "lucide-react"
 import { cargarNivelMapping, guardarNivelMapping, NIVELES_CURRICULARES, type NivelMapping } from "@/lib/nivel-mapping"
@@ -213,7 +222,13 @@ export function PerfilContent() {
   const [infoColegio, setInfoColegio] = useState<InfoColegio>({ nombre: "" })
   const [savingColegio, setSavingColegio] = useState(false)
   const [savedColegio, setSavedColegio] = useState(false)
-  const logoInputRef = useRef<HTMLInputElement | null>(null)
+  const logoInputRef    = useRef<HTMLInputElement | null>(null)
+  const logoDerInputRef = useRef<HTMLInputElement | null>(null)
+
+  // Asignaturas configurables
+  const [asignaturasDisponibles, setAsignaturasDisponibles] = useState<string[]>([])
+  const [asignaturasHabilitadas, setAsignaturasHabilitadas] = useState<string[] | null>(null) // null = aún no cargado, [] = ninguna marcada → mostrar todas
+  const [savingAsignaturas, setSavingAsignaturas] = useState(false)
 
   // Horario state
   const [savingHorario, setSavingHorario] = useState(false)
@@ -258,7 +273,27 @@ export function PerfilContent() {
   // Snapshot de los estudiantes actuales — usado por el flush sincrono al cambiar de curso.
   const estudiantesActualesRef = useRef<Estudiante[]>([])
 
-  const cursosDisponibles = Array.from(new Set(horario.map(h => h.resumen)))
+  // cursos = solo bloques tipo clase/taller/orientación/consejo (excluye almuerzo, planificación, etc.)
+  const cursosDisponibles = Array.from(new Set(horario.filter(h => !esTipoLibre(h.tipo)).map(h => h.resumen)))
+  const horarioPorCurso = useMemo(
+    () => Array.from(agruparHorarioPorCurso(horario).entries()).sort((a, b) => a[0].localeCompare(b[0], "es")),
+    [horario]
+  )
+  // Bloques libres (almuerzo, planificación, recreo, libre) — listados aparte para distinguirlos de cursos
+  const bloquesLibres = useMemo(
+    () => {
+      const ordenDias: Record<string, number> = { Lunes: 1, Martes: 2, Miércoles: 3, Jueves: 4, Viernes: 5 }
+      return horario
+        .filter(b => esTipoLibre(b.tipo))
+        .sort((a, b) => (ordenDias[a.dia] ?? 99) - (ordenDias[b.dia] ?? 99) || a.horaInicio.localeCompare(b.horaInicio))
+    },
+    [horario]
+  )
+  const colisionFormulario = colisionaConHorario(
+    horario,
+    { ...nuevoBloque, uid: editingUid || "__nuevo__" } as ClaseHorario,
+    editingUid || undefined
+  )
   const estudiantesOrdenados = useMemo(() => [...estudiantes].sort(compareEstudiantes), [estudiantes])
 
   const clearAutoSaveEstudiantesTimeout = () => {
@@ -283,12 +318,22 @@ export function PerfilContent() {
   }
 
   useEffect(() => {
-    Promise.all([cargarPerfil(), cargarHorarioSemanal(), cargarNivelMapping(), cargarInfoColegio()])
-      .then(([pData, hData, mapping, colegioData]) => {
+    Promise.all([
+      cargarPerfil(),
+      cargarHorarioSemanal(),
+      cargarNivelMapping(),
+      cargarInfoColegio(),
+      cargarPreferencias(),
+      getAsignaturasDisponibles().catch(() => [] as string[]),
+    ])
+      .then(([pData, hData, mapping, colegioData, prefData, asignaturas]) => {
         if (pData) setPerfil(pData)
         if (hData) setHorario(hData)
         if (mapping) setNivelMapping(mapping)
         if (colegioData) setInfoColegio(colegioData)
+        setAsignaturasDisponibles(asignaturas)
+        // Si nunca configuró: por defecto todas habilitadas
+        setAsignaturasHabilitadas(prefData?.asignaturasHabilitadas ?? [...asignaturas])
       })
       .catch(console.error)
       .finally(() => setLoading(false))
@@ -382,6 +427,30 @@ export function PerfilContent() {
     finally { setSavingPerfil(false) }
   }
 
+  const handleToggleAsignatura = async (nombre: string) => {
+    if (asignaturasHabilitadas === null || savingAsignaturas) return
+    const yaEsta = asignaturasHabilitadas.includes(nombre)
+    const next = yaEsta
+      ? asignaturasHabilitadas.filter(a => a !== nombre)
+      : [...asignaturasHabilitadas, nombre]
+    setAsignaturasHabilitadas(next)
+    setSavingAsignaturas(true)
+    try {
+      await guardarPreferencias({ asignaturasHabilitadas: next })
+    } catch (error) {
+      console.error(error)
+      // Revertir si falla
+      setAsignaturasHabilitadas(asignaturasHabilitadas)
+      toast({
+        title: "No se pudo guardar la preferencia",
+        description: "Inténtalo nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setSavingAsignaturas(false)
+    }
+  }
+
   const handleConnectCalendar = async () => {
     setConnectingCalendar(true)
     setCalendarMessage(null)
@@ -472,6 +541,19 @@ export function PerfilContent() {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
+  const startAddBloqueCurso = (curso: string, base?: ClaseHorario) => {
+    setEditingUid(null)
+    setNuevoBloque({
+      dia: base?.dia ?? "Lunes",
+      horaInicio: base?.horaInicio ?? "08:00",
+      horaFin: base?.horaFin ?? "09:30",
+      resumen: curso,
+      tipo: base?.tipo ?? "clase",
+      color: base?.color ?? "#3B82F6",
+    })
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   const handleRemoveBloque = (uid: string) => {
     setHorario(prev => prev.filter(c => c.uid !== uid))
     if (editingUid === uid) {
@@ -480,32 +562,44 @@ export function PerfilContent() {
     }
   }
 
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const maxMB = 1
-    if (file.size > maxMB * 1024 * 1024) {
-      alert(`El logo no debe superar ${maxMB} MB`)
-      return
+  const handleRemoveCursoCompleto = (curso: string) => {
+    setHorario(prev => prev.filter(c => c.resumen !== curso))
+    if (horario.some(c => c.uid === editingUid && c.resumen === curso)) {
+      setEditingUid(null)
+      setNuevoBloque({ ...nuevoBloque, resumen: "" })
     }
-    const reader = new FileReader()
-    reader.onload = ev => {
-      // Comprimir con canvas a max 300×300 para no saturar Firestore
-      const img = new Image()
-      img.onload = () => {
-        const maxPx = 300
-        const scale = Math.min(1, maxPx / Math.max(img.width, img.height))
-        const canvas = document.createElement("canvas")
-        canvas.width = Math.round(img.width * scale)
-        canvas.height = Math.round(img.height * scale)
-        canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height)
-        const base64 = canvas.toDataURL("image/jpeg", 0.85)
-        setInfoColegio(prev => ({ ...prev, logoBase64: base64 }))
-      }
-      img.src = ev.target?.result as string
-    }
-    reader.readAsDataURL(file)
   }
+
+  const makeLogoUploader = (field: "logoBase64" | "logoDerBase64") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0]
+      if (!file) return
+      const maxMB = 1
+      if (file.size > maxMB * 1024 * 1024) {
+        alert(`El logo no debe superar ${maxMB} MB`)
+        return
+      }
+      const reader = new FileReader()
+      reader.onload = ev => {
+        // Comprimir con canvas a max 300×300 para no saturar Firestore
+        const img = new Image()
+        img.onload = () => {
+          const maxPx = 300
+          const scale = Math.min(1, maxPx / Math.max(img.width, img.height))
+          const canvas = document.createElement("canvas")
+          canvas.width = Math.round(img.width * scale)
+          canvas.height = Math.round(img.height * scale)
+          canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height)
+          const base64 = canvas.toDataURL("image/jpeg", 0.85)
+          setInfoColegio(prev => ({ ...prev, [field]: base64 }))
+        }
+        img.src = ev.target?.result as string
+      }
+      reader.readAsDataURL(file)
+    }
+
+  const handleLogoUpload    = makeLogoUploader("logoBase64")
+  const handleLogoDerUpload = makeLogoUploader("logoDerBase64")
 
   const handleSaveColegio = async () => {
     setSavingColegio(true)
@@ -813,6 +907,51 @@ export function PerfilContent() {
                     <input type="text" name="especialidad" value={perfil.especialidad} onChange={handleChangePerfil} className="w-full h-11 bg-background border border-border rounded-xl px-4 text-[13px] font-medium outline-none" />
                   </div>
                 </div>
+
+                {/* Asignaturas que enseño — filtra el switcher de asignatura */}
+                <div className="rounded-xl border border-border bg-background p-4">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                      <p className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                        <BookMarked className="w-3.5 h-3.5" /> Asignaturas que enseño
+                      </p>
+                      <p className="mt-1 text-[12px] text-muted-foreground">
+                        Solo las marcadas aparecerán en el selector de asignatura del header. Si desmarcas todas, se mostrarán todas (compatibilidad).
+                      </p>
+                    </div>
+                    {savingAsignaturas && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground flex-shrink-0" />}
+                  </div>
+                  {asignaturasDisponibles.length === 0 ? (
+                    <p className="text-[12px] text-muted-foreground italic">No se encontraron asignaturas disponibles en el currículum.</p>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                      {asignaturasDisponibles.map(asignatura => {
+                        const checked = asignaturasHabilitadas?.includes(asignatura) ?? false
+                        return (
+                          <label
+                            key={asignatura}
+                            className={cn(
+                              "flex items-center gap-2 rounded-lg border px-3 py-2 text-[12.5px] font-medium cursor-pointer transition-colors",
+                              checked
+                                ? "border-primary bg-pink-light text-foreground"
+                                : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                            )}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={() => handleToggleAsignatura(asignatura)}
+                              disabled={savingAsignaturas}
+                              className="h-4 w-4 accent-primary"
+                            />
+                            <span className="truncate">{asignatura}</span>
+                          </label>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+
                 <div className="space-y-1.5">
                   <label className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"><GraduationCap className="w-3.5 h-3.5" /> Estudios y Títulos</label>
                   <input type="text" name="estudios" value={perfil.estudios} onChange={handleChangePerfil} className="w-full h-11 bg-background border border-border rounded-xl px-4 text-[13px] font-medium outline-none" />
@@ -901,8 +1040,17 @@ export function PerfilContent() {
                   </select>
                 </div>
                 <div className="min-w-[140px] flex-1 space-y-1">
-                  <label className="text-[11px] font-bold uppercase text-muted-foreground">Curso (Ej. 1° Medio)</label>
-                  <input type="text" required value={nuevoBloque.resumen} onChange={e => setNuevoBloque({...nuevoBloque, resumen: e.target.value})} className="w-full h-10 rounded-lg border border-border px-3 text-[13px] outline-none" />
+                  <label className="text-[11px] font-bold uppercase text-muted-foreground">
+                    {esTipoLibre(nuevoBloque.tipo) ? "Etiqueta" : "Curso (Ej. 1° Medio)"}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={nuevoBloque.resumen}
+                    onChange={e => setNuevoBloque({...nuevoBloque, resumen: e.target.value})}
+                    placeholder={esTipoLibre(nuevoBloque.tipo) ? ETIQUETA_TIPO_LIBRE[nuevoBloque.tipo] : ""}
+                    className="w-full h-10 rounded-lg border border-border px-3 text-[13px] outline-none"
+                  />
                 </div>
                 <div className="w-full space-y-1 sm:w-[90px]">
                   <label className="text-[11px] font-bold uppercase text-muted-foreground"><Clock className="inline w-3 h-3"/> Inicio</label>
@@ -914,17 +1062,44 @@ export function PerfilContent() {
                 </div>
                 <div className="min-w-[100px] flex-1 space-y-1">
                   <label className="text-[11px] font-bold uppercase text-muted-foreground">Tipo</label>
-                  <select value={nuevoBloque.tipo} onChange={e => setNuevoBloque({...nuevoBloque, tipo: e.target.value as any})} className="w-full h-10 rounded-lg border border-border px-3 text-[13px] outline-none">
-                    <option value="clase">Clase regular</option>
-                    <option value="taller">Taller / Extra</option>
-                    <option value="orientacion">Orientación</option>
-                    <option value="consejo">Consejo</option>
+                  <select
+                    value={nuevoBloque.tipo}
+                    onChange={e => {
+                      const nextTipo = e.target.value as ClaseHorario["tipo"]
+                      // Si pasa a un tipo libre y no tiene resumen (o tenía el label de otro tipo libre),
+                      // pre-rellenar con la etiqueta default. Mantiene el resumen si el usuario ya escribió algo no genérico.
+                      const labelsLibres = Object.values(ETIQUETA_TIPO_LIBRE)
+                      const resumenActual = nuevoBloque.resumen.trim()
+                      const debePrellenar = esTipoLibre(nextTipo) && (!resumenActual || labelsLibres.includes(resumenActual))
+                      const nuevoResumen = debePrellenar ? (ETIQUETA_TIPO_LIBRE[nextTipo] || resumenActual) : resumenActual
+                      setNuevoBloque({ ...nuevoBloque, tipo: nextTipo, resumen: nuevoResumen })
+                    }}
+                    className="w-full h-10 rounded-lg border border-border px-3 text-[13px] outline-none"
+                  >
+                    <optgroup label="Bloques con curso">
+                      <option value="clase">Clase regular</option>
+                      <option value="taller">Taller / Extra</option>
+                      <option value="orientacion">Orientación</option>
+                      <option value="consejo">Consejo</option>
+                    </optgroup>
+                    <optgroup label="Bloques libres (sin curso)">
+                      <option value="almuerzo">Almuerzo</option>
+                      <option value="planificacion">Planificación</option>
+                      <option value="recreo">Recreo</option>
+                      <option value="libre">Bloque libre</option>
+                    </optgroup>
                   </select>
                 </div>
                 <div className="w-full space-y-1 sm:w-[72px]">
                   <label className="text-[11px] font-bold uppercase text-muted-foreground">Color</label>
                   <input type="color" value={nuevoBloque.color} onChange={e => setNuevoBloque({...nuevoBloque, color: e.target.value})} className="w-full h-10 rounded-lg border border-border p-1 cursor-pointer" />
                 </div>
+                {colisionFormulario && nuevoBloque.resumen && (
+                  <div className="flex min-h-10 w-full items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 text-[11px] font-semibold text-amber-800 sm:w-auto">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Colision con {colisionFormulario.resumen}
+                  </div>
+                )}
                 <button type="submit" className={cn("flex h-10 w-full items-center justify-center gap-1.5 rounded-lg px-4 text-white transition-colors sm:w-auto", editingUid ? "bg-primary hover:bg-pink-dark" : "bg-slate-900 hover:bg-slate-800")}>
                   {editingUid ? <RefreshCw className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   {editingUid ? "Actualizar" : "Añadir"}
@@ -936,42 +1111,114 @@ export function PerfilContent() {
                 )}
               </form>
 
-              {horario.length === 0 ? (
-                <div className="text-center py-10 border-2 border-dashed border-border rounded-xl text-muted-foreground">
-                  <Calendar className="w-10 h-10 mx-auto opacity-20 mb-2" />
-                  <p className="text-[13px]">No hay bloques añadidos a tu horario.</p>
-                </div>
-              ) : (
-                <div className="border border-border rounded-xl overflow-hidden mb-6 flex flex-col gap-px bg-border">
-                  {DIAS.map(dia => {
-                    const deHoy = horario.filter(h => h.dia === dia).sort((a,b) => a.horaInicio.localeCompare(b.horaInicio))
-                    if (deHoy.length === 0) return null
-                    return (
-                      <div key={dia} className="flex flex-col bg-card sm:flex-row">
-                        <div className="flex items-center justify-center border-b border-border bg-muted/30 p-3 text-[12px] font-extrabold uppercase text-primary sm:w-24 sm:border-b-0 sm:border-r">
-                          {dia}
+              {bloquesLibres.length > 0 && (
+                <div className="mb-3 rounded-xl border border-border bg-background p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                    <h4 className="text-[12px] font-extrabold uppercase tracking-wide text-muted-foreground">
+                      Bloques libres ({bloquesLibres.length})
+                    </h4>
+                    <span className="text-[11px] text-muted-foreground font-normal normal-case">— sin carga horaria de curso</span>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {bloquesLibres.map(b => {
+                      const colision = colisionaConHorario(horario, b, b.uid)
+                      return (
+                        <div key={b.uid} className={cn("group flex flex-wrap items-center gap-2 rounded-lg border bg-card px-3 py-2 text-[12px] shadow-sm transition-colors", editingUid === b.uid ? "border-primary bg-pink-light" : "border-border")}>
+                          <span className="h-2.5 w-2.5 flex-shrink-0 rounded-full" style={{ background: b.color || "#6b7280" }} />
+                          <span className="font-bold text-foreground truncate max-w-[120px]">{b.resumen}</span>
+                          <span className="inline-flex items-center gap-1 text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {b.dia} {b.horaInicio}-{b.horaFin}
+                          </span>
+                          {colision && (
+                            <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                              Colisión con {colision.resumen}
+                            </span>
+                          )}
+                          <button onClick={() => startEditBloque(b)} className="ml-auto text-slate-400 transition-all hover:text-blue-500" title="Editar">
+                            <Pencil className="w-3.5 h-3.5" />
+                          </button>
+                          <button onClick={() => handleRemoveBloque(b.uid)} className="text-slate-400 transition-all hover:text-red-500" title="Eliminar">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
                         </div>
-                        <div className="flex-1 p-3 flex flex-wrap gap-3">
-                          {deHoy.map(b => (
-                            <div key={b.uid} className={cn("flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-lg border text-[12px] group shadow-sm transition-colors", editingUid === b.uid ? "bg-pink-light border-primary" : "bg-card")}>
-                              <span className="w-2.5 h-2.5 rounded-full block" style={{ background: b.color }} />
-                              <span className="font-bold">{b.resumen}</span>
-                              <span className="text-muted-foreground ml-1">{b.horaInicio}-{b.horaFin}</span>
-                              
-                              <button onClick={() => startEditBloque(b)} className="ml-auto text-slate-300 transition-all hover:text-blue-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100" title="Editar">
-                                <Pencil className="w-3.5 h-3.5" />
-                              </button>
-                              <button onClick={() => handleRemoveBloque(b.uid)} className="ml-1 text-slate-300 transition-all hover:text-red-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100" title="Eliminar">
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {horario.length > 0 && horarioPorCurso.length > 0 && (
+                <div className="mb-6 space-y-3">
+                  {horarioPorCurso.map(([curso, bloques]) => {
+                    const base = bloques[0]
+                    return (
+                      <div key={curso} className="rounded-xl border border-border bg-background p-4">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex min-w-0 items-center gap-3">
+                            <span className="h-3 w-3 flex-shrink-0 rounded-full" style={{ background: base?.color || "#3B82F6" }} />
+                            <div className="min-w-0">
+                              <h4 className="truncate text-[14px] font-extrabold text-foreground">{curso}</h4>
+                              <p className="text-[11px] font-semibold text-muted-foreground">
+                                {bloques.length} bloque{bloques.length === 1 ? "" : "s"} semanal{bloques.length === 1 ? "" : "es"} · {base?.tipo || "clase"}
+                              </p>
                             </div>
-                          ))}
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => startAddBloqueCurso(curso, base)}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-[11px] font-bold text-foreground hover:bg-muted/60"
+                            >
+                              <Plus className="h-3.5 w-3.5" /> Agregar bloque
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveCursoCompleto(curso)}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-[11px] font-bold text-red-600 hover:bg-red-100"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" /> Eliminar curso
+                            </button>
+                          </div>
+                        </div>
+                        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                          {bloques.map(b => {
+                            const colision = colisionaConHorario(horario, b, b.uid)
+                            return (
+                              <div key={b.uid} className={cn("group flex flex-wrap items-center gap-2 rounded-lg border bg-card px-3 py-2 text-[12px] shadow-sm transition-colors", editingUid === b.uid ? "border-primary bg-pink-light" : "border-border")}>
+                                <span className="inline-flex items-center gap-1 font-bold text-foreground">
+                                  <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                                  {b.dia}
+                                </span>
+                                <span className="text-muted-foreground">{b.horaInicio}-{b.horaFin}</span>
+                                {colision && (
+                                  <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                                    Colision con {colision.resumen}
+                                  </span>
+                                )}
+                                <button onClick={() => startEditBloque(b)} className="ml-auto text-slate-400 transition-all hover:text-blue-500" title="Editar">
+                                  <Pencil className="w-3.5 h-3.5" />
+                                </button>
+                                <button onClick={() => handleRemoveBloque(b.uid)} className="text-slate-400 transition-all hover:text-red-500" title="Eliminar">
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            )
+                          })}
                         </div>
                       </div>
                     )
                   })}
                 </div>
               )}
+
+              {horario.length === 0 ? (
+                <div className="text-center py-10 border-2 border-dashed border-border rounded-xl text-muted-foreground">
+                  <Calendar className="w-10 h-10 mx-auto opacity-20 mb-2" />
+                  <p className="text-[13px]">No hay bloques añadidos a tu horario.</p>
+                </div>
+              ) : null}
 
               <div className="pt-4 border-t border-border flex flex-wrap items-center gap-4">
                 <button onClick={handleSaveHorario} disabled={savingHorario} className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-white hover:bg-opacity-90 sm:w-auto">
@@ -1349,6 +1596,108 @@ export function PerfilContent() {
                   placeholder="Ej: Escuela Andrew Jackson"
                   className="w-full h-11 bg-background border border-border rounded-xl px-4 text-[13px] font-medium outline-none focus:border-primary"
                 />
+              </div>
+
+              {/* ─── Encabezado para exportaciones ─── */}
+              <div className="border-t border-border pt-5 space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h4 className="text-[14px] font-extrabold mb-0.5">Encabezado para exportaciones</h4>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                      Aparece en la parte superior de las planificaciones por tabla, pruebas y guías.
+                      No afecta a la exportación de rúbricas.
+                    </p>
+                  </div>
+                  <label className="flex items-center gap-2 flex-shrink-0 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={!!infoColegio.encabezadoHabilitado}
+                      onChange={e => setInfoColegio(prev => ({ ...prev, encabezadoHabilitado: e.target.checked }))}
+                      className="h-4 w-4 accent-primary cursor-pointer"
+                    />
+                    <span className="text-[12px] font-bold">Activar</span>
+                  </label>
+                </div>
+
+                {infoColegio.encabezadoHabilitado && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    {/* ─── Lado izquierdo ─── */}
+                    <div className="space-y-2 rounded-[12px] border border-border bg-background p-3">
+                      <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                        Lado izquierdo
+                      </p>
+                      <div className="flex items-start gap-3">
+                        {infoColegio.logoBase64 ? (
+                          <img src={infoColegio.logoBase64} alt="" className="h-14 w-14 rounded-lg border border-border object-contain bg-muted/20 p-0.5" />
+                        ) : (
+                          <div className="h-14 w-14 flex items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/20 text-muted-foreground/40">
+                            <School className="h-5 w-5" />
+                          </div>
+                        )}
+                        <button
+                          onClick={() => logoInputRef.current?.click()}
+                          className="flex items-center gap-1 rounded-lg border border-border px-2.5 py-1.5 text-[11px] font-medium hover:bg-muted/60"
+                        >
+                          <Upload className="h-3 w-3" />
+                          {infoColegio.logoBase64 ? "Cambiar" : "Subir"}
+                        </button>
+                      </div>
+                      <textarea
+                        value={infoColegio.encabezadoTextoIzq || ""}
+                        onChange={e => setInfoColegio(prev => ({ ...prev, encabezadoTextoIzq: e.target.value }))}
+                        placeholder={"COLEGIO SAGRADA FAMILIA\nCOORDINACIÓN ACADÉMICA 2026\nÁREA: Música"}
+                        rows={3}
+                        className="w-full bg-card border border-border rounded-lg px-2.5 py-2 text-[11px] font-medium outline-none focus:border-primary resize-none"
+                      />
+                    </div>
+
+                    {/* ─── Lado derecho ─── */}
+                    <div className="space-y-2 rounded-[12px] border border-border bg-background p-3">
+                      <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                        Lado derecho
+                      </p>
+                      <div className="flex items-start gap-3">
+                        {infoColegio.logoDerBase64 ? (
+                          <div className="relative">
+                            <img src={infoColegio.logoDerBase64} alt="" className="h-14 w-14 rounded-lg border border-border object-contain bg-muted/20 p-0.5" />
+                            <button
+                              onClick={() => setInfoColegio(prev => ({ ...prev, logoDerBase64: undefined }))}
+                              title="Quitar"
+                              className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
+                            >
+                              <X className="h-2.5 w-2.5" />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="h-14 w-14 flex items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/20 text-muted-foreground/40">
+                            <School className="h-5 w-5" />
+                          </div>
+                        )}
+                        <input
+                          ref={logoDerInputRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleLogoDerUpload}
+                        />
+                        <button
+                          onClick={() => logoDerInputRef.current?.click()}
+                          className="flex items-center gap-1 rounded-lg border border-border px-2.5 py-1.5 text-[11px] font-medium hover:bg-muted/60"
+                        >
+                          <Upload className="h-3 w-3" />
+                          {infoColegio.logoDerBase64 ? "Cambiar" : "Subir"}
+                        </button>
+                      </div>
+                      <textarea
+                        value={infoColegio.encabezadoTextoDer || ""}
+                        onChange={e => setInfoColegio(prev => ({ ...prev, encabezadoTextoDer: e.target.value }))}
+                        placeholder={"FUNDACIÓN EDUCACIONAL C.S.F.\nRIO NEGRO"}
+                        rows={3}
+                        className="w-full bg-card border border-border rounded-lg px-2.5 py-2 text-[11px] font-medium outline-none focus:border-primary resize-none"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="pt-2 flex flex-wrap items-center gap-4">

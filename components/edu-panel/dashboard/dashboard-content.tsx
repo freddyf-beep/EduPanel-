@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { cargarEstadoClases, guardarEstadoClases, cargarHorarioSemanal, ClaseHorario } from "@/lib/horario"
 import {
   cargarActividadClase, cargarLibroClases, guardarLibroClases, cargarCronogramaUnidad,
-  guardarAnotacion, cargarAnotacion,
+  guardarAnotacion, cargarAnotacion, buscarActividadPorFecha,
 } from "@/lib/curriculo"
 import type { ActividadClase, BloqueLibroClase, EstadoAsistencia } from "@/lib/curriculo"
 import { buildUrl, withAsignatura } from "@/lib/shared"
@@ -121,6 +121,7 @@ export function DashboardContent() {
       // 1. Buscar en todas las unidades del curso qué clase corresponde a hoy
       let claseNum = 1
       let unidadId = "unidad_1"
+      let claseEncontrada = false
 
       // Buscar en cronograma_unidad las unidades activas y encontrar la clase de hoy
       const cronogramas = await Promise.all(
@@ -141,7 +142,16 @@ export function DashboardContent() {
         if (claseHoy) {
           claseNum = claseHoy.numero
           unidadId = crono.unidadId
+          claseEncontrada = true
           break
+        }
+      }
+
+      if (!claseEncontrada) {
+        const actHoy = await buscarActividadPorFecha(ASIGNATURA, cursoMatch, fechaStr).catch(() => null)
+        if (actHoy) {
+          claseNum = actHoy.numeroClase
+          unidadId = actHoy.unidadId
         }
       }
 

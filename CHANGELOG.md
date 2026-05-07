@@ -109,3 +109,33 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
+## v1.0.14 - 07/05/2026 17:00
+.gitignore
+CHANGELOG.md
+app/api/export-planificacion/route.ts
+components/edu-panel/actividades/actividades-content.tsx
+components/edu-panel/cronograma-unidad/cronograma-unidad-content.tsx
+components/edu-panel/dashboard/dashboard-content.tsx
+components/edu-panel/header.tsx
+components/edu-panel/main-layout.tsx
+components/edu-panel/perfil/perfil-content.tsx
+components/edu-panel/planificaciones/planificaciones-content.tsx
+components/edu-panel/planificaciones/planificaciones-detail.tsx
+components/edu-panel/rubricas/evaluacion-view.tsx
+components/edu-panel/rubricas/resultados-view.tsx
+components/edu-panel/ver-unidad/ver-unidad-content.tsx
+components/edu-panel/version.ts
+firebase.json
+lib/api-client.ts
+lib/curriculo.ts
+lib/export/hoja-evaluacion-pdf.ts
+lib/export/planificacion-docx.ts
+lib/firebase.ts
+lib/horario.ts
+lib/perfil.ts
+lib/rubricas.ts
+next.config.mjs
+package-lock.json
+package.json
+version.txt
+

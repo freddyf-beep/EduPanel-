@@ -8,6 +8,17 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Limitar el cache de webpack en dev para evitar el leak de memoria
+      // con módulos nativos pesados (pdfjs-dist, firebase-admin, mammoth, jszip)
+      config.cache = {
+        type: "filesystem",
+        maxMemoryGenerations: 1,
+      }
+    }
+    return config
+  },
 }
 
 export default nextConfig

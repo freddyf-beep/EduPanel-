@@ -9,6 +9,7 @@ import { useAuth } from "@/components/auth/auth-context"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { getAsignaturasDisponibles } from "@/lib/curriculo"
+import { cargarPreferencias } from "@/lib/perfil"
 import { SUBJECT_FALLBACK_OPTIONS, buildUrl, withAsignatura } from "@/lib/shared"
 import { ThemeSelector } from "./theme-selector"
 
@@ -37,8 +38,19 @@ export function Header({ onOpenMenu }: HeaderProps) {
   }, [])
 
   useEffect(() => {
-    getAsignaturasDisponibles()
-      .then((options) => setSubjectOptions(Array.from(new Set([...options, asignatura]))))
+    Promise.all([
+      getAsignaturasDisponibles().catch(() => SUBJECT_FALLBACK_OPTIONS as string[]),
+      cargarPreferencias().catch(() => null),
+    ])
+      .then(([options, pref]) => {
+        const habilitadas = pref?.asignaturasHabilitadas
+        // Si el usuario configuró asignaturas habilitadas, filtrar.
+        // Siempre incluir la asignatura activa actual para no romper navegación.
+        const filtradas = habilitadas && habilitadas.length > 0
+          ? options.filter(opt => habilitadas.includes(opt))
+          : options
+        setSubjectOptions(Array.from(new Set([...filtradas, asignatura])))
+      })
       .catch(() => setSubjectOptions((prev) => Array.from(new Set([...prev, asignatura]))))
   }, [asignatura])
 

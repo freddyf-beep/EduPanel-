@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import { serverTimestamp } from "firebase/firestore"
 import {
-  ArrowLeft, Download, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save
+  ArrowLeft, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save, Lock, Unlock
 } from "lucide-react"
 import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -12,13 +13,22 @@ import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { auth } from "@/lib/firebase"
 import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
-import { apiFetch } from "@/lib/api-client"
 import {
   cargarRubrica, cargarEvaluacion, guardarEvaluacion, nuevaEvaluacion,
   calcularPuntajeEstudiante, calcularNota,
   type RubricaTemplate, type EvaluacionRubrica,
   type GrupoEvaluacion, type EstudianteEvaluacion
 } from "@/lib/rubricas"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 interface Props {
   rubricaId: string
@@ -36,6 +46,17 @@ const exigenciaEstudiante = (estudiante?: Pick<EstudianteEvaluacion, "hasPie"> |
 
 const normalizeName = (value: string) => value.trim().toLocaleLowerCase("es")
 
+function formatearFechaBloqueo(value: unknown): string {
+  if (!value) return "ahora"
+  const rawDate =
+    value instanceof Date ? value :
+    typeof value === "number" ? new Date(value) :
+    typeof (value as { toDate?: () => Date })?.toDate === "function" ? (value as { toDate: () => Date }).toDate() :
+    null
+  if (!rawDate || Number.isNaN(rawDate.getTime())) return "ahora"
+  return new Intl.DateTimeFormat("es-CL").format(rawDate)
+}
+
 export function EvaluacionView({ rubricaId }: Props) {
   const router = useRouter()
   const { asignatura } = useActiveSubject()
@@ -46,16 +67,14 @@ export function EvaluacionView({ rubricaId }: Props) {
   const [grupoActivo, setGrupoActivo] = useState(0)
   const [alumnoActivo, setAlumnoActivo] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-  const [guardandoExport, setGuardandoExport] = useState(false)
   const [guardandoManual, setGuardandoManual] = useState(false)
   const [guardadoOk, setGuardadoOk] = useState(false)
-  const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
-  const [exportandoListado, setExportandoListado] = useState(false)
-  const [panelAlumno, setPanelAlumno] = useState(false)
   const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
   const [error, setError] = useState("")
   const [parteActivaIdx, setParteActivaIdx] = useState(0)
+  const [confirmBloqueo, setConfirmBloqueo] = useState<"bloquear" | "desbloquear" | null>(null)
   const ignoreFirstSave = useRef(true)
+  const skipNextSave = useRef(false)
 
   // Cargar todo
   useEffect(() => {
@@ -104,6 +123,7 @@ export function EvaluacionView({ rubricaId }: Props) {
   useEffect(() => {
     if (!evaluacion) return
     if (ignoreFirstSave.current) { ignoreFirstSave.current = false; return }
+    if (skipNextSave.current) { skipNextSave.current = false; return }
     const t = setTimeout(async () => {
       try {
         await guardarEvaluacion(evaluacion)
@@ -154,7 +174,10 @@ export function EvaluacionView({ rubricaId }: Props) {
   }
 
   const updateEvaluacion = (fn: (ev: EvaluacionRubrica) => EvaluacionRubrica) => {
-    setEvaluacion(prev => prev ? fn(prev) : prev)
+    setEvaluacion(prev => {
+      if (!prev || prev.bloqueada) return prev
+      return fn(prev)
+    })
   }
 
   const findGrupoIndexByNombre = (nombre: string) => {
@@ -280,85 +303,26 @@ export function EvaluacionView({ rubricaId }: Props) {
     }
   }
 
-  const handleExportarGrupo = async () => {
-    if (!rubrica || !evaluacion) return
-    setGuardandoExport(true)
-    const profesorNombre = auth?.currentUser?.displayName ?? ""
-    const colegio = infoColegio?.nombre ?? ""
-    const logoBase64 = infoColegio?.logoBase64
-    try {
-      await guardarEvaluacion(evaluacion)
-      const res = await apiFetch("/api/export-rubrica", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rubrica, evaluacion, modo: "grupo", profesorNombre, colegio, logoBase64 }),
-      })
-      if (!res.ok) throw new Error("Error al generar el Word")
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `rubrica_${rubrica.nombre}_${rubrica.curso}_grupos.docx`.replace(/\s+/g, "_")
-      a.click()
-      URL.revokeObjectURL(url)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al exportar")
-    } finally {
-      setGuardandoExport(false)
+  const aplicarBloqueo = async (bloquear: boolean) => {
+    if (!evaluacion) return
+    const siguiente: EvaluacionRubrica = {
+      ...evaluacion,
+      bloqueada: bloquear,
+      bloqueadaEn: bloquear ? serverTimestamp() : undefined,
     }
-  }
-
-  const handleExportarAlumno = async (estudianteId: string, nombreAlumno: string) => {
-    if (!rubrica || !evaluacion) return
-    setExportandoAlumno(estudianteId)
-    const profesorNombre = auth?.currentUser?.displayName ?? ""
-    const colegio = infoColegio?.nombre ?? ""
-    const logoBase64 = infoColegio?.logoBase64
+    skipNextSave.current = true
+    setEvaluacion(siguiente)
+    setConfirmBloqueo(null)
+    setGuardandoManual(true)
+    setError("")
     try {
-      const res = await apiFetch("/api/export-rubrica", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rubrica, evaluacion, modo: "alumno", estudianteId, profesorNombre, colegio, logoBase64 }),
-      })
-      if (!res.ok) throw new Error("Error al generar el Word")
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `rubrica_${nombreAlumno.replace(/\s+/g, "_")}.docx`
-      a.click()
-      URL.revokeObjectURL(url)
+      await guardarEvaluacion(siguiente)
+      setGuardadoOk(true)
+      setTimeout(() => setGuardadoOk(false), 2500)
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al exportar")
+      setError(e instanceof Error ? e.message : "Error al guardar")
     } finally {
-      setExportandoAlumno(null)
-    }
-  }
-
-  const handleExportarListado = async () => {
-    if (!rubrica || !evaluacion) return
-    setExportandoListado(true)
-    const profesorNombre = auth?.currentUser?.displayName ?? ""
-    const colegio = infoColegio?.nombre ?? ""
-    const logoBase64 = infoColegio?.logoBase64
-    try {
-      const res = await apiFetch("/api/export-rubrica", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rubrica, evaluacion, modo: "listado", profesorNombre, colegio, logoBase64 }),
-      })
-      if (!res.ok) throw new Error("Error al generar el Word")
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `lista_notas_${rubrica.nombre}_${rubrica.curso}.docx`.replace(/\s+/g, "_")
-      a.click()
-      URL.revokeObjectURL(url)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al exportar listado")
-    } finally {
-      setExportandoListado(false)
+      setGuardandoManual(false)
     }
   }
 
@@ -393,9 +357,32 @@ export function EvaluacionView({ rubricaId }: Props) {
   const grupoActualObj = evaluacion.grupos[grupoActivo]
   const alumnoObj = grupoActualObj?.estudiantes.find(e => e.estudianteId === alumnoActivo)
   const todosLosAlumnosEnGrupos = evaluacion.grupos.flatMap(g => g.estudiantes)
+  const bloqueada = !!evaluacion.bloqueada
+  const fechaBloqueo = formatearFechaBloqueo(evaluacion.bloqueadaEn)
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-8rem)] lg:h-[calc(100vh-8rem)] gap-0">
+      <AlertDialog open={confirmBloqueo !== null} onOpenChange={(open) => !open && setConfirmBloqueo(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {confirmBloqueo === "bloquear" ? "Finalizar y bloquear evaluacion" : "Desbloquear evaluacion"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {confirmBloqueo === "bloquear"
+                ? "Una vez bloqueada, no podras modificar puntajes ni observaciones hasta desbloquearla."
+                : "La evaluacion volvera a ser editable. Podras ajustar puntajes, observaciones y grupos nuevamente."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={() => aplicarBloqueo(confirmBloqueo === "bloquear")}>
+              {confirmBloqueo === "bloquear" ? "Finalizar y bloquear" : "Desbloquear"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Header fijo */}
       <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 sm:gap-3 flex-shrink-0">
         <button
@@ -408,6 +395,20 @@ export function EvaluacionView({ rubricaId }: Props) {
           <h1 className="text-[16px] sm:text-[18px] font-extrabold text-foreground truncate">{rubrica.nombre}</h1>
           <p className="text-[11px] sm:text-[12px] text-muted-foreground truncate">{rubrica.curso} · {rubrica.puntajeMaximo} pts máx</p>
         </div>
+        <button
+          onClick={() => setConfirmBloqueo(bloqueada ? "desbloquear" : "bloquear")}
+          disabled={guardandoManual}
+          title={bloqueada ? "Desbloquear evaluacion" : "Finalizar y bloquear la evaluacion"}
+          className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] transition-colors disabled:opacity-50 ${
+            bloqueada
+              ? "border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100"
+              : "border border-border hover:bg-muted/60"
+          }`}
+        >
+          {bloqueada ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />}
+          <span className="hidden sm:inline">{bloqueada ? "Desbloquear" : "Finalizar"}</span>
+          <span className="sm:hidden">{bloqueada ? "Abrir" : "Finalizar"}</span>
+        </button>
         <button
           onClick={handleGuardarAhora}
           disabled={guardandoManual}
@@ -432,38 +433,6 @@ export function EvaluacionView({ rubricaId }: Props) {
           <span className="sm:hidden">Hoja</span>
         </button>
         <button
-          onClick={handleExportarGrupo}
-          disabled={guardandoExport}
-          title="Descargar un Word con todos los grupos"
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
-        >
-          {guardandoExport ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">Por grupo</span>
-          <span className="sm:hidden">Grupo</span>
-        </button>
-        <button
-          onClick={() => setPanelAlumno(p => !p)}
-          className={`flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium rounded-[10px] transition-colors ${
-            panelAlumno
-              ? "bg-amber-100 text-amber-800 border border-amber-300"
-              : "border border-border hover:bg-muted/60"
-          }`}
-        >
-          <Download className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Por alumno</span>
-          <span className="sm:hidden">Alumno</span>
-        </button>
-        <button
-          onClick={handleExportarListado}
-          disabled={exportandoListado}
-          title="Descargar Word con el listado de notas de todos los alumnos"
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors disabled:opacity-50"
-        >
-          {exportandoListado ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-          <span className="hidden sm:inline">Lista notas</span>
-          <span className="sm:hidden">Lista</span>
-        </button>
-        <button
           onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 ml-auto sm:ml-0"
         >
@@ -471,6 +440,13 @@ export function EvaluacionView({ rubricaId }: Props) {
           <span className="sm:hidden">Resultados</span>
         </button>
       </div>
+
+      {bloqueada && (
+        <div className="mb-3 flex items-center gap-2 rounded-[10px] border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] font-medium text-amber-900">
+          <Lock className="h-3.5 w-3.5" />
+          Evaluacion finalizada el {fechaBloqueo}. Desbloqueala para modificar puntajes, observaciones o grupos.
+        </div>
+      )}
 
       {/* Tabs de grupos */}
       <div className="flex gap-1 mb-3 overflow-x-auto flex-shrink-0 pb-1 items-center">
@@ -499,8 +475,9 @@ export function EvaluacionView({ rubricaId }: Props) {
               {evaluacion.grupos.length > 1 && (
                 <button
                   onClick={e => { e.stopPropagation(); eliminarGrupo(gi) }}
+                  disabled={bloqueada}
                   title={grupo.estudiantes.length > 0 ? `Eliminar "${grupo.nombre}" y mover sus alumnos al Grupo 1` : `Eliminar "${grupo.nombre}"`}
-                  className={`absolute right-1 top-1/2 -translate-y-1/2 flex h-4 w-4 items-center justify-center rounded-full opacity-0 group-hover/tab:opacity-100 transition-opacity ${
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 flex h-4 w-4 items-center justify-center rounded-full opacity-0 group-hover/tab:opacity-100 transition-opacity disabled:cursor-not-allowed disabled:opacity-30 ${
                     esActivo ? "bg-white/20 hover:bg-white/40 text-white" : "bg-muted hover:bg-red-100 hover:text-red-500 text-muted-foreground"
                   }`}
                 >
@@ -514,73 +491,23 @@ export function EvaluacionView({ rubricaId }: Props) {
         {/* Botón agregar grupo */}
         <button
           onClick={asegurarGrupoAusentes}
+          disabled={bloqueada}
           title="Crear o abrir el grupo de ausentes"
-          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 whitespace-nowrap transition-colors flex-shrink-0"
+          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 whitespace-nowrap transition-colors flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <AlertCircle className="w-3.5 h-3.5" />
           Ausentes
         </button>
         <button
           onClick={agregarGrupo}
+          disabled={bloqueada}
           title="Agregar nuevo grupo"
-          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-dashed border-border hover:border-primary/50 hover:text-primary text-muted-foreground whitespace-nowrap transition-colors flex-shrink-0"
+          className="flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-dashed border-border hover:border-primary/50 hover:text-primary text-muted-foreground whitespace-nowrap transition-colors flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Plus className="w-3.5 h-3.5" />
           Grupo
         </button>
       </div>
-
-      {/* Panel "Exportar por alumno" */}
-      {panelAlumno && (
-        <div className="flex-shrink-0 overflow-y-auto border border-amber-200 rounded-[14px] bg-amber-50/60 mb-3 max-h-72">
-          <div className="sticky top-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center justify-between">
-            <div>
-              <p className="text-[13px] font-bold text-amber-900">Exportar por alumno</p>
-              <p className="text-[11px] text-amber-700">Descarga una rúbrica individual para cada alumno.</p>
-            </div>
-            <button onClick={() => setPanelAlumno(false)} className="p-1 rounded hover:bg-amber-100 text-amber-700">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-          <div className="p-3 space-y-1">
-            {evaluacion.grupos.flatMap(grupo =>
-              grupo.estudiantes.map(est => {
-                const puntaje = calcularPuntajeEstudiante(est.puntajes, rubrica.partes)
-                const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
-                const descargando = exportandoAlumno === est.estudianteId
-                return (
-                  <div
-                    key={est.estudianteId}
-                    className="flex items-center gap-3 px-3 py-2 bg-white rounded-[10px] border border-amber-100"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[12px] font-medium text-foreground truncate">
-                        {est.nombre}
-                        {est.hasPie && <span className="ml-1.5 text-[9px] bg-blue-100 text-blue-700 rounded px-1 font-medium">PIE</span>}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground">{grupo.nombre} · {puntaje}/{rubrica.puntajeMaximo} pts</p>
-                    </div>
-                    <span className={`text-[13px] font-bold tabular-nums w-8 text-right ${nota >= 4.0 ? "text-green-600" : "text-red-500"}`}>
-                      {nota.toFixed(1)}
-                    </span>
-                    <button
-                      onClick={() => handleExportarAlumno(est.estudianteId, est.nombre)}
-                      disabled={descargando}
-                      className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-[8px] transition-colors disabled:opacity-50 flex-shrink-0"
-                    >
-                      {descargando ? <Loader2 className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
-                      Descargar
-                    </button>
-                  </div>
-                )
-              })
-            )}
-            {evaluacion.grupos.every(g => g.estudiantes.length === 0) && (
-              <p className="text-[12px] text-muted-foreground text-center py-4">No hay alumnos en ningún grupo.</p>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Layout principal: alumnos | criterios | scoreboard */}
       <div className="flex flex-col lg:flex-row gap-3 flex-1 min-h-0 lg:overflow-hidden">
@@ -642,7 +569,8 @@ export function EvaluacionView({ rubricaId }: Props) {
                           moverAlumno(alumnoActivo!, grupoActivo, gi)
                           setAlumnoActivo(grupoActualObj?.estudiantes.find(e => e.estudianteId !== alumnoActivo)?.estudianteId ?? null)
                         }}
-                        className="text-[10px] px-2 py-1 border border-border rounded-[6px] hover:bg-muted/60 transition-colors"
+                        disabled={bloqueada}
+                        className="text-[10px] px-2 py-1 border border-border rounded-[6px] hover:bg-muted/60 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         {g.nombre}
                       </button>
@@ -752,7 +680,8 @@ export function EvaluacionView({ rubricaId }: Props) {
                                     key={nivel.valor}
                                     title={`${nivel.titulo}: ${desc || "Sin descripción"}`}
                                     onClick={() => setPuntaje(grupoActivo, alumnoObj.estudianteId, criterio.id, nivel.valor)}
-                                    className={`flex flex-col items-center gap-1 p-2 rounded-[8px] border-2 transition-all text-center ${
+                                    disabled={bloqueada}
+                                    className={`flex flex-col items-center gap-1 p-2 rounded-[8px] border-2 transition-all text-center disabled:cursor-not-allowed disabled:opacity-60 ${
                                       seleccionado
                                         ? nivel.color
                                         : "border-border hover:border-primary/30 hover:bg-muted/30"
@@ -786,9 +715,10 @@ export function EvaluacionView({ rubricaId }: Props) {
                     onChange={e => updateEstudiante(grupoActivo, alumnoObj.estudianteId, est => ({
                       ...est, observaciones: e.target.value
                     }))}
+                    disabled={bloqueada}
                     placeholder="Observaciones del alumno (opcional)"
                     rows={2}
-                    className="mt-1 w-full text-[12px] border border-border rounded-[10px] px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground/40 resize-none focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    className="mt-1 w-full text-[12px] border border-border rounded-[10px] px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground/40 resize-none focus:outline-none focus:ring-1 focus:ring-primary/30 disabled:cursor-not-allowed disabled:bg-muted/40"
                   />
                 </div>
 
