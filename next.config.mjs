@@ -8,7 +8,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  webpack: (config, { dev, isServer }) => {
+  // Next.js 16 usa Turbopack por defecto en producción.
+  // Declaramos turbopack: {} para indicar que somos conscientes y no hay config especial.
+  turbopack: {},
+  webpack: (config, { dev }) => {
     if (dev) {
       // Limitar el cache de webpack en dev para evitar el leak de memoria
       // con módulos nativos pesados (pdfjs-dist, firebase-admin, mammoth, jszip)

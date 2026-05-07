@@ -139,3 +139,9 @@ package-lock.json
 package.json
 version.txt
 
+## v1.0.15 - 07/05/2026 17:08
+CHANGELOG.md
+components/edu-panel/version.ts
+next.config.mjs
+version.txt
+
