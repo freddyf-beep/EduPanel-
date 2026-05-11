@@ -9,8 +9,17 @@ import {
 } from "firebase/firestore"
 import { Loader2, CheckCircle, AlertTriangle, Database, Trash2 } from "lucide-react"
 
-const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfigueroagea@gmail.com").toLowerCase()
+const DEFAULT_ADMIN_EMAILS = ["freddyfigueroagea@gmail.com", "freddyfiguea@gmail.com"]
 
+function isAdminEmail(email: string | null | undefined): boolean {
+  const key = (email ?? "").toLowerCase().trim()
+  if (!key) return false
+  const configured = [
+    ...DEFAULT_ADMIN_EMAILS,
+    ...(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").split(","),
+  ].map((item) => item.toLowerCase().trim()).filter(Boolean)
+  return configured.includes(key)
+}
 
 
 export default function MigratePage() {
@@ -332,7 +341,7 @@ export default function MigratePage() {
 
   if (authLoading) return <div className="p-8">Cargando...</div>
 
-  const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL
+  const isAdmin = isAdminEmail(user?.email)
   if (!isAdmin) {
     return (
       <ProtectedRoute>

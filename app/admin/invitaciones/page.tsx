@@ -14,6 +14,18 @@ interface Invitacion {
   usos: number
 }
 
+const DEFAULT_ADMIN_EMAILS = ["freddyfigueroagea@gmail.com", "freddyfiguea@gmail.com"]
+
+function isAdminEmail(email: string | null | undefined): boolean {
+  const key = (email ?? "").toLowerCase().trim()
+  if (!key) return false
+  const configured = [
+    ...DEFAULT_ADMIN_EMAILS,
+    ...(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "").split(","),
+  ].map((item) => item.toLowerCase().trim()).filter(Boolean)
+  return configured.includes(key)
+}
+
 function getApiErrorMessage(error: unknown, fallback: string) {
   if (error instanceof ApiError) {
     const body = error.body as { error?: unknown } | undefined
@@ -51,8 +63,7 @@ export default function InvitacionesPage() {
 
   useEffect(() => {
     if (!authLoading) {
-      const adminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfigueroagea@gmail.com").toLowerCase()
-      if (!user || user.email?.toLowerCase() !== adminEmail) {
+      if (!user || !isAdminEmail(user.email)) {
         router.replace("/")
       } else {
         fetchInvites()

@@ -152,3 +152,7 @@ version.txt
 - `/ver-unidad` ahora usa la experiencia V2 y se agrega `/ver-unidad-v1` como respaldo legacy.
 - Mejoras en IA de actividades: parseo JSON mas tolerante, reintento automatico y recuperacion manual cuando el proveedor devuelve formato invalido.
 - Mejoras de perfil, estudiantes, horario, mapeo de niveles y navegacion lateral.
+
+## v1.0.17 - 11/05/2026 12:04
+- Hotfix admin: acepta ambos correos de administrador conocidos aunque Vercel tenga una variable antigua o incompleta.
+- `/admin/invitaciones`, `/migrate`, helpers server-side y reglas de Firestore quedan alineados para no bloquear al administrador.

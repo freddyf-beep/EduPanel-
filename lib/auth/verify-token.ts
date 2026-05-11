@@ -24,7 +24,7 @@
 import type { App } from "firebase-admin/app"
 
 let cachedApp: App | null = null
-const DEFAULT_ADMIN_EMAIL = "freddyfigueroagea@gmail.com"
+const DEFAULT_ADMIN_EMAILS = ["freddyfigueroagea@gmail.com", "freddyfiguea@gmail.com"]
 
 function normalizeEmail(email: string | null | undefined): string {
   return (email ?? "").toLowerCase().trim()
@@ -34,8 +34,10 @@ export function isAdminEmail(email: string | null | undefined): boolean {
   const key = normalizeEmail(email)
   if (!key) return false
 
-  const configured = (process.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL)
-    .split(",")
+  const configured = [
+    ...DEFAULT_ADMIN_EMAILS,
+    ...(process.env.ADMIN_EMAIL || "").split(","),
+  ]
     .map((item) => normalizeEmail(item))
     .filter(Boolean)
 
