@@ -4,6 +4,7 @@ import Link from "next/link"
 import { BookOpen, ClipboardList, ClipboardCheck, Users, GanttChart, CalendarDays, ExternalLink } from "lucide-react"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 const modules = [
   {
@@ -68,6 +69,7 @@ export function ModulosContent() {
   const { asignatura } = useActiveSubject()
   return (
     <div>
+      <NewDesignBanner href="/modulos-v2" pageName="Módulos" />
       <div className="mb-7">
         <h1 className="text-[22px] font-extrabold">Módulos</h1>
         <p className="text-[13px] text-muted-foreground mt-1">

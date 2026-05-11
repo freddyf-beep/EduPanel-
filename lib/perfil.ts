@@ -61,6 +61,12 @@ export interface PreferenciasUsuario {
    * hacia atrás con usuarios sin configuración).
    */
   asignaturasHabilitadas?: string[]
+  /**
+   * Estilo del banner del perfil v2. Puede ser un nombre de preset
+   * (rosa, oceano, atardecer, esmeralda, indigo, grafito) o un valor
+   * CSS literal de "background" (gradient, color, etc.).
+   */
+  bannerStyle?: string
   updatedAt?: any
 }
 

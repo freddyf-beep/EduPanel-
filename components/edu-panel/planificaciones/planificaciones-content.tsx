@@ -576,11 +576,11 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
         <h1 className="text-[18px] sm:text-[22px] font-extrabold animate-fade-up">Mis Planificaciones</h1>
         <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 sm:w-auto sm:justify-end">
           <Link
-            href={buildUrl("/planificaciones-v2", withAsignatura({ curso }, ASIGNATURA))}
+            href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))}
             className="flex items-center gap-1.5 rounded-[10px] border border-dashed border-primary/50 bg-pink-light/40 px-3 py-2 text-[12px] font-bold text-primary hover:bg-pink-light transition-colors"
-            title="Probar el nuevo diseño en pruebas"
+            title="Ir a la versión principal de Mis Planificaciones"
           >
-            ✨ Probar nuevo diseño
+            ← Volver a la versión principal
           </Link>
           {saveStatus === "saving_silent" && (
             <span className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground animate-pulse">

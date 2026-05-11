@@ -26,6 +26,7 @@ import {
   isGoogleCalendarConnected,
   sincronizarActividadesGoogle,
 } from "@/lib/google-calendar"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 const DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
@@ -497,6 +498,8 @@ function CronogramaInner() {
 
   return (
     <div className="mx-auto max-w-[1400px]">
+
+      <NewDesignBanner href="/cronograma-v2" pageName="el Cronograma" />
 
       {/* Header */}
       <div className="mb-5 sm:mb-6 flex flex-wrap items-start justify-between gap-3">

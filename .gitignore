@@ -11,6 +11,7 @@ build/
 # env
 .env
 .env.local
+.env.vercel
 .env.development.local
 .env.test.local
 .env.production.local
@@ -25,6 +26,10 @@ service-account*.json
 
 # Vercel
 .vercel/
+
+# herramientas locales de agentes
+.claude/
+.codex/
 
 # logs
 *.log
@@ -45,3 +50,4 @@ backups/
 /backup_*/
 *.bak
 scratch.*
+*.zip

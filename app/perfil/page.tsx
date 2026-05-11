@@ -1,10 +1,15 @@
 import { MainLayout } from "@/components/edu-panel"
-import { PerfilContent } from "@/components/edu-panel/perfil/perfil-content"
+import { PerfilV2Shell } from "@/components/edu-panel/perfil/perfil-v2-shell"
+import { Suspense } from "react"
+import { Loader2 } from "lucide-react"
 
+// Página principal de Mi Perfil. La versión anterior está disponible en /perfil-v1.
 export default function PerfilPage() {
   return (
     <MainLayout>
-      <PerfilContent />
+      <Suspense fallback={<div className="p-10"><Loader2 className="animate-spin text-muted-foreground w-8 h-8" /></div>}>
+        <PerfilV2Shell />
+      </Suspense>
     </MainLayout>
   )
 }

@@ -2,6 +2,7 @@
 
 import { HelpCircle, MessageSquare, Clock3, LifeBuoy, BookOpen, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 const flujo = [
   { n: "1", title: "Planificaciones", desc: "Crea tus unidades por curso.", href: "/planificaciones" },
@@ -14,6 +15,7 @@ const flujo = [
 export function SoporteContent() {
   return (
     <div>
+      <NewDesignBanner href="/soporte-v2" pageName="la Ayuda" maxWidth="max-w-6xl" />
       <div className="mb-5 sm:mb-7">
         <h1 className="text-[18px] sm:text-[22px] font-extrabold">Centro de ayuda</h1>
         <p className="text-[12px] sm:text-[13px] text-muted-foreground mt-1">Guía de uso y flujo de trabajo de EduPanel.</p>

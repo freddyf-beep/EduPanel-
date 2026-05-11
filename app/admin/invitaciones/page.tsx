@@ -51,7 +51,8 @@ export default function InvitacionesPage() {
 
   useEffect(() => {
     if (!authLoading) {
-      if (!user || user.email?.toLowerCase() !== "freddyfiguea@gmail.com") {
+      const adminEmail = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfigueroagea@gmail.com").toLowerCase()
+      if (!user || user.email?.toLowerCase() !== adminEmail) {
         router.replace("/")
       } else {
         fetchInvites()

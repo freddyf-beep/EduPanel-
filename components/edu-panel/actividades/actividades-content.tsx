@@ -24,7 +24,7 @@ import {
   eliminarActividadClase, buildActividadClaseId
 } from "@/lib/curriculo"
 import type { ActividadClase, ArchivoAdjunto, OAEditado, ClaseCronograma, ActividadSugerida, EjemploEvaluacion } from "@/lib/curriculo"
-import { ASIGNATURA, UNIT_COLORS, buildUrl } from "@/lib/shared"
+import { ASIGNATURA, UNIT_COLORS, buildUrl, linkifyText } from "@/lib/shared"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
 import {
@@ -637,6 +637,19 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         }),
       })
       const data = await res.json()
+      // Caso especial: la IA devolvió JSON inválido y el reintento también falló.
+      // Cargamos el texto crudo en el importador externo para que Freddy pueda editarlo y aplicarlo a mano.
+      if (data?.error === "json_parse_failed" && typeof data?.rawText === "string") {
+        setExternalJsonInput(data.rawText)
+        setExternalImportError(data.message || "La IA no devolvió JSON válido. Edita la respuesta y aplica manualmente.")
+        setShowExternalImport(true)
+        toast({
+          title: "Respuesta IA con formato inválido",
+          description: "Puedes editarla en el panel de importación manual y aplicar.",
+          variant: "destructive",
+        })
+        return null
+      }
       if (!res.ok) throw new Error(data.error || "Error al generar")
       applyGeneratedLesson(data, options)
       return data
@@ -777,6 +790,14 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         }),
       })
       const data = await res.json()
+      // Caso especial: la IA devolvió JSON inválido y el reintento también falló.
+      if (data?.error === "json_parse_failed" && typeof data?.rawText === "string") {
+        setExternalJsonInput(data.rawText)
+        setExternalImportError(data.message || "La IA no devolvió JSON válido. Edita la respuesta y aplica manualmente.")
+        setShowExternalImport(true)
+        setChatHistory(prev => [...prev, { role: "ai", text: "⚠️ La respuesta no vino en JSON válido. Te abrí el panel de importación manual con el texto crudo para que lo edites y apliques." }])
+        return
+      }
       if (!res.ok) throw new Error(data.error || "Error")
       applyGeneratedLesson(data)
       const resumen = data.resumenCambios || "✅ Cambios aplicados a la clase."
@@ -1193,11 +1214,25 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       }
       toast({ title: "Archivo adjuntado", description: "Quedo disponible en la clase." })
     } catch (error) {
-      toast({
-        title: "No se pudo subir",
-        description: error instanceof Error ? error.message : "Intenta nuevamente.",
-        variant: "destructive",
-      })
+      const code = (error as { code?: string })?.code || ""
+      const message = error instanceof Error ? error.message : "Intenta nuevamente."
+      let titulo = "No se pudo subir"
+      let descripcion = message
+      if (code === "storage/unauthorized" || /unauthorized|permission/i.test(message)) {
+        titulo = "Permiso denegado por Firebase Storage"
+        descripcion = "Verifica que las reglas de Storage permitan tu UID. Pega el contenido de storage.rules en Firebase Console > Storage > Rules y publica."
+      } else if (code === "storage/quota-exceeded") {
+        titulo = "Sin espacio en Storage"
+        descripcion = "Tu cuota de Firebase Storage esta llena. Borra archivos o sube de plan."
+      } else if (code === "storage/unauthenticated") {
+        titulo = "Sesion expirada"
+        descripcion = "Vuelve a iniciar sesion con Google e intenta de nuevo."
+      } else if (code === "storage/retry-limit-exceeded") {
+        titulo = "Conexion inestable"
+        descripcion = "La subida fallo varias veces. Revisa tu internet e intenta otra vez."
+      }
+      toast({ title: titulo, description: descripcion, variant: "destructive" })
+      console.error("[handleSubirArchivos] Error:", code || "(sin codigo)", error)
     } finally {
       setSubiendoArchivo(false)
       if (fileInputRef.current) fileInputRef.current.value = ""
@@ -2016,14 +2051,33 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                         <div className="flex flex-col gap-1.5 mb-3">
                           {(actividad.tics || []).length === 0
                             ? <p className="text-[12px] text-muted-foreground">Sin herramientas TIC aún.</p>
-                            : (actividad.tics || []).map((t, i) => (
-                              <div key={i} className="flex items-center justify-between bg-background rounded-lg px-3 py-2 text-[12px]">
-                                <span>{t}</span>
-                                <button onClick={() => setActividad(p => ({ ...p, tics: (p.tics || []).filter((_, j) => j !== i) }))} className="text-muted-foreground hover:text-red-500">
-                                  <X className="w-3 h-3" />
-                                </button>
-                              </div>
-                            ))
+                            : (actividad.tics || []).map((t, i) => {
+                              const fragments = linkifyText(t)
+                              const hasLink = fragments.some(f => f.type === "link")
+                              return (
+                                <div key={i} className="flex items-center justify-between gap-2 bg-background rounded-lg px-3 py-2 text-[12px]">
+                                  <span className="min-w-0 flex-1 break-words">
+                                    {fragments.map((frag, fi) => frag.type === "link" ? (
+                                      <a
+                                        key={fi}
+                                        href={frag.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-primary underline decoration-dotted underline-offset-2 hover:opacity-80"
+                                      >
+                                        {frag.label}
+                                      </a>
+                                    ) : (
+                                      <span key={fi}>{frag.value}</span>
+                                    ))}
+                                    {hasLink && <ExternalLink className="ml-1 inline h-3 w-3 align-[-1px] text-muted-foreground" />}
+                                  </span>
+                                  <button onClick={() => setActividad(p => ({ ...p, tics: (p.tics || []).filter((_, j) => j !== i) }))} className="flex-shrink-0 text-muted-foreground hover:text-red-500">
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              )
+                            })
                           }
                         </div>
                         <div className="flex gap-2">

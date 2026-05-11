@@ -18,6 +18,7 @@ import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useAuth } from "@/components/auth/auth-context"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { ResumenSemanal } from "@/components/edu-panel/dashboard/resumen-semanal"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 const DAYS   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
 const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
@@ -314,6 +315,8 @@ export function DashboardContent() {
   ]
 
   return (
+    <>
+    <NewDesignBanner href="/dashboard-v2" pageName="Inicio" />
     <div className="flex flex-col gap-6 xl:flex-row">
 
       {/* ── Columna principal ── */}
@@ -811,5 +814,6 @@ export function DashboardContent() {
       )}
 
     </div>
+    </>
   )
 }

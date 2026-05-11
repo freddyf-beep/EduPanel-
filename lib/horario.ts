@@ -30,6 +30,9 @@ export interface ClaseHorario {
   color: string
   tipo: TipoHorario
   hasta?: string
+  // Asignatura asociada al bloque (ej. Música, Lenguaje). Opcional para retrocompatibilidad.
+  // En /perfil v2 cada bloque pertenece a una asignatura del curso.
+  asignatura?: string
 }
 
 export interface HorarioGuardado {
@@ -60,9 +63,32 @@ export function agruparHorarioPorCurso(clases: ClaseHorario[]): Map<string, Clas
   return grupos
 }
 
-function horaToMinutos(hora: string): number {
+export function horaToMinutos(hora: string): number {
   const [h, m] = hora.split(":").map(Number)
   return (h || 0) * 60 + (m || 0)
+}
+
+export function duracionBloque(bloque: { horaInicio: string; horaFin: string }): number {
+  return Math.max(0, horaToMinutos(bloque.horaFin) - horaToMinutos(bloque.horaInicio))
+}
+
+export function formatHorasMinutos(totalMinutos: number): string {
+  const h = Math.floor(totalMinutos / 60)
+  const m = totalMinutos % 60
+  if (h && m) return `${h}h ${m}min`
+  if (h) return `${h}h`
+  return `${m}min`
+}
+
+export const ETIQUETA_TIPO_LIBRE: Record<TipoHorario, string> = {
+  clase: "",
+  taller: "",
+  consejo: "",
+  orientacion: "",
+  almuerzo: "Almuerzo",
+  planificacion: "Planificación",
+  recreo: "Recreo",
+  libre: "Bloque libre",
 }
 
 export function colisionaConHorario(clases: ClaseHorario[], nuevo: ClaseHorario, ignorarUid?: string): ClaseHorario | null {

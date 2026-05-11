@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore"
 import { Loader2, CheckCircle, AlertTriangle, Database, Trash2 } from "lucide-react"
 
-const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfiguea@gmail.com").toLowerCase()
+const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || "freddyfigueroagea@gmail.com").toLowerCase()
 
 
 

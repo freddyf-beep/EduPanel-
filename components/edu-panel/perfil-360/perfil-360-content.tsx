@@ -14,6 +14,7 @@ import { listarLibroClasesCurso, userDoc, cargarObservaciones360, guardarObserva
 import type { Observacion360 } from "@/lib/curriculo"
 import { getDoc } from "firebase/firestore"
 import { evaluarAlumno } from "@/lib/alertas"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 interface EstudianteVista {
   id: string
@@ -256,6 +257,7 @@ export function Perfil360Content() {
 
   return (
     <div>
+      <NewDesignBanner href="/perfil-360-v2" pageName="Perfil 360" />
       <div className="mb-5 sm:mb-6">
         <h1 className="text-[18px] sm:text-[22px] font-extrabold">Perfil 360 del estudiante</h1>
         <p className="text-[12px] sm:text-[13px] text-muted-foreground mt-1">Vista consolidada de asistencia, rendimiento y observaciones.</p>

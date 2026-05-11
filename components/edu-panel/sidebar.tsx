@@ -4,14 +4,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   Home, BookOpen, LayoutGrid, Calendar, ClipboardCheck,
-  Users, Music, ClipboardList, LifeBuoy, CalendarDays, UserCircle, LayoutList
+  Users, Music, ClipboardList, LifeBuoy, CalendarDays, UserCircle, LayoutList,
+  History,
 } from "lucide-react"
 import { buildUrl } from "@/lib/shared"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/components/auth/auth-context"
 import { useEffect, useState } from "react"
 import { cargarPerfil, PerfilUsuario } from "@/lib/perfil"
-import { cargarHorarioSemanal } from "@/lib/horario"
+import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
 import { CURRENT_VERSION } from "./version"
 
 const mainNavItems = [
@@ -28,6 +29,13 @@ const toolsNavItems = [
   { href: "/perfil-360",          label: "Perfil 360",          icon: Users },
   { href: "/soporte",             label: "Ayuda",               icon: LifeBuoy },
   { href: "/perfil",              label: "Mi Perfil",           icon: UserCircle },
+]
+
+// Versiones antiguas: accesibles bajo "Versiones anteriores"
+const legacyNavItems = [
+  { href: "/perfil-v1",           label: "Mi Perfil (v1)",         icon: UserCircle },
+  { href: "/planificaciones-v1",  label: "Planificaciones (v1)",   icon: BookOpen },
+  { href: "/ver-unidad-v1",       label: "Ver Unidad (v1)",        icon: LayoutGrid },
 ]
 
 interface SidebarProps {
@@ -47,7 +55,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
       cargarHorarioSemanal().then(horario => {
         if (!horario) return
         const uniques = new Map<string, string>()
-        horario.filter(h => h.tipo === "clase").forEach(h => {
+        horario.filter(h => !esTipoLibre(h.tipo)).forEach(h => {
           if (!uniques.has(h.resumen)) {
             uniques.set(h.resumen, h.color)
           }
@@ -106,6 +114,9 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
           Herramientas
         </div>
         {toolsNavItems.map(item => <NavLink key={item.href} {...item} />)}
+
+        {/* Versiones anteriores (colapsable, abierto cuando estás en una v1) */}
+        <LegacyMenu pathname={pathname} onNavigate={onNavigate} NavLink={NavLink} />
       </nav>
 
       {/* Cursos rápidos */}
@@ -139,6 +150,40 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
         EduPanel {CURRENT_VERSION}
       </div>
     </aside>
+  )
+}
+
+// Menú colapsable con las versiones anteriores. Se abre automáticamente si estás en una v1.
+function LegacyMenu({
+  pathname, onNavigate, NavLink,
+}: {
+  pathname: string
+  onNavigate?: () => void
+  NavLink: (props: { href: string; label: string; icon: any }) => any
+}) {
+  const isInLegacy = legacyNavItems.some(it => pathname === it.href || pathname.startsWith(it.href))
+  const [open, setOpen] = useState(isInLegacy)
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className={cn(
+          "mt-3 flex w-full items-center gap-2 rounded-[10px] px-3 py-2 text-[11px] font-bold uppercase tracking-wider transition-colors",
+          "text-[#c0c4d6] hover:bg-background hover:text-muted-foreground"
+        )}
+        title="Mostrar/ocultar versiones anteriores"
+      >
+        <History className="h-3 w-3" />
+        Versiones anteriores
+        <span className="ml-auto text-[10px]">{open ? "▾" : "▸"}</span>
+      </button>
+      {open && (
+        <div className="space-y-0.5 pl-1">
+          {legacyNavItems.map(item => <NavLink key={item.href} {...item} />)}
+        </div>
+      )}
+    </>
   )
 }
 

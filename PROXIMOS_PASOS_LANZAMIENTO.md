@@ -14,7 +14,7 @@ Fecha: 2026-04-30 — Auditoría consolidada (Codex + Claude)
    - `scripts/curriculo-common.mjs`: igual, lee de env vars y aborta si faltan
    - `scripts/seed-curriculo.mjs`: ahora importa la config de `curriculo-common.mjs`
    - **Aplicado también en `edupanel_public`**
-3. **CHANGELOG sanitizado** — `Planificaciones_Freddy_Figueroa(1).docx` → `Planificaciones_formato_oficial.docx` (en local y public)
+3. **CHANGELOG sanitizado** — referencias personales reemplazadas por nombres genericos del formato oficial (en local y public)
 4. **Apellido removido del código** — `components/edu-panel/dashboard/dashboard-content.tsx` y `lib/ai/copilot.ts` ya no exponen "Freddy Figueroa"; ahora usan `user.displayName ?? "Docente"` o textos genéricos (en local y public)
 5. **.gitignore reforzado** — agregado `firebase-adminsdk-*.json`, `*.log`, `.firebase/`, `.vercel/`, `*.bak`, `ts_errors.log`, `scratch.*` (en local y public)
 
@@ -71,7 +71,7 @@ El historial de git de `edupanel_public` probablemente contiene la API key hardc
 
 ```bash
 cd ~/Documents/edupanel_public
-git log -p --all -S "AIzaSyAPZ0knktdl2TINlaVhBi8" | head -60
+git log -p --all -S "AIzaSy..." | head -60
 ```
 
 Si aparece, técnicamente la key está expuesta. **Decisión:** las API keys públicas de Firebase no son secretas en sentido estricto (Firebase las diseñó para ir en el cliente), pero combinadas con reglas mal escritas o sin App Check, pueden permitir abuso. Como tus reglas de Firestore ya están firmes y la allowlist está en su lugar, el riesgo real es bajo. Mi recomendación: dejarla, NO rotar (rotar implica re-configurar todo y la key sigue siendo "pública por diseño" de Firebase).

@@ -5,6 +5,7 @@ import {
   cleanText,
   coerceGeneratedLesson,
   getProviderMeta,
+  isJsonParseFailure,
   parseJsonResponse,
   resolveMode,
   type AIProvider,
@@ -274,7 +275,29 @@ export async function POST(req: Request) {
     }
 
     // Modos crear_inicial y aplicar_cambios: respuesta en JSON
-    const parsed = parseJsonResponse(rawText || "{}")
+    let parsed: Record<string, unknown>
+    try {
+      parsed = parseJsonResponse(rawText || "{}")
+    } catch (parseErr) {
+      if (!isJsonParseFailure(parseErr)) throw parseErr
+
+      // Reintento automático: pedir a la IA solo el JSON sin explicación.
+      console.warn("[generar-clase] Parse falló en primer intento, reintentando con prompt estricto...")
+      const retryPrompt = `${prompt}\n\n---\nIMPORTANTE: Tu respuesta anterior contenía formato inválido. Devuelve SOLO un objeto JSON válido (sin texto antes, sin texto después, sin explicación, sin comentarios), envuelto en \`\`\`json ... \`\`\`. Sin comas finales antes de } o ].`
+      try {
+        const retryText = await generateText(provider, body, retryPrompt, expectsJson, req.signal)
+        parsed = parseJsonResponse(retryText || "{}")
+      } catch (retryErr) {
+        // El reintento también falló: devolver el texto crudo para que el cliente
+        // muestre UI de recuperación (textarea editable + botón "Intentar de nuevo")
+        console.error("[generar-clase] Reintento también falló:", retryErr)
+        return NextResponse.json({
+          error: "json_parse_failed",
+          message: "La IA no devolvió JSON válido. Puedes editar la respuesta cruda y aplicar manualmente.",
+          rawText: parseErr.rawText || rawText || "",
+        }, { status: 200 })
+      }
+    }
     const lesson = coerceGeneratedLesson(parsed)
 
     return NextResponse.json({

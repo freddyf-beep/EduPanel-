@@ -24,7 +24,7 @@
 import type { App } from "firebase-admin/app"
 
 let cachedApp: App | null = null
-const DEFAULT_ADMIN_EMAIL = "freddyfiguea@gmail.com"
+const DEFAULT_ADMIN_EMAIL = "freddyfigueroagea@gmail.com"
 
 function normalizeEmail(email: string | null | undefined): string {
   return (email ?? "").toLowerCase().trim()

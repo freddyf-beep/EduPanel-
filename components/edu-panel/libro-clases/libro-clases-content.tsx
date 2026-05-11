@@ -11,6 +11,7 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, normalizeKeyPart, withAsignatura } from "@/lib/shared"
 import { contarObservacionesPorEstudiante, type ResumenObservacionesEstudiante } from "@/lib/observaciones"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 const ESTADOS: { key: EstadoAsistencia; label: string; cls: string }[] = [
   { key: "presente", label: "P", cls: "bg-status-green-bg text-status-green-text" },
@@ -236,6 +237,7 @@ export function LibroClasesContent() {
 
   return (
     <div>
+      <NewDesignBanner href="/libro-clases-v2" pageName="el Libro de Clases" />
       <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-[22px] font-extrabold">Libro de clases digital</h1>

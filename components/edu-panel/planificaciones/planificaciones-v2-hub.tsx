@@ -5,21 +5,27 @@ import Link from "next/link"
 import { Layers, Loader2 } from "lucide-react"
 import { cargarPlanCurso } from "@/lib/curriculo"
 import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
-import { cargarHorarioSemanal } from "@/lib/horario"
+import { agruparHorarioPorCurso, cargarHorarioSemanal } from "@/lib/horario"
+import { cargarCursoTipos, type CursoTipoMap, type TipoCurricular } from "@/lib/nivel-mapping"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 
 export function PlanificacionesV2Hub() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
   const [cursosData, setCursosData] = useState<Record<string, { total: number; completas: number }>>({})
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
+  const [cursoTipos, setCursoTipos] = useState<CursoTipoMap>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadCursos() {
       try {
-        const hData = await cargarHorarioSemanal()
-        const uniqueCursos = Array.from(new Set(hData.map(h => h.resumen)))
+        const [hData, tipos] = await Promise.all([
+          cargarHorarioSemanal(),
+          cargarCursoTipos().catch(() => ({} as CursoTipoMap)),
+        ])
+        const uniqueCursos = Array.from(agruparHorarioPorCurso(hData).keys())
         setCursosDisponibles(uniqueCursos)
+        setCursoTipos(tipos)
 
         const data: Record<string, { total: number; completas: number }> = {}
         for (const curso of uniqueCursos) {
@@ -72,10 +78,12 @@ export function PlanificacionesV2Hub() {
           {cursosDisponibles.map((curso, i) => {
             const info = cursosData[curso] || { total: 0, completas: 0 }
             const coverPct = info.total > 0 ? Math.round((info.completas / info.total) * 100) : 0
+            const tipo = (cursoTipos[curso] ?? "oficial") as TipoCurricular
+            const tipoLabel = tipo === "oficial" ? "Curriculo oficial" : tipo === "taller" ? "Taller" : "Libre"
             return (
               <Link
                 key={curso}
-                href={buildUrl("/planificaciones-v2", withAsignatura({ curso }, ASIGNATURA))}
+                href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))}
                 className="bg-card border border-border rounded-[14px] p-5 hover:border-primary hover:shadow-md transition-all group block cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-4">
@@ -84,13 +92,15 @@ export function PlanificacionesV2Hub() {
                   </div>
                   <div>
                     <h3 className="text-[16px] font-bold group-hover:text-primary transition-colors">{curso}</h3>
-                    <p className="text-[12px] text-muted-foreground">{ASIGNATURA}</p>
+                    <p className="text-[12px] text-muted-foreground">{ASIGNATURA} · {tipoLabel}</p>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between text-[13px]">
-                    <span className="text-muted-foreground font-medium">Unidades creadas</span>
+                    <span className="text-muted-foreground font-medium">
+                      {tipo === "oficial" ? "Unidades creadas" : "Unidades personalizadas"}
+                    </span>
                     <span className="font-bold">{info.total}</span>
                   </div>
                   <div className="flex justify-between text-[13px]">

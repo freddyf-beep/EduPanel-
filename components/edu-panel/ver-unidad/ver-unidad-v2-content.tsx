@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import {
   ArrowLeft, Bookmark, CalendarDays, Check, CheckCircle2, Circle,
-  ClipboardList, FileText, Layers, Loader2, Plus, Target,
+  ClipboardList, Download, FileText, Layers, Loader2, Plus, Target,
   Trash2, BookOpen, Clock, Heart, Pencil, ArrowRight, Eye, X, AlertCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -36,11 +36,19 @@ import type {
 } from "@/lib/curriculo"
 import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
-import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
+import {
+  cargarCursoTipos,
+  cargarNivelMapping,
+  resolveNivel,
+  resolveTipoCurricular,
+  type CursoTipoMap,
+  type TipoCurricular,
+} from "@/lib/nivel-mapping"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import type { ClaseHorario } from "@/lib/horario"
 import { buildUrl, UNIT_COLORS, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { useIsMobile } from "@/components/ui/use-mobile"
 
 type TabKey = "curriculo" | "cronograma" | "actividades"
 
@@ -481,6 +489,7 @@ function VerUnidadV2Inner() {
   const [cronogramaClases, setCronogramaClases] = useState<Array<{ fecha?: string }>>([])
   const [horarioBase, setHorarioBase] = useState<ClaseHorario[]>([])
   const [nivelAsignado, setNivelAsignado] = useState("")
+  const [tipoCurricular, setTipoCurricular] = useState<TipoCurricular>("oficial")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
@@ -511,33 +520,85 @@ function VerUnidadV2Inner() {
   const [modalHab, setModalHab] = useState(false)
   const [modalCon, setModalCon] = useState(false)
   const [modalAct, setModalAct] = useState(false)
+  const [showPdf, setShowPdf] = useState(false)
+  const [pdfPos, setPdfPos] = useState({ right: 32, bottom: 32 })
+  const [isDraggingPdf, setIsDraggingPdf] = useState(false)
+  const pdfDragRef = useRef<{ startX: number, startY: number, startRight: number, startBottom: number } | null>(null)
+  const isMobile = useIsMobile()
   const ignoreNextSaveRef = useRef(true)
+
+  const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    pdfDragRef.current = { startX: e.clientX, startY: e.clientY, startRight: pdfPos.right, startBottom: pdfPos.bottom }
+    setIsDraggingPdf(true)
+    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+  }
+
+  const handlePdfPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (isDraggingPdf && pdfDragRef.current) {
+      setPdfPos({
+        right: pdfDragRef.current.startRight - (e.clientX - pdfDragRef.current.startX),
+        bottom: pdfDragRef.current.startBottom - (e.clientY - pdfDragRef.current.startY)
+      })
+    }
+  }
+
+  const handlePdfPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDraggingPdf(false)
+    ;(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId)
+  }
 
   useEffect(() => {
     async function load() {
       setLoading(true)
       setError(null)
       try {
-        const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
-        if (!nivel) {
-          setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Planificaciones y selecciona el nivel curricular.`)
-          return
-        }
-        setNivelAsignado(nivel)
+        const [mapping, tipos] = await Promise.all([
+          cargarNivelMapping(),
+          cargarCursoTipos().catch(() => ({} as CursoTipoMap)),
+        ])
+        const tipo = resolveTipoCurricular(cursoParam, tipos)
+        setTipoCurricular(tipo)
 
-        const [u, guardada, planificacion, planCurso, cronograma, horario] = await Promise.all([
-          getUnidadCompleta(ASIGNATURA, nivel, unidadParam),
+        const [guardada, planificacion, planCurso, cronograma, horario] = await Promise.all([
           cargarVerUnidad(ASIGNATURA, cursoParam, unidadLocalParam),
           cargarPlanificacion(ASIGNATURA, cursoParam),
           cargarPlanCurso(ASIGNATURA, cursoParam).catch(() => null),
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam).catch(() => null),
           cargarHorarioSemanal().catch(() => []),
         ])
+        const planUnitEncontrada = findPlanUnit(planCurso?.units || [], unidadLocalParam, unidadParam)
 
-        if (!u) {
-          setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
-          return
+        let u: Unidad | null = null
+        if (tipo === "oficial") {
+          const nivel = resolveNivel(cursoParam, mapping)
+          if (!nivel) {
+            setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
+            return
+          }
+          setNivelAsignado(nivel)
+          u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
+          if (!u) {
+            setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
+            return
+          }
+        } else {
+          const etiqueta = tipo === "taller" ? "Taller sin curriculum oficial" : "Libre sin curriculum oficial"
+          setNivelAsignado(etiqueta)
+          u = {
+            id: unidadParam,
+            numero_unidad: unitIndex + 1,
+            nombre_unidad: planUnitEncontrada?.name || `Unidad ${unitIndex + 1}`,
+            proposito: "Unidad personalizada para un curso sin curriculum oficial.",
+            palabras_clave: [],
+            conocimientos: [],
+            habilidades: [],
+            actitudes: [],
+            conocimientos_previos: [],
+            adecuaciones_dua: "",
+            objetivos_aprendizaje: [],
+            actividades_sugeridas: [],
+            ejemplos_evaluacion: [],
+          }
         }
 
         const baseOas = mergeOAs(initOAs(u, ASIGNATURA), guardada?.oas || [])
@@ -546,7 +607,7 @@ function VerUnidadV2Inner() {
         const baseActitudes = mergeElementos(initElems(u.actitudes || [], "actitudes"), guardada?.actitudes || [])
 
         setUnidad(u)
-        setPlanUnit(findPlanUnit(planCurso?.units || [], unidadLocalParam, unidadParam))
+        setPlanUnit(planUnitEncontrada)
         setCronogramaDates(deriveCronogramaDates(cronograma?.clases))
         setCronogramaClases(cronograma?.clases || [])
         setHorarioBase(horario || [])
@@ -721,7 +782,7 @@ function VerUnidadV2Inner() {
     return (
       <div className="mx-auto max-w-[980px] px-4 py-10">
         <Link
-          href={buildUrl("/planificaciones-v2", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
+          href={buildUrl("/planificaciones", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
           className="mb-4 inline-flex items-center gap-2 text-[12px] font-bold text-primary"
         >
           <ArrowLeft className="h-4 w-4" /> Volver
@@ -739,7 +800,7 @@ function VerUnidadV2Inner() {
       <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <Link
-            href={buildUrl("/planificaciones-v2", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
+            href={buildUrl("/planificaciones", withAsignatura({ curso: cursoParam }, ASIGNATURA))}
             className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-background"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -754,6 +815,16 @@ function VerUnidadV2Inner() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <StatusPill status={saveStatus} />
+          {tipoCurricular === "oficial" && (
+            <button
+              onClick={() => setShowPdf(true)}
+              className="flex items-center gap-[7px] rounded-[10px] border-[1.5px] border-primary bg-pink-light/30 px-3 py-2 text-[12px] font-bold text-primary transition-colors hover:bg-pink-light/60 sm:px-4 sm:py-2.5 sm:text-[13px]"
+            >
+              <FileText className="h-[15px] w-[15px]" />
+              <span className="hidden sm:inline">Programa Oficial</span>
+              <span className="sm:hidden">Programa</span>
+            </button>
+          )}
           <Link
             href={buildUrl("/ver-unidad", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
             className="rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-muted-foreground hover:bg-muted"
@@ -823,6 +894,21 @@ function VerUnidadV2Inner() {
       {activeTab === "curriculo" && (
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-4">
+            {tipoCurricular !== "oficial" && (
+              <section className="rounded-[12px] border border-primary/30 bg-primary/5 px-4 py-3">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                  <div>
+                    <h2 className="text-[13px] font-extrabold text-foreground">
+                      Unidad personalizada sin curriculum oficial
+                    </h2>
+                    <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground">
+                      Este curso esta marcado como {tipoCurricular === "taller" ? "Taller" : "Libre"} en Mi Perfil. Puedes completar contexto, objetivo, cronograma y actividades sin asociar OAs Mineduc.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
             <section className="rounded-[12px] border border-border bg-card">
               <div className="border-b border-border px-4 py-3">
                 <h2 className="text-[14px] font-extrabold">Base pedagogica de la unidad</h2>
@@ -1202,6 +1288,60 @@ function VerUnidadV2Inner() {
           onClose={() => setModalAct(false)}
           onChange={setActitudes}
         />
+      )}
+
+      {/* Ventana flotante Programa Oficial (PDF Mineduc) */}
+      {showPdf && tipoCurricular === "oficial" && (
+        <div
+          className={cn(
+            "fixed z-[600] flex flex-col border-[2px] border-border bg-card transition-shadow",
+            isMobile ? "inset-3 rounded-[18px]" : "rounded-[18px]",
+            isDraggingPdf ? "opacity-95 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)]" : "opacity-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]"
+          )}
+          style={isMobile ? { overflow: "hidden" } : { right: `${pdfPos.right}px`, bottom: `${pdfPos.bottom}px`, width: "520px", height: "70vh", resize: "both", overflow: "hidden" }}
+        >
+          <div
+            className={cn("flex items-center justify-between border-b border-border bg-background/95 px-4 py-3 backdrop-blur", isMobile ? "" : "cursor-move touch-none")}
+            onPointerDown={isMobile ? undefined : handlePdfPointerDown}
+            onPointerMove={isMobile ? undefined : handlePdfPointerMove}
+            onPointerUp={isMobile ? undefined : handlePdfPointerUp}
+            onPointerCancel={isMobile ? undefined : handlePdfPointerUp}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="grid h-7 w-7 place-items-center rounded-lg bg-pink-light pointer-events-none">
+                <FileText className="h-3.5 w-3.5 text-primary" />
+              </div>
+              <div className="pointer-events-none">
+                <h3 className="text-[13px] font-extrabold leading-none text-foreground">Programa Oficial</h3>
+                <p className="mt-0.5 text-[10px] font-semibold text-muted-foreground">{ASIGNATURA} — {nivelAsignado || cursoParam}</p>
+              </div>
+            </div>
+            <div className="flex gap-1.5" onPointerDown={e => e.stopPropagation()}>
+              <button
+                onClick={() => window.open(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${encodeURIComponent(`${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}`, "_blank")}
+                className="grid h-8 w-8 place-items-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted"
+                title="Abrir en pestaña nueva"
+              >
+                <Download className="h-3.5 w-3.5" />
+              </button>
+              <button
+                onClick={() => setShowPdf(false)}
+                className="grid h-8 w-8 place-items-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted"
+                title="Cerrar ventana"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+          <div className="relative flex-1 bg-muted">
+            {isDraggingPdf && <div className="absolute inset-0 z-10" />}
+            <iframe
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}&embedded=true`}
+              className="absolute inset-0 h-full w-full border-none bg-white"
+              title="Programa de Estudio"
+            />
+          </div>
+        </div>
       )}
     </div>
   )

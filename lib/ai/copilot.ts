@@ -278,6 +278,58 @@ export function ensureHtmlBlock(value: unknown, fallback = ""): string {
   return `<ul>${lines.map((l) => `<li>${escapeHtml(l)}</li>`).join("")}</ul>`
 }
 
+/**
+ * Limpia errores comunes de JSON producidos por LLMs:
+ * - Comas finales antes de } o ]
+ * - Comentarios estilo //
+ * - Comillas tipográficas reemplazadas por estándar
+ */
+function relaxJsonSyntax(text: string): string {
+  return text
+    // Comillas tipográficas → estándar
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    // Quitar comentarios //
+    .replace(/(^|[^:])\/\/[^\n\r]*/g, "$1")
+    // Quitar comentarios /* */
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    // Quitar comas finales antes de } o ]
+    .replace(/,(\s*[}\]])/g, "$1")
+}
+
+/**
+ * Encuentra todos los bloques {...} balanceados en el texto y los devuelve ordenados
+ * por longitud descendente. Útil para extraer JSON cuando viene mezclado con texto.
+ */
+function findBalancedJsonCandidates(text: string): string[] {
+  const candidates: string[] = []
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== "{") continue
+    let depth = 0
+    let inString = false
+    let escaped = false
+    for (let j = i; j < text.length; j++) {
+      const ch = text[j]
+      if (inString) {
+        if (escaped) escaped = false
+        else if (ch === "\\") escaped = true
+        else if (ch === '"') inString = false
+      } else {
+        if (ch === '"') inString = true
+        else if (ch === "{") depth++
+        else if (ch === "}") {
+          depth--
+          if (depth === 0) {
+            candidates.push(text.slice(i, j + 1))
+            break
+          }
+        }
+      }
+    }
+  }
+  return candidates.sort((a, b) => b.length - a.length)
+}
+
 export function parseJsonResponse(text: string): Record<string, unknown> {
   const cleaned = text
     .trim()
@@ -285,13 +337,41 @@ export function parseJsonResponse(text: string): Record<string, unknown> {
     .replace(/^```\s*/i, "")
     .replace(/\s*```$/i, "")
     .trim()
+
+  // Paso A: parse directo
   try {
     return JSON.parse(cleaned) as Record<string, unknown>
-  } catch {
-    const match = cleaned.match(/\{[\s\S]*\}/)
-    if (!match) throw new Error("La IA devolvió una respuesta vacía o en formato inválido.")
-    return JSON.parse(match[0]) as Record<string, unknown>
+  } catch {}
+
+  // Paso B: parse con relajación sintáctica (comas finales, comentarios, comillas)
+  try {
+    return JSON.parse(relaxJsonSyntax(cleaned)) as Record<string, unknown>
+  } catch {}
+
+  // Paso C: extraer primer bloque {...} greedy y parsear
+  const greedyMatch = cleaned.match(/\{[\s\S]*\}/)
+  if (greedyMatch) {
+    try { return JSON.parse(greedyMatch[0]) as Record<string, unknown> } catch {}
+    try { return JSON.parse(relaxJsonSyntax(greedyMatch[0])) as Record<string, unknown> } catch {}
   }
+
+  // Paso D: extraer todos los bloques balanceados {...} (puede haber múltiples)
+  // y probar cada uno desde el más largo (asume que el más grande es el JSON real).
+  const candidates = findBalancedJsonCandidates(cleaned)
+  for (const candidate of candidates) {
+    try { return JSON.parse(candidate) as Record<string, unknown> } catch {}
+    try { return JSON.parse(relaxJsonSyntax(candidate)) as Record<string, unknown> } catch {}
+  }
+
+  // Paso E: rendirse con error específico que el endpoint puede manejar
+  const err = new Error("La IA devolvió una respuesta vacía o en formato inválido.")
+  ;(err as Error & { __jsonParseFailed?: boolean; rawText?: string }).__jsonParseFailed = true
+  ;(err as Error & { __jsonParseFailed?: boolean; rawText?: string }).rawText = text
+  throw err
+}
+
+export function isJsonParseFailure(error: unknown): error is Error & { __jsonParseFailed: true; rawText: string } {
+  return error instanceof Error && (error as Error & { __jsonParseFailed?: boolean }).__jsonParseFailed === true
 }
 
 function coerceAnalisisBloom(raw: unknown): AnalisisBloom[] | undefined {

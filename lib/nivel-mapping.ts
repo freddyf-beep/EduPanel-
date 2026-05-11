@@ -27,6 +27,13 @@ export const NIVELES_CURRICULARES = [
 // Mapping: { "4° A": "4to Básico", "1° A": "1ro Básico", ... }
 export type NivelMapping = Record<string, string>
 
+// Tipo curricular del curso. Default "oficial" para retrocompatibilidad.
+// - "oficial": curso ligado al currículum Mineduc (requiere nivel + OAs)
+// - "taller": taller / actividad sin currículum oficial (no requiere nivel)
+// - "libre": uso personal del docente, sin asociación curricular
+export type TipoCurricular = "oficial" | "taller" | "libre"
+export type CursoTipoMap = Record<string, TipoCurricular>
+
 export async function cargarNivelMapping(): Promise<NivelMapping> {
   const uid = getUid()
   const ref = doc(db, "users", uid, "configuracion", "nivel_mapping")
@@ -38,7 +45,33 @@ export async function cargarNivelMapping(): Promise<NivelMapping> {
 export async function guardarNivelMapping(mapping: NivelMapping): Promise<void> {
   const uid = getUid()
   const ref = doc(db, "users", uid, "configuracion", "nivel_mapping")
-  await setDoc(ref, { mapping })
+  // Preserva otros campos (cursoTipos) si existen
+  const existing = await getDoc(ref)
+  const data = existing.exists() ? existing.data() : {}
+  await setDoc(ref, { ...data, mapping })
+}
+
+export async function cargarCursoTipos(): Promise<CursoTipoMap> {
+  const uid = getUid()
+  const ref = doc(db, "users", uid, "configuracion", "nivel_mapping")
+  const snap = await getDoc(ref)
+  if (!snap.exists()) return {}
+  return (snap.data()?.cursoTipos ?? {}) as CursoTipoMap
+}
+
+export async function guardarCursoTipos(cursoTipos: CursoTipoMap): Promise<void> {
+  const uid = getUid()
+  const ref = doc(db, "users", uid, "configuracion", "nivel_mapping")
+  const existing = await getDoc(ref)
+  const data = existing.exists() ? existing.data() : {}
+  await setDoc(ref, { ...data, cursoTipos })
+}
+
+/**
+ * Devuelve el tipo curricular del curso. Default "oficial" si no está configurado.
+ */
+export function resolveTipoCurricular(curso: string, tipos: CursoTipoMap): TipoCurricular {
+  return tipos[curso] ?? "oficial"
 }
 
 /**

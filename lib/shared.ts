@@ -73,3 +73,33 @@ export function buildUrl(base: string, params: Record<string, string | null | un
 export function unidadIdFromIndex(index: number): string {
   return `unidad_${index + 1}`
 }
+
+export type LinkifyFragment =
+  | { type: "text"; value: string }
+  | { type: "link"; href: string; label: string }
+
+const URL_REGEX = /(https?:\/\/[^\s)<>"']+)/g
+
+export function linkifyText(text: string): LinkifyFragment[] {
+  if (!text) return []
+  const fragments: LinkifyFragment[] = []
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  URL_REGEX.lastIndex = 0
+  while ((match = URL_REGEX.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      fragments.push({ type: "text", value: text.slice(lastIndex, match.index) })
+    }
+    const raw = match[0]
+    const trimmed = raw.replace(/[.,;:!?]+$/, "")
+    fragments.push({ type: "link", href: trimmed, label: trimmed })
+    if (trimmed.length < raw.length) {
+      fragments.push({ type: "text", value: raw.slice(trimmed.length) })
+    }
+    lastIndex = match.index + raw.length
+  }
+  if (lastIndex < text.length) {
+    fragments.push({ type: "text", value: text.slice(lastIndex) })
+  }
+  return fragments
+}

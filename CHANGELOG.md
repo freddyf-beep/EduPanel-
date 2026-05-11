@@ -145,3 +145,10 @@ components/edu-panel/version.ts
 next.config.mjs
 version.txt
 
+## v1.0.16 - 11/05/2026 10:36
+- Sincronizacion selectiva desde `edupanel_local` hacia el repo publico.
+- Rutas principales migradas a las nuevas experiencias V2: inicio, modulos, perfil, calificaciones, cronograma, libro de clases, perfil 360 y soporte.
+- `/planificaciones` ahora usa el hub V3 y mantiene detalle V2 por curso; se agrega `/planificaciones-v1` como respaldo legacy.
+- `/ver-unidad` ahora usa la experiencia V2 y se agrega `/ver-unidad-v1` como respaldo legacy.
+- Mejoras en IA de actividades: parseo JSON mas tolerante, reintento automatico y recuperacion manual cuando el proveedor devuelve formato invalido.
+- Mejoras de perfil, estudiantes, horario, mapeo de niveles y navegacion lateral.

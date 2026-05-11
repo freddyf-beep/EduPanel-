@@ -33,7 +33,14 @@ import type { UnidadPlan, ClaseCronograma } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { toast } from "@/hooks/use-toast"
-import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
+import {
+  cargarCursoTipos,
+  cargarNivelMapping,
+  resolveTipoCurricular,
+  type CursoTipoMap,
+  type NivelMapping,
+  type TipoCurricular,
+} from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
 import { FormatoDescargaModal, type FormatoDescarga, type SemestreDescarga } from "./formato-descarga-modal"
 import type { InfoColegio } from "@/lib/perfil"
@@ -100,6 +107,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   const [downloading, setDownloading]           = useState(false)
   const [showFormatoModal, setShowFormatoModal]  = useState(false)
   const [nivelMapping, setNivelMapping]          = useState<NivelMapping>({})
+  const [tipoCurricular, setTipoCurricular]      = useState<TipoCurricular>("oficial")
   const [colegioInfo, setColegioInfo]            = useState<InfoColegio | null>(null)
 
   // Auto-save
@@ -251,10 +259,13 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   // ── Cargar nivel curricular + info colegio ──
   useEffect(() => {
     cargarNivelMapping().then(setNivelMapping).catch(() => {})
+    cargarCursoTipos()
+      .then((tipos: CursoTipoMap) => setTipoCurricular(resolveTipoCurricular(curso, tipos)))
+      .catch(() => setTipoCurricular("oficial"))
     import("@/lib/perfil").then(({ cargarInfoColegio }) =>
       cargarInfoColegio().then(setColegioInfo).catch(() => {})
     )
-  }, [])
+  }, [curso])
 
   // ── Descargar planificación ──
   const handleDescargar = async (formato: FormatoDescarga, semestre: SemestreDescarga, usarEncabezado: boolean) => {
@@ -263,7 +274,11 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     setShowFormatoModal(false)
     try {
       const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
-      const nivelCurricular = nivelMapping[curso] || "Sin nivel configurado"
+      const nivelCurricular = tipoCurricular === "oficial"
+        ? (nivelMapping[curso] || "Sin nivel configurado")
+        : tipoCurricular === "taller"
+          ? "Taller / sin curriculum oficial"
+          : "Libre / sin curriculum oficial"
 
       const encabezado = usarEncabezado && colegioInfo ? {
         logoIzqBase64: colegioInfo.logoBase64,
@@ -417,16 +432,23 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       <div className="mb-5 flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <Link
-            href={buildUrl("/planificaciones-v2", withAsignatura({}, ASIGNATURA))}
+            href={buildUrl("/planificaciones", withAsignatura({}, ASIGNATURA))}
             className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-card text-muted-foreground hover:bg-background"
           >
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div className="min-w-0">
             <p className="text-[11px] text-muted-foreground">{ASIGNATURA}</p>
-            <h1 className="text-[18px] sm:text-[22px] font-extrabold leading-tight truncate">
-              {curso}
-            </h1>
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
+              <h1 className="text-[18px] sm:text-[22px] font-extrabold leading-tight truncate">
+                {curso}
+              </h1>
+              {tipoCurricular !== "oficial" && (
+                <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                  {tipoCurricular === "taller" ? "Taller sin curriculum oficial" : "Libre sin curriculum oficial"}
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -434,7 +456,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
           {saveStatus === "saved" && <span className="text-[11px] text-green-600 font-bold">✓ Guardado</span>}
           {saveStatus === "error" && <span className="text-[11px] text-red-500 font-bold">Error</span>}
           <Link
-            href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))}
+            href={buildUrl("/planificaciones-v1", withAsignatura({ curso }, ASIGNATURA))}
             className="text-[11px] text-muted-foreground hover:text-foreground border border-border rounded-md px-2 py-1"
             title="Volver al diseño anterior"
           >
@@ -556,7 +578,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
                       {/* Acciones */}
                       <div className="flex items-center gap-1 flex-shrink-0">
                         <Link
-                          href={buildUrl("/ver-unidad-v2", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
+                          href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
                           className="flex items-center gap-1 text-[11px] font-bold text-primary border border-primary/40 rounded-lg px-2 py-1.5 hover:bg-pink-light"
                           title="Ver y planificar la unidad"
                         >
@@ -617,7 +639,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
           <div className="text-[11px] text-muted-foreground text-center pt-2">
             ¿Necesitas dividir, reordenar o cambiar fechas de unidad?{" "}
             <Link
-              href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))}
+              href={buildUrl("/planificaciones-v1", withAsignatura({ curso }, ASIGNATURA))}
               className="text-primary font-bold hover:underline"
             >
               Usa el diseño anterior →

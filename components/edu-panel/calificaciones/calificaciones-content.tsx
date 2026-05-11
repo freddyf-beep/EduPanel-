@@ -13,6 +13,7 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { contarObservacionesPorEstudiante, type ResumenObservacionesEstudiante } from "@/lib/observaciones"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { NewDesignBanner } from "@/components/edu-panel/shared/new-design-banner"
 
 interface EstudianteCalif {
   id: string
@@ -343,6 +344,7 @@ export function CalificacionesContent() {
 
   return (
     <div>
+      <NewDesignBanner href="/calificaciones-v2" pageName="Calificaciones" />
       <div className="flex items-center justify-between mb-7 flex-wrap gap-3 animate-fade-up">
         <h1 className="text-[22px] font-extrabold">Calificaciones</h1>
         <div className="flex items-center gap-2.5">
