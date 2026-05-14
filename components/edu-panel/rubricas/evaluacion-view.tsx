@@ -386,7 +386,7 @@ export function EvaluacionView({ rubricaId }: Props) {
       {/* Header fijo */}
       <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 sm:gap-3 flex-shrink-0">
         <button
-          onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
+          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas" }, asignatura)))}
           className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors flex-shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -433,7 +433,7 @@ export function EvaluacionView({ rubricaId }: Props) {
           <span className="sm:hidden">Hoja</span>
         </button>
         <button
-          onClick={() => router.push(buildUrl("/rubricas", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
+          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 ml-auto sm:ml-0"
         >
           <span className="hidden sm:inline">Ver resultados</span>

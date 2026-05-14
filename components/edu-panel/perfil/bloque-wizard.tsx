@@ -31,14 +31,16 @@ const TIPOS_CON_CURSO: TipoMeta[] = [
   { value: "clase",       label: "Clase regular",  desc: "Clase de una asignatura del curso",            icon: BookOpen,       defaultColor: "#EC4899" },
   { value: "taller",      label: "Taller",         desc: "Taller, electivo o academia",                  icon: Sparkles,       defaultColor: "#8B5CF6" },
   { value: "orientacion", label: "Orientación",    desc: "Hora de jefatura/orientación con un curso",    icon: Users,          defaultColor: "#3B82F6" },
-  { value: "consejo",     label: "Consejo",        desc: "Consejo de profesores o reunión",              icon: ClipboardList,  defaultColor: "#14B8A6" },
 ]
 
 const TIPOS_LIBRES: TipoMeta[] = [
-  { value: "almuerzo",      label: "Almuerzo",      desc: "Bloque libre — comida",            icon: Coffee,    defaultColor: "#F59E0B" },
-  { value: "recreo",        label: "Recreo",        desc: "Bloque libre — descanso",          icon: BedDouble, defaultColor: "#22C55E" },
-  { value: "planificacion", label: "Planificación", desc: "Tiempo personal de planificación", icon: Brain,     defaultColor: "#6366F1" },
-  { value: "libre",         label: "Bloque libre",  desc: "Otro bloque libre",                icon: FileText,  defaultColor: "#94A3B8" },
+  { value: "almuerzo",              label: "Almuerzo",              desc: "Bloque no lectivo - comida",                 icon: Coffee,        defaultColor: "#F59E0B" },
+  { value: "recreo",                label: "Recreo",                desc: "Bloque no lectivo - descanso",               icon: BedDouble,     defaultColor: "#22C55E" },
+  { value: "planificacion",         label: "Planificación",         desc: "Tiempo personal de planificación",           icon: Brain,         defaultColor: "#6366F1" },
+  { value: "trabajo_colaborativo",  label: "Trabajo colaborativo",  desc: "Reuniones o trabajo docente colaborativo",   icon: Users,         defaultColor: "#0EA5E9" },
+  { value: "consejo",               label: "Consejo",               desc: "Consejo de profesores o reunión interna",    icon: ClipboardList, defaultColor: "#14B8A6" },
+  { value: "no_lectivo",            label: "No lectivo",            desc: "Otro bloque institucional no lectivo",       icon: FileText,      defaultColor: "#64748B" },
+  { value: "libre",                 label: "Bloque libre",          desc: "Otro bloque libre",                         icon: FileText,      defaultColor: "#94A3B8" },
 ]
 
 const HORAS_DISPONIBLES = Array.from({ length: 16 }, (_, i) => i + 7) // 7:00 a 22:00
@@ -231,7 +233,7 @@ export function BloqueWizard({
               </div>
               <div>
                 <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
-                  Bloques libres (no requieren curso)
+                  Bloques no lectivos (no requieren curso)
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   {TIPOS_LIBRES.map(t => (
@@ -262,8 +264,8 @@ export function BloqueWizard({
                     className="h-5 w-5 accent-primary"
                   />
                   <div>
-                    <p className="text-[13px] font-extrabold">🔁 Aplicar a todos los días (Lunes a Viernes)</p>
-                    <p className="text-[11px] opacity-80">Crea 5 bloques de una sola vez · ideal para almuerzo o recreo</p>
+                    <p className="text-[13px] font-extrabold">Aplicar a todos los días (Lunes a Viernes)</p>
+                    <p className="text-[11px] opacity-80">Crea 5 bloques de una sola vez; ideal para almuerzo, recreo o trabajo colaborativo</p>
                   </div>
                 </label>
               )}

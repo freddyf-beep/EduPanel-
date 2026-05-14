@@ -13,16 +13,16 @@ import {
 import { cn } from "@/lib/utils"
 import { cargarEstadoClases, guardarEstadoClases, cargarHorarioSemanal, ClaseHorario, esTipoLibre } from "@/lib/horario"
 import {
-  cargarActividadClase, cargarLibroClases, guardarLibroClases, cargarCronogramaUnidad,
-  guardarAnotacion, cargarAnotacion, buscarActividadPorFecha, listarLibroClasesCurso,
+  cargarActividadClase, buscarActividadPorFecha, buscarClasePlanificadaPorFecha,
 } from "@/lib/curriculo"
-import type { ActividadClase, BloqueLibroClase, EstadoAsistencia, LibroClasesGuardado } from "@/lib/curriculo"
+import type { ActividadClase, BloqueLibroClase, EstadoAsistencia } from "@/lib/curriculo"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useAuth } from "@/components/auth/auth-context"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { ResumenSemanal } from "@/components/edu-panel/dashboard/resumen-semanal"
 import { Badge } from "@/components/ui/badge"
 import { cargarEstudiantes } from "@/lib/estudiantes"
+import { cargarPreferencias, guardarPreferencias } from "@/lib/perfil"
 
 const DAYS   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
 const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
@@ -113,6 +113,8 @@ export function DashboardV2Shell() {
   const [firmado, setFirmado] = useState(false)
   const [claseNumero, setClaseNumero] = useState(1)
   const [unidadModal, setUnidadModal] = useState("unidad_1")
+  const [unidadCurricularModal, setUnidadCurricularModal] = useState("unidad_1")
+  const [claseVinculada, setClaseVinculada] = useState(false)
   const [savingAnotacion, setSavingAnotacion] = useState(false)
   const [anotacionGuardada, setAnotacionGuardada] = useState(false)
 
@@ -152,13 +154,23 @@ export function DashboardV2Shell() {
     Promise.all([
       cargarEstadoClases(claveHoy),
       cargarHorarioSemanal(),
+      cargarPreferencias(),
     ])
-      .then(([est, hor]) => {
+      .then(([est, hor, pref]) => {
+        const tieneCursosLectivos = hor.some(item => !esTipoLibre(item.tipo) && item.resumen.trim())
+        if (!pref?.onboardingCompletado && !tieneCursosLectivos) {
+          router.replace("/onboarding")
+          return
+        }
+        if (!pref?.onboardingCompletado && tieneCursosLectivos) {
+          guardarPreferencias({ ...(pref || {}), onboardingCompletado: true }).catch(console.error)
+        }
         setEstado(est)
         setHorarioSemanal(hor)
+        setLoading(false)
       })
-      .finally(() => setLoading(false))
-  }, [user, claveHoy])
+      .catch(() => setLoading(false))
+  }, [user, claveHoy, router])
 
   // Cargar stickies desde localStorage
   useEffect(() => {
@@ -186,7 +198,7 @@ export function DashboardV2Shell() {
   }
   const removeSticky = (id: string) => setStickies(prev => prev.filter(s => s.id !== id))
 
-  // Cargar stats por curso (en segundo plano, solo cursos académicos)
+  // Cargar stats por curso sin consultar libro/asistencia, que queda como prototipo.
   useEffect(() => {
     if (!user || horarioSemanal.length === 0) return
     const cursosAcademicos = Array.from(new Set(
@@ -199,27 +211,15 @@ export function DashboardV2Shell() {
 
     setLoadingStats(true)
     Promise.all(cursosAcademicos.map(async ({ resumen: c, color }) => {
-      const [estudiantes, libros] = await Promise.all([
-        cargarEstudiantes(c).catch(() => []),
-        listarLibroClasesCurso(ASIGNATURA, c).catch(() => [] as LibroClasesGuardado[]),
-      ])
+      const estudiantes = await cargarEstudiantes(c).catch(() => [])
       const bloquesHoy = horarioSemanal.filter(h => h.dia === diaHoy && h.resumen.trim() === c && !esTipoLibre(h.tipo)).length
-      const ultimoFirmado = libros.slice().reverse().find(l => l.bloques?.some(b => b.firmado))
-      // Asistencia: presentes / total en últimos 30 días
-      const ultimosLibros = libros.slice(-30)
-      let presentes = 0, totalAsistencias = 0
-      ultimosLibros.forEach(l => l.bloques?.forEach(b => b.asistencia?.forEach(a => {
-        totalAsistencias++
-        if (a.estado === "presente") presentes++
-      })))
-      const asistenciaPct = totalAsistencias > 0 ? Math.round((presentes / totalAsistencias) * 100) : undefined
       return {
         curso: c,
         color,
         alumnos: estudiantes.length,
         bloquesHoy,
-        ultimaFirma: ultimoFirmado?.fecha,
-        asistenciaPct,
+        ultimaFirma: undefined,
+        asistenciaPct: undefined,
       } as CursoStats
     })).then(setCursoStats).finally(() => setLoadingStats(false))
   }, [user, horarioSemanal, ASIGNATURA, diaHoy])
@@ -234,6 +234,7 @@ export function DashboardV2Shell() {
   const clasesHoy = useMemo(() => esDiaLaboral ? getClasesDelDia(diaHoy) : [], [esDiaLaboral, diaHoy, getClasesDelDia])
 
   const clasesDelDiaSeleccionado = useMemo(() => getClasesDelDia(selectedDay), [getClasesDelDia, selectedDay])
+  const bloquesLectivosHoy = useMemo(() => clasesHoy.filter(c => !esTipoLibre(c.tipo)), [clasesHoy])
 
   // Bloque actual / siguiente
   const { bloqueActual, bloqueSiguiente, progresoBloque } = useMemo(() => {
@@ -256,10 +257,10 @@ export function DashboardV2Shell() {
 
   // Estadísticas
   const statsHoy = useMemo(() => {
-    const total = clasesHoy.length
-    const completadas = clasesHoy.filter(c => c.completada).length
+    const total = bloquesLectivosHoy.length
+    const completadas = bloquesLectivosHoy.filter(c => c.completada).length
     return { total, completadas, pct: total > 0 ? Math.round((completadas / total) * 100) : 0 }
-  }, [clasesHoy])
+  }, [bloquesLectivosHoy])
 
   const toggleEstado = (uid: string) => {
     setEstado(prev => {
@@ -271,6 +272,7 @@ export function DashboardV2Shell() {
 
   // Cargar panel expandible
   const onExpandClase = async (clase: ClaseHorario) => {
+    if (esTipoLibre(clase.tipo)) return
     if (expandedClase === clase.uid) {
       setExpandedClase(null)
       return
@@ -282,47 +284,58 @@ export function DashboardV2Shell() {
     setBloquesLibro([])
     setAnotaciones("")
     setFirmado(false)
+    setClaseVinculada(false)
 
     try {
-      const fechaStr = fechaKey(new Date())
-      const fechaSlash = `${String(new Date().getDate()).padStart(2,"0")}/${String(new Date().getMonth()+1).padStart(2,"0")}/${new Date().getFullYear()}`
-
-      let claseN = 1, unidad = "unidad_1"
-      const cronos = await Promise.all(
-        ["unidad_1", "unidad_2", "unidad_3"].map(uid =>
-          cargarCronogramaUnidad(ASIGNATURA, clase.resumen, uid).catch(() => null)
-        )
-      )
-      let encontrada = false
-      for (const crono of cronos) {
-        if (!crono) continue
-        const claseHoy = crono.clases.find(c => c.fecha === fechaSlash)
-        if (claseHoy) {
-          claseN = claseHoy.numero
-          unidad = crono.unidadId || unidad
-          encontrada = true
-          break
+      const targetDate = new Date(now)
+      if (clase.dia) {
+        const idx = DAYS.indexOf(clase.dia)
+        if (idx !== -1) {
+          const currentIdx = now.getDay()
+          targetDate.setDate(now.getDate() + (idx - currentIdx))
         }
       }
-      if (!encontrada) {
-        const actHoy = await buscarActividadPorFecha(ASIGNATURA, clase.resumen, fechaSlash).catch(() => null)
+      const fechaStr = fechaKey(targetDate)
+      const fechaSlash = `${String(targetDate.getDate()).padStart(2,"0")}/${String(targetDate.getMonth()+1).padStart(2,"0")}/${targetDate.getFullYear()}`
+
+      const cleanResumen = clase.resumen?.trim() || ""
+      const cleanAsignatura = ASIGNATURA?.trim() || ""
+
+      let claseN = 1, unidad = "unidad_1", unidadCurricular = "unidad_1"
+      const encontrada = await buscarClasePlanificadaPorFecha(cleanAsignatura, cleanResumen, fechaSlash).catch(() => null)
+      let actHoy: ActividadClase | null = null
+      if (encontrada) {
+        claseN = encontrada.numeroClase
+        unidad = encontrada.unidadId
+        unidadCurricular = encontrada.unidadCurricularId || encontrada.cronograma.unidadId || unidad
+        setClaseVinculada(true)
+      } else {
+        actHoy = await buscarActividadPorFecha(cleanAsignatura, cleanResumen, fechaSlash).catch(() => null)
         if (actHoy) {
           claseN = actHoy.numeroClase
           unidad = actHoy.unidadId
+          unidadCurricular = actHoy.unidadId
+          setClaseVinculada(true)
         }
       }
       setClaseNumero(claseN)
       setUnidadModal(unidad)
+      setUnidadCurricularModal(unidadCurricular)
 
-      const [actividad, libro, anotTxt] = await Promise.all([
-        cargarActividadClase(clase.resumen, unidad, claseN, ASIGNATURA).catch(() => null),
-        cargarLibroClases(ASIGNATURA, clase.resumen, fechaSlash).catch(() => null),
-        cargarAnotacion(clase.resumen, fechaSlash, ASIGNATURA).catch(() => ""),
+      const cargarActividadDetectada = async () => {
+        if (actHoy) return actHoy
+        const principal = await cargarActividadClase(cleanResumen, unidad, claseN, cleanAsignatura).catch(() => null)
+        if (principal || unidadCurricular === unidad) return principal
+        return cargarActividadClase(cleanResumen, unidadCurricular, claseN, cleanAsignatura).catch(() => null)
+      }
+
+      const [actividad] = await Promise.all([
+        cargarActividadDetectada(),
       ])
       setActividadModal(actividad)
-      setBloquesLibro(libro?.bloques || [])
-      setAnotaciones(anotTxt || "")
-      setFirmado(libro?.bloques?.[0]?.firmado || false)
+      setBloquesLibro([])
+      setAnotaciones("")
+      setFirmado(false)
     } finally {
       setLoadingPanel(false)
     }
@@ -335,27 +348,9 @@ export function DashboardV2Shell() {
     })))
   }
 
-  const guardarLibroPanel = async (claseSeleccionada: ClaseHorario) => {
-    setSavingLibro(true)
-    try {
-      const fechaSlash = `${String(new Date().getDate()).padStart(2,"0")}/${String(new Date().getMonth()+1).padStart(2,"0")}/${new Date().getFullYear()}`
-      await guardarLibroClases(ASIGNATURA, claseSeleccionada.resumen, fechaSlash, bloquesLibro.map(b => ({ ...b, firmado })))
-    } finally {
-      setSavingLibro(false)
-    }
-  }
+  const guardarLibroPanel = async (_claseSeleccionada: ClaseHorario) => {}
 
-  const guardarAnotacionPanel = async (cursoStr: string) => {
-    setSavingAnotacion(true)
-    try {
-      const fechaSlash = `${String(new Date().getDate()).padStart(2,"0")}/${String(new Date().getMonth()+1).padStart(2,"0")}/${new Date().getFullYear()}`
-      await guardarAnotacion(cursoStr, fechaSlash, anotaciones, ASIGNATURA)
-      setAnotacionGuardada(true)
-      setTimeout(() => setAnotacionGuardada(false), 2000)
-    } finally {
-      setSavingAnotacion(false)
-    }
-  }
+  const guardarAnotacionPanel = async (_cursoStr: string) => {}
 
   const greeting = getGreeting(now)
   const GreetIcon = greeting.icon
@@ -368,7 +363,7 @@ export function DashboardV2Shell() {
       if (tag === "INPUT" || tag === "TEXTAREA" || target?.isContentEditable) return
       if (e.key.toLowerCase() === "h") {
         e.preventDefault()
-        const next = bloqueSiguiente || clasesHoy.find(c => !c.completada)
+        const next = [bloqueSiguiente, ...clasesHoy.filter(c => !c.completada)].find(c => c && !esTipoLibre(c.tipo))
         if (next) onExpandClase(next as ClaseHorario)
       } else if (["1","2","3","4","5"].includes(e.key)) {
         e.preventDefault()
@@ -390,13 +385,13 @@ export function DashboardV2Shell() {
   // Pendientes
   const pendientes = useMemo(() => {
     const items: { id: string; clase: ClaseHorario; tipo: "no_completada" | "no_firmada"; titulo: string }[] = []
-    clasesHoy.forEach(c => {
+    bloquesLectivosHoy.forEach(c => {
       if (!c.completada) {
         items.push({ id: `${c.uid}-comp`, clase: c, tipo: "no_completada", titulo: `${c.resumen} · ${c.horaInicio}-${c.horaFin} sin marcar como dictada` })
       }
     })
     return items
-  }, [clasesHoy])
+  }, [bloquesLectivosHoy])
 
   return (
     <div className="mx-auto max-w-[1400px] px-3 sm:px-5 pb-10">
@@ -430,13 +425,19 @@ export function DashboardV2Shell() {
                   <div className="h-full bg-white transition-all" style={{ width: `${progresoBloque}%` }} />
                 </div>
                 <div className="mt-1 flex items-center justify-between text-[11px] opacity-80">
-                  <span>{progresoBloque}% completado</span>
-                  <button
-                    onClick={() => onExpandClase(bloqueActual as ClaseHorario)}
-                    className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 font-bold hover:bg-white/30"
-                  >
-                    Abrir <ArrowRight className="h-3 w-3" />
-                  </button>
+                  <span>{esTipoLibre(bloqueActual.tipo) ? "Bloque no lectivo" : `${progresoBloque}% completado`}</span>
+                  {esTipoLibre(bloqueActual.tipo) ? (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 font-bold">
+                      Sin registro
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => onExpandClase(bloqueActual as ClaseHorario)}
+                      className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 font-bold hover:bg-white/30"
+                    >
+                      Abrir <ArrowRight className="h-3 w-3" />
+                    </button>
+                  )}
                 </div>
               </div>
             ) : bloqueSiguiente ? (
@@ -449,7 +450,7 @@ export function DashboardV2Shell() {
                   <span className="text-[12px] opacity-85">{bloqueSiguiente.horaInicio} – {bloqueSiguiente.horaFin}</span>
                 </div>
               </div>
-            ) : esDiaLaboral && clasesHoy.length > 0 ? (
+            ) : esDiaLaboral && bloquesLectivosHoy.length > 0 ? (
               <div className="mt-5 rounded-[14px] bg-white/15 backdrop-blur p-4 text-[12px] opacity-90">
                 Jornada finalizada — todas las clases registradas.
               </div>
@@ -470,6 +471,7 @@ export function DashboardV2Shell() {
         </div>
       </div>
 
+      <div className="mb-6" />
       {/* Tabs */}
       <div className="sticky top-0 z-10 -mx-3 mb-5 bg-background/85 px-3 backdrop-blur sm:-mx-5 sm:px-5">
         <div className="flex flex-wrap items-center gap-1 border-b border-border pb-1">
@@ -526,6 +528,8 @@ export function DashboardV2Shell() {
                   asignatura={ASIGNATURA}
                   claseNumero={claseNumero}
                   unidadModal={unidadModal}
+                  unidadCurricularModal={unidadCurricularModal}
+                  claseVinculada={claseVinculada}
                   firmado={firmado}
                   setFirmado={setFirmado}
                   anotaciones={anotaciones}
@@ -604,6 +608,8 @@ interface HoyViewProps {
   asignatura: string
   claseNumero: number
   unidadModal: string
+  unidadCurricularModal: string
+  claseVinculada: boolean
   firmado: boolean
   setFirmado: (v: boolean) => void
   anotaciones: string
@@ -622,7 +628,7 @@ function HoyView(props: HoyViewProps) {
     esDiaLaboral, clasesHoy, selectedDay, setSelectedDay, clasesDelDiaSeleccionado,
     expandedClase, onToggleExpand, onToggleEstado,
     actividadModal, bloquesLibro, loadingPanel, innerTab, setInnerTab,
-    asignatura, claseNumero, unidadModal,
+    asignatura, claseNumero, unidadModal, unidadCurricularModal, claseVinculada,
     firmado, setFirmado, anotaciones, setAnotaciones,
     savingAnotacion, anotacionGuardada, savingLibro,
     onTogglePresente, onGuardarLibro, onGuardarAnotacion, now,
@@ -647,7 +653,7 @@ function HoyView(props: HoyViewProps) {
           </button>
         ))}
         <span className="ml-auto text-[11px] text-muted-foreground italic">
-          Atajos: <kbd className="rounded bg-muted px-1">1-5</kbd> días · <kbd className="rounded bg-muted px-1">H</kbd> próxima clase · <kbd className="rounded bg-muted px-1">A</kbd> asistencia · <kbd className="rounded bg-muted px-1">F</kbd> firma
+          Atajos: <kbd className="rounded bg-muted px-1">1-5</kbd> días · <kbd className="rounded bg-muted px-1">H</kbd> próxima clase · <kbd className="rounded bg-muted px-1">A</kbd> asistencia demo · <kbd className="rounded bg-muted px-1">F</kbd> firma demo
         </span>
       </div>
 
@@ -663,6 +669,7 @@ function HoyView(props: HoyViewProps) {
         <div className="relative space-y-3 before:absolute before:left-[26px] before:top-2 before:bottom-2 before:w-0.5 before:bg-border">
           {clasesDelDiaSeleccionado.map(clase => {
             const isExpanded = expandedClase === clase.uid
+            const noLectivo = esTipoLibre(clase.tipo)
             const isNow = selectedDay === DAYS[now.getDay()] &&
               now.getHours() * 60 + now.getMinutes() >= timeToMin(clase.horaInicio) &&
               now.getHours() * 60 + now.getMinutes() < timeToMin(clase.horaFin)
@@ -671,18 +678,21 @@ function HoyView(props: HoyViewProps) {
                 <div
                   className={cn(
                     "absolute left-[18px] top-3 h-4 w-4 rounded-full border-2 z-10",
-                    clase.completada ? "bg-emerald-500 border-emerald-500" : isNow ? "bg-primary border-primary animate-pulse" : "bg-card border-border"
+                    !noLectivo && clase.completada ? "bg-emerald-500 border-emerald-500" : isNow ? "bg-primary border-primary animate-pulse" : "bg-card border-border"
                   )}
-                  style={!clase.completada && !isNow ? { borderColor: clase.color } : undefined}
+                  style={(noLectivo || !clase.completada) && !isNow ? { borderColor: clase.color } : undefined}
                 />
                 <article className={cn(
                   "rounded-[14px] border bg-card transition-all",
                   isNow && !isExpanded ? "border-primary shadow-md" : "border-border",
-                  isExpanded && "ring-2 ring-primary"
+                  isExpanded && !noLectivo && "ring-2 ring-primary",
+                  noLectivo && "bg-muted/20"
                 )}>
-                  <button
-                    onClick={() => onToggleExpand(clase as ClaseHorario)}
-                    className="w-full flex items-center gap-3 p-4 text-left"
+                  <div
+                    onClick={() => { if (!noLectivo) onToggleExpand(clase as ClaseHorario) }}
+                    className={cn("w-full flex items-center gap-3 p-4 text-left cursor-pointer", noLectivo && "cursor-default")}
+                    role={noLectivo ? undefined : "button"}
+                    tabIndex={noLectivo ? undefined : 0}
                   >
                     <div
                       className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[10px] text-white font-bold text-[12px]"
@@ -693,12 +703,17 @@ function HoyView(props: HoyViewProps) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="text-[13.5px] font-extrabold truncate">{clase.resumen}</span>
-                        {clase.completada && (
+                        {noLectivo && (
+                          <Badge className="bg-slate-100 text-slate-700 dark:bg-slate-900/40 dark:text-slate-300 border-slate-300 text-[9px] h-4">
+                            No lectivo
+                          </Badge>
+                        )}
+                        {!noLectivo && clase.completada && (
                           <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-300 text-[9px] h-4">
                             <Check className="h-2.5 w-2.5 mr-0.5" /> Dictada
                           </Badge>
                         )}
-                        {isNow && !clase.completada && (
+                        {!noLectivo && isNow && !clase.completada && (
                           <Badge className="bg-primary text-white border-primary text-[9px] h-4">EN CURSO</Badge>
                         )}
                       </div>
@@ -710,19 +725,25 @@ function HoyView(props: HoyViewProps) {
                         )}
                       </div>
                     </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); onToggleEstado(clase.uid) }}
-                      className={cn(
-                        "rounded-full px-2.5 py-1 text-[10.5px] font-bold transition-colors",
-                        clase.completada ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" : "bg-background border border-border hover:border-primary"
-                      )}
-                    >
-                      {clase.completada ? "✓ Hecha" : "Marcar"}
-                    </button>
-                    <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform", isExpanded && "rotate-90")} />
-                  </button>
+                    {noLectivo ? (
+                      <span className="rounded-full border border-border bg-background px-2.5 py-1 text-[10.5px] font-bold text-muted-foreground">
+                        Sin registro
+                      </span>
+                    ) : (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onToggleEstado(clase.uid) }}
+                        className={cn(
+                          "rounded-full px-2.5 py-1 text-[10.5px] font-bold transition-colors",
+                          clase.completada ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" : "bg-background border border-border hover:border-primary"
+                        )}
+                      >
+                        {clase.completada ? "✓ Hecha" : "Marcar"}
+                      </button>
+                    )}
+                    {!noLectivo && <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform", isExpanded && "rotate-90")} />}
+                  </div>
 
-                  {isExpanded && (
+                  {isExpanded && !noLectivo && (
                     <div className="border-t border-border p-4 space-y-3">
                       <div className="flex flex-wrap items-center gap-1 border-b border-border pb-1 -mx-1">
                         {([
@@ -766,14 +787,26 @@ function HoyView(props: HoyViewProps) {
                                     <p className="text-[12px] text-muted-foreground mt-1">{actividadModal.objetivo}</p>
                                   )}
                                   <Link
-                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadModal, n: String(claseNumero) }, asignatura))}
+                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: actividadModal.unidadId || unidadModal, clase: String(claseNumero) }, asignatura))}
                                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                                   >
                                     Editar en Actividades <ArrowRight className="h-3 w-3" />
                                   </Link>
                                 </div>
                               ) : (
-                                <p className="text-[12px] text-muted-foreground italic">No hay actividad planificada para esta clase.</p>
+                                <div className="rounded-[10px] border border-dashed border-border bg-background p-3">
+                                  <p className="text-[12px] text-muted-foreground italic">
+                                    {claseVinculada
+                                      ? "Esta fecha esta vinculada en el cronograma, pero todavia no tiene actividad redactada."
+                                      : "No hay actividad planificada para esta clase."}
+                                  </p>
+                                  <Link
+                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: unidadModal, clase: String(claseNumero) }, asignatura))}
+                                    className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
+                                  >
+                                    Abrir actividad <ArrowRight className="h-3 w-3" />
+                                  </Link>
+                                </div>
                               )}
                             </div>
                           )}
@@ -795,7 +828,7 @@ function HoyView(props: HoyViewProps) {
                                 href={buildUrl("/libro-clases", withAsignatura({}, asignatura))}
                                 className="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                               >
-                                Editar en Libro de Clases <ArrowRight className="h-3 w-3" />
+                                Ver prototipo de libro <ArrowRight className="h-3 w-3" />
                               </Link>
                             </div>
                           )}
@@ -803,7 +836,7 @@ function HoyView(props: HoyViewProps) {
                           {innerTab === "asistencia" && (
                             <div className="space-y-2">
                               {bloquesLibro.length === 0 ? (
-                                <p className="text-[12px] text-muted-foreground italic">Sin asistencia registrada.</p>
+                                <p className="text-[12px] text-muted-foreground italic">Asistencia en modo prototipo. No se cargan ni guardan registros reales.</p>
                               ) : (
                                 bloquesLibro[0].asistencia.map(est => (
                                   <div key={est.id} className="flex items-center gap-2 rounded-[8px] border border-border bg-background px-3 py-1.5">
@@ -850,10 +883,10 @@ function HoyView(props: HoyViewProps) {
                                 )}
                               >
                                 <Pen className="h-3.5 w-3.5" />
-                                {firmado ? "Firmado" : "Firmar clase"}
+                                {firmado ? "Firmado demo" : "Firma demo"}
                               </button>
                               <p className="text-[11px] text-muted-foreground italic">
-                                Firma interna de trazabilidad pedagógica. Se almacena junto al libro de clases.
+                                Prototipo visual. Esta acción no registra una firma real ni escribe en el libro de clases.
                               </p>
                               {bloquesLibro.length > 0 && (
                                 <button
@@ -948,7 +981,7 @@ function PendientesView({ pendientes, onExpand }: {
 // ─── Quick Actions Bar ────────────────────────────────────────────────────────
 function QuickActionsBar({ asignatura, cursosStats }: { asignatura: string; cursosStats: CursoStats[] }) {
   const acciones = [
-    { label: "Pasar lista",       icon: ClipboardList,  href: buildUrl("/libro-clases", withAsignatura({}, asignatura)),  cls: "from-amber-500 to-orange-500" },
+    { label: "Libro demo",        icon: ClipboardList,  href: buildUrl("/libro-clases", withAsignatura({}, asignatura)),  cls: "from-amber-500 to-orange-500" },
     { label: "Calificar",         icon: ClipboardCheck, href: buildUrl("/calificaciones", withAsignatura({}, asignatura)), cls: "from-emerald-500 to-teal-500" },
     { label: "Ver cronograma",    icon: CalendarDays,   href: buildUrl("/cronograma", withAsignatura({}, asignatura)),    cls: "from-cyan-500 to-blue-500" },
     { label: "Editar clase",      icon: Lightbulb,      href: buildUrl("/actividades", withAsignatura({}, asignatura)),       cls: "from-fuchsia-500 to-pink-500" },
@@ -1138,13 +1171,10 @@ function InsightsCard({ horario, clasesHoy, now, cursoStats }: {
     return acc + Math.max(0, fin - ini)
   }, 0) / 60
 
-  const promAsist = cursoStats.length > 0
-    ? Math.round(cursoStats.filter(c => c.asistenciaPct != null).reduce((a, b) => a + (b.asistenciaPct || 0), 0) / Math.max(1, cursoStats.filter(c => c.asistenciaPct != null).length))
-    : null
-
   const totalAlumnos = cursoStats.reduce((s, c) => s + c.alumnos, 0)
-  const completadasHoy = clasesHoy.filter(c => c.completada).length
-  const restantes = clasesHoy.length - completadasHoy
+  const clasesLectivasHoy = clasesHoy.filter(c => !esTipoLibre(c.tipo))
+  const completadasHoy = clasesLectivasHoy.filter(c => c.completada).length
+  const restantes = clasesLectivasHoy.length - completadasHoy
 
   return (
     <section className="rounded-[14px] border border-border bg-card p-4">
@@ -1164,8 +1194,8 @@ function InsightsCard({ horario, clasesHoy, now, cursoStats }: {
         </li>
         <li className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"><Activity className="h-3.5 w-3.5" /></div>
-          <span className="flex-1">Asistencia (30 días)</span>
-          <span className="font-extrabold">{promAsist != null ? `${promAsist}%` : "—"}</span>
+          <span className="flex-1">Libro de clases</span>
+          <span className="font-extrabold text-amber-600">Prototipo</span>
         </li>
         <li className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"><Flame className="h-3.5 w-3.5" /></div>
@@ -1177,10 +1207,10 @@ function InsightsCard({ horario, clasesHoy, now, cursoStats }: {
       <div className="mt-4 rounded-[10px] bg-pink-light p-3">
         <p className="text-[11.5px] text-primary leading-relaxed">
           <Sparkles className="inline h-3 w-3 mr-1" />
-          {clasesHoy.length === 0
+          {clasesLectivasHoy.length === 0
             ? "Día tranquilo. Aprovecha para planificar la próxima semana."
-            : completadasHoy === clasesHoy.length
-            ? `¡Tremendo! Completaste tus ${clasesHoy.length} clases del día.`
+            : completadasHoy === clasesLectivasHoy.length
+            ? `¡Tremendo! Completaste tus ${clasesLectivasHoy.length} clases del día.`
             : `Te quedan ${restantes} clase${restantes === 1 ? "" : "s"}. Tú puedes!`
           }
         </p>
@@ -1391,15 +1421,7 @@ function InsightsTab({ horario, cursoStats, estado }: {
   cursoStats: CursoStats[]
   estado: Record<string, boolean>
 }) {
-  // Tendencia simulada de últimas semanas (basada en estado actual + aleatoria semilla)
-  const distribucionAsist = cursoStats.map(s => ({
-    curso: s.curso,
-    color: s.color,
-    pct: s.asistenciaPct ?? 0,
-  })).sort((a, b) => b.pct - a.pct)
-
-  const enRiesgo = distribucionAsist.filter(c => c.pct > 0 && c.pct < 80)
-  const top = distribucionAsist.slice(0, 3)
+  const distribucionAsist: { curso: string; color: string; pct: number }[] = []
 
   const horarioAcademico = horario.filter(h => !esTipoLibre(h.tipo))
   const horarioLibre = horario.filter(h => esTipoLibre(h.tipo))
@@ -1410,12 +1432,6 @@ function InsightsTab({ horario, cursoStats, estado }: {
   const insights: { titulo: string; texto: string; icon: typeof Sparkles; tono: "ok" | "amber" | "rojo" | "info" }[] = []
   if (cursoStats.length === 0) {
     insights.push({ titulo: "Sin cursos configurados", texto: "Agrega bloques con tipo 'clase' en Mi Perfil para empezar.", icon: AlertCircle, tono: "amber" })
-  }
-  if (enRiesgo.length > 0) {
-    insights.push({ titulo: `${enRiesgo.length} curso(s) con asistencia bajo 80%`, texto: enRiesgo.map(c => c.curso).join(", "), icon: AlertCircle, tono: "rojo" })
-  }
-  if (top.length > 0 && top[0].pct >= 90) {
-    insights.push({ titulo: `${top[0].curso} es tu curso estrella`, texto: `Asistencia del ${top[0].pct}% en los últimos 30 días.`, icon: Sparkles, tono: "ok" })
   }
   if (totalHoyEnHorario > 0 && completadasHoy === totalHoyEnHorario) {
     insights.push({ titulo: "Día perfecto", texto: "Marcaste todas tus clases del día como completadas.", icon: Check, tono: "ok" })
@@ -1458,10 +1474,10 @@ function InsightsTab({ horario, cursoStats, estado }: {
 
         <section className="rounded-[14px] border border-border bg-card p-5">
           <h3 className="text-[14px] font-extrabold mb-3 inline-flex items-center gap-2">
-            <Activity className="h-4 w-4 text-primary" /> Asistencia por curso
+            <Activity className="h-4 w-4 text-primary" /> Asistencia por curso (prototipo)
           </h3>
           {distribucionAsist.length === 0 ? (
-            <p className="text-[12px] text-muted-foreground italic">Sin datos aún.</p>
+            <p className="text-[12px] text-muted-foreground italic">Módulo visible como prototipo. No calcula ni registra asistencia real.</p>
           ) : (
             <div className="space-y-2.5">
               {distribucionAsist.map(c => (

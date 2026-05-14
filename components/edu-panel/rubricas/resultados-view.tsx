@@ -341,7 +341,7 @@ export function ResultadosView({ rubricaId }: Props) {
       {/* Header */}
       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
         <button
-          onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
+          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas" }, asignatura)))}
           className="p-2 rounded-[10px] hover:bg-muted/60 transition-colors flex-shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />

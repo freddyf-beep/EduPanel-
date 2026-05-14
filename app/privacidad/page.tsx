@@ -52,6 +52,7 @@ export default function PrivacidadPage() {
               <li>Personalizar su experiencia (asignatura activa, tema, cursos).</li>
               <li>Generar planificaciones con copiloto IA (cuando el docente lo solicita).</li>
               <li>Sincronizar opcionalmente con Google Calendar (solo si el docente lo activa).</li>
+              <li>Crear respaldos opcionales en el Google Drive personal del docente (solo si lo activa).</li>
             </ul>
             <p>
               <strong>No usamos los datos para publicidad, perfilado comercial ni los vendemos
@@ -132,8 +133,8 @@ export default function PrivacidadPage() {
             <h2 className="text-lg font-bold mt-6 mb-2">9. Cookies y almacenamiento local</h2>
             <p>
               Usamos almacenamiento local del navegador (<code>localStorage</code>) para guardar:
-              tema visual, asignatura activa, configuración de IA (BYOK), y token de Google
-              Calendar (si lo activó). No usamos cookies de seguimiento ni publicidad.
+              tema visual, asignatura activa, configuracion de IA (BYOK), y tokens de Google
+              Calendar o Drive en sesion del navegador (si los activo). No usamos cookies de seguimiento ni publicidad.
             </p>
           </section>
 

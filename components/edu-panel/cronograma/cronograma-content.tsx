@@ -1045,7 +1045,7 @@ function CronogramaInner() {
                     href={buildUrl("/libro-clases", withAsignatura({ curso: bloque.curso, fecha: dateKey(hoy) }, ASIGNATURA))}
                     className="mt-3 flex w-full items-center justify-center gap-2 rounded-[10px] bg-primary px-4 py-2.5 text-[12px] font-bold text-primary-foreground hover:bg-pink-dark"
                   >
-                    Iniciar libro de clases <ArrowRight className="h-3.5 w-3.5" />
+                    Ver prototipo de libro <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               ))}

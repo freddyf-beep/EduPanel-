@@ -7,6 +7,9 @@ export type CampoPlanificacionDestino =
   | "cierre"
   | "materiales"
   | "tics"
+  | "oas"
+  | "habilidades"
+  | "actitudes"
   | "adecuacion"
   | "ignorar"
 
@@ -34,10 +37,13 @@ export function detectarCampoPlanificacion(titulo: string): CampoPlanificacionDe
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
 
+  if (/\boa\b|objetivos de aprendizaje|aprendizajes?/.test(key)) return "oas"
   if (/objetivo|proposito|aprendizaje esperado/.test(key)) return "objetivo"
   if (/inicio|motivacion|activacion|entrada/.test(key)) return "inicio"
   if (/desarrollo|actividad principal|secuencia|procedimiento/.test(key)) return "desarrollo"
   if (/cierre|sintesis|metacog|ticket/.test(key)) return "cierre"
+  if (/habilidad/.test(key)) return "habilidades"
+  if (/actitud/.test(key)) return "actitudes"
   if (/material|recurso/.test(key)) return "materiales"
   if (/tic|tecnolog|digital/.test(key)) return "tics"
   if (/adecuacion|pie|dua|necesidades|diversidad/.test(key)) return "adecuacion"

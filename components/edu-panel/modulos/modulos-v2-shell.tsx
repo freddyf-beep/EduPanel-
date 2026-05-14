@@ -79,12 +79,12 @@ const modules: Modulo[] = [
   {
     id: "libro-clases",
     title: "Libro de Clases",
-    description: "Asistencia, objetivo y firma de cada bloque.",
+    description: "Prototipo visual. No registra asistencia ni firma.",
     href: "/libro-clases",
     icon: ClipboardList,
     color: "#F59E0B",
     bg: "bg-amber-50 dark:bg-amber-950/30",
-    hint: "Modo express con teclas 1-4.",
+    hint: "Muestra no operativa para futuro.",
   },
   {
     id: "calificaciones",
@@ -147,7 +147,7 @@ function getContextualSuggestions(): { id: string; label: string; href: string; 
   const day = new Date().getDay() // 0=dom, 1=lun ... 6=sáb
   const hour = new Date().getHours()
   const all = [
-    { id: "pasar-lista",       label: "Pasar lista del día",      href: "/libro-clases",   icon: ClipboardList, when: () => day >= 1 && day <= 5 && hour >= 7 && hour <= 18 },
+    { id: "pasar-lista",       label: "Ver prototipo de libro",   href: "/libro-clases",   icon: ClipboardList, when: () => day >= 1 && day <= 5 && hour >= 7 && hour <= 18 },
     { id: "actividad",         label: "Planificar tu próxima clase",  href: "/actividades", icon: Lightbulb,    when: () => true },
     { id: "calificar",         label: "Registrar evaluaciones",   href: "/calificaciones", icon: ClipboardCheck, when: () => day >= 1 && day <= 5 && hour >= 14 },
     { id: "ver-cronograma",    label: "Revisar tu semana",        href: "/cronograma",     icon: CalendarDays,  when: () => day === 1 || day === 0 },

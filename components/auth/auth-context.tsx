@@ -3,7 +3,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
-import { guardarGoogleCalendarToken } from "@/lib/google-calendar"
 import { isEmailAllowed } from "@/lib/allowlist"
 
 interface AuthContextType {
@@ -13,6 +12,7 @@ interface AuthContextType {
   blockedByAllowlist: boolean
   signInWithGoogle: () => Promise<void>
   signInWithGoogleCalendar: () => Promise<void>
+  signInWithGoogleDrive: () => Promise<void>
   logout: () => Promise<void>
   recheckAllowlist: () => Promise<void>
 }
@@ -74,9 +74,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!credential?.accessToken) {
         throw new Error("No se recibio token de Google Calendar")
       }
+      const { guardarGoogleCalendarToken } = await import("@/lib/google-calendar")
       guardarGoogleCalendarToken(credential.accessToken)
     } catch (error) {
       console.error("Error connecting Google Calendar", error)
+      throw error
+    }
+  }
+
+  const signInWithGoogleDrive = async () => {
+    const provider = new GoogleAuthProvider()
+    provider.addScope("profile")
+    provider.addScope("email")
+    provider.addScope("https://www.googleapis.com/auth/drive.metadata.readonly")
+    provider.addScope("https://www.googleapis.com/auth/drive.file")
+    provider.setCustomParameters({ prompt: "consent" })
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      if (!credential?.accessToken) {
+        throw new Error("No se recibio token de Google Drive")
+      }
+      const { guardarGoogleDriveToken } = await import("@/lib/google-drive")
+      guardarGoogleDriveToken(credential.accessToken)
+    } catch (error) {
+      console.error("Error connecting Google Drive", error)
       throw error
     }
   }
@@ -99,7 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithGoogleCalendar, logout, recheckAllowlist }}>
+    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithGoogleCalendar, signInWithGoogleDrive, logout, recheckAllowlist }}>
       {children}
     </AuthContext.Provider>
   )

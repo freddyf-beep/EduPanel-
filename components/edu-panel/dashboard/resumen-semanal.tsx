@@ -48,6 +48,7 @@ export function ResumenSemanal({ asignatura, horario, fecha }: Props) {
   }, [fecha, horario])
 
   useEffect(() => {
+    if (fecha.getDay() !== 0) return
     let cancelled = false
     Promise.all(cursos.map(curso => listarLibroClasesCurso(asignatura, curso).catch(() => [])))
       .then((listas) => {

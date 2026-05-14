@@ -16,6 +16,8 @@ export type TipoHorario =
   | "taller"          // taller académico
   | "consejo"         // consejo de profesores
   | "orientacion"     // hora de orientación / jefatura
+  | "trabajo_colaborativo" // bloque no lectivo - trabajo colaborativo
+  | "no_lectivo"      // bloque no lectivo generico
   | "almuerzo"        // bloque libre - almuerzo
   | "planificacion"   // bloque libre - tiempo de planificación del docente
   | "recreo"          // bloque libre - recreo
@@ -40,11 +42,27 @@ export interface HorarioGuardado {
   updatedAt?: any
 }
 
-/** Tipos que NO representan una clase de un curso (no requieren carga académica). */
-const TIPOS_LIBRES: TipoHorario[] = ["almuerzo", "planificacion", "recreo", "libre"]
+/** Tipos que NO representan una clase de un curso (no requieren carga academica). */
+const TIPOS_NO_LECTIVOS: TipoHorario[] = [
+  "consejo",
+  "trabajo_colaborativo",
+  "no_lectivo",
+  "almuerzo",
+  "planificacion",
+  "recreo",
+  "libre",
+]
 
 export function esTipoLibre(tipo: TipoHorario): boolean {
-  return TIPOS_LIBRES.includes(tipo)
+  return TIPOS_NO_LECTIVOS.includes(tipo)
+}
+
+export function esBloqueNoLectivo(tipo: TipoHorario): boolean {
+  return esTipoLibre(tipo)
+}
+
+export function esBloqueLectivo(tipo: TipoHorario): boolean {
+  return !esTipoLibre(tipo)
 }
 
 export function agruparHorarioPorCurso(clases: ClaseHorario[]): Map<string, ClaseHorario[]> {
@@ -83,8 +101,10 @@ export function formatHorasMinutos(totalMinutos: number): string {
 export const ETIQUETA_TIPO_LIBRE: Record<TipoHorario, string> = {
   clase: "",
   taller: "",
-  consejo: "",
+  consejo: "Consejo de profesores",
   orientacion: "",
+  trabajo_colaborativo: "Trabajo colaborativo",
+  no_lectivo: "Bloque no lectivo",
   almuerzo: "Almuerzo",
   planificacion: "Planificación",
   recreo: "Recreo",

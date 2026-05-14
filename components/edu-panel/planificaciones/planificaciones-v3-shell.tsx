@@ -16,6 +16,8 @@ import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
+import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
 
 type VistaKey = "timeline" | "cursos" | "calendario" | "insights"
 const VISTAS: { key: VistaKey; label: string; icon: typeof Layers; key_short: string }[] = [
@@ -229,6 +231,20 @@ export function PlanificacionesV3Shell() {
               >
                 <Layers className="h-3.5 w-3.5" /> Vista anterior
               </button>
+              <DriveSheet
+                context={{ tipo: "planificaciones", asignatura: ASIGNATURA }}
+                title="Drive de planificaciones"
+                description="Tu Drive personal para revisar carpetas y documentos sin salir de EduPanel."
+                label="Drive"
+                buttonClassName="border-white/20 bg-white/15 text-white hover:border-white/50 hover:bg-white/25 hover:text-white"
+              />
+              <DriveWorkspaceActions
+                context={{ tipo: "planificaciones", asignatura: ASIGNATURA }}
+                compact
+                setupLabel="Crear carpeta"
+                openLabel="Abrir carpeta"
+                buttonClassName="border-white/20 bg-white/15 text-white hover:border-white/50 hover:bg-white/25 hover:text-white"
+              />
               <div className="relative ml-auto">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/70" />
                 <input

@@ -24,6 +24,7 @@ import {
   Calendar, Plus, Trash2, Download,
   Loader2, ArrowLeft, BookOpen, Layers, AlertCircle,
 } from "lucide-react"
+import { useAuth } from "@/components/auth/auth-context"
 import { cn } from "@/lib/utils"
 import {
   guardarPlanCurso, cargarPlanCurso, eliminarUnidadCompleta,
@@ -33,6 +34,17 @@ import type { UnidadPlan, ClaseCronograma } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { toast } from "@/hooks/use-toast"
+import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
+import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
+import { DriveBackupCursoCompleto } from "@/components/edu-panel/drive/drive-backup-curso-completo"
+import {
+  ensureEduPanelWorkspaceForContext,
+  getGoogleDriveErrorMessage,
+  getGoogleDriveToken,
+  isGoogleDriveAutosaveEnabled,
+  respaldarCursoVivoJsonDrive,
+  subirDocxYPdfADrive,
+} from "@/lib/google-drive"
 import {
   cargarCursoTipos,
   cargarNivelMapping,
@@ -47,6 +59,8 @@ import type { InfoColegio } from "@/lib/perfil"
 
 const COLORS = ["#F59E0B", "#3B82F6", "#EF4444", "#22C55E", "#8B5CF6", "#F03E6E", "#06B6D4", "#D97706"]
 const MAX_UNIDADES = 12
+const DRIVE_WORD_EXPORT_PREF_KEY = "edupanel_drive_export_word_enabled"
+const DRIVE_VISUAL_FORMAT_PREF_KEY = "edupanel_drive_visual_plan_format"
 
 type UnitType = "tradicional" | "invertida" | "proyecto" | "unidad0"
 
@@ -82,6 +96,7 @@ const DIAS_CORTOS = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"]
 
 export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   const { asignatura: ASIGNATURA } = useActiveSubject()
+  const { signInWithGoogleDrive } = useAuth()
 
   const [units, setUnits] = useState<UnidadPlan[]>([])
   const [nextId, setNextId] = useState(1)
@@ -106,12 +121,25 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   // Descarga
   const [downloading, setDownloading]           = useState(false)
   const [showFormatoModal, setShowFormatoModal]  = useState(false)
+  const [subirWordADrive, setSubirWordADrive]     = useState(false)
   const [nivelMapping, setNivelMapping]          = useState<NivelMapping>({})
   const [tipoCurricular, setTipoCurricular]      = useState<TipoCurricular>("oficial")
   const [colegioInfo, setColegioInfo]            = useState<InfoColegio | null>(null)
 
   // Auto-save
   const ignoreNextSaveRef = useRef(true)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    setSubirWordADrive(window.localStorage.getItem(DRIVE_WORD_EXPORT_PREF_KEY) === "true")
+  }, [])
+
+  const handleSubirWordADriveChange = (value: boolean) => {
+    setSubirWordADrive(value)
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(DRIVE_WORD_EXPORT_PREF_KEY, value ? "true" : "false")
+    }
+  }
 
   // ── Cargar unidades del curso ──
   useEffect(() => {
@@ -144,6 +172,25 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     const t = setTimeout(async () => {
       try {
         await guardarPlanCurso(ASIGNATURA, curso, units)
+        const driveToken = isGoogleDriveAutosaveEnabled() ? getGoogleDriveToken() : null
+        if (driveToken) {
+          try {
+            await respaldarCursoVivoJsonDrive(driveToken, {
+              context: { tipo: "planificaciones", asignatura: ASIGNATURA, curso },
+              data: {
+                asignatura: ASIGNATURA,
+                curso,
+                year: new Date().getFullYear(),
+                units,
+                cronogramasPorUnidad,
+                tipoCurricular,
+              },
+            })
+            await sincronizarPlanVisualDrive(driveToken)
+          } catch (error) {
+            console.warn("[drive-autosave:planificaciones]", error)
+          }
+        }
         setSaveStatus("saved")
         setTimeout(() => setSaveStatus("idle"), 1800)
       } catch {
@@ -267,11 +314,96 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     )
   }, [curso])
 
+  const descargarBlob = async (blob: Blob, fileName: string) => {
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = fileName
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const subirWordExportADrive = async (blob: Blob, fileName: string): Promise<boolean> => {
+    if (!subirWordADrive) return false
+    try {
+      let token = getGoogleDriveToken()
+      if (!token) {
+        await signInWithGoogleDrive()
+        token = getGoogleDriveToken()
+      }
+      if (!token) throw new Error("No hay token de Google Drive.")
+      const workspace = await ensureEduPanelWorkspaceForContext(token, {
+        tipo: "planificaciones",
+        asignatura: ASIGNATURA,
+        curso,
+      })
+      const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
+      await subirDocxYPdfADrive(token, { docx: blob, folderId, fileName })
+      return true
+    } catch (error) {
+      console.error("[drive-word-export]", error)
+      toast({
+        title: "Se descargo, pero no se pudo subir a Drive",
+        description: getGoogleDriveErrorMessage(error),
+        variant: "destructive",
+      })
+      return false
+    }
+  }
+
   // ── Descargar planificación ──
+  const sincronizarPlanVisualDrive = async (token: string) => {
+    try {
+      const rawPref = typeof window !== "undefined" ? window.localStorage.getItem(DRIVE_VISUAL_FORMAT_PREF_KEY) : null
+      const pref = rawPref ? JSON.parse(rawPref) as { formato?: FormatoDescarga; semestre?: SemestreDescarga } : {}
+      const formato = pref.formato || "tabla"
+      const semestre = pref.semestre || "ambos"
+      const nivelCurricular = tipoCurricular === "oficial"
+        ? (nivelMapping[curso] || "Sin nivel configurado")
+        : tipoCurricular === "taller"
+          ? "Taller / sin curriculum oficial"
+          : "Libre / sin curriculum oficial"
+      const unidadesExport = units.map((unit, idx) => ({
+        numero: idx + 1,
+        nombre: unit.name || `Unidad ${idx + 1}`,
+        oasBasales: [],
+        oasTransversales: [],
+        clases: [],
+        start: unit.start || undefined,
+        end: unit.end || undefined,
+        indicadoresPorOa: {},
+      }))
+      const res = await apiFetch("/api/export-planificacion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formato, semestre, nivel: nivelCurricular, asignatura: ASIGNATURA, unidades: unidadesExport }),
+      })
+      if (!res.ok) throw new Error("No se pudo generar el respaldo visual.")
+      const blob = await res.blob()
+      const workspace = await ensureEduPanelWorkspaceForContext(token, {
+        tipo: "planificaciones",
+        asignatura: ASIGNATURA,
+        curso,
+      })
+      const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
+      const suffix = formato === "tabla" && semestre !== "ambos" ? `_S${semestre}` : ""
+      await subirDocxYPdfADrive(token, {
+        docx: blob,
+        folderId,
+        fileName: `Planificaciones_${ASIGNATURA}_${curso}${suffix}.docx`,
+      })
+    } catch (error) {
+      console.warn("[drive-plan-visual-autosave]", error)
+    }
+  }
+
   const handleDescargar = async (formato: FormatoDescarga, semestre: SemestreDescarga, usarEncabezado: boolean) => {
     if (units.length === 0 || downloading) return
     setDownloading(true)
     setShowFormatoModal(false)
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(DRIVE_VISUAL_FORMAT_PREF_KEY, JSON.stringify({ formato, semestre }))
+    }
     try {
       const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
       const nivelCurricular = tipoCurricular === "oficial"
@@ -339,13 +471,14 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
         })
         if (!res.ok) throw new Error("Error al generar el documento")
         const blob = await res.blob()
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
         const suf = semestre === 1 ? "_S1" : semestre === 2 ? "_S2" : ""
-        a.download = `PlanAnual_${ASIGNATURA}${suf}_${new Date().getFullYear()}.docx`
-        a.click()
-        URL.revokeObjectURL(url)
+        const fileName = `PlanAnual_${ASIGNATURA}${suf}_${new Date().getFullYear()}.docx`
+        await descargarBlob(blob, fileName)
+        const uploaded = await subirWordExportADrive(blob, fileName)
+        if (uploaded) {
+          toast({ title: "Planificacion descargada y subida a Drive" })
+          return
+        }
         toast({ title: "Planificación descargada exitosamente" })
         return
       }
@@ -403,12 +536,13 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       })
       if (!res.ok) throw new Error("Error al generar el documento")
       const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `Planificacion_${ASIGNATURA}_${curso}_${new Date().getFullYear()}.docx`
-      a.click()
-      URL.revokeObjectURL(url)
+      const fileName = `Planificacion_${ASIGNATURA}_${curso}_${new Date().getFullYear()}.docx`
+      await descargarBlob(blob, fileName)
+      const uploaded = await subirWordExportADrive(blob, fileName)
+      if (uploaded) {
+        toast({ title: "Planificacion descargada y subida a Drive" })
+        return
+      }
       toast({ title: "Planificación descargada exitosamente" })
     } catch (err) {
       console.error("[handleDescargar]", err)
@@ -455,6 +589,27 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
           {saveStatus === "saving" && <span className="text-[11px] text-muted-foreground animate-pulse">Guardando...</span>}
           {saveStatus === "saved" && <span className="text-[11px] text-green-600 font-bold">✓ Guardado</span>}
           {saveStatus === "error" && <span className="text-[11px] text-red-500 font-bold">Error</span>}
+          <DriveSheet
+            context={{ tipo: "planificaciones", asignatura: ASIGNATURA, curso }}
+            title="Drive de planificaciones"
+            description="Tu Drive personal para revisar carpetas y documentos del curso sin abrir otra ventana."
+            label="Drive"
+          />
+          <DriveWorkspaceActions
+            context={{ tipo: "planificaciones", asignatura: ASIGNATURA, curso }}
+            compact
+            setupLabel="Crear carpeta"
+            backupLabel="Respaldar plan"
+            openLabel="Abrir carpeta"
+            buildBackupData={() => ({
+              asignatura: ASIGNATURA,
+              curso,
+              year: new Date().getFullYear(),
+              units,
+              cronogramasPorUnidad,
+              tipoCurricular,
+            })}
+          />
           <Link
             href={buildUrl("/planificaciones-v1", withAsignatura({ curso }, ASIGNATURA))}
             className="text-[11px] text-muted-foreground hover:text-foreground border border-border rounded-md px-2 py-1"
@@ -720,6 +875,26 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
             <p className="mt-2 text-[10px] text-muted-foreground text-center">
               Elige entre formato detallado o por tabla
             </p>
+
+            {/* Backup completo del curso en Exportaciones/ */}
+            <div className="mt-3 border-t border-border pt-3">
+              <p className="mb-2 text-[11px] font-bold text-muted-foreground">Respaldo de emergencia</p>
+              <DriveBackupCursoCompleto
+                asignatura={ASIGNATURA}
+                curso={curso}
+                buildData={() => ({
+                  asignatura: ASIGNATURA,
+                  curso,
+                  year: new Date().getFullYear(),
+                  units,
+                  cronogramasPorUnidad,
+                  tipoCurricular,
+                })}
+              />
+              <p className="mt-1.5 text-[10px] text-muted-foreground">
+                Guarda un JSON completo en Drive → Exportaciones/. Útil si se pierden datos en Firebase.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -730,6 +905,8 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
         downloading={downloading}
         onClose={() => setShowFormatoModal(false)}
         tieneEncabezado={!!colegioInfo?.encabezadoHabilitado}
+        subirADrive={subirWordADrive}
+        onSubirADriveChange={handleSubirWordADriveChange}
         onDescargar={handleDescargar}
       />
     </div>

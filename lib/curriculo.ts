@@ -456,6 +456,11 @@ export interface ActividadCronograma {
   cursoOrigen?: string
   /** ID del evento en Google Calendar si está sincronizado (Fase E3). */
   googleEventId?: string
+  /** Carpeta o archivos Drive asociados al evento (solo metadata minima). */
+  driveFolderId?: string
+  driveFolderUrl?: string
+  driveFileIds?: string[]
+  driveFiles?: Array<{ id: string; title: string; fileUrl: string; mimeType?: string; iconLink?: string }>
 }
 
 export interface CronogramaGuardado {
@@ -598,10 +603,10 @@ export async function listarLibroClasesCurso(
   asignatura: string,
   curso: string,
 ): Promise<LibroClasesGuardado[]> {
-  const snap = await getDocs(userCol("libro_clases"))
+  const q = query(userCol("libro_clases"), where("asignatura", "==", asignatura), where("curso", "==", curso)); const snap = await getDocs(q)
   return snap.docs
     .map((d) => d.data() as LibroClasesGuardado)
-    .filter((item) => item.asignatura === asignatura && item.curso === curso)
+    /* filter removed by query */
     .sort((a, b) => a.fecha.localeCompare(b.fecha))
 }
 
@@ -730,13 +735,93 @@ export async function cargarCronogramaUnidad(
   return snap.data() as CronogramaUnidadData
 }
 
-function normalizarFechaClase(fecha: string): string {
+export function normalizarFechaClase(fecha: string): string {
   if (!fecha) return ""
   if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
     const [year, month, day] = fecha.split("-")
     return `${day}/${month}/${year}`
   }
   return fecha.trim()
+}
+
+function fechaIsoClase(fecha: string): string {
+  const normalizada = normalizarFechaClase(fecha)
+  const match = normalizada.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
+  if (!match) return fecha.trim()
+  return `${match[3]}-${match[2]}-${match[1]}`
+}
+
+function fechaClaseCandidates(fecha: string): string[] {
+  return Array.from(new Set([
+    normalizarFechaClase(fecha),
+    fecha.trim(),
+    fechaIsoClase(fecha),
+  ].filter(Boolean)))
+}
+
+export interface ClasePlanificadaEncontrada {
+  unidadId: string
+  unidadCurricularId?: string
+  numeroClase: number
+  clase: ClaseCronograma
+  cronograma: CronogramaUnidadData
+}
+
+async function unidadIdsPlanificadas(asignatura: string, curso: string): Promise<Array<{ unidadId: string; unidadCurricularId?: string }>> {
+  const ids: Array<{ unidadId: string; unidadCurricularId?: string }> = []
+  const seen = new Set<string>()
+  const push = (unidadId?: string | number | null, unidadCurricularId?: string | null) => {
+    const id = String(unidadId ?? "").trim()
+    if (!id || seen.has(id)) return
+    seen.add(id)
+    ids.push({ unidadId: id, unidadCurricularId: unidadCurricularId || undefined })
+  }
+
+  const plan = await cargarPlanCurso(asignatura, curso).catch(() => null)
+  ;(plan?.units || []).forEach((unit, index) => {
+    push(String(unit.id), unit.unidadCurricularId)
+    push(unit.unidadCurricularId, unit.unidadCurricularId)
+    push(`unidad_${unit.id}`, unit.unidadCurricularId)
+    push(`unidad_${index + 1}`, unit.unidadCurricularId)
+  })
+
+  for (let i = 1; i <= 12; i += 1) {
+    push(`unidad_${i}`)
+    push(String(i))
+  }
+
+  return ids
+}
+
+export async function buscarClasePlanificadaPorFecha(
+  asignatura: string,
+  curso: string,
+  fecha: string,
+): Promise<ClasePlanificadaEncontrada | null> {
+  const fechas = new Set(fechaClaseCandidates(fecha).map(normalizarFechaClase))
+  const unidadIds = await unidadIdsPlanificadas(asignatura, curso)
+
+  const cronogramas = await Promise.all(
+    unidadIds.map(async (unidad) => ({
+      ...unidad,
+      cronograma: await cargarCronogramaUnidad(asignatura, curso, unidad.unidadId).catch(() => null),
+    }))
+  )
+
+  for (const item of cronogramas) {
+    if (!item.cronograma?.clases?.length) continue
+    const clase = item.cronograma.clases.find((entry) => fechas.has(normalizarFechaClase(entry.fecha)))
+    if (!clase) continue
+    return {
+      unidadId: item.unidadId,
+      unidadCurricularId: item.unidadCurricularId,
+      numeroClase: clase.numero,
+      clase,
+      cronograma: item.cronograma,
+    }
+  }
+
+  return null
 }
 
 export async function obtenerOAsActivosDelDia(
@@ -786,18 +871,20 @@ export async function buscarActividadPorFecha(
   curso: string,
   fechaStr: string,
 ): Promise<ActividadClase | null> {
-  const fechaObjetivo = normalizarFechaClase(fechaStr)
-  const q = query(
-    userCol("actividades_clase"),
-    where("fecha", "==", fechaObjetivo),
-    where("curso", "==", curso),
-    where("asignatura", "==", asignatura),
-    orderBy("numeroClase"),
-    limit(1)
-  )
-  const snap = await getDocs(q)
-  if (snap.empty) return null
-  return snap.docs[0].data() as ActividadClase
+  const fechas = fechaClaseCandidates(fechaStr)
+  for (const fechaObjetivo of fechas) {
+    const q = query(
+      userCol("actividades_clase"),
+      where("fecha", "==", fechaObjetivo),
+      where("curso", "==", curso),
+      where("asignatura", "==", asignatura),
+      orderBy("numeroClase"),
+      limit(1)
+    )
+    const snap = await getDocs(q)
+    if (!snap.empty) return snap.docs[0].data() as ActividadClase
+  }
+  return null
 }
 
 // ─── Actividad de Clase (planificación diaria) ────────────────────────────────
@@ -838,10 +925,16 @@ export interface ArchivoAdjunto {
   id: string
   nombre: string
   url: string
-  storagePath: string
+  storagePath?: string
   tipo: string
   tamaño: number
   subidoEn: number
+  provider?: "firebase" | "drive"
+  driveFileId?: string
+  driveFolderId?: string
+  webViewLink?: string
+  previewUrl?: string
+  syncedAt?: number
 }
 
 async function sincronizarFechaCronograma(actividad: Pick<ActividadClase, "asignatura" | "curso" | "unidadId" | "numeroClase" | "fecha">): Promise<void> {

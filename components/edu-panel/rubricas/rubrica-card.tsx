@@ -23,7 +23,7 @@ export function RubricaCard({ rubrica, asignatura, onEliminar, onDuplicar }: Pro
   )
 
   const irA = (view: string) =>
-    router.push(buildUrl("/rubricas", withAsignatura({ view, rubricaId: rubrica.id }, asignatura)))
+    router.push(buildUrl("/evaluaciones", withAsignatura({ view, rubricaId: rubrica.id }, asignatura)))
 
   const handleEliminar = async () => {
     if (!confirmando) { setConfirmando(true); return }

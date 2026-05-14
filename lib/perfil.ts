@@ -67,6 +67,10 @@ export interface PreferenciasUsuario {
    * CSS literal de "background" (gradient, color, etc.).
    */
   bannerStyle?: string
+  /**
+   * Bandera para saber si el usuario completó el Onboarding V2.
+   */
+  onboardingCompletado?: boolean
   updatedAt?: any
 }
 
@@ -80,5 +84,5 @@ export async function guardarPreferencias(pref: Omit<PreferenciasUsuario, "updat
   await setDoc(doc(db, "users", getUid(), "perfil_info", "preferencias"), {
     ...pref,
     updatedAt: serverTimestamp()
-  })
+  }, { merge: true })
 }

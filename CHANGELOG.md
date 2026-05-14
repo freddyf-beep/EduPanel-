@@ -156,3 +156,10 @@ version.txt
 ## v1.0.17 - 11/05/2026 12:04
 - Hotfix admin: acepta ambos correos de administrador conocidos aunque Vercel tenga una variable antigua o incompleta.
 - `/admin/invitaciones`, `/migrate`, helpers server-side y reglas de Firestore quedan alineados para no bloquear al administrador.
+
+## v1.0.18 - 14/05/2026 14:22
+- Sincronizacion selectiva de la actualizacion grande desde `edupanel_local`.
+- Nuevo panel Admin con dashboard, usuarios, invitaciones, curriculum, establecimientos y mantenimiento.
+- Nueva ruta `/evaluaciones` y mejoras en actividades: importacion Word, Notebook/PPT y Google Drive.
+- Nuevo flujo `/onboarding` y componentes Drive para respaldos y curso completo.
+- Mejoras en perfil, planificaciones, ver unidad, libro de clases, rubricas, privacidad y navegacion.

@@ -85,10 +85,11 @@ export async function subirArchivoClase(
     tipo: file.type,
     tamaño: file.size,
     subidoEn: Date.now(),
+    provider: "firebase",
   }
 }
 
-export async function eliminarArchivoClase(storagePath: string): Promise<void> {
+export async function eliminarArchivoClase(storagePath?: string): Promise<void> {
   if (!storagePath) return
   await deleteObject(ref(storage, storagePath))
 }

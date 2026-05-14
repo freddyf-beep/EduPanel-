@@ -26,18 +26,25 @@ import {
   isGoogleCalendarAutosyncEnabled, isGoogleCalendarConnected,
   setGoogleCalendarAutosync, sincronizarCronogramasGoogle,
 } from "@/lib/google-calendar"
+import {
+  desconectarGoogleDrive,
+  isGoogleDriveAutosaveEnabled,
+  isGoogleDriveConnected,
+  setGoogleDriveAutosave,
+} from "@/lib/google-drive"
 import { DEFAULT_ASIGNATURA, SUBJECT_STORAGE_KEY, UNIT_COLORS } from "@/lib/shared"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { MigracionPerfilBanner } from "@/components/edu-panel/perfil/migracion-perfil-banner"
 import { BloqueWizard } from "@/components/edu-panel/perfil/bloque-wizard"
+import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
 import {
   LayoutDashboard, CalendarRange, Folder, BookMarked, IdCard, Plug,
   Loader2, Plus, Trash2, Pencil, Clock, Users, Calendar, CheckCircle,
   AlertCircle, X, Upload, School, Sparkles, ArrowRight, ChevronRight,
   GraduationCap, Briefcase, FileText, Hash, RefreshCw, Save,
   Coffee, Brain, BedDouble, Music, ClipboardList, BookOpen, Palette, Check,
-  GripVertical,
+  GripVertical, HardDrive, ShieldCheck,
 } from "lucide-react"
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -60,8 +67,10 @@ const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"] as const
 const TIPO_META: Record<TipoHorario, { label: string; icon: any; libre: boolean }> = {
   clase:         { label: "Clase",          icon: BookOpen,      libre: false },
   taller:        { label: "Taller",         icon: Music,         libre: false },
-  consejo:       { label: "Consejo",        icon: ClipboardList, libre: false },
+  consejo:       { label: "Consejo",        icon: ClipboardList, libre: true  },
   orientacion:   { label: "Orientación",    icon: Users,         libre: false },
+  trabajo_colaborativo: { label: "Trabajo colaborativo", icon: Users, libre: true },
+  no_lectivo:    { label: "No lectivo",     icon: FileText,      libre: true  },
   almuerzo:      { label: "Almuerzo",       icon: Coffee,        libre: true  },
   planificacion: { label: "Planificación",  icon: Brain,         libre: true  },
   recreo:        { label: "Recreo",         icon: BedDouble,     libre: true  },
@@ -69,6 +78,9 @@ const TIPO_META: Record<TipoHorario, { label: string; icon: any; libre: boolean 
 }
 
 const ETIQUETA_TIPO_LIBRE: Record<string, string> = {
+  consejo: "Consejo de profesores",
+  trabajo_colaborativo: "Trabajo colaborativo",
+  no_lectivo: "Bloque no lectivo",
   almuerzo: "Almuerzo",
   planificacion: "Planificación",
   recreo: "Recreo",
@@ -193,10 +205,11 @@ function SaveBadge({ status }: { status: "idle" | "saving" | "saved" | "error" }
 //   Componente principal
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function PerfilV2Shell() {
-  const { user, signInWithGoogleCalendar } = useAuth()
+export function PerfilV2Shell({ isOnboardingMode = false }: { isOnboardingMode?: boolean }) {
+  const { user, signInWithGoogleCalendar, signInWithGoogleDrive } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const routeBase = isOnboardingMode ? "/onboarding" : "/perfil"
 
   const tabFromUrl = (searchParams.get("tab") as TabKey) || "resumen"
   const [tab, setTab] = useState<TabKey>(TABS.find(t => t.key === tabFromUrl) ? tabFromUrl : "resumen")
@@ -231,6 +244,12 @@ export function PerfilV2Shell() {
   const [connectingCalendar, setConnectingCalendar] = useState(false)
   const [syncingCalendar, setSyncingCalendar] = useState(false)
   const [calendarMessage, setCalendarMessage] = useState<string | null>(null)
+
+  // ── Drive ──
+  const [driveConnected, setDriveConnected] = useState(false)
+  const [driveAutosave, setDriveAutosaveState] = useState(false)
+  const [connectingDrive, setConnectingDrive] = useState(false)
+  const [driveMessage, setDriveMessage] = useState<string | null>(null)
 
   // ── Refs autosave ──
   const ignoreFirstHorarioRef = useRef(true)
@@ -328,6 +347,8 @@ export function PerfilV2Shell() {
   useEffect(() => {
     setCalendarConnected(isGoogleCalendarConnected())
     setCalendarAutosyncState(isGoogleCalendarAutosyncEnabled())
+    setDriveConnected(isGoogleDriveConnected())
+    setDriveAutosaveState(isGoogleDriveAutosaveEnabled())
   }, [])
 
   // Sync tab → URL
@@ -336,8 +357,8 @@ export function PerfilV2Shell() {
     if (tab === "resumen") params.delete("tab")
     else params.set("tab", tab)
     const qs = params.toString()
-    router.replace(qs ? `/perfil?${qs}` : "/perfil", { scroll: false })
-  }, [tab]) // eslint-disable-line react-hooks/exhaustive-deps
+    router.replace(qs ? `${routeBase}?${qs}` : routeBase, { scroll: false })
+  }, [tab, routeBase]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Autosaves ──
   useEffect(() => {
@@ -512,6 +533,29 @@ export function PerfilV2Shell() {
     } finally { setSyncingCalendar(false) }
   }
 
+  // Drive
+  const handleConnectDrive = async () => {
+    setConnectingDrive(true); setDriveMessage(null)
+    try {
+      await signInWithGoogleDrive()
+      setDriveConnected(isGoogleDriveConnected())
+      setDriveAutosaveState(isGoogleDriveAutosaveEnabled())
+      setDriveMessage(isGoogleDriveAutosaveEnabled()
+        ? "Google Drive conectado. Auto-respaldo Drive activado."
+        : "Google Drive conectado."
+      )
+    } catch (err) {
+      console.error(err)
+      setDriveMessage("No se pudo conectar Google Drive.")
+    } finally { setConnectingDrive(false) }
+  }
+  const handleDisconnectDrive = () => {
+    desconectarGoogleDrive()
+    setDriveConnected(false)
+    setDriveAutosaveState(false)
+    setDriveMessage("Google Drive desconectado.")
+  }
+
   // Logos uploader
   const makeLogoUploader = (field: "logoBase64" | "logoDerBase64") =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -566,9 +610,55 @@ export function PerfilV2Shell() {
   if (cursosDisponibles.length > 0 && cursosSinNivel.length === 0) setupDone++
   if (totalEstudiantes > 0) setupDone++
   const setupPct = Math.round((setupDone / totalSetup) * 100)
+  const onboardingReady = cursosDisponibles.length > 0
+
+  const handleFinishOnboarding = async () => {
+    if (!onboardingReady) {
+      setTab("semana")
+      toast({
+        title: "Falta tu primer curso",
+        description: "Crea al menos un bloque lectivo para entrar al dashboard.",
+        variant: "destructive",
+      })
+      return
+    }
+    setLoading(true)
+    try {
+      const prevPref = await cargarPreferencias()
+      await guardarPreferencias({ ...(prevPref || {}), onboardingCompletado: true })
+      router.push("/")
+    } catch (err) {
+      console.error(err)
+      setLoading(false)
+      toast({ title: "No se pudo finalizar el inicio", variant: "destructive" })
+    }
+  }
 
   return (
-    <div className="mx-auto max-w-[1320px] space-y-6 px-0 pt-2 sm:pt-4 lg:pt-6">
+    <div className="mx-auto max-w-[1320px] space-y-6 px-0 pt-2 sm:pt-4 lg:pt-6 pb-20">
+
+      {isOnboardingMode && (
+        <div className="sticky top-0 z-50 rounded-xl border-2 border-primary bg-primary/10 p-4 shadow-lg backdrop-blur mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-extrabold text-foreground flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              ¡Te damos la bienvenida a EduPanel!
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Este es tu panel inicial. Configura cursos, asignaturas, identidad y conexiones antes de entrar al dashboard diario.
+            </p>
+          </div>
+          <button
+            onClick={handleFinishOnboarding}
+            disabled={!onboardingReady}
+            title={onboardingReady ? "Entrar al dashboard" : "Primero crea al menos un curso con bloques lectivos"}
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-extrabold text-primary-foreground transition-all hover:scale-105 shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          >
+            Entrar al Dashboard <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
       {/* ─── Hero ─── */}
       <HeroBanner
         user={user}
@@ -667,7 +757,7 @@ export function PerfilV2Shell() {
           />
         )}
         {tab === "conexiones" && (
-          <ConexionesView
+          <ConexionesViewV2
             calendarConnected={calendarConnected}
             calendarAutosync={calendarAutosync}
             connectingCalendar={connectingCalendar}
@@ -677,6 +767,17 @@ export function PerfilV2Shell() {
             handleDisconnectCalendar={handleDisconnectCalendar}
             handleSyncCalendarNow={handleSyncCalendarNow}
             setCalendarAutosync={(v: boolean) => { setGoogleCalendarAutosync(v); setCalendarAutosyncState(v) }}
+            driveConnected={driveConnected}
+            driveAutosave={driveAutosave}
+            connectingDrive={connectingDrive}
+            driveMessage={driveMessage}
+            handleConnectDrive={handleConnectDrive}
+            handleDisconnectDrive={handleDisconnectDrive}
+            setDriveAutosave={(v: boolean) => {
+              setGoogleDriveAutosave(v)
+              setDriveAutosaveState(v)
+              setDriveMessage(v ? "Auto-respaldo Drive activado. Se actualizara al guardar." : "Auto-respaldo Drive desactivado.")
+            }}
           />
         )}
       </div>
@@ -1242,12 +1343,14 @@ function BloqueForm({
             <option value="clase">Clase regular</option>
             <option value="taller">Taller</option>
             <option value="orientacion">Orientación</option>
-            <option value="consejo">Consejo</option>
           </optgroup>
-          <optgroup label="Bloques libres">
+          <optgroup label="Bloques no lectivos">
             <option value="almuerzo">Almuerzo</option>
             <option value="planificacion">Planificación</option>
             <option value="recreo">Recreo</option>
+            <option value="trabajo_colaborativo">Trabajo colaborativo</option>
+            <option value="consejo">Consejo de profesores</option>
+            <option value="no_lectivo">Bloque no lectivo</option>
             <option value="libre">Bloque libre</option>
           </optgroup>
         </select>
@@ -1295,6 +1398,19 @@ function BloqueForm({
 //   Vista: Mi Semana (grid visual)
 // ─────────────────────────────────────────────────────────────────────────────
 
+type GrupoNoLectivo = {
+  key: string
+  tipo: TipoHorario
+  resumen: string
+  bloques: ClaseHorario[]
+  dias: ClaseHorario["dia"][]
+  mismaHora: boolean
+  horaInicio: string
+  horaFin: string
+  color: string
+  totalMinutos: number
+}
+
 function SemanaView({
   horario, upsertBloque, removeBloque, saveStatus, asignaturasSugeridas,
 }: {
@@ -1307,10 +1423,36 @@ function SemanaView({
   const [editingBloque, setEditingBloque] = useState<ClaseHorario | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [showWizard, setShowWizard] = useState(false)
+  const [editingGrupoNoLectivo, setEditingGrupoNoLectivo] = useState<GrupoNoLectivo | null>(null)
   const cursosSugeridos = useMemo(
     () => Array.from(new Set(horario.filter(h => !esTipoLibre(h.tipo)).map(h => h.resumen))),
     [horario]
   )
+  const gruposNoLectivos = useMemo<GrupoNoLectivo[]>(() => {
+    const grupos = new Map<string, ClaseHorario[]>()
+    horario.filter(b => esTipoLibre(b.tipo)).forEach(b => {
+      const key = `${b.tipo}::${b.resumen.trim().toLowerCase()}`
+      grupos.set(key, [...(grupos.get(key) || []), b])
+    })
+
+    return Array.from(grupos.entries()).map(([key, bloques]) => {
+      const ordenados = [...bloques].sort((a, b) => DIAS.indexOf(a.dia) - DIAS.indexOf(b.dia) || a.horaInicio.localeCompare(b.horaInicio))
+      const primera = ordenados[0]
+      const mismaHora = ordenados.every(b => b.horaInicio === primera.horaInicio && b.horaFin === primera.horaFin)
+      return {
+        key,
+        tipo: primera.tipo,
+        resumen: primera.resumen,
+        bloques: ordenados,
+        dias: ordenados.map(b => b.dia),
+        mismaHora,
+        horaInicio: primera.horaInicio,
+        horaFin: primera.horaFin,
+        color: primera.color,
+        totalMinutos: ordenados.reduce((acc, b) => acc + duracionBloque(b), 0),
+      }
+    }).sort((a, b) => a.resumen.localeCompare(b.resumen, "es"))
+  }, [horario])
 
   // Calcular rango de horas dinámico
   const minutosMin = horario.length > 0
@@ -1390,6 +1532,72 @@ function SemanaView({
         cursosSugeridos={cursosSugeridos}
         onCreate={(bloques) => bloques.forEach(b => upsertBloque(b))}
       />
+
+      {gruposNoLectivos.length > 0 && (
+        <div className="rounded-[16px] border border-border bg-card p-5">
+          <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <SectionTitle icon={Coffee} title="Bloques no lectivos" hint="Edita almuerzo, recreos y trabajo colaborativo como grupo" />
+              <p className="text-[12px] text-muted-foreground">
+                Estos bloques se ven en tu semana, pero no cuentan como clase, pendiente, leccionario ni asistencia.
+              </p>
+            </div>
+            <span className="rounded-full bg-muted px-3 py-1 text-[11px] font-bold text-muted-foreground">
+              {gruposNoLectivos.length} grupo{gruposNoLectivos.length === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          <div className="grid gap-2 md:grid-cols-2">
+            {gruposNoLectivos.map(grupo => {
+              const meta = TIPO_META[grupo.tipo]
+              const Icon = meta.icon
+              const horarioTexto = grupo.mismaHora ? `${grupo.horaInicio}-${grupo.horaFin}` : "Horarios distintos"
+              return (
+                <div key={grupo.key} className="rounded-[12px] border border-border bg-background p-3">
+                  <div className="flex items-start gap-3">
+                    <span className="mt-1 h-3 w-3 rounded-full" style={{ background: grupo.color }} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+                        <h3 className="truncate text-[13.5px] font-extrabold">{grupo.resumen}</h3>
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
+                          {meta.label}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-[11.5px] text-muted-foreground">
+                        {grupo.dias.join(", ")} · {horarioTexto} · {formatHorasMin(grupo.totalMinutos)}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setEditingGrupoNoLectivo(grupo)}
+                      className="rounded-lg border border-border bg-card px-2.5 py-1 text-[11px] font-bold text-foreground hover:border-primary hover:text-primary"
+                    >
+                      Editar grupo
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {editingGrupoNoLectivo && (
+        <GrupoNoLectivoEditor
+          grupo={editingGrupoNoLectivo}
+          allBloques={horario}
+          onCancel={() => setEditingGrupoNoLectivo(null)}
+          onSave={(updates) => {
+            editingGrupoNoLectivo.bloques.forEach(b => upsertBloque({ ...b, ...updates }))
+            setEditingGrupoNoLectivo(null)
+          }}
+          onDelete={() => {
+            editingGrupoNoLectivo.bloques.forEach(b => removeBloque(b.uid))
+            setEditingGrupoNoLectivo(null)
+          }}
+        />
+      )}
 
       {/* Grid visual de la semana */}
       <div className="rounded-[16px] border border-border bg-card p-5">
@@ -1549,6 +1757,139 @@ function SemanaView({
 // ─────────────────────────────────────────────────────────────────────────────
 //   Vista: Mis Cursos (cards detalladas)
 // ─────────────────────────────────────────────────────────────────────────────
+
+function GrupoNoLectivoEditor({
+  grupo, allBloques, onSave, onDelete, onCancel,
+}: {
+  grupo: GrupoNoLectivo
+  allBloques: ClaseHorario[]
+  onSave: (updates: Pick<ClaseHorario, "resumen" | "horaInicio" | "horaFin" | "color">) => void
+  onDelete: () => void
+  onCancel: () => void
+}) {
+  const [resumen, setResumen] = useState(grupo.resumen)
+  const [horaInicio, setHoraInicio] = useState(grupo.mismaHora ? grupo.horaInicio : "")
+  const [horaFin, setHoraFin] = useState(grupo.mismaHora ? grupo.horaFin : "")
+  const [color, setColor] = useState(grupo.color)
+  const meta = TIPO_META[grupo.tipo]
+  const Icon = meta.icon
+
+  const handleSave = () => {
+    if (!resumen.trim() || !horaInicio || !horaFin) {
+      toast({ title: "Faltan datos", description: "Completa etiqueta, inicio y fin.", variant: "destructive" })
+      return
+    }
+    if (horaToMinutos(horaFin) <= horaToMinutos(horaInicio)) {
+      toast({ title: "Hora invalida", description: "La hora de fin debe ser posterior al inicio.", variant: "destructive" })
+      return
+    }
+
+    const colisiones = grupo.bloques
+      .map(b => colisionaConHorario(allBloques, { ...b, resumen: resumen.trim(), horaInicio, horaFin, color }, b.uid))
+      .filter(Boolean)
+
+    if (colisiones.length > 0) {
+      toast({
+        title: "Hay choques de horario",
+        description: "Ajusta el rango antes de aplicar este cambio al grupo.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    onSave({ resumen: resumen.trim(), horaInicio, horaFin, color })
+  }
+
+  const handleDelete = () => {
+    if (!window.confirm(`Eliminar ${grupo.bloques.length} bloque(s) de "${grupo.resumen}"?`)) return
+    onDelete()
+  }
+
+  return (
+    <div className="fixed inset-0 z-[720] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={onCancel}>
+      <div className="w-full max-w-[560px] rounded-[18px] border border-border bg-card shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
+          <div className="flex items-center gap-3">
+            <div className="grid h-9 w-9 place-items-center rounded-xl" style={{ background: `${color}22`, color }}>
+              <Icon className="h-4 w-4" />
+            </div>
+            <div>
+              <h2 className="text-[15px] font-extrabold">Editar bloque no lectivo</h2>
+              <p className="text-[11px] text-muted-foreground">
+                Se aplicara a {grupo.dias.join(", ")}
+              </p>
+            </div>
+          </div>
+          <button type="button" onClick={onCancel} className="rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="space-y-4 px-5 py-5">
+          <div className="grid gap-3 sm:grid-cols-[1fr_110px]">
+            <div>
+              <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Etiqueta</label>
+              <input
+                value={resumen}
+                onChange={e => setResumen(e.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-[13px] font-semibold outline-none focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Color</label>
+              <input
+                type="color"
+                value={color}
+                onChange={e => setColor(e.target.value)}
+                className="mt-1 h-10 w-full cursor-pointer rounded-lg border border-border bg-background p-1"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Inicio</label>
+              <input
+                type="time"
+                value={horaInicio}
+                onChange={e => setHoraInicio(e.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-[13px] font-semibold outline-none focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Fin</label>
+              <input
+                type="time"
+                value={horaFin}
+                onChange={e => setHoraFin(e.target.value)}
+                className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-[13px] font-semibold outline-none focus:border-primary"
+              />
+            </div>
+          </div>
+
+          {!grupo.mismaHora && (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[11.5px] font-semibold text-amber-800">
+              Este grupo tenia horarios distintos por dia. Al guardar, todos quedaran con el mismo inicio y fin.
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2 border-t border-border px-5 py-4 sm:flex-row sm:items-center">
+          <button type="button" onClick={handleDelete} className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-[12px] font-bold text-red-600 hover:bg-red-100">
+            <Trash2 className="h-3.5 w-3.5" /> Eliminar grupo
+          </button>
+          <div className="flex-1" />
+          <button type="button" onClick={onCancel} className="rounded-lg px-3 py-2 text-[12px] font-bold text-muted-foreground hover:bg-muted">
+            Cancelar
+          </button>
+          <button type="button" onClick={handleSave} className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-[12px] font-bold text-primary-foreground hover:opacity-90">
+            <Save className="h-3.5 w-3.5" /> Aplicar al grupo
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function CursosView({
   horario, horarioPorCurso, nivelMapping, setNivelMapping, cursoTipos, setCursoTipos,
@@ -2783,6 +3124,7 @@ function IdentidadView({
 function ConexionesView({
   calendarConnected, calendarAutosync, connectingCalendar, syncingCalendar, calendarMessage,
   handleConnectCalendar, handleDisconnectCalendar, handleSyncCalendarNow, setCalendarAutosync,
+  driveConnected, connectingDrive, driveMessage, handleConnectDrive, handleDisconnectDrive,
 }: any) {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -2860,13 +3202,176 @@ function ConexionesView({
           </li>
           <li className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50" />
-            Drive (sincronizar documentos)
+            Classroom (publicar materiales)
           </li>
           <li className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50" />
             WhatsApp (avisos a apoderados)
           </li>
         </ul>
+      </div>
+    </div>
+  )
+}
+
+function ConexionesViewV2({
+  calendarConnected, calendarAutosync, connectingCalendar, syncingCalendar, calendarMessage,
+  handleConnectCalendar, handleDisconnectCalendar, handleSyncCalendarNow, setCalendarAutosync,
+  driveConnected, driveAutosave, connectingDrive, driveMessage, handleConnectDrive, handleDisconnectDrive, setDriveAutosave,
+}: any) {
+  return (
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <div className="rounded-[16px] border border-border bg-card p-5">
+        <SectionTitle icon={Calendar} title="Google Calendar" hint="Sincroniza tus actividades" />
+        <div className="mb-4 flex items-center justify-between rounded-[12px] border border-border bg-background px-4 py-3">
+          <div>
+            <div className="text-[12.5px] font-bold text-foreground">Estado de la conexion</div>
+            <div className="text-[11px] text-muted-foreground">
+              {calendarConnected
+                ? "Tu cuenta esta conectada. Las actividades pueden incluir enlaces Drive cuando existan."
+                : "Conecta tu cuenta de Google para enviar actividades y enlaces de apoyo."}
+            </div>
+          </div>
+          <span className={cn(
+            "rounded-full px-3 py-1 text-[10.5px] font-extrabold",
+            calendarConnected ? "border border-green-200 bg-green-50 text-green-700" : "border border-border bg-muted text-muted-foreground"
+          )}>
+            {calendarConnected ? "Conectado" : "Desconectado"}
+          </span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {calendarConnected ? (
+            <button
+              onClick={handleDisconnectCalendar}
+              className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-4 py-2 text-[12px] font-bold text-foreground hover:bg-muted/60"
+            >
+              Desconectar
+            </button>
+          ) : (
+            <button
+              onClick={handleConnectCalendar}
+              disabled={connectingCalendar}
+              className="inline-flex items-center gap-1.5 rounded-[10px] bg-slate-900 px-4 py-2 text-[12px] font-bold text-white hover:bg-slate-800 disabled:opacity-70"
+            >
+              {connectingCalendar && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+              Conectar Google Calendar
+            </button>
+          )}
+
+          <label className="inline-flex items-center gap-2 rounded-[10px] border border-border bg-card px-3 py-2 text-[11.5px] font-bold">
+            <input
+              type="checkbox"
+              checked={calendarAutosync}
+              disabled={!calendarConnected}
+              onChange={e => setCalendarAutosync(e.target.checked)}
+              className="h-4 w-4 accent-primary"
+            />
+            Auto-sync al guardar cronograma
+          </label>
+
+          <button
+            onClick={handleSyncCalendarNow}
+            disabled={!calendarConnected || syncingCalendar}
+            className="inline-flex items-center gap-1.5 rounded-[10px] border border-primary bg-card px-4 py-2 text-[12px] font-bold text-primary hover:bg-pink-light disabled:opacity-60"
+          >
+            {syncingCalendar && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+            Sincronizar ahora
+          </button>
+        </div>
+        {calendarMessage && (
+          <p className="mt-3 text-[11.5px] font-semibold text-muted-foreground">{calendarMessage}</p>
+        )}
+      </div>
+
+      <div className="rounded-[16px] border border-border bg-card p-5">
+        <SectionTitle icon={HardDrive} title="Google Drive personal" hint="Tus carpetas dentro de EduPanel" />
+        <div className="mb-4 flex items-center justify-between rounded-[12px] border border-border bg-background px-4 py-3">
+          <div>
+            <div className="text-[12.5px] font-bold text-foreground">Estado de la conexion</div>
+            <div className="text-[11px] text-muted-foreground">
+              {driveConnected
+                ? "Tu Drive personal esta disponible en planificaciones, unidades, pruebas y guias."
+                : "Conecta tu cuenta para abrir tu Drive personal sin salir de EduPanel."}
+            </div>
+          </div>
+          <span className={cn(
+            "rounded-full px-3 py-1 text-[10.5px] font-extrabold",
+            driveConnected ? "border border-green-200 bg-green-50 text-green-700" : "border border-border bg-muted text-muted-foreground"
+          )}>
+            {driveConnected ? "Conectado" : "Desconectado"}
+          </span>
+        </div>
+
+        <div className="mb-4 rounded-[12px] border border-green-200 bg-green-50 px-4 py-3 text-[11.5px] font-semibold leading-relaxed text-green-800">
+          <div className="mb-1 flex items-center gap-1.5 font-extrabold">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Privado por docente
+          </div>
+          EduPanel crea carpetas solo en tu Drive personal cuando lo autorizas. Guarda IDs y enlaces minimos, no contenido de documentos.
+        </div>
+
+        <div className="mb-4 rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3 text-[11.5px] leading-relaxed text-amber-900">
+          <div className="mb-2 flex items-center gap-1.5 font-extrabold">
+            <AlertCircle className="h-3.5 w-3.5" />
+            Antes de configurar Drive
+          </div>
+          <ul className="space-y-1">
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+              Google pedira permiso para ver metadata de Drive y crear archivos/carpetas que EduPanel gestione.
+            </li>
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+              Al usar "Crear / reparar", se crea una carpeta privada Edu-Panel con ano, asignatura, curso y unidad.
+            </li>
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+              Los archivos quedan en tu Drive; EduPanel guarda solo enlaces, IDs y contexto minimo para volver rapido.
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {driveConnected ? (
+            <button
+              onClick={handleDisconnectDrive}
+              className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-4 py-2 text-[12px] font-bold text-foreground hover:bg-muted/60"
+            >
+              Desconectar
+            </button>
+          ) : (
+            <button
+              onClick={handleConnectDrive}
+              disabled={connectingDrive}
+              className="inline-flex items-center gap-1.5 rounded-[10px] bg-slate-900 px-4 py-2 text-[12px] font-bold text-white hover:bg-slate-800 disabled:opacity-70"
+            >
+              {connectingDrive && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+              Conectar Google Drive
+            </button>
+          )}
+
+          <label className="inline-flex items-center gap-2 rounded-[10px] border border-border bg-card px-3 py-2 text-[11.5px] font-bold">
+            <input
+              type="checkbox"
+              checked={driveAutosave}
+              disabled={!driveConnected}
+              onChange={e => setDriveAutosave(e.target.checked)}
+              className="h-4 w-4 accent-primary"
+            />
+            Auto-respaldo JSON al guardar
+          </label>
+        </div>
+        {driveConnected && (
+          <DriveWorkspaceActions
+            className="mt-3"
+            setupLabel="Crear / reparar carpeta Edu-Panel"
+            openLabel="Abrir carpeta raiz"
+          />
+        )}
+        {driveMessage && (
+          <p className="mt-3 text-[11.5px] font-semibold text-muted-foreground">{driveMessage}</p>
+        )}
       </div>
     </div>
   )

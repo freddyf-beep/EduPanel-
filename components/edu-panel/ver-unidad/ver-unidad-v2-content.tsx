@@ -7,7 +7,8 @@ import { useSearchParams } from "next/navigation"
 import {
   ArrowLeft, Bookmark, CalendarDays, Check, CheckCircle2, Circle,
   ClipboardList, Download, FileText, Layers, Loader2, Plus, Target,
-  Trash2, BookOpen, Clock, Heart, Pencil, ArrowRight, Eye, X, AlertCircle
+  Trash2, BookOpen, Clock, Heart, Pencil, ArrowRight, Eye, X, AlertCircle,
+  MoreHorizontal, FolderOpen, UploadCloud, HardDrive
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -36,6 +37,13 @@ import type {
 } from "@/lib/curriculo"
 import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
+import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
+import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
+import {
+  actualizarUnidadEnRespaldoVivoDrive,
+  getGoogleDriveToken,
+  isGoogleDriveAutosaveEnabled,
+} from "@/lib/google-drive"
 import {
   cargarCursoTipos,
   cargarNivelMapping,
@@ -474,6 +482,83 @@ function ElementosCompactos({
   )
 }
 
+// ─── Menú de acciones secundarias del header ─────────────────────────────────
+function HeaderMoreMenu({
+  onOpenFolder,
+  onBackup,
+  legacyHref,
+}: {
+  onOpenFolder: () => Promise<void>
+  onBackup: () => Promise<void>
+  legacyHref: string
+}) {
+  const [open, setOpen] = useState(false)
+  const [working, setWorking] = useState<"folder" | "backup" | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener("mousedown", handler)
+    return () => document.removeEventListener("mousedown", handler)
+  }, [open])
+
+  const run = async (key: "folder" | "backup", fn: () => Promise<void>) => {
+    setWorking(key)
+    setOpen(false)
+    try { await fn() } finally { setWorking(null) }
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className="grid h-9 w-9 place-items-center rounded-[10px] border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        title="Más acciones"
+      >
+        {working ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <MoreHorizontal className="h-4 w-4" />
+        )}
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-1.5 w-52 rounded-[12px] border border-border bg-card p-1.5 shadow-[0_8px_28px_rgba(0,0,0,0.12)]">
+          <button
+            type="button"
+            onClick={() => run("folder", onOpenFolder)}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold text-foreground hover:bg-background"
+          >
+            <FolderOpen className="h-4 w-4 text-muted-foreground" />
+            Abrir carpeta en Drive
+          </button>
+          <button
+            type="button"
+            onClick={() => run("backup", onBackup)}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold text-foreground hover:bg-background"
+          >
+            <UploadCloud className="h-4 w-4 text-muted-foreground" />
+            Respaldar en Drive
+          </button>
+          <div className="my-1 h-px bg-border" />
+          <Link
+            href={legacyHref}
+            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12px] font-semibold text-muted-foreground hover:bg-background hover:text-foreground"
+          >
+            <Clock className="h-3.5 w-3.5" />
+            Diseño anterior
+          </Link>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function VerUnidadV2Inner() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
   const searchParams = useSearchParams()
@@ -663,6 +748,49 @@ function VerUnidadV2Inner() {
       actitudes.forEach(item => { matriz.actitudes[buildMatrixCellKey(item.id, unitIndex)] = !!item.seleccionado })
       await guardarPlanificacion(ASIGNATURA, cursoParam, planificacion?.fechas || {}, matriz)
 
+      const driveToken = isGoogleDriveAutosaveEnabled() ? getGoogleDriveToken() : null
+      if (driveToken) {
+        try {
+          await actualizarUnidadEnRespaldoVivoDrive(driveToken, {
+            context: {
+              tipo: "unidad",
+              asignatura: ASIGNATURA,
+              curso: cursoParam,
+              unidadId: unidadLocalParam,
+              unidadNombre: planUnit?.name || unidad?.nombre_unidad,
+            },
+            data: {
+              asignatura: ASIGNATURA,
+              curso: cursoParam,
+              unidadId: unidadLocalParam,
+              unidadCurricularId: unidadParam,
+              nombre: planUnit?.name || unidad?.nombre_unidad,
+              numeroClases: clases,
+              horas: horasParaGuardar,
+              verUnidad: {
+                descripcion,
+                contextoDocente,
+                objetivoDocente,
+                oas,
+                habilidades,
+                conocimientos,
+                actitudes,
+                actividades,
+                conocimientosPrevios,
+                recursosMaterialesUnidad,
+                estrategiasEvaluacion,
+              },
+              cronograma: {
+                fechas: cronogramaDates,
+                clases: cronogramaClases,
+              },
+            },
+          })
+        } catch (error) {
+          console.warn("[drive-autosave:unidad]", error)
+        }
+      }
+
       setSaveStatus("saved")
       setTimeout(() => setSaveStatus("idle"), 2500)
     } catch {
@@ -757,6 +885,11 @@ function VerUnidadV2Inner() {
     setRecursoDraft("")
   }
 
+  const ajustarTotalClases = (next: number) => {
+    const safe = Math.min(60, Math.max(1, Math.round(next || 1)))
+    setClases(safe)
+  }
+
   const addEstrategia = () => {
     if (!evalDraft.nombre.trim() || !evalDraft.instrumento.trim()) return
     const ponderacion = evalDraft.ponderacion.trim() ? Number(evalDraft.ponderacion) : null
@@ -815,6 +948,23 @@ function VerUnidadV2Inner() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <StatusPill status={saveStatus} />
+
+          {/* Drive — explorador contextualizado a la unidad */}
+          <DriveSheet
+            context={{
+              tipo: "unidad",
+              asignatura: ASIGNATURA,
+              curso: cursoParam,
+              unidadId: unidadLocalParam,
+              unidadNombre: planUnit?.name || unidad.nombre_unidad,
+            }}
+            title="Drive de esta unidad"
+            description="Tu Drive personal a mano para guias, pruebas, rubricas y materiales de la unidad."
+            label="Drive"
+            buttonClassName="gap-1.5 rounded-[10px] border border-border bg-card px-3 py-2 text-[12px] font-bold text-muted-foreground hover:border-primary hover:text-primary"
+          />
+
+          {/* Programa Oficial — solo si el curso tiene curriculum oficial */}
           {tipoCurricular === "oficial" && (
             <button
               onClick={() => setShowPdf(true)}
@@ -825,12 +975,57 @@ function VerUnidadV2Inner() {
               <span className="sm:hidden">Programa</span>
             </button>
           )}
-          <Link
-            href={buildUrl("/ver-unidad", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
-            className="rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-muted-foreground hover:bg-muted"
-          >
-            Diseno antiguo
-          </Link>
+
+          {/* Menú ⋯ — acciones secundarias de Drive + diseño anterior */}
+          <HeaderMoreMenu
+            onOpenFolder={async () => {
+              const { ensureEduPanelWorkspaceForContext, getGoogleDriveToken: getToken, buildDriveFolderUrl } = await import("@/lib/google-drive")
+              const token = getToken()
+              if (!token) { alert("Conecta Google Drive primero."); return }
+              const ws = await ensureEduPanelWorkspaceForContext(token, {
+                tipo: "unidad",
+                asignatura: ASIGNATURA,
+                curso: cursoParam,
+                unidadId: unidadLocalParam,
+                unidadNombre: planUnit?.name || unidad.nombre_unidad,
+              })
+              window.open(ws.focusFolder.webViewLink || buildDriveFolderUrl(ws.focusFolder.id), "_blank", "noopener,noreferrer")
+            }}
+            onBackup={async () => {
+              const { respaldarCursoVivoJsonDrive, getGoogleDriveToken: getToken, getGoogleDriveErrorMessage } = await import("@/lib/google-drive")
+              const token = getToken()
+              if (!token) { alert("Conecta Google Drive primero."); return }
+              try {
+                await respaldarCursoVivoJsonDrive(token, {
+                  context: {
+                    tipo: "unidad",
+                    asignatura: ASIGNATURA,
+                    curso: cursoParam,
+                    unidadId: unidadLocalParam,
+                    unidadNombre: planUnit?.name || unidad.nombre_unidad,
+                  },
+                  data: {
+                    asignatura: ASIGNATURA,
+                    curso: cursoParam,
+                    unidadId: unidadLocalParam,
+                    unidadCurricularId: unidadParam,
+                    nombre: planUnit?.name || unidad.nombre_unidad,
+                    numeroClases: clases,
+                    horas: horasParaGuardar,
+                    verUnidad: { descripcion, contextoDocente, objetivoDocente, oas, habilidades, conocimientos, actitudes, actividades, conocimientosPrevios, recursosMaterialesUnidad, estrategiasEvaluacion },
+                    cronograma: { fechas: cronogramaDates, clases: cronogramaClases },
+                  },
+                })
+                alert("Respaldo guardado en Drive.")
+              } catch (err) {
+                const { getGoogleDriveErrorMessage: msg } = await import("@/lib/google-drive")
+                alert(msg(err))
+              }
+            }}
+            legacyHref={buildUrl("/ver-unidad", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
+          />
+
+          {/* Guardar */}
           <button
             onClick={() => handleGuardar(false)}
             disabled={saving || saveStatus === "saving_silent"}
@@ -1112,9 +1307,39 @@ function VerUnidadV2Inner() {
               )}
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <div className="rounded-lg border border-border bg-background p-3">
-                  <span className="mb-1 flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground"><ClipboardList className="h-3.5 w-3.5" /> Clases</span>
-                  <p className="text-[14px] font-extrabold">{clases}</p>
-                  <p className="text-[10px] text-muted-foreground">Desde cronograma</p>
+                  <span className="mb-2 flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground"><ClipboardList className="h-3.5 w-3.5" /> Clases</span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => ajustarTotalClases(clases - 1)}
+                      disabled={clases <= 1}
+                      className="grid h-7 w-7 place-items-center rounded-md border border-border text-[14px] font-extrabold text-muted-foreground hover:bg-card disabled:opacity-40"
+                      title="Quitar una clase"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      min={1}
+                      max={60}
+                      value={clases}
+                      onChange={event => ajustarTotalClases(Number(event.target.value))}
+                      className="h-7 w-14 rounded-md border border-border bg-card text-center text-[13px] font-extrabold outline-none focus:border-primary"
+                      aria-label="Numero de clases de la unidad"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => ajustarTotalClases(clases + 1)}
+                      disabled={clases >= 60}
+                      className="grid h-7 w-7 place-items-center rounded-md border border-border text-[14px] font-extrabold text-muted-foreground hover:bg-card disabled:opacity-40"
+                      title="Agregar una clase"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Ajusta la cantidad antes de armar el cronograma.
+                  </p>
                 </div>
                 <label className="rounded-lg border border-border bg-background p-3">
                   <span className="mb-1 flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground"><Clock className="h-3.5 w-3.5" /> Horas</span>

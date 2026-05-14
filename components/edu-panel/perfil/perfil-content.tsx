@@ -8,6 +8,9 @@ import { agruparHorarioPorCurso, cargarHorarioSemanal, colisionaConHorario, guar
 
 // Etiqueta default por tipo de bloque libre
 const ETIQUETA_TIPO_LIBRE: Record<string, string> = {
+  consejo: "Consejo de profesores",
+  trabajo_colaborativo: "Trabajo colaborativo",
+  no_lectivo: "Bloque no lectivo",
   almuerzo: "Almuerzo",
   planificacion: "Planificación",
   recreo: "Recreo",
@@ -1080,12 +1083,14 @@ export function PerfilContent() {
                       <option value="clase">Clase regular</option>
                       <option value="taller">Taller / Extra</option>
                       <option value="orientacion">Orientación</option>
-                      <option value="consejo">Consejo</option>
                     </optgroup>
-                    <optgroup label="Bloques libres (sin curso)">
+                    <optgroup label="Bloques no lectivos (sin curso)">
                       <option value="almuerzo">Almuerzo</option>
                       <option value="planificacion">Planificación</option>
                       <option value="recreo">Recreo</option>
+                      <option value="trabajo_colaborativo">Trabajo colaborativo</option>
+                      <option value="consejo">Consejo de profesores</option>
+                      <option value="no_lectivo">Bloque no lectivo</option>
                       <option value="libre">Bloque libre</option>
                     </optgroup>
                   </select>

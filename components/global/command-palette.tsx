@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { BookOpen, CalendarDays, GraduationCap, Search, UserRound } from "lucide-react"
+import { BookOpen, CalendarDays, GraduationCap, LayoutList, Search, UserRound } from "lucide-react"
 import {
   CommandDialog,
   CommandEmpty,
@@ -71,10 +71,16 @@ export function CommandPalette() {
     },
     {
       id: "libro-hoy",
-      label: primerCurso ? `Libro de hoy - ${primerCurso}` : "Libro de hoy",
+      label: "Libro de clases (prototipo)",
       icon: BookOpen,
       href: buildUrl("/libro-clases", withAsignatura({ curso: primerCurso, fecha: todayIso() }, asignatura)),
       disabled: !primerCurso,
+    },
+    {
+      id: "evaluaciones",
+      label: "Evaluaciones",
+      icon: LayoutList,
+      href: buildUrl("/evaluaciones", withAsignatura({}, asignatura)),
     },
   ]), [asignatura, primerCurso])
 

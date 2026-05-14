@@ -512,7 +512,7 @@ export function RubricaImport({ mode = "import" }: Props) {
     try {
       await guardarRubrica(rubrica)
       setSaveStatus("saved")
-      router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))
+      router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas" }, asignatura)))
     } catch (saveError) {
       const message = saveError instanceof Error ? saveError.message : "Error al guardar"
       setSaveStatus("error")
@@ -548,7 +548,7 @@ export function RubricaImport({ mode = "import" }: Props) {
     <div className="mx-auto w-full max-w-[96rem] space-y-6">
       <div className="flex items-center gap-2 sm:gap-3">
         <button
-          onClick={() => router.push(buildUrl("/rubricas", withAsignatura({}, asignatura)))}
+          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas" }, asignatura)))}
           className="rounded-[10px] p-2 transition-colors hover:bg-muted/60 flex-shrink-0"
         >
           <ArrowLeft className="h-4 w-4" />

@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import DOMPurify from "isomorphic-dompurify"
+import { useAuth } from "@/components/auth/auth-context"
 import {
   ChevronLeft, Bookmark, Loader2, Check, ArrowRight,
   ChevronDown, ChevronRight, Plus, X, Target,
@@ -12,7 +13,8 @@ import {
   RefreshCw, BookOpen, Calendar, Sparkles, Bot, Blocks,
   Send, Settings2, Wand2, KeyRound, ChevronUp, Mic, MicOff,
   PanelRightOpen, SlidersHorizontal, RotateCcw, BrainCircuit, Copy,
-  Save, PencilLine, Trash2, Paperclip, UploadCloud, ExternalLink
+  Save, PencilLine, Trash2, Paperclip, UploadCloud, ExternalLink, HardDrive,
+  Download, Eye
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
@@ -35,7 +37,22 @@ import {
 } from "@/lib/ai/copilot"
 import { IaModal } from "@/components/edu-panel/actividades/ia-modal"
 import { ImportWordModal } from "@/components/edu-panel/actividades/import-word-modal"
+import { NotebookPptModal } from "@/components/edu-panel/actividades/notebook-ppt-modal"
+import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
 import { eliminarArchivoClase, formatoTamaño, subirArchivoClase } from "@/lib/storage"
+import {
+  buildDrivePreviewUrl,
+  actualizarUnidadEnRespaldoVivoDrive,
+  crearAccesoDirectoDrive,
+  ensureEduPanelClassFolder,
+  getGoogleDriveErrorMessage,
+  getGoogleDriveToken,
+  isGoogleDriveAutosaveEnabled,
+  isGoogleDriveConnected,
+  subirArchivoADrive,
+  subirDocxYPdfADrive,
+  type DriveItem,
+} from "@/lib/google-drive"
 import dynamic from 'next/dynamic'
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
@@ -345,11 +362,25 @@ function listsEqual(left: string[] = [], right: string[] = []) {
   return left.every((item, index) => item === right[index])
 }
 
+function normalizeImportMatch(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+}
+
+function attachmentSize(archivo: ArchivoAdjunto): number {
+  const raw = archivo as unknown as Record<string, unknown>
+  return Number(raw.tamano || raw["tama\u00f1o"] || raw["tama\u00c3\u00b1o"] || 0)
+}
+
 function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverride, claseOverride, compact, oasOverride }: ActividadesInnerProps = {}) {
   const { toast } = useToast()
+  const { signInWithGoogleDrive } = useAuth()
   const searchParams = useSearchParams()
   const cursoParam = cursoOverride || searchParams.get("curso") || "1° A"
-  const unidadParam = unidadOverride || searchParams.get("unitIdLocal") || searchParams.get("unidad") || "unidad_1"
+  const rawUnitIdLocal = searchParams.get("unitIdLocal")
+  const unidadParam = unidadOverride || rawUnitIdLocal || searchParams.get("unidad") || "unidad_1"
   const unidadCurricularParam = unidadCurricularOverride || searchParams.get("unidad") || unidadParam
   const claseParam = claseOverride || parseInt(searchParams.get("clase") || "1")
 
@@ -372,6 +403,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [exportingDrive, setExportingDrive] = useState(false)
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving_silent" | "saved" | "error" | "synced">("idle")
   const [tabDerecho, setTabDerecho] = useState<"desarrollo" | "adecuacion">("desarrollo")
   const [tabRecursos, setTabRecursos] = useState<"materiales" | "tics">("materiales")
@@ -379,11 +411,14 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [nuevoMaterial, setNuevoMaterial] = useState("")
   const [nuevoTic, setNuevoTic] = useState("")
   const [subiendoArchivo, setSubiendoArchivo] = useState(false)
+  const [subiendoDrive, setSubiendoDrive] = useState(false)
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({})
   const [dragArchivoActivo, setDragArchivoActivo] = useState(false)
   const [showEstadoMenu, setShowEstadoMenu] = useState(false)
   const [showBancoModal, setShowBancoModal] = useState(false)
+  const [previewArchivo, setPreviewArchivo] = useState<ArchivoAdjunto | null>(null)
   const [showImportWordModal, setShowImportWordModal] = useState(false)
+  const [showNotebookPptModal, setShowNotebookPptModal] = useState(false)
   const [bancoActividades, setBancoActividades] = useState<ActividadClase[]>([])
   const [loadingBanco, setLoadingBanco] = useState(false)
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
@@ -410,6 +445,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const generationAbortRef = useRef<AbortController | null>(null)
   const recognitionRef = useRef<any>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const driveFileInputRef = useRef<HTMLInputElement | null>(null)
 
   // Cargar config guardada
   useEffect(() => {
@@ -905,7 +941,20 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     setShowBancoModal(false)
   }
 
-  const importarDesdeWord = (payload: Partial<Record<"objetivo" | "inicio" | "desarrollo" | "cierre" | "materiales" | "tics" | "adecuacion", string | string[]>>) => {
+  const importarDesdeWord = (payload: Partial<Record<"objetivo" | "inicio" | "desarrollo" | "cierre" | "materiales" | "tics" | "adecuacion" | "oas" | "habilidades" | "actitudes", string | string[]>>) => {
+    const importedOaText = Array.isArray(payload.oas) ? normalizeImportMatch(payload.oas.join(" ")) : ""
+    const importedOaIds = importedOaText
+      ? oasCurriculo
+        .filter(oa => {
+          const numero = oa.numero ? normalizeImportMatch(`oa ${oa.numero}`) : ""
+          const id = normalizeImportMatch(oa.id)
+          const descripcion = normalizeImportMatch(oa.descripcion || "").slice(0, 80)
+          return (numero && importedOaText.includes(numero)) ||
+            importedOaText.includes(id) ||
+            (descripcion.length > 24 && importedOaText.includes(descripcion))
+        })
+        .map(oa => oa.id)
+      : []
     setActividad(prev => ({
       ...prev,
       objetivo: typeof payload.objetivo === "string" && payload.objetivo.trim() ? htmlToPlainText(payload.objetivo) : prev.objetivo,
@@ -913,6 +962,9 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       desarrollo: typeof payload.desarrollo === "string" && payload.desarrollo.trim() ? payload.desarrollo : prev.desarrollo,
       cierre: typeof payload.cierre === "string" && payload.cierre.trim() ? payload.cierre : prev.cierre,
       adecuacion: typeof payload.adecuacion === "string" && payload.adecuacion.trim() ? payload.adecuacion : prev.adecuacion,
+      oaIds: importedOaIds.length ? Array.from(new Set([...(prev.oaIds || []), ...importedOaIds])) : prev.oaIds,
+      habilidades: Array.isArray(payload.habilidades) && payload.habilidades.length ? payload.habilidades : prev.habilidades,
+      actitudes: Array.isArray(payload.actitudes) && payload.actitudes.length ? payload.actitudes : prev.actitudes,
       materiales: Array.isArray(payload.materiales) && payload.materiales.length ? payload.materiales : prev.materiales,
       tics: Array.isArray(payload.tics) && payload.tics.length ? payload.tics : prev.tics,
     }))
@@ -1061,7 +1113,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     if (!isAutoSave) setSaving(true)
     try {
       const claseData = clases.find(c => c.numero === selectedClase)
-      await guardarActividadClase({
+      const actividadGuardada = {
         id: `${cursoParam}_${unidadParam}_clase${selectedClase}`,
         asignatura: ASIGNATURA,
         curso: cursoParam,
@@ -1088,7 +1140,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         actividadEvaluacion: actividad.actividadEvaluacion,
         desarrolloFormal: actividad.desarrolloFormal,
         indicadoresPorOa: actividad.indicadoresPorOa,
-      })
+      }
+      await guardarActividadClase(actividadGuardada)
+      await sincronizarPlanificacionClaseDrive(actividadGuardada)
+      await sincronizarClaseEnRespaldoVivoDrive(actividadGuardada)
       ignoreNextSaveRef.current = true
       setActividad(p => ({ ...p, estado: "planificada" }))
       setSaveStatus("saved")
@@ -1097,6 +1152,94 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       setSaveStatus("error")
       setTimeout(() => setSaveStatus("idle"), 3000)
     } finally { setSaving(false) }
+  }
+
+  const handleExportarClaseDrive = async () => {
+    if (exportingDrive) return
+    setExportingDrive(true)
+    try {
+      const token = await ensureDriveToken()
+      const { classPlanificacionFolder } = await ensureEduPanelClassFolder(token, {
+        ...driveContext,
+        numeroClase: selectedClase,
+      })
+
+      const oasSeleccionados = oasCurriculo.filter(oa => (actividad.oaIds || []).includes(oa.id))
+      const oasBasales = oasSeleccionados
+        .filter(oa => oa.tipo !== "oat")
+        .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+      const oasTransversales = oasSeleccionados
+        .filter(oa => oa.tipo === "oat")
+        .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+      const indicadores = oasSeleccionados.flatMap(oa => {
+        const selectedIds = actividad.indicadoresPorOa?.[oa.id]
+        return (oa.indicadores || [])
+          .filter(ind => ind.seleccionado)
+          .filter(ind => !selectedIds || selectedIds.includes(ind.id))
+          .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
+      })
+
+      const res = await apiFetch("/api/export-planificacion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formato: "detallado",
+          nivel: nivelCurricular || cursoParam,
+          asignatura: ASIGNATURA,
+          unidades: [{
+            numero: Number(unidadParam.replace(/\D/g, "")) || 1,
+            nombre: unidadData?.nombre_unidad || unidadParam,
+            oasBasales,
+            oasTransversales,
+            clases: [{
+              numero: selectedClase,
+              oasOcupados: oasBasales,
+              indicadores,
+              objetivo: stripRichText(actividad.objetivo || ""),
+              inicio: stripRichText(actividad.inicio || ""),
+              actividadInicio: "",
+              desarrollo: stripRichText(actividad.desarrollo || ""),
+              cierre: stripRichText(actividad.cierre || ""),
+              recursos: actividad.materiales || [],
+              tics: actividad.tics || [],
+              criteriosEvaluacion: [],
+            }],
+          }],
+        }),
+      })
+
+      if (!res.ok) throw new Error("No se pudo generar el documento.")
+      const blob = await res.blob()
+
+      // Descargar localmente
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `Clase_${String(selectedClase).padStart(2, "0")}_${ASIGNATURA}_${cursoParam}.docx`.replace(/\s+/g, "_")
+      a.click()
+      URL.revokeObjectURL(url)
+
+      // Subir DOCX + PDF a Drive en Clases/Clase XX/Planificacion/
+      await subirDocxYPdfADrive(token, {
+        docx: blob,
+        folderId: classPlanificacionFolder.id,
+        fileName: `Clase_${String(selectedClase).padStart(2, "0")}_Planificacion.docx`,
+      })
+
+      toast({
+        title: "Clase exportada",
+        description: `Descargada y subida a Drive en Clase ${String(selectedClase).padStart(2, "0")}/Planificacion/ (Word + PDF).`,
+      })
+    } catch (error) {
+      toast({
+        title: "No se pudo exportar",
+        description: getGoogleDriveErrorMessage(error),
+        variant: "destructive",
+      })
+      console.error("[handleExportarClaseDrive]", error)
+    } finally {
+      setExportingDrive(false)
+    }
   }
 
   const handleBorrarClase = async () => {
@@ -1193,6 +1336,227 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   }
 
   const actividadClaseId = buildActividadClaseId(cursoParam, unidadParam, selectedClase, ASIGNATURA)
+  const driveContext = {
+    tipo: "unidad" as const,
+    asignatura: ASIGNATURA,
+    curso: cursoParam,
+    unidadId: unidadParam,
+    unidadNombre: unidadData?.nombre_unidad || unidadParam,
+  }
+
+  const ensureDriveToken = async () => {
+    let token = getGoogleDriveToken()
+    if (!token || !isGoogleDriveConnected()) {
+      await signInWithGoogleDrive()
+      token = getGoogleDriveToken()
+    }
+    if (!token) throw new Error("No se recibio autorizacion de Google Drive.")
+    return token
+  }
+
+  const esArchivoTic = (file: File) => {
+    const name = file.name.toLowerCase()
+    const type = file.type.toLowerCase()
+    return type.includes("presentation") ||
+      type.includes("video") ||
+      name.endsWith(".ppt") ||
+      name.endsWith(".pptx") ||
+      name.endsWith(".mp4") ||
+      name.includes("tic")
+  }
+
+  const archivoAdjuntoDesdeDrive = (item: DriveItem, folderId?: string): ArchivoAdjunto => ({
+    id: `drive_${item.id}_${Date.now()}`,
+    nombre: item.name,
+    url: item.webViewLink || buildDrivePreviewUrl(item) || "",
+    storagePath: "",
+    tipo: item.mimeType,
+    tamaño: Number(item.size || 0),
+    subidoEn: Date.now(),
+    provider: "drive",
+    driveFileId: item.id,
+    driveFolderId: folderId || item.parents?.[0],
+    webViewLink: item.webViewLink,
+    previewUrl: buildDrivePreviewUrl(item) || undefined,
+    syncedAt: Date.now(),
+  })
+
+  const handleAdjuntarDrive = async (item: DriveItem) => {
+    if ((actividad.archivos || []).some(archivo => archivo.driveFileId === item.id)) {
+      toast({ title: "Ya estaba adjunto", description: "Ese archivo de Drive ya esta en esta clase." })
+      return
+    }
+
+    // Adjuntar el enlace a la clase
+    setActividad(prev => ({ ...prev, archivos: [...(prev.archivos || []), archivoAdjuntoDesdeDrive(item)] }))
+
+    // Crear shortcut en Unidad/Materiales/ o Unidad/TICs/ según el tipo de archivo
+    try {
+      const token = getGoogleDriveToken()
+      if (token && isGoogleDriveConnected()) {
+        const { workspace } = await ensureEduPanelClassFolder(token, {
+          ...driveContext,
+          numeroClase: selectedClase,
+        })
+        const isTic = esArchivoTic({ name: item.name, type: item.mimeType } as unknown as File)
+        const indexFolder = isTic ? workspace.folders.tics : workspace.folders.materiales
+        if (indexFolder) {
+          await crearAccesoDirectoDrive(token, {
+            targetId: item.id,
+            parentId: indexFolder.id,
+            name: item.name,
+          }).catch(err => console.warn("[drive-shortcut-adjuntar]", err))
+        }
+        toast({
+          title: "Archivo adjuntado",
+          description: `Enlace guardado y acceso directo creado en ${isTic ? "TICs" : "Materiales"} de la unidad.`,
+        })
+      } else {
+        toast({ title: "Archivo Drive adjuntado", description: "Se guardo el enlace. Conecta Drive para crear el acceso directo en la unidad." })
+      }
+    } catch (err) {
+      // No bloquear si falla el shortcut — el adjunto ya quedó
+      console.warn("[handleAdjuntarDrive shortcut]", err)
+      toast({ title: "Archivo Drive adjuntado", description: "Se guardo el enlace a la clase." })
+    }
+  }
+
+  const handleSubirArchivosDrive = async (files: FileList | File[]) => {
+    const selectedFiles = Array.from(files)
+    if (selectedFiles.length === 0 || subiendoDrive) return
+    setSubiendoDrive(true)
+    try {
+      const token = await ensureDriveToken()
+      const { workspace, classMaterialesFolder, classTicsFolder } = await ensureEduPanelClassFolder(token, {
+        ...driveContext,
+        numeroClase: selectedClase,
+      })
+      for (const file of selectedFiles) {
+        const progressKey = `drive_${file.name}_${file.lastModified}`
+        const isTic = esArchivoTic(file)
+        const targetFolder = isTic ? classTicsFolder : classMaterialesFolder
+        const indexFolder = isTic ? workspace.folders.tics : workspace.folders.materiales
+        setUploadProgress(prev => ({ ...prev, [progressKey]: 0 }))
+        const driveFile = await subirArchivoADrive(token, {
+          file,
+          folderId: targetFolder.id,
+          onProgress: progress => setUploadProgress(prev => ({ ...prev, [progressKey]: progress })),
+        })
+        if (indexFolder) {
+          await crearAccesoDirectoDrive(token, {
+            targetId: driveFile.id,
+            parentId: indexFolder.id,
+            name: driveFile.name,
+          }).catch(error => console.warn("[drive-shortcut]", error))
+        }
+        setActividad(prev => ({ ...prev, archivos: [...(prev.archivos || []), archivoAdjuntoDesdeDrive(driveFile, targetFolder.id)] }))
+        setUploadProgress(prev => {
+          const next = { ...prev }
+          delete next[progressKey]
+          return next
+        })
+      }
+      toast({ title: "Archivo subido a Drive", description: "Quedo en la carpeta de la clase y con acceso directo en la unidad." })
+    } catch (error) {
+      toast({ title: "No se pudo subir a Drive", description: getGoogleDriveErrorMessage(error), variant: "destructive" })
+      console.error("[handleSubirArchivosDrive]", error)
+    } finally {
+      setSubiendoDrive(false)
+      if (driveFileInputRef.current) driveFileInputRef.current.value = ""
+    }
+  }
+
+  const sincronizarPlanificacionClaseDrive = async (actividadGuardada: Partial<ActividadClase>) => {
+    if (!isGoogleDriveAutosaveEnabled()) return
+    const token = getGoogleDriveToken()
+    if (!token) return
+    const tieneContenido = [
+      actividadGuardada.objetivo,
+      actividadGuardada.inicio,
+      actividadGuardada.desarrollo,
+      actividadGuardada.cierre,
+      actividadGuardada.adecuacion,
+    ].some(value => stripRichText(String(value || "")).length > 0)
+    if (!tieneContenido) return
+
+    try {
+      const { classPlanificacionFolder } = await ensureEduPanelClassFolder(token, {
+        ...driveContext,
+        numeroClase: selectedClase,
+      })
+      const oasSeleccionados = oasCurriculo.filter(oa => (actividadGuardada.oaIds || []).includes(oa.id))
+      const oasBasales = oasSeleccionados
+        .filter(oa => oa.tipo !== "oat")
+        .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+      const oasTransversales = oasSeleccionados
+        .filter(oa => oa.tipo === "oat")
+        .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+      const indicadores = oasSeleccionados.flatMap(oa => {
+        const selectedIds = actividadGuardada.indicadoresPorOa?.[oa.id]
+        return (oa.indicadores || [])
+          .filter(ind => ind.seleccionado)
+          .filter(ind => !selectedIds || selectedIds.includes(ind.id))
+          .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
+      })
+      const res = await apiFetch("/api/export-planificacion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formato: "detallado",
+          nivel: nivelCurricular || cursoParam,
+          asignatura: ASIGNATURA,
+          unidades: [{
+            numero: Number(unidadParam.replace(/\D/g, "")) || 1,
+            nombre: unidadData?.nombre_unidad || unidadParam,
+            oasBasales,
+            oasTransversales,
+            clases: [{
+              numero: selectedClase,
+              oasOcupados: oasBasales,
+              indicadores,
+              objetivo: stripRichText(actividadGuardada.objetivo || ""),
+              inicio: stripRichText(actividadGuardada.inicio || ""),
+              actividadInicio: "",
+              desarrollo: stripRichText(actividadGuardada.desarrollo || ""),
+              cierre: stripRichText(actividadGuardada.cierre || ""),
+              recursos: actividadGuardada.materiales || [],
+              tics: actividadGuardada.tics || [],
+              criteriosEvaluacion: [],
+            }],
+          }],
+        }),
+      })
+      if (!res.ok) throw new Error("No se pudo generar Word de la clase.")
+      const blob = await res.blob()
+      await subirDocxYPdfADrive(token, {
+        docx: blob,
+        folderId: classPlanificacionFolder.id,
+        fileName: `Clase_${String(selectedClase).padStart(2, "0")}_Planificacion.docx`,
+      })
+    } catch (error) {
+      console.warn("[drive-class-visual-autosave]", error)
+    }
+  }
+
+  const sincronizarClaseEnRespaldoVivoDrive = async (actividadGuardada: Partial<ActividadClase>) => {
+    if (!isGoogleDriveAutosaveEnabled()) return
+    const token = getGoogleDriveToken()
+    if (!token) return
+    try {
+      await actualizarUnidadEnRespaldoVivoDrive(token, {
+        context: driveContext,
+        data: {
+          unidadId: unidadParam,
+          unidadNombre: unidadData?.nombre_unidad || unidadParam,
+          clases: {
+            [String(selectedClase).padStart(2, "0")]: actividadGuardada,
+          },
+        },
+      })
+    } catch (error) {
+      console.warn("[drive-class-json-autosave]", error)
+    }
+  }
 
   const handleSubirArchivos = async (files: FileList | File[]) => {
     const selectedFiles = Array.from(files)
@@ -1241,7 +1605,9 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
   const handleEliminarArchivo = async (archivo: ArchivoAdjunto) => {
     try {
-      await eliminarArchivoClase(archivo.storagePath)
+      if (archivo.provider !== "drive" && !archivo.driveFileId) {
+        await eliminarArchivoClase(archivo.storagePath)
+      }
       setActividad(prev => ({
         ...prev,
         archivos: (prev.archivos || []).filter(item => item.id !== archivo.id),
@@ -1310,6 +1676,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     ...(actividad.tics || []),
     ...(actividad.archivos || []).map(archivo => archivo.nombre),
   ].some(value => stripRichText(String(value || "")).length > 0)
+  const claseActualCronograma = clases.find(c => c.numero === selectedClase)
 
   const verUnidadParams: Record<string, string> = unidadCurricularParam !== unidadParam
     ? { curso: cursoParam, unidad: unidadCurricularParam, unitIdLocal: unidadParam }
@@ -1342,7 +1709,28 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       <ImportWordModal
         open={showImportWordModal}
         onOpenChange={setShowImportWordModal}
+        driveContext={driveContext}
         onImport={importarDesdeWord}
+        oasDisponibles={oasCurriculo}
+        habilidadesDisponibles={dispHabilidades}
+        actitudesDisponibles={dispActitudes}
+      />
+      <NotebookPptModal
+        open={showNotebookPptModal}
+        onOpenChange={setShowNotebookPptModal}
+        asignatura={ASIGNATURA}
+        curso={cursoParam}
+        unidadId={unidadParam}
+        unidadNombre={unidadData?.nombre_unidad || unidadCurricularParam || unidadParam}
+        unidadProposito={unidadData?.proposito || ""}
+        nivelCurricular={nivelCurricular}
+        numeroClase={selectedClase}
+        totalClases={clases.length}
+        claseCronograma={claseActualCronograma}
+        actividad={actividad}
+        oas={oasCurriculo}
+        contextoDocente={unidadContextoDocente}
+        objetivoDocente={unidadObjetivoDocente}
       />
       <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-3 sm:px-4 md:px-6")}>
         {/* Header — oculto en modo compact */}
@@ -1377,6 +1765,16 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
               {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
               <span className="hidden sm:inline">Borrar clase</span>
               <span className="sm:hidden">Borrar</span>
+            </button>
+            <button
+              onClick={handleExportarClaseDrive}
+              disabled={exportingDrive || !tieneContenidoClase}
+              className="flex items-center gap-1.5 border-[1.5px] border-border bg-card text-muted-foreground text-[12px] sm:text-[13px] font-bold rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 hover:border-primary hover:text-primary transition-colors disabled:opacity-50"
+              title="Exportar esta clase a Word + PDF y subir a Drive"
+            >
+              {exportingDrive ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+              <span className="hidden sm:inline">Exportar a Drive</span>
+              <span className="sm:hidden">Exportar</span>
             </button>
             <button
               onClick={() => handleGuardar(false)}
@@ -1994,6 +2392,17 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                   </p>
                 )}
 
+                <button
+                  type="button"
+                  onClick={() => setShowNotebookPptModal(true)}
+                  disabled={!tieneContenidoClase}
+                  className="flex items-center justify-center gap-2 w-full border border-primary/30 bg-primary/5 text-primary font-bold text-[13px] rounded-[10px] px-5 py-3 hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:hover:bg-primary/5 print:hidden"
+                  title={tieneContenidoClase ? "Preparar fuente, prompt y enlace para NotebookLM" : "Completa la planificacion de la clase antes de preparar el PPT"}
+                >
+                  <Monitor className="w-4 h-4" />
+                  Preparar PPT con Notebook
+                </button>
+
                 {/* Materiales y TICs */}
                 <div className="bg-card border border-border rounded-[14px] overflow-hidden">
                   <div className="flex border-b border-border">
@@ -2109,15 +2518,35 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                         {(actividad.archivos || []).length}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={subiendoArchivo}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-[11px] font-bold hover:bg-muted/60 disabled:opacity-50"
-                    >
-                      {subiendoArchivo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />}
-                      Adjuntar
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={subiendoArchivo}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-[11px] font-bold hover:bg-muted/60 disabled:opacity-50"
+                      >
+                        {subiendoArchivo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />}
+                        Adjuntar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => driveFileInputRef.current?.click()}
+                        disabled={subiendoDrive}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 px-3 py-1.5 text-[11px] font-bold text-primary hover:bg-pink-light disabled:opacity-50"
+                      >
+                        {subiendoDrive ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <HardDrive className="h-3.5 w-3.5" />}
+                        Subir a Drive
+                      </button>
+                      <DriveSheet
+                        context={driveContext}
+                        label="Desde Drive"
+                        title="Adjuntar desde Drive"
+                        description="Selecciona un archivo de tu Drive personal para vincularlo a esta clase."
+                        buttonClassName="rounded-lg px-3 py-1.5 text-[11px]"
+                        onSelectFile={handleAdjuntarDrive}
+                        selectLabel="Adjuntar a clase"
+                      />
+                    </div>
                   </div>
                   <div className="p-4">
                     <input
@@ -2127,6 +2556,14 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                       multiple
                       accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp4,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,video/mp4"
                       onChange={e => { if (e.target.files) void handleSubirArchivos(e.target.files) }}
+                    />
+                    <input
+                      ref={driveFileInputRef}
+                      type="file"
+                      className="hidden"
+                      multiple
+                      accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp4,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,video/mp4"
+                      onChange={e => { if (e.target.files) void handleSubirArchivosDrive(e.target.files) }}
                     />
                     <div
                       onDragOver={e => {
@@ -2163,32 +2600,46 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                       <p className="text-[12px] text-muted-foreground">Sin adjuntos para esta clase.</p>
                     ) : (
                       <div className="space-y-2">
-                        {(actividad.archivos || []).map(archivo => (
+                        {(actividad.archivos || []).map(archivo => {
+                          const esDrive = archivo.provider === "drive" || !!archivo.driveFileId
+                          const href = archivo.webViewLink || archivo.url
+                          const sizeValue = attachmentSize(archivo)
+                          const sizeLabel = sizeValue > 0 ? formatoTamaño(sizeValue) : "Sin peso local"
+                          return (
                           <div key={archivo.id} className="flex items-center gap-3 rounded-lg bg-background px-3 py-2 text-[12px]">
                             <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
                             <div className="min-w-0 flex-1">
-                              <p className="truncate font-semibold text-foreground">{archivo.nombre}</p>
-                              <p className="text-[10px] text-muted-foreground">{formatoTamaño(archivo.tamaño)} · {archivo.tipo || "archivo"}</p>
+                              <div className="flex min-w-0 items-center gap-2">
+                                <p className="truncate font-semibold text-foreground">{archivo.nombre}</p>
+                                {esDrive && (
+                                  <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[9px] font-extrabold uppercase text-primary">
+                                    Drive
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-[10px] text-muted-foreground">{sizeLabel} · {archivo.tipo || "archivo"}</p>
                             </div>
-                            <a
-                              href={archivo.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-card hover:text-primary"
-                              title="Abrir archivo"
-                            >
-                              <ExternalLink className="h-3.5 w-3.5" />
-                            </a>
+                            {href && (
+                              <button
+                                type="button"
+                                onClick={() => setPreviewArchivo(archivo)}
+                                className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-card hover:text-primary"
+                                title="Vista previa"
+                              >
+                                <Eye className="h-3.5 w-3.5" />
+                              </button>
+                            )}
                             <button
                               type="button"
                               onClick={() => void handleEliminarArchivo(archivo)}
                               className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-red-50 hover:text-red-500"
-                              title="Eliminar archivo"
+                              title={esDrive ? "Quitar enlace" : "Eliminar archivo"}
                             >
                               <X className="h-3.5 w-3.5" />
                             </button>
                           </div>
-                        ))}
+                          )
+                        })}
                       </div>
                     )}
                   </div>
@@ -2311,6 +2762,102 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
             </div>
           </div>
         </div>
+
+        {/* Modal preview de archivo adjunto */}
+        {previewArchivo && (() => {
+          const previewUrl = previewArchivo.previewUrl || previewArchivo.webViewLink || previewArchivo.url
+          const isVideo = previewArchivo.tipo?.includes("video") || previewArchivo.nombre?.toLowerCase().endsWith(".mp4")
+          const isImage = previewArchivo.tipo?.includes("image/")
+          const isPdf = previewArchivo.tipo?.includes("pdf") || previewArchivo.nombre?.toLowerCase().endsWith(".pdf")
+          const externalUrl = previewArchivo.webViewLink || previewArchivo.url
+
+          return (
+            <div className="fixed inset-0 z-[700] flex items-center justify-center bg-black/60 p-3 sm:p-6">
+              <div className="flex h-full max-h-[90vh] w-full max-w-[960px] flex-col overflow-hidden rounded-[18px] border border-border bg-card shadow-2xl">
+                {/* Header */}
+                <div className="flex flex-shrink-0 items-center justify-between gap-3 border-b border-border px-4 py-3">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <div className="min-w-0">
+                      <p className="truncate text-[13px] font-extrabold text-foreground">{previewArchivo.nombre}</p>
+                      <p className="text-[10px] text-muted-foreground">{previewArchivo.tipo || "archivo"}</p>
+                    </div>
+                    {(previewArchivo.provider === "drive" || previewArchivo.driveFileId) && (
+                      <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[9px] font-extrabold uppercase text-primary">
+                        Drive
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {externalUrl && (
+                      <a
+                        href={externalUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-[11px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground"
+                        title="Abrir en nueva pestaña"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        <span className="hidden sm:inline">Abrir</span>
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setPreviewArchivo(null)}
+                      className="grid h-8 w-8 place-items-center rounded-lg border border-border text-muted-foreground hover:bg-red-50 hover:text-red-500"
+                      title="Cerrar"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Contenido del preview */}
+                <div className="relative min-h-0 flex-1 bg-muted/30">
+                  {isVideo ? (
+                    <video
+                      src={previewArchivo.url}
+                      controls
+                      className="h-full w-full object-contain"
+                    />
+                  ) : isImage ? (
+                    <div className="flex h-full items-center justify-center p-4">
+                      <img
+                        src={previewArchivo.url}
+                        alt={previewArchivo.nombre}
+                        className="max-h-full max-w-full rounded-lg object-contain shadow-md"
+                      />
+                    </div>
+                  ) : previewUrl ? (
+                    <iframe
+                      src={previewUrl}
+                      title={previewArchivo.nombre}
+                      className="h-full w-full border-0 bg-white"
+                      allow="autoplay"
+                    />
+                  ) : (
+                    <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+                      <FileText className="h-12 w-12 text-muted-foreground/40" />
+                      <p className="text-[13px] font-bold text-foreground">Sin vista previa disponible</p>
+                      <p className="text-[12px] text-muted-foreground">Este tipo de archivo no se puede previsualizar aquí.</p>
+                      {externalUrl && (
+                        <a
+                          href={externalUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-2 inline-flex items-center gap-2 rounded-[10px] border border-primary bg-primary/10 px-4 py-2 text-[12px] font-bold text-primary hover:bg-pink-light"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          Abrir en nueva pestaña
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )
+        })()}
 
         {/* Modal Banco de Clases */}
         {showBancoModal && (

@@ -23,9 +23,9 @@ const mainNavItems = [
 
 const toolsNavItems = [
   { href: "/cronograma",          label: "Cronograma",          icon: CalendarDays },
-  { href: "/libro-clases",        label: "Libro de clases",     icon: ClipboardList },
+  { href: "/libro-clases",        label: "Libro de clases (prototipo)", icon: ClipboardList },
   { href: "/calificaciones",      label: "Calificaciones",      icon: ClipboardCheck },
-  { href: "/rubricas",            label: "Rúbricas",            icon: LayoutList },
+  { href: "/evaluaciones",        label: "Evaluaciones",        icon: LayoutList },
   { href: "/perfil-360",          label: "Perfil 360",          icon: Users },
   { href: "/soporte",             label: "Ayuda",               icon: LifeBuoy },
   { href: "/perfil",              label: "Mi Perfil",           icon: UserCircle },
@@ -87,7 +87,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
   return (
     <aside className={cn(
       "flex flex-shrink-0 flex-col overflow-y-auto border-border bg-card px-3 py-5",
-      mobile ? "h-full w-full" : "hidden lg:flex sticky top-[58px] h-[calc(100vh-58px)] w-[220px] border-r"
+      mobile ? "h-full w-full" : "hidden lg:flex h-full w-[220px] border-r"
     )}>
       {/* Perfil */}
       <div className="mb-4 flex flex-col items-center gap-2 border-b border-border px-3 pb-5 pt-2">

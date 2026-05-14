@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Download, Loader2, X, FileText, Table2 } from "lucide-react"
+import { Download, Loader2, X, FileText, Table2, HardDrive } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export type FormatoDescarga = "detallado" | "tabla"
@@ -12,6 +12,8 @@ interface Props {
   downloading: boolean
   onClose: () => void
   tieneEncabezado?: boolean
+  subirADrive?: boolean
+  onSubirADriveChange?: (value: boolean) => void
   onDescargar: (formato: FormatoDescarga, semestre: SemestreDescarga, usarEncabezado: boolean) => void
 }
 
@@ -88,7 +90,15 @@ const SEMESTRES: { value: SemestreDescarga; label: string }[] = [
 ]
 
 // ─── Componente principal ────────────────────────────────────────────────────
-export function FormatoDescargaModal({ open, downloading, onClose, tieneEncabezado, onDescargar }: Props) {
+export function FormatoDescargaModal({
+  open,
+  downloading,
+  onClose,
+  tieneEncabezado,
+  subirADrive,
+  onSubirADriveChange,
+  onDescargar,
+}: Props) {
   const [semestre, setSemestre] = useState<SemestreDescarga>("ambos")
   const [usarEncabezado, setUsarEncabezado] = useState(() => tieneEncabezado ?? false)
 
@@ -128,6 +138,23 @@ export function FormatoDescargaModal({ open, downloading, onClose, tieneEncabeza
 
         {/* Body */}
         <div className="p-5">
+          {typeof subirADrive === "boolean" && onSubirADriveChange && (
+            <label className="mb-4 flex cursor-pointer items-start gap-3 rounded-[12px] border border-border bg-background px-4 py-3 text-[11.5px]">
+              <input
+                type="checkbox"
+                checked={subirADrive}
+                onChange={e => onSubirADriveChange(e.target.checked)}
+                disabled={downloading}
+                className="mt-0.5 h-4 w-4 accent-primary"
+              />
+              <HardDrive className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+              <span className="leading-snug text-muted-foreground">
+                <span className="block font-extrabold text-foreground">Tambien subir una copia a Google Drive</span>
+                La preferencia queda guardada en este navegador para futuras descargas.
+              </span>
+            </label>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {/* ── Tarjeta: Formato Detallado ── */}
@@ -156,7 +183,7 @@ export function FormatoDescargaModal({ open, downloading, onClose, tieneEncabeza
                 {downloading ? (
                   <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Generando…</>
                 ) : (
-                  <><Download className="h-3.5 w-3.5" /> Descargar</>
+                  <><Download className="h-3.5 w-3.5" /> {subirADrive ? "Descargar y subir" : "Descargar"}</>
                 )}
               </button>
             </div>
@@ -236,7 +263,7 @@ export function FormatoDescargaModal({ open, downloading, onClose, tieneEncabeza
                 {downloading ? (
                   <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Generando…</>
                 ) : (
-                  <><Download className="h-3.5 w-3.5" /> Descargar</>
+                  <><Download className="h-3.5 w-3.5" /> {subirADrive ? "Descargar y subir" : "Descargar"}</>
                 )}
               </button>
             </div>

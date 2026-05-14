@@ -30,7 +30,7 @@ const flujo = [
   { n: 2, title: "Ver Unidad",          desc: "Selecciona OA, habilidades, actitudes y DUA.", href: "/ver-unidad", icon: Map, color: "from-fuchsia-500 to-pink-500" },
   { n: 3, title: "Cronograma de Unidad",desc: "Distribuye OA en clases con fechas reales.", href: "/cronograma", icon: Calendar, color: "from-violet-500 to-fuchsia-500" },
   { n: 4, title: "Actividades",         desc: "Planifica Inicio/Desarrollo/Cierre de cada clase.", href: "/actividades", icon: Lightbulb, color: "from-indigo-500 to-violet-500" },
-  { n: 5, title: "Libro de Clases",     desc: "Registra asistencia y firma el leccionario.", href: "/libro-clases", icon: ClipboardList, color: "from-blue-500 to-indigo-500" },
+  { n: 5, title: "Libro de Clases",     desc: "Prototipo visual; no registra asistencia ni firma.", href: "/libro-clases", icon: ClipboardList, color: "from-blue-500 to-indigo-500" },
   { n: 6, title: "Calificaciones",      desc: "Registra notas y revisa la distribución del curso.", href: "/calificaciones", icon: ClipboardCheck, color: "from-emerald-500 to-blue-500" },
   { n: 7, title: "Perfil 360",          desc: "Vista integrada de cada estudiante.", href: "/perfil-360", icon: Users, color: "from-teal-500 to-emerald-500" },
 ]
@@ -53,12 +53,12 @@ const atajos: { contexto: string; entries: { keys: string[]; desc: string }[] }[
       { keys: ["3"],            desc: "Ver Miércoles" },
       { keys: ["4"],            desc: "Ver Jueves" },
       { keys: ["5"],            desc: "Ver Viernes" },
-      { keys: ["F"],            desc: "Firmar la clase actual" },
-      { keys: ["A"],            desc: "Abrir modo de asistencia rápida" },
+      { keys: ["F"],            desc: "Abrir firma demo" },
+      { keys: ["A"],            desc: "Abrir vista demo de asistencia" },
     ],
   },
   {
-    contexto: "Libro de Clases v2 (modo express)",
+    contexto: "Libro de Clases (prototipo)",
     entries: [
       { keys: ["1"],            desc: "Marcar Presente (P)" },
       { keys: ["2"],            desc: "Marcar Ausente (A)" },
@@ -129,8 +129,8 @@ const faqs = [
     a: "Sí. Todas las calificaciones usan la fórmula chilena (mínimo 1.0, máximo 7.0, aprueba con 4.0). El sistema convierte porcentajes a notas automáticamente.",
   },
   {
-    q: "¿Cómo se generan los OA sugeridos en el Libro de Clases?",
-    a: "El sistema toma los OA marcados como activos en Ver Unidad y los muestra como sugerencia el día que tu cronograma los programó. Aparecen como chips clickeables.",
+    q: "¿Cómo funciona el Libro de Clases ahora?",
+    a: "Por ahora queda como prototipo visual. Sirve para mostrar la idea, pero no guarda asistencia, firmas ni leccionario real.",
   },
   {
     q: "¿Qué hacen los iconos de colores en el Cronograma?",
@@ -142,15 +142,15 @@ const principios = [
   { texto: "Firestore es la fuente única de verdad para todos tus datos.", icon: Shield },
   { texto: "El parámetro ?curso= se pasa entre páginas para mantener contexto.", icon: Hash },
   { texto: "Los OA seleccionados en Ver Unidad alimentan el Cronograma y las Actividades.", icon: ArrowRight },
-  { texto: "El Desarrollo de una Actividad se sincroniza al Libro de Clases.", icon: Play },
-  { texto: "Perfil 360 se alimenta solo del Libro de Clases y Calificaciones.", icon: Users },
+  { texto: "El Libro de Clases está visible solo como prototipo no operativo.", icon: Play },
+  { texto: "Perfil 360 debe depender de datos académicos reales antes de asistencia.", icon: Users },
 ]
 
 const tips = [
   "Guarda siempre antes de cambiar de página.",
   "En el Cronograma usa 'Fechas automáticas' para asignar desde el ICS.",
-  "El botón 'Sincronizar' en Actividades llena el Libro de Clases con un clic.",
-  "Las observaciones del Perfil 360 también aparecen en el Libro de Clases.",
+  "El Libro de Clases queda como muestra hasta definir si EduPanel llevará asistencia diaria.",
+  "Prioriza planificaciones, actividades, evaluaciones y exportación antes de módulos administrativos.",
   "Marca tus OA cubiertos para que el progreso se actualice.",
 ]
 

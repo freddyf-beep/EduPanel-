@@ -24,6 +24,12 @@ export type GoogleCalendarEventPayload = {
   description: string
   start: { dateTime: string; timeZone: string }
   end: { dateTime: string; timeZone: string }
+  attachments?: Array<{
+    fileUrl: string
+    title?: string
+    mimeType?: string
+    iconLink?: string
+  }>
   extendedProperties: {
     private: Record<string, string>
   }
@@ -136,18 +142,35 @@ export function actividadCronogramaToGoogleEvent(
   const start = fechaActividad(act, year)
   const end = new Date(start)
   end.setMinutes(end.getMinutes() + parseDuracion(act.duracion))
+  const descriptionParts = [
+    `EduPanel - ${asignatura} - ${curso}`,
+    `Unidad: ${act.unidad || "Sin unidad"}`,
+  ]
+  if (act.driveFolderUrl) {
+    descriptionParts.push("", `Carpeta Drive: ${act.driveFolderUrl}`)
+  }
+
+  const privateProps: Record<string, string> = {
+    edupanelId: act.id,
+    edupanelCurso: curso,
+    edupanelAsignatura: asignatura,
+  }
+  if (act.driveFolderId) privateProps.driveFolderId = act.driveFolderId
+  if (act.driveFileIds?.length) privateProps.driveFileIds = act.driveFileIds.join(",")
 
   return {
     summary: `${act.tipo}: ${act.nombre}`,
-    description: `EduPanel - ${asignatura} - ${curso}\nUnidad: ${act.unidad || "Sin unidad"}`,
+    description: descriptionParts.join("\n"),
     start: { dateTime: localDateTime(start), timeZone: TIME_ZONE },
     end: { dateTime: localDateTime(end), timeZone: TIME_ZONE },
+    attachments: act.driveFiles?.map(file => ({
+      fileUrl: file.fileUrl,
+      title: file.title,
+      mimeType: file.mimeType,
+      iconLink: file.iconLink,
+    })),
     extendedProperties: {
-      private: {
-        edupanelId: act.id,
-        edupanelCurso: curso,
-        edupanelAsignatura: asignatura,
-      },
+      private: privateProps,
     },
   }
 }
@@ -156,7 +179,8 @@ export async function crearEventoGoogle(
   accessToken: string,
   evento: GoogleCalendarEventPayload,
 ): Promise<{ id: string }> {
-  return googleFetch(accessToken, "https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+  const supportsAttachments = evento.attachments?.length ? "?supportsAttachments=true" : ""
+  return googleFetch(accessToken, `https://www.googleapis.com/calendar/v3/calendars/primary/events${supportsAttachments}`, {
     method: "POST",
     body: JSON.stringify(evento),
   })
@@ -167,7 +191,8 @@ export async function actualizarEventoGoogle(
   eventId: string,
   evento: GoogleCalendarEventPayload,
 ): Promise<{ id: string }> {
-  return googleFetch(accessToken, `https://www.googleapis.com/calendar/v3/calendars/primary/events/${encodeURIComponent(eventId)}`, {
+  const supportsAttachments = evento.attachments?.length ? "?supportsAttachments=true" : ""
+  return googleFetch(accessToken, `https://www.googleapis.com/calendar/v3/calendars/primary/events/${encodeURIComponent(eventId)}${supportsAttachments}`, {
     method: "PATCH",
     body: JSON.stringify(evento),
   })
