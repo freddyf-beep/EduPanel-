@@ -76,12 +76,12 @@ async function runSeed() {
   console.log("  📅 Seeding Horario...")
   await userRef.collection("configuracion").doc("horario").set({
     clases: [
-      { dia: 1, bloque: 1, curso: "1° Medio A", asignatura: "Música", tipo: "clase", resumen: "1° Medio A - Música" },
-      { dia: 1, bloque: 2, curso: "1° Medio A", asignatura: "Música", tipo: "clase", resumen: "1° Medio A - Música" },
-      { dia: 2, bloque: 3, curso: "2° Medio B", asignatura: "Música", tipo: "clase", resumen: "2° Medio B - Música" },
-      { dia: 2, bloque: 4, curso: "2° Medio B", asignatura: "Música", tipo: "clase", resumen: "2° Medio B - Música" },
-      { dia: 3, bloque: 1, curso: "5° Básico A", asignatura: "Música", tipo: "clase", resumen: "5° Básico A - Música" },
-      { dia: 3, bloque: 2, curso: "5° Básico A", asignatura: "Música", tipo: "clase", resumen: "5° Básico A - Música" }
+      { dia: "Lunes", horaInicio: "08:00", horaFin: "09:30", curso: "1° Medio A", asignatura: "Música", tipo: "clase", resumen: "1° Medio A - Música", color: "#EC4899", uid: "lu_1m_m_1" },
+      { dia: "Lunes", horaInicio: "09:30", horaFin: "11:00", curso: "1° Medio A", asignatura: "Música", tipo: "clase", resumen: "1° Medio A - Música", color: "#EC4899", uid: "lu_1m_m_2" },
+      { dia: "Martes", horaInicio: "11:00", horaFin: "12:30", curso: "2° Medio B", asignatura: "Música", tipo: "clase", resumen: "2° Medio B - Música", color: "#3B82F6", uid: "ma_2m_m_3" },
+      { dia: "Martes", horaInicio: "12:30", horaFin: "14:00", curso: "2° Medio B", asignatura: "Música", tipo: "clase", resumen: "2° Medio B - Música", color: "#3B82F6", uid: "ma_2m_m_4" },
+      { dia: "Miércoles", horaInicio: "08:00", horaFin: "09:30", curso: "5° Básico A", asignatura: "Música", tipo: "clase", resumen: "5° Básico A - Música", color: "#22C55E", uid: "mi_5b_m_1" },
+      { dia: "Miércoles", horaInicio: "09:30", horaFin: "11:00", curso: "5° Básico A", asignatura: "Música", tipo: "clase", resumen: "5° Básico A - Música", color: "#22C55E", uid: "mi_5b_m_2" }
     ],
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
   })

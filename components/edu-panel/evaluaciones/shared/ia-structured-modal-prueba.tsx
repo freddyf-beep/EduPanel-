@@ -37,6 +37,7 @@ import { useRouter } from "next/navigation"
 import { Loader2, Sparkles, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
 import { CardSkeleton } from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
 import { guardarPrueba, nuevaPrueba, nuevaSeccion, nuevoItem } from "@/lib/pruebas"
@@ -303,9 +304,8 @@ export function IAStructuredModalPrueba({
         ].filter(Boolean).join(". "),
       }
 
-      const res = await fetch("/api/generar-evaluacion", {
+      const res = await apiFetch("/api/generar-evaluacion", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
 

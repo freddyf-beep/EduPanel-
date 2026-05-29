@@ -7,6 +7,7 @@ import {
   Maximize2, Minimize2, CheckCircle2, AlertCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 import type { ActividadClase } from "@/lib/curriculo"
 
 // ─── Configuración de momentos de la clase ─────────────────────────────
@@ -154,9 +155,8 @@ export function ModoClaseEnVivo({ open, onClose, actividad, asignatura, curso }:
   const pedirSugerencia = useCallback(async (tipo: SugerenciaIA["tipo"]) => {
     setSugerencia({ tipo, data: {}, loading: true })
     try {
-      const res = await fetch("/api/clase-en-vivo", {
+      const res = await apiFetch("/api/clase-en-vivo", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tipo,
           asignatura,

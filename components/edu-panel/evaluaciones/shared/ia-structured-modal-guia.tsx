@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation"
 import { Sparkles, X, Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
 import { CardSkeleton } from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
 import { guardarGuia, nuevaGuia, nuevaSeccionGuia, nuevaActividadGuia } from "@/lib/guias"
@@ -289,9 +290,8 @@ export function IAStructuredModalGuia({
         ].join(". "),
       }
 
-      const res = await fetch("/api/generar-evaluacion", {
+      const res = await apiFetch("/api/generar-evaluacion", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
 

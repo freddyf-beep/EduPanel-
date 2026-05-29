@@ -5,6 +5,7 @@ import {
   AlertCircle, CheckCircle2, Heart, Loader2, Sparkles, X,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 import type { Estudiante } from "@/lib/estudiantes"
 
 // ─── Diagnósticos PIE comunes en Chile ────────────────────────────────────
@@ -56,9 +57,8 @@ export function AdaptarPieModal({
     setError("")
     setIsProcessing(true)
     try {
-      const res = await fetch("/api/adaptar-pie", {
+      const res = await apiFetch("/api/adaptar-pie", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tipo,
           documento,

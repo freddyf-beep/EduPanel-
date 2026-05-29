@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { AlertCircle, CheckCircle2, Loader2, Mic, MicOff, Square, Wand2, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
+import { apiFetch } from "@/lib/api-client"
 
 interface BitacoraVozModalProps {
   open: boolean
@@ -128,9 +129,8 @@ export function BitacoraVozModal({
     try {
       const audioBase64 = await blobToBase64(audioBlob)
 
-      const res = await fetch("/api/bitacora-por-voz", {
+      const res = await apiFetch("/api/bitacora-por-voz", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           audioBase64,
           mimeType,

@@ -70,7 +70,11 @@ type ModalTab = "clase" | "anotaciones"
 function fechaKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`
 }
-function timeToMin(s: string) { const [h, m] = s.split(":").map(Number); return h * 60 + m }
+function timeToMin(s: string) {
+  if (!s || typeof s !== "string") return 0
+  const [h, m] = s.split(":").map(Number)
+  return (h || 0) * 60 + (m || 0)
+}
 
 function getGreeting(date: Date): { greet: string; icon: typeof Sun; gradient: string; mood: string } {
   const h = date.getHours()

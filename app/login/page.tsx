@@ -30,12 +30,21 @@ export default function LoginPage() {
     setQaLoggingIn(true)
     setSignInError("")
     try {
-      const res = await apiFetch("/api/auth/impersonate", {
+      const res = await fetch("/api/auth/impersonate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: "uSyXwkXm8iW07RTHRWfIdRWqAJm2" }),
       })
-      if (!res.ok) throw new Error(await res.text() || "Error al obtener token de QA.")
+      if (!res.ok) {
+        let errMsg = "Error al obtener token de QA."
+        try {
+          const body = await res.json()
+          if (body?.error) errMsg = body.error
+        } catch {
+          // ignore
+        }
+        throw new Error(errMsg)
+      }
       const data = await res.json()
       await signInWithToken(data.token)
     } catch (error) {
