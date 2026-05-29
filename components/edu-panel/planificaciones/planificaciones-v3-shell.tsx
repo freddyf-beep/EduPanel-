@@ -10,14 +10,16 @@ import {
   Check, Zap, Pin, Users, Eye, Clock, Wand2,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { cargarPlanCurso, type PlanificacionCurso, type UnidadPlan } from "@/lib/curriculo"
+import { cargarCronogramaUnidad, cargarPlanCurso, type ClaseCronograma, type PlanificacionCurso, type UnidadPlan } from "@/lib/curriculo"
 import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
-import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
 import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
+import { RecomendadorSemanticoModal } from "./recomendador-semantico-modal"
+import { getFeatureFlags } from "@/lib/feature-flags"
 
 type VistaKey = "timeline" | "cursos" | "calendario" | "insights"
 const VISTAS: { key: VistaKey; label: string; icon: typeof Layers; key_short: string }[] = [
@@ -49,6 +51,44 @@ function parseISO(s: string | undefined): Date | null {
   const [y, m, d] = s.split("-").map(Number)
   if (!y || !m || !d) return null
   return new Date(y, m - 1, d)
+}
+
+function parseDDMMYYYY(s: string | undefined): Date | null {
+  if (!s) return null
+  const match = s.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (!match) return null
+  const date = new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]))
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function toInputDate(date: Date): string {
+  const yyyy = date.getFullYear()
+  const mm = String(date.getMonth() + 1).padStart(2, "0")
+  const dd = String(date.getDate()).padStart(2, "0")
+  return `${yyyy}-${mm}-${dd}`
+}
+
+function rangoDesdeCronograma(cronograma: { clases?: ClaseCronograma[] } | null | undefined): { start: string; end: string } | null {
+  const fechas = (cronograma?.clases || [])
+    .map(clase => parseDDMMYYYY(clase.fecha))
+    .filter((date): date is Date => !!date)
+    .sort((a, b) => a.getTime() - b.getTime())
+  if (!fechas.length) return null
+  return { start: toInputDate(fechas[0]), end: toInputDate(fechas[fechas.length - 1]) }
+}
+
+async function cargarCronogramaUnidadConFallback(asignatura: string, curso: string, unidad: UnidadPlan, index: number) {
+  const ids = [
+    String(unidad.id),
+    unidad.id ? `unidad_${unidad.id}` : null,
+    unidad.unidadCurricularId,
+    unidadIdFromIndex(index),
+  ].filter(Boolean) as string[]
+  for (const id of Array.from(new Set(ids))) {
+    const cronograma = await cargarCronogramaUnidad(asignatura, curso, id).catch(() => null)
+    if (cronograma?.clases?.some(clase => clase.fecha?.trim())) return cronograma
+  }
+  return null
 }
 
 function rangoDeMes(fecha: Date): { ini: Date; fin: Date } {
@@ -107,6 +147,12 @@ export function PlanificacionesV3Shell() {
   const [filtroCurso, setFiltroCurso] = useState<string[]>([])
   const [filtroEstado, setFiltroEstado] = useState<string[]>([])
   const [mesActual, setMesActual] = useState(new Date())
+  const [showRecomendador, setShowRecomendador] = useState(false)
+  const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({})
+
+  useEffect(() => {
+    getFeatureFlags().then(setFeatureFlags).catch(console.error)
+  }, [])
 
   useEffect(() => { setVista(vistaParam ?? "timeline") }, [vistaParam])
 
@@ -140,15 +186,26 @@ export function PlanificacionesV3Shell() {
 
         const cursosArr: CursoInfo[] = []
         const unidadesAll: UnidadConCurso[] = []
-        planes.forEach(({ curso, plan }) => {
+        for (const { curso, plan } of planes) {
           const color = cursosColor.get(curso) || "var(--primary)"
-          const units = plan?.units || []
+          const baseUnits = plan?.units || []
+          const units = await Promise.all(baseUnits.map(async (unit, idx) => {
+            if (unit.start && unit.end) return unit
+            const cronograma = await cargarCronogramaUnidadConFallback(ASIGNATURA, curso, unit, idx)
+            const rango = rangoDesdeCronograma(cronograma)
+            if (!rango) return unit
+            return {
+              ...unit,
+              start: unit.start || rango.start,
+              end: unit.end || rango.end,
+            }
+          }))
           const completas = units.filter(u => u.start && u.end).length
           const totalHoras = units.reduce((s, u) => s + (u.hours || 0), 0)
           const cobertura = units.length > 0 ? Math.round((completas / units.length) * 100) : 0
           cursosArr.push({ curso, color, unidades: units, totalHoras, cobertura })
           units.forEach(u => unidadesAll.push({ ...u, curso, cursoColor: color, asignatura: ASIGNATURA }))
-        })
+        }
 
         setCursos(cursosArr)
         setTodasUnidades(unidadesAll)
@@ -225,12 +282,6 @@ export function PlanificacionesV3Shell() {
               Vista global de tus unidades didácticas: timeline anual, calendario de hitos y métricas en tiempo real.
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => router.push("/planificaciones-v1")}
-                className="inline-flex items-center gap-1.5 rounded-[10px] bg-white/15 px-3 py-1.5 text-[12px] font-bold backdrop-blur hover:bg-white/25"
-              >
-                <Layers className="h-3.5 w-3.5" /> Vista anterior
-              </button>
               <DriveSheet
                 context={{ tipo: "planificaciones", asignatura: ASIGNATURA }}
                 title="Drive de planificaciones"
@@ -245,6 +296,15 @@ export function PlanificacionesV3Shell() {
                 openLabel="Abrir carpeta"
                 buttonClassName="border-white/20 bg-white/15 text-white hover:border-white/50 hover:bg-white/25 hover:text-white"
               />
+              {featureFlags["recomendador-semantico"]?.active && (
+                <button
+                  onClick={() => setShowRecomendador(true)}
+                  className="rounded-[10px] border border-white/20 bg-white/15 hover:border-white/50 hover:bg-white/25 text-white font-bold px-3 py-1.5 text-xs transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-indigo-200 animate-pulse" />
+                  Asistente IA
+                </button>
+              )}
               <div className="relative ml-auto">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/70" />
                 <input
@@ -286,8 +346,8 @@ export function PlanificacionesV3Shell() {
               )}
             </div>
             <ul className="space-y-0.5 max-h-60 overflow-y-auto">
-              {cursos.map(c => (
-                <li key={c.curso}>
+              {cursos.map((c, index) => (
+                <li key={`${c.curso}-${index}`}>
                   <button
                     onClick={() => setFiltroCurso(prev => prev.includes(c.curso) ? prev.filter(x => x !== c.curso) : [...prev, c.curso])}
                     className="w-full text-left rounded-md px-2 py-1 text-[12px] hover:bg-muted/50 flex items-center gap-2"
@@ -403,11 +463,13 @@ export function PlanificacionesV3Shell() {
         </>
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/planificaciones-v1" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
-      </div>
+      {/* Recomendador Semántico (Premium) */}
+      <RecomendadorSemanticoModal
+        isOpen={showRecomendador}
+        onClose={() => setShowRecomendador(false)}
+        curso={cursos[0]?.curso || ""}
+        asignatura={ASIGNATURA}
+      />
     </div>
   )
 }
@@ -479,8 +541,8 @@ function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCur
       </div>
 
       <div className="space-y-2">
-        {cursosArr.map(c => (
-          <div key={c.curso}>
+        {cursosArr.map((c, cursoIndex) => (
+          <div key={`${c.curso}-${cursoIndex}`}>
             <div className="flex items-center gap-2 mb-1">
               <div className="w-32 flex-shrink-0 inline-flex items-center gap-1.5 truncate text-[11.5px] font-bold">
                 <span className="inline-block h-3 w-3 rounded-sm flex-shrink-0" style={{ background: c.color }} />
@@ -501,7 +563,7 @@ function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCur
                   if (!ini || !fin) {
                     return (
                       <div
-                        key={u.id}
+                        key={`${u.curso}-${u.id}-${idx}-sin-fechas`}
                         className="absolute inset-y-1 px-1 rounded-[4px] border-2 border-dashed bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 flex items-center text-[8.5px] font-bold"
                         style={{ left: `${(idx / Math.max(1, c.unidadesFiltradas.length)) * 100}%`, width: "8%", borderColor: "var(--status-amber-border)" }}
                         title={`${u.name} — sin fechas`}
@@ -515,7 +577,7 @@ function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCur
                   const color = u.color || UNIT_COLORS[idx % UNIT_COLORS.length]
                   return (
                     <div
-                      key={u.id}
+                      key={`${u.curso}-${u.id}-${idx}`}
                       className="absolute inset-y-1 rounded-[4px] flex items-center px-1.5 text-white text-[9px] font-bold truncate shadow-sm"
                       style={{ left: `${startPct}%`, width: `${widthPct}%`, background: color }}
                       title={`${u.name}\n${u.start} → ${u.end}\n${u.hours}h\n${TIPO_META[u.type].label}`}
@@ -555,7 +617,7 @@ function CursosGrid({ cursos, asignatura }: { cursos: CursoInfo[]; asignatura: s
         const proximas = c.unidades.filter(u => estadoUnidad(u, hoy) === "futura")
         return (
           <Link
-            key={c.curso}
+            key={`${c.curso}-${i}`}
             href={buildUrl("/planificaciones", withAsignatura({ curso: c.curso }, asignatura))}
             className="group rounded-[14px] border border-border bg-card p-4 hover:-translate-y-0.5 hover:shadow-md hover:border-primary transition-all"
           >
@@ -743,8 +805,8 @@ function CalendarioView({ mes, setMes, unidades, asignatura }: {
           <p className="text-[12px] text-muted-foreground italic">Sin unidades en este mes.</p>
         ) : (
           <ul className="space-y-2">
-            {activasMes.map(u => (
-              <li key={`${u.curso}-${u.id}`}>
+            {activasMes.map((u, index) => (
+              <li key={`${u.curso}-${u.id}-${index}`}>
                 <Link
                   href={buildUrl("/planificaciones", withAsignatura({ curso: u.curso }, asignatura))}
                   className="block rounded-[10px] border border-border bg-background p-2.5 hover:border-primary transition-colors"
@@ -884,8 +946,8 @@ function InsightsView({ cursos, unidades, stats }: {
         <div className="space-y-2.5">
           {cursos.length === 0 ? (
             <p className="text-[12px] text-muted-foreground italic">Sin cursos.</p>
-          ) : cursos.map(c => (
-            <div key={c.curso} className="space-y-1">
+          ) : cursos.map((c, index) => (
+            <div key={`${c.curso}-${index}`} className="space-y-1">
               <div className="flex items-center justify-between text-[11.5px]">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <span className="h-3 w-3 rounded-sm flex-shrink-0" style={{ background: c.color }} />
@@ -919,11 +981,11 @@ function InsightsView({ cursos, unidades, stats }: {
             <Clock className="h-4 w-4 text-primary" /> Próximas 30 días
           </h3>
           <ul className="space-y-2">
-            {proximas30.map(u => {
+            {proximas30.map((u, index) => {
               const ini = parseISO(u.start)!
               const dif = diasEntre(hoy, ini)
               return (
-                <li key={`${u.curso}-${u.id}`} className="flex items-center gap-3 rounded-[10px] border border-border bg-background p-2.5">
+                <li key={`${u.curso}-${u.id}-${index}`} className="flex items-center gap-3 rounded-[10px] border border-border bg-background p-2.5">
                   <span className="inline-block h-9 w-1 rounded-full flex-shrink-0" style={{ background: u.color || u.cursoColor }} />
                   <div className="flex-1 min-w-0">
                     <div className="text-[12.5px] font-bold truncate">{u.name}</div>
@@ -945,8 +1007,8 @@ function InsightsView({ cursos, unidades, stats }: {
             <AlertCircle className="h-4 w-4" /> Sin fechas asignadas ({incompletas.length})
           </h3>
           <ul className="space-y-1.5">
-            {incompletas.map(u => (
-              <li key={`${u.curso}-${u.id}`} className="text-[11.5px] flex items-center gap-2 text-amber-900 dark:text-amber-100">
+            {incompletas.map((u, index) => (
+              <li key={`${u.curso}-${u.id}-${index}`} className="text-[11.5px] flex items-center gap-2 text-amber-900 dark:text-amber-100">
                 <span className="inline-block h-2 w-2 rounded-sm flex-shrink-0" style={{ background: u.color || u.cursoColor }} />
                 <span className="font-semibold truncate">{u.name}</span>
                 <span className="opacity-75">· {u.curso}</span>

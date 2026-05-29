@@ -4,7 +4,7 @@ import { fileURLToPath } from "url"
 import { gunzip } from "zlib"
 import { promisify } from "util"
 import { cert, deleteApp, getApps, initializeApp } from "firebase-admin/app"
-import { GeoPoint, Timestamp, getFirestore } from "firebase-admin/firestore"
+import { GeoPoint, Timestamp, getFirestore, initializeFirestore } from "firebase-admin/firestore"
 
 const unzip = promisify(gunzip)
 const __filename = fileURLToPath(import.meta.url)
@@ -83,6 +83,10 @@ function env(name, fallback = "") {
   return value === undefined || value === null || value === "" ? fallback : value
 }
 
+function boolEnv(name) {
+  return ["1", "true", "yes", "si", "on"].includes(env(name).toLowerCase())
+}
+
 function initAdminApp() {
   const projectId = env("FIREBASE_ADMIN_PROJECT_ID")
   const clientEmail = env("FIREBASE_ADMIN_CLIENT_EMAIL")
@@ -105,6 +109,14 @@ function initAdminApp() {
     }),
     projectId,
   })
+}
+
+function initFirestore(app) {
+  if (boolEnv("FIRESTORE_PREFER_REST")) {
+    return initializeFirestore(app, { preferRest: true })
+  }
+
+  return getFirestore(app)
 }
 
 async function readBackupFile(filePath) {
@@ -198,7 +210,7 @@ async function main() {
   }
 
   const app = initAdminApp()
-  const db = getFirestore(app)
+  const db = initFirestore(app)
   const restoredDocumentCount = await restoreDocuments(db, backup.documents || [])
   await deleteApp(app).catch(() => {})
 

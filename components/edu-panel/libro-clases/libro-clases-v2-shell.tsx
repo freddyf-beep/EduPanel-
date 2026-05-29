@@ -527,12 +527,6 @@ export function LibroClasesV2Shell() {
         />
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/libro-clases" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
-      </div>
-
       {/* Express modal */}
       {expressMode && expressBloque && (
         <ExpressModal

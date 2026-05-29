@@ -67,6 +67,25 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
       })
     )
 
+    // Estadísticas de uso de IA
+    const COST_PER_TOKEN = 1.5 / 1_000_000
+    const aiStatsDoc = await db.collection("ai_usage_stats").doc(uid).get()
+    let aiStats: Record<string, any> | null = null
+    if (aiStatsDoc.exists) {
+      const d = aiStatsDoc.data() as any
+      const tokens = (d.tokens_input ?? 0) + (d.tokens_output ?? 0) + (d.tokens ?? 0)
+      const cost = d.cost ?? tokens * COST_PER_TOKEN
+      aiStats = {
+        tokens_input: d.tokens_input ?? 0,
+        tokens_output: d.tokens_output ?? 0,
+        tokens,
+        prompts: d.prompts ?? 0,
+        cost,
+        limit: d.limit ?? 5.0,
+        last_used: d.last_used?.toDate().toISOString() ?? null,
+      }
+    }
+
     // Allowlist (verificar si esta invitado)
     let allowlistEntry: any = null
     if (userRecord.email) {
@@ -99,6 +118,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
       horario: horario.exists ? horario.data() : null,
       conteos,
       allowlist: allowlistEntry,
+      ai: aiStats,
     })
   } catch (err: any) {
     console.error("[admin/usuarios/[uid] GET]", err)
@@ -250,6 +270,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
       // en su propio cliente y recordar cerrar sesion.
       const token = await authAdmin.createCustomToken(uid, { impersonation: true })
       return NextResponse.json({ success: true, token })
+    }
+
+    if (action === "updateAiLimit") {
+      const { limit } = body as { limit: number }
+      if (typeof limit !== "number" || limit < 0) {
+        return NextResponse.json({ error: "Límite inválido" }, { status: 400 })
+      }
+      await db.collection("ai_usage_stats").doc(uid).set(
+        { limit },
+        { merge: true }
+      )
+      return NextResponse.json({ success: true, limit })
     }
 
     return NextResponse.json({ error: "Acción no válida" }, { status: 400 })

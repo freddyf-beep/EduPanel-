@@ -502,10 +502,10 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                           {clase.fecha ? formatFechaCorta(clase.fecha) : "Fecha"}
                         </button>
                       )}
-                      {/* Botón ir a actividad */}
+                      {/* Botón ir a clase */}
                       <Link
                         href={buildUrl(
-                          "/actividades",
+                          "/ver-unidad/clases",
                           withAsignatura(
                             unidadCurricularId && unidadCurricularId !== unidadId
                               ? { curso, unidad: unidadCurricularId, unitIdLocal: unidadId, clase: String(clase.numero) }
@@ -515,7 +515,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                         )}
                         className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-primary hover:opacity-70 transition-opacity"
                       >
-                        Ir a actividad <ArrowRight className="w-2.5 h-2.5" />
+                        Ir a clase <ArrowRight className="w-2.5 h-2.5" />
                       </Link>
                     </div>
                   </th>
@@ -526,7 +526,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
               {oasSeleccionados.length === 0 ? (
                 <tr>
                   <td colSpan={COLS_VISIBLE + 1} className="px-4 py-10 text-center text-[13px] text-muted-foreground">
-                    No hay OA seleccionados. Ve a la pestaña <strong>Unidad</strong> y selecciona los OA primero.
+                    No hay OA seleccionados. Vuelve a <strong>Unidad</strong> y selecciona los OA primero.
                   </td>
                 </tr>
               ) : (

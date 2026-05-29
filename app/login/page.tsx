@@ -4,7 +4,7 @@ import { useAuth } from "@/components/auth/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { AlertCircle, KeyRound, Loader2, CheckCircle2 } from "lucide-react"
+import { AlertCircle, KeyRound, Loader2, CheckCircle2, Sparkles } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
 
 function getApiErrorMessage(error: unknown, fallback: string) {
@@ -16,14 +16,34 @@ function getApiErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function LoginPage() {
-  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
+  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist, signInWithToken } = useAuth()
   const router = useRouter()
   const [inviteCode, setInviteCode] = useState("")
   const [redeeming, setRedeeming] = useState(false)
   const [redeemError, setRedeemError] = useState("")
   const [signInError, setSignInError] = useState("")
   const [signingIn, setSigningIn] = useState(false)
+  const [qaLoggingIn, setQaLoggingIn] = useState(false)
   const [redeemSuccess, setRedeemSuccess] = useState(false)
+
+  const handleQaSignIn = async () => {
+    setQaLoggingIn(true)
+    setSignInError("")
+    try {
+      const res = await apiFetch("/api/auth/impersonate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: "uSyXwkXm8iW07RTHRWfIdRWqAJm2" }),
+      })
+      if (!res.ok) throw new Error(await res.text() || "Error al obtener token de QA.")
+      const data = await res.json()
+      await signInWithToken(data.token)
+    } catch (error) {
+      setSignInError(getApiErrorMessage(error, "No se pudo iniciar sesión en modo QA."))
+    } finally {
+      setQaLoggingIn(false)
+    }
+  }
 
   useEffect(() => {
     if (!loading && user && !blockedByAllowlist) {
@@ -124,14 +144,25 @@ export default function LoginPage() {
         )}
 
         {!user && (
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={signingIn}
-            className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
-          >
-            {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            {signingIn ? "Conectando..." : "Iniciar sesion con Google"}
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={handleGoogleSignIn}
+              disabled={signingIn || qaLoggingIn}
+              className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 text-sm"
+            >
+              {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+              {signingIn ? "Conectando..." : "Iniciar sesión con Google"}
+            </button>
+            
+            <button
+              onClick={handleQaSignIn}
+              disabled={signingIn || qaLoggingIn}
+              className="w-full border border-border bg-card text-muted-foreground hover:text-foreground rounded-xl py-2.5 font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              {qaLoggingIn ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-fuchsia-500" />}
+              {qaLoggingIn ? "Generando sesión de QA..." : "Ingresar como Usuario de QA (Codex)"}
+            </button>
+          </div>
         )}
 
         {signInError && (

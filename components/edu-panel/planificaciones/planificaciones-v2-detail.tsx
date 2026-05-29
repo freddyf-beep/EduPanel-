@@ -23,12 +23,15 @@ import Link from "next/link"
 import {
   Calendar, Plus, Trash2, Download,
   Loader2, ArrowLeft, BookOpen, Layers, AlertCircle,
+  UploadCloud,
 } from "lucide-react"
 import { useAuth } from "@/components/auth/auth-context"
 import { cn } from "@/lib/utils"
 import {
   guardarPlanCurso, cargarPlanCurso, eliminarUnidadCompleta,
+  cargarActividadClase,
   cargarCronogramaUnidad,
+  cargarVerUnidad,
 } from "@/lib/curriculo"
 import type { UnidadPlan, ClaseCronograma } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
@@ -42,7 +45,9 @@ import {
   getGoogleDriveErrorMessage,
   getGoogleDriveToken,
   isGoogleDriveAutosaveEnabled,
+  isGoogleDriveConnected,
   respaldarCursoVivoJsonDrive,
+  subirDocxADrive,
   subirDocxYPdfADrive,
 } from "@/lib/google-drive"
 import {
@@ -120,6 +125,8 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
 
   // Descarga
   const [downloading, setDownloading]           = useState(false)
+  const [exportandoCursoDrive, setExportandoCursoDrive] = useState(false)
+  const [exportCursoDriveUrl, setExportCursoDriveUrl] = useState("")
   const [showFormatoModal, setShowFormatoModal]  = useState(false)
   const [subirWordADrive, setSubirWordADrive]     = useState(false)
   const [nivelMapping, setNivelMapping]          = useState<NivelMapping>({})
@@ -128,6 +135,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
 
   // Auto-save
   const ignoreNextSaveRef = useRef(true)
+  const drivePlanTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -140,6 +148,34 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       window.localStorage.setItem(DRIVE_WORD_EXPORT_PREF_KEY, value ? "true" : "false")
     }
   }
+
+  const schedulePlanDriveAutosave = (token: string) => {
+    if (drivePlanTimerRef.current) clearTimeout(drivePlanTimerRef.current)
+    drivePlanTimerRef.current = setTimeout(async () => {
+      try {
+        await respaldarCursoVivoJsonDrive(token, {
+          context: { tipo: "planificaciones", asignatura: ASIGNATURA, curso },
+          data: {
+            asignatura: ASIGNATURA,
+            curso,
+            year: new Date().getFullYear(),
+            units,
+            cronogramasPorUnidad,
+            tipoCurricular,
+          },
+        })
+        await sincronizarPlanVisualDrive(token)
+      } catch (error) {
+        console.warn("[drive-autosave:planificaciones]", error)
+      }
+    }, 5000)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (drivePlanTimerRef.current) clearTimeout(drivePlanTimerRef.current)
+    }
+  }, [])
 
   // ── Cargar unidades del curso ──
   useEffect(() => {
@@ -174,22 +210,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
         await guardarPlanCurso(ASIGNATURA, curso, units)
         const driveToken = isGoogleDriveAutosaveEnabled() ? getGoogleDriveToken() : null
         if (driveToken) {
-          try {
-            await respaldarCursoVivoJsonDrive(driveToken, {
-              context: { tipo: "planificaciones", asignatura: ASIGNATURA, curso },
-              data: {
-                asignatura: ASIGNATURA,
-                curso,
-                year: new Date().getFullYear(),
-                units,
-                cronogramasPorUnidad,
-                tipoCurricular,
-              },
-            })
-            await sincronizarPlanVisualDrive(driveToken)
-          } catch (error) {
-            console.warn("[drive-autosave:planificaciones]", error)
-          }
+          schedulePlanDriveAutosave(driveToken)
         }
         setSaveStatus("saved")
         setTimeout(() => setSaveStatus("idle"), 1800)
@@ -323,22 +344,139 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     URL.revokeObjectURL(url)
   }
 
+  const ensureDriveToken = async () => {
+    let token = getGoogleDriveToken()
+    if (!token || !isGoogleDriveConnected()) {
+      await signInWithGoogleDrive()
+      token = getGoogleDriveToken()
+    }
+    if (!token) throw new Error("No se recibio autorizacion de Google Drive.")
+    return token
+  }
+
+  const runDriveWithReconnect = async <T,>(operation: (token: string) => Promise<T>): Promise<T> => {
+    const token = await ensureDriveToken()
+    try {
+      return await operation(token)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error || "")
+      const canReconnect = (message.includes("401") || message.includes("insufficient") || message.includes("PERMISSION_DENIED"))
+        && !message.includes("SERVICE_DISABLED")
+        && !message.includes("accessNotConfigured")
+      if (!canReconnect) throw error
+      await signInWithGoogleDrive()
+      const nextToken = getGoogleDriveToken()
+      if (!nextToken) throw error
+      return operation(nextToken)
+    }
+  }
+
+  const getNivelCurricularExport = () => tipoCurricular === "oficial"
+    ? (nivelMapping[curso] || "Sin nivel configurado")
+    : tipoCurricular === "taller"
+      ? "Taller / sin curriculum oficial"
+      : "Libre / sin curriculum oficial"
+
+  const cargarVerUnidadConFallback = async (unit: typeof units[number], idx: number) => {
+    const ids = [
+      String(unit.id),
+      unit.id ? `unidad_${unit.id}` : null,
+      unit.unidadCurricularId,
+      unidadIdFromIndex(idx),
+    ].filter(Boolean) as string[]
+    for (const id of ids) {
+      const v = await cargarVerUnidad(ASIGNATURA, curso, id).catch(() => null)
+      if (v) return v
+    }
+    return null
+  }
+
+  const buildUnidadesExportDetallado = async () => {
+    const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
+    return Promise.all(
+      units.map(async (unit, idx) => {
+        const unidadId = String(unit.id)
+        const verUnidad = await cargarVerUnidadConFallback(unit, idx)
+        const oasBasales: string[] = []
+        const oasTransversales: string[] = []
+        if (verUnidad?.oas) {
+          for (const oa of verUnidad.oas) {
+            if (!oa.seleccionado) continue
+            const label = `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim()
+            if (oa.tipo === "oat") oasTransversales.push(label)
+            else oasBasales.push(label)
+          }
+        }
+        const clasesExport = []
+        const totalClases = Math.max(cronogramasPorUnidad[unit.id]?.totalClases || 0, cronogramasPorUnidad[unit.id]?.clases?.length || 0, 30)
+        for (let n = 1; n <= totalClases; n++) {
+          const act = await cargarActividadClase(curso, unidadId, n, ASIGNATURA).catch(() => null)
+          if (!act) continue
+          if (!act.objetivo && !act.inicio && !act.desarrollo && !act.cierre) continue
+          const oasOcupados = (verUnidad?.oas || [])
+            .filter(oa => (act.oaIds || []).includes(oa.id))
+            .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+          const indicadores = (verUnidad?.oas || [])
+            .filter(oa => (act.oaIds || []).includes(oa.id))
+            .flatMap(oa => {
+              const selIds = act.indicadoresPorOa?.[oa.id]
+              return (oa.indicadores || [])
+                .filter(i => i.seleccionado)
+                .filter(i => !selIds || selIds.includes(i.id))
+                .map(i => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${i.texto}`)
+            })
+          clasesExport.push({
+            numero: n,
+            oasOcupados,
+            indicadores,
+            objetivo: htmlToPlainTextForExport(act.objetivo || ""),
+            inicio: htmlToPlainTextForExport(act.inicio || ""),
+            actividadInicio: "",
+            desarrollo: htmlToPlainTextForExport(act.desarrollo || ""),
+            cierre: htmlToPlainTextForExport(act.cierre || ""),
+            recursos: act.materiales || [],
+            tics: act.tics || [],
+            criteriosEvaluacion: [],
+          })
+        }
+        return {
+          numero: idx + 1,
+          nombre: unit.name || `Unidad ${idx + 1}`,
+          oasBasales,
+          oasTransversales,
+          clases: clasesExport,
+        }
+      })
+    )
+  }
+
+  const generarPlanificacionDocxBlob = async (unidadesExport: unknown[]) => {
+    const res = await apiFetch("/api/export-planificacion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formato: "detallado",
+        nivel: getNivelCurricularExport(),
+        asignatura: ASIGNATURA,
+        unidades: unidadesExport,
+      }),
+    })
+    if (!res.ok) throw new Error("Error al generar el documento")
+    return res.blob()
+  }
+
   const subirWordExportADrive = async (blob: Blob, fileName: string): Promise<boolean> => {
     if (!subirWordADrive) return false
     try {
-      let token = getGoogleDriveToken()
-      if (!token) {
-        await signInWithGoogleDrive()
-        token = getGoogleDriveToken()
-      }
-      if (!token) throw new Error("No hay token de Google Drive.")
-      const workspace = await ensureEduPanelWorkspaceForContext(token, {
-        tipo: "planificaciones",
-        asignatura: ASIGNATURA,
-        curso,
+      await runDriveWithReconnect(async token => {
+        const workspace = await ensureEduPanelWorkspaceForContext(token, {
+          tipo: "planificaciones",
+          asignatura: ASIGNATURA,
+          curso,
+        })
+        const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
+        await subirDocxYPdfADrive(token, { docx: blob, folderId, fileName })
       })
-      const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
-      await subirDocxYPdfADrive(token, { docx: blob, folderId, fileName })
       return true
     } catch (error) {
       console.error("[drive-word-export]", error)
@@ -387,7 +525,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       })
       const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
       const suffix = formato === "tabla" && semestre !== "ambos" ? `_S${semestre}` : ""
-      await subirDocxYPdfADrive(token, {
+      await subirDocxADrive(token, {
         docx: blob,
         folderId,
         fileName: `Planificaciones_${ASIGNATURA}_${curso}${suffix}.docx`,
@@ -552,6 +690,85 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     }
   }
 
+  const handleExportarCursoDrive = async () => {
+    if (units.length === 0 || exportandoCursoDrive) return
+    setExportandoCursoDrive(true)
+    setExportCursoDriveUrl("")
+    try {
+      await guardarPlanCurso(ASIGNATURA, curso, units)
+      const unidadesExport = await buildUnidadesExportDetallado()
+
+      const cursoBlob = await generarPlanificacionDocxBlob(unidadesExport)
+      let cursoFolderUrl = ""
+      await runDriveWithReconnect(async token => {
+        const cursoWorkspace = await ensureEduPanelWorkspaceForContext(token, {
+          tipo: "planificaciones",
+          asignatura: ASIGNATURA,
+          curso,
+        })
+        const cursoFolderId = cursoWorkspace.folders.planificacion?.id || cursoWorkspace.focusFolder.id
+        cursoFolderUrl = cursoWorkspace.folders.planificacion?.webViewLink || cursoWorkspace.focusFolder.webViewLink || ""
+        await subirDocxYPdfADrive(token, {
+          docx: cursoBlob,
+          folderId: cursoFolderId,
+          fileName: `Planificacion_${ASIGNATURA}_${curso}_${new Date().getFullYear()}.docx`,
+        })
+        setExportCursoDriveUrl(cursoFolderUrl)
+
+        for (const [idx, unit] of units.entries()) {
+          const unidadExport = unidadesExport[idx]
+          if (!unidadExport) continue
+          const unidadBlob = await generarPlanificacionDocxBlob([unidadExport])
+          const unidadWorkspace = await ensureEduPanelWorkspaceForContext(token, {
+            tipo: "unidad",
+            asignatura: ASIGNATURA,
+            curso,
+            unidadId: String(unit.id),
+            unidadNombre: unit.name,
+          })
+          const unidadFolderId = unidadWorkspace.folders.planificacion?.id || unidadWorkspace.focusFolder.id
+          await subirDocxYPdfADrive(token, {
+            docx: unidadBlob,
+            folderId: unidadFolderId,
+            fileName: `Unidad_${String(idx + 1).padStart(2, "0")}_Planificacion.docx`,
+          })
+        }
+
+        await respaldarCursoVivoJsonDrive(token, {
+          context: { tipo: "planificaciones", asignatura: ASIGNATURA, curso },
+          data: {
+            asignatura: ASIGNATURA,
+            curso,
+            year: new Date().getFullYear(),
+            units,
+            cronogramasPorUnidad,
+            tipoCurricular,
+            respaldoVisual: {
+              formato: "detallado",
+              incluyeUnidades: true,
+              incluyeClases: true,
+              actualizadoEn: new Date().toISOString(),
+            },
+          },
+        })
+      })
+
+      toast({
+        title: "Curso exportado a Drive",
+        description: cursoFolderUrl ? "Se actualizaron Word, PDF y respaldo vivo del curso. Puedes abrir la carpeta desde el panel." : "Se actualizaron Word, PDF y respaldo vivo del curso.",
+      })
+    } catch (error) {
+      console.error("[drive-bulk-export:planificaciones]", error)
+      toast({
+        title: "No se pudo exportar el curso a Drive",
+        description: getGoogleDriveErrorMessage(error),
+        variant: "destructive",
+      })
+    } finally {
+      setExportandoCursoDrive(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64 gap-2 text-muted-foreground text-[13px]">
@@ -611,11 +828,11 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
             })}
           />
           <Link
-            href={buildUrl("/planificaciones-v1", withAsignatura({ curso }, ASIGNATURA))}
+            href={buildUrl("/planificaciones", withAsignatura({}, ASIGNATURA))}
             className="text-[11px] text-muted-foreground hover:text-foreground border border-border rounded-md px-2 py-1"
-            title="Volver al diseño anterior"
+            title="Volver a planificaciones"
           >
-            ← Diseño antiguo
+            ← Planificaciones
           </Link>
         </div>
       </div>
@@ -790,16 +1007,6 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
             </ul>
           )}
 
-          {/* Link al diseño antiguo para acciones avanzadas */}
-          <div className="text-[11px] text-muted-foreground text-center pt-2">
-            ¿Necesitas dividir, reordenar o cambiar fechas de unidad?{" "}
-            <Link
-              href={buildUrl("/planificaciones-v1", withAsignatura({ curso }, ASIGNATURA))}
-              className="text-primary font-bold hover:underline"
-            >
-              Usa el diseño anterior →
-            </Link>
-          </div>
         </div>
 
         {/* ─── Columna derecha: mini-calendario ─── */}
@@ -876,7 +1083,33 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
               Elige entre formato detallado o por tabla
             </p>
 
-            {/* Backup completo del curso en Exportaciones/ */}
+            <button
+              type="button"
+              onClick={handleExportarCursoDrive}
+              disabled={units.length === 0 || exportandoCursoDrive}
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-[10px] border border-primary bg-card px-4 py-2.5 text-[13px] font-bold text-primary transition-colors hover:bg-pink-light disabled:cursor-not-allowed disabled:opacity-40"
+              title="Subir el curso completo a Drive en Word y PDF"
+            >
+              {exportandoCursoDrive
+                ? <><Loader2 className="h-[14px] w-[14px] animate-spin" /> Exportando a Drive...</>
+                : <><UploadCloud className="h-[14px] w-[14px]" /> Exportar curso a Drive</>
+              }
+            </button>
+            <p className="mt-1.5 text-[10px] text-muted-foreground text-center">
+              Sube el documento completo y cada unidad en Word + PDF.
+            </p>
+            {exportCursoDriveUrl && (
+              <a
+                href={exportCursoDriveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 block text-center text-[11px] font-bold text-primary underline underline-offset-2"
+              >
+                Abrir carpeta del curso en Drive
+              </a>
+            )}
+
+            {/* Respaldo vivo del curso en Exportaciones/ */}
             <div className="mt-3 border-t border-border pt-3">
               <p className="mb-2 text-[11px] font-bold text-muted-foreground">Respaldo de emergencia</p>
               <DriveBackupCursoCompleto
@@ -892,7 +1125,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
                 })}
               />
               <p className="mt-1.5 text-[10px] text-muted-foreground">
-                Guarda un JSON completo en Drive → Exportaciones/. Útil si se pierden datos en Firebase.
+                Actualiza el JSON vivo en Drive, carpeta Exportaciones. Util si se pierden datos en Firebase.
               </p>
             </div>
           </div>

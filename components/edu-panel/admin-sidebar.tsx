@@ -10,19 +10,28 @@ import {
   Database,
   ArrowLeft,
   ShieldCheck,
-  BookA
+  BookA,
+  Sparkles,
+  AlertTriangle,
+  TrendingUp,
+  Brain,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/components/auth/auth-context"
 import { CURRENT_VERSION } from "./version"
 
 const adminNavItems = [
-  { href: "/admin",                 label: "Dashboard",       icon: LayoutDashboard },
-  { href: "/admin/usuarios",        label: "Usuarios",        icon: Users },
-  { href: "/admin/establecimientos",label: "Establecimientos",icon: Building2 },
-  { href: "/admin/curriculum",      label: "Currículum",      icon: BookA },
-  { href: "/admin/invitaciones",    label: "Invitaciones",    icon: KeyRound },
-  { href: "/admin/mantenimiento",   label: "Mantenimiento",   icon: Database },
+  { href: "/admin",                    label: "Dashboard",        icon: LayoutDashboard },
+  { href: "/admin/usuarios",           label: "Usuarios",         icon: Users },
+  { href: "/admin/establecimientos",   label: "Establecimientos", icon: Building2 },
+  { href: "/admin/curriculum",         label: "Currículum",       icon: BookA },
+  { href: "/admin/invitaciones",       label: "Invitaciones",     icon: KeyRound },
+  { href: "/admin/radar-desercion",    label: "Radar Deserción",  icon: AlertTriangle },
+  { href: "/admin/predictor-cobertura",label: "Predic. Cobertura",icon: TrendingUp },
+  { href: "/admin/sustituciones",      label: "Sustituciones",    icon: Users },
+  { href: "/admin/features",           label: "Funciones IA",     icon: Sparkles },
+  { href: "/admin/consumo-ia",         label: "Consumo IA",       icon: Brain },
+  { href: "/admin/mantenimiento",      label: "Mantenimiento",    icon: Database },
 ]
 
 interface AdminSidebarProps {

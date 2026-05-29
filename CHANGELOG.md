@@ -66,7 +66,6 @@ components/edu-panel/planificaciones/planificaciones-hub.tsx
 components/edu-panel/planificaciones/planificaciones-matriz.tsx
 components/edu-panel/sidebar.tsx
 components/edu-panel/ver-unidad/ver-unidad-content.tsx
-edupanel_context.md
 lib/ai/copilot.ts
 lib/curriculo.ts
 lib/estudiantes.ts
@@ -109,57 +108,3 @@ version.txt
 
 ## v1.0.11 - 23/04/2026 23:45
 
-## v1.0.14 - 07/05/2026 17:00
-.gitignore
-CHANGELOG.md
-app/api/export-planificacion/route.ts
-components/edu-panel/actividades/actividades-content.tsx
-components/edu-panel/cronograma-unidad/cronograma-unidad-content.tsx
-components/edu-panel/dashboard/dashboard-content.tsx
-components/edu-panel/header.tsx
-components/edu-panel/main-layout.tsx
-components/edu-panel/perfil/perfil-content.tsx
-components/edu-panel/planificaciones/planificaciones-content.tsx
-components/edu-panel/planificaciones/planificaciones-detail.tsx
-components/edu-panel/rubricas/evaluacion-view.tsx
-components/edu-panel/rubricas/resultados-view.tsx
-components/edu-panel/ver-unidad/ver-unidad-content.tsx
-components/edu-panel/version.ts
-firebase.json
-lib/api-client.ts
-lib/curriculo.ts
-lib/export/hoja-evaluacion-pdf.ts
-lib/export/planificacion-docx.ts
-lib/firebase.ts
-lib/horario.ts
-lib/perfil.ts
-lib/rubricas.ts
-next.config.mjs
-package-lock.json
-package.json
-version.txt
-
-## v1.0.15 - 07/05/2026 17:08
-CHANGELOG.md
-components/edu-panel/version.ts
-next.config.mjs
-version.txt
-
-## v1.0.16 - 11/05/2026 10:36
-- Sincronizacion selectiva desde `edupanel_local` hacia el repo publico.
-- Rutas principales migradas a las nuevas experiencias V2: inicio, modulos, perfil, calificaciones, cronograma, libro de clases, perfil 360 y soporte.
-- `/planificaciones` ahora usa el hub V3 y mantiene detalle V2 por curso; se agrega `/planificaciones-v1` como respaldo legacy.
-- `/ver-unidad` ahora usa la experiencia V2 y se agrega `/ver-unidad-v1` como respaldo legacy.
-- Mejoras en IA de actividades: parseo JSON mas tolerante, reintento automatico y recuperacion manual cuando el proveedor devuelve formato invalido.
-- Mejoras de perfil, estudiantes, horario, mapeo de niveles y navegacion lateral.
-
-## v1.0.17 - 11/05/2026 12:04
-- Hotfix admin: acepta ambos correos de administrador conocidos aunque Vercel tenga una variable antigua o incompleta.
-- `/admin/invitaciones`, `/migrate`, helpers server-side y reglas de Firestore quedan alineados para no bloquear al administrador.
-
-## v1.0.18 - 14/05/2026 14:22
-- Sincronizacion selectiva de la actualizacion grande desde `edupanel_local`.
-- Nuevo panel Admin con dashboard, usuarios, invitaciones, curriculum, establecimientos y mantenimiento.
-- Nueva ruta `/evaluaciones` y mejoras en actividades: importacion Word, Notebook/PPT y Google Drive.
-- Nuevo flujo `/onboarding` y componentes Drive para respaldos y curso completo.
-- Mejoras en perfil, planificaciones, ver unidad, libro de clases, rubricas, privacidad y navegacion.

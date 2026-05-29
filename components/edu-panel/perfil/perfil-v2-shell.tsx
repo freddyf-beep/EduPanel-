@@ -209,7 +209,7 @@ export function PerfilV2Shell({ isOnboardingMode = false }: { isOnboardingMode?:
   const { user, signInWithGoogleCalendar, signInWithGoogleDrive } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const routeBase = isOnboardingMode ? "/onboarding" : "/perfil"
+  const routeBase = "/perfil"
 
   const tabFromUrl = (searchParams.get("tab") as TabKey) || "resumen"
   const [tab, setTab] = useState<TabKey>(TABS.find(t => t.key === tabFromUrl) ? tabFromUrl : "resumen")
@@ -776,7 +776,7 @@ export function PerfilV2Shell({ isOnboardingMode = false }: { isOnboardingMode?:
             setDriveAutosave={(v: boolean) => {
               setGoogleDriveAutosave(v)
               setDriveAutosaveState(v)
-              setDriveMessage(v ? "Auto-respaldo Drive activado. Se actualizara al guardar." : "Auto-respaldo Drive desactivado.")
+              setDriveMessage(v ? "Auto-respaldo Drive activado. Se actualizara Word y JSON al guardar." : "Auto-respaldo Drive desactivado.")
             }}
           />
         )}
@@ -3359,8 +3359,11 @@ function ConexionesViewV2({
               onChange={e => setDriveAutosave(e.target.checked)}
               className="h-4 w-4 accent-primary"
             />
-            Auto-respaldo JSON al guardar
+            Auto-respaldo Drive al guardar
           </label>
+          <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+            El auto-respaldo actualiza Word y JSON. El PDF solo se crea al usar Exportar a Drive.
+          </p>
         </div>
         {driveConnected && (
           <DriveWorkspaceActions

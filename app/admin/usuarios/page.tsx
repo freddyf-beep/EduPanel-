@@ -26,6 +26,9 @@ import {
   ArrowLeft,
   CheckCircle2,
   X,
+  Brain,
+  Pencil,
+  Check,
 } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
 
@@ -609,6 +612,15 @@ interface UserDetail {
   horario: any
   conteos: Record<string, number>
   allowlist: any
+  ai: {
+    tokens_input: number
+    tokens_output: number
+    tokens: number
+    prompts: number
+    cost: number
+    limit: number
+    last_used: string | null
+  } | null
 }
 
 function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () => void; onRefresh: () => void }) {
@@ -616,6 +628,9 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [copiedToken, setCopiedToken] = useState(false)
+  const [editingLimit, setEditingLimit] = useState(false)
+  const [tempLimit, setTempLimit] = useState("")
+  const [savingLimit, setSavingLimit] = useState(false)
 
   const fetch = async () => {
     setLoading(true)
@@ -651,6 +666,29 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
     }
   }
 
+  const handleSaveAiLimit = async () => {
+    const limitNum = parseFloat(tempLimit)
+    if (isNaN(limitNum) || limitNum < 0) return
+    setSavingLimit(true)
+    try {
+      await apiFetch(`/api/admin/usuarios/${uid}`, {
+        method: "PATCH",
+        body: JSON.stringify({ action: "updateAiLimit", limit: limitNum }),
+      })
+      setDetalle((prev) => prev ? {
+        ...prev,
+        ai: prev.ai
+          ? { ...prev.ai, limit: limitNum }
+          : { tokens_input: 0, tokens_output: 0, tokens: 0, prompts: 0, cost: 0, limit: limitNum, last_used: null }
+      } : prev)
+      setEditingLimit(false)
+    } catch (err) {
+      alert(getApiErrorMessage(err, "Error al guardar límite."))
+    } finally {
+      setSavingLimit(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -678,8 +716,10 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
     )
   }
 
-  const { auth: a, perfil, horario, conteos, allowlist } = detalle
+  const { auth: a, perfil, horario, conteos, allowlist, ai } = detalle
   const totalContenido = Object.values(conteos).reduce((acc, n) => acc + n, 0)
+  const aiPct = ai && ai.limit > 0 ? Math.min((ai.cost / ai.limit) * 100, 100) : 0
+  const aiStatus = ai && ai.cost >= ai.limit ? "exceeded" : ai && ai.cost >= ai.limit * 0.8 ? "warning" : "active"
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -775,7 +815,7 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
 
         <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
           <h2 className="font-bold mb-3 flex items-center gap-2 text-sm">
-            <Database className="w-4 h-4 text-muted-foreground" /> Uso
+            <Database className="w-4 h-4 text-muted-foreground" /> Uso de Contenido
           </h2>
           <div className="text-2xl font-extrabold mb-1">{totalContenido}</div>
           <div className="text-xs text-muted-foreground mb-3">documentos en Firestore</div>
@@ -788,6 +828,97 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
             ))}
           </dl>
         </div>
+      </div>
+
+      {/* Tarjeta de Inteligencia Artificial */}
+      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-bold flex items-center gap-2 text-sm">
+            <Brain className="w-4 h-4 text-fuchsia-500" /> Consumo de Inteligencia Artificial
+          </h2>
+          {ai && (
+            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
+              aiStatus === "exceeded" ? "bg-red-100 text-red-700" :
+              aiStatus === "warning" ? "bg-amber-100 text-amber-700" :
+              "bg-green-100 text-green-700"
+            }`}>
+              {aiStatus === "exceeded" ? "Límite Excedido" : aiStatus === "warning" ? "Cerca del límite" : "Normal"}
+            </span>
+          )}
+        </div>
+
+        {!ai ? (
+          <div className="text-xs text-muted-foreground italic">Este usuario no ha usado la IA aún.</div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-secondary/50 rounded-xl p-4">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Interacciones</div>
+              <div className="text-[22px] font-extrabold">{ai.prompts}</div>
+            </div>
+            <div className="bg-secondary/50 rounded-xl p-4">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Tokens Totales</div>
+              <div className="text-[22px] font-extrabold">
+                {ai.tokens >= 1_000_000 ? `${(ai.tokens / 1_000_000).toFixed(2)}M` : `${(ai.tokens / 1_000).toFixed(1)}k`}
+              </div>
+            </div>
+            <div className="bg-secondary/50 rounded-xl p-4">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Gasto USD</div>
+              <div className="text-[22px] font-extrabold">${ai.cost.toFixed(4)}</div>
+            </div>
+            <div className="bg-secondary/50 rounded-xl p-4">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1 flex items-center justify-between">
+                <span>Límite / Mes</span>
+                {!editingLimit && (
+                  <button onClick={() => { setEditingLimit(true); setTempLimit(ai.limit.toString()) }} className="text-muted-foreground hover:text-primary">
+                    <Pencil className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+              {editingLimit ? (
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className="text-[12px] text-muted-foreground">$</span>
+                  <input
+                    type="number" step="0.5" min="0" value={tempLimit}
+                    onChange={(e) => setTempLimit(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleSaveAiLimit(); if (e.key === "Escape") setEditingLimit(false) }}
+                    className="w-16 px-2 py-1 text-[13px] border border-primary rounded outline-none"
+                    autoFocus
+                  />
+                  <button onClick={handleSaveAiLimit} disabled={savingLimit} className="text-green-600 hover:text-green-700 disabled:opacity-40">
+                    {savingLimit ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                  </button>
+                  <button onClick={() => setEditingLimit(false)} className="text-muted-foreground hover:text-foreground">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <div className="text-[22px] font-extrabold">${ai.limit.toFixed(2)}</div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {ai && (
+          <div className="mt-4">
+            <div className="flex justify-between text-[11px] text-muted-foreground mb-1">
+              <span>Uso del presupuesto mensual</span>
+              <span>{aiPct.toFixed(1)}%</span>
+            </div>
+            <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-700 ${
+                  aiStatus === "exceeded" ? "bg-red-500" : aiStatus === "warning" ? "bg-amber-500" : "bg-fuchsia-500"
+                }`}
+                style={{ width: `${aiPct}%` }}
+              />
+            </div>
+            {ai.last_used && (
+              <p className="text-[11px] text-muted-foreground mt-2">
+                Último uso: {new Date(ai.last_used).toLocaleString("es-CL")}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

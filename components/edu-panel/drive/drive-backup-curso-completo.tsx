@@ -8,7 +8,7 @@ import {
   getGoogleDriveToken,
   getGoogleDriveErrorMessage,
   isGoogleDriveConnected,
-  respaldarCursoCompletoEnDrive,
+  respaldarCursoVivoJsonDrive,
 } from "@/lib/google-drive"
 
 interface DriveBackupCursoCompletoProps {
@@ -47,16 +47,14 @@ export function DriveBackupCursoCompleto({
       if (!token) throw new Error("No se recibio autorizacion de Google Drive.")
 
       const data = await buildData()
-      const result = await respaldarCursoCompletoEnDrive({
-        accessToken: token,
-        asignatura,
-        curso,
+      const result = await respaldarCursoVivoJsonDrive(token, {
+        context: { tipo: "planificaciones", asignatura, curso },
         data,
       })
 
       setFileUrl(result.file.webViewLink || "")
       setStatus("success")
-      setMessage("Backup completo guardado en Exportaciones/")
+      setMessage("Respaldo vivo actualizado en Exportaciones/")
     } catch (error) {
       setStatus("error")
       setMessage(getGoogleDriveErrorMessage(error))
@@ -72,13 +70,13 @@ export function DriveBackupCursoCompleto({
         onClick={handleBackup}
         disabled={isWorking}
         className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 py-2 text-[12px] font-bold text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-50"
-        title="Guardar backup completo del curso en Drive (Exportaciones/)"
+        title="Actualizar respaldo vivo del curso en Drive (Exportaciones/)"
       >
         {isWorking
           ? <Loader2 className="h-4 w-4 animate-spin" />
           : <DatabaseBackup className="h-4 w-4" />
         }
-        {compact ? "Backup" : "Backup completo"}
+        {compact ? "Respaldo" : "Respaldo vivo"}
       </button>
 
       {fileUrl && status === "success" && (

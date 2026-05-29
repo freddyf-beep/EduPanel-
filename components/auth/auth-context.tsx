@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
-import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, signInWithCustomToken } from "firebase/auth"
 import { isEmailAllowed } from "@/lib/allowlist"
 
 interface AuthContextType {
@@ -13,6 +13,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<void>
   signInWithGoogleCalendar: () => Promise<void>
   signInWithGoogleDrive: () => Promise<void>
+  signInWithToken: (token: string) => Promise<void>
   logout: () => Promise<void>
   recheckAllowlist: () => Promise<void>
 }
@@ -58,6 +59,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // El check de allowlist se hace en onAuthStateChanged arriba
     } catch (error) {
       console.error("Error signing in with Google", error)
+      throw error
+    }
+  }
+
+  const signInWithToken = async (token: string) => {
+    try {
+      await signInWithCustomToken(auth, token)
+    } catch (error) {
+      console.error("Error signing in with custom token", error)
       throw error
     }
   }
@@ -121,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithGoogleCalendar, signInWithGoogleDrive, logout, recheckAllowlist }}>
+    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithGoogleCalendar, signInWithGoogleDrive, logout, recheckAllowlist, signInWithToken }}>
       {children}
     </AuthContext.Provider>
   )

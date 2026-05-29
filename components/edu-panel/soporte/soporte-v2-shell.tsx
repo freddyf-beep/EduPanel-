@@ -118,7 +118,7 @@ const faqs = [
   },
   {
     q: "¿Qué hago si una página se ve rara?",
-    a: "Cada página renovada tiene un link 'Volver al diseño anterior' en su parte inferior. Tus datos siguen sincronizados sin importar el diseño que uses.",
+    a: "Recarga la página y revisa el bloque 'Estado del sistema'. Si persiste, usa Contactar soporte con el detalle de lo que estabas haciendo.",
   },
   {
     q: "¿Puedo importar mis estudiantes desde un Excel?",
@@ -263,13 +263,6 @@ export function SoporteV2Shell() {
       {activeTab === "atajos" && <AtajosView />}
       {activeTab === "faqs" && <FaqsView />}
       {activeTab === "estado" && <EstadoView isOnline={isOnline} />}
-
-      {/* Volver al diseño anterior */}
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/soporte" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
-      </div>
 
       {/* Command Palette */}
       <CommandDialog open={openCommand} onOpenChange={setOpenCommand}>

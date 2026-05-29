@@ -613,12 +613,6 @@ export function Perfil360V2Shell() {
         </div>
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/perfil-360" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
-      </div>
-
       {/* Comparador */}
       <Sheet open={comparador.open} onOpenChange={(o) => setComparador(prev => ({ ...prev, open: o }))}>
         <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">

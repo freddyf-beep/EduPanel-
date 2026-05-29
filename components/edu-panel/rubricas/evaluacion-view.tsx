@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { serverTimestamp } from "firebase/firestore"
 import {
-  ArrowLeft, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save, Lock, Unlock
+  ArrowLeft, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save, Lock, Unlock, Sparkles, Upload, FileText, Check, Image as ImageIcon
 } from "lucide-react"
 import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -73,6 +73,19 @@ export function EvaluacionView({ rubricaId }: Props) {
   const [error, setError] = useState("")
   const [parteActivaIdx, setParteActivaIdx] = useState(0)
   const [confirmBloqueo, setConfirmBloqueo] = useState<"bloquear" | "desbloquear" | null>(null)
+  const [mostrarAsistenteIA, setMostrarAsistenteIA] = useState(false)
+  const [analizandoIA, setAnalizandoIA] = useState(false)
+  const [progresoIA, setProgresoIA] = useState("")
+  const [errorIA, setErrorIA] = useState("")
+  const [fileBase64, setFileBase64] = useState<string | null>(null)
+  const [fileMime, setFileMime] = useState<string | null>(null)
+  const [fileName, setFileName] = useState<string | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [resultadoIA, setResultadoIA] = useState<{
+    transcripcion?: string
+    evaluaciones?: Record<string, { nivel: string; puntos: number; justificacion: string }>
+    observaciones?: string
+  } | null>(null)
   const ignoreFirstSave = useRef(true)
   const skipNextSave = useRef(false)
 
@@ -288,6 +301,105 @@ export function EvaluacionView({ rubricaId }: Props) {
     setAlumnoActivo(null)
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    
+    setErrorIA("")
+    setFileName(file.name)
+    setFileMime(file.type)
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const base64String = (reader.result as string).split(",")[1]
+      setFileBase64(base64String)
+      if (file.type.startsWith("image/")) {
+        setPreviewUrl(reader.result as string)
+      } else {
+        setPreviewUrl(null)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleAnalizarConIA = async () => {
+    if (!fileBase64 || !fileMime || !rubrica || !alumnoObj) return
+    setAnalizandoIA(true)
+    setProgresoIA("Procesando documento...")
+    setErrorIA("")
+    try {
+      setProgresoIA("Transcribiendo y evaluando con Gemini 2.0...")
+      const response = await fetch("/api/corregir-con-foto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          imageBase64: fileBase64,
+          mimeType: fileMime,
+          rubrica,
+          studentName: alumnoObj.nombre,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Error del servidor (${response.status})`)
+      }
+
+      const data = await response.json()
+      setResultadoIA(data)
+      setProgresoIA("")
+    } catch (err: any) {
+      setErrorIA(err.message || "Error al analizar el trabajo.")
+    } finally {
+      setAnalizandoIA(false)
+    }
+  }
+
+  const aplicarEvaluacionIA = () => {
+    if (!resultadoIA || !alumnoObj) return
+    
+    const levelMap: Record<string, number> = {
+      logrado: 4,
+      casiLogrado: 3,
+      parcialmenteLogrado: 2,
+      porLograr: 1,
+    }
+
+    const nuevosPuntajes = { ...alumnoObj.puntajes }
+    if (resultadoIA.evaluaciones) {
+      Object.entries(resultadoIA.evaluaciones).forEach(([criterioId, evalData]) => {
+        const val = levelMap[evalData.nivel] || evalData.puntos
+        if (val >= 1 && val <= 4) {
+          nuevosPuntajes[criterioId] = val
+        }
+      })
+    }
+
+    const rubr = rubrica!
+    const puntaje = calcularPuntajeEstudiante(nuevosPuntajes, rubr.partes)
+    const nota = calcularNota(puntaje, rubr.puntajeMaximo, exigenciaEstudiante(alumnoObj))
+    const criteriosTotal = rubr.partes.reduce((a, p) => a + p.criterios.length, 0)
+    const completado = Object.keys(nuevosPuntajes).length === criteriosTotal
+
+    updateEstudiante(grupoActivo, alumnoObj.estudianteId, est => ({
+      ...est,
+      puntajes: nuevosPuntajes,
+      nota,
+      completado,
+      observaciones: resultadoIA.observaciones 
+        ? `${est.observaciones ? est.observaciones + "\n" : ""}${resultadoIA.observaciones}`
+        : est.observaciones,
+    }))
+
+    // Reset state
+    setMostrarAsistenteIA(false)
+    setResultadoIA(null)
+    setFileBase64(null)
+    setFileMime(null)
+    setFileName(null)
+    setPreviewUrl(null)
+  }
+
   const handleGuardarAhora = async () => {
     if (!evaluacion) return
     setGuardandoManual(true)
@@ -433,7 +545,7 @@ export function EvaluacionView({ rubricaId }: Props) {
           <span className="sm:hidden">Hoja</span>
         </button>
         <button
-          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ view: "resultados", rubricaId }, asignatura)))}
+          onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas", view: "resultados", rubricaId }, asignatura)))}
           className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 ml-auto sm:ml-0"
         >
           <span className="hidden sm:inline">Ver resultados</span>
@@ -592,10 +704,30 @@ export function EvaluacionView({ rubricaId }: Props) {
             <div>
               {/* Header del alumno */}
               <div className="sticky top-0 bg-card border-b border-border px-4 py-3 flex items-center justify-between">
-                <div>
-                  <p className="text-[14px] font-bold text-foreground">{alumnoObj.nombre}</p>
-                  {alumnoObj.hasPie && (
-                    <span className="text-[10px] bg-blue-100 text-blue-700 rounded px-1.5 py-0.5 font-medium">PIE</span>
+                <div className="flex items-center gap-2">
+                  <div>
+                    <p className="text-[14px] font-bold text-foreground">{alumnoObj.nombre}</p>
+                    {alumnoObj.hasPie && (
+                      <span className="text-[10px] bg-blue-100 text-blue-700 rounded px-1.5 py-0.5 font-medium">PIE</span>
+                    )}
+                  </div>
+                  {!bloqueada && (
+                    <button
+                      onClick={() => {
+                        setMostrarAsistenteIA(true)
+                        setResultadoIA(null)
+                        setFileBase64(null)
+                        setFileMime(null)
+                        setFileName(null)
+                        setPreviewUrl(null)
+                        setErrorIA("")
+                      }}
+                      title="Evaluar trabajo con Asistente de IA (Multimodal)"
+                      className="ml-2 flex items-center gap-1 px-2 py-1 text-[10px] font-semibold border border-purple-200 bg-purple-50 text-purple-700 rounded-[8px] hover:bg-purple-100 transition-colors"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      Asistente IA
+                    </button>
                   )}
                 </div>
                 <div className="text-right">
@@ -613,135 +745,318 @@ export function EvaluacionView({ rubricaId }: Props) {
                 </div>
               </div>
 
-              {/* Tabs por parte/etapa */}
-              {rubrica.partes.length > 1 && (
-                <div className="flex gap-1 px-3 pt-3 overflow-x-auto pb-1">
-                  {rubrica.partes.map((parte, pi) => {
-                    const criteriosEvaluados = parte.criterios.filter(c => alumnoObj.puntajes[c.id] !== undefined).length
-                    return (
-                      <button
-                        key={parte.id}
-                        onClick={() => setParteActivaIdx(pi)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-[8px] whitespace-nowrap transition-colors border ${
-                          parteActivaIdx === pi
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "border-border hover:bg-muted/60 text-muted-foreground"
-                        }`}
-                      >
-                        {parte.nombre}
-                        <span className={`text-[9px] px-1 py-0.5 rounded-full ${
-                          parteActivaIdx === pi ? "bg-white/20" : "bg-muted"
-                        }`}>
-                          {criteriosEvaluados}/{parte.criterios.length}
-                        </span>
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
+              {mostrarAsistenteIA ? (
+                <div className="p-4 space-y-4 bg-purple-50/10 border-t border-border">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-purple-600 animate-pulse" />
+                      <h3 className="text-[13px] font-bold text-purple-950">Asistente de Corrección Multimodal (IA)</h3>
+                    </div>
+                    <button
+                      onClick={() => setMostrarAsistenteIA(false)}
+                      className="p-1 rounded-full hover:bg-muted text-muted-foreground transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
 
-              {/* Criterios de la parte activa */}
-              <div className="p-3 space-y-4">
-                {(rubrica.partes.length === 1 ? rubrica.partes : [rubrica.partes[parteActivaIdx]]).filter(Boolean).map(parte => (
-                  <div key={parte.id}>
-                    {rubrica.partes.length === 1 && (
-                      <p className="text-[12px] font-bold text-muted-foreground mb-2 uppercase tracking-wide">
-                        {parte.nombre}
-                        {parte.oasVinculados.length > 0 && (
-                          <span className="text-primary ml-1.5 normal-case font-medium">
-                            {parte.oasVinculados.join(", ")}
-                          </span>
-                        )}
+                  {!resultadoIA && !analizandoIA && (
+                    <div className="space-y-3">
+                      <p className="text-[11px] text-muted-foreground">
+                        Sube una fotografía, documento escaneado o archivo PDF del trabajo realizado por el alumno para evaluarlo con inteligencia artificial.
                       </p>
-                    )}
-                    <div className="space-y-2">
-                      {parte.criterios.map(criterio => {
-                        const nivelActual = alumnoObj.puntajes[criterio.id]
-                        return (
-                          <div key={criterio.id} className="border border-border rounded-[10px] p-3">
-                            <p className="text-[13px] font-medium text-foreground mb-2">
-                              {criterio.nombre || "Criterio sin nombre"}
-                              {(criterio.ponderacion ?? 1) > 1 && (
-                                <span className="ml-2 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 text-purple-700">
-                                  ×{criterio.ponderacion}
-                                </span>
-                              )}
-                            </p>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                              {NIVEL_OPCIONES.map(nivel => {
-                                const desc = criterio.niveles[
-                                  nivel.valor === 4 ? "logrado" :
-                                  nivel.valor === 3 ? "casiLogrado" :
-                                  nivel.valor === 2 ? "parcialmenteLogrado" : "porLograr"
-                                ].descripcion
-                                const seleccionado = nivelActual === nivel.valor
-                                return (
-                                  <button
-                                    key={nivel.valor}
-                                    title={`${nivel.titulo}: ${desc || "Sin descripción"}`}
-                                    onClick={() => setPuntaje(grupoActivo, alumnoObj.estudianteId, criterio.id, nivel.valor)}
-                                    disabled={bloqueada}
-                                    className={`flex flex-col items-center gap-1 p-2 rounded-[8px] border-2 transition-all text-center disabled:cursor-not-allowed disabled:opacity-60 ${
-                                      seleccionado
-                                        ? nivel.color
-                                        : "border-border hover:border-primary/30 hover:bg-muted/30"
-                                    }`}
-                                  >
-                                    <span className="text-[11px] font-bold">{nivel.label}</span>
-                                    <span className={`text-[10px] ${seleccionado ? "text-white/80" : "text-muted-foreground"}`}>
-                                      {nivel.valor} pts
-                                    </span>
-                                    {desc && (
-                                      <span className={`text-[9px] line-clamp-2 ${seleccionado ? "text-white/70" : "text-muted-foreground"}`}>
-                                        {desc}
-                                      </span>
-                                    )}
-                                  </button>
-                                )
-                              })}
-                            </div>
+
+                      <div className="border-2 border-dashed border-purple-200 rounded-[12px] p-6 text-center hover:border-purple-300 transition-colors bg-white/50">
+                        <input
+                          type="file"
+                          id="ai-file-upload"
+                          accept="image/*,application/pdf"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+                        <label htmlFor="ai-file-upload" className="cursor-pointer flex flex-col items-center gap-2">
+                          <div className="p-3 bg-purple-50 rounded-full text-purple-600">
+                            <Upload className="w-5 h-5" />
                           </div>
+                          <span className="text-[12px] font-semibold text-purple-900">
+                            {fileName ? fileName : "Haga clic para seleccionar archivo"}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground">
+                            Formatos soportados: PNG, JPG, PDF (Máx. 10MB)
+                          </span>
+                        </label>
+                      </div>
+
+                      {previewUrl && (
+                        <div className="flex justify-center border border-border rounded-[10px] p-2 bg-white max-h-40 overflow-hidden">
+                          <img src={previewUrl} alt="Vista previa" className="object-contain max-h-36 rounded" />
+                        </div>
+                      )}
+
+                      {fileName && (
+                        <button
+                          onClick={handleAnalizarConIA}
+                          className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-purple-600 hover:bg-purple-700 text-white rounded-[10px] text-[12px] font-bold transition-all shadow-sm"
+                        >
+                          <Sparkles className="w-4 h-4" />
+                          Analizar con Inteligencia Artificial
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {analizandoIA && (
+                    <div className="py-8 flex flex-col items-center justify-center gap-3">
+                      <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+                      <p className="text-[12px] font-bold text-purple-950">{progresoIA}</p>
+                      <p className="text-[10px] text-muted-foreground text-center max-w-xs">
+                        Gemini está leyendo las respuestas del alumno y contrastándolas con cada criterio de logro de tu rúbrica.
+                      </p>
+                    </div>
+                  )}
+
+                  {errorIA && (
+                    <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-[10px] text-[11px] flex items-start gap-2 animate-shake">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Error al evaluar</p>
+                        <p>{errorIA}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {resultadoIA && (
+                    <div className="space-y-4">
+                      {resultadoIA.transcripcion && (
+                        <div className="bg-white border border-border rounded-[10px] p-3">
+                          <p className="text-[11px] font-bold text-purple-950 mb-1 flex items-center gap-1">
+                            <FileText className="w-3.5 h-3.5 text-purple-600" />
+                            Texto Transcrito
+                          </p>
+                          <p className="text-[11.5px] text-foreground bg-muted/30 p-2 rounded whitespace-pre-wrap max-h-32 overflow-y-auto leading-relaxed border border-border/50">
+                            {resultadoIA.transcripcion}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="space-y-2">
+                        <p className="text-[11px] font-bold text-purple-950">Resultados por Criterio Sugeridos</p>
+                        <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                          {rubrica.partes.flatMap(p => p.criterios).map(crit => {
+                            const evalSugerida = resultadoIA.evaluaciones?.[crit.id]
+                            if (!evalSugerida) return null
+                            
+                            const labelMap: Record<string, string> = {
+                              logrado: "L",
+                              casiLogrado: "CL",
+                              parcialmenteLogrado: "PL",
+                              porLograr: "PL*",
+                            }
+                            const textMap: Record<string, string> = {
+                              logrado: "Logrado",
+                              casiLogrado: "Casi logrado",
+                              parcialmenteLogrado: "Parcialmente logrado",
+                              porLograr: "Por lograr",
+                            }
+                            const colorMap: Record<string, string> = {
+                              logrado: "bg-green-100 text-green-800 border-green-200",
+                              casiLogrado: "bg-blue-100 text-blue-800 border-blue-200",
+                              parcialmenteLogrado: "bg-amber-100 text-amber-800 border-amber-200",
+                              porLograr: "bg-red-100 text-red-800 border-red-200",
+                            }
+
+                            const badgeColor = colorMap[evalSugerida.nivel] || "bg-muted text-muted-foreground"
+                            const badgeLabel = labelMap[evalSugerida.nivel] || "?"
+                            const badgeText = textMap[evalSugerida.nivel] || evalSugerida.nivel
+
+                            return (
+                              <div key={crit.id} className="border border-border rounded-[8px] p-2.5 bg-white">
+                                <div className="flex items-start justify-between gap-2 mb-1.5">
+                                  <p className="text-[11.5px] font-semibold text-foreground leading-tight">
+                                    {crit.nombre}
+                                  </p>
+                                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border flex-shrink-0 ${badgeColor}`}>
+                                    {badgeLabel} · {badgeText}
+                                  </span>
+                                </div>
+                                <p className="text-[10.5px] text-muted-foreground italic leading-normal">
+                                  "{evalSugerida.justificacion}"
+                                </p>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+
+                      {resultadoIA.observaciones && (
+                        <div className="bg-white border border-border rounded-[10px] p-3">
+                          <p className="text-[11px] font-bold text-purple-950 mb-1 flex items-center gap-1">
+                            <Check className="w-3.5 h-3.5 text-green-600" />
+                            Retroalimentación Sugerida
+                          </p>
+                          <p className="text-[11.5px] text-foreground leading-relaxed">
+                            {resultadoIA.observaciones}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={aplicarEvaluacionIA}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded-[10px] text-[12px] font-bold transition-all shadow-sm"
+                        >
+                          <Check className="w-4 h-4" />
+                          Aplicar a la rúbrica
+                        </button>
+                        <button
+                          onClick={() => {
+                            setResultadoIA(null)
+                            setFileBase64(null)
+                            setFileMime(null)
+                            setFileName(null)
+                            setPreviewUrl(null)
+                          }}
+                          className="py-2 px-3 border border-border hover:bg-muted text-muted-foreground rounded-[10px] text-[12px] font-medium transition-colors"
+                        >
+                          Descartar
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {/* Tabs por parte/etapa */}
+                  {rubrica.partes.length > 1 && (
+                    <div className="flex gap-1 px-3 pt-3 overflow-x-auto pb-1">
+                      {rubrica.partes.map((parte, pi) => {
+                        const criteriosEvaluados = parte.criterios.filter(c => alumnoObj.puntajes[c.id] !== undefined).length
+                        return (
+                          <button
+                            key={parte.id}
+                            onClick={() => setParteActivaIdx(pi)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-[8px] whitespace-nowrap transition-colors border ${
+                              parteActivaIdx === pi
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "border-border hover:bg-muted/60 text-muted-foreground"
+                            }`}
+                          >
+                            {parte.nombre}
+                            <span className={`text-[9px] px-1 py-0.5 rounded-full ${
+                              parteActivaIdx === pi ? "bg-white/20" : "bg-muted"
+                            }`}>
+                              {criteriosEvaluados}/{parte.criterios.length}
+                            </span>
+                          </button>
                         )
                       })}
                     </div>
-                  </div>
-                ))}
+                  )}
 
-                {/* Observaciones */}
-                <div>
-                  <label className="text-[12px] font-semibold text-muted-foreground">Observaciones</label>
-                  <textarea
-                    value={alumnoObj.observaciones}
-                    onChange={e => updateEstudiante(grupoActivo, alumnoObj.estudianteId, est => ({
-                      ...est, observaciones: e.target.value
-                    }))}
-                    disabled={bloqueada}
-                    placeholder="Observaciones del alumno (opcional)"
-                    rows={2}
-                    className="mt-1 w-full text-[12px] border border-border rounded-[10px] px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground/40 resize-none focus:outline-none focus:ring-1 focus:ring-primary/30 disabled:cursor-not-allowed disabled:bg-muted/40"
-                  />
-                </div>
+                  {/* Criterios de la parte activa */}
+                  <div className="p-3 space-y-4">
+                    {(rubrica.partes.length === 1 ? rubrica.partes : [rubrica.partes[parteActivaIdx]]).filter(Boolean).map(parte => (
+                      <div key={parte.id}>
+                        {rubrica.partes.length === 1 && (
+                          <p className="text-[12px] font-bold text-muted-foreground mb-2 uppercase tracking-wide">
+                            {parte.nombre}
+                            {parte.oasVinculados.length > 0 && (
+                              <span className="text-primary ml-1.5 normal-case font-medium">
+                                {parte.oasVinculados.join(", ")}
+                              </span>
+                            )}
+                          </p>
+                        )}
+                        <div className="space-y-2">
+                          {parte.criterios.map(criterio => {
+                            const nivelActual = alumnoObj.puntajes[criterio.id]
+                            return (
+                              <div key={criterio.id} className="border border-border rounded-[10px] p-3">
+                                <p className="text-[13px] font-medium text-foreground mb-2">
+                                  {criterio.nombre || "Criterio sin nombre"}
+                                  {(criterio.ponderacion ?? 1) > 1 && (
+                                    <span className="ml-2 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 text-purple-700">
+                                      ×{criterio.ponderacion}
+                                    </span>
+                                  )}
+                                </p>
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                                  {NIVEL_OPCIONES.map(nivel => {
+                                    const desc = criterio.niveles[
+                                      nivel.valor === 4 ? "logrado" :
+                                      nivel.valor === 3 ? "casiLogrado" :
+                                      nivel.valor === 2 ? "parcialmenteLogrado" : "porLograr"
+                                    ].descripcion
+                                    const seleccionado = nivelActual === nivel.valor
+                                    return (
+                                      <button
+                                        key={nivel.valor}
+                                        title={`${nivel.titulo}: ${desc || "Sin descripción"}`}
+                                        onClick={() => setPuntaje(grupoActivo, alumnoObj.estudianteId, criterio.id, nivel.valor)}
+                                        disabled={bloqueada}
+                                        className={`flex flex-col items-center gap-1 p-2 rounded-[8px] border-2 transition-all text-center disabled:cursor-not-allowed disabled:opacity-60 ${
+                                          seleccionado
+                                            ? nivel.color
+                                            : "border-border hover:border-primary/30 hover:bg-muted/30"
+                                        }`}
+                                      >
+                                        <span className="text-[11px] font-bold">{nivel.label}</span>
+                                        <span className={`text-[10px] ${seleccionado ? "text-white/80" : "text-muted-foreground"}`}>
+                                          {nivel.valor} pts
+                                        </span>
+                                        {desc && (
+                                          <span className={`text-[9px] line-clamp-2 ${seleccionado ? "text-white/70" : "text-muted-foreground"}`}>
+                                            {desc}
+                                          </span>
+                                        )}
+                                      </button>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    ))}
 
-                {/* Navegación anterior / siguiente parte */}
-                {rubrica.partes.length > 1 && (
-                  <div className="flex justify-between pt-1">
-                    <button
-                      onClick={() => setParteActivaIdx(i => Math.max(0, i - 1))}
-                      disabled={parteActivaIdx === 0}
-                      className="text-[11px] px-3 py-1.5 rounded-[8px] border border-border hover:bg-muted/60 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                      ← Parte anterior
-                    </button>
-                    <button
-                      onClick={() => setParteActivaIdx(i => Math.min(rubrica.partes.length - 1, i + 1))}
-                      disabled={parteActivaIdx === rubrica.partes.length - 1}
-                      className="text-[11px] px-3 py-1.5 rounded-[8px] border border-border hover:bg-muted/60 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                      Siguiente parte →
-                    </button>
+                    {/* Observaciones */}
+                    <div>
+                      <label className="text-[12px] font-semibold text-muted-foreground">Observaciones</label>
+                      <textarea
+                        value={alumnoObj.observaciones}
+                        onChange={e => updateEstudiante(grupoActivo, alumnoObj.estudianteId, est => ({
+                          ...est, observaciones: e.target.value
+                        }))}
+                        disabled={bloqueada}
+                        placeholder="Observaciones del alumno (opcional)"
+                        rows={2}
+                        className="mt-1 w-full text-[12px] border border-border rounded-[10px] px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground/40 resize-none focus:outline-none focus:ring-1 focus:ring-primary/30 disabled:cursor-not-allowed disabled:bg-muted/40"
+                      />
+                    </div>
+
+                    {/* Navegación anterior / siguiente parte */}
+                    {rubrica.partes.length > 1 && (
+                      <div className="flex justify-between pt-1">
+                        <button
+                          onClick={() => setParteActivaIdx(i => Math.max(0, i - 1))}
+                          disabled={parteActivaIdx === 0}
+                          className="text-[11px] px-3 py-1.5 rounded-[8px] border border-border hover:bg-muted/60 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        >
+                          ← Parte anterior
+                        </button>
+                        <button
+                          onClick={() => setParteActivaIdx(i => Math.min(rubrica.partes.length - 1, i + 1))}
+                          disabled={parteActivaIdx === rubrica.partes.length - 1}
+                          className="text-[11px] px-3 py-1.5 rounded-[8px] border border-border hover:bg-muted/60 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        >
+                          Siguiente parte →
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
           )}
         </div>

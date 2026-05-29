@@ -1,0 +1,36 @@
+# 🚨 REGLAS CRÍTICAS PARA AGENTES DE IA (EduPanel Local) 🚨
+
+Este archivo contiene reglas de comportamiento e instrucciones de seguridad obligatorias para cualquier IA que trabaje en esta carpeta (`edupanel_local`). **Debes leer y respetar estas normas estrictamente en cada turno.**
+
+---
+
+## 🚫 1. PROHIBICIÓN ABSOLUTA DE GIT PUSH / COMMIT
+* **NO ejecutes `git commit` ni `git push`** en este directorio.
+* Este directorio (`edupanel_local`) es estrictamente de desarrollo y pruebas locales. 
+* El repositorio público se maneja de forma independiente en la carpeta `edupanel_public`. El traspaso de código es un proceso manual y limpio controlado por el Administrador.
+
+---
+
+## 🔒 2. SEGURIDAD Y BYPASS DE QA
+* Los archivos que contienen credenciales locales, endpoints de impersonación (`/api/auth/impersonate`) o bypass de listas de permitidos (`allowlist`) **bajo ninguna circunstancia** deben ser expuestos o confirmados en repositorios públicos.
+* Estos bypasses solo sirven para que la IA/QA entre a realizar pruebas locales.
+
+---
+
+## 📂 3. TRASPASO LIMPIO A PRODUCCIÓN
+* Cuando el Administrador indique traspasar una nueva versión a la carpeta pública, el traspaso debe ser **limpio**.
+* **EXCLUIR** los siguientes elementos:
+  * Archivos de documentación `.md` del agente (como manuales de instrucciones de IA, resúmenes, checklists, FODAs).
+  * Scripts locales de desarrollo y seeding (ej. `scripts/seed-qa-user.mjs`).
+  * Archivos temporales, backups locales (`backups/`), y configs de depuración.
+
+---
+
+## 👁️ 4. LEER AVISOS EN EL CÓDIGO
+* Antes de realizar cualquier cambio, verifica la cabecera de los archivos.
+* Si ves un comentario como `🤖 AVISO PARA AGENTES IA... NO SUBIR A GITHUB`, respeta la regla y asegúrate de que el archivo permanezca local y fuera de cualquier índice de Git remoto.
+
+---
+
+## 🗣️ 5. CONSENTIMIENTO EXPLÍCITO
+* **NUNCA** asumas tareas de despliegue, empaquetado o git sin antes consultarlo y recibir la confirmación afirmativa del Administrador por el chat.

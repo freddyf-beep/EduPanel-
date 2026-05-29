@@ -1,20 +1,9 @@
-import { Suspense } from "react"
-import { Loader2 } from "lucide-react"
-import { MainLayout } from "@/components/edu-panel"
-import { CalificacionesV2Shell } from "@/components/edu-panel/calificaciones/calificaciones-v2-shell"
+import { redirect } from "next/navigation"
 
+/**
+ * Ruta legacy /calificaciones-v2 — redirige permanentemente a /calificaciones.
+ * El shell CalificacionesV2Shell ya es la versión actual en /calificaciones.
+ */
 export default function CalificacionesV2Page() {
-  return (
-    <MainLayout>
-      <Suspense
-        fallback={
-          <div className="p-10 grid place-items-center">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-          </div>
-        }
-      >
-        <CalificacionesV2Shell />
-      </Suspense>
-    </MainLayout>
-  )
+  redirect("/calificaciones")
 }

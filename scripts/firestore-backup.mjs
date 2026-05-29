@@ -7,12 +7,14 @@ import { pipeline } from "stream/promises"
 import { createGzip } from "zlib"
 import { spawn } from "child_process"
 import { cert, deleteApp, getApps, initializeApp } from "firebase-admin/app"
-import { getFirestore } from "firebase-admin/firestore"
+import { getFirestore, initializeFirestore } from "firebase-admin/firestore"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const PROJECT_ROOT = resolve(__dirname, "..")
 const BACKUP_FORMAT = "edupanel.firestore.backup.v1"
+const BACKUP_STATUS_FILE = "backup-status.json"
+const BACKUP_LOCK_FILE = "backup-lock.json"
 
 const originalEnvKeys = new Set(Object.keys(process.env))
 
@@ -21,6 +23,7 @@ function parseArgs(argv) {
     outDir: null,
     remote: false,
     plainJsonOnly: false,
+    trigger: "manual-cli",
   }
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -32,6 +35,9 @@ function parseArgs(argv) {
       args.remote = true
     } else if (arg === "--plain-json-only") {
       args.plainJsonOnly = true
+    } else if (arg === "--trigger") {
+      args.trigger = argv[i + 1] || args.trigger
+      i += 1
     } else if (arg === "--help" || arg === "-h") {
       printHelp()
       process.exit(0)
@@ -45,12 +51,13 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`Uso:
-  node scripts/firestore-backup.mjs [--out-dir backups/firestore] [--remote]
+  node scripts/firestore-backup.mjs [--out-dir backups/firestore] [--remote] [--trigger manual-admin]
 
 Opciones:
   --out-dir <ruta>       Carpeta local donde guardar el respaldo.
   --remote               Envia el respaldo al servidor Ubuntu via SSH/SCP.
   --plain-json-only      No crea archivo .gz, solo JSON.
+  --trigger <origen>     Etiqueta el origen del respaldo (ej. manual-admin, scheduled-hourly).
 
 Variables requeridas:
   FIREBASE_ADMIN_PROJECT_ID
@@ -105,6 +112,13 @@ function boolEnv(name) {
   return ["1", "true", "yes", "si", "on"].includes(env(name).toLowerCase())
 }
 
+function shouldKeepPlainJson(args) {
+  if (args.plainJsonOnly) return true
+  const value = process.env.BACKUP_KEEP_PLAIN_JSON
+  if (value === undefined || value === null || value === "") return true
+  return ["1", "true", "yes", "si", "on"].includes(String(value).toLowerCase())
+}
+
 function initAdminApp() {
   const projectId = env("FIREBASE_ADMIN_PROJECT_ID")
   const clientEmail = env("FIREBASE_ADMIN_CLIENT_EMAIL")
@@ -127,6 +141,14 @@ function initAdminApp() {
     }),
     projectId,
   })
+}
+
+function initFirestore(app) {
+  if (boolEnv("FIRESTORE_PREFER_REST")) {
+    return initializeFirestore(app, { preferRest: true })
+  }
+
+  return getFirestore(app)
 }
 
 function serializeFirestoreValue(value) {
@@ -270,6 +292,72 @@ async function pruneOldBackups(outDir) {
   return removed
 }
 
+async function readJsonIfExists(filePath) {
+  try {
+    return JSON.parse(await readFile(filePath, "utf8"))
+  } catch (error) {
+    if (error.code === "ENOENT") return null
+    throw error
+  }
+}
+
+function isProcessAlive(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return false
+  try {
+    process.kill(pid, 0)
+    return true
+  } catch {
+    return false
+  }
+}
+
+async function writeStatusFile(statusPath, nextState) {
+  await writeFile(statusPath, `${JSON.stringify(nextState, null, 2)}\n`, "utf8")
+}
+
+async function readStatusFile(statusPath) {
+  return (await readJsonIfExists(statusPath)) || {
+    version: 1,
+    updatedAt: null,
+    running: null,
+    lastSuccess: null,
+    lastFailure: null,
+  }
+}
+
+async function acquireBackupLock({ lockPath, statusPath, running }) {
+  const existingLock = await readJsonIfExists(lockPath)
+  if (existingLock?.pid && isProcessAlive(existingLock.pid)) {
+    const started = existingLock.startedAt ? ` desde ${existingLock.startedAt}` : ""
+    throw new Error(`Ya hay un respaldo en curso${started}.`)
+  }
+
+  if (existingLock) {
+    await unlink(lockPath).catch(() => {})
+  }
+
+  const currentStatus = await readStatusFile(statusPath)
+  await writeFile(lockPath, `${JSON.stringify(running, null, 2)}\n`, "utf8")
+  await writeStatusFile(statusPath, {
+    ...currentStatus,
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    running,
+  })
+}
+
+async function finalizeBackupStatus({ statusPath, running, lastSuccess = undefined, lastFailure = undefined }) {
+  const currentStatus = await readStatusFile(statusPath)
+  await writeStatusFile(statusPath, {
+    ...currentStatus,
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    running: null,
+    lastSuccess: lastSuccess === undefined ? currentStatus.lastSuccess : lastSuccess,
+    lastFailure: lastFailure === undefined ? currentStatus.lastFailure : lastFailure,
+  })
+}
+
 function sshCommonArgs({ scp = false } = {}) {
   const args = []
   const port = env("BACKUP_REMOTE_PORT", "22")
@@ -338,48 +426,99 @@ async function main() {
   const args = parseArgs(process.argv.slice(2))
   await loadBackupEnv()
 
-  const app = initAdminApp()
-  const db = getFirestore(app)
   const outDir = resolve(PROJECT_ROOT, args.outDir || env("BACKUP_LOCAL_DIR", "backups/firestore"))
   await mkdir(outDir, { recursive: true })
-
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
-  const backupBaseName = `edupanel-firestore-${timestamp}`
-  const jsonPath = join(outDir, `${backupBaseName}.json`)
-  const gzipPath = `${jsonPath}.gz`
-  const checksumPath = join(outDir, `${backupBaseName}.sha256`)
-
-  const snapshot = await exportFirestore(db)
-  await writeFile(jsonPath, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8")
-
-  let archivePath = jsonPath
-  if (!args.plainJsonOnly) {
-    await gzipFile(jsonPath, gzipPath)
-    archivePath = gzipPath
+  const statusPath = join(outDir, BACKUP_STATUS_FILE)
+  const lockPath = join(outDir, BACKUP_LOCK_FILE)
+  const startedAt = new Date().toISOString()
+  const keepPlainJson = shouldKeepPlainJson(args)
+  const shouldUploadRemote = args.remote || boolEnv("BACKUP_REMOTE_ENABLED")
+  const running = {
+    pid: process.pid,
+    startedAt,
+    trigger: args.trigger,
+    outDir,
+    remoteRequested: shouldUploadRemote,
   }
 
-  const checksum = await sha256File(archivePath)
-  await writeFile(checksumPath, `${checksum}  ${basename(archivePath)}\n`, "utf8")
+  await acquireBackupLock({ lockPath, statusPath, running })
 
-  const removedByRetention = await pruneOldBackups(outDir)
-  const shouldUploadRemote = args.remote || boolEnv("BACKUP_REMOTE_ENABLED")
-  const remote = shouldUploadRemote ? await uploadToRemote([archivePath, checksumPath]) : null
+  let app = null
 
-  await deleteApp(app).catch(() => {})
+  try {
+    app = initAdminApp()
+    const db = initFirestore(app)
 
-  console.log(JSON.stringify({
-    ok: true,
-    format: BACKUP_FORMAT,
-    projectId: snapshot.projectId,
-    collectionCount: snapshot.collectionCount,
-    documentCount: snapshot.documentCount,
-    localJsonPath: jsonPath,
-    localArchivePath: archivePath,
-    checksumPath,
-    checksum,
-    removedByRetention,
-    remote,
-  }, null, 2))
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
+    const backupBaseName = `edupanel-firestore-${timestamp}`
+    const jsonPath = join(outDir, `${backupBaseName}.json`)
+    const gzipPath = `${jsonPath}.gz`
+    const checksumPath = join(outDir, `${backupBaseName}.sha256`)
+
+    const snapshot = await exportFirestore(db)
+    await writeFile(jsonPath, `${JSON.stringify(snapshot, null, 2)}\n`, "utf8")
+
+    let archivePath = jsonPath
+    if (!args.plainJsonOnly) {
+      await gzipFile(jsonPath, gzipPath)
+      archivePath = gzipPath
+      if (!keepPlainJson) {
+        await unlink(jsonPath).catch(() => {})
+      }
+    }
+
+    const checksum = await sha256File(archivePath)
+    await writeFile(checksumPath, `${checksum}  ${basename(archivePath)}\n`, "utf8")
+
+    const removedByRetention = await pruneOldBackups(outDir)
+    const remote = shouldUploadRemote ? await uploadToRemote([archivePath, checksumPath]) : null
+    const finishedAt = new Date().toISOString()
+    const summary = {
+      ok: true,
+      trigger: args.trigger,
+      startedAt,
+      finishedAt,
+      durationMs: Date.parse(finishedAt) - Date.parse(startedAt),
+      format: BACKUP_FORMAT,
+      projectId: snapshot.projectId,
+      collectionCount: snapshot.collectionCount,
+      documentCount: snapshot.documentCount,
+      localJsonPath: args.plainJsonOnly || keepPlainJson ? jsonPath : null,
+      localArchivePath: archivePath,
+      checksumPath,
+      checksum,
+      keepPlainJson,
+      removedByRetention,
+      remote,
+    }
+
+    await finalizeBackupStatus({
+      statusPath,
+      running,
+      lastSuccess: summary,
+      lastFailure: null,
+    })
+
+    console.log(JSON.stringify(summary, null, 2))
+  } catch (error) {
+    await finalizeBackupStatus({
+      statusPath,
+      running,
+      lastFailure: {
+        ok: false,
+        trigger: args.trigger,
+        startedAt,
+        finishedAt: new Date().toISOString(),
+        message: error instanceof Error ? error.message : String(error),
+      },
+    }).catch(() => {})
+    throw error
+  } finally {
+    if (app) {
+      await deleteApp(app).catch(() => {})
+    }
+    await unlink(lockPath).catch(() => {})
+  }
 }
 
 main().catch(async (error) => {

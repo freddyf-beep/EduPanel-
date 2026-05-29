@@ -14,7 +14,7 @@ import {
   Send, Settings2, Wand2, KeyRound, ChevronUp, Mic, MicOff,
   PanelRightOpen, SlidersHorizontal, RotateCcw, BrainCircuit, Copy,
   Save, PencilLine, Trash2, Paperclip, UploadCloud, ExternalLink, HardDrive,
-  Download, Eye
+  Download, Eye, Play
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
@@ -38,6 +38,8 @@ import {
 import { IaModal } from "@/components/edu-panel/actividades/ia-modal"
 import { ImportWordModal } from "@/components/edu-panel/actividades/import-word-modal"
 import { NotebookPptModal } from "@/components/edu-panel/actividades/notebook-ppt-modal"
+import { GenerarEvaluacionIaModal } from "@/components/edu-panel/actividades/generar-evaluacion-ia-modal"
+import { ModoClaseEnVivo } from "@/components/edu-panel/actividades/modo-clase-en-vivo"
 import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
 import { eliminarArchivoClase, formatoTamaño, subirArchivoClase } from "@/lib/storage"
 import {
@@ -50,6 +52,7 @@ import {
   isGoogleDriveAutosaveEnabled,
   isGoogleDriveConnected,
   subirArchivoADrive,
+  subirDocxADrive,
   subirDocxYPdfADrive,
   type DriveItem,
 } from "@/lib/google-drive"
@@ -419,6 +422,8 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [previewArchivo, setPreviewArchivo] = useState<ArchivoAdjunto | null>(null)
   const [showImportWordModal, setShowImportWordModal] = useState(false)
   const [showNotebookPptModal, setShowNotebookPptModal] = useState(false)
+  const [showGenerarEvaluacionIaModal, setShowGenerarEvaluacionIaModal] = useState(false)
+  const [showModoClaseEnVivo, setShowModoClaseEnVivo] = useState(false)
   const [bancoActividades, setBancoActividades] = useState<ActividadClase[]>([])
   const [loadingBanco, setLoadingBanco] = useState(false)
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
@@ -1528,7 +1533,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       })
       if (!res.ok) throw new Error("No se pudo generar Word de la clase.")
       const blob = await res.blob()
-      await subirDocxYPdfADrive(token, {
+      await subirDocxADrive(token, {
         docx: blob,
         folderId: classPlanificacionFolder.id,
         fileName: `Clase_${String(selectedClase).padStart(2, "0")}_Planificacion.docx`,
@@ -1731,6 +1736,31 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         oas={oasCurriculo}
         contextoDocente={unidadContextoDocente}
         objetivoDocente={unidadObjetivoDocente}
+      />
+      <GenerarEvaluacionIaModal
+        open={showGenerarEvaluacionIaModal}
+        onOpenChange={setShowGenerarEvaluacionIaModal}
+        asignatura={ASIGNATURA}
+        curso={cursoParam}
+        unidadId={unidadParam}
+        unidadNombre={unidadData?.nombre_unidad || unidadCurricularParam || unidadParam}
+        unidadProposito={unidadData?.proposito || ""}
+        nivelCurricular={nivelCurricular}
+        numeroClase={selectedClase}
+        totalClases={clases.length}
+        claseCronograma={claseActualCronograma}
+        actividad={actividad}
+        oas={oasCurriculo}
+        contextoDocente={unidadContextoDocente}
+        objetivoDocente={unidadObjetivoDocente}
+        aiConfig={aiConfig}
+      />
+      <ModoClaseEnVivo
+        open={showModoClaseEnVivo}
+        onClose={() => setShowModoClaseEnVivo(false)}
+        actividad={actividad as ActividadClase | null}
+        asignatura={ASIGNATURA}
+        curso={cursoParam}
       />
       <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-3 sm:px-4 md:px-6")}>
         {/* Header — oculto en modo compact */}
@@ -2401,6 +2431,28 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                 >
                   <Monitor className="w-4 h-4" />
                   Preparar PPT con Notebook
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowGenerarEvaluacionIaModal(true)}
+                  disabled={!tieneContenidoClase}
+                  className="flex items-center justify-center gap-2 w-full border border-primary/30 bg-primary/5 text-primary font-bold text-[13px] rounded-[10px] px-5 py-3 hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:hover:bg-primary/5 print:hidden"
+                  title={tieneContenidoClase ? "Generar rúbricas o guías de aprendizaje con Inteligencia Artificial" : "Completa la planificacion de la clase antes de generar una evaluación"}
+                >
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  Generar Rúbrica / Guía con IA
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowModoClaseEnVivo(true)}
+                  disabled={!tieneContenidoClase}
+                  className="flex items-center justify-center gap-2 w-full border border-emerald-500/30 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 text-emerald-600 dark:text-emerald-400 font-bold text-[13px] rounded-[10px] px-5 py-3 hover:from-emerald-500/10 hover:to-teal-500/10 transition-all disabled:opacity-50 print:hidden"
+                  title={tieneContenidoClase ? "Abrir modo clase en vivo con temporizador y asistente IA" : "Completa la planificación antes de usar el modo en vivo"}
+                >
+                  <Play className="w-4 h-4" />
+                  Modo Clase en Vivo
                 </button>
 
                 {/* Materiales y TICs */}

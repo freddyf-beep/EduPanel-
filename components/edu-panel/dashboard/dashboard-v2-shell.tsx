@@ -4,19 +4,22 @@ import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
-  ArrowRight, Calendar, Check, Clock, Loader2, Users, X, BookOpen, Pen,
-  PenLine, AlertCircle, Sparkles, Sunrise, Sun, Moon, ListChecks, Bell,
+  ArrowRight, Calendar, Check, Clock, Loader2, Users, X, BookOpen,
+  AlertCircle, Sparkles, Sunrise, Sun, Moon, ListChecks, Bell,
   Zap, ChevronDown, ChevronRight, Coffee, Flame, Target, Activity, Hash,
-  StickyNote, Plus, Trash2, ClipboardCheck, ClipboardList, CalendarDays,
+  StickyNote, Plus, Trash2, ClipboardCheck, CalendarDays,
   TrendingUp, Lightbulb, Pin, MapPin, GraduationCap, BarChart3, UserRound,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { cargarEstadoClases, guardarEstadoClases, cargarHorarioSemanal, ClaseHorario, esTipoLibre } from "@/lib/horario"
 import {
   cargarActividadClase, buscarActividadPorFecha, buscarClasePlanificadaPorFecha,
+  guardarAnotacion, cargarAnotacion,
 } from "@/lib/curriculo"
-import type { ActividadClase, BloqueLibroClase, EstadoAsistencia } from "@/lib/curriculo"
+import type { ActividadClase } from "@/lib/curriculo"
 import { buildUrl, withAsignatura } from "@/lib/shared"
+import { getFeatureFlags } from "@/lib/feature-flags"
+import { apiFetch } from "@/lib/api-client"
 import { useAuth } from "@/components/auth/auth-context"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { ResumenSemanal } from "@/components/edu-panel/dashboard/resumen-semanal"
@@ -27,13 +30,6 @@ import { cargarPreferencias, guardarPreferencias } from "@/lib/perfil"
 const DAYS   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
 const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 const DIAS_HABILES = ["Lunes","Martes","Miércoles","Jueves","Viernes"]
-
-const ESTADOS_ASISTENCIA: { key: EstadoAsistencia; label: string; long: string; cls: string }[] = [
-  { key: "presente", label: "P", long: "Presente",  cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300" },
-  { key: "ausente",  label: "A", long: "Ausente",   cls: "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300" },
-  { key: "atraso",   label: "T", long: "Tardanza",  cls: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300" },
-  { key: "retirado", label: "R", long: "Retiro",    cls: "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-300" },
-]
 
 type TabKey = "hoy" | "semana" | "mes" | "insights" | "pendientes"
 const TABS: { key: TabKey; label: string; icon: typeof Clock }[] = [
@@ -69,7 +65,7 @@ interface CursoStats {
   asistenciaPct?: number
 }
 
-type ModalTab = "clase" | "leccionario" | "asistencia" | "firma" | "anotaciones"
+type ModalTab = "clase" | "anotaciones"
 
 function fechaKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`
@@ -106,17 +102,15 @@ export function DashboardV2Shell() {
   const [expandedClase, setExpandedClase] = useState<string | null>(null)
   const [innerTab, setInnerTab] = useState<ModalTab>("clase")
   const [actividadModal, setActividadModal] = useState<ActividadClase | null>(null)
-  const [bloquesLibro, setBloquesLibro] = useState<BloqueLibroClase[]>([])
   const [loadingPanel, setLoadingPanel] = useState(false)
-  const [savingLibro, setSavingLibro] = useState(false)
   const [anotaciones, setAnotaciones] = useState("")
-  const [firmado, setFirmado] = useState(false)
   const [claseNumero, setClaseNumero] = useState(1)
   const [unidadModal, setUnidadModal] = useState("unidad_1")
   const [unidadCurricularModal, setUnidadCurricularModal] = useState("unidad_1")
   const [claseVinculada, setClaseVinculada] = useState(false)
   const [savingAnotacion, setSavingAnotacion] = useState(false)
   const [anotacionGuardada, setAnotacionGuardada] = useState(false)
+  const [fechaStrModal, setFechaStrModal] = useState("")
 
   // Stickies / recordatorios (localStorage)
   const [stickies, setStickies] = useState<StickyNote[]>([])
@@ -159,7 +153,7 @@ export function DashboardV2Shell() {
       .then(([est, hor, pref]) => {
         const tieneCursosLectivos = hor.some(item => !esTipoLibre(item.tipo) && item.resumen.trim())
         if (!pref?.onboardingCompletado && !tieneCursosLectivos) {
-          router.replace("/onboarding")
+          router.replace("/perfil")
           return
         }
         if (!pref?.onboardingCompletado && tieneCursosLectivos) {
@@ -281,9 +275,7 @@ export function DashboardV2Shell() {
     setInnerTab("clase")
     setLoadingPanel(true)
     setActividadModal(null)
-    setBloquesLibro([])
     setAnotaciones("")
-    setFirmado(false)
     setClaseVinculada(false)
 
     try {
@@ -321,6 +313,7 @@ export function DashboardV2Shell() {
       setClaseNumero(claseN)
       setUnidadModal(unidad)
       setUnidadCurricularModal(unidadCurricular)
+      setFechaStrModal(fechaStr)
 
       const cargarActividadDetectada = async () => {
         if (actHoy) return actHoy
@@ -329,33 +322,53 @@ export function DashboardV2Shell() {
         return cargarActividadClase(cleanResumen, unidadCurricular, claseN, cleanAsignatura).catch(() => null)
       }
 
-      const [actividad] = await Promise.all([
+      const [actividad, anotTxt] = await Promise.all([
         cargarActividadDetectada(),
+        cargarAnotacion(cleanResumen, fechaStr, cleanAsignatura).catch(() => ""),
       ])
       setActividadModal(actividad)
-      setBloquesLibro([])
-      setAnotaciones("")
-      setFirmado(false)
+      setAnotaciones(anotTxt || "")
     } finally {
       setLoadingPanel(false)
     }
   }
 
-  const togglePresente = (estId: string, estado: EstadoAsistencia) => {
-    setBloquesLibro(prev => prev.map(b => ({
-      ...b,
-      asistencia: b.asistencia.map(a => a.id === estId ? { ...a, estado } : a),
-    })))
+  const guardarAnotacionPanel = async (cursoStr: string) => {
+    setSavingAnotacion(true)
+    try {
+      let finalAnotaciones = anotaciones
+      const flags = (await getFeatureFlags().catch(() => ({}))) as Record<string, any>
+      if (flags["corrector-tono"]?.active) {
+        const checkRes = await apiFetch("/api/corregir-anotacion", {
+          method: "POST",
+          body: JSON.stringify({ texto: anotaciones })
+        }).then(r => r.json()).catch(() => null)
+
+        if (checkRes?.resultado?.riesgoso) {
+          const conf = window.confirm(
+            `⚠️ ALERTA DE SEGURIDAD LEGAL (IA)\n\nSe detectó lenguaje subjetivo o potencialmente conflictivo:\n"${checkRes.resultado.analisis}"\n\n¿Deseas aplicar la siguiente redacción alternativa profesional y segura?\n\n"${checkRes.resultado.sugerencia}"`
+          )
+          if (conf) {
+            finalAnotaciones = checkRes.resultado.sugerencia
+            setAnotaciones(checkRes.resultado.sugerencia)
+          }
+        }
+      }
+
+      await guardarAnotacion(cursoStr, fechaStrModal, finalAnotaciones, ASIGNATURA)
+      setAnotacionGuardada(true)
+      setTimeout(() => setAnotacionGuardada(false), 3000)
+    } catch (err) {
+      console.error("Error saving annotation", err)
+    } finally {
+      setSavingAnotacion(false)
+    }
   }
-
-  const guardarLibroPanel = async (_claseSeleccionada: ClaseHorario) => {}
-
-  const guardarAnotacionPanel = async (_cursoStr: string) => {}
 
   const greeting = getGreeting(now)
   const GreetIcon = greeting.icon
 
-  // Atajos H, 1-5, F, A
+  // Atajos discretos: H abre la proxima clase; 1-5 cambia el dia.
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null
@@ -369,12 +382,6 @@ export function DashboardV2Shell() {
         e.preventDefault()
         const idx = Number(e.key) - 1
         setSelectedDay(DIAS_HABILES[idx])
-      } else if (e.key.toLowerCase() === "f" && expandedClase) {
-        e.preventDefault()
-        setInnerTab("firma")
-      } else if (e.key.toLowerCase() === "a" && expandedClase) {
-        e.preventDefault()
-        setInnerTab("asistencia")
       }
     }
     document.addEventListener("keydown", handler)
@@ -521,7 +528,6 @@ export function DashboardV2Shell() {
                   onToggleExpand={onExpandClase}
                   onToggleEstado={toggleEstado}
                   actividadModal={actividadModal}
-                  bloquesLibro={bloquesLibro}
                   loadingPanel={loadingPanel}
                   innerTab={innerTab}
                   setInnerTab={setInnerTab}
@@ -530,15 +536,10 @@ export function DashboardV2Shell() {
                   unidadModal={unidadModal}
                   unidadCurricularModal={unidadCurricularModal}
                   claseVinculada={claseVinculada}
-                  firmado={firmado}
-                  setFirmado={setFirmado}
                   anotaciones={anotaciones}
                   setAnotaciones={setAnotaciones}
                   savingAnotacion={savingAnotacion}
                   anotacionGuardada={anotacionGuardada}
-                  savingLibro={savingLibro}
-                  onTogglePresente={togglePresente}
-                  onGuardarLibro={guardarLibroPanel}
                   onGuardarAnotacion={guardarAnotacionPanel}
                   now={now}
                 />
@@ -571,11 +572,6 @@ export function DashboardV2Shell() {
         />
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
-      </div>
     </div>
   )
 }
@@ -601,7 +597,6 @@ interface HoyViewProps {
   onToggleExpand: (clase: ClaseHorario) => void
   onToggleEstado: (uid: string) => void
   actividadModal: ActividadClase | null
-  bloquesLibro: BloqueLibroClase[]
   loadingPanel: boolean
   innerTab: ModalTab
   setInnerTab: (t: ModalTab) => void
@@ -610,15 +605,10 @@ interface HoyViewProps {
   unidadModal: string
   unidadCurricularModal: string
   claseVinculada: boolean
-  firmado: boolean
-  setFirmado: (v: boolean) => void
   anotaciones: string
   setAnotaciones: (v: string) => void
   savingAnotacion: boolean
   anotacionGuardada: boolean
-  savingLibro: boolean
-  onTogglePresente: (estId: string, estado: EstadoAsistencia) => void
-  onGuardarLibro: (clase: ClaseHorario) => void
   onGuardarAnotacion: (uid: string) => void
   now: Date
 }
@@ -627,18 +617,18 @@ function HoyView(props: HoyViewProps) {
   const {
     esDiaLaboral, clasesHoy, selectedDay, setSelectedDay, clasesDelDiaSeleccionado,
     expandedClase, onToggleExpand, onToggleEstado,
-    actividadModal, bloquesLibro, loadingPanel, innerTab, setInnerTab,
+    actividadModal, loadingPanel, innerTab, setInnerTab,
     asignatura, claseNumero, unidadModal, unidadCurricularModal, claseVinculada,
-    firmado, setFirmado, anotaciones, setAnotaciones,
-    savingAnotacion, anotacionGuardada, savingLibro,
-    onTogglePresente, onGuardarLibro, onGuardarAnotacion, now,
+    anotaciones, setAnotaciones,
+    savingAnotacion, anotacionGuardada,
+    onGuardarAnotacion, now,
   } = props
 
   return (
     <div className="space-y-5">
       {/* Switch día */}
       <div className="flex flex-wrap items-center gap-1.5">
-        {DIAS_HABILES.map((d, idx) => (
+        {DIAS_HABILES.map(d => (
           <button
             key={d}
             onClick={() => setSelectedDay(d)}
@@ -649,12 +639,9 @@ function HoyView(props: HoyViewProps) {
                 : "border-border bg-card hover:border-primary"
             )}
           >
-            {d.slice(0, 3)} <span className="text-muted-foreground text-[10px] ml-0.5">{idx + 1}</span>
+            {d.slice(0, 3)}
           </button>
         ))}
-        <span className="ml-auto text-[11px] text-muted-foreground italic">
-          Atajos: <kbd className="rounded bg-muted px-1">1-5</kbd> días · <kbd className="rounded bg-muted px-1">H</kbd> próxima clase · <kbd className="rounded bg-muted px-1">A</kbd> asistencia demo · <kbd className="rounded bg-muted px-1">F</kbd> firma demo
-        </span>
       </div>
 
       {clasesDelDiaSeleccionado.length === 0 ? (
@@ -748,9 +735,6 @@ function HoyView(props: HoyViewProps) {
                       <div className="flex flex-wrap items-center gap-1 border-b border-border pb-1 -mx-1">
                         {([
                           { k: "clase",        label: "Clase",        icon: BookOpen },
-                          { k: "leccionario",  label: "Leccionario",  icon: PenLine },
-                          { k: "asistencia",   label: "Asistencia",   icon: Users },
-                          { k: "firma",        label: "Firma",        icon: Pen },
                           { k: "anotaciones",  label: "Anotaciones",  icon: AlertCircle },
                         ] as const).map(t => {
                           const Icon = t.icon
@@ -787,7 +771,7 @@ function HoyView(props: HoyViewProps) {
                                     <p className="text-[12px] text-muted-foreground mt-1">{actividadModal.objetivo}</p>
                                   )}
                                   <Link
-                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: actividadModal.unidadId || unidadModal, clase: String(claseNumero) }, asignatura))}
+                                    href={buildUrl("/actividades-v2", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: actividadModal.unidadId || unidadModal, clase: String(claseNumero) }, asignatura))}
                                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                                   >
                                     Editar en Actividades <ArrowRight className="h-3 w-3" />
@@ -801,102 +785,12 @@ function HoyView(props: HoyViewProps) {
                                       : "No hay actividad planificada para esta clase."}
                                   </p>
                                   <Link
-                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: unidadModal, clase: String(claseNumero) }, asignatura))}
+                                    href={buildUrl("/actividades-v2", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: unidadModal, clase: String(claseNumero) }, asignatura))}
                                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                                   >
                                     Abrir actividad <ArrowRight className="h-3 w-3" />
                                   </Link>
                                 </div>
-                              )}
-                            </div>
-                          )}
-
-                          {innerTab === "leccionario" && (
-                            <div className="space-y-2">
-                              {bloquesLibro.length === 0 ? (
-                                <p className="text-[12px] text-muted-foreground italic">Sin leccionario registrado todavía.</p>
-                              ) : (
-                                bloquesLibro.map(b => (
-                                  <div key={b.id} className="rounded-[10px] border border-border bg-background p-3">
-                                    <div className="text-[11px] font-bold">{b.bloque} · {b.horaInicio} – {b.horaFin}</div>
-                                    <p className="mt-1 text-[12px]"><strong>Objetivo:</strong> {b.objetivo || <span className="text-muted-foreground italic">—</span>}</p>
-                                    <p className="text-[12px] mt-0.5"><strong>Actividad:</strong> {b.actividad || <span className="text-muted-foreground italic">—</span>}</p>
-                                  </div>
-                                ))
-                              )}
-                              <Link
-                                href={buildUrl("/libro-clases", withAsignatura({}, asignatura))}
-                                className="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
-                              >
-                                Ver prototipo de libro <ArrowRight className="h-3 w-3" />
-                              </Link>
-                            </div>
-                          )}
-
-                          {innerTab === "asistencia" && (
-                            <div className="space-y-2">
-                              {bloquesLibro.length === 0 ? (
-                                <p className="text-[12px] text-muted-foreground italic">Asistencia en modo prototipo. No se cargan ni guardan registros reales.</p>
-                              ) : (
-                                bloquesLibro[0].asistencia.map(est => (
-                                  <div key={est.id} className="flex items-center gap-2 rounded-[8px] border border-border bg-background px-3 py-1.5">
-                                    <span className="text-[12px] font-medium flex-1 truncate">{est.nombre}</span>
-                                    <div className="flex gap-0.5">
-                                      {ESTADOS_ASISTENCIA.map(e => (
-                                        <button
-                                          key={e.key}
-                                          onClick={() => onTogglePresente(est.id, e.key)}
-                                          className={cn(
-                                            "h-6 w-6 rounded text-[10px] font-bold",
-                                            est.estado === e.key ? `${e.cls} ring-1 ring-primary` : "bg-muted text-muted-foreground hover:bg-muted/70"
-                                          )}
-                                        >
-                                          {e.label}
-                                        </button>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                              {bloquesLibro.length > 0 && (
-                                <button
-                                  onClick={() => onGuardarLibro(clase as ClaseHorario)}
-                                  disabled={savingLibro}
-                                  className="mt-2 inline-flex items-center gap-1.5 rounded-[10px] bg-primary text-white px-3 py-1.5 text-[11px] font-bold hover:opacity-90 disabled:opacity-60"
-                                >
-                                  {savingLibro ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
-                                  Guardar asistencia
-                                </button>
-                              )}
-                            </div>
-                          )}
-
-                          {innerTab === "firma" && (
-                            <div className="space-y-2">
-                              <button
-                                onClick={() => setFirmado(!firmado)}
-                                className={cn(
-                                  "rounded-[10px] px-4 py-2.5 text-[12.5px] font-bold flex items-center gap-2 transition-colors",
-                                  firmado
-                                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-300"
-                                    : "border border-primary text-primary hover:bg-pink-light"
-                                )}
-                              >
-                                <Pen className="h-3.5 w-3.5" />
-                                {firmado ? "Firmado demo" : "Firma demo"}
-                              </button>
-                              <p className="text-[11px] text-muted-foreground italic">
-                                Prototipo visual. Esta acción no registra una firma real ni escribe en el libro de clases.
-                              </p>
-                              {bloquesLibro.length > 0 && (
-                                <button
-                                  onClick={() => onGuardarLibro(clase as ClaseHorario)}
-                                  disabled={savingLibro}
-                                  className="inline-flex items-center gap-1.5 rounded-[10px] bg-primary text-white px-3 py-1.5 text-[11px] font-bold hover:opacity-90 disabled:opacity-60"
-                                >
-                                  {savingLibro ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
-                                  Guardar firma
-                                </button>
                               )}
                             </div>
                           )}
@@ -981,10 +875,9 @@ function PendientesView({ pendientes, onExpand }: {
 // ─── Quick Actions Bar ────────────────────────────────────────────────────────
 function QuickActionsBar({ asignatura, cursosStats }: { asignatura: string; cursosStats: CursoStats[] }) {
   const acciones = [
-    { label: "Libro demo",        icon: ClipboardList,  href: buildUrl("/libro-clases", withAsignatura({}, asignatura)),  cls: "from-amber-500 to-orange-500" },
     { label: "Calificar",         icon: ClipboardCheck, href: buildUrl("/calificaciones", withAsignatura({}, asignatura)), cls: "from-emerald-500 to-teal-500" },
     { label: "Ver cronograma",    icon: CalendarDays,   href: buildUrl("/cronograma", withAsignatura({}, asignatura)),    cls: "from-cyan-500 to-blue-500" },
-    { label: "Editar clase",      icon: Lightbulb,      href: buildUrl("/actividades", withAsignatura({}, asignatura)),       cls: "from-fuchsia-500 to-pink-500" },
+    { label: "Editar clase",      icon: Lightbulb,      href: buildUrl("/actividades-v2", withAsignatura({}, asignatura)),       cls: "from-fuchsia-500 to-pink-500" },
     { label: "Perfil 360",        icon: UserRound,      href: buildUrl("/perfil-360", withAsignatura({}, asignatura)),    cls: "from-indigo-500 to-violet-500" },
   ]
   return (
@@ -997,7 +890,7 @@ function QuickActionsBar({ asignatura, cursosStats }: { asignatura: string; curs
           {cursosStats.length} cursos · {cursosStats.reduce((s, c) => s + c.alumnos, 0)} estudiantes
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {acciones.map(a => {
           const Icon = a.icon
           return (

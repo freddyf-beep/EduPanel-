@@ -8,12 +8,14 @@ import {
   ArrowLeft, Bookmark, CalendarDays, Check, CheckCircle2, Circle,
   ClipboardList, Download, FileText, Layers, Loader2, Plus, Target,
   Trash2, BookOpen, Clock, Heart, Pencil, ArrowRight, Eye, X, AlertCircle,
-  MoreHorizontal, FolderOpen, UploadCloud, HardDrive
+  MoreHorizontal, FolderOpen, UploadCloud, HardDrive, Sparkles
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/components/auth/auth-context"
 import {
   applyPlanSelection,
   buildMatrixCellKey,
+  cargarActividadClase,
   cargarCronogramaUnidad,
   cargarPlanCurso,
   cargarPlanificacion,
@@ -35,14 +37,18 @@ import type {
   Unidad,
   UnidadPlan,
 } from "@/lib/curriculo"
-import { ActividadesEmbedded } from "@/components/edu-panel/actividades/actividades-content"
+import { ActividadesEmbedded } from "@/components/edu-panel/actividades-v2/actividades-content-v2"
 import { CronogramaUnidadContent } from "@/components/edu-panel/cronograma-unidad/cronograma-unidad-content"
 import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
-import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
 import {
   actualizarUnidadEnRespaldoVivoDrive,
+  ensureEduPanelWorkspaceForContext,
+  getGoogleDriveErrorMessage,
   getGoogleDriveToken,
   isGoogleDriveAutosaveEnabled,
+  isGoogleDriveConnected,
+  subirDocxADrive,
+  subirDocxYPdfADrive,
 } from "@/lib/google-drive"
 import {
   cargarCursoTipos,
@@ -57,8 +63,12 @@ import type { ClaseHorario } from "@/lib/horario"
 import { buildUrl, UNIT_COLORS, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { useIsMobile } from "@/components/ui/use-mobile"
+import { apiFetch } from "@/lib/api-client"
+import { toast } from "@/hooks/use-toast"
 
-type TabKey = "curriculo" | "cronograma" | "actividades"
+export type VerUnidadTabKey = "unidad" | "cronograma" | "clases"
+type TabKey = VerUnidadTabKey
+type DriveExportStatus = "idle" | "exporting" | "word" | "success" | "error" | "reconnect"
 
 function unitIndexFrom(value: string): number {
   const n = parseInt(value.replace(/\D/g, ""), 10)
@@ -559,15 +569,16 @@ function HeaderMoreMenu({
   )
 }
 
-function VerUnidadV2Inner() {
+function VerUnidadV2Inner({ initialTab }: { initialTab: TabKey }) {
   const { asignatura: ASIGNATURA } = useActiveSubject()
+  const { signInWithGoogleDrive } = useAuth()
   const searchParams = useSearchParams()
   const unidadParam = searchParams.get("unidad") || "unidad_1"
   const unidadLocalParam = searchParams.get("unitIdLocal") || unidadParam
   const cursoParam = searchParams.get("curso") || "1° A"
   const unitIndex = unitIndexFrom(unidadLocalParam)
 
-  const [activeTab, setActiveTab] = useState<TabKey>("curriculo")
+  const activeTab = initialTab
   const [unidad, setUnidad] = useState<Unidad | null>(null)
   const [planUnit, setPlanUnit] = useState<UnidadPlan | null>(null)
   const [cronogramaDates, setCronogramaDates] = useState<{ start: string; end: string; datedCount: number; totalCount: number } | null>(null)
@@ -579,6 +590,9 @@ function VerUnidadV2Inner() {
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving_silent" | "saved" | "error">("idle")
+  const [driveExportStatus, setDriveExportStatus] = useState<DriveExportStatus>("idle")
+  const [driveExportMessage, setDriveExportMessage] = useState("")
+  const [driveExportFolderUrl, setDriveExportFolderUrl] = useState("")
 
   const [descripcion, setDescripcion] = useState("")
   const [contextoDocente, setContextoDocente] = useState("")
@@ -611,6 +625,7 @@ function VerUnidadV2Inner() {
   const pdfDragRef = useRef<{ startX: number, startY: number, startRight: number, startBottom: number } | null>(null)
   const isMobile = useIsMobile()
   const ignoreNextSaveRef = useRef(true)
+  const driveWordTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     pdfDragRef.current = { startX: e.clientX, startY: e.clientY, startRight: pdfPos.right, startBottom: pdfPos.bottom }
@@ -720,7 +735,181 @@ function VerUnidadV2Inner() {
     load()
   }, [ASIGNATURA, cursoParam, unidadLocalParam, unidadParam, unitIndex])
 
-  const handleGuardar = async (isAutoSave = false) => {
+  const getUnidadDriveContext = () => ({
+    tipo: "unidad" as const,
+    asignatura: ASIGNATURA,
+    curso: cursoParam,
+    unidadId: unidadLocalParam,
+    unidadNombre: planUnit?.name || unidad?.nombre_unidad,
+  })
+
+  const buildUnidadBackupData = () => ({
+    asignatura: ASIGNATURA,
+    curso: cursoParam,
+    unidadId: unidadLocalParam,
+    unidadCurricularId: unidadParam,
+    nombre: planUnit?.name || unidad?.nombre_unidad,
+    numeroClases: clases,
+    horas: horasParaGuardar,
+    verUnidad: {
+      descripcion,
+      contextoDocente,
+      objetivoDocente,
+      oas,
+      habilidades,
+      conocimientos,
+      actitudes,
+      actividades,
+      conocimientosPrevios,
+      recursosMaterialesUnidad,
+      estrategiasEvaluacion,
+    },
+    cronograma: {
+      fechas: cronogramaDates,
+      clases: cronogramaClases,
+    },
+  })
+
+  const ensureDriveToken = async () => {
+    let token = getGoogleDriveToken()
+    if (!token || !isGoogleDriveConnected()) {
+      setDriveExportStatus("reconnect")
+      setDriveExportMessage("Reconectando Drive...")
+      await signInWithGoogleDrive()
+      token = getGoogleDriveToken()
+    }
+    if (!token) throw new Error("No se recibio autorizacion de Google Drive.")
+    return token
+  }
+
+  const generarUnidadWordBlob = async (): Promise<Blob> => {
+    const { htmlToPlainTextForExport } = await import("@/lib/export/planificacion-docx")
+    const oasSeleccionados = selectedOas(oas)
+    const oasBasales = oasSeleccionados
+      .filter(oa => oa.tipo !== "oat")
+      .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+    const oasTransversales = oasSeleccionados
+      .filter(oa => oa.tipo === "oat")
+      .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+
+    const clasesExport = []
+    const total = Math.max(1, Math.min(60, clases || 1))
+    for (let n = 1; n <= total; n++) {
+      const actividadClase = await cargarActividadClase(cursoParam, unidadLocalParam, n, ASIGNATURA).catch(() => null)
+      if (!actividadClase) continue
+      if (!actividadClase.objetivo && !actividadClase.inicio && !actividadClase.desarrollo && !actividadClase.cierre) continue
+      const oasOcupados = oas
+        .filter(oa => (actividadClase.oaIds || []).includes(oa.id))
+        .map(oa => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${oa.descripcion || ""}`.trim())
+      const indicadores = oas
+        .filter(oa => (actividadClase.oaIds || []).includes(oa.id))
+        .flatMap(oa => {
+          const selectedIds = actividadClase.indicadoresPorOa?.[oa.id]
+          return (oa.indicadores || [])
+            .filter(ind => ind.seleccionado)
+            .filter(ind => !selectedIds || selectedIds.includes(ind.id))
+            .map(ind => `${oa.numero ? `OA ${oa.numero}` : oa.id}: ${ind.texto}`)
+        })
+      clasesExport.push({
+        numero: n,
+        oasOcupados,
+        indicadores,
+        objetivo: htmlToPlainTextForExport(actividadClase.objetivo || ""),
+        inicio: htmlToPlainTextForExport(actividadClase.inicio || ""),
+        actividadInicio: "",
+        desarrollo: htmlToPlainTextForExport(actividadClase.desarrollo || ""),
+        cierre: htmlToPlainTextForExport(actividadClase.cierre || ""),
+        recursos: actividadClase.materiales || [],
+        tics: actividadClase.tics || [],
+        criteriosEvaluacion: [],
+      })
+    }
+
+    const res = await apiFetch("/api/export-planificacion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formato: "detallado",
+        nivel: nivelAsignado || cursoParam,
+        asignatura: ASIGNATURA,
+        unidades: [{
+          numero: unitIndex + 1,
+          nombre: planUnit?.name || unidad?.nombre_unidad || `Unidad ${unitIndex + 1}`,
+          oasBasales,
+          oasTransversales,
+          clases: clasesExport,
+        }],
+      }),
+    })
+    if (!res.ok) throw new Error("No se pudo generar el Word de la unidad.")
+    return res.blob()
+  }
+
+  const runDriveWithReconnect = async <T,>(operation: (token: string) => Promise<T>): Promise<T> => {
+    const token = await ensureDriveToken()
+    try {
+      return await operation(token)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error || "")
+      const canReconnect = (message.includes("401") || message.includes("insufficient") || message.includes("PERMISSION_DENIED"))
+        && !message.includes("SERVICE_DISABLED")
+        && !message.includes("accessNotConfigured")
+      if (!canReconnect) throw error
+      setDriveExportStatus("reconnect")
+      setDriveExportMessage("Reconectando Drive...")
+      await signInWithGoogleDrive()
+      const nextToken = getGoogleDriveToken()
+      if (!nextToken) throw error
+      return operation(nextToken)
+    }
+  }
+
+  const subirUnidadWordDrive = async (token: string, blob: Blob, includePdf: boolean) => {
+    const workspace = await ensureEduPanelWorkspaceForContext(token, getUnidadDriveContext())
+    const folderId = workspace.folders.planificacion?.id || workspace.focusFolder.id
+    const folderUrl = workspace.folders.planificacion?.webViewLink || workspace.focusFolder.webViewLink || ""
+    const fileName = `Unidad_${String(unitIndex + 1).padStart(2, "0")}_Planificacion.docx`
+    if (includePdf) {
+      const files = await subirDocxYPdfADrive(token, { docx: blob, folderId, fileName })
+      return { folderUrl, files }
+    }
+    const docx = await subirDocxADrive(token, { docx: blob, folderId, fileName })
+    return { folderUrl, files: { docx } }
+  }
+
+  const scheduleUnidadDriveAutosave = (token: string) => {
+    if (driveWordTimerRef.current) clearTimeout(driveWordTimerRef.current)
+    driveWordTimerRef.current = setTimeout(async () => {
+      setDriveExportStatus("exporting")
+      setDriveExportMessage("Sincronizando Drive en segundo plano...")
+      try {
+        await actualizarUnidadEnRespaldoVivoDrive(token, {
+          context: getUnidadDriveContext(),
+          data: buildUnidadBackupData(),
+        })
+        const blob = await generarUnidadWordBlob()
+        await subirUnidadWordDrive(token, blob, false)
+        setDriveExportStatus("word")
+        setDriveExportMessage("Drive actualizado: JSON y Word.")
+        setTimeout(() => {
+          setDriveExportStatus("idle")
+          setDriveExportMessage("")
+        }, 2800)
+      } catch (error) {
+        console.warn("[drive-autosave:unidad]", error)
+        setDriveExportStatus("error")
+        setDriveExportMessage(getGoogleDriveErrorMessage(error))
+      }
+    }, 4500)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (driveWordTimerRef.current) clearTimeout(driveWordTimerRef.current)
+    }
+  }, [])
+
+  const handleGuardar = async (isAutoSave = false, options?: { skipAutoWord?: boolean }): Promise<boolean> => {
     if (!isAutoSave) setSaving(true)
     if (isAutoSave) setSaveStatus("saving_silent")
     try {
@@ -749,55 +938,56 @@ function VerUnidadV2Inner() {
       await guardarPlanificacion(ASIGNATURA, cursoParam, planificacion?.fechas || {}, matriz)
 
       const driveToken = isGoogleDriveAutosaveEnabled() ? getGoogleDriveToken() : null
-      if (driveToken) {
-        try {
-          await actualizarUnidadEnRespaldoVivoDrive(driveToken, {
-            context: {
-              tipo: "unidad",
-              asignatura: ASIGNATURA,
-              curso: cursoParam,
-              unidadId: unidadLocalParam,
-              unidadNombre: planUnit?.name || unidad?.nombre_unidad,
-            },
-            data: {
-              asignatura: ASIGNATURA,
-              curso: cursoParam,
-              unidadId: unidadLocalParam,
-              unidadCurricularId: unidadParam,
-              nombre: planUnit?.name || unidad?.nombre_unidad,
-              numeroClases: clases,
-              horas: horasParaGuardar,
-              verUnidad: {
-                descripcion,
-                contextoDocente,
-                objetivoDocente,
-                oas,
-                habilidades,
-                conocimientos,
-                actitudes,
-                actividades,
-                conocimientosPrevios,
-                recursosMaterialesUnidad,
-                estrategiasEvaluacion,
-              },
-              cronograma: {
-                fechas: cronogramaDates,
-                clases: cronogramaClases,
-              },
-            },
-          })
-        } catch (error) {
-          console.warn("[drive-autosave:unidad]", error)
-        }
+      if (driveToken && !options?.skipAutoWord) {
+        scheduleUnidadDriveAutosave(driveToken)
       }
 
       setSaveStatus("saved")
       setTimeout(() => setSaveStatus("idle"), 2500)
+      return true
     } catch {
       setSaveStatus("error")
       setTimeout(() => setSaveStatus("idle"), 3000)
+      return false
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handleExportarUnidadDrive = async () => {
+    if (driveExportStatus === "exporting" || driveExportStatus === "reconnect") return
+    if (driveWordTimerRef.current) {
+      clearTimeout(driveWordTimerRef.current)
+      driveWordTimerRef.current = null
+    }
+    setDriveExportStatus("exporting")
+    setDriveExportMessage("Exportando a Drive...")
+    setDriveExportFolderUrl("")
+    try {
+      const guardado = await handleGuardar(false, { skipAutoWord: true })
+      if (!guardado) throw new Error("No se pudo guardar la unidad antes de exportar.")
+      const blob = await generarUnidadWordBlob()
+      const result = await runDriveWithReconnect(async token => {
+        await actualizarUnidadEnRespaldoVivoDrive(token, {
+          context: getUnidadDriveContext(),
+          data: buildUnidadBackupData(),
+        })
+        setDriveExportMessage("Word actualizado. Generando PDF...")
+        return subirUnidadWordDrive(token, blob, true)
+      })
+      setDriveExportFolderUrl(result.folderUrl)
+      setDriveExportStatus("success")
+      setDriveExportMessage("Word y PDF actualizados en Drive.")
+      toast({ title: "Exportado a Drive", description: "La unidad quedo respaldada en Word y PDF." })
+    } catch (error) {
+      console.error("[drive-manual-export:unidad]", error)
+      setDriveExportStatus("error")
+      setDriveExportMessage(getGoogleDriveErrorMessage(error))
+      toast({
+        title: "No se pudo exportar a Drive",
+        description: getGoogleDriveErrorMessage(error),
+        variant: "destructive",
+      })
     }
   }
 
@@ -902,6 +1092,24 @@ function VerUnidadV2Inner() {
     setEvalDraft({ nombre: "", instrumento: "", ponderacion: "" })
   }
 
+  const routeForTab = (tab: TabKey, extra?: Record<string, string>) => {
+    const base = tab === "unidad"
+      ? "/ver-unidad"
+      : tab === "cronograma"
+        ? "/ver-unidad/cronograma"
+        : "/ver-unidad/clases"
+
+    return buildUrl(
+      base,
+      withAsignatura({
+        curso: cursoParam,
+        unidad: unidadParam,
+        unitIdLocal: unidadLocalParam,
+        ...extra,
+      }, ASIGNATURA)
+    )
+  }
+
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center gap-3 text-muted-foreground">
@@ -964,6 +1172,30 @@ function VerUnidadV2Inner() {
             buttonClassName="gap-1.5 rounded-[10px] border border-border bg-card px-3 py-2 text-[12px] font-bold text-muted-foreground hover:border-primary hover:text-primary"
           />
 
+          <button
+            type="button"
+            onClick={handleExportarUnidadDrive}
+            disabled={driveExportStatus === "exporting" || driveExportStatus === "reconnect" || saving || saveStatus === "saving_silent"}
+            className="flex items-center gap-1.5 rounded-[10px] border border-primary bg-card px-3 py-2 text-[12px] font-bold text-primary hover:bg-pink-light disabled:opacity-50"
+            title="Guardar la unidad y exportarla a Google Drive en Word y PDF"
+          >
+            {driveExportStatus === "exporting" || driveExportStatus === "reconnect"
+              ? <Loader2 className="h-4 w-4 animate-spin" />
+              : <HardDrive className="h-4 w-4" />
+            }
+            <span className="hidden sm:inline">Exportar a Drive</span>
+            <span className="sm:hidden">Drive</span>
+          </button>
+
+          {/* Clases */}
+          <Link
+            href={routeForTab("clases", { clase: "1" })}
+            className="flex items-center gap-[7px] rounded-[10px] border-[1.5px] border-purple-600 bg-purple-50 px-3 py-2 text-[12px] font-bold text-purple-700 transition-colors hover:bg-purple-100 dark:bg-purple-950/30 dark:border-purple-500 dark:text-purple-400 sm:px-4 sm:py-2.5 sm:text-[13px]"
+          >
+            <Sparkles className="h-[15px] w-[15px]" />
+            <span>Planificar clase</span>
+          </Link>
+
           {/* Programa Oficial — solo si el curso tiene curriculum oficial */}
           {tipoCurricular === "oficial" && (
             <button
@@ -976,7 +1208,7 @@ function VerUnidadV2Inner() {
             </button>
           )}
 
-          {/* Menú ⋯ — acciones secundarias de Drive + diseño anterior */}
+          {/* Menú ⋯ — acciones secundarias de Drive */}
           <HeaderMoreMenu
             onOpenFolder={async () => {
               const { ensureEduPanelWorkspaceForContext, getGoogleDriveToken: getToken, buildDriveFolderUrl } = await import("@/lib/google-drive")
@@ -1034,27 +1266,46 @@ function VerUnidadV2Inner() {
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Bookmark className="h-4 w-4" />}
             Guardar
           </button>
+          {driveExportMessage && (
+            <div className={cn(
+              "basis-full text-right text-[11px] font-semibold",
+              driveExportStatus === "error" ? "text-red-600" : "text-green-700",
+            )}>
+              <span>{driveExportMessage}</span>
+              {driveExportFolderUrl && (
+                <a
+                  href={driveExportFolderUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ml-2 underline underline-offset-2 hover:text-primary"
+                >
+                  Abrir carpeta
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </header>
 
       <div className="mb-5 flex gap-0 overflow-x-auto border-b-2 border-border">
         {([
-          { key: "curriculo", label: "Curriculo", icon: BookOpen },
+          { key: "unidad", label: "Unidad", icon: BookOpen },
           { key: "cronograma", label: "Cronograma", icon: CalendarDays },
-          { key: "actividades", label: "Actividades", icon: ClipboardList },
+          { key: "clases", label: "Clases", icon: ClipboardList },
         ] as const).map(tab => {
           const Icon = tab.icon
           return (
-            <button
+            <Link
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              href={routeForTab(tab.key)}
+              aria-current={activeTab === tab.key ? "page" : undefined}
               className={cn(
                 "flex items-center gap-2 whitespace-nowrap border-b-2 px-4 py-2.5 text-[13px] font-bold transition-colors -mb-[2px]",
                 activeTab === tab.key ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
               )}
             >
               <Icon className="h-4 w-4" /> {tab.label}
-            </button>
+            </Link>
           )
         })}
       </div>
@@ -1069,11 +1320,11 @@ function VerUnidadV2Inner() {
         />
       )}
 
-      {activeTab === "actividades" && (
+      {activeTab === "clases" && (
         <Suspense fallback={
           <div className="flex h-48 items-center justify-center gap-3 text-muted-foreground">
             <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-[14px]">Cargando actividades...</span>
+            <span className="text-[14px]">Cargando clases...</span>
           </div>
         }>
           <ActividadesEmbedded
@@ -1086,7 +1337,7 @@ function VerUnidadV2Inner() {
         </Suspense>
       )}
 
-      {activeTab === "curriculo" && (
+      {activeTab === "unidad" && (
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-4">
             {tipoCurricular !== "oficial" && (
@@ -1098,7 +1349,7 @@ function VerUnidadV2Inner() {
                       Unidad personalizada sin curriculum oficial
                     </h2>
                     <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground">
-                      Este curso esta marcado como {tipoCurricular === "taller" ? "Taller" : "Libre"} en Mi Perfil. Puedes completar contexto, objetivo, cronograma y actividades sin asociar OAs Mineduc.
+                      Este curso esta marcado como {tipoCurricular === "taller" ? "Taller" : "Libre"} en Mi Perfil. Puedes completar contexto, objetivo, cronograma y clases sin asociar OAs Mineduc.
                     </p>
                   </div>
                 </div>
@@ -1302,7 +1553,7 @@ function VerUnidadV2Inner() {
                 </p>
               ) : (
                 <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[11px] leading-snug text-amber-800">
-                  El cronograma aun no tiene fechas. Completa la pestaña Cronograma para que esta carga se arme sola.
+                  El cronograma aun no tiene fechas. Abre Cronograma para que esta carga se arme sola.
                 </div>
               )}
               <div className="mt-3 grid grid-cols-2 gap-2">
@@ -1357,13 +1608,12 @@ function VerUnidadV2Inner() {
                 </div>
               )}
               {!cronogramaDates && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("cronograma")}
+                <Link
+                  href={routeForTab("cronograma")}
                   className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 px-3 py-2 text-[12px] font-bold text-primary hover:bg-primary/10"
                 >
                   Ir a Cronograma <ArrowRight className="h-3.5 w-3.5" />
-                </button>
+                </Link>
               )}
             </section>
 
@@ -1572,7 +1822,7 @@ function VerUnidadV2Inner() {
   )
 }
 
-export function VerUnidadV2Content() {
+export function VerUnidadV2Content({ initialTab = "unidad" }: { initialTab?: TabKey }) {
   return (
     <Suspense fallback={
       <div className="flex h-64 items-center justify-center gap-3 text-muted-foreground">
@@ -1580,7 +1830,7 @@ export function VerUnidadV2Content() {
         <span className="text-[14px] font-medium">Cargando...</span>
       </div>
     }>
-      <VerUnidadV2Inner />
+      <VerUnidadV2Inner initialTab={initialTab} />
     </Suspense>
   )
 }

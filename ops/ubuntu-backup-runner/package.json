@@ -1,0 +1,13 @@
+{
+  "name": "edupanel-ubuntu-backup-runner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "backup": "node scripts/firestore-backup.mjs",
+    "status": "node scripts/firestore-backup-status.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.8.0"
+  }
+}

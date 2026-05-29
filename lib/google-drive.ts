@@ -697,7 +697,7 @@ export async function subirArchivoADrive(
     }
   }
 
-  const sessionUrl = `${DRIVE_UPLOAD_BASE}/files?uploadType=resumable&fields=${encodeURIComponent(DRIVE_FILE_FIELDS)}`
+  const sessionUrl = `${DRIVE_UPLOAD_BASE}/files?uploadType=resumable&supportsAllDrives=true&fields=${encodeURIComponent(DRIVE_FILE_FIELDS)}`
   const session = await fetch(sessionUrl, {
     method: "POST",
     headers: {
@@ -909,13 +909,7 @@ export async function subirDocxYPdfADrive(
 ): Promise<{ docx: DriveItem; pdf: DriveItem }> {
   const docxName = params.fileName.endsWith(".docx") ? params.fileName : `${params.fileName}.docx`
   const pdfName = docxName.replace(/\.docx$/i, ".pdf")
-  const docxFile = new File([params.docx], docxName, { type: GOOGLE_DRIVE_DOCX_MIME })
-  const docx = await subirArchivoADrive(accessToken, {
-    file: docxFile,
-    folderId: params.folderId,
-    fileName: docxName,
-    overwrite: true,
-  })
+  const docx = await subirDocxADrive(accessToken, params)
   const pdf = await convertirDocxAPdfYSubirDrive(accessToken, {
     docx: params.docx,
     sourceFileName: docxName,
@@ -923,6 +917,24 @@ export async function subirDocxYPdfADrive(
     pdfFileName: pdfName,
   })
   return { docx, pdf }
+}
+
+export async function subirDocxADrive(
+  accessToken: string,
+  params: {
+    docx: Blob
+    folderId: string
+    fileName: string
+  },
+): Promise<DriveItem> {
+  const docxName = params.fileName.endsWith(".docx") ? params.fileName : `${params.fileName}.docx`
+  const docxFile = new File([params.docx], docxName, { type: GOOGLE_DRIVE_DOCX_MIME })
+  return subirArchivoADrive(accessToken, {
+    file: docxFile,
+    folderId: params.folderId,
+    fileName: docxName,
+    overwrite: true,
+  })
 }
 
 export async function descargarArchivoDrive(

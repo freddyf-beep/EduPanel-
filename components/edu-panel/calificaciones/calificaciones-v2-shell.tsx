@@ -6,13 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation"
 import {
   Plus, Loader2, Check, X, AlertCircle, TrendingUp, TrendingDown, Minus,
   BarChart3, MessageSquare, Bookmark, Sparkles, Filter, Grid3x3, LayoutList,
-  ChevronRight, Search, Hash, Target, Flame, Eye, ArrowUpDown, Trash2,
+  ChevronRight, Search, Hash, Target, Flame, Eye, ArrowUpDown, Trash2, Download,
 } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, Tooltip as ChartTooltip, Cell, ResponsiveContainer } from "recharts"
 import { cn } from "@/lib/utils"
 import { cargarVerUnidadesCurso, userDoc } from "@/lib/curriculo"
 import { setDoc, getDoc, serverTimestamp } from "firebase/firestore"
-import { cargarHorarioSemanal } from "@/lib/horario"
+import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
@@ -143,10 +143,12 @@ export function CalificacionesV2Shell() {
     setActiveTab(key)
   }, [router, searchParams])
 
-  // Cursos
+  // Cursos — excluye tipos libres (recreo, almuerzo, planificacion, etc.)
   useEffect(() => {
     cargarHorarioSemanal().then(hData => {
-      const unique = Array.from(new Set(hData.map(h => h.resumen)))
+      const unique = Array.from(new Set(
+        hData.filter(h => !esTipoLibre(h.tipo)).map(h => h.resumen.trim()).filter(Boolean)
+      ))
       setCursosDisponibles(unique)
       if (unique.length > 0) setCurso(unique[0])
     })
@@ -244,6 +246,32 @@ export function CalificacionesV2Shell() {
       setSaveStatus("error")
       setTimeout(() => setSaveStatus("idle"), 5000)
     }
+  }, [ASIGNATURA, curso, estudiantes, evaluaciones])
+
+  // Exportar CSV de notas
+  const handleDescargarCSV = useCallback(() => {
+    const evalIds = evaluaciones.map(ev => ev.id)
+    const header = ["N°", "Estudiante", "PIE", ...evaluaciones.map(ev => ev.label), "Promedio"]
+    const rows = estudiantes.map((e, i) => {
+      const prom = calcPromedioFn(e.notas, evalIds)
+      return [
+        String(e.orden ?? i + 1),
+        e.name,
+        e.hasPie ? "Sí" : "No",
+        ...evaluaciones.map(ev => e.notas[ev.id] || ""),
+        prom !== null ? prom.toFixed(1) : "",
+      ]
+    })
+    const csv = [header, ...rows]
+      .map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n")
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `calificaciones_${ASIGNATURA}_${curso}_${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
   }, [ASIGNATURA, curso, estudiantes, evaluaciones])
 
   // Autosave
@@ -560,10 +588,15 @@ export function CalificacionesV2Shell() {
         </>
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/calificaciones" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
+      <div className="mt-10 mb-4 flex items-center justify-center gap-4">
+        {estudiantes.length > 0 && curso && (
+          <button
+            onClick={handleDescargarCSV}
+            className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 py-1.5 text-[12px] font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
+          >
+            <Download className="h-3.5 w-3.5" /> Exportar CSV
+          </button>
+        )}
       </div>
     </div>
   )
@@ -657,6 +690,18 @@ function TablaView(props: TablaViewProps) {
       e.preventDefault()
       const next = tableRef.current?.querySelector<HTMLInputElement>(`input[data-r="${estIdx - 1}"][data-c="${evalIdx}"]`)
       next?.focus()
+    } else if (e.key === "Tab" || e.key === "ArrowRight") {
+      // Navega a la siguiente evaluación (derecha)
+      const nextEvalInput = tableRef.current?.querySelector<HTMLInputElement>(`input[data-r="${estIdx}"][data-c="${evalIdx + 1}"]`)
+      if (nextEvalInput) {
+        e.preventDefault()
+        nextEvalInput.focus()
+      }
+      // Si no hay siguiente evaluación, Tab nativo avanza al siguiente input (comportamiento por defecto)
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault()
+      const prev = tableRef.current?.querySelector<HTMLInputElement>(`input[data-r="${estIdx}"][data-c="${evalIdx - 1}"]`)
+      prev?.focus()
     }
   }
 
@@ -892,7 +937,7 @@ function TablaView(props: TablaViewProps) {
       </div>
 
       <div className="rounded-[10px] border border-border bg-card px-3 py-2 text-[11px] text-muted-foreground">
-        Atajos: <kbd className="rounded bg-muted px-1">Tab</kbd> celda siguiente · <kbd className="rounded bg-muted px-1">Enter</kbd>/<kbd className="rounded bg-muted px-1">↓</kbd> baja · <kbd className="rounded bg-muted px-1">↑</kbd> sube · empieza con <kbd className="rounded bg-muted px-1">=</kbd> para fórmulas (ej. =5+6/2 → 5.5)
+        Atajos: <kbd className="rounded bg-muted px-1">Tab</kbd>/<kbd className="rounded bg-muted px-1">→</kbd> columna siguiente · <kbd className="rounded bg-muted px-1">←</kbd> columna anterior · <kbd className="rounded bg-muted px-1">Enter</kbd>/<kbd className="rounded bg-muted px-1">↓</kbd> baja · <kbd className="rounded bg-muted px-1">↑</kbd> sube · empieza con <kbd className="rounded bg-muted px-1">=</kbd> para fórmulas (ej. =5+6/2 → 5.5)
       </div>
     </div>
   )
@@ -1021,7 +1066,7 @@ function AlumnoView({ estudiantes, evaluaciones, selectedId, onSelect, tendencia
               </Link>
             </div>
 
-            {Object.keys(seleccionado.notas).length >= 2 && (
+            {Object.values(seleccionado.notas).filter(v => !isNaN(parseFloat(v))).length >= 2 && (
               <div className="rounded-[12px] bg-background border border-border p-3 mb-4">
                 <div className="text-[11px] font-bold text-muted-foreground mb-2 inline-flex items-center gap-1">
                   <TrendingUp className="h-3 w-3" /> Tendencia

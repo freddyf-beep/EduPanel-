@@ -30,6 +30,9 @@ service-account*.json
 # herramientas locales de agentes
 .claude/
 .codex/
+.kiro/
+.vscode/settings.json
+.git.broken_*/
 
 # logs
 *.log
@@ -45,9 +48,19 @@ ts_errors.log
 next-env.d.ts
 
 # datos locales
+Archivos de Curriculum/
+PDF Y .JSON CURSOS/
+PDF-FREDDY/
+Pruebas y Ribricas 2026/
 backups/
+.backups/
 /tmp/
 /backup_*/
+scratch/
+scratch_*.js
+inspect_*.py
+read_pdf.py
+search_config.py
 *.bak
 scratch.*
 *.zip

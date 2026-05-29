@@ -7,7 +7,7 @@ import {
   ChevronLeft, ChevronRight, Calendar, CalendarDays, Clock, Filter, LayoutGrid, List,
   Loader2, Check, X, ArrowRight, BookOpen, Zap, Search, Pin, Activity, Layers,
   Flame, Sparkles, BarChart3, Target, MoreHorizontal, GripVertical, Grid3x3, Eye,
-  GanttChart, ChevronDown,
+  GanttChart, ChevronDown, Download, FileText,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { guardarCronograma, cargarCronograma, cargarPlanCurso } from "@/lib/curriculo"
@@ -63,16 +63,35 @@ function semanaLabel(lunes: Date): string {
   const viernes = new Date(lunes); viernes.setDate(viernes.getDate() + 4)
   return `${lunes.getDate()} – ${viernes.getDate()} ${MESES[viernes.getMonth()]}`
 }
+
+/**
+ * Número de semana ISO 8601. La semana 1 es la que contiene el primer jueves del año.
+ * Es el estándar que usa Google Calendar, planillas ministeriales, etc.
+ */
 function weekNumber(d: Date): number {
-  const onejan = new Date(d.getFullYear(), 0, 1)
-  return Math.ceil((((d.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7)
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+  // Ajustar al jueves más cercano: semana actual empieza el lunes
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7))
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1))
+  return Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7)
 }
+
+/**
+ * Lunes de la semana ISO N del año (inverso de weekNumber ISO).
+ */
 function getLunesDeSemana(weekNum: number, year: number): Date {
-  const onejan = new Date(year, 0, 1)
-  const offsetDays = (weekNum - 1) * 7 - onejan.getDay() + 1
-  const d = new Date(year, 0, 1 + offsetDays)
-  return getLunes(d)
+  // Enero 4 siempre está en la semana 1 ISO
+  const jan4 = new Date(Date.UTC(year, 0, 4))
+  const dayOfWeek = jan4.getUTCDay() || 7
+  // Lunes de la semana 1
+  const mondayWeek1 = new Date(jan4)
+  mondayWeek1.setUTCDate(jan4.getUTCDate() - dayOfWeek + 1)
+  // Lunes de la semana N
+  const target = new Date(mondayWeek1)
+  target.setUTCDate(mondayWeek1.getUTCDate() + (weekNum - 1) * 7)
+  return new Date(target.getUTCFullYear(), target.getUTCMonth(), target.getUTCDate())
 }
+
 function parseDuracion(s: string): number {
   if (!s) return 45
   const m = s.match(/([\d.]+)\s*(min|h)?/i)
@@ -83,6 +102,92 @@ function parseDuracion(s: string): number {
 function minutesFromHHMM(value: string): number {
   const [h, m] = (value || "08:30").split(":").map(Number)
   return (Number.isFinite(h) ? h : 8) * 60 + (Number.isFinite(m) ? m : 30)
+}
+
+// ─── Exportación ICS y CSV ───────────────────────────────────────────────────
+
+function fechaICS(d: Date): string {
+  const y = d.getFullYear()
+  const mo = pad(d.getMonth() + 1)
+  const da = pad(d.getDate())
+  const h = pad(d.getHours())
+  const mi = pad(d.getMinutes())
+  return `${y}${mo}${da}T${h}${mi}00`
+}
+
+function escapeICS(s: string): string {
+  return (s || "").replace(/[\\,;]/g, m => "\\" + m).replace(/\n/g, "\\n")
+}
+
+function actividadesToICS(actividades: ActividadCronograma[], year: number, asignatura: string): string {
+  const lines: string[] = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//EduPanel//Cronograma//ES",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+  ]
+  for (const act of actividades) {
+    const lunes = getLunesDeSemana(act.semana, year)
+    const fecha = getFechaReal(lunes, act.dia)
+    const [hh, mm] = (act.hora || "08:30").split(":").map(n => parseInt(n, 10) || 0)
+    const start = new Date(fecha); start.setHours(hh, mm, 0, 0)
+    const end = new Date(start.getTime() + parseDuracion(act.duracion) * 60_000)
+    const cursoLabel = act.cursoOrigen ? ` · ${act.cursoOrigen}` : ""
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${act.id}@edupanel`,
+      `DTSTAMP:${fechaICS(new Date())}`,
+      `DTSTART:${fechaICS(start)}`,
+      `DTEND:${fechaICS(end)}`,
+      `SUMMARY:${escapeICS(act.nombre)}`,
+      `DESCRIPTION:${escapeICS(`EduPanel · ${asignatura}${cursoLabel}\nUnidad: ${act.unidad || "-"}`)}`,
+      `CATEGORIES:${escapeICS(act.tipo)}`,
+      "END:VEVENT",
+    )
+  }
+  lines.push("END:VCALENDAR")
+  return lines.join("\r\n")
+}
+
+function actividadesToCSV(actividades: ActividadCronograma[], year: number): string {
+  const DIAS_MAP_CSV: Record<string, number> = { Lunes:1, Martes:2, "Miércoles":3, Jueves:4, Viernes:5 }
+  const headers = ["Semana", "Curso", "Día", "Fecha", "Hora", "Duración", "Tipo", "Unidad", "Actividad"]
+  const rows: string[][] = [headers]
+  const sorted = [...actividades].sort((a, b) =>
+    (a.semana - b.semana) || (DIAS_MAP_CSV[a.dia] || 0) - (DIAS_MAP_CSV[b.dia] || 0) || a.hora.localeCompare(b.hora)
+  )
+  for (const act of sorted) {
+    const lunes = getLunesDeSemana(act.semana, year)
+    const fecha = getFechaReal(lunes, act.dia)
+    rows.push([
+      String(act.semana),
+      act.cursoOrigen || "",
+      act.dia,
+      `${pad(fecha.getDate())}/${pad(fecha.getMonth() + 1)}/${fecha.getFullYear()}`,
+      act.hora,
+      act.duracion,
+      act.tipo,
+      act.unidad || "",
+      act.nombre,
+    ])
+  }
+  return rows.map(r => r.map(cell => {
+    const s = String(cell ?? "")
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
+  }).join(",")).join("\r\n")
+}
+
+function descargarArchivo(contenido: string, nombre: string, mime: string) {
+  const blob = new Blob([contenido], { type: `${mime};charset=utf-8` })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.href = url
+  link.download = nombre
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  setTimeout(() => URL.revokeObjectURL(url), 5_000)
 }
 
 interface FiltroState {
@@ -264,13 +369,14 @@ export function CronogramaV2Shell() {
   const actividadesFiltradas = useMemo(() => {
     let lista = actividades
     if (filtros.cursos.length > 0) {
-      lista = lista.filter(a => filtros.cursos.includes(a.cursoOrigen || curso))
+      // En modo "Todos", filtramos por cursoOrigen; en modo curso especifico no aplica
+      lista = lista.filter(a => filtros.cursos.includes(a.cursoOrigen || ""))
     }
     if (filtros.unidades.length > 0) {
       lista = lista.filter(a => filtros.unidades.includes(a.unidad || ""))
     }
     return lista
-  }, [actividades, filtros, curso])
+  }, [actividades, filtros])
 
   // Stats globales
   const stats = useMemo(() => {
@@ -582,10 +688,35 @@ export function CronogramaV2Shell() {
         </>
       )}
 
-      <div className="mt-10 mb-4 text-center">
-        <Link href="/cronograma" className="text-xs text-muted-foreground underline hover:text-foreground">
-          Volver al diseño anterior
-        </Link>
+      <div className="mt-6 mb-4 flex items-center justify-center gap-3">
+        {actividadesFiltradas.length > 0 && (
+          <>
+            <button
+              onClick={() => {
+                const year = currentDate.getFullYear()
+                const sufijo = curso === "__todos__" ? "todos" : curso.replace(/\s+/g, "_")
+                const ics = actividadesToICS(actividadesFiltradas, year, ASIGNATURA)
+                descargarArchivo(ics, `cronograma_${ASIGNATURA}_${sufijo}.ics`, "text/calendar")
+              }}
+              className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 py-1.5 text-[12px] font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
+              title="Exportar a Google Calendar / iPhone"
+            >
+              <CalendarDays className="h-3.5 w-3.5" /> Exportar .ics
+            </button>
+            <button
+              onClick={() => {
+                const year = currentDate.getFullYear()
+                const sufijo = curso === "__todos__" ? "todos" : curso.replace(/\s+/g, "_")
+                const csv = actividadesToCSV(actividadesFiltradas, year)
+                descargarArchivo(csv, `cronograma_${ASIGNATURA}_${sufijo}.csv`, "text/csv")
+              }}
+              className="inline-flex items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 py-1.5 text-[12px] font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
+              title="Exportar planilla CSV"
+            >
+              <FileText className="h-3.5 w-3.5" /> Exportar .csv
+            </button>
+          </>
+        )}
       </div>
 
       {/* Command palette */}
@@ -720,9 +851,19 @@ function SemanaView({ lunes, semana, actividades, horario, colorUnidad, nombreUn
               draggingActividad && "border-dashed"
             )}
           >
-            <div className={cn("border-b border-border px-3 py-2", isHoy && "bg-pink-light")}>
-              <div className={cn("text-[11px] font-bold uppercase", isHoy ? "text-primary" : "text-muted-foreground")}>{dia}</div>
-              <div className={cn("text-[15px] font-extrabold", isHoy && "text-primary")}>{fecha.getDate()}</div>
+            {/* Encabezado del día con botón + Agregar siempre visible */}
+            <div className={cn("border-b border-border px-3 py-2 flex items-center justify-between", isHoy && "bg-pink-light")}>
+              <div>
+                <div className={cn("text-[11px] font-bold uppercase", isHoy ? "text-primary" : "text-muted-foreground")}>{dia}</div>
+                <div className={cn("text-[15px] font-extrabold", isHoy && "text-primary")}>{fecha.getDate()}</div>
+              </div>
+              <button
+                onClick={() => onCreate(dia, "08:30")}
+                className="rounded-full border border-border bg-background w-6 h-6 flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary text-[14px] font-bold transition-colors"
+                title={`Agregar actividad el ${dia}`}
+              >
+                +
+              </button>
             </div>
             <div className="p-2 space-y-1.5">
               {bloquesDia.map(b => (
@@ -735,35 +876,48 @@ function SemanaView({ lunes, semana, actividades, horario, colorUnidad, nombreUn
                 </div>
               ))}
               {actividadesDelDia.map(act => (
-                <button
+                <div
                   key={act.id}
-                  draggable
-                  onDragStart={() => onDragStart(act)}
-                  onDragEnd={onDragEnd}
-                  onClick={() => onEdit(act)}
-                  className="group relative w-full rounded-[8px] border-l-4 bg-background px-2 py-1.5 text-left hover:shadow-sm transition-shadow cursor-grab active:cursor-grabbing"
+                  className="group relative w-full rounded-[8px] border-l-4 bg-background hover:shadow-sm transition-shadow"
                   style={{ borderLeftColor: colorUnidad(act.unidad) }}
                 >
-                  <div className="flex items-center gap-1 text-[10px] font-bold text-muted-foreground">
-                    <GripVertical className="h-2.5 w-2.5 opacity-0 group-hover:opacity-100" />
-                    {act.hora} · {act.duracion}
-                  </div>
-                  <div className="text-[11.5px] font-bold mt-0.5 truncate">{act.nombre}</div>
-                  {act.cursoOrigen && (
-                    <div className="text-[9.5px] font-semibold text-primary truncate mt-0.5">📚 {act.cursoOrigen}</div>
-                  )}
+                  <button
+                    draggable
+                    onDragStart={() => onDragStart(act)}
+                    onDragEnd={onDragEnd}
+                    onClick={() => onEdit(act)}
+                    className="w-full text-left px-2 py-1.5 cursor-grab active:cursor-grabbing"
+                  >
+                    <div className="flex items-center gap-1 text-[10px] font-bold text-muted-foreground">
+                      <GripVertical className="h-2.5 w-2.5 opacity-0 group-hover:opacity-100" />
+                      {act.hora} · {act.duracion}
+                    </div>
+                    <div className="text-[11.5px] font-bold mt-0.5 truncate">{act.nombre}</div>
+                    {act.cursoOrigen && (
+                      <div className="text-[9.5px] font-semibold text-primary truncate mt-0.5">📚 {act.cursoOrigen}</div>
+                    )}
+                    {act.unidad && (
+                      <div className="text-[9.5px] text-muted-foreground truncate mt-0.5">{nombreUnidad(act.unidad)}</div>
+                    )}
+                  </button>
+                  {/* Link "Ver clase" → /ver-unidad */}
                   {act.unidad && (
-                    <div className="text-[9.5px] text-muted-foreground truncate mt-0.5">{nombreUnidad(act.unidad)}</div>
+                    <Link
+                      href={buildUrl("/ver-unidad", withAsignatura({
+                        curso: act.cursoOrigen || "",
+                        unidad: normalizeKeyPart(act.unidad),
+                      }, ""))}
+                      onClick={e => e.stopPropagation()}
+                      className="absolute bottom-1.5 right-1.5 opacity-0 group-hover:opacity-100 flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[9px] font-bold bg-muted text-muted-foreground hover:bg-primary hover:text-white transition-all"
+                      title="Ver contenido de la unidad"
+                    >
+                      Ver clase <ArrowRight className="w-2.5 h-2.5" />
+                    </Link>
                   )}
-                </button>
+                </div>
               ))}
               {actividadesDelDia.length === 0 && bloquesDia.length === 0 && (
-                <button
-                  onClick={() => onCreate(dia, "08:30")}
-                  className="w-full rounded-[8px] border border-dashed border-border px-2 py-3 text-[10.5px] text-muted-foreground hover:border-primary hover:text-primary"
-                >
-                  + Agregar
-                </button>
+                <p className="text-[10px] text-muted-foreground italic px-1 py-2">Sin actividades</p>
               )}
             </div>
           </div>

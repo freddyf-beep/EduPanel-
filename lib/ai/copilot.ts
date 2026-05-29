@@ -6,6 +6,14 @@
 //  • aplicar_cambios → extrae del chat qué cambiar y lo aplica como JSON
 // ═══════════════════════════════════════════════════════════════════════════
 
+import {
+  buildPedagogicalLessonPrompt,
+  type PedagogicalBrief,
+  type PedagogicalEngine,
+  type PedagogicalExternalSource,
+  type StudentSummary,
+} from "@/lib/ai/pedagogical-engine"
+
 export type CopilotMode =
   | "crear_inicial"
   | "chat"
@@ -106,6 +114,7 @@ export interface ChatTurnInput {
 }
 
 export interface LessonRequestBody {
+  engine?: PedagogicalEngine
   modo?: string
   curso?: string
   asignatura?: string
@@ -123,6 +132,16 @@ export interface LessonRequestBody {
   claseActual?: ClaseInput | null
   unidad?: UnitInput | null
   chatHistory?: ChatTurnInput[]
+  focoPedagogico?: string
+  tono?: string
+  allowExternalSearch?: boolean
+  studentSummary?: StudentSummary
+  pedagogicalBrief?: PedagogicalBrief
+  externalSources?: PedagogicalExternalSource[]
+  referenciasCurriculares?: {
+    actividadesSugeridas?: unknown[]
+    ejemplosEvaluacion?: unknown[]
+  }
   estadoActual?: {
     analisisBloom?: AnalisisBloom[]
     objetivoMultinivel?: ObjetivoMultinivel
@@ -925,6 +944,7 @@ FORMATO DE RESPUESTA (solo JSON puro, sin texto adicional):
 export function buildCopilotPrompt(body: LessonRequestBody, mode: CopilotMode): string {
   const override = cleanText(body.promptOverride)
   if (override) return override
+  if (body.engine === "pedagogical_v1" && mode === "crear_inicial") return buildPedagogicalLessonPrompt(body)
   if (mode === "crear_inicial") return buildCrearInicialPrompt(body)
   if (mode === "aplicar_cambios") return buildAplicarCambiosPrompt(body)
   if (mode === "freddy_detallado") return buildFreddyDetalladoPrompt(body)
