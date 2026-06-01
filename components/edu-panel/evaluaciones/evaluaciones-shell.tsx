@@ -3,22 +3,24 @@
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { BookOpenCheck, ClipboardList, FileText, LayoutList, Loader2 } from "lucide-react"
+import { BookOpenCheck, ClipboardList, FileText, LayoutList, Loader2, ListChecks } from "lucide-react"
 import { DriveExplorer } from "@/components/edu-panel/drive/drive-explorer"
 import { DriveWorkspaceActions } from "@/components/edu-panel/drive/drive-workspace-actions"
 import { RubricasShell } from "@/components/edu-panel/rubricas/rubricas-shell"
+import { ListasCotejoShell } from "@/components/edu-panel/listas-cotejo/listas-cotejo-shell"
 import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
 import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { cn } from "@/lib/utils"
 
-type EvaluacionesTab = "pruebas" | "guias" | "rubricas"
+type EvaluacionesTab = "pruebas" | "guias" | "rubricas" | "listas"
 
 const TABS: Array<{ key: EvaluacionesTab; label: string; icon: typeof FileText }> = [
   { key: "pruebas", label: "Pruebas", icon: FileText },
   { key: "guias", label: "Guias", icon: ClipboardList },
   { key: "rubricas", label: "Rubricas", icon: LayoutList },
+  { key: "listas", label: "Listas", icon: ListChecks },
 ]
 
 interface CursoOption {
@@ -31,8 +33,16 @@ export function EvaluacionesShell() {
   const searchParams = useSearchParams()
   const { asignatura } = useActiveSubject()
   const hasRubricaView = !!searchParams.get("view") || !!searchParams.get("rubricaId")
+  const hasListaView = !!searchParams.get("listaId")
   const tabParam = searchParams.get("tab") as EvaluacionesTab | null
-  const activeTab = hasRubricaView ? "rubricas" : TABS.some(tab => tab.key === tabParam) ? tabParam! : "pruebas"
+  
+  const activeTab = hasListaView
+    ? "listas"
+    : hasRubricaView
+      ? "rubricas"
+      : TABS.some(tab => tab.key === tabParam)
+        ? tabParam!
+        : "pruebas"
 
   const [cursos, setCursos] = useState<CursoOption[]>([])
   const [curso, setCurso] = useState("")
@@ -98,7 +108,7 @@ export function EvaluacionesShell() {
             <BookOpenCheck className="h-5 w-5" />
             <span className="text-[11px] font-extrabold uppercase tracking-wide">Evaluaciones</span>
           </div>
-          <h1 className="mt-1 text-[22px] font-extrabold text-foreground">Pruebas, guias y rubricas</h1>
+          <h1 className="mt-1 text-[22px] font-extrabold text-foreground">Pruebas, guias, rubricas y listas</h1>
           <p className="mt-1 max-w-2xl text-[13px] text-muted-foreground">
             Ten tu Drive personal a mano para revisar documentos de evaluacion sin salir de EduPanel.
           </p>
@@ -125,11 +135,11 @@ export function EvaluacionesShell() {
         </div>
       </header>
 
-      {activeTab === "rubricas" ? (
-        <RubricasShell />
-      ) : (
+      {activeTab === "rubricas" && <RubricasShell />}
+      {activeTab === "listas" && <ListasCotejoShell />}
+      {activeTab !== "rubricas" && activeTab !== "listas" && (
         <DocumentosEvaluacionView
-          tipo={activeTab}
+          tipo={activeTab as "pruebas" | "guias"}
           asignatura={asignatura}
           cursos={cursos}
           curso={curso}
