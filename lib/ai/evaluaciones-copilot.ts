@@ -9,9 +9,13 @@
 
 import type { AIProvider, StoredAiConfig } from "@/lib/ai/copilot"
 import type { OAEditado } from "@/lib/curriculo"
-import type { PruebaTemplate, SeccionPrueba } from "@/lib/pruebas"
-import type { GuiaTemplate, SeccionGuia } from "@/lib/guias"
 import type { ListaCotejoTemplate } from "@/lib/listas-cotejo"
+
+// Stubs for missing modules in public repository
+export interface PruebaTemplate { [key: string]: any }
+export interface SeccionPrueba { [key: string]: any }
+export interface GuiaTemplate { [key: string]: any }
+export interface SeccionGuia { [key: string]: any }
 
 export type EvalCopilotMode =
   | "prueba_generar"

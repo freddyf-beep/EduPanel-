@@ -585,7 +585,7 @@ function buildUTPHtml(opts: PlantillaUTPOpciones): string {
   const { lista, colegio, profesorNombre: profesor } = opts
 
   const colegioNombre = escapeHtml(colegio?.nombre || "")
-  const rbd = escapeHtml(lista.rbd || colegio?.rbd || "No registrado")
+  const rbd = escapeHtml(lista.rbd || (colegio as any)?.rbd || "No registrado")
   const profesorNombre = escapeHtml(profesor || lista.docenteNombre || "Docente Evaluador")
   const asignatura = escapeHtml(lista.asignatura || "")
   const curso = escapeHtml(lista.curso || "")
