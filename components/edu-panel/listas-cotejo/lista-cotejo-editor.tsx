@@ -10,6 +10,7 @@ import {
   Loader2,
   Plus,
   Save,
+  Sparkles,
   Trash2,
   Upload,
   X,
@@ -22,7 +23,7 @@ import { toast } from "@/hooks/use-toast"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
 import { getUnidades, type Unidad } from "@/lib/curriculo"
 import { resolverMetadatosCurricularesRubrica, cargarOAsParaRubrica } from "@/lib/rubricas"
-import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
+import { RubricaOAEditor } from "@/components/edu-panel/rubricas/rubrica-oa-editor"
 import type { OAEditado } from "@/lib/curriculo"
 import {
   buildListaCotejoId,
@@ -36,6 +37,8 @@ import {
   type ListaCotejoTemplate,
   type SeccionListaCotejo,
 } from "@/lib/listas-cotejo"
+import { abrirListaCotejoPlantillaUTP } from "@/lib/export/lista-cotejo-pdf"
+import { ListaCotejoIaModal } from "@/components/edu-panel/listas-cotejo/lista-cotejo-ia-modal"
 
 interface Props {
   mode: "blank" | "import"
@@ -55,6 +58,28 @@ function inputToRefs(value: string): string[] {
     .filter(Boolean)
 }
 
+function validarVerbosMentalistas(texto: string): string | null {
+  if (!texto) return null
+  const verbosProhibidos = [
+    "comprende", "comprender", "comprenden", "comprendio",
+    "entiende", "entender", "entienden", "entendio",
+    "sabe", "saber", "saben", "sabia",
+    "conoce", "conocer", "conocen", "conocio",
+    "reflexiona", "reflexionar", "reflexionan",
+    "valora", "valorar", "valoran", "valoro",
+    "aprecia", "apreciar", "aprecian",
+    "asimila", "asimilar", "asimilacion",
+    "piensa", "pensar", "piensan",
+    "razona", "razonar", "razonan"
+  ]
+  const palabras = texto.toLowerCase().split(/[^a-záéíóúüñ]+/)
+  const coincidencia = palabras.find(p => verbosProhibidos.includes(p))
+  if (coincidencia) {
+    return `Evita verbos cognitivos inobservables como "${coincidencia}". Usa verbos observables (ej: nombra, describe, señala, manipula).`
+  }
+  return null
+}
+
 function normalizarParaGuardar(lista: ListaCotejoTemplate): ListaCotejoTemplate {
   const secciones = lista.secciones
     .map((seccion, seccionIndex) => ({
@@ -67,6 +92,10 @@ function normalizarParaGuardar(lista: ListaCotejoTemplate): ListaCotejoTemplate 
           ...indicador,
           orden: indicadorIndex + 1,
           texto: indicador.texto.trim(),
+          esTransversal: !!indicador.esTransversal,
+          focoDiferenciadoActivo: !!indicador.focoDiferenciadoActivo,
+          focoDiferenciadoTexto: indicador.focoDiferenciadoTexto?.trim() ?? "",
+          puedoFilmarloConfirmado: !!indicador.puedoFilmarloConfirmado,
         })),
     }))
     .filter(seccion => seccion.indicadores.length > 0)
@@ -74,6 +103,11 @@ function normalizarParaGuardar(lista: ListaCotejoTemplate): ListaCotejoTemplate 
   return normalizarListaCotejoTemplate({
     ...lista,
     nombre: lista.nombre.trim() || "Lista de cotejo",
+    instruccionesMetodologicas: lista.instruccionesMetodologicas?.trim() ?? "",
+    escalaDicotomica: lista.escalaDicotomica || ["Sí", "No"],
+    rbd: lista.rbd?.trim() ?? "",
+    nombreEstablecimiento: lista.nombreEstablecimiento?.trim() ?? "",
+    docenteNombre: lista.docenteNombre?.trim() ?? "",
     secciones,
   })
 }
@@ -91,6 +125,7 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
   const [guardando, setGuardando] = useState(false)
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle")
   const [error, setError] = useState("")
+  const [showIaModal, setShowIaModal] = useState(false)
 
   const [nivelMapping, setNivelMapping] = useState<NivelMapping>({})
   const [unidadesDisponibles, setUnidadesDisponibles] = useState<Unidad[]>([])
@@ -103,6 +138,8 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
   const autoSaveRunRef = useRef(0)
   const curriculoRequestRef = useRef(0)
   const oasRequestRef = useRef(0)
+  const loadedRef = useRef<string | null>(null)
+  const isDirtyRef = useRef(false)
 
   const cursoParam = searchParams.get("curso") ?? ""
   const esEdicion = mode === "blank" && !!listaId
@@ -111,6 +148,11 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
   useEffect(() => {
     let cancelled = false
     const cargar = async () => {
+      const loadKey = esEdicion ? listaId : "new"
+      if (loadedRef.current === loadKey) {
+        return
+      }
+
       try {
         const horario = await cargarHorarioSemanal()
         const cursosDisponibles = Array.from(
@@ -129,10 +171,12 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
             setLista(null)
             return
           }
+          loadedRef.current = listaId
           setLista(existente)
           return
         }
 
+        loadedRef.current = "new"
         setLista(nuevaListaCotejo(asignatura, cursoBase))
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al cargar editor")
@@ -201,6 +245,7 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
   // Lógica de auto-guardado en Firebase
   useEffect(() => {
     if (!lista) return
+    if (!isDirtyRef.current) return
     if (ignoreFirstSave.current) {
       ignoreFirstSave.current = false
       setSaveStatus("idle")
@@ -319,6 +364,7 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
   }
 
   const updateLista = (fn: (actual: ListaCotejoTemplate) => ListaCotejoTemplate) => {
+    isDirtyRef.current = true
     setLista(prev => prev ? fn(prev) : prev)
   }
 
@@ -380,9 +426,10 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
       const res = await apiFetch("/api/parse-lista-cotejo", { method: "POST", body: formData })
       const data = await res.json() as ListaImportada
       const cursoResuelto = data.curso || lista?.curso || cursoParam || cursos[0] || ""
+      isDirtyRef.current = true
       setLista(normalizarListaCotejoTemplate({
         ...data,
-        id: buildListaCotejoId(asignatura, cursoResuelto),
+        id: lista?.id || buildListaCotejoId(asignatura, cursoResuelto),
         asignatura: asignatura,
         curso: cursoResuelto,
       }))
@@ -490,11 +537,33 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            onClick={() => setShowIaModal(true)}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-violet-300 bg-violet-50 text-violet-800 px-3.5 text-[12px] font-bold transition-colors hover:bg-violet-100"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Asistente IA
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (lista) {
+                abrirListaCotejoPlantillaUTP({
+                  lista: normalizarParaGuardar(lista),
+                  profesorNombre: lista.docenteNombre || "Docente Evaluador"
+                })
+              }
+            }}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-sky-300 bg-sky-50 text-sky-800 px-3.5 text-[12px] font-bold transition-colors hover:bg-sky-100"
+          >
+            Exportar UTP
+          </button>
+          <button
+            type="button"
             onClick={handleGuardar}
             disabled={guardando}
             className="inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-primary px-4 text-[12px] font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
           >
-            {guardando ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {guardando ? <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin" /> : <Save className="h-3.5 w-3.5 shrink-0" />}
             Guardar y salir
           </button>
         </div>
@@ -508,47 +577,113 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
       )}
 
       {mode === "import" && (
-        <div
-          onDragOver={event => event.preventDefault()}
-          onDrop={event => {
-            event.preventDefault()
-            const file = event.dataTransfer.files?.[0]
-            if (file) void handleImportarWord(file)
-          }}
-          className="rounded-[14px] border border-dashed border-border bg-card p-5"
-        >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".docx"
-            className="hidden"
-            onChange={event => {
-              const file = event.target.files?.[0]
+        <div className="grid gap-4 md:grid-cols-2">
+          <div
+            onDragOver={event => event.preventDefault()}
+            onDrop={event => {
+              event.preventDefault()
+              const file = event.dataTransfer.files?.[0]
               if (file) void handleImportarWord(file)
             }}
-          />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={importando}
-            className="flex w-full flex-col items-center justify-center rounded-[12px] border border-dashed border-border bg-background px-4 py-8 text-center transition-colors hover:bg-muted/40 disabled:opacity-60"
+            className="rounded-[14px] border border-dashed border-border bg-card p-5"
           >
-            {importando ? <Loader2 className="h-8 w-8 animate-spin text-primary" /> : <Upload className="h-8 w-8 text-primary" />}
-            <span className="mt-3 text-[14px] font-bold text-foreground">Arrastra tu Word aqui</span>
-            <span className="mt-1 text-[12px] text-muted-foreground">o haz clic para seleccionar un .docx con indicadores Si/No</span>
-          </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".docx"
+              className="hidden"
+              onChange={event => {
+                const file = event.target.files?.[0]
+                if (file) void handleImportarWord(file)
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={importando}
+              className="flex w-full flex-col items-center justify-center rounded-[12px] border border-dashed border-border bg-background px-4 py-8 text-center transition-colors hover:bg-muted/40 disabled:opacity-60 cursor-pointer"
+            >
+              {importando ? <Loader2 className="h-8 w-8 animate-spin text-primary" /> : <Upload className="h-8 w-8 text-primary" />}
+              <span className="mt-3 text-[14px] font-bold text-foreground">Arrastra tu Word aquí</span>
+              <span className="mt-1 text-[12px] text-muted-foreground">o haz clic para seleccionar un .docx con indicadores Si/No</span>
+            </button>
+          </div>
+
+          <div className="rounded-[14px] border border-dashed border-border bg-card p-5">
+            <div className="flex w-full flex-col items-center justify-center rounded-[12px] border border-dashed border-violet-200 bg-violet-500/5 px-4 py-8 text-center h-full min-h-[180px]">
+              <Sparkles className="h-8 w-8 text-violet-500 animate-pulse animate-duration-1000" />
+              <span className="mt-3 text-[14px] font-bold text-foreground">Genera o Adapta con IA</span>
+              <span className="mt-1 text-[12px] text-muted-foreground px-2">Utiliza nuestro Asistente IA Avanzado para crear tu lista de cotejo con DUA en segundos</span>
+              <button
+                type="button"
+                onClick={() => setShowIaModal(true)}
+                className="mt-5 inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-violet-600 px-4 text-[12px] font-bold text-white transition-opacity hover:opacity-90 cursor-pointer shadow-sm shadow-violet-500/10"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Abrir Asistente IA
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       <section className="rounded-[14px] border border-border bg-card p-5">
-        <h2 className="text-[14px] font-extrabold text-foreground">Informacion general</h2>
-        <div className="mt-4 grid gap-3 md:grid-cols-[1fr_180px_180px]">
+        <h2 className="text-[14px] font-extrabold text-foreground">Información general</h2>
+        
+        {/* Fila 1: Trazabilidad Básica */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
           <label className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase text-muted-foreground">Nombre</span>
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Nombre del Establecimiento</span>
+            <input
+              value={lista.nombreEstablecimiento || ""}
+              onChange={event => updateLista(actual => ({ ...actual, nombreEstablecimiento: event.target.value }))}
+              placeholder="Ej: Colegio San Agustín"
+              className="h-10 w-full rounded-[10px] border border-border bg-background px-3 text-[13px] outline-none focus:border-primary"
+            />
+          </label>
+          <label className="space-y-1.5">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">RBD (Rol Base Datos)</span>
+            <input
+              value={lista.rbd || ""}
+              onChange={event => updateLista(actual => ({ ...actual, rbd: event.target.value }))}
+              placeholder="Ej: 12345-6"
+              className="h-10 w-full rounded-[10px] border border-border bg-background px-3 text-[13px] outline-none focus:border-primary"
+            />
+          </label>
+          <label className="space-y-1.5">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Nombre del Docente</span>
+            <input
+              value={lista.docenteNombre || ""}
+              onChange={event => updateLista(actual => ({ ...actual, docenteNombre: event.target.value }))}
+              placeholder="Ej: Prof. María José"
+              className="h-10 w-full rounded-[10px] border border-border bg-background px-3 text-[13px] outline-none focus:border-primary"
+            />
+          </label>
+          <label className="space-y-1.5">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Escala Dicotómica</span>
+            <select
+              value={lista.escalaDicotomica ? `${lista.escalaDicotomica[0]}/${lista.escalaDicotomica[1]}` : "Sí/No"}
+              onChange={event => {
+                const parts = event.target.value.split("/")
+                updateLista(actual => ({ ...actual, escalaDicotomica: [parts[0], parts[1]] }))
+              }}
+              className="h-10 w-full rounded-[10px] border border-border bg-background px-3 text-[13px] outline-none focus:border-primary"
+            >
+              <option value="Sí/No">Sí / No</option>
+              <option value="Logrado/No logrado">Logrado / No logrado</option>
+              <option value="Presente/Ausente">Presente / Ausente</option>
+            </select>
+          </label>
+        </div>
+
+        {/* Fila 2: Trazabilidad Didáctica */}
+        <div className="mt-3 grid gap-3 md:grid-cols-[1fr_180px_180px]">
+          <label className="space-y-1.5">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Nombre del Instrumento</span>
             <input
               value={lista.nombre}
               onChange={event => updateLista(actual => ({ ...actual, nombre: event.target.value }))}
-              placeholder="Ej: Lista de cotejo Unidad 2"
+              placeholder="Ej: Pauta de Cotejo - Lectura Rítmica"
               className="h-10 w-full rounded-[10px] border border-border bg-background px-3 text-[13px] outline-none focus:border-primary"
             />
           </label>
@@ -566,7 +701,7 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
             </select>
           </label>
           <label className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase text-muted-foreground">Puntos por Si</span>
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Puntos por Logro</span>
             <input
               type="number"
               min={0.1}
@@ -580,6 +715,8 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
             />
           </label>
         </div>
+
+        {/* Fila 3: Unidad Curricular */}
         <div className="mt-3">
           <label className="space-y-1.5 block">
             <span className="text-[11px] font-bold uppercase text-muted-foreground">
@@ -616,6 +753,20 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
                     : `Configura el nivel curricular de "${lista.curso}" en Mi Perfil`}
               </div>
             )}
+          </label>
+        </div>
+
+        {/* Fila 4: Instrucciones Metodológicas */}
+        <div className="mt-3">
+          <label className="space-y-1.5 block">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Instrucciones Metodológicas</span>
+            <textarea
+              value={lista.instruccionesMetodologicas || ""}
+              onChange={event => updateLista(actual => ({ ...actual, instruccionesMetodologicas: event.target.value }))}
+              placeholder="Indica cómo los estudiantes deben realizar la tarea o cómo el evaluador registrará la información (ej: Marque una X por cada criterio observado directamente en la ejecución musical)."
+              rows={2}
+              className="w-full rounded-[10px] border border-border bg-background px-3 py-2 text-[13px] outline-none focus:border-primary resize-y min-h-[60px]"
+            />
           </label>
         </div>
       </section>
@@ -681,27 +832,91 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
               </button>
             </div>
 
-            <div className="mt-4 space-y-2">
+            <div className="mt-4 space-y-3">
               {seccion.indicadores.map((indicador, indicadorIndex) => (
-                <div key={indicador.id} className="grid gap-2 rounded-[12px] border border-border bg-background p-3 md:grid-cols-[36px_1fr_36px] md:items-start">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-[9px] bg-muted text-[12px] font-bold text-muted-foreground">
-                    {indicadorIndex + 1}
+                <div key={indicador.id} className="rounded-[12px] border border-border bg-background p-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-[12px] font-bold text-muted-foreground">
+                      {indicadorIndex + 1}
+                    </div>
+                    <div className="flex-1 space-y-1.5">
+                      <textarea
+                        value={indicador.texto}
+                        onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, texto: event.target.value }))}
+                        placeholder="Escribe un indicador observable (ej: Toca la secuencia rítmica respetando la pulsación)..."
+                        rows={2}
+                        className="w-full resize-y rounded-[10px] border border-border bg-card px-3 py-2 text-[13px] outline-none focus:border-primary"
+                      />
+                      {(() => {
+                        const warning = validarVerbosMentalistas(indicador.texto)
+                        if (warning) {
+                          return (
+                            <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded px-2.5 py-1.5 font-medium animate-pulse">
+                              ⚠️ {warning}
+                            </p>
+                          )
+                        }
+                        return null
+                      })()}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => eliminarIndicador(seccion.id, indicador.id)}
+                      className="flex h-8 w-8 items-center justify-center rounded-[9px] border border-border text-muted-foreground transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                      aria-label="Eliminar indicador"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
                   </div>
-                  <textarea
-                    value={indicador.texto}
-                    onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, texto: event.target.value }))}
-                    placeholder="Escribe un indicador observable..."
-                    rows={2}
-                    className="min-h-[70px] w-full resize-y rounded-[10px] border border-border bg-card px-3 py-2 text-[13px] outline-none focus:border-primary"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => eliminarIndicador(seccion.id, indicador.id)}
-                    className="flex h-9 w-9 items-center justify-center rounded-[9px] border border-border text-muted-foreground transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
-                    aria-label="Eliminar indicador"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
+
+                  {/* Focos y metadatos del indicador */}
+                  <div className="grid gap-3 sm:grid-cols-3 pl-11 text-[12px]">
+                    <label className="flex items-center gap-2 cursor-pointer select-none font-medium">
+                      <input
+                        type="checkbox"
+                        checked={!!indicador.puedoFilmarloConfirmado}
+                        onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, puedoFilmarloConfirmado: event.target.checked }))}
+                        className="rounded border-gray-300 text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                      />
+                      <span className="flex items-center gap-1">
+                        📹 ¿Puedo filmarlo?
+                      </span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer select-none font-medium">
+                      <input
+                        type="checkbox"
+                        checked={!!indicador.esTransversal}
+                        onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, esTransversal: event.target.checked }))}
+                        className="rounded border-gray-300 text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                      />
+                      <span>🌱 Es Transversal (OAT)</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer select-none font-medium">
+                      <input
+                        type="checkbox"
+                        checked={!!indicador.focoDiferenciadoActivo}
+                        onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, focoDiferenciadoActivo: event.target.checked }))}
+                        className="rounded border-gray-300 text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                      />
+                      <span>♿ Canal alternativo (Dec 83)</span>
+                    </label>
+                  </div>
+
+                  {indicador.focoDiferenciadoActivo && (
+                    <div className="pl-11 animate-fadeIn">
+                      <label className="space-y-1.5 block">
+                        <span className="text-[11px] font-bold uppercase text-purple-700">Mecanismo de salida alternativo para inclusión</span>
+                        <input
+                          value={indicador.focoDiferenciadoTexto || ""}
+                          onChange={event => updateIndicador(seccion.id, indicador.id, actual => ({ ...actual, focoDiferenciadoTexto: event.target.value }))}
+                          placeholder="Ej: Señala mediante gestos la secuencia o percute sobre sus piernas en reemplazo del instrumento."
+                          className="h-9 w-full rounded-[10px] border border-purple-200 bg-purple-50/30 px-3 text-[12px] outline-none focus:border-purple-500 text-purple-900"
+                        />
+                      </label>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -726,6 +941,28 @@ export function ListaCotejoEditor({ mode, listaId }: Props) {
           Agregar seccion
         </button>
       </section>
+
+      {lista && (
+        <ListaCotejoIaModal
+          open={showIaModal}
+          onOpenChange={setShowIaModal}
+          listaActual={lista}
+          onApplyLista={(nuevaLista) => {
+            isDirtyRef.current = true
+            setLista(normalizarListaCotejoTemplate({
+              ...lista,
+              ...nuevaLista,
+              id: lista.id,
+              asignatura: lista.asignatura,
+              curso: lista.curso,
+            }))
+            toast({
+              title: "Lista de cotejo actualizada",
+              description: "Los indicadores generados por la IA se han cargado en el editor.",
+            })
+          }}
+        />
+      )}
     </div>
   )
 }

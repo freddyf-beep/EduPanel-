@@ -9,8 +9,13 @@
 
 import type { AIProvider, StoredAiConfig } from "@/lib/ai/copilot"
 import type { OAEditado } from "@/lib/curriculo"
-import type { PruebaTemplate, SeccionPrueba } from "@/lib/pruebas"
-import type { GuiaTemplate, SeccionGuia } from "@/lib/guias"
+import type { ListaCotejoTemplate } from "@/lib/listas-cotejo"
+
+// Stubs for missing modules in public repository
+export interface PruebaTemplate { [key: string]: any }
+export interface SeccionPrueba { [key: string]: any }
+export interface GuiaTemplate { [key: string]: any }
+export interface SeccionGuia { [key: string]: any }
 
 export type EvalCopilotMode =
   | "prueba_generar"
@@ -20,6 +25,7 @@ export type EvalCopilotMode =
   | "chat"
   | "aplicar_cambios"
   | "rubrica_generar"
+  | "lista_cotejo_generar"
 
 export interface ContextoCurricular {
   asignatura: string
@@ -60,11 +66,11 @@ export interface ActividadClaseResumen {
 export interface EvalCopilotRequest {
   modo: EvalCopilotMode
   contexto: ContextoCurricular
-  documentoActual?: Partial<PruebaTemplate> | Partial<GuiaTemplate>
+  documentoActual?: Partial<PruebaTemplate> | Partial<GuiaTemplate> | Partial<ListaCotejoTemplate>
   seccionActual?: Partial<SeccionPrueba> | Partial<SeccionGuia>
   instrucciones?: string
   chatHistory?: Array<{ role: "user" | "ai"; text: string }>
-  tipoDoc: "prueba" | "guia" | "rubrica"
+  tipoDoc: "prueba" | "guia" | "rubrica" | "lista_cotejo"
   modelProvider?: string
   customToken?: string
   customModel?: string
@@ -192,6 +198,7 @@ export function buildEvalCopilotPrompt(req: EvalCopilotRequest): string {
     case "chat":             return buildChat(req, ins)
     case "aplicar_cambios":  return buildAplicarCambios(req, ins)
     case "rubrica_generar":  return buildRubricaGenerar(req, cp, ins)
+    case "lista_cotejo_generar": return buildListaCotejoGenerar(req, cp, ins)
   }
 }
 
@@ -573,6 +580,54 @@ RESPUESTA (JSON puro):
 {
   "cambiosAplicados": { ...documento modificado... },
   "explicacionCambios": "Descripcion breve de los cambios."
+}`
+}
+
+function buildListaCotejoGenerar(req: EvalCopilotRequest, cp: string, ins: string): string {
+  const ctx = req.contexto
+  return `Actúa como un Diseñador Instruccional Experto en Evaluación y Currículum Chileno (Decreto 67 y Decreto 83).
+Tu tarea es generar una Lista de Cotejo completa de manera estructurada para el curso ${ctx.curso} y la asignatura ${ctx.asignatura}.
+
+${cp ? `INSTRUCCIONES MAESTRAS:\n${cp}\n` : ""}
+CONTEXTO CURRICULAR:
+${formatCtx(ctx)}
+
+OA SELECCIONADOS DE LA CLASE:
+${formatOAs(ctx.oas)}
+
+INSTRUCCIONES ADICIONALES DEL DOCENTE:
+${ins || "Ninguna."}
+
+REGLAS DE DISEÑO OBLIGATORIAS:
+1. Formulación Observable (Decreto 67): Redacta indicadores que representen acciones empíricas observables de forma directa (ej. 'Representa', 'Produce', 'Identifica', 'Ajusta', 'Mantiene'). Evita estrictamente el uso de verbos mentalistas o inobservables (ej. 'comprende', 'entiende', 'sabe', 'conoce', 'valora', 'aprecia').
+2. Indicadores Generales y Flexibles: Los indicadores NO deben ser ejemplos específicos o conductas rígidas (por ejemplo, evita 'estirando los brazos para sonidos largos y palmada para cortos' o 'percutiendo con lápices'). En su lugar, redacta indicadores generales (ej. 'Representa mediante movimientos corporales o gestos libres...') para que el estudiante interprete y demuestre la habilidad a su manera, promoviendo su autonomía.
+3. Adecuaciones DUA (Decreto 83): Para cada indicador, proporciona un 'Mecanismo de Salida Alternativo' (Canal Alternativo) que permita demostrar la misma competencia si existen barreras expresivas, motoras o sensoriales. Activa 'focoDiferenciadoActivo': true y describe el mecanismo en 'focoDiferenciadoTexto'.
+4. Focos Actitudinales (OAT): Integra al menos 2 indicadores actitudinales transversales (OAT) alineados con la asignatura y márcalos con 'esTransversal': true.
+5. Estructura del Documento: Crea de 3 a 5 secciones temáticas lógicas con 2 a 4 indicadores cada una.
+6. Escala Dicotómica: Usa por defecto la escala ["Sí", "No"], o adáptala si el docente especificó otra en las instrucciones adicionales.
+
+RESPUESTA (JSON puro sin texto adicional, sin code-fences, que coincida con la siguiente estructura):
+{
+  "nombre": "Lista de cotejo - ${ctx.asignatura} - ${ctx.curso}",
+  "curso": "${ctx.curso}",
+  "asignatura": "${ctx.asignatura}",
+  "unidadNombre": "${ctx.unidadNombre || ""}",
+  "instruccionesMetodologicas": "Marque con una 'X' en la casilla correspondiente si el estudiante cumple (Sí) o no cumple (No) con la acción descrita de manera general. Permita que el estudiante elija o proponga formas alternativas de representar cada habilidad según sus propias capacidades de expresión.",
+  "escalaDicotomica": ["Sí", "No"],
+  "puntajePorSi": 2,
+  "secciones": [
+    {
+      "nombre": "I. Nombre de la Sección",
+      "indicadores": [
+        {
+          "texto": "Texto del indicador observable y general.",
+          "esTransversal": false,
+          "focoDiferenciadoActivo": true,
+          "focoDiferenciadoTexto": "Mecanismo alternativo de salida..."
+        }
+      ]
+    }
+  ]
 }`
 }
 

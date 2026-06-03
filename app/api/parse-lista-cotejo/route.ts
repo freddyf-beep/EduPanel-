@@ -4,6 +4,7 @@ import type {
   ListaCotejoMetadatosCurriculares,
   ListaCotejoTemplate,
   SeccionListaCotejo,
+  IndicadorListaCotejo,
 } from "@/lib/listas-cotejo"
 import { calcularPuntajeMaximoLista } from "@/lib/listas-cotejo"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
@@ -20,6 +21,11 @@ interface ParsedListaCotejo {
   metadatosCurriculares: ListaCotejoMetadatosCurriculares
   secciones: SeccionListaCotejo[]
   puntajePorSi: number
+  instruccionesMetodologicas?: string
+  escalaDicotomica?: [string, string]
+  nombreEstablecimiento?: string
+  rbd?: string
+  docenteNombre?: string
 }
 
 function uid(prefix: string) {
@@ -121,15 +127,19 @@ function extraerPuntajePorSi(lineas: string[]): number {
     const puntaje = Number.parseFloat(match[1].replace(",", "."))
     if (Number.isFinite(puntaje) && puntaje > 0) return puntaje
   }
-  return 1
+  return 2 // Default to 2 if not found (like in our generated file)
 }
 
 function esLineaCabecera(linea: string): boolean {
+  const l = linea.toLowerCase()
   return (
     /^Indicadores?\s+de\s+Evaluaci[oó]n$/i.test(linea) ||
     /^S[ií](?:\s*\(\s*\d+(?:[,.]\d+)?\s*pts?\s*\))?$/i.test(linea) ||
     /^No(?:\s*\(\s*\d+(?:[,.]\d+)?\s*pts?\s*\))?$/i.test(linea) ||
-    /^Puntaje$/i.test(linea)
+    /^Puntaje$/i.test(linea) ||
+    l === "n°" ||
+    l.includes("indicador de logro general") ||
+    l.includes("metadatos de inclusión")
   )
 }
 
@@ -141,7 +151,7 @@ function esLineaFinal(linea: string): boolean {
 }
 
 function findStartIndex(lineas: string[]): number {
-  const header = lineas.findIndex(linea => /^Indicadores?\s+de\s+Evaluaci[oó]n$/i.test(linea))
+  const header = lineas.findIndex(linea => /^Indicadores?\s+de\s+Evaluaci[oó]n$/i.test(linea) || /indicador de logro general/i.test(linea))
   if (header !== -1) {
     let i = header + 1
     while (i < lineas.length && esLineaCabecera(lineas[i])) i++
@@ -185,6 +195,55 @@ function extraerMetadatosCurriculares(
   }
 }
 
+function extraerEscalaDicotomica(lineas: string[]): [string, string] | undefined {
+  for (const linea of lineas) {
+    const norm = normalizeLine(linea).toLowerCase()
+    if (norm.includes("logrado") && norm.includes("no logrado")) {
+      return ["Logrado", "No logrado"]
+    }
+    if (norm.includes("presente") && norm.includes("ausente")) {
+      return ["Presente", "Ausente"]
+    }
+    if (norm.includes("sí") && norm.includes("no")) {
+      return ["Sí", "No"]
+    }
+    if (norm.includes("si") && norm.includes("no")) {
+      return ["Sí", "No"]
+    }
+  }
+  return undefined
+}
+
+function extraerInstrucciones(lineas: string[]): string | undefined {
+  for (const linea of lineas) {
+    if (/^Instrucciones:\s*.+/i.test(linea)) {
+      return linea.replace(/^Instrucciones:\s*/i, "").trim()
+    }
+  }
+  return undefined
+}
+
+function extraerTrazabilidad(lineas: string[]) {
+  let docenteNombre = ""
+  let nombreEstablecimiento = ""
+  let rbd = ""
+
+  lineas.forEach(linea => {
+    const l = normalizeLine(linea)
+    if (/^Docente:\s*.+/i.test(l)) {
+      docenteNombre = l.replace(/^Docente:\s*/i, "").trim()
+    }
+    if (/^Establecimiento:\s*.+/i.test(l)) {
+      nombreEstablecimiento = l.replace(/^Establecimiento:\s*/i, "").trim()
+    }
+    if (/^RBD:\s*.+/i.test(l)) {
+      rbd = l.replace(/^RBD:\s*/i, "").trim()
+    }
+  })
+
+  return { docenteNombre, nombreEstablecimiento, rbd }
+}
+
 export function parsearTextoListaCotejo(texto: string): ParsedListaCotejo {
   const lineas = texto
     .split(/\r?\n/)
@@ -194,6 +253,12 @@ export function parsearTextoListaCotejo(texto: string): ParsedListaCotejo {
   const startIndex = findStartIndex(lineas)
   const meta = extraerMeta(startIndex > 0 ? lineas.slice(0, startIndex) : lineas)
   const puntajePorSi = extraerPuntajePorSi(lineas)
+  
+  const lineasAntesStart = lineas.slice(0, startIndex)
+  const instruccionesMetodologicas = extraerInstrucciones(lineasAntesStart)
+  const escalaDicotomica = extraerEscalaDicotomica(lineasAntesStart)
+  const trazabilidad = extraerTrazabilidad(lineasAntesStart)
+
   const secciones: SeccionListaCotejo[] = []
   let seccionActual: SeccionListaCotejo | null = null
   let ultimoIndicadorId: string | null = null
@@ -225,23 +290,75 @@ export function parsearTextoListaCotejo(texto: string): ParsedListaCotejo {
       }
 
       const textoIndicador = indicadorMatch[2].trim()
-      const indicador = {
+      const indicador: IndicadorListaCotejo = {
         id: uid("ind"),
         orden: seccionActual.indicadores.length + 1,
         texto: textoIndicador,
         oasVinculados: extractCurricularRefs(textoIndicador),
+        puedoFilmarloConfirmado: true,
       }
       seccionActual.indicadores.push(indicador)
       ultimoIndicadorId = indicador.id
       continue
     }
 
-    if (seccionActual && ultimoIndicadorId && !/^[-–—]+$/.test(linea)) {
-      seccionActual.indicadores = seccionActual.indicadores.map(indicador =>
-        indicador.id === ultimoIndicadorId
-          ? { ...indicador, texto: normalizeLine(`${indicador.texto} ${linea}`) }
-          : indicador
-      )
+    // Single number (multi-line style, e.g. "1")
+    if (/^\d+$/.test(linea)) {
+      if (!seccionActual) {
+        seccionActual = buildSeccion(nextSectionOrder)
+        nextSectionOrder += 1
+        secciones.push(seccionActual)
+      }
+      const indicador: IndicadorListaCotejo = {
+        id: uid("ind"),
+        orden: seccionActual.indicadores.length + 1,
+        texto: "",
+        oasVinculados: [],
+        puedoFilmarloConfirmado: true,
+      }
+      seccionActual.indicadores.push(indicador)
+      ultimoIndicadorId = indicador.id
+      continue
+    }
+
+    if (seccionActual && ultimoIndicadorId) {
+      const idx = seccionActual.indicadores.findIndex(ind => ind.id === ultimoIndicadorId)
+      if (idx !== -1) {
+        const ind = seccionActual.indicadores[idx]
+        
+        let isSpecial = false
+        
+        if (/(🌱|OAT\s+Actitudinal|OAT)/i.test(linea)) {
+          ind.esTransversal = true
+          isSpecial = true
+        }
+        
+        if (/(♿|Canal\s+Alt|Dec\s*83)/i.test(linea)) {
+          ind.focoDiferenciadoActivo = true
+          const match = linea.match(/(?:♿|Canal\s+Alt\s*\(Dec\s*83\)|♿\s*Canal\s*Alt\s*\(Dec\s*83\)|Canal\s+Alt|Dec\s*83):\s*(.+)$/i)
+          if (match) {
+            ind.focoDiferenciadoTexto = match[1].trim()
+          } else {
+            ind.focoDiferenciadoTexto = linea.replace(/^[♿🌱\s]*(Canal\s+Alt\s*\(Dec\s*83\)|Canal\s+Alt|Dec\s*83):?/i, "").trim()
+          }
+          isSpecial = true
+        }
+        
+        if (
+          /^\[\s*\]$/.test(linea) ||
+          /^\[\s*[xX]?\s*\]$/.test(linea) ||
+          /^(Sí|No|Logrado|No logrado|Presente|Ausente)$/i.test(linea) ||
+          /^(Sí|No|Logrado|No logrado|Presente|Ausente)\s*\(\s*\d+\s*pts?\s*\)$/i.test(linea) ||
+          esLineaCabecera(linea)
+        ) {
+          isSpecial = true
+        }
+        
+        if (!isSpecial && !/^[-–—]+$/.test(linea)) {
+          ind.texto = normalizeLine(`${ind.texto} ${linea}`).trim()
+          ind.oasVinculados = extractCurricularRefs(ind.texto)
+        }
+      }
     }
   }
 
@@ -251,6 +368,11 @@ export function parsearTextoListaCotejo(texto: string): ParsedListaCotejo {
     metadatosCurriculares: extraerMetadatosCurriculares(lineas.slice(0, startIndex), seccionesValidas),
     secciones: seccionesValidas.map((seccion, index) => ({ ...seccion, orden: index + 1 })),
     puntajePorSi,
+    instruccionesMetodologicas,
+    escalaDicotomica,
+    nombreEstablecimiento: trazabilidad.nombreEstablecimiento,
+    rbd: trazabilidad.rbd,
+    docenteNombre: trazabilidad.docenteNombre,
   }
 }
 
@@ -267,7 +389,17 @@ export async function POST(req: NextRequest) {
 
     const buffer = Buffer.from(await file.arrayBuffer())
     const { value: texto } = await mammoth.extractRawText({ buffer })
-    const { meta, metadatosCurriculares, secciones, puntajePorSi } = parsearTextoListaCotejo(texto)
+    const {
+      meta,
+      metadatosCurriculares,
+      secciones,
+      puntajePorSi,
+      instruccionesMetodologicas,
+      escalaDicotomica,
+      nombreEstablecimiento,
+      rbd,
+      docenteNombre,
+    } = parsearTextoListaCotejo(texto)
 
     if (secciones.length === 0) {
       return NextResponse.json(
@@ -285,6 +417,11 @@ export async function POST(req: NextRequest) {
       secciones,
       puntajePorSi,
       puntajeMaximo: calcularPuntajeMaximoLista(secciones, puntajePorSi),
+      instruccionesMetodologicas,
+      escalaDicotomica,
+      nombreEstablecimiento,
+      rbd,
+      docenteNombre,
     }
 
     return NextResponse.json(lista)

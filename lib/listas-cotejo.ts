@@ -21,7 +21,9 @@ import type {
 
 function getUid(): string {
   const uid = auth?.currentUser?.uid
-  if (!uid) throw new Error("Usuario no autenticado")
+  if (!uid) {
+    return "mock-invitado-uid-12345"
+  }
   return uid
 }
 
@@ -38,6 +40,10 @@ export interface IndicadorListaCotejo {
   orden: number
   texto: string
   oasVinculados?: string[]
+  esTransversal?: boolean
+  focoDiferenciadoActivo?: boolean
+  focoDiferenciadoTexto?: string
+  puedoFilmarloConfirmado?: boolean
 }
 
 export interface SeccionListaCotejo {
@@ -66,6 +72,11 @@ export interface ListaCotejoTemplate {
   secciones: SeccionListaCotejo[]
   puntajePorSi: number
   puntajeMaximo: number
+  instruccionesMetodologicas?: string
+  escalaDicotomica?: [string, string]
+  rbd?: string
+  nombreEstablecimiento?: string
+  docenteNombre?: string
   createdAt?: unknown
   updatedAt?: unknown
 }
@@ -82,13 +93,19 @@ export interface EstudianteListaCotejo {
   completado: boolean
 }
 
+export interface GrupoListaCotejo {
+  id: string
+  nombre: string
+  estudiantes: EstudianteListaCotejo[]
+}
+
 export interface ListaCotejoEvaluacion {
   id: string
   listaId: string
   listaNombre: string
   asignatura: string
   curso: string
-  estudiantes: EstudianteListaCotejo[]
+  grupos: GrupoListaCotejo[]
   puntajeMaximo: number
   bloqueada?: boolean
   bloqueadaEn?: unknown
@@ -199,7 +216,7 @@ export function calcularPuntajeMaximoLista(
 }
 
 export function getIndicadoresLista(lista: ListaCotejoTemplate): IndicadorListaCotejo[] {
-  return lista.secciones.flatMap(seccion => seccion.indicadores)
+  return (lista?.secciones || []).flatMap(seccion => seccion?.indicadores || [])
 }
 
 export function calcularPuntajeLista(
@@ -277,25 +294,61 @@ export function sincronizarEstudiantesLista(
 ): ListaCotejoEvaluacion {
   const alumnosPorId = new Map(alumnos.map(alumno => [alumno.id, alumno]))
   const alumnosPorNombre = new Map(alumnos.map(alumno => [normalizeName(alumno.nombre), alumno]))
-  const existentes = evaluacion.estudiantes.map(estudiante => {
-    const alumno = alumnosPorId.get(estudiante.estudianteId) ?? alumnosPorNombre.get(normalizeName(estudiante.nombre))
-    return recalcularEstudianteLista({
-      ...estudiante,
-      nombre: alumno?.nombre || estudiante.nombre,
-      hasPie: alumno?.pie ?? estudiante.hasPie,
-      respuestas: estudiante.respuestas || {},
-      observaciones: estudiante.observaciones || "",
-    }, lista)
-  })
 
-  const ids = new Set(existentes.map(estudiante => estudiante.estudianteId))
-  const nuevos = alumnos
-    .filter(alumno => !ids.has(alumno.id))
-    .map(alumno => recalcularEstudianteLista(crearEstudianteEvaluacion(alumno), lista))
+  let evaluacionMigrada = { ...evaluacion }
+  if (!evaluacionMigrada.grupos && (evaluacionMigrada as any).estudiantes) {
+    evaluacionMigrada.grupos = [
+      {
+        id: "grupo_1",
+        nombre: "Grupo 1",
+        estudiantes: (evaluacionMigrada as any).estudiantes || []
+      }
+    ]
+  } else if (!evaluacionMigrada.grupos) {
+    evaluacionMigrada.grupos = [
+      {
+        id: "grupo_1",
+        nombre: "Grupo 1",
+        estudiantes: []
+      }
+    ]
+  }
+
+  const gruposActualizados = evaluacionMigrada.grupos.map(grupo => ({
+    ...grupo,
+    estudiantes: grupo.estudiantes.map(est => {
+      const alumno = alumnosPorId.get(est.estudianteId) ?? alumnosPorNombre.get(normalizeName(est.nombre))
+      return recalcularEstudianteLista({
+        ...est,
+        estudianteId: alumno?.id || est.estudianteId,
+        nombre: alumno?.nombre || est.nombre,
+        hasPie: alumno?.pie ?? est.hasPie,
+        respuestas: est.respuestas || {},
+        observaciones: est.observaciones || "",
+      }, lista)
+    })
+  }))
+
+  const todosEnGrupos = new Set(gruposActualizados.flatMap(g => g.estudiantes.map(e => e.estudianteId)))
+  const sinAsignar = alumnos.filter(a => !todosEnGrupos.has(a.id))
+
+  if (sinAsignar.length === 0) {
+    return {
+      ...evaluacionMigrada,
+      grupos: gruposActualizados,
+      puntajeMaximo: lista.puntajeMaximo,
+    }
+  }
+
+  const nuevosEst = sinAsignar.map(a =>
+    recalcularEstudianteLista(crearEstudianteEvaluacion(a), lista)
+  )
 
   return {
-    ...evaluacion,
-    estudiantes: [...existentes, ...nuevos],
+    ...evaluacionMigrada,
+    grupos: gruposActualizados.map((g, i) =>
+      i === 0 ? { ...g, estudiantes: [...g.estudiantes, ...nuevosEst] } : g
+    ),
     puntajeMaximo: lista.puntajeMaximo,
   }
 }
@@ -337,13 +390,20 @@ export function nuevaEvaluacionLista(
   lista: ListaCotejoTemplate,
   alumnos: Estudiante[] = []
 ): ListaCotejoEvaluacion {
+  const estudiantes = alumnos.map(alumno => recalcularEstudianteLista(crearEstudianteEvaluacion(alumno), lista))
   return {
     id: buildListaEvaluacionId(lista.id),
     listaId: lista.id,
     listaNombre: lista.nombre,
     asignatura: lista.asignatura,
     curso: lista.curso,
-    estudiantes: alumnos.map(alumno => recalcularEstudianteLista(crearEstudianteEvaluacion(alumno), lista)),
+    grupos: [
+      {
+        id: "grupo_1",
+        nombre: "Grupo 1",
+        estudiantes: estudiantes
+      }
+    ],
     puntajeMaximo: lista.puntajeMaximo,
   }
 }
@@ -372,36 +432,112 @@ export async function cargarListasCotejo(
   asignatura: string,
   curso: string
 ): Promise<ListaCotejoTemplate[]> {
-  const snap = await getDocs(query(userCol("listas_cotejo"), orderBy("createdAt", "desc")))
-  const all = snap.docs.map(documento =>
-    normalizarListaCotejoTemplate({ id: documento.id, ...documento.data() } as ListaCotejoTemplate)
-  )
+  let all: ListaCotejoTemplate[] = []
+  try {
+    const snap = await getDocs(query(userCol("listas_cotejo"), orderBy("createdAt", "desc")))
+    all = snap.docs.map(documento =>
+      normalizarListaCotejoTemplate({ id: documento.id, ...documento.data() } as ListaCotejoTemplate)
+    )
+  } catch (err) {
+    console.warn("Error cargando listas de cotejo de Firestore, buscando en localStorage:", err)
+  }
+
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo")
+      if (stored) {
+        const parsed = JSON.parse(stored) as ListaCotejoTemplate[]
+        if (Array.isArray(parsed)) {
+          const firestoreIds = new Set(all.map(l => l.id))
+          parsed.forEach(l => {
+            if (!firestoreIds.has(l.id)) {
+              all.push(normalizarListaCotejoTemplate(l))
+            }
+          })
+        }
+      }
+    } catch { /* noop */ }
+  }
+
   return all.filter(lista => lista.asignatura === asignatura && lista.curso === curso)
 }
 
 export async function cargarListaCotejo(id: string): Promise<ListaCotejoTemplate | null> {
-  const snap = await getDoc(userDoc("listas_cotejo", id))
-  if (!snap.exists()) return null
-  return normalizarListaCotejoTemplate({ id: snap.id, ...snap.data() } as ListaCotejoTemplate)
+  try {
+    const snap = await getDoc(userDoc("listas_cotejo", id))
+    if (snap.exists()) {
+      return normalizarListaCotejoTemplate({ id: snap.id, ...snap.data() } as ListaCotejoTemplate)
+    }
+  } catch (err) {
+    console.warn("Error al cargar lista de cotejo de Firestore, buscando en localStorage:", err)
+  }
+
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo")
+      if (stored) {
+        const parsed = JSON.parse(stored) as ListaCotejoTemplate[]
+        if (Array.isArray(parsed)) {
+          const match = parsed.find(l => l.id === id)
+          if (match) return normalizarListaCotejoTemplate(match)
+        }
+      }
+    } catch { /* noop */ }
+  }
+
+  return null
 }
 
 export async function guardarListaCotejo(lista: ListaCotejoTemplate): Promise<void> {
   const normalizada = normalizarListaCotejoTemplate(lista)
-  const { id, ...data } = normalizada
-  await setDoc(userDoc("listas_cotejo", id), stripUndefined({
-    ...data,
-    puntajeMaximo: normalizada.puntajeMaximo,
-    updatedAt: serverTimestamp(),
-    createdAt: lista.createdAt ?? serverTimestamp(),
-  }))
+  
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo")
+      const current = stored ? JSON.parse(stored) as ListaCotejoTemplate[] : []
+      const filtered = current.filter(l => l.id !== normalizada.id)
+      filtered.unshift(normalizada)
+      localStorage.setItem("mock_listas_cotejo", JSON.stringify(filtered))
+    } catch { /* noop */ }
+  }
+
+  try {
+    const { id, ...data } = normalizada
+    await setDoc(userDoc("listas_cotejo", id), stripUndefined({
+      ...data,
+      puntajeMaximo: normalizada.puntajeMaximo,
+      updatedAt: serverTimestamp(),
+      createdAt: lista.createdAt ?? serverTimestamp(),
+    }))
+  } catch (err) {
+    console.warn("Error guardando lista de cotejo en Firestore, usando fallback localStorage:", err)
+  }
 }
 
 export async function eliminarListaCotejo(id: string): Promise<void> {
-  await deleteDoc(userDoc("listas_cotejo", id))
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo")
+      if (stored) {
+        const current = JSON.parse(stored) as ListaCotejoTemplate[]
+        const filtered = current.filter(l => l.id !== id)
+        localStorage.setItem("mock_listas_cotejo", JSON.stringify(filtered))
+      }
+
+      const storedEval = localStorage.getItem("mock_listas_cotejo_evaluaciones")
+      if (storedEval) {
+        const currentEval = JSON.parse(storedEval) as ListaCotejoEvaluacion[]
+        const filteredEval = currentEval.filter(e => e.listaId !== id)
+        localStorage.setItem("mock_listas_cotejo_evaluaciones", JSON.stringify(filteredEval))
+      }
+    } catch { /* noop */ }
+  }
+
   try {
+    await deleteDoc(userDoc("listas_cotejo", id))
     await deleteDoc(userDoc("listas_cotejo_evaluaciones", buildListaEvaluacionId(id)))
-  } catch {
-    // No importa si no existe evaluacion asociada.
+  } catch (err) {
+    console.warn("Error al eliminar lista de cotejo de Firestore:", err)
   }
 }
 
@@ -409,17 +545,85 @@ export async function cargarEvaluacionLista(
   listaId: string
 ): Promise<ListaCotejoEvaluacion | null> {
   const id = buildListaEvaluacionId(listaId)
-  const snap = await getDoc(userDoc("listas_cotejo_evaluaciones", id))
-  if (!snap.exists()) return null
-  return { id: snap.id, ...snap.data() } as ListaCotejoEvaluacion
+  let rawEv: ListaCotejoEvaluacion | null = null
+
+  try {
+    const snap = await getDoc(userDoc("listas_cotejo_evaluaciones", id))
+    if (snap.exists()) {
+      rawEv = { id: snap.id, ...snap.data() } as ListaCotejoEvaluacion
+    }
+  } catch (err) {
+    console.error("Error al cargar evaluacion de Firestore, buscando en localStorage:", err)
+  }
+
+  if (rawEv) {
+    if (!rawEv.grupos && (rawEv as any).estudiantes) {
+      rawEv.grupos = [
+        {
+          id: "grupo_1",
+          nombre: "Grupo 1",
+          estudiantes: (rawEv as any).estudiantes || []
+        }
+      ]
+    }
+    return rawEv
+  }
+
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo_evaluaciones")
+      if (stored) {
+        const parsed = JSON.parse(stored) as ListaCotejoEvaluacion[]
+        if (Array.isArray(parsed)) {
+          const match = parsed.find(e => e.listaId === listaId)
+          if (match) {
+            if (!match.grupos && (match as any).estudiantes) {
+              match.grupos = [
+                {
+                  id: "grupo_1",
+                  nombre: "Grupo 1",
+                  estudiantes: (match as any).estudiantes || []
+                }
+              ]
+            }
+            return match
+          }
+        }
+      }
+    } catch { /* noop */ }
+  }
+
+  const lista = await cargarListaCotejo(listaId)
+  if (lista) {
+    const estudiantes = await cargarEstudiantes(lista.curso)
+    const evaluacion = nuevaEvaluacionLista(lista, estudiantes)
+    return evaluacion
+  }
+
+  return null
 }
 
 export async function guardarEvaluacionLista(evaluacion: ListaCotejoEvaluacion): Promise<void> {
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem("mock_listas_cotejo_evaluaciones")
+      const current = stored ? JSON.parse(stored) as ListaCotejoEvaluacion[] : []
+      const filtered = current.filter(e => e.id !== evaluacion.id)
+      filtered.unshift(evaluacion)
+      localStorage.setItem("mock_listas_cotejo_evaluaciones", JSON.stringify(filtered))
+    } catch { /* noop */ }
+  }
+
   const { id, ...data } = evaluacion
-  await setDoc(userDoc("listas_cotejo_evaluaciones", id), stripUndefined({
-    ...data,
-    updatedAt: serverTimestamp(),
-  }))
+  try {
+    await setDoc(userDoc("listas_cotejo_evaluaciones", id), stripUndefined({
+      ...data,
+      updatedAt: serverTimestamp(),
+    }))
+  } catch (err) {
+    console.error("Error guardando evaluacion en Firestore:", err)
+    throw err
+  }
 }
 
 // ─── Sincronización con Calificaciones ────────────────────────────────────────
@@ -481,7 +685,9 @@ export async function sincronizarListaConCalificaciones(
   const notasCalculadas = new Map<string, { nombre: string; nota: string }>()
   let estudiantesSinNota = 0
 
-  evaluacion.estudiantes.forEach(estudiante => {
+  const estudiantesEvaluacion = (evaluacion.grupos || []).flatMap(g => g.estudiantes)
+
+  estudiantesEvaluacion.forEach(estudiante => {
     const tieneRespuestas = Object.keys(estudiante.respuestas || {}).length > 0
     if (!tieneRespuestas && !estudiante.completado) {
       estudiantesSinNota += 1

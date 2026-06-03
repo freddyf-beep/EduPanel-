@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { AlertCircle, ArrowLeft, BarChart2, Check, Loader2, Pencil, X, Send, Lock, Unlock } from "lucide-react"
+import { AlertCircle, ArrowLeft, BarChart2, Check, Loader2, Pencil, X, Send, Lock, Unlock, Printer, Eye } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { toast } from "@/hooks/use-toast"
@@ -27,6 +27,10 @@ import {
   type ListaCotejoTemplate,
 } from "@/lib/listas-cotejo"
 import type { SincronizarCalificacionesResultado } from "@/lib/rubricas"
+import {
+  abrirListaCotejoResultadosIndividualesImprimible,
+  abrirListaCotejoPlantillaUTP
+} from "@/lib/export/lista-cotejo-pdf"
 
 interface Props {
   listaId: string
@@ -97,10 +101,11 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
 
   const indicadoresStats = useMemo(() => {
     if (!lista || !evaluacion) return []
+    const estudiantesList = (evaluacion.grupos || []).flatMap(g => g.estudiantes)
     return getIndicadoresLista(lista).map(indicador => {
-      const si = evaluacion.estudiantes.filter(estudiante => estudiante.respuestas?.[indicador.id] === true).length
-      const no = evaluacion.estudiantes.filter(estudiante => estudiante.respuestas?.[indicador.id] === false).length
-      const total = evaluacion.estudiantes.length
+      const si = estudiantesList.filter(estudiante => estudiante.respuestas?.[indicador.id] === true).length
+      const no = estudiantesList.filter(estudiante => estudiante.respuestas?.[indicador.id] === false).length
+      const total = estudiantesList.length
       return {
         indicador,
         si,
@@ -147,7 +152,11 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
     )
   }
 
-  const estudiantes = evaluacion?.estudiantes ?? []
+  const totalIndicadores = useMemo(() => {
+    return (lista?.secciones || []).reduce((acc, s) => acc + (s?.indicadores?.length || 0), 0)
+  }, [lista])
+
+  const estudiantes = (evaluacion?.grupos || []).flatMap(g => g.estudiantes)
   const completados = estudiantes.filter(estudiante => estudiante.completado).length
   const promedioPorcentaje = estudiantes.length > 0
     ? Math.round(estudiantes.reduce((total, estudiante) => total + (estudiante.porcentaje ?? 0), 0) / estudiantes.length)
@@ -240,14 +249,48 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
             <p className="text-[12px] text-muted-foreground">{lista.nombre || "Lista de cotejo"} · {lista.curso}</p>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={irEvaluacion}
-          className="inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-primary px-4 text-[12px] font-bold text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          <Pencil className="h-3.5 w-3.5" />
-          Evaluar
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (lista && evaluacion) {
+                abrirListaCotejoResultadosIndividualesImprimible({
+                  lista,
+                  evaluacion,
+                  profesorNombre: lista.docenteNombre || "Docente Evaluador"
+                })
+              }
+            }}
+            disabled={!evaluacion}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 text-[12px] font-bold text-muted-foreground transition-colors hover:bg-muted/60 disabled:opacity-50"
+          >
+            <Printer className="h-3.5 w-3.5" />
+            Reportes Alumnos
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (lista) {
+                abrirListaCotejoPlantillaUTP({
+                  lista,
+                  profesorNombre: lista.docenteNombre || "Docente Evaluador"
+                })
+              }
+            }}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 text-[12px] font-bold text-muted-foreground transition-colors hover:bg-muted/60"
+          >
+            <Eye className="h-3.5 w-3.5" />
+            Ficha UTP
+          </button>
+          <button
+            type="button"
+            onClick={irEvaluacion}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-primary px-4 text-[12px] font-bold text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            Evaluar
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -257,22 +300,41 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
         </div>
       )}
 
-      {!evaluacion ? (
-        <div className="flex min-h-[260px] flex-col items-center justify-center rounded-[14px] border border-dashed border-border bg-card px-4 text-center">
-          <BarChart2 className="h-9 w-9 text-muted-foreground/60" />
-          <h2 className="mt-3 text-[15px] font-bold text-foreground">Aún no hay respuestas</h2>
-          <p className="mt-1 max-w-md text-[12px] text-muted-foreground">Abre la evaluación para marcar Si/No por estudiante.</p>
+      {totalIndicadores === 0 && (
+        <div className="flex flex-col items-center justify-center rounded-[14px] border border-dashed border-amber-300 bg-amber-50/50 p-8 text-center text-amber-800">
+          <AlertCircle className="h-8 w-8 text-amber-600 mb-2 animate-bounce" />
+          <h3 className="text-[15px] font-bold">Sin resultados disponibles</h3>
+          <p className="text-[12px] text-amber-700/80 mt-1 max-w-md">
+            Esta lista de cotejo no tiene indicadores configurados, por lo que no se pueden calcular resultados.
+          </p>
           <button
             type="button"
-            onClick={irEvaluacion}
-            className="mt-4 inline-flex items-center gap-1.5 rounded-[10px] bg-primary px-3 py-2 text-[12px] font-bold text-primary-foreground"
+            onClick={() => router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "listas", view: "crear", listaId, curso: lista?.curso }, asignatura)))}
+            className="mt-4 inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-amber-600 px-4 text-[12px] font-bold text-white hover:bg-amber-700 transition-colors shadow-xs"
           >
-            <Pencil className="h-3.5 w-3.5" />
-            Evaluar ahora
+            Configurar Indicadores
           </button>
         </div>
-      ) : (
+      )}
+
+      {totalIndicadores > 0 && (
         <>
+          {!evaluacion ? (
+            <div className="flex min-h-[260px] flex-col items-center justify-center rounded-[14px] border border-dashed border-border bg-card px-4 text-center">
+              <BarChart2 className="h-9 w-9 text-muted-foreground/60" />
+              <h2 className="mt-3 text-[15px] font-bold text-foreground">Aún no hay respuestas</h2>
+              <p className="mt-1 max-w-md text-[12px] text-muted-foreground">Abre la evaluación para marcar Si/No por estudiante.</p>
+              <button
+                type="button"
+                onClick={irEvaluacion}
+                className="mt-4 inline-flex items-center gap-1.5 rounded-[10px] bg-primary px-3 py-2 text-[12px] font-bold text-primary-foreground"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+                Evaluar ahora
+              </button>
+            </div>
+          ) : (
+            <>
           {/* Stats rápidas */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
@@ -313,15 +375,15 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <p className="text-[13px] font-semibold text-foreground">{indicador.texto}</p>
                     <span className="shrink-0 rounded-[999px] bg-muted px-2 py-1 text-[11px] font-extrabold text-muted-foreground">
-                      {porcentaje}% Si
+                      {porcentaje}% {lista.escalaDicotomica?.[0] || "Si"}
                     </span>
                   </div>
                   <div className="mt-3 h-2 overflow-hidden rounded-full bg-muted">
                     <div className="h-full rounded-full bg-green-500" style={{ width: `${porcentaje}%` }} />
                   </div>
                   <div className="mt-2 flex gap-4 text-[11px] text-muted-foreground">
-                    <span className="inline-flex items-center gap-1"><Check className="h-3 w-3 text-green-600" /> {si} Si</span>
-                    <span className="inline-flex items-center gap-1"><X className="h-3 w-3 text-red-600" /> {no} No</span>
+                    <span className="inline-flex items-center gap-1"><Check className="h-3 w-3 text-green-600" /> {si} {lista.escalaDicotomica?.[0] || "Si"}</span>
+                    <span className="inline-flex items-center gap-1"><X className="h-3 w-3 text-red-600" /> {no} {lista.escalaDicotomica?.[1] || "No"}</span>
                     <span>{total - si - no} sin marcar</span>
                   </div>
                 </div>
@@ -388,6 +450,8 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
               </button>
             </div>
           </div>
+            </>
+          )}
         </>
       )}
     </div>

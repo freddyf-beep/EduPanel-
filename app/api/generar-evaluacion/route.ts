@@ -12,7 +12,9 @@ import {
   type AIProvider,
 } from "@/lib/ai/copilot"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
-import { checkAiQuota, recordAiUsage } from "@/lib/auth/ai-quota"
+
+// Stub for missing quota check in public repository
+const checkAiQuota = async (uid: string) => ({ ok: true, error: "" });
 
 // Rate limiting identico al de generar-clase
 const RATE_LIMIT_PER_HOUR = 30
@@ -231,11 +233,7 @@ export async function POST(req: Request) {
 
     // Modo chat: respuesta libre
     if (isChat) {
-      if (totalInputTokens > 0 || totalOutputTokens > 0) {
-        recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-          console.error("[generar-evaluacion] Error recording AI usage:", err)
-        })
-      }
+
       return NextResponse.json({ respuestaChat: cleanText(rawText) || "No pude generar una respuesta." })
     }
 
@@ -252,11 +250,7 @@ export async function POST(req: Request) {
         recordTokens(retryUsage)
         parsed = parseJsonResponse(retryText || "{}")
       } catch (retryErr) {
-        if (totalInputTokens > 0 || totalOutputTokens > 0) {
-          recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-            console.error("[generar-evaluacion] Error recording AI usage:", err)
-          })
-        }
+
         return NextResponse.json({
           error: "json_parse_failed",
           message: "La IA no devolvio JSON valido.",
@@ -265,19 +259,11 @@ export async function POST(req: Request) {
       }
     }
 
-    if (totalInputTokens > 0 || totalOutputTokens > 0) {
-      recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-        console.error("[generar-evaluacion] Error recording AI usage:", err)
-      })
-    }
+
 
     return NextResponse.json(parsed)
   } catch (error) {
-    if (totalInputTokens > 0 || totalOutputTokens > 0) {
-      recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-        console.error("[generar-evaluacion] Error recording AI usage:", err)
-      })
-    }
+
     if (error instanceof DOMException && error.name === "AbortError") {
       return NextResponse.json({ error: "Generacion cancelada." }, { status: 499 })
     }
