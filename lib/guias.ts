@@ -11,28 +11,21 @@
 // específicas de guías (colorear, encerrar, dibujar).
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { db, auth } from "@/lib/firebase"
-import {
-  doc, getDoc, getDocs, setDoc, deleteDoc,
-  collection, query, orderBy, serverTimestamp,
-} from "firebase/firestore"
-import {
-  getUnidadCompleta, getUnidades,
-  initOAs, mergeOAs, cargarVerUnidad,
-} from "@/lib/curriculo"
-import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
+import { getDoc, getDocs, setDoc, deleteDoc, query, orderBy, serverTimestamp } from "firebase/firestore"
+import { normalizeKeyPart } from "@/lib/shared"
 import type { BloqueContenido, MetadatosCurricularesEval, OAEditado } from "@/lib/evaluaciones-tipos"
-import { metadatosCurricularesVaciosEval } from "@/lib/evaluaciones-tipos"
-
-// ─── Helpers Firestore ──────────────────────────────────────────────────────
-
-function getUid(): string {
-  const uid = auth?.currentUser?.uid
-  if (!uid) throw new Error("Usuario no autenticado")
-  return uid
-}
-function userDoc(col: string, id: string) { return doc(db, "users", getUid(), col, id) }
-function userCol(col: string) { return collection(db, "users", getUid(), col) }
+import {
+  cargarOAsParaDocumento,
+  metadatosCurricularesVaciosEval,
+  normalizeMetadatos,
+  normalizeStringList,
+  resolverMetadatosCurriculares,
+  sortByOrder,
+  stripUndefined,
+  userCol,
+  userDoc,
+  type ResolucionCurricular,
+} from "@/lib/edu-doc"
 
 // ─── Tipos de actividad propios de guías ──────────────────────────────────
 
@@ -144,29 +137,6 @@ export interface GuiaTemplate {
 
 // ─── Normalización ────────────────────────────────────────────────────────
 
-function sortByOrder<T extends { orden?: number }>(items: T[]): T[] {
-  return [...items].sort((a, b) => {
-    const aO = typeof a.orden === "number" ? a.orden : Number.MAX_SAFE_INTEGER
-    const bO = typeof b.orden === "number" ? b.orden : Number.MAX_SAFE_INTEGER
-    return aO - bO
-  })
-}
-
-function normalizeStringList(value: unknown): string[] {
-  if (!Array.isArray(value)) return []
-  return value
-    .map(item => typeof item === "string" ? item.trim() : "")
-    .filter(Boolean)
-}
-
-function normalizeMetadatos(v?: MetadatosCurricularesEval): MetadatosCurricularesEval {
-  return {
-    objetivos: normalizeStringList(v?.objetivos),
-    indicadores: normalizeStringList(v?.indicadores),
-    objetivosTransversales: normalizeStringList(v?.objetivosTransversales),
-  }
-}
-
 export function calcularPuntajeMaximoGuia(secciones: SeccionGuia[]): number {
   return secciones.reduce((acc, sec) =>
     acc + sec.actividades.reduce((a, act) => a + (act.puntaje || 0), 0)
@@ -201,81 +171,15 @@ export function nuevoIdGuia(prefix = "g"): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
 }
 
-// ─── Resolución curricular ────────────────────────────────────────────────
+// ─── Resolución curricular (delegada a lib/edu-doc) ────────────────────────
+// Mantenemos los nombres específicos de Guías para preservar la API pública.
 
-function normalizeCompareText(value: string): string {
-  return normalizeKeyPart(value).replace(/^unidad_/, "")
-}
-
-function extraerNumeroUnidad(value?: string): number | null {
-  if (!value) return null
-  const match = value.match(/unidad\s*(\d+)/i)
-  if (!match) return null
-  const numero = Number.parseInt(match[1], 10)
-  return Number.isFinite(numero) ? numero : null
-}
-
-function mergeUnique(target: string[], values: string[]) {
-  values.forEach(value => {
-    const limpio = value.trim()
-    if (limpio && !target.includes(limpio)) target.push(limpio)
-  })
-}
-
-export interface ResolucionCurricularGuia {
-  metadatosCurriculares: MetadatosCurricularesEval
-  unidadId?: string
-  unidadNombre?: string
-  resolvedFromDatabase: boolean
-}
+export type { ResolucionCurricular }
 
 export async function resolverMetadatosCurricularesGuia(
   guia: Pick<GuiaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
-): Promise<ResolucionCurricularGuia> {
-  const fallback = normalizeMetadatos(guia.metadatosCurriculares)
-  const nivel = getCurriculoNivel(guia.curso)
-  const unidades = await getUnidades(guia.asignatura, nivel)
-  if (!unidades.length) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-
-  const numero = extraerNumeroUnidad(guia.unidadNombre)
-  const comp = guia.unidadNombre ? normalizeCompareText(guia.unidadNombre) : ""
-
-  const match = unidades.find(u => {
-    if (numero !== null && u.numero_unidad === numero) return true
-    const nc = normalizeCompareText(u.nombre_unidad || "")
-    return !!comp && (nc === comp || nc.includes(comp) || comp.includes(nc))
-  })
-
-  if (!match) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-
-  const completa = await getUnidadCompleta(guia.asignatura, nivel, match.id)
-  if (!completa) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-
-  const objetivos: string[] = []
-  const indicadores: string[] = []
-  const objetivosTransversales: string[] = []
-
-  ;(completa.objetivos_aprendizaje || []).forEach(oa => {
-    const desc = oa.descripcion?.trim()
-    const isOAT = String(oa.tipo || "").toUpperCase() === "OAT"
-    if (desc) {
-      const t = `${isOAT ? "OAA" : "OA"} ${oa.numero}: ${desc}`
-      if (isOAT) objetivosTransversales.push(t)
-      else objetivos.push(t)
-    }
-    if (!isOAT) mergeUnique(indicadores, (oa.indicadores || []).map(i => i.trim()).filter(Boolean))
-  })
-
-  return {
-    metadatosCurriculares: {
-      objetivos: objetivos.length ? objetivos : fallback.objetivos,
-      indicadores: indicadores.length ? indicadores : fallback.indicadores,
-      objetivosTransversales: objetivosTransversales.length ? objetivosTransversales : fallback.objetivosTransversales,
-    },
-    unidadId: completa.id,
-    unidadNombre: completa.nombre_unidad || guia.unidadNombre,
-    resolvedFromDatabase: true,
-  }
+): Promise<ResolucionCurricular> {
+  return resolverMetadatosCurriculares(guia)
 }
 
 export async function cargarOAsParaGuia(
@@ -284,39 +188,10 @@ export async function cargarOAsParaGuia(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = getCurriculoNivel(curso)
-  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
-  if (!unidad) return oasExistentes ?? []
-
-  const base = initOAs(unidad, asignatura)
-  let verUnidadOas: OAEditado[] = []
-  try {
-    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
-    verUnidadOas = guardada?.oas ?? []
-  } catch {}
-
-  const merged = mergeOAs(base, verUnidadOas)
-  if (oasExistentes && oasExistentes.length > 0) return mergeOAs(merged, oasExistentes)
-  return merged
+  return cargarOAsParaDocumento(asignatura, curso, unidadId, oasExistentes)
 }
 
 // ─── Persistencia ────────────────────────────────────────────────────────
-
-function stripUndefined(value: any): any {
-  if (Array.isArray(value)) return value.map(stripUndefined)
-  if (value !== null && typeof value === "object" &&
-      (value as any)._methodName === undefined &&
-      typeof (value as any).toDate !== "function" &&
-      !(value?.constructor?.name?.includes("Timestamp"))) {
-    const out: Record<string, unknown> = {}
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      if (v === undefined) continue
-      out[k] = stripUndefined(v)
-    }
-    return out
-  }
-  return value
-}
 
 export async function cargarGuias(asignatura: string, curso: string): Promise<GuiaTemplate[]> {
   const col = userCol("guias")

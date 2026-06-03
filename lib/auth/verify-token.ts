@@ -144,18 +144,6 @@ export async function verifyAllowedUser(req: Request): Promise<VerifyAllowedUser
   const auth = await verifyIdToken(req)
   if (!auth) return { ok: false, response: unauthorized("No autorizado") }
 
-  // Bypass especial para el usuario de QA (Codex QA UI)
-  if (auth.uid === "uSyXwkXm8iW07RTHRWfIdRWqAJm2") {
-    return {
-      ok: true,
-      auth: {
-        ...auth,
-        email: "codex-qa-ui@edupanel.local",
-        isAdmin: false,
-      },
-    }
-  }
-
   const email = normalizeEmail(auth.email)
   if (!email) {
     return { ok: false, response: forbidden("Tu cuenta no tiene email verificable.") }

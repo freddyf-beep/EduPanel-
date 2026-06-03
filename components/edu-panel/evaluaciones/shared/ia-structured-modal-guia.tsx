@@ -24,14 +24,17 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Sparkles, X, Loader2 } from "lucide-react"
+import { Bot, Check, ClipboardCopy, Loader2, Sparkles, Wand2, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { apiFetch } from "@/lib/api-client"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
 import { CardSkeleton } from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
 import { guardarGuia, nuevaGuia, nuevaSeccionGuia, nuevaActividadGuia } from "@/lib/guias"
 import type { GuiaTemplate, SeccionGuia, TipoActividadGuia } from "@/lib/guias"
+import { cargarOAsParaGuia } from "@/lib/guias"
+import { parseJsonResponse } from "@/lib/ai/copilot"
+import type { OAEditado } from "@/lib/curriculo"
+import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
 
 // ─── Tipos públicos ─────────────────────────────────────────────────────────
 
@@ -70,6 +73,8 @@ export interface IAStructuredModalGuiaProps {
   curso?: string
   /** Si es `true`, el formulario se bloquea externamente. */
   submitting?: boolean
+  /** Unidad activa: el modal la usa para cargar los OAs correctos. */
+  unidadId?: string
 }
 
 // ─── Constantes de configuración ────────────────────────────────────────────
@@ -117,6 +122,7 @@ export function IAStructuredModalGuia({
   asignatura = "",
   curso = "",
   submitting = false,
+  unidadId,
 }: IAStructuredModalGuiaProps) {
   // ── Estado del formulario ────────────────────────────────────────────────
   const [tipoGuia, setTipoGuia] = useState<TipoGuiaIA>("aprendizaje")
@@ -126,7 +132,8 @@ export function IAStructuredModalGuia({
     "seleccion_multiple",
     "completar",
   ])
-  const [oasSeleccionados, setOasSeleccionados] = useState<string[]>([])
+  const [oas, setOas] = useState<OAEditado[]>([])
+  const [oasCargando, setOasCargando] = useState(false)
   const [duracionMin, setDuracionMin] = useState<number>(45)
 
   // ── Errores de validación ────────────────────────────────────────────────
@@ -144,6 +151,13 @@ export function IAStructuredModalGuia({
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const lastParamsRef = useRef<IAStructuredModalGuiaParams | null>(null)
 
+  // ── Vista: form → choose (elegir modo) → agent (pegar) ─────────
+  const [view, setView] = useState<"form" | "choose" | "agent">("form")
+  const [pastedJson, setPastedJson] = useState("")
+  const [applying, setApplying] = useState(false)
+  const [pasteError, setPasteError] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+
   const isDisabled = generando || submitting
 
   const router = useRouter()
@@ -158,8 +172,131 @@ export function IAStructuredModalGuia({
       setErrorMsg(null)
       setGenerando(false)
       lastParamsRef.current = null
+      setView("form")
+      setPastedJson("")
+      setPasteError(null)
+      setApplying(false)
+      setCopied(false)
     }
   }, [open])
+
+  // ── Cargar OAs sugeridos de la unidad al abrir ─────────────────────
+  useEffect(() => {
+    if (!open) return
+    if (!asignatura || !curso) {
+      setOas([])
+      return
+    }
+    let cancelled = false
+    setOasCargando(true)
+    cargarOAsParaGuia(asignatura, curso, unidadId || "")
+      .then(list => {
+        if (cancelled) return
+        setOas(list.map(o => ({ ...o, seleccionado: o.tipo !== "oat" })))
+      })
+      .catch(() => {
+        if (!cancelled) setOas([])
+      })
+      .finally(() => {
+        if (!cancelled) setOasCargando(false)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [open, asignatura, curso, unidadId])
+
+  // ── OAs seleccionados (los marcados en el OaEditor) ───────────────
+  const oasSeleccionados = useMemo(
+    () => oas.filter(o => o.seleccionado),
+    [oas],
+  )
+
+  // ── Prompt generado para modo Agente ────────────────────────────────
+  const agentPrompt = useMemo(
+    () =>
+      buildGuiaPrompt({
+        tipoGuia,
+        objetivo: objetivo.trim(),
+        numeroSecciones,
+        tiposActividades,
+        duracionMin,
+        oas: oasSeleccionados.map(o => ({
+          code: o.id,
+          numero: o.numero,
+          descripcion: o.descripcion,
+          indicadores: (o.indicadores || [])
+            .filter(i => i.seleccionado)
+            .map(i => i.texto),
+        })),
+        asignatura: asignatura || "Sin asignatura",
+        curso: curso || "Sin curso",
+      }),
+    [
+      tipoGuia,
+      objetivo,
+      numeroSecciones,
+      tiposActividades,
+      duracionMin,
+      oasSeleccionados,
+      asignatura,
+      curso,
+    ],
+  )
+
+  const handleCopyPrompt = async () => {
+    try {
+      await navigator.clipboard.writeText(agentPrompt)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {
+      // Fallback silencioso.
+    }
+  }
+
+  const handleApplyPasted = async () => {
+    setPasteError(null)
+    setApplying(true)
+    try {
+      const parsed = parseJsonResponse(pastedJson) as Record<string, unknown>
+      const base = nuevaGuia(asignatura || "Sin asignatura", curso || "Sin curso")
+      const guia: GuiaTemplate = {
+        ...base,
+        nombre: `Guía ${tipoGuia} — ${objetivo.trim().slice(0, 40)}`.trim(),
+        tipoGuia,
+        objetivo: objetivo.trim(),
+        tiempoMinutos: duracionMin,
+        estado: "borrador",
+        unidadNombre: unidadLabel,
+        oas: oas.length > 0 ? oas : undefined,
+        metadatosCurriculares: {
+          objetivos: oasSeleccionados.map(o =>
+            o.numero ? `OA ${o.numero}: ${o.descripcion}` : o.descripcion,
+          ),
+          indicadores: oasSeleccionados
+            .flatMap(o => o.indicadores || [])
+            .filter(i => i.seleccionado)
+            .map(i => i.texto),
+          objetivosTransversales: oasSeleccionados
+            .filter(o => o.tipo === "oat")
+            .map(o =>
+              o.numero ? `OAA ${o.numero}: ${o.descripcion}` : o.descripcion,
+            ),
+        },
+        secciones: buildSecciones(parsed),
+        puntajeMaximo: 0,
+      }
+      await guardarGuia(guia)
+      onClose()
+      router.push(`/evaluaciones?tab=guias&view=editor&guiaId=${guia.id}`)
+    } catch (err: any) {
+      setPasteError(err?.message || "No pude aplicar ese JSON.")
+    } finally {
+      setApplying(false)
+    }
+  }
+
+  const isAgent = view === "agent"
+  const canApplyPasted = isAgent && pastedJson.trim().length > 0 && !applying
 
   // Auto-focus en el textarea al abrir.
   useEffect(() => {
@@ -223,12 +360,6 @@ export function IAStructuredModalGuia({
     )
   }
 
-  const toggleOA = (code: string) => {
-    setOasSeleccionados((prev) =>
-      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code],
-    )
-  }
-
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault()
     setSubmitAttempted(true)
@@ -239,31 +370,50 @@ export function IAStructuredModalGuia({
       objetivo: objetivo.trim(),
       numeroSecciones,
       tiposActividades,
-      oasSeleccionados,
+      oasSeleccionados: oasSeleccionados.map(o => o.id),
       duracionMin,
     }
-    await ejecutarGeneracion(params)
-  }
-
-  async function ejecutarGeneracion(params: IAStructuredModalGuiaParams) {
-    // Si el caller provee onSubmit externo, delegamos (modo legacy).
+    // Modo legacy: si el caller provee onSubmit, lo invocamos directamente.
     if (onSubmit) {
       await onSubmit(params)
       return
     }
+    // Flujo nuevo: tras validar, avanzamos al paso de elegir modo.
+    setView("choose")
+  }
 
+  function handleChooseMode(mode: "integrated" | "agent") {
+    if (mode === "integrated") {
+      const params: IAStructuredModalGuiaParams = {
+        tipoGuia,
+        objetivo: objetivo.trim(),
+        numeroSecciones,
+        tiposActividades,
+        oasSeleccionados: oasSeleccionados.map(o => o.id),
+        duracionMin,
+      }
+      void ejecutarGeneracion(params)
+    } else {
+      setView("agent")
+    }
+  }
+
+  async function ejecutarGeneracion(params: IAStructuredModalGuiaParams) {
     lastParamsRef.current = params
     setGenerando(true)
     setErrorMsg(null)
 
     try {
-      const oasCtx = params.oasSeleccionados.map(code => ({
-        id: code,
-        numero: code.replace(/\D/g, ""),
-        descripcion: oasDisponibles.find(o => o.code === code)?.descripcion ?? code,
+      // Construir contexto con OAs enriquecidos (descripción + indicadores)
+      const oasCtx = oasSeleccionados.map(o => ({
+        id: o.id,
+        numero: o.numero,
+        descripcion: o.descripcion,
         seleccionado: true,
-        esPropio: false,
-        indicadores: [],
+        esPropio: o.esPropio,
+        indicadores: (o.indicadores || [])
+          .filter(i => i.seleccionado)
+          .map(i => ({ id: i.id, texto: i.texto, seleccionado: true })),
         habilidades: [],
       }))
 
@@ -290,8 +440,9 @@ export function IAStructuredModalGuia({
         ].join(". "),
       }
 
-      const res = await apiFetch("/api/generar-evaluacion", {
+      const res = await fetch("/api/generar-evaluacion", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
 
@@ -316,6 +467,21 @@ export function IAStructuredModalGuia({
         tiempoMinutos: params.duracionMin,
         estado: "borrador",
         unidadNombre: unidadLabel,
+        oas: oas.length > 0 ? oas : undefined,
+        metadatosCurriculares: {
+          objetivos: oasSeleccionados.map(o =>
+            o.numero ? `OA ${o.numero}: ${o.descripcion}` : o.descripcion,
+          ),
+          indicadores: oasSeleccionados
+            .flatMap(o => o.indicadores || [])
+            .filter(i => i.seleccionado)
+            .map(i => i.texto),
+          objetivosTransversales: oasSeleccionados
+            .filter(o => o.tipo === "oat")
+            .map(o =>
+              o.numero ? `OAA ${o.numero}: ${o.descripcion}` : o.descripcion,
+            ),
+        },
         secciones: buildSecciones(data),
         puntajeMaximo: 0,
       }
@@ -423,12 +589,13 @@ export function IAStructuredModalGuia({
           </button>
         </header>
 
-        {/* Body con scroll */}
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-1 flex-col overflow-hidden"
-          noValidate
-        >
+        {/* ── Vista: FORM (rellenar parámetros) ─────────────────────── */}
+        {view === "form" && (
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-1 flex-col overflow-hidden"
+            noValidate
+          >
           <div className="flex-1 space-y-5 overflow-y-auto px-5 py-4 sm:px-6 sm:py-5">
             {/* Error banner (Tarea 5.4) */}
             {errorMsg && (
@@ -576,45 +743,29 @@ export function IAStructuredModalGuia({
               </div>
             </Field>
 
-            {/* OAs sugeridos */}
+            {/* OAs y objetivos (editor rico estilo Rúbricas) */}
             <Field
               id="oas"
-              label="OAs sugeridos"
+              label="OAs y objetivos de la unidad"
               hint={
-                oasDisponibles.length === 0
+                oas.length === 0
                   ? "Sin OAs disponibles para esta unidad"
-                  : `${oasSeleccionados.length} de ${oasDisponibles.length} seleccionados`
+                  : "Marca los OAs (y sus indicadores) que quieres priorizar. Se usarán para generar la guía y para alimentar el prompt del agente."
               }
             >
-              {oasDisponibles.length === 0 ? (
+              {oas.length === 0 ? (
                 <div className="rounded-[10px] border border-dashed border-border bg-muted/40 px-3 py-3 text-[12px] text-muted-foreground">
-                  Selecciona una unidad con OAs configurados para vincular
-                  actividades al currículum.
+                  {oasCargando
+                    ? "Cargando OAs de la unidad…"
+                    : "Selecciona una unidad con OAs configurados para vincular actividades al currículum."}
                 </div>
               ) : (
-                <div className="max-h-40 overflow-y-auto rounded-[10px] border border-border bg-background">
-                  <ul className="divide-y divide-border">
-                    {oasDisponibles.map((oa) => (
-                      <li key={oa.code}>
-                        <CheckRow
-                          checked={oasSeleccionados.includes(oa.code)}
-                          onChange={() => toggleOA(oa.code)}
-                          label={
-                            <span className="flex min-w-0 items-start gap-2">
-                              <span className="rounded-md border border-border bg-card px-1.5 py-0.5 text-[10.5px] font-black text-foreground">
-                                {oa.code}
-                              </span>
-                              <span className="min-w-0 flex-1 text-[12px] leading-5 text-muted-foreground">
-                                {oa.descripcion}
-                              </span>
-                            </span>
-                          }
-                          dense
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <RubricaOAEditor
+                  oas={oas}
+                  onChange={setOas}
+                  asignatura={asignatura || "Música"}
+                  cargando={oasCargando}
+                />
               )}
             </Field>
           </div>
@@ -651,7 +802,148 @@ export function IAStructuredModalGuia({
               Crear con IA
             </button>
           </footer>
-        </form>
+          </form>
+        )}
+
+        {/* ── Vista: CHOOSE MODE (elegir cómo generar) ────────────── */}
+        {view === "choose" && (
+          <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-5 py-4 sm:px-6">
+            <p className="text-[12px] font-bold text-foreground">
+              ¿Cómo quieres generar la guía?
+            </p>
+            <p className="text-[11.5px] text-muted-foreground">
+              Usaremos los parámetros y los OAs que completaste arriba para
+              construir el contenido.
+            </p>
+            <button
+              type="button"
+              onClick={() => handleChooseMode("integrated")}
+              className={cn(
+                "flex items-start gap-3 rounded-[12px] border border-border bg-card p-4 text-left transition-colors",
+                "hover:border-[var(--accent-guias)] hover:bg-[var(--accent-guias-soft)]/30",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-guias)]",
+              )}
+            >
+              <Sparkles className="mt-0.5 h-5 w-5 text-[var(--accent-guias)]" />
+              <div>
+                <div className="text-[13px] font-extrabold text-foreground">
+                  IA Integrada (Gemini 1-click)
+                </div>
+                <div className="text-[11.5px] text-muted-foreground">
+                  Más económico. Generamos la guía con la API key de la
+                  página en 1-click.
+                </div>
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleChooseMode("agent")}
+              className={cn(
+                "flex items-start gap-3 rounded-[12px] border border-border bg-card p-4 text-left transition-colors",
+                "hover:border-[var(--accent-guias)] hover:bg-[var(--accent-guias-soft)]/30",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-guias)]",
+              )}
+            >
+              <Bot className="mt-0.5 h-5 w-5 text-[var(--accent-guias)]" />
+              <div>
+                <div className="text-[13px] font-extrabold text-foreground">
+                  Mi Agente Externo (ChatGPT / Claude)
+                </div>
+                <div className="text-[11.5px] text-muted-foreground">
+                  Te damos un prompt listo para copiar. Tú lo pegas en tu
+                  modelo premium y traes la respuesta. Costo en tu cuenta.
+                </div>
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setView("form")}
+              className="text-[11.5px] text-muted-foreground hover:text-foreground self-center"
+            >
+              ← Volver a editar parámetros
+            </button>
+          </div>
+        )}
+
+        {/* ── Vista: AGENT (prompt copiable + paste) ──────────────── */}
+        {view === "agent" && (
+          <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-5 py-4 sm:px-6">
+            <div className="rounded-[10px] border border-border bg-background/60 p-3">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="text-[12px] font-bold text-foreground">
+                  1. Copia este prompt y pégalo en tu modelo preferido
+                </p>
+                <button
+                  type="button"
+                  onClick={handleCopyPrompt}
+                  className="inline-flex items-center gap-1.5 rounded-[8px] border border-[var(--accent-guias)]/30 bg-[var(--accent-guias-soft)] px-2.5 py-1.5 text-[11.5px] font-bold text-[var(--accent-guias)] hover:opacity-90 transition-opacity"
+                >
+                  {copied ? (
+                    <Check className="h-3.5 w-3.5" />
+                  ) : (
+                    <ClipboardCopy className="h-3.5 w-3.5" />
+                  )}
+                  {copied ? "¡Copiado!" : "Copiar prompt"}
+                </button>
+              </div>
+              <textarea
+                readOnly
+                value={agentPrompt}
+                className="h-[200px] w-full resize-none rounded-[8px] border border-border bg-muted/30 p-2.5 font-mono text-[11px] leading-relaxed outline-none"
+              />
+            </div>
+
+            <div className="rounded-[10px] border border-border bg-background/60 p-3">
+              <p className="text-[12px] font-bold text-foreground">
+                2. Pega la respuesta del modelo (JSON)
+              </p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">
+                Acepta JSON puro o con fences. Detectamos la estructura
+                automáticamente.
+              </p>
+              <textarea
+                value={pastedJson}
+                onChange={e => {
+                  setPastedJson(e.target.value)
+                  setPasteError(null)
+                }}
+                placeholder='{"seccionesGuia": [...]}'
+                className="mt-2 h-[150px] w-full resize-y rounded-[8px] border border-border bg-background p-2.5 font-mono text-[11px] leading-relaxed outline-none focus:border-[var(--accent-guias)]"
+              />
+              {pasteError && (
+                <p className="mt-2 text-[11.5px] font-semibold text-red-600 dark:text-red-300">
+                  {pasteError}
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={handleApplyPasted}
+                disabled={!canApplyPasted}
+                className={cn(
+                  "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[10px] px-4 py-2 text-[12px] font-bold text-white transition-opacity",
+                  "bg-[var(--accent-guias)] hover:opacity-90",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
+                  "disabled:cursor-not-allowed disabled:opacity-60",
+                )}
+              >
+                {applying ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Wand2 className="h-3.5 w-3.5" />
+                )}
+                {applying ? "Aplicando…" : "Aplicar JSON a la guía"}
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setView("choose")}
+              className="text-[11.5px] text-muted-foreground hover:text-foreground self-center"
+            >
+              ← Volver a elegir modo
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -759,4 +1051,78 @@ function CheckRow({ checked, onChange, label, dense }: CheckRowProps) {
       <span className="min-w-0 flex-1">{label}</span>
     </label>
   )
+}
+
+// ─── Constructor del prompt para modo Agente ────────────────────────────────
+
+interface BuildGuiaPromptInput {
+  tipoGuia: TipoGuiaIA
+  objetivo: string
+  numeroSecciones: number
+  tiposActividades: string[]
+  duracionMin: number
+  oas: Array<{ code: string; descripcion: string }>
+  asignatura: string
+  curso: string
+}
+
+function buildGuiaPrompt(input: BuildGuiaPromptInput): string {
+  const oasTexto =
+    input.oas.length > 0
+      ? input.oas.map(o => `- ${o.code}: ${o.descripcion}`).join("\n")
+      : "(sin OAs seleccionados)"
+
+  return `Eres un asistente que diseña guías de aprendizaje para profesores chilenos.
+Devuelve EXCLUSIVAMENTE un objeto JSON válido con la siguiente estructura, sin markdown ni explicaciones previas o posteriores:
+
+{
+  "seccionesGuia": [
+    {
+      "titulo": "string",
+      "descripcion": "string",
+      "contenidoHtml": "string HTML breve con el contenido didáctico de la sección (puede incluir <p>, <ul>, <strong>, <em>)",
+      "actividades": [
+        {
+          "tipo": "seleccion_multiple" | "verdadero_falso" | "completar" | "respuesta_corta" | "ordenar" | "pareados" | "encerrar" | "marcar" | "colorear" | "dibujar" | "investigar" | "sopa_letras" | "abierta",
+          "enunciado": "string",
+          "puntaje": number,
+          "oaVinculado": "OA1" | "OA2" | ...,
+          "alternativas?": [{ "id": "a1", "texto": "...", "correcta": boolean }],
+          "afirmaciones?": [{ "id": "af1", "texto": "...", "correcta": boolean }],
+          "texto?": "string con __ para completar",
+          "respuestas?": ["palabra1"],
+          "banco?": ["opción1"],
+          "lineas?": number,
+          "pasos?": [{ "id": "p1", "texto": "...", "numeroCorrecto": number }],
+          "columnaA?": [{ "id": "c1a", "texto": "..." }],
+          "columnaB?": [{ "id": "c1b", "texto": "...", "pareCon": "c1a" }],
+          "opciones?": [{ "id": "o1", "texto": "..." }],
+          "instruccion?": "string",
+          "alturaCm?": number,
+          "lineasRespuesta?": number,
+          "palabras?": ["palabra1"],
+          "tamañoCuadro?": number
+        }
+      ]
+    }
+  ]
+}
+
+Parámetros del docente:
+- Asignatura: ${input.asignatura}
+- Curso: ${input.curso}
+- Tipo de guía: ${input.tipoGuia}
+- Objetivo de la guía: ${input.objetivo || "(no especificado)"}
+- Número de secciones: ${input.numeroSecciones}
+- Tipos de actividades: ${input.tiposActividades.join(", ")}
+- Duración estimada: ${input.duracionMin} minutos
+
+OAs sugeridos (priorízalos si son relevantes):
+${oasTexto}
+
+Instrucciones:
+- Cada sección debe incluir contenido didáctico breve y al menos una actividad.
+- Las actividades deben ser claras y adecuadas al nivel escolar chileno.
+- Vincula cada actividad a un OA cuando sea posible.
+- IMPORTANTE: responde SOLO con el JSON, sin \`\`\`json ni texto adicional.`
 }

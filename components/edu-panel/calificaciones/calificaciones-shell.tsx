@@ -105,7 +105,7 @@ function evaluarFormula(input: string): string {
   }
 }
 
-export function CalificacionesV2Shell() {
+export function CalificacionesShell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()

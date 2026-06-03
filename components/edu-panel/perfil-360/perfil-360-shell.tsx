@@ -117,7 +117,7 @@ const TIER_CLS: Record<"verde"|"amber"|"rojo", { dot: string; bg: string; text: 
 
 type FiltroLista = "todos" | "pie" | "atencion" | "criticos"
 
-export function Perfil360V2Shell() {
+export function Perfil360Shell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()

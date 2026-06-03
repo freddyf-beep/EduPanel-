@@ -84,7 +84,7 @@ function getGreeting(date: Date): { greet: string; icon: typeof Sun; gradient: s
   return { greet: "Buenas noches", icon: Moon, gradient: "from-violet-500 via-indigo-500 to-blue-600", mood: "Tiempo de planificar mañana" }
 }
 
-export function DashboardV2Shell() {
+export function DashboardShell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()
@@ -775,7 +775,7 @@ function HoyView(props: HoyViewProps) {
                                     <p className="text-[12px] text-muted-foreground mt-1">{actividadModal.objetivo}</p>
                                   )}
                                   <Link
-                                    href={buildUrl("/actividades-v2", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: actividadModal.unidadId || unidadModal, clase: String(claseNumero) }, asignatura))}
+                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: actividadModal.unidadId || unidadModal, clase: String(claseNumero) }, asignatura))}
                                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                                   >
                                     Editar en Actividades <ArrowRight className="h-3 w-3" />
@@ -789,7 +789,7 @@ function HoyView(props: HoyViewProps) {
                                       : "No hay actividad planificada para esta clase."}
                                   </p>
                                   <Link
-                                    href={buildUrl("/actividades-v2", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: unidadModal, clase: String(claseNumero) }, asignatura))}
+                                    href={buildUrl("/actividades", withAsignatura({ curso: clase.resumen, unidad: unidadCurricularModal, unitIdLocal: unidadModal, clase: String(claseNumero) }, asignatura))}
                                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline"
                                   >
                                     Abrir actividad <ArrowRight className="h-3 w-3" />
@@ -881,7 +881,7 @@ function QuickActionsBar({ asignatura, cursosStats }: { asignatura: string; curs
   const acciones = [
     { label: "Calificar",         icon: ClipboardCheck, href: buildUrl("/calificaciones", withAsignatura({}, asignatura)), cls: "from-emerald-500 to-teal-500" },
     { label: "Ver cronograma",    icon: CalendarDays,   href: buildUrl("/cronograma", withAsignatura({}, asignatura)),    cls: "from-cyan-500 to-blue-500" },
-    { label: "Editar clase",      icon: Lightbulb,      href: buildUrl("/actividades-v2", withAsignatura({}, asignatura)),       cls: "from-fuchsia-500 to-pink-500" },
+    { label: "Editar clase",      icon: Lightbulb,      href: buildUrl("/actividades", withAsignatura({}, asignatura)),       cls: "from-fuchsia-500 to-pink-500" },
     { label: "Perfil 360",        icon: UserRound,      href: buildUrl("/perfil-360", withAsignatura({}, asignatura)),    cls: "from-indigo-500 to-violet-500" },
   ]
   return (

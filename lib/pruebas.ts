@@ -11,35 +11,22 @@
 // (resultados por estudiante) en `users/{uid}/pruebas_aplicaciones/{evalId}`.
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { db, auth } from "@/lib/firebase"
-import {
-  doc, getDoc, getDocs, setDoc, deleteDoc,
-  collection, query, orderBy, serverTimestamp,
-} from "firebase/firestore"
-import {
-  getUnidadCompleta, getUnidades,
-  initOAs, mergeOAs, cargarVerUnidad,
-} from "@/lib/curriculo"
+import { getDoc, getDocs, setDoc, deleteDoc, query, orderBy, serverTimestamp } from "firebase/firestore"
 import { cargarEstudiantes } from "@/lib/estudiantes"
-import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
+import { normalizeKeyPart } from "@/lib/shared"
 import type { BloqueContenido, MetadatosCurricularesEval, OAEditado } from "@/lib/evaluaciones-tipos"
-import { metadatosCurricularesVaciosEval } from "@/lib/evaluaciones-tipos"
-
-// ─── Helpers Firestore ──────────────────────────────────────────────────────
-
-function getUid(): string {
-  const uid = auth?.currentUser?.uid
-  if (!uid) throw new Error("Usuario no autenticado")
-  return uid
-}
-
-function userDoc(col: string, id: string) {
-  return doc(db, "users", getUid(), col, id)
-}
-
-function userCol(col: string) {
-  return collection(db, "users", getUid(), col)
-}
+import {
+  cargarOAsParaDocumento,
+  metadatosCurricularesVaciosEval,
+  normalizeMetadatos,
+  normalizeStringList,
+  resolverMetadatosCurriculares,
+  sortByOrder,
+  stripUndefined,
+  userCol,
+  userDoc,
+  type ResolucionCurricular,
+} from "@/lib/edu-doc"
 
 // ─── Tipos de ítem ──────────────────────────────────────────────────────────
 
@@ -267,29 +254,6 @@ export interface AplicacionPrueba {
 
 // ─── Helpers de normalización ───────────────────────────────────────────────
 
-function sortByOrder<T extends { orden?: number }>(items: T[]): T[] {
-  return [...items].sort((a, b) => {
-    const aOrden = typeof a.orden === "number" ? a.orden : Number.MAX_SAFE_INTEGER
-    const bOrden = typeof b.orden === "number" ? b.orden : Number.MAX_SAFE_INTEGER
-    return aOrden - bOrden
-  })
-}
-
-function normalizeStringList(value: unknown): string[] {
-  if (!Array.isArray(value)) return []
-  return value
-    .map(item => typeof item === "string" ? item.trim() : "")
-    .filter(Boolean)
-}
-
-function normalizeMetadatos(v?: MetadatosCurricularesEval): MetadatosCurricularesEval {
-  return {
-    objetivos: normalizeStringList(v?.objetivos),
-    indicadores: normalizeStringList(v?.indicadores),
-    objetivosTransversales: normalizeStringList(v?.objetivosTransversales),
-  }
-}
-
 function calcularPuntajeMaximoSeccion(seccion: SeccionPrueba): number {
   return seccion.items.reduce((acc, item) => acc + (item.puntaje || 0), 0)
 }
@@ -355,91 +319,15 @@ export function nuevoItemId(prefix = "it"): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
 }
 
-// ─── Resolución curricular (similar a rúbricas) ────────────────────────────
+// ─── Resolución curricular (delegada a lib/edu-doc) ────────────────────────
+// Mantenemos los nombres específicos de Pruebas para preservar la API pública.
 
-function normalizeCompareText(value: string): string {
-  return normalizeKeyPart(value).replace(/^unidad_/, "")
-}
-
-function extraerNumeroUnidad(value?: string): number | null {
-  if (!value) return null
-  const match = value.match(/unidad\s*(\d+)/i)
-  if (!match) return null
-  const numero = Number.parseInt(match[1], 10)
-  return Number.isFinite(numero) ? numero : null
-}
-
-function mergeUnique(target: string[], values: string[]) {
-  values.forEach(value => {
-    const limpio = value.trim()
-    if (limpio && !target.includes(limpio)) target.push(limpio)
-  })
-}
-
-export interface ResolucionCurricular {
-  metadatosCurriculares: MetadatosCurricularesEval
-  unidadId?: string
-  unidadNombre?: string
-  resolvedFromDatabase: boolean
-}
+export type { ResolucionCurricular } from "@/lib/edu-doc"
 
 export async function resolverMetadatosCurricularesPrueba(
   prueba: Pick<PruebaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<ResolucionCurricular> {
-  const fallback = normalizeMetadatos(prueba.metadatosCurriculares)
-  const nivel = getCurriculoNivel(prueba.curso)
-  const unidades = await getUnidades(prueba.asignatura, nivel)
-  if (!unidades.length) {
-    return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-  }
-
-  const unidadNumero = extraerNumeroUnidad(prueba.unidadNombre)
-  const unidadNombreComp = prueba.unidadNombre ? normalizeCompareText(prueba.unidadNombre) : ""
-
-  const match = unidades.find(unidad => {
-    if (unidadNumero !== null && unidad.numero_unidad === unidadNumero) return true
-    const nombreComp = normalizeCompareText(unidad.nombre_unidad || "")
-    return !!unidadNombreComp && (
-      nombreComp === unidadNombreComp ||
-      nombreComp.includes(unidadNombreComp) ||
-      unidadNombreComp.includes(nombreComp)
-    )
-  })
-
-  if (!match) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-
-  const completa = await getUnidadCompleta(prueba.asignatura, nivel, match.id)
-  if (!completa) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
-
-  const objetivos: string[] = []
-  const indicadores: string[] = []
-  const objetivosTransversales: string[] = []
-
-  ;(completa.objetivos_aprendizaje || []).forEach(oa => {
-    const descripcion = oa.descripcion?.trim()
-    const isOAT = String(oa.tipo || "").toUpperCase() === "OAT"
-
-    if (descripcion) {
-      const texto = `${isOAT ? "OAA" : "OA"} ${oa.numero}: ${descripcion}`
-      if (isOAT) objetivosTransversales.push(texto)
-      else objetivos.push(texto)
-    }
-
-    if (!isOAT) {
-      mergeUnique(indicadores, (oa.indicadores || []).map(i => i.trim()).filter(Boolean))
-    }
-  })
-
-  return {
-    metadatosCurriculares: {
-      objetivos: objetivos.length ? objetivos : fallback.objetivos,
-      indicadores: indicadores.length ? indicadores : fallback.indicadores,
-      objetivosTransversales: objetivosTransversales.length ? objetivosTransversales : fallback.objetivosTransversales,
-    },
-    unidadId: completa.id,
-    unidadNombre: completa.nombre_unidad || prueba.unidadNombre,
-    resolvedFromDatabase: true,
-  }
+  return resolverMetadatosCurriculares(prueba)
 }
 
 export async function cargarOAsParaPrueba(
@@ -448,22 +336,7 @@ export async function cargarOAsParaPrueba(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = getCurriculoNivel(curso)
-  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
-  if (!unidad) return oasExistentes ?? []
-
-  const base = initOAs(unidad, asignatura)
-  let verUnidadOas: OAEditado[] = []
-  try {
-    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
-    verUnidadOas = guardada?.oas ?? []
-  } catch {}
-
-  const merged = mergeOAs(base, verUnidadOas)
-  if (oasExistentes && oasExistentes.length > 0) {
-    return mergeOAs(merged, oasExistentes)
-  }
-  return merged
+  return cargarOAsParaDocumento(asignatura, curso, unidadId, oasExistentes)
 }
 
 // ─── Cálculos de corrección ────────────────────────────────────────────────
@@ -582,22 +455,6 @@ export function calcularNotaPrueba(puntaje: number, max: number, exigencia = 0.6
 }
 
 // ─── Persistencia Firestore ────────────────────────────────────────────────
-
-function stripUndefined(value: any): any {
-  if (Array.isArray(value)) return value.map(stripUndefined)
-  if (value !== null && typeof value === "object" &&
-      (value as any)._methodName === undefined &&
-      typeof (value as any).toDate !== "function" &&
-      !(value?.constructor?.name?.includes("Timestamp"))) {
-    const out: Record<string, unknown> = {}
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      if (v === undefined) continue
-      out[k] = stripUndefined(v)
-    }
-    return out
-  }
-  return value
-}
 
 export async function cargarPruebas(asignatura: string, curso: string): Promise<PruebaTemplate[]> {
   const col = userCol("pruebas")

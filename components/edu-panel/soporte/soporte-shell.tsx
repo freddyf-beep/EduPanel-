@@ -154,7 +154,7 @@ const tips = [
   "Marca tus OA cubiertos para que el progreso se actualice.",
 ]
 
-export function SoporteV2Shell() {
+export function SoporteShell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const tabParam = (searchParams.get("tab") as TabKey | null)

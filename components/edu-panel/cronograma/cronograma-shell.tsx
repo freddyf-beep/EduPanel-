@@ -202,7 +202,7 @@ interface UnidadInfo {
   curso: string
 }
 
-export function CronogramaV2Shell() {
+export function CronogramaShell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()

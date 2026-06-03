@@ -28,7 +28,7 @@ const INITIAL_SUGGESTIONS = [
   "Genera una rúbrica para disertación de historia"
 ]
 
-export function AgenteV2View() {
+export function AgenteView() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
   const [messages, setMessages] = useState<Message[]>([
     {

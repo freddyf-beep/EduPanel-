@@ -4,7 +4,7 @@ import { useAuth } from "@/components/auth/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { AlertCircle, KeyRound, Loader2, CheckCircle2, Sparkles } from "lucide-react"
+import { AlertCircle, KeyRound, Loader2, CheckCircle2 } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
 
 function getApiErrorMessage(error: unknown, fallback: string) {
@@ -16,43 +16,14 @@ function getApiErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function LoginPage() {
-  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist, signInWithToken } = useAuth()
+  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
   const router = useRouter()
   const [inviteCode, setInviteCode] = useState("")
   const [redeeming, setRedeeming] = useState(false)
   const [redeemError, setRedeemError] = useState("")
   const [signInError, setSignInError] = useState("")
   const [signingIn, setSigningIn] = useState(false)
-  const [qaLoggingIn, setQaLoggingIn] = useState(false)
   const [redeemSuccess, setRedeemSuccess] = useState(false)
-
-  const handleQaSignIn = async () => {
-    setQaLoggingIn(true)
-    setSignInError("")
-    try {
-      const res = await fetch("/api/auth/impersonate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: "uSyXwkXm8iW07RTHRWfIdRWqAJm2" }),
-      })
-      if (!res.ok) {
-        let errMsg = "Error al obtener token de QA."
-        try {
-          const body = await res.json()
-          if (body?.error) errMsg = body.error
-        } catch {
-          // ignore
-        }
-        throw new Error(errMsg)
-      }
-      const data = await res.json()
-      await signInWithToken(data.token)
-    } catch (error) {
-      setSignInError(getApiErrorMessage(error, "No se pudo iniciar sesión en modo QA."))
-    } finally {
-      setQaLoggingIn(false)
-    }
-  }
 
   useEffect(() => {
     if (!loading && user && !blockedByAllowlist) {
@@ -96,7 +67,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
-      <div className="max-w-md w-full bg-card rounded-[20px] shadow-xl p-8 text-center border border-border">
+      <div className="max-w-md w-full bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
         <img src="/logos/logo-3.png" alt="EduPanel" className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-sm object-contain" />
         <h1 className="text-2xl font-extrabold mb-2">Bienvenido a EduPanel</h1>
         <p className="text-muted-foreground mb-6">Inicia sesion para gestionar tus clases y planificaciones.</p>
@@ -156,20 +127,11 @@ export default function LoginPage() {
           <div className="space-y-3">
             <button
               onClick={handleGoogleSignIn}
-              disabled={signingIn || qaLoggingIn}
+              disabled={signingIn}
               className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 text-sm"
             >
               {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               {signingIn ? "Conectando..." : "Iniciar sesión con Google"}
-            </button>
-            
-            <button
-              onClick={handleQaSignIn}
-              disabled={signingIn || qaLoggingIn}
-              className="w-full border border-border bg-card text-muted-foreground hover:text-foreground rounded-xl py-2.5 font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-60"
-            >
-              {qaLoggingIn ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-fuchsia-500" />}
-              {qaLoggingIn ? "Generando sesión de QA..." : "Ingresar como Usuario de QA (Codex)"}
             </button>
           </div>
         )}

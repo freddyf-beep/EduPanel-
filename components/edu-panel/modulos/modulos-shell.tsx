@@ -156,7 +156,7 @@ function getContextualSuggestions(): { id: string; label: string; href: string; 
   return all.filter(s => s.when()).slice(0, 3)
 }
 
-export function ModulosV2Shell() {
+export function ModulosShell() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

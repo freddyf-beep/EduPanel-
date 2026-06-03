@@ -22,7 +22,7 @@ import { toast } from "@/hooks/use-toast"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
 import { getUnidades, type Unidad } from "@/lib/curriculo"
 import { resolverMetadatosCurricularesRubrica, cargarOAsParaRubrica } from "@/lib/rubricas"
-import { RubricaOAEditor } from "@/components/edu-panel/rubricas/rubrica-oa-editor"
+import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
 import type { OAEditado } from "@/lib/curriculo"
 import {
   buildListaCotejoId,

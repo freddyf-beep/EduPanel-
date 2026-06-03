@@ -21,7 +21,7 @@ import { toast } from "@/hooks/use-toast"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
-import { ApiError, apiFetch } from "@/lib/api-client"
+import { apiFetch } from "@/lib/api-client"
 import { getUnidades } from "@/lib/curriculo"
 import type { Unidad } from "@/lib/curriculo"
 import {
@@ -41,7 +41,7 @@ import {
   type RubricaCurriculoResolucion,
   type OAEditado,
 } from "@/lib/rubricas"
-import { RubricaOAEditor } from "./rubrica-oa-editor"
+import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
 import { CrearRubricaSelloModal } from "./crear-rubrica-sello-modal"
 import { getFeatureFlags } from "@/lib/feature-flags"
 
@@ -374,16 +374,7 @@ export function RubricaImport({ mode = "import" }: Props) {
         setPartesExpandidas(new Set(data.partes.map((parte: RubricaParte) => parte.id)))
       }
     } catch (importError) {
-      if (importError instanceof ApiError) {
-        const body = importError.body
-        const message =
-          body && typeof body === "object" && "error" in body
-            ? String((body as { error?: unknown }).error)
-            : importError.message
-        setError(message)
-      } else {
-        setError(importError instanceof Error ? importError.message : "Error al leer el archivo")
-      }
+      setError(importError instanceof Error ? importError.message : "Error al leer el archivo")
     } finally {
       setImporting(false)
     }

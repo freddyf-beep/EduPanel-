@@ -50,7 +50,7 @@ export function AdminSidebar({ mobile, onNavigate }: AdminSidebarProps) {
         href={href}
         onClick={onNavigate}
         className={cn(
-          "flex items-center gap-2.5 rounded-[10px] px-3 py-2 text-[13px] font-medium transition-colors",
+          "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
           isActive
             ? "bg-slate-800 text-white font-semibold dark:bg-slate-800 dark:text-white"
             : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -93,7 +93,7 @@ export function AdminSidebar({ mobile, onNavigate }: AdminSidebarProps) {
          <Link
           href="/"
           onClick={onNavigate}
-          className="flex items-center gap-2.5 rounded-[10px] px-3 py-2 text-[13px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
         >
           <ArrowLeft className="h-[17px] w-[17px] flex-shrink-0" />
           Volver a EduPanel

@@ -20,7 +20,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen grid place-items-center bg-background">
+      <div className="min-h-screen grid place-items-center bg-background" suppressHydrationWarning>
         <div className="flex flex-col items-center gap-4 text-muted-foreground">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="font-semibold text-sm">Cargando tu espacio...</p>

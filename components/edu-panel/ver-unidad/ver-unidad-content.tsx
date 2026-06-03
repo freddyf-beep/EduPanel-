@@ -610,7 +610,7 @@ function VerUnidadInner() {
         </div>
         <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 print:hidden sm:w-auto sm:justify-end">
           <Link
-            href={buildUrl("/actividades-v2", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
+            href={buildUrl("/actividades", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
             className="flex items-center gap-[7px] border-none text-white rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-bold bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 transition-all shadow-md hover:shadow-lg"
           >
             <Sparkles className="w-[15px] h-[15px]" />
@@ -988,7 +988,7 @@ function VerUnidadInner() {
   )
 }
 
-export function VerUnidadContent() {
+export function VerUnidadContent({ initialTab: _initialTab }: { initialTab?: string } = {}) {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center h-64 gap-3 text-muted-foreground">

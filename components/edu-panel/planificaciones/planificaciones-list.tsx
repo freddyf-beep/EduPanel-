@@ -132,7 +132,7 @@ const TIPO_META: Record<UnidadPlan["type"], { label: string; cls: string }> = {
   unidad0:     { label: "Unidad 0",    cls: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200" },
 }
 
-export function PlanificacionesV3Shell() {
+export function PlanificacionesList() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()

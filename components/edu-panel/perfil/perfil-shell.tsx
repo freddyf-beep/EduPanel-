@@ -205,7 +205,7 @@ function SaveBadge({ status }: { status: "idle" | "saving" | "saved" | "error" }
 //   Componente principal
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function PerfilV2Shell({ isOnboardingMode = false }: { isOnboardingMode?: boolean }) {
+export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: boolean }) {
   const { user, signInWithGoogleCalendar, signInWithGoogleDrive } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()

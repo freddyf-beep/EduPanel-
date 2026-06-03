@@ -71,7 +71,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
         href={href}
         onClick={onNavigate}
         className={cn(
-          "flex items-center gap-2.5 rounded-[10px] px-3 py-2 text-[13px] font-medium transition-colors",
+          "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
           isActive
             ? "bg-pink-light font-semibold text-primary"
             : "text-muted-foreground hover:bg-background hover:text-foreground"
@@ -126,7 +126,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
             href={buildUrl("/planificaciones", { curso: curso.nombre })}
             onClick={onNavigate}
             className={cn(
-              "flex items-center gap-2.5 rounded-[10px] px-3 py-1.5 text-[12px] font-medium transition-colors",
+              "flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-[12px] font-medium transition-colors",
               pathname.includes(`curso=${encodeURIComponent(curso.nombre)}`)
                 ? "bg-pink-light text-primary font-semibold"
                 : "text-muted-foreground hover:bg-background hover:text-foreground"

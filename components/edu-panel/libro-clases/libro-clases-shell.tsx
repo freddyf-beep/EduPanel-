@@ -98,7 +98,7 @@ function fechaPrevDia(fecha: string): string {
 
 interface OASugerido { id: string; numero?: number; descripcion: string; unidadId?: string }
 
-export function LibroClasesV2Shell() {
+export function LibroClasesShell() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const tabParam = (searchParams.get("tab") as TabKey | null)

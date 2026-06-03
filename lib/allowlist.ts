@@ -47,11 +47,8 @@ export async function isEmailAllowed(email: string | null | undefined): Promise<
 
   try {
     const user = auth.currentUser
-    if (user?.uid === "uSyXwkXm8iW07RTHRWfIdRWqAJm2") return true
-
     const normalizedEmail = normalizeEmail(email)
     if (!normalizedEmail) return false
-    if (user && user.uid === "uSyXwkXm8iW07RTHRWfIdRWqAJm2") return true
     if (!user) return false
     if (user.emailVerified && isAdminEmail(normalizedEmail)) return true
 
