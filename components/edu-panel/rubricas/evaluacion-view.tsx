@@ -6,6 +6,16 @@ import { serverTimestamp } from "firebase/firestore"
 import {
   ArrowLeft, Users, CheckCircle2, AlertCircle, Loader2, Plus, X, Printer, Save, Lock, Unlock, Sparkles, Upload, FileText, Check, Image as ImageIcon
 } from "lucide-react"
+import { toast } from "@/hooks/use-toast"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog"
 import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
@@ -87,6 +97,10 @@ export function EvaluacionView({ rubricaId }: Props) {
     evaluaciones?: Record<string, { nivel: string; puntos: number; justificacion: string }>
     observaciones?: string
   } | null>(null)
+  const [showDistribucionModal, setShowDistribucionModal] = useState(false)
+  const [distribucionTipo, setDistribucionTipo] = useState<"porGrupo" | "totalGrupos">("porGrupo")
+  const [distribucionValor, setDistribucionValor] = useState(2)
+  const [reglaEvitarPieJuntos, setReglaEvitarPieJuntos] = useState(true)
   const ignoreFirstSave = useRef(true)
   const skipNextSave = useRef(false)
 
@@ -302,6 +316,113 @@ export function EvaluacionView({ rubricaId }: Props) {
     setAlumnoActivo(null)
   }
 
+  const ejecutarDistribucion = (
+    tipo: "porGrupo" | "totalGrupos",
+    valor: number,
+    evitarPieJuntos: boolean
+  ) => {
+    if (!evaluacion) return
+
+    const idxAusentes = evaluacion.grupos.findIndex(
+      g => g.nombre.trim().toLowerCase() === "ausentes"
+    )
+    const grupoAusentesObj = idxAusentes >= 0 ? evaluacion.grupos[idxAusentes] : null
+
+    const gruposNoAusentes = evaluacion.grupos.filter(
+      (_, idx) => idx !== idxAusentes
+    )
+    const todosAlumnosADistribuir = gruposNoAusentes.flatMap(g => g.estudiantes)
+
+    if (todosAlumnosADistribuir.length === 0) {
+      toast({
+        title: "Sin estudiantes",
+        description: "No hay estudiantes disponibles para distribuir.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    const alumnosPie = todosAlumnosADistribuir.filter(a => a.hasPie)
+    const alumnosRegulares = todosAlumnosADistribuir.filter(a => !a.hasPie)
+
+    const shuffle = <T,>(array: T[]): T[] => {
+      const copy = [...array]
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[copy[i], copy[j]] = [copy[j], copy[i]]
+      }
+      return copy
+    }
+
+    const pieShuffled = shuffle(alumnosPie)
+    const regularShuffled = shuffle(alumnosRegulares)
+
+    let numGrupos = 1
+    if (tipo === "porGrupo") {
+      numGrupos = Math.max(1, Math.ceil(todosAlumnosADistribuir.length / valor))
+    } else {
+      numGrupos = Math.max(1, valor)
+    }
+
+    interface GrupoTemporal {
+      nombre: string
+      estudiantes: typeof todosAlumnosADistribuir
+    }
+    const nuevosGruposTemp: GrupoTemporal[] = Array.from({ length: numGrupos }, (_, i) => ({
+      nombre: `Grupo ${i + 1}`,
+      estudiantes: [],
+    }))
+
+    if (evitarPieJuntos) {
+      pieShuffled.forEach((estudiante, idx) => {
+        const grupoIdx = idx % numGrupos
+        nuevosGruposTemp[grupoIdx].estudiantes.push(estudiante)
+      })
+
+      regularShuffled.forEach((estudiante) => {
+        let minGrupoIdx = 0
+        let minSize = Infinity
+        for (let i = 0; i < numGrupos; i++) {
+          if (nuevosGruposTemp[i].estudiantes.length < minSize) {
+            minSize = nuevosGruposTemp[i].estudiantes.length
+            minGrupoIdx = i
+          }
+        }
+        nuevosGruposTemp[minGrupoIdx].estudiantes.push(estudiante)
+      })
+    } else {
+      const todosMezclados = shuffle(todosAlumnosADistribuir)
+      todosMezclados.forEach((estudiante, idx) => {
+        const grupoIdx = idx % numGrupos
+        nuevosGruposTemp[grupoIdx].estudiantes.push(estudiante)
+      })
+    }
+
+    const nuevosGrupos: GrupoEvaluacion[] = nuevosGruposTemp.map((g, idx) => ({
+      id: `grupo_${idx + 1}_${Date.now()}_${idx}`,
+      nombre: g.nombre,
+      estudiantes: g.estudiantes,
+    }))
+
+    if (grupoAusentesObj) {
+      nuevosGrupos.push(grupoAusentesObj)
+    }
+
+    updateEvaluacion(ev => ({
+      ...ev,
+      grupos: nuevosGrupos,
+    }))
+
+    setGrupoActivo(0)
+    setAlumnoActivo(nuevosGrupos[0]?.estudiantes[0]?.estudianteId ?? null)
+    setShowDistribucionModal(false)
+
+    toast({
+      title: "Distribución completa",
+      description: `Se han creado ${numGrupos} grupos de forma automática.`,
+    })
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -496,6 +617,91 @@ export function EvaluacionView({ rubricaId }: Props) {
         </AlertDialogContent>
       </AlertDialog>
 
+      <Dialog open={showDistribucionModal} onOpenChange={setShowDistribucionModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-violet-600" />
+              Distribución Rápida de Estudiantes
+            </DialogTitle>
+            <DialogDescription>
+              Organiza automáticamente a los estudiantes en grupos para la evaluación.
+              Los alumnos en el grupo &quot;Ausentes&quot; no serán redistribuidos.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <label className="text-[12px] font-bold text-foreground">Tipo de distribución</label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setDistribucionTipo("porGrupo")}
+                  className={`flex-1 px-3 py-2 rounded-[10px] text-[12px] font-bold border transition-colors ${
+                    distribucionTipo === "porGrupo"
+                      ? "bg-violet-600 text-white border-violet-600"
+                      : "border-border hover:bg-muted/60"
+                  }`}
+                >
+                  <div className="text-[11px]">Alumnos por grupo</div>
+                  <div className="text-[9px] opacity-70">N alumnos/grupo</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDistribucionTipo("totalGrupos")}
+                  className={`flex-1 px-3 py-2 rounded-[10px] text-[12px] font-bold border transition-colors ${
+                    distribucionTipo === "totalGrupos"
+                      ? "bg-violet-600 text-white border-violet-600"
+                      : "border-border hover:bg-muted/60"
+                  }`}
+                >
+                  <div className="text-[11px]">Cantidad de grupos</div>
+                  <div className="text-[9px] opacity-70">N grupos totales</div>
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[12px] font-bold text-foreground">
+                {distribucionTipo === "porGrupo" ? "Alumnos por grupo" : "Cantidad de grupos"}
+              </label>
+              <input
+                type="number"
+                min={1}
+                max={distribucionTipo === "porGrupo" ? todosLosAlumnosEnGrupos.length : 20}
+                value={distribucionValor}
+                onChange={e => setDistribucionValor(Math.max(1, parseInt(e.target.value) || 1))}
+                className="w-full h-9 rounded-lg border border-border bg-background px-3 text-[13px] font-bold outline-none focus:border-primary"
+              />
+            </div>
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={reglaEvitarPieJuntos}
+                onChange={e => setReglaEvitarPieJuntos(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-border text-violet-600 focus:ring-violet-500"
+              />
+              <span className="text-[12px] text-muted-foreground">
+                Evitar juntar 2 estudiantes PIE en el mismo grupo
+              </span>
+            </label>
+          </div>
+          <DialogFooter className="sm:justify-between">
+            <DialogClose asChild>
+              <button className="px-4 py-2 text-[12px] font-bold rounded-[10px] border border-border hover:bg-muted/60 transition-colors">
+                Cancelar
+              </button>
+            </DialogClose>
+            <button
+              type="button"
+              onClick={() => ejecutarDistribucion(distribucionTipo, distribucionValor, reglaEvitarPieJuntos)}
+              className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-bold rounded-[10px] bg-violet-600 text-white hover:bg-violet-700 transition-colors shadow-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Aplicar distribución
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Header fijo */}
       <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 sm:gap-3 flex-shrink-0">
         <button
@@ -619,6 +825,15 @@ export function EvaluacionView({ rubricaId }: Props) {
         >
           <Plus className="w-3.5 h-3.5" />
           Grupo
+        </button>
+        <button
+          onClick={() => setShowDistribucionModal(true)}
+          disabled={bloqueada}
+          title="Distribución automática de estudiantes en grupos"
+          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-bold rounded-[10px] border border-violet-300 bg-violet-50 text-violet-800 hover:bg-violet-100 whitespace-nowrap transition-colors flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer shadow-xs"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-violet-600 animate-pulse" />
+          Distribución Rápida
         </button>
       </div>
 
