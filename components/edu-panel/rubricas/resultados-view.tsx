@@ -802,6 +802,7 @@ export function ResultadosView({ rubricaId }: Props) {
                               >
                                 {subiendoAlumnoDrive === est.estudianteId ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <HardDrive className="w-3.5 h-3.5" />}
                               </button>
+                            </div>
                           </td>
                         </tr>
                       )
