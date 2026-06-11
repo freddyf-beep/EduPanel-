@@ -826,6 +826,22 @@ export function EvaluacionView({ rubricaId }: Props) {
           <Sparkles className="w-3.5 h-3.5 text-violet-600 animate-pulse" />
           Distribución Rápida
         </button>
+        <button
+          onClick={asegurarGrupoAusentes}
+          disabled={bloqueada}
+          title="Crear o abrir el grupo de ausentes"
+          className="ml-auto flex items-center gap-1 px-2.5 py-2 text-[12px] font-medium rounded-[10px] border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 whitespace-nowrap transition-colors flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <AlertCircle className="w-3.5 h-3.5" />
+          Ausentes
+          {(() => {
+            const idxAus = evaluacion.grupos.findIndex(g => g.nombre.trim().toLowerCase() === "ausentes")
+            if (idxAus >= 0) {
+              return <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-amber-200">{evaluacion.grupos[idxAus].estudiantes.length}</span>
+            }
+            return null
+          })()}
+        </button>
       </div>
 
       {/* Layout principal: alumnos | criterios | scoreboard */}
@@ -1270,26 +1286,8 @@ export function EvaluacionView({ rubricaId }: Props) {
 
         {/* Panel derecho: scoreboard del grupo (oculto en móvil) */}
         <div className="hidden lg:block w-40 flex-shrink-0 overflow-y-auto border border-border rounded-[14px] bg-card">
-          <div className="sticky top-0 bg-card border-b border-border px-3 py-2 flex items-center justify-between">
+          <div className="sticky top-0 bg-card border-b border-border px-3 py-2">
             <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Notas</p>
-          </div>
-          <div className="border-b border-border">
-            <button
-              onClick={asegurarGrupoAusentes}
-              disabled={bloqueada}
-              title="Crear o abrir el grupo de ausentes"
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-2 text-[12px] font-medium text-amber-800 hover:bg-amber-50 whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <AlertCircle className="w-3.5 h-3.5" />
-              Ausentes
-              {(() => {
-                const idxAus = evaluacion.grupos.findIndex(g => g.nombre.trim().toLowerCase() === "ausentes")
-                if (idxAus >= 0) {
-                  return <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100">{evaluacion.grupos[idxAus].estudiantes.length}</span>
-                }
-                return null
-              })()}
-            </button>
           </div>
           <div className="p-1.5 space-y-0.5">
             {todosLosAlumnosEnGrupos.map(est => {
