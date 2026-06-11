@@ -657,13 +657,30 @@ export function ResultadosView({ rubricaId }: Props) {
       ) : (
         <>
           {/* Stats rápidas */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+          {estudiantesAusentes.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-[12px] border border-amber-200 bg-amber-50/60 px-4 py-2.5">
+              <span className="text-[12px] font-extrabold text-amber-800">
+                <AlertCircle className="inline w-3.5 h-3.5 mr-1.5 -mt-0.5" />
+                {estudiantesAusentes.length} estudiante{estudiantesAusentes.length !== 1 ? "s" : ""} ausente{estudiantesAusentes.length !== 1 ? "s" : ""}
+              </span>
+              <button
+                onClick={() => setIncluirAusentes(!incluirAusentes)}
+                className={`text-[11px] font-bold px-2.5 py-1 rounded-[8px] border transition-colors ${
+                  incluirAusentes
+                    ? "border-amber-300 bg-white text-amber-800"
+                    : "border-transparent hover:bg-white/60 text-amber-700"
+                }`}
+              >
+                {incluirAusentes ? "Incluidos en estadísticas" : "Excluidos de estadísticas"}
+              </button>
+            </div>
+          )}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: "Alumnos evaluados", valor: estudiantesActivos.length, color: "text-foreground" },
               { label: "Promedio", valor: promedio.toFixed(1), color: promedio >= 4 ? "text-green-600" : "text-red-500" },
               { label: "Aprobados", valor: aprobados, color: "text-green-600" },
               { label: "Reprobados", valor: reprobados, color: reprobados > 0 ? "text-red-500" : "text-foreground" },
-              { label: "Ausentes", valor: estudiantesAusentes.length, color: estudiantesAusentes.length > 0 ? "text-amber-600" : "text-muted-foreground" },
             ].map(stat => (
               <div key={stat.label} className="bg-card border border-border rounded-[14px] p-4 text-center">
                 <p className={`text-[28px] font-extrabold ${stat.color}`}>{stat.valor}</p>
@@ -785,20 +802,6 @@ export function ResultadosView({ rubricaId }: Props) {
                               >
                                 {subiendoAlumnoDrive === est.estudianteId ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <HardDrive className="w-3.5 h-3.5" />}
                               </button>
-          </div>
-          {estudiantesAusentes.length > 0 && (
-            <button
-              onClick={() => setIncluirAusentes(!incluirAusentes)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-[10px] border transition-colors ${
-                incluirAusentes
-                  ? "border-amber-300 bg-amber-50 text-amber-800"
-                  : "border-border hover:bg-muted/60 text-muted-foreground"
-              }`}
-            >
-              <AlertCircle className="w-3 h-3" />
-              {incluirAusentes ? "Incluyendo ausentes en estadísticas" : "Excluyendo ausentes de estadísticas"}
-            </button>
-          )}
                           </td>
                         </tr>
                       )
