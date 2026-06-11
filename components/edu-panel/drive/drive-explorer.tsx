@@ -115,15 +115,22 @@ export function DriveExplorer({
   const searching = query.trim().length >= 2
 
   useEffect(() => {
-    setConnected(isGoogleDriveConnected())
-    setToken(getGoogleDriveToken())
-    const pinned = getPinnedDriveFolder(context)
-    setPinnedFolder(pinned)
-    if (pinned) {
-      setFolderId(pinned.folderId)
-      setBreadcrumbs([{ id: "root", name: "Mi unidad" }, { id: pinned.folderId, name: pinned.name }])
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (cancelled) return
+      setConnected(isGoogleDriveConnected())
+      setToken(getGoogleDriveToken())
+      const pinned = getPinnedDriveFolder(context)
+      setPinnedFolder(pinned)
+      if (pinned) {
+        setFolderId(pinned.folderId)
+        setBreadcrumbs([{ id: "root", name: "Mi unidad" }, { id: pinned.folderId, name: pinned.name }])
+      }
+    })
+    return () => {
+      cancelled = true
     }
-  }, [context?.tipo, context?.asignatura, context?.curso, context?.unidadId])
+  }, [context])
 
   const loadItems = useCallback(async () => {
     if (!token) {
@@ -408,7 +415,10 @@ export function DriveExplorer({
                   >
                     <div className={cn("grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg", folder ? "bg-amber-50 text-amber-600" : "bg-muted text-muted-foreground")}>
                       {item.iconLink ? (
-                        <img src={item.iconLink} alt="" className="h-4 w-4" />
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element -- Google Drive returns small icon URLs outside the app image pipeline. */}
+                          <img src={item.iconLink} alt="" className="h-4 w-4" />
+                        </>
                       ) : (
                         <Icon className="h-4 w-4" />
                       )}

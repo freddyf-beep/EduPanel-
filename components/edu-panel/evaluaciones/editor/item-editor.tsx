@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 import { apiFetch } from "@/lib/api-client"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { subirImagenEvaluacion } from "@/lib/evaluaciones-storage"
 import type {
   ItemPrueba, ItemSeleccionMultiple, ItemVerdaderoFalso,
   ItemPareados, ItemOrdenar, ItemCompletar,
@@ -31,6 +32,15 @@ const TIPO_LABEL: Record<TipoItem, { label: string; icon: any; color: string }> 
   completar: { label: "Completar", icon: PenLine, color: "bg-pink-100 text-pink-700 border-pink-300" },
   respuesta_corta: { label: "Respuesta corta", icon: AlignLeft, color: "bg-cyan-100 text-cyan-700 border-cyan-300" },
   desarrollo: { label: "Desarrollo", icon: FileText, color: "bg-indigo-100 text-indigo-700 border-indigo-300" },
+}
+
+function dataUrlToFile(dataUrl: string, fileName: string): File {
+  const [meta, data] = dataUrl.split(",")
+  const mime = meta.match(/data:([^;]+);base64/)?.[1] || "image/jpeg"
+  const binary = atob(data || "")
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  return new File([bytes], fileName, { type: mime })
 }
 
 interface Props {
@@ -83,21 +93,26 @@ export function ItemEditor({
         })
       })
 
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || "Error al ilustrar el caso.")
-      }
-
       const data = await res.json()
-      if (!data.url) {
-        throw new Error("No se obtuvo ninguna URL de la ilustración.")
+      const image = typeof data.image === "string" ? data.image : typeof data.url === "string" ? data.url : ""
+      if (!image) throw new Error("No se obtuvo ninguna imagen desde la IA.")
+
+      let imageUrl = image
+      let storagePath: string | undefined
+      if (image.startsWith("data:image/")) {
+        const extension = image.match(/^data:image\/([^;]+)/)?.[1] || "jpg"
+        const file = dataUrlToFile(image, `ilustracion_ia_${Date.now()}.${extension}`)
+        const subida = await subirImagenEvaluacion(tipoDoc, docId, file)
+        imageUrl = subida.url
+        storagePath = subida.storagePath
       }
 
       const nuevoBloque = {
         id: `img_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
         tipo: "imagen" as const,
         data: {
-          url: data.url,
+          url: imageUrl,
+          storagePath,
           ancho: "medium" as const,
           alineacion: "centro" as const,
           alt: item.enunciado,

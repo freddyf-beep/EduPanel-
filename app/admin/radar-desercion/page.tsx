@@ -29,6 +29,7 @@ import {
   HelpCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 
 interface StudentRiskItem {
   id: string
@@ -91,9 +92,11 @@ export default function RadarDesercionPage() {
     if (!isReady || !isAdmin || !featureActive) return
     
     let isCancelled = false
-    setLoadingData(true)
 
     async function loadData() {
+      if (isCancelled) return
+      setLoadingData(true)
+
       try {
         const hData = await cargarHorarioSemanal()
         const cursos = Array.from(new Set(hData.map(h => h.resumen)))
@@ -190,7 +193,7 @@ export default function RadarDesercionPage() {
       }
     }
 
-    loadData()
+    void Promise.resolve().then(loadData)
 
     return () => {
       isCancelled = true
@@ -203,7 +206,7 @@ export default function RadarDesercionPage() {
     setAiError(null)
     setAiReport(null)
     try {
-      const res = await fetch("/api/predecir-desercion", {
+      const res = await apiFetch("/api/predecir-desercion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

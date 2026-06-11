@@ -373,7 +373,7 @@ export function GenerarEvaluacionIaModal({
               <div>Clase: <span className="text-foreground font-medium">Clase {numeroClase}</span></div>
               <div>Curso: <span className="text-foreground font-medium">{curso}</span></div>
               <div className="col-span-2 truncate">Asignatura: <span className="text-foreground font-medium">{asignatura}</span></div>
-              <div className="col-span-2 truncate">Objetivo de la clase: <span className="text-foreground font-medium italic">"{actividad.objetivo || 'Sin registrar'}"</span></div>
+              <div className="col-span-2 truncate">Objetivo de la clase: <span className="text-foreground font-medium italic">&quot;{actividad.objetivo || 'Sin registrar'}&quot;</span></div>
             </div>
           </div>
         </div>

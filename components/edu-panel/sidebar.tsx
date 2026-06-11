@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import {
   Home,
@@ -71,7 +72,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
         href={href}
         onClick={onNavigate}
         className={cn(
-          "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+          "flex items-center gap-2.5 rounded-[10px] px-3 py-2 text-[13px] font-medium transition-colors",
           isActive
             ? "bg-pink-light font-semibold text-primary"
             : "text-muted-foreground hover:bg-background hover:text-foreground"
@@ -90,7 +91,13 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
     )}>
       <div className="mb-4 flex flex-col items-center gap-2 border-b border-border px-3 pb-5 pt-2">
         {user?.photoURL ? (
-          <img src={user.photoURL} alt="Foto" className="h-[52px] w-[52px] rounded-full object-cover border-2 border-background shadow-sm" />
+          <Image
+            src={user.photoURL}
+            alt="Foto"
+            width={52}
+            height={52}
+            className="h-[52px] w-[52px] rounded-full object-cover border-2 border-background shadow-sm"
+          />
         ) : (
           <div className="grid h-[52px] w-[52px] place-items-center rounded-full bg-gradient-to-br from-primary to-pink-mid text-lg font-extrabold text-primary-foreground shadow-sm">
             {user?.displayName?.charAt(0) || "U"}
@@ -126,7 +133,7 @@ export function Sidebar({ mobile, onNavigate }: SidebarProps) {
             href={buildUrl("/planificaciones", { curso: curso.nombre })}
             onClick={onNavigate}
             className={cn(
-              "flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-[12px] font-medium transition-colors",
+              "flex items-center gap-2.5 rounded-[10px] px-3 py-1.5 text-[12px] font-medium transition-colors",
               pathname.includes(`curso=${encodeURIComponent(curso.nombre)}`)
                 ? "bg-pink-light text-primary font-semibold"
                 : "text-muted-foreground hover:bg-background hover:text-foreground"

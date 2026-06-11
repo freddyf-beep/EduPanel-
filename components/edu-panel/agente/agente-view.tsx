@@ -30,6 +30,7 @@ const INITIAL_SUGGESTIONS = [
 
 export function AgenteView() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
+  const nextMessageIdRef = useRef(1)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -53,9 +54,10 @@ export function AgenteView() {
 
   const handleSend = (text: string = inputValue) => {
     if (!text.trim()) return
+    nextMessageIdRef.current += 1
 
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: `msg_${nextMessageIdRef.current}`,
       role: "user",
       content: text,
       timestamp: new Date()
@@ -66,8 +68,9 @@ export function AgenteView() {
 
     // Simulated AI response
     setTimeout(() => {
+      nextMessageIdRef.current += 1
       const aiThinking: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `msg_${nextMessageIdRef.current}`,
         role: "assistant",
         content: "",
         timestamp: new Date(),

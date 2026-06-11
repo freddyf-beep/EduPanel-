@@ -76,7 +76,7 @@ export function ResumenSemanal({ asignatura, horario, fecha }: Props) {
         setAsistenciaPromedio(total > 0 ? Math.round((presentes / total) * 100) : null)
       })
     return () => { cancelled = true }
-  }, [asignatura, cursos, lunes, viernes])
+  }, [asignatura, cursos, lunes, viernes, fecha])
 
   if (fecha.getDay() !== 0) return null
 

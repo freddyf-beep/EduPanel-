@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { GoogleGenAI } from "@google/genai"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" })
 
@@ -80,8 +81,12 @@ export async function POST(req: NextRequest) {
       }
     `
 
+    const model = "gemini-2.5-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "rubricas-sello", inputText: prompt })
+    if (!budget.ok) return budget.response
+
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model,
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -90,6 +95,15 @@ export async function POST(req: NextRequest) {
     })
 
     const text = response.text?.trim() || "{}"
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "rubricas-sello",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: text,
+      usageMetadata: (response as any)?.usageMetadata,
+    })
     const resultJson = JSON.parse(text)
 
     return NextResponse.json(resultJson)

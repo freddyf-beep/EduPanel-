@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "backup": "node scripts/firestore-backup.mjs",
+    "live": "node scripts/firebase-live-backup.mjs",
+    "live:once": "node scripts/firebase-live-backup.mjs --once",
     "status": "node scripts/firestore-backup-status.mjs"
   },
   "dependencies": {

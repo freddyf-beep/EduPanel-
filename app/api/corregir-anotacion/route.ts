@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 export const dynamic = "force-dynamic"
 
@@ -93,6 +94,8 @@ export async function POST(req: Request) {
 
     const prompt = buildPrompt(textoLimpio)
     const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "corrector-tono", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -125,6 +128,16 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo respuesta de moderación.")
     }
+
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "corrector-tono",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
 
     const resultJson = JSON.parse(textOutput.trim())
     return NextResponse.json({

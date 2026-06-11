@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAdminGuard } from "@/hooks/use-admin-guard"
 import { apiFetch, ApiError } from "@/lib/api-client"
 import {
@@ -140,7 +140,7 @@ export default function AdminMantenimientoPage() {
   const [error, setError] = useState("")
   const [actionMessage, setActionMessage] = useState("")
 
-  const fetchDashboard = async ({ silent = false }: { silent?: boolean } = {}) => {
+  const fetchDashboard = useCallback(async ({ silent = false }: { silent?: boolean } = {}) => {
     if (!silent) {
       setLoading(true)
     } else {
@@ -158,7 +158,7 @@ export default function AdminMantenimientoPage() {
       setLoading(false)
       setRefreshing(false)
     }
-  }
+  }, [])
 
   const handleRunBackup = async () => {
     setRunningManual(true)
@@ -181,10 +181,15 @@ export default function AdminMantenimientoPage() {
   }
 
   useEffect(() => {
-    if (isReady && isAdmin) {
-      void fetchDashboard()
+    if (!isReady || !isAdmin) return
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) void fetchDashboard()
+    })
+    return () => {
+      cancelled = true
     }
-  }, [isReady, isAdmin])
+  }, [isReady, isAdmin, fetchDashboard])
 
   useEffect(() => {
     if (!isReady || !isAdmin || !data) return
@@ -193,7 +198,7 @@ export default function AdminMantenimientoPage() {
       void fetchDashboard({ silent: true })
     }, delay)
     return () => window.clearTimeout(timer)
-  }, [isReady, isAdmin, data?.status.running, data?.status.updatedAt])
+  }, [isReady, isAdmin, data, fetchDashboard])
 
   if (!isReady) return <div className="p-8 text-muted-foreground text-sm">Cargando...</div>
   if (!isAdmin) return null

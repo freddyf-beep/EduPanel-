@@ -16,7 +16,7 @@ import {
   findLessonQualityIssues,
 } from "@/lib/ai/pedagogical-engine"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
-import { checkAiQuota, recordAiUsage } from "@/lib/auth/ai-quota"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 /**
  * Rate limiting in-memory por uid.
@@ -76,6 +76,19 @@ function resolveProvider(raw: string): AIProvider {
   return AI_PROVIDER_OPTIONS.some(option => option.value === raw) ? raw as AIProvider : "public"
 }
 
+function usesServerPaidCredentials(provider: AIProvider, body: LessonRequestBody): boolean {
+  if (provider === "public") return true
+  if (provider === "compatible") return false
+  return !cleanText(body.customToken)
+}
+
+function resolveTrackingModel(provider: AIProvider, body: LessonRequestBody, expectsJson: boolean): string {
+  if (provider === "public" || provider === "gemini") return resolveGeminiModel(body, expectsJson, provider)
+  if (provider === "groq") return cleanText(body.customModel) || getProviderMeta("groq").defaultModel
+  if (provider === "compatible") return cleanText(body.customModel) || getProviderMeta("compatible").defaultModel
+  return cleanText(body.customModel) || getProviderMeta(provider).defaultModel
+}
+
 function resolveGeminiModel(body: LessonRequestBody, expectsJson: boolean, provider: AIProvider) {
   const requested = cleanText(body.customModel)
   const defaultFast = cleanText(process.env.GEMINI_FAST_MODEL) || getProviderMeta("gemini").defaultModel
@@ -127,15 +140,7 @@ async function callGemini(body: LessonRequestBody, prompt: string, expectsJson: 
     throw new Error(message)
   }
 
-  const usage = json?.usageMetadata ? {
-    inputTokens: Number(json.usageMetadata.promptTokenCount) || 0,
-    outputTokens: Number(json.usageMetadata.candidatesTokenCount) || 0,
-  } : undefined
-
-  return {
-    text: extractGeminiText(json) || rawText,
-    usage,
-  }
+  return extractGeminiText(json) || rawText
 }
 
 async function callOpenAI(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
@@ -167,15 +172,7 @@ async function callOpenAI(body: LessonRequestBody, prompt: string, expectsJson: 
     throw new Error(message)
   }
 
-  const usage = json?.usage ? {
-    inputTokens: Number(json.usage.prompt_tokens) || 0,
-    outputTokens: Number(json.usage.completion_tokens) || 0,
-  } : undefined
-
-  return {
-    text: extractOpenAIText(json) || rawText,
-    usage,
-  }
+  return extractOpenAIText(json) || rawText
 }
 
 async function callAnthropic(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
@@ -209,15 +206,7 @@ async function callAnthropic(body: LessonRequestBody, prompt: string, expectsJso
     throw new Error(message)
   }
 
-  const usage = json?.usage ? {
-    inputTokens: Number(json.usage.input_tokens) || 0,
-    outputTokens: Number(json.usage.output_tokens) || 0,
-  } : undefined
-
-  return {
-    text: extractAnthropicText(json) || rawText,
-    usage,
-  }
+  return extractAnthropicText(json) || rawText
 }
 
 async function callCompatible(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal) {
@@ -257,15 +246,7 @@ async function callCompatible(body: LessonRequestBody, prompt: string, expectsJs
     throw new Error(message)
   }
 
-  const usage = json?.usage ? {
-    inputTokens: Number(json.usage.prompt_tokens) || 0,
-    outputTokens: Number(json.usage.completion_tokens) || 0,
-  } : undefined
-
-  return {
-    text: extractOpenAIText(json) || rawText,
-    usage,
-  }
+  return extractOpenAIText(json) || rawText
 }
 
 async function generateText(
@@ -274,7 +255,7 @@ async function generateText(
   prompt: string,
   expectsJson: boolean,
   signal?: AbortSignal,
-): Promise<{ text: string; usage?: { inputTokens: number; outputTokens: number } }> {
+): Promise<string> {
   if (provider === "openai") return callOpenAI(body, prompt, expectsJson, signal)
   if (provider === "anthropic") return callAnthropic(body, prompt, expectsJson, signal)
   if (provider === "groq") {
@@ -285,23 +266,17 @@ async function generateText(
     }, prompt, expectsJson, signal)
   }
   if (provider === "compatible") return callCompatible(body, prompt, expectsJson, signal)
+  // 'public' y 'gemini' usan callGemini
   return callGemini(body, prompt, expectsJson, signal, provider)
 }
+
+// ─── Handler principal ────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
   // 1) Auth: Bearer token de Firebase + allowlist obligatorios
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
   const auth = authCheck.auth
-
-  // 1.5) AI quota check
-  const quotaCheck = await checkAiQuota(auth.uid)
-  if (!quotaCheck.ok) {
-    return NextResponse.json(
-      { error: quotaCheck.error },
-      { status: 403 }
-    )
-  }
 
   // 2) Rate limit por uid (30/h)
   const rl = checkRateLimit(auth.uid)
@@ -313,15 +288,6 @@ export async function POST(req: Request) {
   }
 
   let provider: AIProvider = "gemini"
-  let totalInputTokens = 0
-  let totalOutputTokens = 0
-
-  const recordTokens = (usage?: { inputTokens: number; outputTokens: number }) => {
-    if (usage) {
-      totalInputTokens += usage.inputTokens
-      totalOutputTokens += usage.outputTokens
-    }
-  }
 
   try {
     const body = (await req.json()) as LessonRequestBody
@@ -330,17 +296,28 @@ export async function POST(req: Request) {
 
     const prompt = buildCopilotPrompt(body, mode)
     const expectsJson = mode !== "chat"
+    const shouldTrackUsage = usesServerPaidCredentials(provider, body)
+    const trackedModel = resolveTrackingModel(provider, body, expectsJson)
 
-    const { text: rawText, usage: initialUsage } = await generateText(provider, body, prompt, expectsJson, req.signal)
-    recordTokens(initialUsage)
+    if (shouldTrackUsage) {
+      const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: prompt })
+      if (!budget.ok) return budget.response
+    }
+
+    const rawText = await generateText(provider, body, prompt, expectsJson, req.signal)
+    if (shouldTrackUsage) {
+      await recordAiUsage({
+        uid: auth.uid,
+        feature: "generar-clase",
+        provider,
+        model: trackedModel,
+        inputText: prompt,
+        outputText: rawText,
+      })
+    }
 
     // Modo chat: respuesta libre en texto
     if (mode === "chat") {
-      if (totalInputTokens > 0 || totalOutputTokens > 0) {
-        recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-          console.error("[generar-clase] Error recording AI usage:", err)
-        })
-      }
       return NextResponse.json({
         respuestaChat: cleanText(rawText) || "No pude generar una respuesta esta vez.",
       })
@@ -357,18 +334,26 @@ export async function POST(req: Request) {
       console.warn("[generar-clase] Parse falló en primer intento, reintentando con prompt estricto...")
       const retryPrompt = `${prompt}\n\n---\nIMPORTANTE: Tu respuesta anterior contenía formato inválido. Devuelve SOLO un objeto JSON válido (sin texto antes, sin texto después, sin explicación, sin comentarios), envuelto en \`\`\`json ... \`\`\`. Sin comas finales antes de } o ].`
       try {
-        const { text: retryText, usage: retryUsage } = await generateText(provider, body, retryPrompt, expectsJson, req.signal)
-        recordTokens(retryUsage)
+        if (shouldTrackUsage) {
+          const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: retryPrompt })
+          if (!budget.ok) return budget.response
+        }
+        const retryText = await generateText(provider, body, retryPrompt, expectsJson, req.signal)
+        if (shouldTrackUsage) {
+          await recordAiUsage({
+            uid: auth.uid,
+            feature: "generar-clase",
+            provider,
+            model: trackedModel,
+            inputText: retryPrompt,
+            outputText: retryText,
+          })
+        }
         parsed = parseJsonResponse(retryText || "{}")
       } catch (retryErr) {
         // El reintento también falló: devolver el texto crudo para que el cliente
         // muestre UI de recuperación (textarea editable + botón "Intentar de nuevo")
         console.error("[generar-clase] Reintento también falló:", retryErr)
-        if (totalInputTokens > 0 || totalOutputTokens > 0) {
-          recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-            console.error("[generar-clase] Error recording AI usage:", err)
-          })
-        }
         return NextResponse.json({
           error: "json_parse_failed",
           message: "La IA no devolvió JSON válido. Puedes editar la respuesta cruda y aplicar manualmente.",
@@ -386,8 +371,21 @@ export async function POST(req: Request) {
       if (issues.length > 0) {
         const repairPrompt = buildPedagogicalRepairPrompt(body, parsed, issues)
         try {
-          const { text: repairText, usage: repairUsage } = await generateText(provider, body, repairPrompt, true, req.signal)
-          recordTokens(repairUsage)
+          if (shouldTrackUsage) {
+            const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: repairPrompt })
+            if (!budget.ok) return budget.response
+          }
+          const repairText = await generateText(provider, body, repairPrompt, true, req.signal)
+          if (shouldTrackUsage) {
+            await recordAiUsage({
+              uid: auth.uid,
+              feature: "generar-clase",
+              provider,
+              model: trackedModel,
+              inputText: repairPrompt,
+              outputText: repairText,
+            })
+          }
           parsed = parseJsonResponse(repairText || "{}")
           lesson = coerceGeneratedLesson(parsed)
         } catch (repairErr) {
@@ -396,25 +394,14 @@ export async function POST(req: Request) {
       }
     }
 
-    if (totalInputTokens > 0 || totalOutputTokens > 0) {
-      recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-        console.error("[generar-clase] Error recording AI usage:", err)
-      })
-    }
-
     return NextResponse.json({
       ...lesson,
+      // Solo aplicar_cambios devuelve resumen_cambios
       resumenCambios: typeof parsed.resumen_cambios === "string"
         ? cleanText(parsed.resumen_cambios)
         : undefined,
     })
   } catch (error) {
-    if (totalInputTokens > 0 || totalOutputTokens > 0) {
-      recordAiUsage(auth.uid, totalInputTokens, totalOutputTokens).catch(err => {
-        console.error("[generar-clase] Error recording AI usage:", err)
-      })
-    }
-
     if (error instanceof DOMException && error.name === "AbortError") {
       return NextResponse.json({ error: "Generación cancelada." }, { status: 499 })
     }
@@ -424,10 +411,16 @@ export async function POST(req: Request) {
     const rawMessage = error instanceof Error ? error.message : "Error interno del servidor"
     const message = normalizeProviderError(provider, rawMessage)
 
-    const status = error instanceof ProviderConfigError ? error.status : 500
+    const status = error instanceof ProviderConfigError
+      ? error.status
+      : /quota|rate limit|rate-limit|too many requests|resource_exhausted|exceeded|429/i.test(rawMessage)
+        ? 429
+        : 500
     return NextResponse.json({ error: message }, { status })
   }
 }
+
+// ─── Normalización de errores ─────────────────────────────────────────────────
 
 function normalizeProviderError(provider: AIProvider, message: string): string {
   const n = message.toLowerCase()

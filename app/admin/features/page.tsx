@@ -12,26 +12,30 @@ export default function AdminFeaturesPage() {
   const [saving, setSaving] = useState<string | null>(null)
 
   useEffect(() => {
-    if (isReady && isAdmin) {
-      loadFlags()
+    if (!isReady || !isAdmin) return
+    let cancelled = false
+
+    void Promise.resolve().then(async () => {
+      setLoading(true)
+      try {
+        const data = await getFeatureFlags()
+        if (cancelled) return
+        const sortedFlags = Object.values(data).sort((a, b) => {
+          if (a.group !== b.group) return a.group - b.group
+          return a.name.localeCompare(b.name)
+        })
+        setFlags(sortedFlags)
+      } catch (error) {
+        console.error("Error loading flags", error)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
+
+    return () => {
+      cancelled = true
     }
   }, [isReady, isAdmin])
-
-  const loadFlags = async () => {
-    setLoading(true)
-    try {
-      const data = await getFeatureFlags()
-      const sortedFlags = Object.values(data).sort((a, b) => {
-        if (a.group !== b.group) return a.group - b.group
-        return a.name.localeCompare(b.name)
-      })
-      setFlags(sortedFlags)
-    } catch (error) {
-      console.error("Error loading flags", error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleToggle = async (flag: FeatureFlag) => {
     setSaving(flag.id)
@@ -107,7 +111,17 @@ export default function AdminFeaturesPage() {
   )
 }
 
-function FeatureGroup({ title, description, flags, saving, onToggle, accentClass, isPremium = false }: any) {
+interface FeatureGroupProps {
+  title: string
+  description: string
+  flags: FeatureFlag[]
+  saving: string | null
+  onToggle: (flag: FeatureFlag) => void
+  accentClass: string
+  isPremium?: boolean
+}
+
+function FeatureGroup({ title, description, flags, saving, onToggle, accentClass, isPremium = false }: FeatureGroupProps) {
   if (flags.length === 0) return null
 
   return (

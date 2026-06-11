@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { checkAiBudget, estimateAudioRequestTokens, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
 // Rate limit
 const RATE_LIMIT_PER_HOUR = 30
@@ -100,6 +102,11 @@ export async function POST(req: Request) {
 
     const prompt = buildBitacoraPrompt(estudiantes, asignatura || "", curso || "")
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, {
+      feature: "bitacora-por-voz",
+      estimatedInputTokens: estimateAudioRequestTokens(prompt),
+    })
+    if (!budget.ok) return budget.response
 
     // Llamar a la API multimodal de Gemini con audio
     const response = await fetch(
@@ -133,11 +140,7 @@ export async function POST(req: Request) {
     const rawText = await response.text()
     if (!response.ok) {
       console.error("[bitacora-por-voz] Gemini API error response:", rawText)
-      let parsedError
-      try {
-        parsedError = JSON.parse(rawText)
-      } catch {}
-      throw new Error(parsedError?.error?.message || `API error (${response.status})`)
+      throw parseGeminiApiError(rawText, response.status, "Gemini no pudo procesar la bitacora por voz.")
     }
 
     let parsedResponse
@@ -152,6 +155,16 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo texto de la respuesta de Gemini.")
     }
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "bitacora-por-voz",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+      kind: "audio",
+    })
 
     let resultJson
     try {
@@ -164,6 +177,6 @@ export async function POST(req: Request) {
     return NextResponse.json(resultJson)
   } catch (error: any) {
     console.error("[bitacora-por-voz] Error:", error)
-    return NextResponse.json({ error: error.message || "Error interno del servidor" }, { status: 500 })
+    return aiErrorResponse(error)
   }
 }

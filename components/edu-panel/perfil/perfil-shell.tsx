@@ -307,16 +307,35 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
 
   // ── Carga inicial ──
   useEffect(() => {
-    Promise.all([
+    Promise.allSettled([
       cargarPerfil(),
       cargarHorarioSemanal(),
       cargarNivelMapping(),
       cargarInfoColegio(),
       cargarPreferencias(),
-      getAsignaturasDisponibles().catch(() => [] as string[]),
-      cargarCursoTipos().catch(() => ({} as CursoTipoMap)),
+      getAsignaturasDisponibles(),
+      cargarCursoTipos(),
     ])
-      .then(([pData, hData, mapping, colegioData, prefData, asignaturas, tipos]) => {
+      .then((results) => {
+        const [perfilResult, horarioResult, mappingResult, colegioResult, prefResult, asignaturasResult, tiposResult] = results
+        const pData = perfilResult.status === "fulfilled" ? perfilResult.value : null
+        const hData = horarioResult.status === "fulfilled" ? horarioResult.value : null
+        const mapping = mappingResult.status === "fulfilled" ? mappingResult.value : null
+        const colegioData = colegioResult.status === "fulfilled" ? colegioResult.value : null
+        const prefData = prefResult.status === "fulfilled" ? prefResult.value : null
+        const asignaturas = asignaturasResult.status === "fulfilled" ? asignaturasResult.value : [] as string[]
+        const tipos = tiposResult.status === "fulfilled" ? tiposResult.value : {} as CursoTipoMap
+        const failedLoads = results.filter(result => result.status === "rejected")
+
+        if (failedLoads.length > 0) {
+          console.warn("[perfil] algunas secciones no pudieron cargarse", failedLoads)
+          toast({
+            title: "Carga parcial del perfil",
+            description: "Algunas secciones no respondieron. Tus datos guardados no se borraron; intenta refrescar si algo aparece vacio.",
+            variant: "destructive",
+          })
+        }
+
         if (pData) setPerfil(pData)
         if (hData) setHorario(hData)
         if (mapping) setNivelMapping(mapping)

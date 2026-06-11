@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useAdminGuard } from "@/hooks/use-admin-guard"
 import {
   BookA,
@@ -96,7 +96,7 @@ export default function AdminCurriculumPage() {
   const [detalle, setDetalle] = useState<DetalleResponse | null>(null)
   const [cargandoDetalle, setCargandoDetalle] = useState(false)
 
-  const fetchList = async () => {
+  const fetchList = useCallback(async () => {
     setLoading(true)
     setError("")
     try {
@@ -108,11 +108,12 @@ export default function AdminCurriculumPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    if (isReady && isAdmin) fetchList()
-  }, [isReady, isAdmin])
+    if (!isReady || !isAdmin) return
+    void Promise.resolve().then(fetchList)
+  }, [isReady, isAdmin, fetchList])
 
   const abrirDetalle = async (docId: string) => {
     setDetalleAbierto(docId)

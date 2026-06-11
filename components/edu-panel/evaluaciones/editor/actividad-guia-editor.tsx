@@ -556,7 +556,7 @@ function ActividadDataEditor({
             className="w-full resize-y rounded border border-border bg-background px-3 py-2 text-[12.5px]"
           />
           <div className="text-[11px] text-muted-foreground">
-            Sube la imagen a colorear arriba en "Imagen / texto adicional".
+            Sube la imagen a colorear arriba en &quot;Imagen / texto adicional&quot;.
           </div>
         </div>
       )

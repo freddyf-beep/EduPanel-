@@ -18,6 +18,7 @@ import {
   BookOpen
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 
 interface Teacher {
   id: string
@@ -63,7 +64,7 @@ export default function SustitucionesPage() {
   useEffect(() => {
     if (isReady && isAdmin) {
       getFeatureFlags().then(flags => {
-        setFeatureActive(!!flags["agente-sustituciones"]?.active)
+        setFeatureActive(!!flags["agent-sustituciones"]?.active)
         setLoadingConfig(false)
       }).catch(err => {
         console.error("Error loading flags", err)
@@ -104,7 +105,7 @@ export default function SustitucionesPage() {
     setAiReport(null)
 
     try {
-      const res = await fetch("/api/sugerir-sustituto", {
+      const res = await apiFetch("/api/sugerir-sustituto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

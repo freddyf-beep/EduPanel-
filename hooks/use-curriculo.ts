@@ -6,35 +6,35 @@ import type { Unidad, ObjetivoAprendizaje } from "@/lib/curriculo"
 
 // ─── Hook: lista de unidades ──────────────────────────────────────────────────
 export function useUnidades(asignatura: string, nivel: string) {
-  const [prevParams, setPrevParams] = useState({ asignatura, nivel })
   const [unidades, setUnidades] = useState<Unidad[]>([])
-  const [loading, setLoading]   = useState(() => !!asignatura && !!nivel)
+  const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState<string | null>(null)
 
-  if (prevParams.asignatura !== asignatura || prevParams.nivel !== nivel) {
-    setPrevParams({ asignatura, nivel })
-    setLoading(!!asignatura && !!nivel)
-    setError(null)
-  }
-
   useEffect(() => {
-    if (!asignatura || !nivel) return
-    let active = true
-    getUnidades(asignatura, nivel)
-      .then(res => {
-        if (active) {
-          setUnidades(res)
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel) {
+        if (!cancelled) {
+          setUnidades([])
+          setError(null)
           setLoading(false)
         }
-      })
-      .catch(e => {
-        if (active) {
-          setError(e.message)
-          setLoading(false)
-        }
-      })
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getUnidades(asignatura, nivel)
+        if (!cancelled) setUnidades(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando unidades")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
     return () => {
-      active = false
+      cancelled = true
     }
   }, [asignatura, nivel])
 
@@ -47,35 +47,35 @@ export function useUnidadCompleta(
   nivel: string,
   unidadId: string
 ) {
-  const [prevParams, setPrevParams] = useState({ asignatura, nivel, unidadId })
   const [unidad, setUnidad]   = useState<Unidad | null>(null)
-  const [loading, setLoading] = useState(() => !!asignatura && !!nivel && !!unidadId)
+  const [loading, setLoading] = useState(true)
   const [error, setError]     = useState<string | null>(null)
 
-  if (prevParams.asignatura !== asignatura || prevParams.nivel !== nivel || prevParams.unidadId !== unidadId) {
-    setPrevParams({ asignatura, nivel, unidadId })
-    setLoading(!!asignatura && !!nivel && !!unidadId)
-    setError(null)
-  }
-
   useEffect(() => {
-    if (!asignatura || !nivel || !unidadId) return
-    let active = true
-    getUnidadCompleta(asignatura, nivel, unidadId)
-      .then(res => {
-        if (active) {
-          setUnidad(res)
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel || !unidadId) {
+        if (!cancelled) {
+          setUnidad(null)
+          setError(null)
           setLoading(false)
         }
-      })
-      .catch(e => {
-        if (active) {
-          setError(e.message)
-          setLoading(false)
-        }
-      })
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getUnidadCompleta(asignatura, nivel, unidadId)
+        if (!cancelled) setUnidad(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando unidad")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
     return () => {
-      active = false
+      cancelled = true
     }
   }, [asignatura, nivel, unidadId])
 
@@ -88,35 +88,35 @@ export function useOADeUnidad(
   nivel: string,
   unidadId: string
 ) {
-  const [prevParams, setPrevParams] = useState({ asignatura, nivel, unidadId })
   const [oas, setOas]         = useState<ObjetivoAprendizaje[]>([])
-  const [loading, setLoading] = useState(() => !!asignatura && !!nivel && !!unidadId)
+  const [loading, setLoading] = useState(true)
   const [error, setError]     = useState<string | null>(null)
 
-  if (prevParams.asignatura !== asignatura || prevParams.nivel !== nivel || prevParams.unidadId !== unidadId) {
-    setPrevParams({ asignatura, nivel, unidadId })
-    setLoading(!!asignatura && !!nivel && !!unidadId)
-    setError(null)
-  }
-
   useEffect(() => {
-    if (!asignatura || !nivel || !unidadId) return
-    let active = true
-    getOADeUnidad(asignatura, nivel, unidadId)
-      .then(res => {
-        if (active) {
-          setOas(res)
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel || !unidadId) {
+        if (!cancelled) {
+          setOas([])
+          setError(null)
           setLoading(false)
         }
-      })
-      .catch(e => {
-        if (active) {
-          setError(e.message)
-          setLoading(false)
-        }
-      })
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getOADeUnidad(asignatura, nivel, unidadId)
+        if (!cancelled) setOas(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando objetivos")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
     return () => {
-      active = false
+      cancelled = true
     }
   }, [asignatura, nivel, unidadId])
 

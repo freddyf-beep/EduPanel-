@@ -139,7 +139,7 @@ export async function resolverMetadatosCurriculares(
   input: ResolverMetadatosInput,
 ): Promise<ResolucionCurricular> {
   const fallback = normalizeMetadatos(input.metadatosCurriculares)
-  const nivel = getCurriculoNivel(input.curso)
+  const nivel = await getCurriculoNivel(input.curso)
   const unidades = await getUnidades(input.asignatura, nivel)
   if (!unidades.length) {
     return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
@@ -217,7 +217,7 @@ export async function cargarOAsParaDocumento(
   unidadId: string,
   oasExistentes?: OAEditado[],
 ): Promise<OAEditado[]> {
-  const nivel = getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 

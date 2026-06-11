@@ -31,6 +31,7 @@ import {
   FileSpreadsheet
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { apiFetch } from "@/lib/api-client"
 
 interface OAProgress {
   codigo: string
@@ -90,11 +91,13 @@ export default function PredictorCoberturaPage() {
     if (!selectedCurso || !featureActive) return
     
     let isCancelled = false
-    setLoadingData(true)
-    setAiReport(null)
-    setAiError(null)
 
     async function calculateCoverage() {
+      if (isCancelled) return
+      setLoadingData(true)
+      setAiReport(null)
+      setAiError(null)
+
       try {
         const mapping = await cargarNivelMapping()
         const resolvedNivel = resolveNivel(selectedCurso, mapping)
@@ -222,7 +225,7 @@ export default function PredictorCoberturaPage() {
       }
     }
 
-    calculateCoverage()
+    void Promise.resolve().then(calculateCoverage)
 
     return () => {
       isCancelled = true
@@ -257,7 +260,7 @@ export default function PredictorCoberturaPage() {
     setAiError(null)
     setAiReport(null)
     try {
-      const res = await fetch("/api/predecir-cobertura", {
+      const res = await apiFetch("/api/predecir-cobertura", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

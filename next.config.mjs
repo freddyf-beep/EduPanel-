@@ -35,6 +35,46 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/actividades-v2",
+        destination: "/actividades",
+        permanent: true,
+      },
+      {
+        source: "/calificaciones-v2",
+        destination: "/calificaciones",
+        permanent: true,
+      },
+      {
+        source: "/cronograma-v2",
+        destination: "/cronograma",
+        permanent: true,
+      },
+      {
+        source: "/libro-clases-v2",
+        destination: "/libro-clases",
+        permanent: true,
+      },
+      {
+        source: "/modulos-v2",
+        destination: "/modulos",
+        permanent: true,
+      },
+      {
+        source: "/perfil-360-v2",
+        destination: "/perfil-360",
+        permanent: true,
+      },
+      {
+        source: "/soporte-v2",
+        destination: "/soporte",
+        permanent: true,
+      },
+      {
+        source: "/ver-unidad-v3",
+        destination: "/ver-unidad",
+        permanent: true,
+      },
+      {
         source: "/evaluaciones-stitch",
         destination: "/evaluaciones?tab=pruebas",
         permanent: true,

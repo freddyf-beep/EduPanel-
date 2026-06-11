@@ -165,7 +165,13 @@ export function SoporteShell() {
   const isOnline = useOnlineStatus()
 
   useEffect(() => {
-    setActiveTab(tabParam ?? "flujo")
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (!cancelled) setActiveTab(tabParam ?? "flujo")
+    })
+    return () => {
+      cancelled = true
+    }
   }, [tabParam])
 
   const goToTab = useCallback((key: TabKey) => {

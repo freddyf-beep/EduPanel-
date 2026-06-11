@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, estimateImageGenerationCost, recordAiUsage } from "@/lib/server/ai-usage"
 
 const RATE_LIMIT_PER_HOUR = 15
 const rateBuckets = new Map<string, { count: number; resetAt: number }>()
@@ -63,6 +64,14 @@ export async function POST(req: Request) {
 
     // Intentar llamar a Imagen 3 en Gemini API
     const model = "imagen-3.0-generate-002"
+    const imagePrompt = `Educational illustration for school test, clear, simplified, vector/line-art style, white background, subject: ${prompt}`
+    const budget = await checkAiBudget(authUser.uid, {
+      feature: "ilustrador-casos",
+      inputText: imagePrompt,
+      estimatedCostUsd: estimateImageGenerationCost(),
+    })
+    if (!budget.ok) return budget.response
+
     let base64Image = ""
     let isFallback = false
     let fallbackUrl = ""
@@ -76,7 +85,7 @@ export async function POST(req: Request) {
           body: JSON.stringify({
             instances: [
               {
-                prompt: `Educational illustration for school test, clear, simplified, vector/line-art style, white background, subject: ${prompt}`
+                prompt: imagePrompt
               }
             ],
             parameters: {
@@ -93,6 +102,16 @@ export async function POST(req: Request) {
         const b64 = data?.predictions?.[0]?.bytesBase64Encoded
         if (b64) {
           base64Image = `data:image/jpeg;base64,${b64}`
+          await recordAiUsage({
+            uid: authUser.uid,
+            feature: "ilustrador-casos",
+            provider: "gemini",
+            model,
+            inputText: imagePrompt,
+            outputText: "[image]",
+            costOverrideUsd: estimateImageGenerationCost(),
+            kind: "image",
+          })
         }
       } else {
         console.warn("[ilustrador-casos] Imagen API returned non-OK status, using Unsplash fallback:", response.status)

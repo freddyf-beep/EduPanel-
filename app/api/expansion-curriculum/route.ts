@@ -3,6 +3,7 @@ import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { db } from "@/lib/firebase"
 import { collection, doc, setDoc, addDoc, getDocs, query, where } from "firebase/firestore"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 const RATE_LIMIT_PER_HOUR = 10
 const rateBuckets = new Map<string, { count: number; resetAt: number }>()
@@ -112,6 +113,8 @@ export async function POST(req: Request) {
 
     const prompt = buildCurriculumPrompt(rawText, asignatura, curso)
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "expansion-curriculum", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -144,6 +147,15 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo texto de la respuesta de Gemini.")
     }
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "expansion-curriculum",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
 
     const resultJson = parseJsonResponse(textOutput)
     const objetivosExtraidos = resultJson.objetivos || []

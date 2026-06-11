@@ -350,6 +350,8 @@ function VerUnidadInner() {
   const [pdfPos, setPdfPos]             = useState({ right: 32, bottom: 32 })
   const [isDraggingPdf, setIsDraggingPdf] = useState(false)
   const pdfDragRef = useRef<{ startX: number, startY: number, startRight: number, startBottom: number } | null>(null)
+  const ignoreNextSaveRef = useRef(true)
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
   const isMobile = useIsMobile()
   
   const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -419,21 +421,20 @@ function VerUnidadInner() {
       }
     }
     cargar()
-  }, [cursoParam, unidadParam, unitIndex, ASIGNATURA])
+  }, [cursoParam, unidadParam, unidadLocalParam, unitIndex, ASIGNATURA])
 
-  const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
     if (loading) return;
     if (ignoreNextSaveRef.current) {
       ignoreNextSaveRef.current = false;
       return;
     }
-    setSaveStatus("saving_silent");
     const timer = setTimeout(() => {
-      handleGuardar(true);
+      setSaveStatus("saving_silent");
+      void handleGuardarRef.current?.(true);
     }, 2500)
     return () => clearTimeout(timer);
-  }, [descripcion, contextoDocente, objetivoDocente, horas, clases, oas, habilidades, conocimientos, actitudes, actividades])
+  }, [descripcion, contextoDocente, objetivoDocente, horas, clases, oas, habilidades, conocimientos, actitudes, actividades, loading])
 
   // ── Warn al salir con cambios sin guardar ──
   useEffect(() => {
@@ -482,6 +483,10 @@ function VerUnidadInner() {
       if (!isAutoSave) setSaving(false)
     }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   const handleDescargarDocx = async () => {
     if (downloadingDocx) return
@@ -988,7 +993,7 @@ function VerUnidadInner() {
   )
 }
 
-export function VerUnidadContent({ initialTab: _initialTab }: { initialTab?: string } = {}) {
+export function VerUnidadContent() {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center h-64 gap-3 text-muted-foreground">

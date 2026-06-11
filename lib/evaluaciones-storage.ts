@@ -9,15 +9,27 @@ import {
   deleteObject, getDownloadURL, ref, uploadBytesResumable,
   type UploadTaskSnapshot,
 } from "firebase/storage"
+import { onAuthStateChanged, type User } from "firebase/auth"
 import { auth, storage } from "@/lib/firebase"
 
 const MAX_IMAGE_SIZE = 8 * 1024 * 1024  // 8 MB
 const ALLOWED_IMAGE = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"])
 
-function getUid(): string {
-  const uid = auth?.currentUser?.uid
-  if (!uid) throw new Error("Usuario no autenticado")
-  return uid
+async function getCurrentUser(): Promise<User> {
+  if (auth.currentUser) return auth.currentUser
+  return new Promise<User>((resolve, reject) => {
+    let unsub: () => void = () => {}
+    const timer = window.setTimeout(() => {
+      unsub()
+      reject(new Error("Usuario no autenticado"))
+    }, 3000)
+    unsub = onAuthStateChanged(auth, user => {
+      window.clearTimeout(timer)
+      unsub()
+      if (user) resolve(user)
+      else reject(new Error("Usuario no autenticado"))
+    })
+  })
 }
 
 function sanitizeFileName(name: string): string {
@@ -44,6 +56,9 @@ export async function subirImagenEvaluacion(
   file: File,
   onProgress?: (pct: number, snap: UploadTaskSnapshot) => void,
 ): Promise<ImagenSubida> {
+  if (!docId?.trim()) {
+    throw new Error("Guarda el documento antes de subir imagenes.")
+  }
   if (!ALLOWED_IMAGE.has(file.type)) {
     throw new Error("Solo se permiten imágenes JPG, PNG, WEBP o GIF.")
   }
@@ -51,7 +66,7 @@ export async function subirImagenEvaluacion(
     throw new Error("La imagen no puede superar los 8 MB.")
   }
 
-  const uid = getUid()
+  const uid = (await getCurrentUser()).uid
   const id = crypto.randomUUID()
   const fname = sanitizeFileName(file.name)
   const path = `users/${uid}/evaluaciones/${tipoDoc}/${docId}/${id}_${fname}`

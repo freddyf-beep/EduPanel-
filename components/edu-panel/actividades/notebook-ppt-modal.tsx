@@ -308,7 +308,7 @@ export function NotebookPptModal(props: NotebookPptModalProps) {
                   <li><b>3.</b> Sube el archivo Markdown como fuente. Espera a que Notebook termine de leerlo.</li>
                   <li><b>4.</b> Copia el prompt de EduPanel y pegalo en el chat del notebook.</li>
                   <li><b>5.</b> Revisa la tabla de diapositivas, ajusta lo que quieras y pasalo a PowerPoint o Google Slides.</li>
-                  <li><b>6.</b> Si necesitas una version mas breve, responde en Notebook: "reduce a 7 diapositivas y conserva solo lo esencial".</li>
+                  <li><b>6.</b> Si necesitas una version mas breve, responde en Notebook: &quot;reduce a 7 diapositivas y conserva solo lo esencial&quot;.</li>
                 </ol>
                 <p className="mt-3">
                   Consejo: si la clase aun esta incompleta, vuelve a EduPanel, completa inicio/desarrollo/cierre y descarga otra fuente antes de generar la presentacion final.

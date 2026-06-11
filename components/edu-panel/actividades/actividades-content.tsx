@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, Suspense, useRef, useMemo } from "react"
+import { useState, useEffect, Suspense, useRef, useMemo, useCallback } from "react"
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -543,15 +543,15 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     setIsListening(true)
   }
 
-  const getIndicadoresSeleccionados = (oa: OAEditado) => {
+  const getIndicadoresSeleccionados = useCallback((oa: OAEditado) => {
     const indicadoresDisponibles = (oa.indicadores || []).filter(i => i.seleccionado)
     const selectedIds = actividad.indicadoresPorOa?.[oa.id]
     return selectedIds
       ? indicadoresDisponibles.filter(i => selectedIds.includes(i.id))
       : indicadoresDisponibles
-  }
+  }, [actividad.indicadoresPorOa])
 
-  const buildLessonPayload = (modo?: CopilotMode, customMessage = "") => {
+  const buildLessonPayload = useCallback((modo?: CopilotMode, customMessage = "") => {
     const oasSeleccionados = oasCurriculo.filter(oa => (actividad.oaIds || []).includes(oa.id))
     return {
       curso: cursoParam,
@@ -603,7 +603,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       customPrompt: aiConfig.promptExtra,
       promptOverride: modo ? aiConfig.promptOverrides?.[modo] : undefined,
     }
-  }
+  }, [actividad, aiConfig, clases.length, cursoParam, getIndicadoresSeleccionados, ideaInicial, nivelCurricular, oasCurriculo, selectedClase, unidadContextoDocente, unidadData, unidadObjetivoDocente])
 
   const applyGeneratedLesson = (data: any, options?: { onlyBloom?: boolean; onlyIndicators?: boolean; detailedOnly?: boolean }) => {
     setActividad(prev => {
@@ -1097,6 +1097,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   // 🚀 AUTOGUARDADO INTELIGENTE (DEBOUNCE)
   // ==========================================
   const ignoreNextSaveRef = useRef(true);
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
   useEffect(() => {
     if (loading) return;
 
@@ -1108,11 +1109,11 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
     setSaveStatus("saving_silent")
     const timer = setTimeout(() => {
-      handleGuardar(true)
+      void handleGuardarRef.current?.(true)
     }, 2500)
 
     return () => clearTimeout(timer)
-  }, [actividad]) // Se dispara cada vez que el usuario teclea o Gemini modifica algo
+  }, [actividad, loading]) // Se dispara cada vez que el usuario teclea o Gemini modifica algo
 
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -1158,6 +1159,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       setTimeout(() => setSaveStatus("idle"), 3000)
     } finally { setSaving(false) }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   const handleExportarClaseDrive = async () => {
     if (exportingDrive) return
@@ -1653,7 +1658,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   }, [actividad.indicadoresEvaluacion])
   const iaModalRequestBody = useMemo(() => {
     return buildLessonPayload(promptMode, chatInput)
-  }, [promptMode, chatInput, actividad, aiConfig, oasCurriculo, unidadData, unidadContextoDocente, unidadObjetivoDocente, clases.length, nivelCurricular])
+  }, [promptMode, chatInput, buildLessonPayload])
   const hasConfiguredProvider = aiConfig.provider === "public" || !!aiConfig.token
   const promptPreview = useMemo(() => {
     try {
@@ -1661,7 +1666,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     } catch {
       return ""
     }
-  }, [promptMode, chatInput, actividad, aiConfig, oasCurriculo, unidadData, unidadContextoDocente, unidadObjetivoDocente, clases.length, nivelCurricular])
+  }, [promptMode, chatInput, buildLessonPayload])
 
   if (loading) return (
     <div className="flex items-center justify-center h-64 gap-3 text-muted-foreground">
@@ -2874,6 +2879,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                     />
                   ) : isImage ? (
                     <div className="flex h-full items-center justify-center p-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- Preview uses arbitrary local, Drive, and blob URLs. */}
                       <img
                         src={previewArchivo.url}
                         alt={previewArchivo.nombre}

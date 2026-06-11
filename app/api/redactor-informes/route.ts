@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 const RATE_LIMIT_PER_HOUR = 30
 const rateBuckets = new Map<string, { count: number; resetAt: number }>()
@@ -139,6 +140,8 @@ export async function POST(req: Request) {
     )
 
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "redactor-informes", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -179,6 +182,16 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo texto de la respuesta de Gemini.")
     }
+
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "redactor-informes",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
 
     let resultJson
     try {

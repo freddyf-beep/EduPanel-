@@ -54,10 +54,12 @@ export function EvalCopilotPanel({
 
   // Reset al cambiar tipo
   useEffect(() => {
-    setModo(tipoDoc === "prueba" ? "prueba_generar" : "guia_generar")
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) setModo(tipoDoc === "prueba" ? "prueba_generar" : "guia_generar")
+    })
+    return () => { cancelled = true }
   }, [tipoDoc])
-
-  if (!visible) return null
 
   // ─── Generar prompt para mostrar/copiar ────────────────────────────
 
@@ -254,8 +256,6 @@ ${tipoDoc === "prueba" ? `{
     }
   }
 
-  // ─── Render ────────────────────────────────────────────────────────
-
   const modoOpciones = tipoDoc === "prueba"
     ? [
         { value: "prueba_generar", label: "Generar prueba completa", icon: Wand2 },
@@ -267,6 +267,10 @@ ${tipoDoc === "prueba" ? `{
         { value: "guia_seccion", label: "Generar una sección", icon: ClipboardList },
         { value: "chat", label: "Preguntar / conversar", icon: MessageSquare },
       ]
+
+  if (!visible) return null
+
+  // ─── Render ────────────────────────────────────────────────────────
 
   return (
     <div className="rounded-[14px] border border-border bg-card p-4 shadow-sm">
@@ -560,7 +564,7 @@ ${tipoDoc === "prueba" ? `{
             <>
               <b>Cómo usar con ChatGPT:</b>
               <ol className="mt-1 ml-3 space-y-0.5 list-decimal">
-                <li>Haz click en "Generar prompt para ChatGPT"</li>
+                <li>Haz click en &quot;Generar prompt para ChatGPT&quot;</li>
                 <li>Copia el prompt completo (contexto + tarea)</li>
                 <li>Pégalo en un chat nuevo de ChatGPT</li>
                 <li>ChatGPT te devolverá el JSON con la {tipoDoc}</li>
@@ -571,7 +575,7 @@ ${tipoDoc === "prueba" ? `{
             <>
               <b>Cómo usar con NotebookLM:</b>
               <ol className="mt-1 ml-3 space-y-0.5 list-decimal">
-                <li>Haz click en "Generar prompts para NotebookLM"</li>
+                <li>Haz click en &quot;Generar prompts para NotebookLM&quot;</li>
                 <li>Copia el <b>Prompt 1</b> (contexto) y súbelo como fuente .md</li>
                 <li>Copia el <b>Prompt 2</b> (tarea) y pégalo en el chat</li>
                 <li>NotebookLM generará el contenido basado en tu contexto</li>

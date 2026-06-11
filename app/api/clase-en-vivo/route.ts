@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
 const RATE_LIMIT_PER_HOUR = 30
 const rateBuckets = new Map<string, { count: number; resetAt: number }>()
@@ -113,8 +115,12 @@ Responde con un JSON:
         return NextResponse.json({ error: "Tipo de sugerencia no reconocido." }, { status: 400 })
     }
 
+    const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authCheck.auth.uid, { feature: "clase-en-vivo", inputText: prompt })
+    if (!budget.ok) return budget.response
+
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(token)}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(token)}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -128,17 +134,26 @@ Responde con un JSON:
     if (!response.ok) {
       const errText = await response.text()
       console.error("[clase-en-vivo] API error:", errText)
-      throw new Error("Error de la API de Gemini")
+      throw parseGeminiApiError(errText, response.status, "Gemini no pudo generar la sugerencia de clase en vivo.")
     }
 
     const data = await response.json()
     const text = extractGeminiText(data)
     if (!text) throw new Error("Respuesta vacía de Gemini")
+    await recordAiUsage({
+      uid: authCheck.auth.uid,
+      feature: "clase-en-vivo",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: text,
+      usageMetadata: data?.usageMetadata,
+    })
 
     const parsed = JSON.parse(text.replace(/^```json\s*/i, "").replace(/```$/, "").trim())
     return NextResponse.json(parsed)
   } catch (error: any) {
     console.error("[clase-en-vivo] Error:", error)
-    return NextResponse.json({ error: error.message || "Error interno" }, { status: 500 })
+    return aiErrorResponse(error, "Error interno")
   }
 }

@@ -16,15 +16,21 @@ function readStoredSubject(): string | null {
 export function useActiveSubject(explicitSubject?: string | null) {
   const searchParams = useSearchParams()
   const urlSubject = explicitSubject ?? searchParams.get("asignatura")
-  const [prevUrlSubject, setPrevUrlSubject] = useState(urlSubject)
   const [asignatura, setAsignaturaState] = useState(() =>
     sanitizeAsignatura(urlSubject ?? readStoredSubject() ?? DEFAULT_ASIGNATURA)
   )
 
-  if (urlSubject !== prevUrlSubject) {
-    setPrevUrlSubject(urlSubject)
-    setAsignaturaState(sanitizeAsignatura(urlSubject ?? readStoredSubject() ?? DEFAULT_ASIGNATURA))
-  }
+  useEffect(() => {
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      const next = sanitizeAsignatura(urlSubject ?? readStoredSubject() ?? DEFAULT_ASIGNATURA)
+      setAsignaturaState((prev) => (prev === next ? prev : next))
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [urlSubject])
 
   useEffect(() => {
     if (typeof window === "undefined") return

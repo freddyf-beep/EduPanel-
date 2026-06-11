@@ -1,3 +1,5 @@
+import { cargarNivelMapping, resolveNivel } from "./nivel-mapping"
+
 export const DEFAULT_ASIGNATURA = "Música"
 export const ASIGNATURA = DEFAULT_ASIGNATURA
 export const SUBJECT_STORAGE_KEY = "edupanel.asignatura"
@@ -49,19 +51,9 @@ export function withAsignatura<T extends Record<string, string | null | undefine
   return merged
 }
 
-// Mapping curso -> nivel curricular en Firestore
-// Cuando tengamos más datos curriculares se puede expandir
-export function getCurriculoNivel(curso: string): string {
-  const map: Record<string, string> = {
-    "1° A": "1ro Básico",
-    "2° A": "1ro Básico",
-    "2° B": "1ro Básico",
-    "3°": "1ro Básico",
-    "4°": "1ro Básico",
-    "Taller 1er Ciclo": "1ro Básico",
-    "Taller 2do Ciclo": "1ro Básico",
-  }
-  return map[curso] ?? "1ro Básico"
+export async function getCurriculoNivel(curso: string): Promise<string> {
+  const mapping = await cargarNivelMapping()
+  return resolveNivel(curso, mapping) ?? "1ro Básico"
 }
 
 export function buildUrl(base: string, params: Record<string, string | null | undefined>): string {

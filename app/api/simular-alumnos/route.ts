@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 const RATE_LIMIT_PER_HOUR = 20
 const rateBuckets = new Map<string, { count: number; resetAt: number }>()
@@ -112,6 +113,45 @@ Responde ESTRICTAMENTE con un JSON puro (sin bloques de código markdown) con la
 }`
 }
 
+function resumirItem(item: any): Record<string, unknown> {
+  return {
+    id: item.id,
+    tipo: item.tipo,
+    enunciado: item.enunciado,
+    puntaje: item.puntaje ?? item.puntos,
+    oaVinculado: item.oaVinculado,
+    alternativas: item.alternativas,
+    respuestaCorrecta: item.respuestaCorrecta,
+    pideJustificacion: item.pideJustificacion,
+    columnaA: item.columnaA,
+    columnaB: item.columnaB,
+    pasos: item.pasos,
+    textoConBlancos: item.textoConBlancos,
+    respuestas: item.respuestas,
+    bancoPalabras: item.bancoPalabras,
+    lineasRespuesta: item.lineasRespuesta,
+    datos: item.datos,
+  }
+}
+
+function resumirDocumento(documento: any, tipo: "prueba" | "guia"): Record<string, unknown> {
+  return {
+    nombre: documento.nombre,
+    objetivo: documento.objetivo,
+    instruccionesGenerales: documento.instruccionesGenerales ?? documento.instrucciones,
+    secciones: (documento.secciones || []).map((sec: any) => {
+      const rawItems = tipo === "guia"
+        ? (sec.actividades || [])
+        : (sec.items || sec.actividades || [])
+      return {
+        titulo: sec.titulo,
+        instrucciones: sec.instrucciones ?? sec.descripcion,
+        items: rawItems.map(resumirItem),
+      }
+    }),
+  }
+}
+
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
@@ -149,23 +189,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Falta la clave de API de Gemini en el servidor." }, { status: 500 })
     }
 
-    // Serializar solo campos relevantes para reducir tokens
-    const docJson = JSON.stringify({
-      nombre: documento.nombre,
-      instruccionesGenerales: documento.instruccionesGenerales,
-      secciones: (documento.secciones || []).map((sec: any) => ({
-        titulo: sec.titulo,
-        instrucciones: sec.instrucciones,
-        items: (sec.items || []).map((it: any) => ({
-          enunciado: it.enunciado,
-          opciones: it.opciones,
-          puntos: it.puntos
-        }))
-      }))
-    }, null, 2)
+    const tipoDoc: "prueba" | "guia" = tipo === "guia" ? "guia" : "prueba"
+    const docJson = JSON.stringify(resumirDocumento(documento, tipoDoc), null, 2)
 
-    const prompt = buildSimulacionPrompt(docJson, tipo || "prueba")
+    const prompt = buildSimulacionPrompt(docJson, tipoDoc)
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "testeador-alumnos", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -198,6 +228,16 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo texto de la respuesta de Gemini.")
     }
+
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "testeador-alumnos",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
 
     const resultJson = parseJsonResponse(textOutput)
     return NextResponse.json(resultJson)

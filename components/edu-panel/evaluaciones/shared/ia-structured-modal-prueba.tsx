@@ -34,18 +34,14 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Bot, Check, ClipboardCopy, Loader2, Sparkles, Wand2, X } from "lucide-react"
+import { Loader2, Sparkles, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
 import { CardSkeleton } from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
+import { apiFetch } from "@/lib/api-client"
 import { guardarPrueba, nuevaPrueba, nuevaSeccion, nuevoItem } from "@/lib/pruebas"
 import type { PruebaTemplate, SeccionPrueba, ItemPrueba, TipoItem } from "@/lib/pruebas"
-import { parseJsonResponse } from "@/lib/ai/copilot"
-import type { OAEditado } from "@/lib/curriculo"
-import { cargarOAsParaPrueba } from "@/lib/pruebas"
-import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
-import { convertirItemIA } from "@/lib/ia-item-converter"
 
 // ─── Tipos exportados ───────────────────────────────────────────────────────
 
@@ -80,8 +76,6 @@ export interface IAStructuredModalPruebaProps {
   curso?: string
   /** Si está procesando IA externamente, deshabilita el formulario. */
   submitting?: boolean
-  /** Unidad activa: el modal la usa para cargar los OAs correctos. */
-  unidadId?: string
 }
 
 // ─── Constantes del formulario ──────────────────────────────────────────────
@@ -134,7 +128,6 @@ export function IAStructuredModalPrueba({
   asignatura = "",
   curso = "",
   submitting = false,
-  unidadId,
 }: IAStructuredModalPruebaProps) {
   const titleId = useId()
   const numeroErrorId = useId()
@@ -148,23 +141,13 @@ export function IAStructuredModalPrueba({
     String(DEFAULT_PREGUNTAS),
   )
   const [tiposIncluir, setTiposIncluir] = useState<string[]>(DEFAULT_TIPOS)
+  const [oasSeleccionados, setOasSeleccionados] = useState<string[]>([])
   const [dificultad, setDificultad] = useState<Dificultad>(DEFAULT_DIFICULTAD)
   const [nivel, setNivel] = useState<string>("")
   const [errores, setErrores] = useState<{
     numero?: string
     tipos?: string
   }>({})
-
-  // ── OAs (estado rico, editable como en Rúbricas) ───────────────────────
-  const [oas, setOas] = useState<OAEditado[]>([])
-  const [oasCargando, setOasCargando] = useState(false)
-
-  // ── Vista: form (rellenar) → choose (elegir modo) → agent (pegar) ──
-  const [view, setView] = useState<"form" | "choose" | "agent">("form")
-  const [pastedJson, setPastedJson] = useState("")
-  const [applying, setApplying] = useState(false)
-  const [pasteError, setPasteError] = useState<string | null>(null)
-  const [copied, setCopied] = useState(false)
 
   // ── Estado de generación IA (Tarea 5.3 + 5.4) ───────────────────────────
   const [generando, setGenerando] = useState(false)
@@ -180,155 +163,14 @@ export function IAStructuredModalPrueba({
     setTipoEvaluacion(DEFAULT_TIPO_EVAL)
     setNumeroInput(String(DEFAULT_PREGUNTAS))
     setTiposIncluir(DEFAULT_TIPOS)
+    setOasSeleccionados([])
     setDificultad(DEFAULT_DIFICULTAD)
     setNivel("")
     setErrores({})
     setErrorMsg(null)
     setGenerando(false)
     lastParamsRef.current = null
-    setView("form")
-    setPastedJson("")
-    setPasteError(null)
-    setApplying(false)
-    setCopied(false)
   }, [open])
-
-  // ── Cargar OAs sugeridos de la unidad cuando se abre el modal ─────────
-  useEffect(() => {
-    if (!open) return
-    if (!asignatura || !curso) {
-      setOas([])
-      return
-    }
-    let cancelled = false
-    setOasCargando(true)
-    cargarOAsParaPrueba(asignatura, curso, unidadId || "")
-      .then(list => {
-        if (cancelled) return
-        // Pre-selecciona los OAs del tipo "oa" (no OAT transversales)
-        setOas(list.map(o => ({ ...o, seleccionado: o.tipo !== "oat" })))
-      })
-      .catch(() => {
-        if (!cancelled) setOas([])
-      })
-      .finally(() => {
-        if (!cancelled) setOasCargando(false)
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [open, asignatura, curso, unidadId])
-
-  // ── OAs seleccionados (los marcados en el OaEditor) ───────────────
-  const oasSeleccionados = useMemo(
-    () => oas.filter(o => o.seleccionado),
-    [oas],
-  )
-
-  // ── Prompt generado para modo Agente ────────────────────────────────
-  const agentPrompt = useMemo(
-    () =>
-      buildPruebaPrompt({
-        tipoEvaluacion,
-        numeroPreguntas: Number(numeroInput) || DEFAULT_PREGUNTAS,
-        tiposIncluir,
-        dificultad,
-        nivel: nivel.trim(),
-        oas: oasSeleccionados.map(o => ({
-          code: o.id,
-          numero: o.numero,
-          descripcion: o.descripcion,
-          indicadores: (o.indicadores || [])
-            .filter(i => i.seleccionado)
-            .map(i => i.texto),
-        })),
-        asignatura: asignatura || "Sin asignatura",
-        curso: curso || "Sin curso",
-      }),
-    [
-      tipoEvaluacion,
-      numeroInput,
-      tiposIncluir,
-      dificultad,
-      nivel,
-      oasSeleccionados,
-      asignatura,
-      curso,
-    ],
-  )
-
-  const handleCopyPrompt = async () => {
-    try {
-      await navigator.clipboard.writeText(agentPrompt)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
-    } catch {
-      // Fallback silencioso.
-    }
-  }
-
-  const handleApplyPasted = async () => {
-    setPasteError(null)
-    setApplying(true)
-    try {
-      const parsed = parseJsonResponse(pastedJson) as Record<string, unknown>
-      console.log("[IAStructuredModalPrueba] JSON parseado:", parsed)
-      if (!parsed.secciones) {
-        throw new Error(
-          "El JSON no tiene la clave 'secciones' (raíz esperada: { secciones: [...] }). " +
-          "Asegúrate de pegar la respuesta completa del modelo, sin texto adicional.",
-        )
-      }
-      const base = nuevaPrueba(asignatura || "Sin asignatura", curso || "Sin curso")
-      const oasFinales = oas.length > 0 ? oas : undefined
-      const prueba: PruebaTemplate = {
-        ...base,
-        nombre: `Prueba ${tipoEvaluacion} — ${nivel.trim() || curso || ""}`.trim(),
-        tipoEvaluacion,
-        estado: "borrador",
-        unidadNombre: unidadLabel,
-        oas: oasFinales,
-        metadatosCurriculares: {
-          objetivos: oas.filter(o => o.seleccionado).map(o =>
-            o.numero ? `OA ${o.numero}: ${o.descripcion}` : o.descripcion,
-          ),
-          indicadores: oas
-            .flatMap(o => o.indicadores || [])
-            .filter(i => i.seleccionado)
-            .map(i => i.texto),
-          objetivosTransversales: oas
-            .filter(o => o.seleccionado && o.tipo === "oat")
-            .map(o =>
-              o.numero ? `OAA ${o.numero}: ${o.descripcion}` : o.descripcion,
-            ),
-        },
-        secciones: buildSecciones(parsed),
-        puntajeMaximo: 0,
-      }
-      console.log("[IAStructuredModalPrueba] Prueba a guardar:", {
-        id: prueba.id,
-        secciones: prueba.secciones.length,
-        items: prueba.secciones.reduce((a, s) => a + s.items.length, 0),
-        primerItem: prueba.secciones[0]?.items[0],
-      })
-      await guardarPrueba(prueba)
-      console.log("[IAStructuredModalPrueba] Guardado OK, navegando a:", prueba.id)
-      onClose()
-      const targetUrl = `/evaluaciones?tab=pruebas&view=editor&pruebaId=${prueba.id}`
-      // Forzamos navegación real: router.push a veces no re-renderiza la
-      // misma ruta cuando solo cambian los query params. window.location.href
-      // siempre navega.
-      window.location.href = targetUrl
-    } catch (err: any) {
-      console.error("[IAStructuredModalPrueba] Error:", err)
-      setPasteError(err?.message || "No pude aplicar ese JSON.")
-    } finally {
-      setApplying(false)
-    }
-  }
-
-  const isAgent = view === "agent"
-  const canApplyPasted = isAgent && pastedJson.trim().length > 0 && !applying
 
   // Esc cierra el modal (mientras no esté generando).
   useEffect(() => {
@@ -356,6 +198,12 @@ export function IAStructuredModalPrueba({
     if (errores.tipos) {
       setErrores((prev) => ({ ...prev, tipos: undefined }))
     }
+  }
+
+  function toggleOA(code: string) {
+    setOasSeleccionados((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code],
+    )
   }
 
   function handleNumeroChange(raw: string) {
@@ -394,7 +242,7 @@ export function IAStructuredModalPrueba({
       tipoEvaluacion,
       numeroPreguntas: parsed,
       tiposIncluir: [...tiposIncluir],
-      oasSeleccionados: oasSeleccionados.map(o => o.id),
+      oasSeleccionados: [...oasSeleccionados],
       dificultad,
       nivel: nivel.trim(),
     }
@@ -405,44 +253,29 @@ export function IAStructuredModalPrueba({
     if (isDisabled) return
     const params = validar()
     if (!params) return
-    // Modo legacy: si el caller provee onSubmit, lo invocamos directamente.
+    await ejecutarGeneracion(params)
+  }
+
+  async function ejecutarGeneracion(params: IAStructuredModalPruebaParams) {
+    // Si el caller provee onSubmit externo, delegamos (modo legacy).
     if (onSubmit) {
       await onSubmit(params)
       return
     }
-    // Flujo nuevo: tras validar, avanzamos al paso de elegir modo.
-    setView("choose")
-  }
 
-  function handleChooseMode(mode: "integrated" | "agent") {
-    if (mode === "integrated") {
-      const params = validar()
-      if (!params) {
-        setView("form")
-        return
-      }
-      void ejecutarGeneracion(params)
-    } else {
-      setView("agent")
-    }
-  }
-
-  async function ejecutarGeneracion(params: IAStructuredModalPruebaParams) {
     lastParamsRef.current = params
     setGenerando(true)
     setErrorMsg(null)
 
     try {
-      // Construir contexto con OAs enriquecidos (descripción + indicadores)
-      const oasCtx = oasSeleccionados.map(o => ({
-        id: o.id,
-        numero: o.numero,
-        descripcion: o.descripcion,
+      // Construir contexto mínimo para el endpoint
+      const oasCtx = params.oasSeleccionados.map(code => ({
+        id: code,
+        numero: code.replace(/\D/g, ""),
+        descripcion: oasDisponibles.find(o => o.code === code)?.descripcion ?? code,
         seleccionado: true,
-        esPropio: o.esPropio,
-        indicadores: (o.indicadores || [])
-          .filter(i => i.seleccionado)
-          .map(i => ({ id: i.id, texto: i.texto, seleccionado: true })),
+        esPropio: false,
+        indicadores: [],
         habilidades: [],
       }))
 
@@ -471,16 +304,10 @@ export function IAStructuredModalPrueba({
         ].filter(Boolean).join(". "),
       }
 
-      const res = await fetch("/api/generar-evaluacion", {
+      const res = await apiFetch("/api/generar-evaluacion", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data.error || `Error ${res.status}`)
-      }
 
       const data = await res.json()
 
@@ -496,21 +323,6 @@ export function IAStructuredModalPrueba({
         tipoEvaluacion: params.tipoEvaluacion,
         estado: "borrador",
         unidadNombre: unidadLabel,
-        oas: oas.length > 0 ? oas : undefined,
-        metadatosCurriculares: {
-          objetivos: oasSeleccionados.map(o =>
-            o.numero ? `OA ${o.numero}: ${o.descripcion}` : o.descripcion,
-          ),
-          indicadores: oasSeleccionados
-            .flatMap(o => o.indicadores || [])
-            .filter(i => i.seleccionado)
-            .map(i => i.texto),
-          objetivosTransversales: oasSeleccionados
-            .filter(o => o.tipo === "oat")
-            .map(o =>
-              o.numero ? `OAA ${o.numero}: ${o.descripcion}` : o.descripcion,
-            ),
-        },
         secciones: buildSecciones(data),
         puntajeMaximo: 0,
       }
@@ -526,13 +338,15 @@ export function IAStructuredModalPrueba({
     }
   }
 
-  /** Construye secciones desde la respuesta del endpoint o JSON pegado. */
+  /** Construye secciones desde la respuesta del endpoint */
   function buildSecciones(data: Record<string, unknown>): SeccionPrueba[] {
     const rawSecciones = Array.isArray(data.secciones) ? data.secciones : []
     return rawSecciones.map((sec: any, idx: number) => {
-      const items: ItemPrueba[] = (Array.isArray(sec.items) ? sec.items : []).map(
-        (it: any) => convertirItemIA(it),
-      )
+      const items: ItemPrueba[] = (Array.isArray(sec.items) ? sec.items : []).map((it: any) => {
+        const tipo = (it.tipo || "seleccion_multiple") as TipoItem
+        const base = nuevoItem(tipo, it.puntaje ?? 1)
+        return { ...base, ...it, tipo } as ItemPrueba
+      })
       const seccion = nuevaSeccion(idx + 1, sec.tipoPredominante || "mixto")
       return {
         ...seccion,
@@ -614,13 +428,12 @@ export function IAStructuredModalPrueba({
           </div>
         )}
 
-        {/* ── Vista: FORM (rellenar parámetros) ─────────────────────── */}
-        {view === "form" && (
-          <form
-            onSubmit={handleSubmit}
-            className="mt-5 flex flex-col gap-4"
-            noValidate
-          >
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="mt-5 flex flex-col gap-4"
+          noValidate
+        >
           {/* Tipo de evaluación */}
           <Field label="Tipo de evaluación">
             <SegmentedGroup
@@ -690,28 +503,46 @@ export function IAStructuredModalPrueba({
             </div>
           </Field>
 
-          {/* OAs sugeridos (editor rico estilo Rúbricas) */}
+          {/* OAs sugeridos */}
           <Field
-            label="OAs y objetivos de la unidad"
+            label="OAs sugeridos de la unidad"
             hint={
-              oas.length > 0
-                ? "Marca los OAs (y sus indicadores) que quieres priorizar. Se usarán para generar la prueba y para alimentar el prompt del agente."
-                : "Estos OAs también se incluirán en el prompt cuando uses tu agente externo."
+              oasDisponibles.length > 0
+                ? "Marca los OAs que quieras priorizar (opcional)."
+                : undefined
             }
           >
-            {oas.length === 0 ? (
+            {oasDisponibles.length === 0 ? (
               <p className="rounded-[10px] border border-dashed border-border bg-background px-3 py-2.5 text-[12.5px] italic text-muted-foreground">
-                {oasCargando
-                  ? "Cargando OAs de la unidad…"
-                  : "No hay OAs definidos en esta unidad."}
+                No hay OAs definidos en esta unidad.
               </p>
             ) : (
-              <RubricaOAEditor
-                oas={oas}
-                onChange={setOas}
-                asignatura={asignatura || "Música"}
-                cargando={oasCargando}
-              />
+              <div className="max-h-40 overflow-y-auto rounded-[10px] border border-border bg-background p-2">
+                <ul className="flex flex-col gap-1">
+                  {oasDisponibles.map((oa) => {
+                    const checked = oasSeleccionados.includes(oa.code)
+                    return (
+                      <li key={oa.code}>
+                        <CheckboxRow
+                          label={
+                            <span className="flex min-w-0 flex-1 items-baseline gap-2">
+                              <span className="rounded-md border border-border bg-card px-1.5 py-0.5 text-[10.5px] font-black text-foreground">
+                                {oa.code}
+                              </span>
+                              <span className="truncate text-[12.5px] text-foreground">
+                                {oa.descripcion}
+                              </span>
+                            </span>
+                          }
+                          checked={checked}
+                          onChange={() => toggleOA(oa.code)}
+                          disabled={isDisabled}
+                        />
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
             )}
           </Field>
 
@@ -786,148 +617,7 @@ export function IAStructuredModalPrueba({
               )}
             </button>
           </div>
-          </form>
-        )}
-
-        {/* ── Vista: CHOOSE MODE (elegir cómo generar) ────────────── */}
-        {view === "choose" && (
-          <div className="mt-5 flex flex-col gap-3">
-            <p className="text-[12px] font-bold text-foreground">
-              ¿Cómo quieres generar la prueba?
-            </p>
-            <p className="text-[11.5px] text-muted-foreground">
-              Usaremos los parámetros que completaste (incluidos los OAs
-              seleccionados arriba) para construir el contenido.
-            </p>
-            <button
-              type="button"
-              onClick={() => handleChooseMode("integrated")}
-              className={cn(
-                "flex items-start gap-3 rounded-[12px] border border-border bg-card p-4 text-left transition-colors",
-                "hover:border-[var(--accent-pruebas)] hover:bg-[var(--accent-pruebas-soft)]/30",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-pruebas)]",
-              )}
-            >
-              <Sparkles className="mt-0.5 h-5 w-5 text-[var(--accent-pruebas)]" />
-              <div>
-                <div className="text-[13px] font-extrabold text-foreground">
-                  IA Integrada (Gemini 1-click)
-                </div>
-                <div className="text-[11.5px] text-muted-foreground">
-                  Más económico. Generamos la prueba con la API key de la
-                  página en 1-click.
-                </div>
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleChooseMode("agent")}
-              className={cn(
-                "flex items-start gap-3 rounded-[12px] border border-border bg-card p-4 text-left transition-colors",
-                "hover:border-[var(--accent-pruebas)] hover:bg-[var(--accent-pruebas-soft)]/30",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-pruebas)]",
-              )}
-            >
-              <Bot className="mt-0.5 h-5 w-5 text-[var(--accent-pruebas)]" />
-              <div>
-                <div className="text-[13px] font-extrabold text-foreground">
-                  Mi Agente Externo (ChatGPT / Claude)
-                </div>
-                <div className="text-[11.5px] text-muted-foreground">
-                  Te damos un prompt listo para copiar. Tú lo pegas en tu
-                  modelo premium y traes la respuesta. Costo en tu cuenta.
-                </div>
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setView("form")}
-              className="text-[11.5px] text-muted-foreground hover:text-foreground self-center"
-            >
-              ← Volver a editar parámetros
-            </button>
-          </div>
-        )}
-
-        {/* ── Vista: AGENT (prompt copiable + paste) ──────────────── */}
-        {view === "agent" && (
-          <div className="mt-5 flex flex-col gap-3">
-            <div className="rounded-[10px] border border-border bg-background/60 p-3">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <p className="text-[12px] font-bold text-foreground">
-                  1. Copia este prompt y pégalo en tu modelo preferido
-                </p>
-                <button
-                  type="button"
-                  onClick={handleCopyPrompt}
-                  className="inline-flex items-center gap-1.5 rounded-[8px] border border-[var(--accent-pruebas)]/30 bg-[var(--accent-pruebas-soft)] px-2.5 py-1.5 text-[11.5px] font-bold text-[var(--accent-pruebas)] hover:opacity-90 transition-opacity"
-                >
-                  {copied ? (
-                    <Check className="h-3.5 w-3.5" />
-                  ) : (
-                    <ClipboardCopy className="h-3.5 w-3.5" />
-                  )}
-                  {copied ? "¡Copiado!" : "Copiar prompt"}
-                </button>
-              </div>
-              <textarea
-                readOnly
-                value={agentPrompt}
-                className="h-[200px] w-full resize-none rounded-[8px] border border-border bg-muted/30 p-2.5 font-mono text-[11px] leading-relaxed outline-none"
-              />
-            </div>
-
-            <div className="rounded-[10px] border border-border bg-background/60 p-3">
-              <p className="text-[12px] font-bold text-foreground">
-                2. Pega la respuesta del modelo (JSON)
-              </p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
-                Acepta JSON puro o con fences. Detectamos la estructura
-                automáticamente.
-              </p>
-              <textarea
-                value={pastedJson}
-                onChange={e => {
-                  setPastedJson(e.target.value)
-                  setPasteError(null)
-                }}
-                placeholder='{"secciones": [...]}'
-                className="mt-2 h-[150px] w-full resize-y rounded-[8px] border border-border bg-background p-2.5 font-mono text-[11px] leading-relaxed outline-none focus:border-[var(--accent-pruebas)]"
-              />
-              {pasteError && (
-                <p className="mt-2 text-[11.5px] font-semibold text-red-600 dark:text-red-300">
-                  {pasteError}
-                </p>
-              )}
-              <button
-                type="button"
-                onClick={handleApplyPasted}
-                disabled={!canApplyPasted}
-                className={cn(
-                  "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[10px] px-4 py-2 text-[12px] font-bold text-white transition-opacity",
-                  "bg-[var(--accent-pruebas)] hover:opacity-90",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-[var(--accent-pruebas)]",
-                  "disabled:cursor-not-allowed disabled:opacity-60",
-                )}
-              >
-                {applying ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <Wand2 className="h-3.5 w-3.5" />
-                )}
-                {applying ? "Aplicando…" : "Aplicar JSON a la prueba"}
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setView("choose")}
-              className="text-[11.5px] text-muted-foreground hover:text-foreground self-center"
-            >
-              ← Volver a elegir modo
-            </button>
-          </div>
-        )}
+        </form>
       </div>
     </div>
   )
@@ -1045,78 +735,4 @@ function CheckboxRow({ label, checked, onChange, disabled }: CheckboxRowProps) {
       </span>
     </label>
   )
-}
-
-// ─── Constructor del prompt para modo Agente ────────────────────────────────
-
-interface BuildPruebaPromptInput {
-  tipoEvaluacion: TipoEvaluacion
-  numeroPreguntas: number
-  tiposIncluir: string[]
-  dificultad: Dificultad
-  nivel: string
-  oas: Array<{ code: string; descripcion: string }>
-  asignatura: string
-  curso: string
-}
-
-function buildPruebaPrompt(input: BuildPruebaPromptInput): string {
-  const oasTexto =
-    input.oas.length > 0
-      ? input.oas.map(o => `- ${o.code}: ${o.descripcion}`).join("\n")
-      : "(sin OAs seleccionados)"
-
-  return `Eres un asistente que diseña pruebas para profesores chilenos.
-Devuelve EXCLUSIVAMENTE un objeto JSON válido con la siguiente estructura, sin markdown ni explicaciones previas o posteriores:
-
-{
-  "secciones": [
-    {
-      "titulo": "string",
-      "instrucciones": "string",
-      "tipoPredominante": "seleccion_multiple" | "verdadero_falso" | "pareados" | "ordenar" | "completar" | "respuesta_corta" | "desarrollo" | "mixto",
-      "items": [
-        {
-          "tipo": "seleccion_multiple" | "verdadero_falso" | "pareados" | "ordenar" | "completar" | "respuesta_corta" | "desarrollo",
-          "enunciado": "string",
-          "puntaje": number,
-          "oaVinculado": "OA1" | "OA2" | ...,
-          "alternativas?": [{ "id": "a1", "texto": "...", "esCorrecta": boolean }],
-          "respuestaCorrecta?": boolean,
-          "pideJustificacion?": boolean,
-          "afirmaciones?": [{ "id": "af1", "texto": "...", "correcta": boolean }],
-          "columnaA?": [{ "id": "c1a", "texto": "..." }],
-          "columnaB?": [{ "id": "c1b", "texto": "...", "correctaParaAId": "c1a" }],
-          "pasos?": [{ "id": "p1", "texto": "..." }],
-          "textoConBlancos?": "string con __ para los espacios en blanco",
-          "respuestas?": ["palabra1", "palabra2"],
-          "bancoPalabras?": ["op1", "op2"],
-          "respuestaEsperada?": "string",
-          "lineasRespuesta?": number,
-          "pautaCorreccion?": "string",
-          "criterios?": [{ "id": "crit1", "texto": "...", "puntaje": number }]
-        }
-      ]
-    }
-  ]
-}
-
-Parámetros del docente:
-- Asignatura: ${input.asignatura}
-- Curso: ${input.curso}
-- Tipo de evaluación: ${input.tipoEvaluacion}
-- Número total de preguntas: ${input.numeroPreguntas}
-- Tipos de ítem a incluir: ${input.tiposIncluir.join(", ")}
-- Dificultad: ${input.dificultad}
-- Nivel: ${input.nivel || "no especificado"}
-
-OAs sugeridos (priorízalos si son relevantes):
-${oasTexto}
-
-Instrucciones:
-- Distribuye el número de preguntas entre los tipos seleccionados.
-- Cada ítem debe ser claro, sin ambigüedad, y adecuado al nivel escolar chileno.
-- Vincula cada ítem a un OA cuando sea posible.
-- Asigna puntajes coherentes (sugerido 1-3 pts por ítem).
-- IMPORTANTE: responde SOLO con el JSON, sin \`\`\`json ni texto adicional.`
 }

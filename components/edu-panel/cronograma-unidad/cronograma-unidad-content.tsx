@@ -122,14 +122,21 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   const [autoFechaMensaje, setAutoFechaMensaje] = useState("")
 
   const COLS_VISIBLE = 7  // columnas visibles a la vez
+  const ignoreNextSaveRef = useRef(true)
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
 
   // Inicializar clases
   useEffect(() => {
-    setLoading(true)
-    Promise.all([
-      cargarCronogramaUnidad(ASIGNATURA, curso, unidadId),
-      cargarHorarioSemanal()
-    ]).then(([data, hData]) => {
+    let cancelled = false
+
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const [data, hData] = await Promise.all([
+        cargarCronogramaUnidad(ASIGNATURA, curso, unidadId),
+        cargarHorarioSemanal(),
+      ])
+      if (cancelled) return
+
       setHorarioBase(hData || [])
       
       if (data && data.clases.length > 0) {
@@ -152,23 +159,28 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           oaIds: [],
         })))
       }
-      ignoreNextSaveRef.current = true;
-    }).finally(() => setLoading(false))
+      ignoreNextSaveRef.current = true
+    }).finally(() => {
+      if (!cancelled) setLoading(false)
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, unidadId, totalClases, ASIGNATURA])
 
-  const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
-    if (loading) return;
+    if (loading) return
     if (ignoreNextSaveRef.current) {
-      ignoreNextSaveRef.current = false;
-      return;
+      ignoreNextSaveRef.current = false
+      return
     }
     setSaveStatus("saving_silent")
     const timer = setTimeout(() => {
-      handleGuardar(true)
+      void handleGuardarRef.current?.(true)
     }, 2500)
     return () => clearTimeout(timer)
-  }, [clases])
+  }, [clases, loading])
 
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -181,6 +193,10 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       setTimeout(() => setSaveStatus("idle"), 3000)
     } finally { setSaving(false) }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   // Toggle OA en una clase
   const toggleOA = (claseNum: number, oaId: string) => {

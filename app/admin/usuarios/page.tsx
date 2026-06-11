@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import Image from "next/image"
 import { useAdminGuard } from "@/hooks/use-admin-guard"
 import {
   Users,
@@ -66,24 +67,33 @@ export default function AdminUsuariosPage() {
   const [error, setError] = useState("")
   const [sortBy, setSortBy] = useState<"lastSignIn" | "created" | "name">("lastSignIn")
   const [detalleUid, setDetalleUid] = useState<string | null>(null)
+  const [nowTs, setNowTs] = useState(() => Date.now())
 
-  const fetchUsuarios = async () => {
+  const fetchUsuarios = useCallback(async () => {
     setLoading(true)
     setError("")
     try {
       const res = await apiFetch("/api/admin/usuarios")
       const data = await res.json()
+      setNowTs(Date.now())
       setUsuarios(data.usuarios || [])
     } catch (err) {
       setError(getApiErrorMessage(err, "Error al cargar usuarios."))
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    if (isReady && isAdmin) fetchUsuarios()
-  }, [isReady, isAdmin])
+    if (!isReady || !isAdmin) return
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) void fetchUsuarios()
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [isReady, isAdmin, fetchUsuarios])
 
   // ── Acciones ────────────────────────────────────────────────────────────
   const runAction = async (key: string, fn: () => Promise<void>) => {
@@ -197,9 +207,8 @@ export default function AdminUsuariosPage() {
   // ── Filtros ─────────────────────────────────────────────────────────────
   const filtered = useMemo(() => {
     const term = searchTerm.trim().toLowerCase()
-    const ahora = Date.now()
-    const d30 = ahora - 30 * 86400000
-    const d7 = ahora - 7 * 86400000
+    const d30 = nowTs - 30 * 86400000
+    const d7 = nowTs - 7 * 86400000
 
     const pass = (u: FirebaseUser): boolean => {
       if (term) {
@@ -235,7 +244,7 @@ export default function AdminUsuariosPage() {
       return Date.parse(b.lastSignInTime || "0") - Date.parse(a.lastSignInTime || "0")
     })
     return sorted
-  }, [usuarios, searchTerm, filter, sortBy])
+  }, [usuarios, searchTerm, filter, sortBy, nowTs])
 
   const exportCSV = () => {
     const headers = ["UID", "Email", "Nombre", "Creado", "Ultimo login", "Activo", "Admin", "Allowlist"]
@@ -259,22 +268,26 @@ export default function AdminUsuariosPage() {
     URL.revokeObjectURL(url)
   }
 
+  const filterCounts = useMemo(() => {
+    const d7 = nowTs - 7 * 86400000
+    const d30 = nowTs - 30 * 86400000
+    return {
+      todos: usuarios.length,
+      activos7d: usuarios.filter((u) => u.lastSignInTime && Date.parse(u.lastSignInTime) >= d7).length,
+      activos30d: usuarios.filter((u) => u.lastSignInTime && Date.parse(u.lastSignInTime) >= d30).length,
+      nuevos30d: usuarios.filter((u) => u.creationTime && Date.parse(u.creationTime) >= d30).length,
+      sin_acceso: usuarios.filter((u) => !u.inAllowlist && !u.isAdmin).length,
+      allowlist: usuarios.filter((u) => u.inAllowlist).length,
+      admins: usuarios.filter((u) => u.isAdmin).length,
+      suspendidos: usuarios.filter((u) => u.disabled).length,
+    }
+  }, [usuarios, nowTs])
+
   if (!isReady) return <div className="p-8 text-muted-foreground text-sm">Cargando...</div>
   if (!isAdmin) return null
 
   if (detalleUid) {
     return <UserDetailPane uid={detalleUid} onClose={() => setDetalleUid(null)} onRefresh={fetchUsuarios} />
-  }
-
-  const filterCounts = {
-    todos: usuarios.length,
-    activos7d: usuarios.filter((u) => u.lastSignInTime && Date.parse(u.lastSignInTime) >= Date.now() - 7 * 86400000).length,
-    activos30d: usuarios.filter((u) => u.lastSignInTime && Date.parse(u.lastSignInTime) >= Date.now() - 30 * 86400000).length,
-    nuevos30d: usuarios.filter((u) => u.creationTime && Date.parse(u.creationTime) >= Date.now() - 30 * 86400000).length,
-    sin_acceso: usuarios.filter((u) => !u.inAllowlist && !u.isAdmin).length,
-    allowlist: usuarios.filter((u) => u.inAllowlist).length,
-    admins: usuarios.filter((u) => u.isAdmin).length,
-    suspendidos: usuarios.filter((u) => u.disabled).length,
   }
 
   return (
@@ -437,7 +450,13 @@ function UserRow({
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
           {u.photoURL ? (
-            <img src={u.photoURL} alt={u.displayName || "Avatar"} className="w-10 h-10 rounded-full border border-border object-cover" />
+            <Image
+              src={u.photoURL}
+              alt={u.displayName || "Avatar"}
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-full border border-border object-cover"
+            />
           ) : (
             <div className="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs">
               {u.displayName?.charAt(0) || u.email?.charAt(0) || "U"}
@@ -632,7 +651,7 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
   const [tempLimit, setTempLimit] = useState("")
   const [savingLimit, setSavingLimit] = useState(false)
 
-  const fetch = async () => {
+  const fetchDetalle = useCallback(async () => {
     setLoading(true)
     setError("")
     try {
@@ -644,11 +663,17 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
     } finally {
       setLoading(false)
     }
-  }
+  }, [uid])
 
   useEffect(() => {
-    fetch()
-  }, [uid])
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) void fetchDetalle()
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [fetchDetalle])
 
   const generarImpersonationToken = async () => {
     if (!confirm("Generar un token de impersonación? Úsalo solo para debug. El token permite iniciar sesión como este usuario.")) return
@@ -731,7 +756,13 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
       <div className="bg-card border border-border rounded-xl p-6 mb-6 shadow-sm">
         <div className="flex flex-col sm:flex-row items-start gap-4">
           {a.photoURL ? (
-            <img src={a.photoURL} alt="" className="w-20 h-20 rounded-full border-2 border-border" />
+            <Image
+              src={a.photoURL}
+              alt=""
+              width={80}
+              height={80}
+              className="w-20 h-20 rounded-full border-2 border-border object-cover"
+            />
           ) : (
             <div className="w-20 h-20 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-2xl">
               {a.displayName?.charAt(0) || a.email?.charAt(0) || "U"}

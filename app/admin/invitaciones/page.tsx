@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAuth } from "@/components/auth/auth-context"
 import { useRouter } from "next/navigation"
 import { KeyRound, Plus, Trash2, Loader2, AlertCircle } from "lucide-react"
@@ -46,7 +46,7 @@ export default function InvitacionesPage() {
   const [maxUsos, setMaxUsos] = useState("1")
   const [creating, setCreating] = useState(false)
 
-  const fetchInvites = async () => {
+  const fetchInvites = useCallback(async () => {
     if (!user) return
     setLoading(true)
     setError("")
@@ -59,17 +59,17 @@ export default function InvitacionesPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
 
   useEffect(() => {
     if (!authLoading) {
       if (!user || !isAdminEmail(user.email)) {
         router.replace("/")
       } else {
-        fetchInvites()
+        void Promise.resolve().then(fetchInvites)
       }
     }
-  }, [user, authLoading, router])
+  }, [user, authLoading, router, fetchInvites])
 
   const handleCreate = async () => {
     if (!newCode.trim() || !user) return

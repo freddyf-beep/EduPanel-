@@ -335,6 +335,7 @@ function BloqueImagenEditor({
       <div className="flex items-start gap-3">
         {data.url ? (
           <div className="relative">
+            {/* eslint-disable-next-line @next/next/no-img-element -- Editor previews arbitrary user-provided image URLs. */}
             <img
               src={data.url}
               alt={data.alt || ""}

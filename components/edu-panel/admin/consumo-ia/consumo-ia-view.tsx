@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
+import Image from "next/image"
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip as RechartsTooltip, ResponsiveContainer,
@@ -34,6 +35,7 @@ interface DocenteStat {
   cost: number
   limit: number
   last_used: string | null
+  month?: string
   status: "active" | "warning" | "exceeded"
 }
 
@@ -56,6 +58,14 @@ function fmtDate(iso: string | null) {
   return new Date(iso).toLocaleDateString("es-CL", { day: "2-digit", month: "short" })
 }
 
+function fmtMonth(month: string | null) {
+  if (!month || !/^\d{4}-\d{2}$/.test(month)) return "Mes actual"
+  return new Date(`${month}-01T12:00:00`).toLocaleDateString("es-CL", {
+    month: "long",
+    year: "numeric",
+  })
+}
+
 function getApiErrorMessage(err: unknown, fallback: string) {
   if (err instanceof ApiError) {
     const body = err.body as { error?: unknown } | undefined
@@ -70,6 +80,7 @@ export function ConsumoIAView() {
   const [global, setGlobal] = useState<GlobalStats>({ tokens: 0, prompts: 0, cost: 0, docentes_activos: 0 })
   const [docentes, setDocentes] = useState<DocenteStat[]>([])
   const [tendencia, setTendencia] = useState<TendenciaPunto[]>([])
+  const [month, setMonth] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
@@ -86,6 +97,7 @@ export function ConsumoIAView() {
       setGlobal(data.global ?? { tokens: 0, prompts: 0, cost: 0, docentes_activos: 0 })
       setDocentes(data.por_docente || [])
       setTendencia(data.tendencia || [])
+      setMonth(typeof data.month === "string" ? data.month : null)
     } catch (err) {
       setError(getApiErrorMessage(err, "Error al cargar datos de consumo IA."))
     } finally {
@@ -93,7 +105,15 @@ export function ConsumoIAView() {
     }
   }, [])
 
-  useEffect(() => { fetchData() }, [fetchData])
+  useEffect(() => {
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) void fetchData()
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [fetchData])
 
   const handleSaveLimit = async (uid: string) => {
     const limitNum = parseFloat(tempLimit)
@@ -121,6 +141,7 @@ export function ConsumoIAView() {
   const totalCost = global?.cost ?? 0
   const spendPct = Math.min((totalCost / GLOBAL_BUDGET_DEFAULT) * 100, 100)
   const hasData = docentes.length > 0
+  const monthLabel = fmtMonth(month)
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -134,7 +155,7 @@ export function ConsumoIAView() {
             <div>
               <h1 className="text-[22px] font-extrabold tracking-tight">Consumo de IA</h1>
               <p className="text-[13px] text-muted-foreground">
-                Gemini 1.5 Pro · $1.50 USD por millón de tokens
+                Costo estimado de IA · consumo mensual por docente
               </p>
             </div>
           </div>
@@ -169,7 +190,7 @@ export function ConsumoIAView() {
                   <DollarSign className="w-5 h-5" />
                 </div>
                 <span className="text-[11px] font-bold bg-white/20 px-2 py-1 rounded-lg flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" /> Mayo 2026
+                  <TrendingUp className="w-3 h-3" /> {monthLabel}
                 </span>
               </div>
               <div className="text-[11px] font-bold uppercase tracking-wider opacity-80 mb-1">Gasto Acumulado</div>
@@ -385,7 +406,15 @@ export function ConsumoIAView() {
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-3">
                             {d.photoURL
-                              ? <img src={d.photoURL} alt="" className="w-9 h-9 rounded-xl border border-border object-cover flex-shrink-0" />
+                              ? (
+                                <Image
+                                  src={d.photoURL}
+                                  alt=""
+                                  width={36}
+                                  height={36}
+                                  className="w-9 h-9 rounded-xl border border-border object-cover flex-shrink-0"
+                                />
+                              )
                               : <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-600 flex items-center justify-center text-white text-[13px] font-bold flex-shrink-0">
                                   {d.name.charAt(0).toUpperCase()}
                                 </div>

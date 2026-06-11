@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
 function cleanText(text: any): string {
   if (typeof text !== "string") return ""
@@ -57,7 +59,7 @@ export async function POST(req: Request) {
   // Verificar Feature Flag
   try {
     const flags = await getFeatureFlags()
-    if (!flags["agente-sustituciones"]?.active) {
+    if (!flags["agent-sustituciones"]?.active) {
       return NextResponse.json(
         { error: "La función de Agente de Sustituciones está desactivada." },
         { status: 403 }
@@ -81,6 +83,8 @@ export async function POST(req: Request) {
 
     const prompt = buildPrompt(ausenteNombre, ausenteAsignatura, bloqueDia, candidatos)
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "agent-sustituciones", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -105,7 +109,7 @@ export async function POST(req: Request) {
     const rawText = await response.text()
     if (!response.ok) {
       console.error("[agente-sustituciones] Gemini API error:", rawText)
-      throw new Error(`Gemini API error (${response.status})`)
+      throw parseGeminiApiError(rawText, response.status, "Gemini no pudo sugerir un sustituto.")
     }
 
     const parsedResponse = JSON.parse(rawText)
@@ -114,6 +118,16 @@ export async function POST(req: Request) {
       throw new Error("No se obtuvo recomendación de sustitución.")
     }
 
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "agent-sustituciones",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
+
     const resultJson = JSON.parse(textOutput.trim())
     return NextResponse.json({
       success: true,
@@ -121,6 +135,6 @@ export async function POST(req: Request) {
     })
   } catch (error: any) {
     console.error("[agente-sustituciones] Error:", error)
-    return NextResponse.json({ error: error.message || "Error interno del servidor" }, { status: 500 })
+    return aiErrorResponse(error)
   }
 }

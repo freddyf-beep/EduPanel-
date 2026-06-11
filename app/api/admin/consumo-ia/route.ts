@@ -12,12 +12,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser, getAdminApp } from "@/lib/auth/verify-token"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
+import { summarizeAiUsageData } from "@/lib/server/ai-usage"
 
 export const dynamic = "force-dynamic"
 
-// Tarifa Gemini 1.5 Pro: $3.50 por millón de tokens de entrada, $10.50 de salida.
-// Usamos un promedio conservador de $1.50 por millón de tokens combinados.
-export const COST_PER_TOKEN = 1.5 / 1_000_000
 
 // ── GET: métricas globales + por usuario ─────────────────────────────────────
 export async function GET(req: NextRequest) {
@@ -49,34 +47,26 @@ export async function GET(req: NextRequest) {
     const userMap = new Map(userRecords.users.map((u) => [u.uid, u]))
 
     const por_docente = statsSnap.docs.map((doc) => {
-      const data = doc.data() as {
-        tokens?: number
-        tokens_input?: number
-        tokens_output?: number
-        prompts?: number
-        cost?: number
-        limit?: number
-        last_used?: FirebaseFirestore.Timestamp
-        daily?: Record<string, { tokens: number; cost: number }>
-      }
+      const data = doc.data() as Record<string, any>
+      const summary = summarizeAiUsageData(data)
       const user = userMap.get(doc.id)
-      const tokens = (data.tokens_input ?? 0) + (data.tokens_output ?? 0) + (data.tokens ?? 0)
-      const cost = data.cost ?? tokens * COST_PER_TOKEN
-      const limit = data.limit ?? 5.0
 
       return {
         uid: doc.id,
         name: user?.displayName || user?.email || "Usuario desconocido",
         email: user?.email || "",
         photoURL: user?.photoURL || "",
-        prompts: data.prompts ?? 0,
-        tokens_input: data.tokens_input ?? 0,
-        tokens_output: data.tokens_output ?? 0,
-        tokens,
-        cost,
-        limit,
-        last_used: data.last_used?.toDate().toISOString() ?? null,
-        status: cost >= limit ? "exceeded" : cost >= limit * 0.8 ? "warning" : "active",
+        prompts: summary.prompts,
+        tokens_input: summary.tokens_input,
+        tokens_output: summary.tokens_output,
+        tokens: summary.tokens,
+        cost: summary.cost,
+        limit: summary.limit,
+        last_used: summary.last_used,
+        month: summary.month,
+        total_cost: summary.total_cost,
+        total_tokens: summary.total_tokens,
+        status: summary.cost >= summary.limit ? "exceeded" : summary.cost >= summary.limit * 0.8 ? "warning" : "active",
       }
     })
 
@@ -111,6 +101,7 @@ export async function GET(req: NextRequest) {
       global,
       por_docente: por_docente.sort((a, b) => b.cost - a.cost),
       tendencia,
+      month: por_docente[0]?.month ?? null,
     })
   } catch (err: any) {
     console.error("[admin/consumo-ia GET]", err)

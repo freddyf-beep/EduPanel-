@@ -157,6 +157,7 @@ export function ModoClaseEnVivo({ open, onClose, actividad, asignatura, curso }:
     try {
       const res = await apiFetch("/api/clase-en-vivo", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tipo,
           asignatura,
@@ -492,7 +493,7 @@ function AIResultCard({ tipo, data }: { tipo: SugerenciaIA["tipo"]; data: Record
           {data.pregunta && (
             <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] px-5 py-4">
               <p className="text-[16px] font-bold text-white/90 leading-relaxed italic">
-                "{data.pregunta}"
+                &quot;{data.pregunta}&quot;
               </p>
             </div>
           )}

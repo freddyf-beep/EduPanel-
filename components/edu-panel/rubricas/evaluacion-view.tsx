@@ -8,8 +8,8 @@ import {
 } from "lucide-react"
 import { abrirHojaEvaluacionImprimible } from "@/lib/export/hoja-evaluacion-pdf"
 import { useActiveSubject } from "@/hooks/use-active-subject"
-import { apiFetch } from "@/lib/api-client"
 import { buildUrl, withAsignatura } from "@/lib/shared"
+import { apiFetch } from "@/lib/api-client"
 import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { auth } from "@/lib/firebase"
@@ -332,6 +332,7 @@ export function EvaluacionView({ rubricaId }: Props) {
       setProgresoIA("Transcribiendo y evaluando con Gemini 2.0...")
       const response = await apiFetch("/api/corregir-con-foto", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           imageBase64: fileBase64,
           mimeType: fileMime,

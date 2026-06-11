@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
 import { getFeatureFlags } from "@/lib/feature-flags"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
 function cleanText(text: any): string {
   if (typeof text !== "string") return ""
@@ -67,7 +69,7 @@ export async function POST(req: Request) {
     const flags = await getFeatureFlags()
     if (!flags["predictor-cobertura"]?.active) {
       return NextResponse.json(
-        { error: "La función de Predicador de Cobertura Curricular está desactivada." },
+        { error: "La función de Predictor de Cobertura Curricular está desactivada." },
         { status: 403 }
       )
     }
@@ -110,6 +112,8 @@ export async function POST(req: Request) {
     )
 
     const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authUser.uid, { feature: "predictor-cobertura", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(token)}`,
@@ -134,7 +138,7 @@ export async function POST(req: Request) {
     const rawText = await response.text()
     if (!response.ok) {
       console.error("[predictor-cobertura] Gemini API error:", rawText)
-      throw new Error(`Gemini API error (${response.status})`)
+      throw parseGeminiApiError(rawText, response.status, "Gemini no pudo predecir la cobertura curricular.")
     }
 
     const parsedResponse = JSON.parse(rawText)
@@ -142,6 +146,15 @@ export async function POST(req: Request) {
     if (!textOutput) {
       throw new Error("No se obtuvo respuesta de cobertura.")
     }
+    await recordAiUsage({
+      uid: authUser.uid,
+      feature: "predictor-cobertura",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: textOutput,
+      usageMetadata: parsedResponse?.usageMetadata,
+    })
 
     const resultJson = JSON.parse(textOutput.trim())
     return NextResponse.json({
@@ -150,6 +163,6 @@ export async function POST(req: Request) {
     })
   } catch (error: any) {
     console.error("[predictor-cobertura] Error:", error)
-    return NextResponse.json({ error: error.message || "Error interno del servidor" }, { status: 500 })
+    return aiErrorResponse(error)
   }
 }

@@ -8,7 +8,7 @@ import { basename, join, resolve } from "path"
 
 const execFileAsync = promisify(execFile)
 
-const PROJECT_ROOT = resolve(process.cwd())
+const PROJECT_ROOT = resolve(/* turbopackIgnore: true */ process.cwd())
 const DEFAULT_BACKUP_DIR = "backups/firestore"
 const BACKUP_STATUS_FILE = "backup-status.json"
 const BACKUP_LOCK_FILE = "backup-lock.json"

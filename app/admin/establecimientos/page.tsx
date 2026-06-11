@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { Building2, Plus, Search } from "lucide-react"
 
 // Temporal para validación de admin
-const DEFAULT_ADMIN_EMAILS = ["freddyfigueroagea@gmail.com", "freddyfiguea@gmail.com"]
+const DEFAULT_ADMIN_EMAILS = ["udefret34@gmail.com", "freddyfiguea@gmail.com"]
 function isAdminEmail(email: string | null | undefined): boolean {
   const key = (email ?? "").toLowerCase().trim()
   if (!key) return false

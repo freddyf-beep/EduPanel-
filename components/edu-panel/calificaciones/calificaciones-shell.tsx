@@ -95,7 +95,6 @@ function evaluarFormula(input: string): string {
   try {
     const expr = trimmed.slice(1).replace(/[^0-9+\-*/.() ]/g, "")
     if (!expr) return input
-    // eslint-disable-next-line no-new-func
     const result = Function(`"use strict"; return (${expr})`)()
     if (typeof result !== "number" || !isFinite(result)) return input
     const clamped = Math.max(1.0, Math.min(7.0, parseFloat(result.toFixed(1))))
@@ -110,7 +109,7 @@ export function CalificacionesShell() {
   const searchParams = useSearchParams()
   const { asignatura: ASIGNATURA } = useActiveSubject()
   const tabParam = (searchParams.get("tab") as TabKey | null)
-  const [activeTab, setActiveTab] = useState<TabKey>(tabParam ?? "tabla")
+  const activeTab: TabKey = tabParam ?? "tabla"
 
   const [curso, setCurso] = useState("")
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
@@ -134,13 +133,10 @@ export function CalificacionesShell() {
 
   const ignoreNextSaveRef = useRef(true)
 
-  useEffect(() => { setActiveTab(tabParam ?? "tabla") }, [tabParam])
-
   const goToTab = useCallback((key: TabKey) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()))
     params.set("tab", key)
     router.replace(`/calificaciones?${params.toString()}`, { scroll: false })
-    setActiveTab(key)
   }, [router, searchParams])
 
   // Cursos — excluye tipos libres (recreo, almuerzo, planificacion, etc.)
@@ -157,12 +153,17 @@ export function CalificacionesShell() {
   // Datos del curso
   useEffect(() => {
     if (!curso) return
-    setLoading(true)
-    const id = buildId(ASIGNATURA, curso)
-    Promise.all([
-      getDoc(userDoc("calificaciones", id)),
-      cargarEstudiantes(curso)
-    ]).then(([snap, estDocs]) => {
+    let cancelled = false
+
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const id = buildId(ASIGNATURA, curso)
+      const [snap, estDocs] = await Promise.all([
+        getDoc(userDoc("calificaciones", id)),
+        cargarEstudiantes(curso),
+      ])
+      if (cancelled) return
+
       if (snap.exists()) {
         const data = snap.data()
         const notasEstudiantes = data.estudiantes || []
@@ -194,16 +195,31 @@ export function CalificacionesShell() {
         setEvaluaciones([{ id: "n1", label: "N1", tipo: "sumativa", periodo: "s1" }])
       }
     }).catch(console.error).finally(() => {
+      if (cancelled) return
       setLoading(false)
       ignoreNextSaveRef.current = true
     })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
   // OAs disponibles
   useEffect(() => {
-    if (!curso) { setOaOpciones([]); return }
-    cargarVerUnidadesCurso(ASIGNATURA, curso)
-      .then(unidades => {
+    let cancelled = false
+    if (!curso) {
+      Promise.resolve().then(() => {
+        if (!cancelled) setOaOpciones([])
+      })
+      return () => {
+        cancelled = true
+      }
+    }
+
+    Promise.resolve().then(async () => {
+      const unidades = await cargarVerUnidadesCurso(ASIGNATURA, curso)
+      if (cancelled) return
         const opciones: OaOpcion[] = []
         Object.entries(unidades).forEach(([unidadId, unidad]) => {
           (unidad.oas || [])
@@ -216,21 +232,49 @@ export function CalificacionesShell() {
             }))
         })
         setOaOpciones(opciones)
-      })
-      .catch(() => setOaOpciones([]))
+    }).catch(() => {
+      if (!cancelled) setOaOpciones([])
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
   // Observaciones resumen
   useEffect(() => {
-    if (!curso) { setObservacionesResumen({}); return }
-    contarObservacionesPorEstudiante(ASIGNATURA, curso)
-      .then(setObservacionesResumen)
-      .catch(() => setObservacionesResumen({}))
+    let cancelled = false
+    if (!curso) {
+      Promise.resolve().then(() => {
+        if (!cancelled) setObservacionesResumen({})
+      })
+      return () => {
+        cancelled = true
+      }
+    }
+
+    Promise.resolve().then(async () => {
+      const resumen = await contarObservacionesPorEstudiante(ASIGNATURA, curso)
+      if (!cancelled) setObservacionesResumen(resumen)
+    }).catch(() => {
+      if (!cancelled) setObservacionesResumen({})
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
   // Alumno seleccionado por defecto
   useEffect(() => {
-    if (!selectedAlumnoId && estudiantes.length > 0) setSelectedAlumnoId(estudiantes[0].id)
+    if (selectedAlumnoId || estudiantes.length === 0) return
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (!cancelled) setSelectedAlumnoId(estudiantes[0].id)
+    })
+    return () => {
+      cancelled = true
+    }
   }, [estudiantes, selectedAlumnoId])
 
   const handleGuardar = useCallback(async (isAutoSave = false) => {
@@ -1126,7 +1170,7 @@ function CoberturaView({ estudiantes, evaluaciones, oaOpciones }: {
   if (oaInfo.length === 0) {
     return (
       <div className="rounded-[14px] border border-dashed border-border bg-card p-8 text-center text-[12.5px] text-muted-foreground">
-        Aún no has vinculado evaluaciones a OAs. Vincula al menos una en la pestaña "Tabla densa" → "Nueva evaluación".
+        Aún no has vinculado evaluaciones a OAs. Vincula al menos una en la pestaña &quot;Tabla densa&quot; → &quot;Nueva evaluación&quot;.
       </div>
     )
   }

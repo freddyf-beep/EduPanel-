@@ -70,11 +70,7 @@ type ModalTab = "clase" | "anotaciones"
 function fechaKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`
 }
-function timeToMin(s: string) {
-  if (!s || typeof s !== "string") return 0
-  const [h, m] = s.split(":").map(Number)
-  return (h || 0) * 60 + (m || 0)
-}
+function timeToMin(s: string) { const [h, m] = s.split(":").map(Number); return h * 60 + m }
 
 function getGreeting(date: Date): { greet: string; icon: typeof Sun; gradient: string; mood: string } {
   const h = date.getHours()
@@ -90,7 +86,7 @@ export function DashboardShell() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
   const { user } = useAuth()
   const tabParam = (searchParams.get("tab") as TabKey | null)
-  const [activeTab, setActiveTab] = useState<TabKey>(tabParam ?? "hoy")
+  const activeTab: TabKey = tabParam ?? "hoy"
 
   const [now, setNow] = useState(new Date())
   const [estado, setEstado] = useState<Record<string, boolean>>({})
@@ -130,13 +126,10 @@ export function DashboardShell() {
   const diaHoy = DAYS[new Date().getDay()]
   const esDiaLaboral = DIAS_HABILES.includes(diaHoy)
 
-  useEffect(() => { setActiveTab(tabParam ?? "hoy") }, [tabParam])
-
   const goToTab = useCallback((key: TabKey) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()))
     params.set("tab", key)
     router.replace(`/?${params.toString()}`, { scroll: false })
-    setActiveTab(key)
   }, [router, searchParams])
 
   // Reloj — actualiza cada 60s
@@ -148,35 +141,51 @@ export function DashboardShell() {
   // Datos iniciales
   useEffect(() => {
     if (!user) return
-    setLoading(true)
-    Promise.all([
-      cargarEstadoClases(claveHoy),
-      cargarHorarioSemanal(),
-      cargarPreferencias(),
-    ])
-      .then(([est, hor, pref]) => {
-        const tieneCursosLectivos = hor.some(item => !esTipoLibre(item.tipo) && item.resumen.trim())
-        if (!pref?.onboardingCompletado && !tieneCursosLectivos) {
-          router.replace("/perfil")
-          return
-        }
-        if (!pref?.onboardingCompletado && tieneCursosLectivos) {
-          guardarPreferencias({ ...(pref || {}), onboardingCompletado: true }).catch(console.error)
-        }
-        setEstado(est)
-        setHorarioSemanal(hor)
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
+    let cancelled = false
+
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const [est, hor, pref] = await Promise.all([
+        cargarEstadoClases(claveHoy),
+        cargarHorarioSemanal(),
+        cargarPreferencias(),
+      ])
+      if (cancelled) return
+
+      const tieneCursosLectivos = hor.some(item => !esTipoLibre(item.tipo) && item.resumen.trim())
+      if (!pref?.onboardingCompletado && !tieneCursosLectivos) {
+        router.replace("/perfil")
+        return
+      }
+      if (!pref?.onboardingCompletado && tieneCursosLectivos) {
+        guardarPreferencias({ ...(pref || {}), onboardingCompletado: true }).catch(console.error)
+      }
+      setEstado(est)
+      setHorarioSemanal(hor)
+    }).catch(() => {
+      // Mantiene el dashboard usable aunque falle una fuente local.
+    }).finally(() => {
+      if (!cancelled) setLoading(false)
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [user, claveHoy, router])
 
   // Cargar stickies desde localStorage
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STICKY_KEY)
-      if (raw) setStickies(JSON.parse(raw))
-    } catch { /* noop */ }
-    setHydrated(true)
+    let cancelled = false
+    Promise.resolve().then(() => {
+      try {
+        const raw = window.localStorage.getItem(STICKY_KEY)
+        if (!cancelled && raw) setStickies(JSON.parse(raw))
+      } catch { /* noop */ }
+      if (!cancelled) setHydrated(true)
+    })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   useEffect(() => {
@@ -199,6 +208,7 @@ export function DashboardShell() {
   // Cargar stats por curso sin consultar libro/asistencia, que queda como prototipo.
   useEffect(() => {
     if (!user || horarioSemanal.length === 0) return
+    let cancelled = false
     const cursosAcademicos = Array.from(new Set(
       horarioSemanal
         .filter(h => !esTipoLibre(h.tipo))
@@ -207,20 +217,29 @@ export function DashboardShell() {
         .map(x => JSON.stringify(x))
     )).map(s => JSON.parse(s) as { resumen: string; color: string })
 
-    setLoadingStats(true)
-    Promise.all(cursosAcademicos.map(async ({ resumen: c, color }) => {
-      const estudiantes = await cargarEstudiantes(c).catch(() => [])
-      const bloquesHoy = horarioSemanal.filter(h => h.dia === diaHoy && h.resumen.trim() === c && !esTipoLibre(h.tipo)).length
-      return {
-        curso: c,
-        color,
-        alumnos: estudiantes.length,
-        bloquesHoy,
-        ultimaFirma: undefined,
-        asistenciaPct: undefined,
-      } as CursoStats
-    })).then(setCursoStats).finally(() => setLoadingStats(false))
-  }, [user, horarioSemanal, ASIGNATURA, diaHoy])
+    Promise.resolve().then(async () => {
+      setLoadingStats(true)
+      const stats = await Promise.all(cursosAcademicos.map(async ({ resumen: c, color }) => {
+        const estudiantes = await cargarEstudiantes(c).catch(() => [])
+        const bloquesHoy = horarioSemanal.filter(h => h.dia === diaHoy && h.resumen.trim() === c && !esTipoLibre(h.tipo)).length
+        return {
+          curso: c,
+          color,
+          alumnos: estudiantes.length,
+          bloquesHoy,
+          ultimaFirma: undefined,
+          asistenciaPct: undefined,
+        } as CursoStats
+      }))
+      if (!cancelled) setCursoStats(stats)
+    }).finally(() => {
+      if (!cancelled) setLoadingStats(false)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [user, horarioSemanal, diaHoy])
 
   const getClasesDelDia = useCallback((dia: string) => {
     return horarioSemanal

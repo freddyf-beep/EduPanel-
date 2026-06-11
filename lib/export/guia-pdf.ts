@@ -403,6 +403,30 @@ ${cierre}
 </html>`
 }
 
+function waitForImages(win: Window, timeoutMs = 5000): Promise<void> {
+  const images = Array.from(win.document.images)
+  if (images.length === 0) return Promise.resolve()
+
+  const loaded = Promise.all(images.map(img => {
+    if (img.complete) return Promise.resolve()
+    return new Promise<void>(resolve => {
+      img.addEventListener("load", () => resolve(), { once: true })
+      img.addEventListener("error", () => resolve(), { once: true })
+    })
+  })).then(() => undefined)
+
+  const timeout = new Promise<void>(resolve => {
+    win.setTimeout(resolve, timeoutMs)
+  })
+
+  return Promise.race([loaded, timeout])
+}
+
+async function printWhenReady(win: Window): Promise<void> {
+  await waitForImages(win)
+  try { win.focus(); win.print() } catch {}
+}
+
 export function abrirGuiaImprimible(opts: ExportGuiaOpciones): void {
   const html = buildHtml(opts)
   const win = window.open("", "_blank", "width=900,height=900")
@@ -413,7 +437,5 @@ export function abrirGuiaImprimible(opts: ExportGuiaOpciones): void {
   win.document.open()
   win.document.write(html)
   win.document.close()
-  setTimeout(() => {
-    try { win.focus(); win.print() } catch {}
-  }, 700)
+  void printWhenReady(win)
 }

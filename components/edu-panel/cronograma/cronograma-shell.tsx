@@ -210,7 +210,7 @@ export function CronogramaShell() {
 
   const vistaParam = (searchParams.get("vista") as ViewMode | null)
   const cursoParam = searchParams.get("curso") || ""
-  const [vista, setVista] = useState<ViewMode>(vistaParam ?? "semana")
+  const vista: ViewMode = vistaParam ?? "semana"
 
   const [curso, setCurso] = useState(cursoParam)
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
@@ -232,22 +232,25 @@ export function CronogramaShell() {
 
   const ignoreNextSaveRef = useRef(true)
 
-  useEffect(() => { setVista(vistaParam ?? "semana") }, [vistaParam])
-
   const goToVista = useCallback((v: ViewMode) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()))
     params.set("vista", v)
     router.replace(`/cronograma?${params.toString()}`, { scroll: false })
-    setVista(v)
   }, [router, searchParams])
 
   // localStorage filtros
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(FILTRO_KEY)
-      if (raw) setFiltros(JSON.parse(raw))
-    } catch { /* noop */ }
-    setHydrated(true)
+    let cancelled = false
+    Promise.resolve().then(() => {
+      try {
+        const raw = window.localStorage.getItem(FILTRO_KEY)
+        if (!cancelled && raw) setFiltros(JSON.parse(raw))
+      } catch { /* noop */ }
+      if (!cancelled) setHydrated(true)
+    })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   useEffect(() => {
@@ -270,13 +273,17 @@ export function CronogramaShell() {
   // Cargar cronograma + plan de unidades de UN curso o de TODOS
   useEffect(() => {
     if (!curso || cursosDisponibles.length === 0) return
-    setLoading(true)
+    let cancelled = false
     const cursosACargar = curso === "__todos__" ? cursosDisponibles : [curso]
 
-    Promise.all(cursosACargar.flatMap(c => [
-      cargarCronograma(ASIGNATURA, c).then(crono => ({ curso: c, crono })),
-      cargarPlanCurso(ASIGNATURA, c).then(plan => ({ curso: c, plan })),
-    ])).then((results) => {
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const results = await Promise.all(cursosACargar.flatMap(c => [
+        cargarCronograma(ASIGNATURA, c).then(crono => ({ curso: c, crono })),
+        cargarPlanCurso(ASIGNATURA, c).then(plan => ({ curso: c, plan })),
+      ]))
+      if (cancelled) return
+
       const todasActividades: ActividadCronograma[] = []
       const todasUnidades: UnidadInfo[] = []
       cursosACargar.forEach(c => {
@@ -296,10 +303,15 @@ export function CronogramaShell() {
       setActividades(todasActividades)
       setUnidadesDisponibles(todasUnidades)
     }).catch(console.error).finally(() => {
+      if (cancelled) return
       setLoading(false)
       ignoreNextSaveRef.current = true
     })
-  }, [curso, ASIGNATURA])
+
+    return () => {
+      cancelled = true
+    }
+  }, [curso, ASIGNATURA, cursosDisponibles])
 
   // Autosave (en modo "Todos" guarda agrupando por cursoOrigen)
   const handleGuardar = useCallback(async () => {
@@ -947,17 +959,14 @@ function MesView({ date, actividades, colorUnidad, onSelectDay, onChangeMonth }:
     dias.push({ date: dt, weekday: dt.getDay() })
   }
 
-  const actividadesPorFecha = useMemo(() => {
-    const map = new Map<string, ActividadCronograma[]>()
-    actividades.forEach(act => {
-      const lunesAct = getLunesDeSemana(act.semana, year)
-      const fecha = getFechaReal(lunesAct, act.dia)
-      const k = dateKey(fecha)
-      if (!map.has(k)) map.set(k, [])
-      map.get(k)!.push(act)
-    })
-    return map
-  }, [actividades, year])
+  const actividadesPorFecha = new Map<string, ActividadCronograma[]>()
+  actividades.forEach(act => {
+    const lunesAct = getLunesDeSemana(act.semana, year)
+    const fecha = getFechaReal(lunesAct, act.dia)
+    const k = dateKey(fecha)
+    if (!actividadesPorFecha.has(k)) actividadesPorFecha.set(k, [])
+    actividadesPorFecha.get(k)!.push(act)
+  })
 
   return (
     <div className="rounded-[16px] border border-border bg-card p-4">
@@ -1266,16 +1275,13 @@ function HeatmapView({ date, actividades, onChangeMonth }: {
   const dias: Date[] = []
   for (let d = 1; d <= lastDay.getDate(); d++) dias.push(new Date(year, month, d))
 
-  const conteoPorFecha = useMemo(() => {
-    const map = new Map<string, number>()
-    actividades.forEach(act => {
-      const lunesAct = getLunesDeSemana(act.semana, year)
-      const fecha = getFechaReal(lunesAct, act.dia)
-      const k = dateKey(fecha)
-      map.set(k, (map.get(k) || 0) + 1)
-    })
-    return map
-  }, [actividades, year])
+  const conteoPorFecha = new Map<string, number>()
+  actividades.forEach(act => {
+    const lunesAct = getLunesDeSemana(act.semana, year)
+    const fecha = getFechaReal(lunesAct, act.dia)
+    const k = dateKey(fecha)
+    conteoPorFecha.set(k, (conteoPorFecha.get(k) || 0) + 1)
+  })
 
   const max = Math.max(0, ...Array.from(conteoPorFecha.values()))
 

@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase"
-import { doc, getDoc, setDoc, updateDoc, collection, getDocs } from "firebase/firestore"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
 
 export type FeatureTier = "free" | "low-cost" | "premium"
 
@@ -69,15 +69,10 @@ export async function getFeatureFlags(): Promise<Record<string, FeatureFlag>> {
     const docRef = doc(db, "config", "feature_flags")
     const snap = await getDoc(docRef)
     
-    if (snap.exists()) {
-      return mergeFeatureFlags(snap.data())
-    } else {
-      // Initialize if missing
-      await setDoc(docRef, DEFAULT_FEATURE_FLAGS)
-      return DEFAULT_FEATURE_FLAGS
-    }
+    if (snap.exists()) return mergeFeatureFlags(snap.data())
+    return DEFAULT_FEATURE_FLAGS
   } catch (error) {
-    console.error("Error fetching feature flags", error)
+    console.warn("[feature-flags] usando valores locales por falta de acceso a config/feature_flags", error)
     return SAFE_FALLBACK_FEATURE_FLAGS
   }
 }

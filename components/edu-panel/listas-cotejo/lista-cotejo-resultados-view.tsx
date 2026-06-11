@@ -116,6 +116,10 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
     })
   }, [lista, evaluacion])
 
+  const totalIndicadores = useMemo(() => {
+    return (lista?.secciones || []).reduce((acc, s) => acc + (s?.indicadores?.length || 0), 0)
+  }, [lista])
+
   const volver = () => {
     router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "listas", curso: lista?.curso }, asignatura)))
   }
@@ -151,10 +155,6 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
       </div>
     )
   }
-
-  const totalIndicadores = useMemo(() => {
-    return (lista?.secciones || []).reduce((acc, s) => acc + (s?.indicadores?.length || 0), 0)
-  }, [lista])
 
   const estudiantes = (evaluacion?.grupos || []).flatMap(g => g.estudiantes)
   const completados = estudiantes.filter(estudiante => estudiante.completado).length

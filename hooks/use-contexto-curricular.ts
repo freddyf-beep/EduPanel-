@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState, useCallback } from "react"
 import {
@@ -38,24 +38,10 @@ export function useContextoCurricular({
   const [verUnidad, setVerUnidad] = useState<VerUnidadGuardada | null>(null)
   const [cronograma, setCronograma] = useState<CronogramaUnidadData | null>(null)
   const [oasOverride, setOasOverride] = useState<OAEditado[] | null>(null)
-  const [tick, setTick] = useState(0)
-
-  const [prevParams, setPrevParams] = useState({ asignatura, curso, unidadId, tick: 0 })
   const [cargando, setCargando] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  if (
-    prevParams.asignatura !== asignatura ||
-    prevParams.curso !== curso ||
-    prevParams.unidadId !== unidadId ||
-    prevParams.tick !== tick
-  ) {
-    setPrevParams({ asignatura, curso, unidadId, tick })
-    if (asignatura && curso && unidadId) {
-      setCargando(true)
-      setError(null)
-    }
-  }
+  const [tick, setTick] = useState(0)
+  const [nivelCurricular, setNivelCurricular] = useState("1ro Básico")
 
   const refrescar = useCallback(() => setTick((t: number) => t + 1), [])
 
@@ -63,16 +49,25 @@ export function useContextoCurricular({
     if (!asignatura || !curso || !unidadId) return
     let cancelled = false
 
-    Promise.all([
-      cargarVerUnidad(asignatura, curso, unidadId)
-        .then(data => { if (!cancelled) setVerUnidad(data) })
-        .catch(() => { if (!cancelled) setVerUnidad(null) }),
-      cargarCronogramaUnidad(asignatura, curso, unidadId)
-        .then(data => { if (!cancelled) setCronograma(data) })
-        .catch(() => { if (!cancelled) setCronograma(null) }),
-    ])
-      .catch((e: Error) => { if (!cancelled) setError(e?.message || "Error cargando contexto") })
-      .finally(() => { if (!cancelled) setCargando(false) })
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      setCargando(true)
+      setError(null)
+
+      Promise.all([
+        cargarVerUnidad(asignatura, curso, unidadId)
+          .then(data => { if (!cancelled) setVerUnidad(data) })
+          .catch(() => { if (!cancelled) setVerUnidad(null) }),
+        cargarCronogramaUnidad(asignatura, curso, unidadId)
+          .then(data => { if (!cancelled) setCronograma(data) })
+          .catch(() => { if (!cancelled) setCronograma(null) }),
+        getCurriculoNivel(curso)
+          .then(nivel => { if (!cancelled) setNivelCurricular(nivel) })
+          .catch(() => { if (!cancelled) setNivelCurricular("1ro Básico") }),
+      ])
+        .catch((e: Error) => { if (!cancelled) setError(e?.message || "Error cargando contexto") })
+        .finally(() => { if (!cancelled) setCargando(false) })
+    })
 
     return () => { cancelled = true }
   }, [asignatura, curso, unidadId, tick])
@@ -97,7 +92,7 @@ export function useContextoCurricular({
   const contexto: ContextoCurricular = {
     asignatura,
     curso,
-    nivelCurricular: getCurriculoNivel(curso),
+    nivelCurricular,
     unidadId,
     unidadNombre,
     oas: oasEfectivos,

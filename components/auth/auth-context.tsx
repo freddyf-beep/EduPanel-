@@ -2,7 +2,15 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
-import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, signInWithCustomToken } from "firebase/auth"
+import {
+  User,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  signInAnonymously,
+  updateProfile,
+} from "firebase/auth"
 import { isEmailAllowed } from "@/lib/allowlist"
 
 interface AuthContextType {
@@ -11,14 +19,35 @@ interface AuthContextType {
   /** Si es true, hubo login pero el email no esta en la allowlist. */
   blockedByAllowlist: boolean
   signInWithGoogle: () => Promise<void>
+  signInWithTestInvite: (code: string, testerName?: string) => Promise<void>
   signInWithGoogleCalendar: () => Promise<void>
   signInWithGoogleDrive: () => Promise<void>
-  signInWithToken: (token: string) => Promise<void>
   logout: () => Promise<void>
   recheckAllowlist: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
+
+async function isCurrentUserAllowedByApi(currentUser: User): Promise<boolean> {
+  try {
+    const idToken = await currentUser.getIdToken()
+    const res = await fetch("/api/check-allowlist", {
+      headers: { Authorization: `Bearer ${idToken}` },
+    })
+    if (!res.ok) return false
+    const body = await res.json()
+    return body?.allowed === true
+  } catch (error) {
+    console.warn("[auth] no se pudo verificar allowlist por API", error)
+    return false
+  }
+}
+
+async function isCurrentUserAllowed(currentUser: User): Promise<boolean> {
+  if (await isCurrentUserAllowedByApi(currentUser)) return true
+  if (!currentUser.email) return false
+  return isEmailAllowed(currentUser.email)
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
@@ -35,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Verificar que el email este invitado a la alfa cerrada
-      const allowed = await isEmailAllowed(currentUser.email)
+      const allowed = await isCurrentUserAllowed(currentUser)
       if (!allowed) {
         setUser(currentUser)
         setBlockedByAllowlist(true)
@@ -63,11 +92,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const signInWithToken = async (token: string) => {
+  const signInWithTestInvite = async (code: string, testerName = "Tester EduPanel") => {
+    const cleanCode = code.trim()
+    if (!cleanCode) throw new Error("Ingresa un codigo de invitacion.")
+
     try {
-      await signInWithCustomToken(auth, token)
+      const credential = await signInAnonymously(auth)
+      const currentUser = credential.user
+      const cleanName = testerName.trim() || "Tester EduPanel"
+
+      if (!currentUser.displayName) {
+        try {
+          await updateProfile(currentUser, { displayName: cleanName })
+        } catch (error) {
+          console.warn("[auth] no se pudo actualizar el nombre del tester", error)
+        }
+      }
+
+      const idToken = await currentUser.getIdToken(true)
+      const res = await fetch("/api/redeem-test-invite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ code: cleanCode, testerName: cleanName }),
+      })
+
+      if (!res.ok) {
+        let message = "No se pudo activar el acceso de prueba."
+        try {
+          const body = await res.json()
+          if (typeof body?.error === "string") message = body.error
+        } catch {
+          // Mantener mensaje por defecto.
+        }
+        throw new Error(message)
+      }
+
+      setUser(currentUser)
+      setBlockedByAllowlist(false)
     } catch (error) {
-      console.error("Error signing in with custom token", error)
+      console.error("Error signing in with test invite", error)
       throw error
     }
   }
@@ -124,14 +190,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const recheckAllowlist = async () => {
     if (!user) return
-    const allowed = await isEmailAllowed(user.email)
+    const allowed = await isCurrentUserAllowed(user)
     if (allowed) {
       setBlockedByAllowlist(false)
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithGoogleCalendar, signInWithGoogleDrive, logout, recheckAllowlist, signInWithToken }}>
+    <AuthContext.Provider value={{ user, loading, blockedByAllowlist, signInWithGoogle, signInWithTestInvite, signInWithGoogleCalendar, signInWithGoogleDrive, logout, recheckAllowlist }}>
       {children}
     </AuthContext.Provider>
   )

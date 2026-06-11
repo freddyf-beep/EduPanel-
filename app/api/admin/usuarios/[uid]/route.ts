@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser, getAdminApp } from "@/lib/auth/verify-token"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore, FieldValue } from "firebase-admin/firestore"
+import { summarizeAiUsageData } from "@/lib/server/ai-usage"
 
 export const dynamic = "force-dynamic"
 
@@ -68,21 +69,21 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
     )
 
     // Estadísticas de uso de IA
-    const COST_PER_TOKEN = 1.5 / 1_000_000
     const aiStatsDoc = await db.collection("ai_usage_stats").doc(uid).get()
     let aiStats: Record<string, any> | null = null
     if (aiStatsDoc.exists) {
-      const d = aiStatsDoc.data() as any
-      const tokens = (d.tokens_input ?? 0) + (d.tokens_output ?? 0) + (d.tokens ?? 0)
-      const cost = d.cost ?? tokens * COST_PER_TOKEN
+      const summary = summarizeAiUsageData(aiStatsDoc.data() as Record<string, any>)
       aiStats = {
-        tokens_input: d.tokens_input ?? 0,
-        tokens_output: d.tokens_output ?? 0,
-        tokens,
-        prompts: d.prompts ?? 0,
-        cost,
-        limit: d.limit ?? 5.0,
-        last_used: d.last_used?.toDate().toISOString() ?? null,
+        tokens_input: summary.tokens_input,
+        tokens_output: summary.tokens_output,
+        tokens: summary.tokens,
+        prompts: summary.prompts,
+        cost: summary.cost,
+        limit: summary.limit,
+        last_used: summary.last_used,
+        month: summary.month,
+        total_cost: summary.total_cost,
+        total_tokens: summary.total_tokens,
       }
     }
 

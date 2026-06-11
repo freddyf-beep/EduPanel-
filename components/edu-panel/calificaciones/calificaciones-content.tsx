@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useMemo } from "react"
+import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import Link from "next/link"
 import { Download, Plus, Bookmark, Info, Loader2, Check, X, AlertCircle, TrendingUp, TrendingDown, Minus, ChevronDown, ChevronUp, BarChart3, MessageSquare } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, Tooltip as ChartTooltip, Cell, ResponsiveContainer } from "recharts"
@@ -64,6 +64,7 @@ export function CalificacionesContent() {
   const [observacionesResumen, setObservacionesResumen] = useState<Record<string, ResumenObservacionesEstudiante>>({})
   const [oaOpciones, setOaOpciones] = useState<OaOpcion[]>([])
   const [newEvalOaIds, setNewEvalOaIds] = useState<string[]>([])
+  const ignoreNextSaveRef = useRef(true)
 
   // Cargar cursos disponibles
   useEffect(() => {
@@ -77,12 +78,17 @@ export function CalificacionesContent() {
   // Cargar desde Firestore cuando cambia el curso
   useEffect(() => {
     if (!curso) return
-    setLoading(true)
-    const id = buildId(ASIGNATURA, curso)
-    Promise.all([
-      getDoc(userDoc("calificaciones", id)),
-      cargarEstudiantes(curso)
-    ]).then(([snap, estDocs]) => {
+    let cancelled = false
+
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const id = buildId(ASIGNATURA, curso)
+      const [snap, estDocs] = await Promise.all([
+        getDoc(userDoc("calificaciones", id)),
+        cargarEstudiantes(curso),
+      ])
+      if (cancelled) return
+
       if (snap.exists()) {
         const data = snap.data()
         const notasEstudiantes = data.estudiantes || []
@@ -123,61 +129,77 @@ export function CalificacionesContent() {
     }).catch(e => {
       console.error(e)
     }).finally(() => {
+      if (cancelled) return
       setLoading(false)
       ignoreNextSaveRef.current = true
     })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
   useEffect(() => {
+    let cancelled = false
     if (!curso) {
-      setOaOpciones([])
-      return
-    }
-    cargarVerUnidadesCurso(ASIGNATURA, curso)
-      .then((unidades) => {
-        const opciones: OaOpcion[] = []
-        Object.entries(unidades).forEach(([unidadId, unidad]) => {
-          ;(unidad.oas || [])
-            .filter((oa) => oa.seleccionado)
-            .forEach((oa) => {
-              opciones.push({
-                id: oa.id,
-                label: oa.numero ? `OA ${oa.numero}` : oa.id,
-                descripcion: oa.descripcion,
-                unidadId,
-              })
-            })
-        })
-        setOaOpciones(opciones)
+      Promise.resolve().then(() => {
+        if (!cancelled) setOaOpciones([])
       })
-      .catch(() => setOaOpciones([]))
+      return () => {
+        cancelled = true
+      }
+    }
+
+    Promise.resolve().then(async () => {
+      const unidades = await cargarVerUnidadesCurso(ASIGNATURA, curso)
+      if (cancelled) return
+      const opciones: OaOpcion[] = []
+      Object.entries(unidades).forEach(([unidadId, unidad]) => {
+        ;(unidad.oas || [])
+          .filter((oa) => oa.seleccionado)
+          .forEach((oa) => {
+            opciones.push({
+              id: oa.id,
+              label: oa.numero ? `OA ${oa.numero}` : oa.id,
+              descripcion: oa.descripcion,
+              unidadId,
+            })
+          })
+      })
+      setOaOpciones(opciones)
+    }).catch(() => {
+      if (!cancelled) setOaOpciones([])
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
   useEffect(() => {
+    let cancelled = false
     if (!curso) {
-      setObservacionesResumen({})
-      return
+      Promise.resolve().then(() => {
+        if (!cancelled) setObservacionesResumen({})
+      })
+      return () => {
+        cancelled = true
+      }
     }
-    contarObservacionesPorEstudiante(ASIGNATURA, curso)
-      .then(setObservacionesResumen)
-      .catch(() => setObservacionesResumen({}))
+
+    Promise.resolve().then(async () => {
+      const resumen = await contarObservacionesPorEstudiante(ASIGNATURA, curso)
+      if (!cancelled) setObservacionesResumen(resumen)
+    }).catch(() => {
+      if (!cancelled) setObservacionesResumen({})
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, ASIGNATURA])
 
-  const ignoreNextSaveRef = useRef(true)
-  useEffect(() => {
-    if (loading) return
-    if (ignoreNextSaveRef.current) {
-      ignoreNextSaveRef.current = false
-      return
-    }
-    setSaveStatus("saving_silent")
-    const timer = setTimeout(() => {
-      handleGuardar(true)
-    }, 2500)
-    return () => clearTimeout(timer)
-  }, [estudiantes, evaluaciones])
-
-  const handleGuardar = async (isAutoSave = false) => {
+  const handleGuardar = useCallback(async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
     try {
       const id = buildId(ASIGNATURA, curso)
@@ -193,7 +215,20 @@ export function CalificacionesContent() {
     } finally {
       if (!isAutoSave) setSaving(false)
     }
-  }
+  }, [ASIGNATURA, curso, estudiantes, evaluaciones])
+
+  useEffect(() => {
+    if (loading) return
+    if (ignoreNextSaveRef.current) {
+      ignoreNextSaveRef.current = false
+      return
+    }
+    setSaveStatus("saving_silent")
+    const timer = setTimeout(() => {
+      handleGuardar(true)
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [estudiantes, evaluaciones, loading, handleGuardar])
 
   // Atajo de teclado Ctrl+S / Cmd+S para guardar
   useEffect(() => {
@@ -205,7 +240,7 @@ export function CalificacionesContent() {
     }
     document.addEventListener("keydown", handler)
     return () => document.removeEventListener("keydown", handler)
-  }, [curso, estudiantes, evaluaciones])
+  }, [handleGuardar])
 
   const updateNota = (estudianteId: string, evalId: string, value: string) => {
     if (value !== "" && (isNaN(parseFloat(value)) || parseFloat(value) < 1 || parseFloat(value) > 7)) return

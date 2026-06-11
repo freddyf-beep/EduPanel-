@@ -6,6 +6,8 @@ import {
   type PedagogicalExternalSource,
 } from "@/lib/ai/pedagogical-engine"
 import { cleanText, type LessonRequestBody } from "@/lib/ai/copilot"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse } from "@/lib/server/gemini-error"
 
 export const dynamic = "force-dynamic"
 
@@ -54,6 +56,18 @@ function extractSources(response: any): PedagogicalExternalSource[] {
     })
     .filter(Boolean)
     .slice(0, 6) as PedagogicalExternalSource[]
+}
+
+function extractResponseText(response: any): string {
+  const directText = cleanText(response?.text)
+  if (directText) return directText
+
+  const parts = response?.candidates?.[0]?.content?.parts
+  if (!Array.isArray(parts)) return ""
+  return parts
+    .map((part: any) => cleanText(part?.text))
+    .filter(Boolean)
+    .join("\n")
 }
 
 function buildSearchPrompt(query: string, body: LessonRequestBody) {
@@ -122,17 +136,35 @@ export async function POST(req: Request) {
     }
 
     const ai = new GoogleGenAI({ apiKey })
+    const prompt = buildSearchPrompt(query, lessonRequestBody)
+    const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash"
+    const budget = await checkAiBudget(authCheck.auth.uid, { feature: "pedagogical-search", inputText: prompt })
+    if (!budget.ok) return budget.response
+
     const response = await ai.models.generateContent({
-      model: cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash",
-      contents: buildSearchPrompt(query, lessonRequestBody),
+      model,
+      contents: prompt,
       config: {
         tools: [{ googleSearch: {} }],
-        responseMimeType: "application/json",
         temperature: 0.3,
       } as any,
     })
 
-    const parsed = parseJson(response.text || "{}")
+    const outputText = extractResponseText(response)
+    if (!outputText) {
+      throw new Error("Gemini no devolvio texto para la busqueda pedagogica.")
+    }
+
+    await recordAiUsage({
+      uid: authCheck.auth.uid,
+      feature: "pedagogical-search",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText,
+      usageMetadata: (response as any)?.usageMetadata,
+    })
+    const parsed = parseJson(outputText)
     return NextResponse.json({
       resumen: cleanText(parsed.resumen),
       recomendaciones: Array.isArray(parsed.recomendaciones)
@@ -145,7 +177,6 @@ export async function POST(req: Request) {
     })
   } catch (error) {
     console.error("[pedagogical-search]", error)
-    const message = error instanceof Error ? error.message : "Error interno"
-    return NextResponse.json({ error: message }, { status: 500 })
+    return aiErrorResponse(error, "Error interno")
   }
 }

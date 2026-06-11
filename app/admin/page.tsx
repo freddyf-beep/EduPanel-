@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAdminGuard } from "@/hooks/use-admin-guard"
 import {
   LayoutDashboard,
@@ -55,7 +55,7 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     setLoading(true)
     setError("")
     try {
@@ -67,11 +67,12 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    if (isReady && isAdmin) fetchStats()
-  }, [isReady, isAdmin])
+    if (!isReady || !isAdmin) return
+    void Promise.resolve().then(fetchStats)
+  }, [isReady, isAdmin, fetchStats])
 
   if (!isReady) return <div className="p-8 text-muted-foreground text-sm">Cargando...</div>
   if (!isAdmin) return null

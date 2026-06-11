@@ -10,7 +10,7 @@ import {
   Check, Zap, Pin, Users, Eye, Clock, Wand2,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { cargarCronogramaUnidad, cargarPlanCurso, type ClaseCronograma, type PlanificacionCurso, type UnidadPlan } from "@/lib/curriculo"
+import { cargarCronogramaUnidad, cargarPlanCurso, listarPlanesCurso, type ClaseCronograma, type PlanificacionCurso, type UnidadPlan } from "@/lib/curriculo"
 import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
 import { UNIT_COLORS, buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -176,10 +176,17 @@ export function PlanificacionesList() {
             cursosColor.set(h.resumen.trim(), h.color)
           }
         })
-        const cursosUnique = Array.from(cursosColor.keys()).filter(Boolean)
+        const cursosHorario = Array.from(cursosColor.keys()).filter(Boolean)
+        const planesGuardados = await listarPlanesCurso(ASIGNATURA).catch(() => [] as PlanificacionCurso[])
+        const cursosPorPlan = planesGuardados.map(plan => plan.curso).filter(Boolean)
+        const cursosUnique = Array.from(new Set([...cursosHorario, ...cursosPorPlan]))
 
         const planes = await Promise.all(
-          cursosUnique.map(c => cargarPlanCurso(ASIGNATURA, c).then(p => ({ curso: c, plan: p })).catch(() => ({ curso: c, plan: null as PlanificacionCurso | null })))
+          cursosUnique.map(c => {
+            const cached = planesGuardados.find(plan => plan.curso === c)
+            if (cached) return Promise.resolve({ curso: c, plan: cached })
+            return cargarPlanCurso(ASIGNATURA, c).then(p => ({ curso: c, plan: p })).catch(() => ({ curso: c, plan: null as PlanificacionCurso | null }))
+          })
         )
 
         if (cancel) return

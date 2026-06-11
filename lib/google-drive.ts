@@ -52,7 +52,7 @@ export interface DriveFolderPin {
 }
 
 export interface DriveResourceContext {
-  tipo?: "planificaciones" | "unidad" | "pruebas" | "guias" | "rubricas" | "evaluaciones" | "materiales" | "tics"
+  tipo?: "planificaciones" | "unidad" | "pruebas" | "guias" | "rubricas" | "listas" | "evaluaciones" | "materiales" | "tics"
   asignatura?: string
   curso?: string
   unidadId?: string
@@ -78,6 +78,7 @@ export type EduPanelDriveFolderKey =
   | "pruebas"
   | "guias"
   | "rubricas"
+  | "listas"
   | "exportaciones"
 
 export interface EduPanelDriveWorkspace {
@@ -588,7 +589,7 @@ export async function ensureEduPanelWorkspaceForContext(
   }
 
   if (!context.unidadId) {
-    focusFolder = context.tipo && ["pruebas", "guias", "rubricas", "evaluaciones"].includes(context.tipo)
+    focusFolder = context.tipo && ["pruebas", "guias", "rubricas", "listas", "evaluaciones"].includes(context.tipo)
       ? evaluaciones
       : context.tipo === "materiales" || context.tipo === "tics"
         ? planificacion
@@ -608,6 +609,7 @@ export async function ensureEduPanelWorkspaceForContext(
   const pruebas = await asegurarCarpetaDrive(accessToken, "Pruebas", unidadEvaluaciones.id)
   const guias = await asegurarCarpetaDrive(accessToken, "Guias", unidadEvaluaciones.id)
   const rubricas = await asegurarCarpetaDrive(accessToken, "Rubricas", unidadEvaluaciones.id)
+  const listas = await asegurarCarpetaDrive(accessToken, "Listas de cotejo", unidadEvaluaciones.id)
 
   Object.assign(folders, {
     planificacion: unidadPlanificacion,
@@ -619,12 +621,14 @@ export async function ensureEduPanelWorkspaceForContext(
     pruebas,
     guias,
     rubricas,
+    listas,
     exportaciones,
   })
 
   if (context.tipo === "pruebas") focusFolder = pruebas
   else if (context.tipo === "guias") focusFolder = guias
   else if (context.tipo === "rubricas") focusFolder = rubricas
+  else if (context.tipo === "listas") focusFolder = listas
   else if (context.tipo === "planificaciones") focusFolder = unidadPlanificacion
   else if (context.tipo === "evaluaciones") focusFolder = unidadEvaluaciones
   else if (context.tipo === "materiales") focusFolder = materiales
