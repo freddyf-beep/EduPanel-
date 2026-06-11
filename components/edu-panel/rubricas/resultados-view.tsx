@@ -71,6 +71,7 @@ export function ResultadosView({ rubricaId }: Props) {
   const [syncPendiente, setSyncPendiente] = useState<SincronizarCalificacionesResultado | null>(null)
   const [confirmSyncOpen, setConfirmSyncOpen] = useState(false)
   const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
+  const [incluirAusentes, setIncluirAusentes] = useState(false)
 
   const { signInWithGoogleDrive } = useAuth()
   const [subiendoCompletoDrive, setSubiendoCompletoDrive] = useState(false)
@@ -475,12 +476,15 @@ export function ResultadosView({ rubricaId }: Props) {
   )
 
   // ── Calcular estadísticas ──────────────────────────────────────────────────
+  const idxAusentes = evaluacion ? evaluacion.grupos.findIndex(g => g.nombre.trim().toLowerCase() === "ausentes") : -1
   const todosEstudiantes: EstudianteEvaluacion[] = evaluacion
     ? evaluacion.grupos.flatMap(g => g.estudiantes)
     : []
+  const estudiantesAusentes = idxAusentes >= 0 ? evaluacion!.grupos[idxAusentes].estudiantes : []
+  const estudiantesActivos = incluirAusentes ? todosEstudiantes : todosEstudiantes.filter(e => !estudiantesAusentes.some(aus => aus.estudianteId === e.estudianteId))
   const bloqueada = !!evaluacion?.bloqueada
 
-  const notasConDatos = todosEstudiantes
+  const notasConDatos = estudiantesActivos
     .map(e => {
       const puntaje = calcularPuntajeEstudiante(e.puntajes, rubrica.partes)
       const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(e))
@@ -512,7 +516,7 @@ export function ResultadosView({ rubricaId }: Props) {
   const criterioStats: { nombre: string; promedio: number; parte: string }[] = []
   for (const parte of rubrica.partes) {
     for (const criterio of parte.criterios) {
-      const vals = todosEstudiantes.map(e => e.puntajes[criterio.id]).filter(v => v !== undefined)
+      const vals = estudiantesActivos.map(e => e.puntajes[criterio.id]).filter(v => v !== undefined)
       const avg = vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 0
       criterioStats.push({ nombre: criterio.nombre || criterio.id, promedio: avg, parte: parte.nombre })
     }
@@ -653,12 +657,13 @@ export function ResultadosView({ rubricaId }: Props) {
       ) : (
         <>
           {/* Stats rápidas */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             {[
-              { label: "Alumnos evaluados", valor: todosEstudiantes.length, color: "text-foreground" },
+              { label: "Alumnos evaluados", valor: estudiantesActivos.length, color: "text-foreground" },
               { label: "Promedio", valor: promedio.toFixed(1), color: promedio >= 4 ? "text-green-600" : "text-red-500" },
               { label: "Aprobados", valor: aprobados, color: "text-green-600" },
               { label: "Reprobados", valor: reprobados, color: reprobados > 0 ? "text-red-500" : "text-foreground" },
+              { label: "Ausentes", valor: estudiantesAusentes.length, color: estudiantesAusentes.length > 0 ? "text-amber-600" : "text-muted-foreground" },
             ].map(stat => (
               <div key={stat.label} className="bg-card border border-border rounded-[14px] p-4 text-center">
                 <p className={`text-[28px] font-extrabold ${stat.color}`}>{stat.valor}</p>
@@ -736,10 +741,14 @@ export function ResultadosView({ rubricaId }: Props) {
                       const nota = calcularNota(puntaje, rubrica.puntajeMaximo, exigenciaEstudiante(est))
                       const aprobado = nota >= 4.0
                       const descargandoEste = exportandoAlumno === est.estudianteId
+                      const esAusente = estudiantesAusentes.some(aus => aus.estudianteId === est.estudianteId)
                       return (
-                        <tr key={est.estudianteId} className="border-b border-border hover:bg-muted/30">
+                        <tr key={est.estudianteId} className={`border-b border-border hover:bg-muted/30 ${esAusente ? "bg-amber-50/40" : ""}`}>
                           <td className="sticky left-0 z-10 bg-card border-r border-border px-4 py-2.5 font-medium text-foreground">
                             {est.nombre}
+                            {esAusente && (
+                              <span className="ml-1.5 text-[9px] bg-amber-100 text-amber-700 rounded px-1 font-medium border border-amber-200">Ausente</span>
+                            )}
                             {est.hasPie && (
                               <span className="ml-1.5 text-[9px] bg-blue-100 text-blue-700 rounded px-1 font-medium">PIE</span>
                             )}
@@ -776,7 +785,20 @@ export function ResultadosView({ rubricaId }: Props) {
                               >
                                 {subiendoAlumnoDrive === est.estudianteId ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <HardDrive className="w-3.5 h-3.5" />}
                               </button>
-                            </div>
+          </div>
+          {estudiantesAusentes.length > 0 && (
+            <button
+              onClick={() => setIncluirAusentes(!incluirAusentes)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-[10px] border transition-colors ${
+                incluirAusentes
+                  ? "border-amber-300 bg-amber-50 text-amber-800"
+                  : "border-border hover:bg-muted/60 text-muted-foreground"
+              }`}
+            >
+              <AlertCircle className="w-3 h-3" />
+              {incluirAusentes ? "Incluyendo ausentes en estadísticas" : "Excluyendo ausentes de estadísticas"}
+            </button>
+          )}
                           </td>
                         </tr>
                       )
