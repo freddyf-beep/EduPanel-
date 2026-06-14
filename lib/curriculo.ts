@@ -374,6 +374,7 @@ export interface VerUnidadGuardada {
   actividades: ActividadDocente[]
   conocimientosPrevios?: string
   recursosMaterialesUnidad?: string[]
+  recursosMaterialesUnidadArchivos?: ArchivoAdjunto[]
   estrategiasEvaluacion?: EstrategiaEvaluacionUnidad[]
   updatedAt?: any
 }
@@ -543,6 +544,12 @@ export async function cargarPlanCurso(
 
 
 // ─── Tipos para Libro de clases digital ─────────────────────────────────────
+
+export async function listarPlanesCurso(asignatura: string): Promise<PlanificacionCurso[]> {
+  const q = query(userCol("planificaciones_curso"), where("asignatura", "==", asignatura))
+  const snap = await getDocs(q)
+  return snap.docs.map(d => d.data() as PlanificacionCurso)
+}
 
 export type EstadoAsistencia = "presente" | "ausente" | "atraso" | "retirado"
 

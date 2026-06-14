@@ -45,21 +45,23 @@ function writeCachedAllowed(uid: string, email: string, allowed: boolean) {
 export async function isEmailAllowed(email: string | null | undefined): Promise<boolean> {
   if (process.env.NEXT_PUBLIC_ALLOWLIST_BYPASS === "true") return true
   const normalizedEmail = normalizeEmail(email)
-  if (!normalizedEmail) return false
 
   try {
     const user = auth.currentUser
     if (!user) return false
-    if (user.emailVerified && isAdminEmail(normalizedEmail)) return true
+    if (normalizedEmail && user.emailVerified && isAdminEmail(normalizedEmail)) return true
 
-    const cached = readCachedAllowed(user.uid, normalizedEmail)
+    const lookupKey = normalizedEmail || `uid:${user.uid}`
+    const cached = readCachedAllowed(user.uid, lookupKey)
     if (cached !== null) return cached
     if (inFlightCheck) return inFlightCheck
 
-    inFlightCheck = getDoc(doc(db, "allowlist", normalizedEmail))
+    inFlightCheck = (normalizedEmail
+      ? getDoc(doc(db, "allowlist", normalizedEmail))
+      : getDoc(doc(db, "allowlist_uids", user.uid)))
       .then((snap) => {
         const allowed = snap.exists()
-        writeCachedAllowed(user.uid, normalizedEmail, allowed)
+        writeCachedAllowed(user.uid, lookupKey, allowed)
         return allowed
       })
       .finally(() => {

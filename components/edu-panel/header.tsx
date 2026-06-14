@@ -90,7 +90,7 @@ export function Header({ onOpenMenu }: HeaderProps) {
         </button>
 
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="grid h-8 w-8 place-items-center rounded-[10px] bg-primary shadow-sm">
+          <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary shadow-sm">
             <BookOpen className="h-4 w-4 text-white" strokeWidth={2.5} />
           </div>
           <span className="text-[15px] font-extrabold tracking-tight sm:text-[16px]">EduPanel</span>

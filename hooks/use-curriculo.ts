@@ -11,12 +11,31 @@ export function useUnidades(asignatura: string, nivel: string) {
   const [error, setError]       = useState<string | null>(null)
 
   useEffect(() => {
-    if (!asignatura || !nivel) return
-    setLoading(true)
-    getUnidades(asignatura, nivel)
-      .then(setUnidades)
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel) {
+        if (!cancelled) {
+          setUnidades([])
+          setError(null)
+          setLoading(false)
+        }
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getUnidades(asignatura, nivel)
+        if (!cancelled) setUnidades(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando unidades")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
   }, [asignatura, nivel])
 
   return { unidades, loading, error }
@@ -33,12 +52,31 @@ export function useUnidadCompleta(
   const [error, setError]     = useState<string | null>(null)
 
   useEffect(() => {
-    if (!asignatura || !nivel || !unidadId) return
-    setLoading(true)
-    getUnidadCompleta(asignatura, nivel, unidadId)
-      .then(setUnidad)
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel || !unidadId) {
+        if (!cancelled) {
+          setUnidad(null)
+          setError(null)
+          setLoading(false)
+        }
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getUnidadCompleta(asignatura, nivel, unidadId)
+        if (!cancelled) setUnidad(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando unidad")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
   }, [asignatura, nivel, unidadId])
 
   return { unidad, loading, error }
@@ -55,12 +93,31 @@ export function useOADeUnidad(
   const [error, setError]     = useState<string | null>(null)
 
   useEffect(() => {
-    if (!asignatura || !nivel || !unidadId) return
-    setLoading(true)
-    getOADeUnidad(asignatura, nivel, unidadId)
-      .then(setOas)
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
+    let cancelled = false
+    void Promise.resolve().then(async () => {
+      if (!asignatura || !nivel || !unidadId) {
+        if (!cancelled) {
+          setOas([])
+          setError(null)
+          setLoading(false)
+        }
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getOADeUnidad(asignatura, nivel, unidadId)
+        if (!cancelled) setOas(data)
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Error cargando objetivos")
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
   }, [asignatura, nivel, unidadId])
 
   return { oas, loading, error }

@@ -2,7 +2,13 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
-import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import {
+  User,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth"
 import { isEmailAllowed } from "@/lib/allowlist"
 
 interface AuthContextType {
@@ -19,6 +25,27 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
+async function isCurrentUserAllowedByApi(currentUser: User): Promise<boolean> {
+  try {
+    const idToken = await currentUser.getIdToken()
+    const res = await fetch("/api/check-allowlist", {
+      headers: { Authorization: `Bearer ${idToken}` },
+    })
+    if (!res.ok) return false
+    const body = await res.json()
+    return body?.allowed === true
+  } catch (error) {
+    console.warn("[auth] no se pudo verificar allowlist por API", error)
+    return false
+  }
+}
+
+async function isCurrentUserAllowed(currentUser: User): Promise<boolean> {
+  if (await isCurrentUserAllowedByApi(currentUser)) return true
+  if (!currentUser.email) return false
+  return isEmailAllowed(currentUser.email)
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -34,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Verificar que el email este invitado a la alfa cerrada
-      const allowed = await isEmailAllowed(currentUser.email)
+      const allowed = await isCurrentUserAllowed(currentUser)
       if (!allowed) {
         setUser(currentUser)
         setBlockedByAllowlist(true)
@@ -114,7 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const recheckAllowlist = async () => {
     if (!user) return
-    const allowed = await isEmailAllowed(user.email)
+    const allowed = await isCurrentUserAllowed(user)
     if (allowed) {
       setBlockedByAllowlist(false)
     }

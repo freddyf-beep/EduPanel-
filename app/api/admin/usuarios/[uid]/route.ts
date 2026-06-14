@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser, getAdminApp } from "@/lib/auth/verify-token"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore, FieldValue } from "firebase-admin/firestore"
+import { summarizeAiUsageData } from "@/lib/server/ai-usage"
 
 export const dynamic = "force-dynamic"
 
@@ -67,6 +68,26 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
       })
     )
 
+    // Estadísticas de uso de IA
+    const aiStatsDoc = await db.collection("ai_usage_stats").doc(uid).get()
+    const aiAccessDoc = await db.collection("ai_access").doc(uid).get()
+    let aiStats: Record<string, any> | null = null
+    if (aiStatsDoc.exists) {
+      const summary = summarizeAiUsageData(aiStatsDoc.data() as Record<string, any>)
+      aiStats = {
+        tokens_input: summary.tokens_input,
+        tokens_output: summary.tokens_output,
+        tokens: summary.tokens,
+        prompts: summary.prompts,
+        cost: summary.cost,
+        limit: summary.limit,
+        last_used: summary.last_used,
+        month: summary.month,
+        total_cost: summary.total_cost,
+        total_tokens: summary.total_tokens,
+      }
+    }
+
     // Allowlist (verificar si esta invitado)
     let allowlistEntry: any = null
     if (userRecord.email) {
@@ -99,6 +120,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
       horario: horario.exists ? horario.data() : null,
       conteos,
       allowlist: allowlistEntry,
+      aiAccess: aiAccessDoc.exists ? aiAccessDoc.data() : null,
+      ai: aiStats,
     })
   } catch (err: any) {
     console.error("[admin/usuarios/[uid] GET]", err)
@@ -244,12 +267,30 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
       return NextResponse.json({ success: true, eliminados })
     }
 
-    if (action === "generateImpersonationToken") {
-      // Genera un custom token para "iniciar sesion como" un usuario.
-      // USO CUIDADOSO: solo para debugging. El admin debe loguearse con el token
-      // en su propio cliente y recordar cerrar sesion.
-      const token = await authAdmin.createCustomToken(uid, { impersonation: true })
-      return NextResponse.json({ success: true, token })
+    if (action === "updateAiLimit") {
+      const { limit } = body as { limit: number }
+      if (typeof limit !== "number" || limit < 0) {
+        return NextResponse.json({ error: "Límite inválido" }, { status: 400 })
+      }
+      await db.collection("ai_usage_stats").doc(uid).set(
+        { limit },
+        { merge: true }
+      )
+      return NextResponse.json({ success: true, limit })
+    }
+
+    if (action === "toggleAiAccess") {
+      const enabled = body.enabled === true
+      await db.collection("ai_access").doc(uid).set(
+        {
+          uid,
+          enabled,
+          updatedAt: FieldValue.serverTimestamp(),
+          updatedBy: authUser.email,
+        },
+        { merge: true }
+      )
+      return NextResponse.json({ success: true, enabled })
     }
 
     return NextResponse.json({ error: "Acción no válida" }, { status: 400 })

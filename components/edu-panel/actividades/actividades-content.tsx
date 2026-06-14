@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, Suspense, useRef, useMemo } from "react"
+import { useState, useEffect, Suspense, useRef, useMemo, useCallback } from "react"
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -14,7 +14,7 @@ import {
   Send, Settings2, Wand2, KeyRound, ChevronUp, Mic, MicOff,
   PanelRightOpen, SlidersHorizontal, RotateCcw, BrainCircuit, Copy,
   Save, PencilLine, Trash2, Paperclip, UploadCloud, ExternalLink, HardDrive,
-  Download, Eye
+  Download, Eye, Play
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
@@ -38,6 +38,8 @@ import {
 import { IaModal } from "@/components/edu-panel/actividades/ia-modal"
 import { ImportWordModal } from "@/components/edu-panel/actividades/import-word-modal"
 import { NotebookPptModal } from "@/components/edu-panel/actividades/notebook-ppt-modal"
+import { GenerarEvaluacionIaModal } from "@/components/edu-panel/actividades/generar-evaluacion-ia-modal"
+import { ModoClaseEnVivo } from "@/components/edu-panel/actividades/modo-clase-en-vivo"
 import { DriveSheet } from "@/components/edu-panel/drive/drive-sheet"
 import { eliminarArchivoClase, formatoTamaño, subirArchivoClase } from "@/lib/storage"
 import {
@@ -50,6 +52,7 @@ import {
   isGoogleDriveAutosaveEnabled,
   isGoogleDriveConnected,
   subirArchivoADrive,
+  subirDocxADrive,
   subirDocxYPdfADrive,
   type DriveItem,
 } from "@/lib/google-drive"
@@ -419,6 +422,8 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   const [previewArchivo, setPreviewArchivo] = useState<ArchivoAdjunto | null>(null)
   const [showImportWordModal, setShowImportWordModal] = useState(false)
   const [showNotebookPptModal, setShowNotebookPptModal] = useState(false)
+  const [showGenerarEvaluacionIaModal, setShowGenerarEvaluacionIaModal] = useState(false)
+  const [showModoClaseEnVivo, setShowModoClaseEnVivo] = useState(false)
   const [bancoActividades, setBancoActividades] = useState<ActividadClase[]>([])
   const [loadingBanco, setLoadingBanco] = useState(false)
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
@@ -538,15 +543,15 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     setIsListening(true)
   }
 
-  const getIndicadoresSeleccionados = (oa: OAEditado) => {
+  const getIndicadoresSeleccionados = useCallback((oa: OAEditado) => {
     const indicadoresDisponibles = (oa.indicadores || []).filter(i => i.seleccionado)
     const selectedIds = actividad.indicadoresPorOa?.[oa.id]
     return selectedIds
       ? indicadoresDisponibles.filter(i => selectedIds.includes(i.id))
       : indicadoresDisponibles
-  }
+  }, [actividad.indicadoresPorOa])
 
-  const buildLessonPayload = (modo?: CopilotMode, customMessage = "") => {
+  const buildLessonPayload = useCallback((modo?: CopilotMode, customMessage = "") => {
     const oasSeleccionados = oasCurriculo.filter(oa => (actividad.oaIds || []).includes(oa.id))
     return {
       curso: cursoParam,
@@ -598,7 +603,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       customPrompt: aiConfig.promptExtra,
       promptOverride: modo ? aiConfig.promptOverrides?.[modo] : undefined,
     }
-  }
+  }, [actividad, aiConfig, clases.length, cursoParam, getIndicadoresSeleccionados, ideaInicial, nivelCurricular, oasCurriculo, selectedClase, unidadContextoDocente, unidadData, unidadObjetivoDocente])
 
   const applyGeneratedLesson = (data: any, options?: { onlyBloom?: boolean; onlyIndicators?: boolean; detailedOnly?: boolean }) => {
     setActividad(prev => {
@@ -1070,7 +1075,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       if (data) {
         setActividad({
           ...data,
-          // Forzamos fuente de verdad del cronograma 
+          // Forzamos fuente de verdad del cronograma
           oaIds: claseData?.oaIds || [],
         })
       } else {
@@ -1092,6 +1097,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   // 🚀 AUTOGUARDADO INTELIGENTE (DEBOUNCE)
   // ==========================================
   const ignoreNextSaveRef = useRef(true);
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
   useEffect(() => {
     if (loading) return;
 
@@ -1103,11 +1109,11 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
     setSaveStatus("saving_silent")
     const timer = setTimeout(() => {
-      handleGuardar(true)
+      void handleGuardarRef.current?.(true)
     }, 2500)
 
     return () => clearTimeout(timer)
-  }, [actividad]) // Se dispara cada vez que el usuario teclea o Gemini modifica algo
+  }, [actividad, loading]) // Se dispara cada vez que el usuario teclea o Gemini modifica algo
 
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -1153,6 +1159,10 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       setTimeout(() => setSaveStatus("idle"), 3000)
     } finally { setSaving(false) }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   const handleExportarClaseDrive = async () => {
     if (exportingDrive) return
@@ -1528,7 +1538,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       })
       if (!res.ok) throw new Error("No se pudo generar Word de la clase.")
       const blob = await res.blob()
-      await subirDocxYPdfADrive(token, {
+      await subirDocxADrive(token, {
         docx: blob,
         folderId: classPlanificacionFolder.id,
         fileName: `Clase_${String(selectedClase).padStart(2, "0")}_Planificacion.docx`,
@@ -1648,7 +1658,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
   }, [actividad.indicadoresEvaluacion])
   const iaModalRequestBody = useMemo(() => {
     return buildLessonPayload(promptMode, chatInput)
-  }, [promptMode, chatInput, actividad, aiConfig, oasCurriculo, unidadData, unidadContextoDocente, unidadObjetivoDocente, clases.length, nivelCurricular])
+  }, [promptMode, chatInput, buildLessonPayload])
   const hasConfiguredProvider = aiConfig.provider === "public" || !!aiConfig.token
   const promptPreview = useMemo(() => {
     try {
@@ -1656,7 +1666,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
     } catch {
       return ""
     }
-  }, [promptMode, chatInput, actividad, aiConfig, oasCurriculo, unidadData, unidadContextoDocente, unidadObjetivoDocente, clases.length, nivelCurricular])
+  }, [promptMode, chatInput, buildLessonPayload])
 
   if (loading) return (
     <div className="flex items-center justify-center h-64 gap-3 text-muted-foreground">
@@ -1731,6 +1741,31 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
         oas={oasCurriculo}
         contextoDocente={unidadContextoDocente}
         objetivoDocente={unidadObjetivoDocente}
+      />
+      <GenerarEvaluacionIaModal
+        open={showGenerarEvaluacionIaModal}
+        onOpenChange={setShowGenerarEvaluacionIaModal}
+        asignatura={ASIGNATURA}
+        curso={cursoParam}
+        unidadId={unidadParam}
+        unidadNombre={unidadData?.nombre_unidad || unidadCurricularParam || unidadParam}
+        unidadProposito={unidadData?.proposito || ""}
+        nivelCurricular={nivelCurricular}
+        numeroClase={selectedClase}
+        totalClases={clases.length}
+        claseCronograma={claseActualCronograma}
+        actividad={actividad}
+        oas={oasCurriculo}
+        contextoDocente={unidadContextoDocente}
+        objetivoDocente={unidadObjetivoDocente}
+        aiConfig={aiConfig}
+      />
+      <ModoClaseEnVivo
+        open={showModoClaseEnVivo}
+        onClose={() => setShowModoClaseEnVivo(false)}
+        actividad={actividad as ActividadClase | null}
+        asignatura={ASIGNATURA}
+        curso={cursoParam}
       />
       <div className={cn("pb-10 pt-4", "mx-auto max-w-[1680px] px-3 sm:px-4 md:px-6")}>
         {/* Header — oculto en modo compact */}
@@ -2403,6 +2438,28 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                   Preparar PPT con Notebook
                 </button>
 
+                <button
+                  type="button"
+                  onClick={() => setShowGenerarEvaluacionIaModal(true)}
+                  disabled={!tieneContenidoClase}
+                  className="flex items-center justify-center gap-2 w-full border border-primary/30 bg-primary/5 text-primary font-bold text-[13px] rounded-[10px] px-5 py-3 hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:hover:bg-primary/5 print:hidden"
+                  title={tieneContenidoClase ? "Generar rúbricas o guías de aprendizaje con Inteligencia Artificial" : "Completa la planificacion de la clase antes de generar una evaluación"}
+                >
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  Generar Rúbrica / Guía con IA
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowModoClaseEnVivo(true)}
+                  disabled={!tieneContenidoClase}
+                  className="flex items-center justify-center gap-2 w-full border border-emerald-500/30 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 text-emerald-600 dark:text-emerald-400 font-bold text-[13px] rounded-[10px] px-5 py-3 hover:from-emerald-500/10 hover:to-teal-500/10 transition-all disabled:opacity-50 print:hidden"
+                  title={tieneContenidoClase ? "Abrir modo clase en vivo con temporizador y asistente IA" : "Completa la planificación antes de usar el modo en vivo"}
+                >
+                  <Play className="w-4 h-4" />
+                  Modo Clase en Vivo
+                </button>
+
                 {/* Materiales y TICs */}
                 <div className="bg-card border border-border rounded-[14px] overflow-hidden">
                   <div className="flex border-b border-border">
@@ -2822,6 +2879,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                     />
                   ) : isImage ? (
                     <div className="flex h-full items-center justify-center p-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- Preview uses arbitrary local, Drive, and blob URLs. */}
                       <img
                         src={previewArchivo.url}
                         alt={previewArchivo.nombre}
@@ -3222,7 +3280,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                         </p>
                         <div className="w-full mt-4">
                           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wide block mb-1 text-left">Tu propuesta base (Opcional)</label>
-                          <textarea 
+                          <textarea
                             value={actividad.contextoProfesor || ideaInicial}
                             onChange={(e) => {
                               setIdeaInicial(e.target.value)

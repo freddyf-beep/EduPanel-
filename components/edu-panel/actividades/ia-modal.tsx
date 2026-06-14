@@ -67,33 +67,43 @@ export function IaModal({
 
   useEffect(() => {
     if (!open) return
-    const saved = window.localStorage.getItem("eduAiPreference")
-    if (saved === "agent" || saved === "integrated") setTab(saved)
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      const saved = window.localStorage.getItem("eduAiPreference")
+      if (saved === "agent" || saved === "integrated") setTab(saved)
+    })
+    return () => {
+      cancelled = true
+    }
   }, [open])
 
   useEffect(() => {
     if (!open || tab !== "agent") return
     let cancelled = false
-    setLoadingPrompt(true)
-    setPromptError("")
-    apiFetch("/api/preview-prompt", {
-      method: "POST",
-      body: JSON.stringify({ lessonRequestBody: requestBody, mode }),
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      setLoadingPrompt(true)
+      setPromptError("")
+      apiFetch("/api/preview-prompt", {
+        method: "POST",
+        body: JSON.stringify({ lessonRequestBody: requestBody, mode }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (cancelled) return
+          setPrompt(typeof data.prompt === "string" ? data.prompt : "")
+        })
+        .catch(error => {
+          if (cancelled) return
+          setPromptError(error instanceof Error ? error.message : "No pude generar el prompt.")
+        })
+        .finally(() => {
+          if (!cancelled) setLoadingPrompt(false)
+        })
     })
-      .then(res => res.json())
-      .then(data => {
-        if (cancelled) return
-        setPrompt(typeof data.prompt === "string" ? data.prompt : "")
-      })
-      .catch(error => {
-        if (cancelled) return
-        setPromptError(error instanceof Error ? error.message : "No pude generar el prompt.")
-      })
-      .finally(() => {
-        if (!cancelled) setLoadingPrompt(false)
-      })
     return () => { cancelled = true }
-  }, [open, tab, mode, requestKey])
+  }, [open, tab, mode, requestKey, requestBody])
 
   const handleTabChange = (value: string) => {
     const next = value === "integrated" ? "integrated" : "agent"

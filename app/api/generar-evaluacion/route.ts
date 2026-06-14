@@ -12,6 +12,7 @@ import {
   type AIProvider,
 } from "@/lib/ai/copilot"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 
 // Stub for missing quota check in public repository
 const checkAiQuota = async (uid: string) => ({ ok: true, error: "" });
@@ -80,7 +81,7 @@ async function callGemini(body: EvalCopilotRequest, prompt: string, signal?: Abo
   )
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-  
+
   const usage = json?.usageMetadata ? {
     inputTokens: Number(json.usageMetadata.promptTokenCount) || 0,
     outputTokens: Number(json.usageMetadata.candidatesTokenCount) || 0,
@@ -107,7 +108,7 @@ async function callOpenAI(body: EvalCopilotRequest, prompt: string, signal?: Abo
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-  
+
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.prompt_tokens) || 0,
     outputTokens: Number(json.usage.completion_tokens) || 0,
@@ -133,7 +134,7 @@ async function callAnthropic(body: EvalCopilotRequest, prompt: string, signal?: 
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-  
+
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.input_tokens) || 0,
     outputTokens: Number(json.usage.output_tokens) || 0,
@@ -163,7 +164,7 @@ async function callCompatible(body: EvalCopilotRequest, prompt: string, signal?:
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-  
+
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.prompt_tokens) || 0,
     outputTokens: Number(json.usage.completion_tokens) || 0,
@@ -192,6 +193,8 @@ async function generateText(provider: AIProvider, body: EvalCopilotRequest, prom
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const auth = authCheck.auth
 
   const quotaCheck = await checkAiQuota(auth.uid)

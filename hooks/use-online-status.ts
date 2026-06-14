@@ -5,13 +5,13 @@ export function useOnlineStatus(): boolean {
   const [isOnline, setIsOnline] = useState(true)
 
   useEffect(() => {
-    setIsOnline(navigator.onLine)
-
     const handleOnline  = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
+    const syncStatus = () => setIsOnline(navigator.onLine)
 
     window.addEventListener("online",  handleOnline)
     window.addEventListener("offline", handleOffline)
+    void Promise.resolve().then(syncStatus)
 
     return () => {
       window.removeEventListener("online",  handleOnline)

@@ -32,9 +32,15 @@ export async function GET(req: NextRequest) {
     const allowByEmail = new Map<string, any>()
     allowSnap.docs.forEach((d) => allowByEmail.set(d.id, d.data()))
 
+    const aiAccessSnap = await db.collection("ai_access").get()
+    const aiAccessByUid = new Map<string, any>()
+    aiAccessSnap.docs.forEach((d) => aiAccessByUid.set(d.id, d.data()))
+
     const usuarios = listUsersResult.users.map((u) => {
       const email = (u.email || "").toLowerCase().trim()
       const claims = (u.customClaims || {}) as Record<string, any>
+      const admin = !!claims.admin || isAdminEmail(email)
+      const explicitAiAccess = aiAccessByUid.get(u.uid)?.enabled === true
       return {
         uid: u.uid,
         email: u.email,
@@ -44,9 +50,12 @@ export async function GET(req: NextRequest) {
         lastSignInTime: u.metadata.lastSignInTime,
         disabled: u.disabled,
         emailVerified: u.emailVerified,
-        isAdmin: !!claims.admin || isAdminEmail(email),
+        isAdmin: admin,
         inAllowlist: allowByEmail.has(email),
         allowlistSource: allowByEmail.get(email)?.source || null,
+        aiEnabled: admin || explicitAiAccess,
+        aiAccessManual: explicitAiAccess,
+        aiAccessSource: admin ? "admin" : explicitAiAccess ? "manual" : null,
       }
     })
 

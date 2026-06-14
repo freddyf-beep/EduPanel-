@@ -25,6 +25,16 @@ export class ApiError extends Error {
   }
 }
 
+function getErrorMessage(input: string, status: number, body: unknown): string {
+  if (body && typeof body === "object") {
+    const record = body as Record<string, unknown>
+    const msg = record.error ?? record.message
+    if (typeof msg === "string" && msg.trim()) return msg.trim()
+  }
+  if (typeof body === "string" && body.trim()) return body.trim()
+  return `Request to ${input} failed: ${status}`
+}
+
 export async function apiFetch(input: string, init: RequestInit = {}): Promise<Response> {
   const user = auth.currentUser
   if (!user) {
@@ -42,7 +52,7 @@ export async function apiFetch(input: string, init: RequestInit = {}): Promise<R
   const res = await fetch(input, { ...init, headers })
 
   if (!res.ok) {
-    let body: unknown = undefined
+    let body: unknown
     try {
       body = await res.clone().json()
     } catch {
@@ -52,7 +62,7 @@ export async function apiFetch(input: string, init: RequestInit = {}): Promise<R
         // ignorar
       }
     }
-    throw new ApiError(res.status, `Request to ${input} failed: ${res.status}`, body)
+    throw new ApiError(res.status, getErrorMessage(input, res.status, body), body)
   }
 
   return res

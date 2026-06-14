@@ -7,7 +7,7 @@ import {
   Download, Calendar, Plus, MoreHorizontal, X,
   ChevronRight, ExternalLink, Scissors, RefreshCw,
   EyeOff, Pencil, ArrowRight, Clock, Bookmark,
-  Loader2, Check, BookOpen, Layers, Link2, AlertCircle
+  Loader2, Check, BookOpen, Layers, Link2, AlertCircle, Sparkles
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { guardarPlanCurso, cargarPlanCurso, getAsignaturasDisponibles, getUnidades, eliminarUnidadCompleta, cargarCronogramaUnidad } from "@/lib/curriculo"
@@ -864,6 +864,16 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
                       ))}
                     </select>
                   </div>
+                  <Link
+                    href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
+                    className="flex items-center justify-between rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/30 px-3 py-2 text-[13px] font-extrabold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors"
+                  >
+                    <span className="flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-500 animate-pulse" />
+                      Probar Ver Unidad V3 (Rediseñado)
+                    </span>
+                    <ChevronRight className="h-3.5 w-3.5 text-indigo-400" />
+                  </Link>
                   <Link
                     href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
                     className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-[13px] font-semibold text-foreground hover:bg-background hover:border-primary transition-colors"

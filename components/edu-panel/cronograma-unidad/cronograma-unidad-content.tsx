@@ -122,16 +122,23 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
   const [autoFechaMensaje, setAutoFechaMensaje] = useState("")
 
   const COLS_VISIBLE = 7  // columnas visibles a la vez
+  const ignoreNextSaveRef = useRef(true)
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
 
   // Inicializar clases
   useEffect(() => {
-    setLoading(true)
-    Promise.all([
-      cargarCronogramaUnidad(ASIGNATURA, curso, unidadId),
-      cargarHorarioSemanal()
-    ]).then(([data, hData]) => {
+    let cancelled = false
+
+    Promise.resolve().then(async () => {
+      setLoading(true)
+      const [data, hData] = await Promise.all([
+        cargarCronogramaUnidad(ASIGNATURA, curso, unidadId),
+        cargarHorarioSemanal(),
+      ])
+      if (cancelled) return
+
       setHorarioBase(hData || [])
-      
+
       if (data && data.clases.length > 0) {
         // Si hay guardado, expandir/contraer al totalClases actual
         const saved = data.clases
@@ -152,23 +159,28 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
           oaIds: [],
         })))
       }
-      ignoreNextSaveRef.current = true;
-    }).finally(() => setLoading(false))
+      ignoreNextSaveRef.current = true
+    }).finally(() => {
+      if (!cancelled) setLoading(false)
+    })
+
+    return () => {
+      cancelled = true
+    }
   }, [curso, unidadId, totalClases, ASIGNATURA])
 
-  const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
-    if (loading) return;
+    if (loading) return
     if (ignoreNextSaveRef.current) {
-      ignoreNextSaveRef.current = false;
-      return;
+      ignoreNextSaveRef.current = false
+      return
     }
     setSaveStatus("saving_silent")
     const timer = setTimeout(() => {
-      handleGuardar(true)
+      void handleGuardarRef.current?.(true)
     }, 2500)
     return () => clearTimeout(timer)
-  }, [clases])
+  }, [clases, loading])
 
   const handleGuardar = async (isAutoSave = false) => {
     if (!isAutoSave) setSaving(true)
@@ -181,6 +193,10 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       setTimeout(() => setSaveStatus("idle"), 3000)
     } finally { setSaving(false) }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   // Toggle OA en una clase
   const toggleOA = (claseNum: number, oaId: string) => {
@@ -502,10 +518,10 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                           {clase.fecha ? formatFechaCorta(clase.fecha) : "Fecha"}
                         </button>
                       )}
-                      {/* Botón ir a actividad */}
+                      {/* Botón ir a clase */}
                       <Link
                         href={buildUrl(
-                          "/actividades",
+                          "/ver-unidad/clases",
                           withAsignatura(
                             unidadCurricularId && unidadCurricularId !== unidadId
                               ? { curso, unidad: unidadCurricularId, unitIdLocal: unidadId, clase: String(clase.numero) }
@@ -515,7 +531,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
                         )}
                         className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-primary hover:opacity-70 transition-opacity"
                       >
-                        Ir a actividad <ArrowRight className="w-2.5 h-2.5" />
+                        Ir a clase <ArrowRight className="w-2.5 h-2.5" />
                       </Link>
                     </div>
                   </th>
@@ -526,7 +542,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
               {oasSeleccionados.length === 0 ? (
                 <tr>
                   <td colSpan={COLS_VISIBLE + 1} className="px-4 py-10 text-center text-[13px] text-muted-foreground">
-                    No hay OA seleccionados. Ve a la pestaña <strong>Unidad</strong> y selecciona los OA primero.
+                    No hay OA seleccionados. Vuelve a <strong>Unidad</strong> y selecciona los OA primero.
                   </td>
                 </tr>
               ) : (

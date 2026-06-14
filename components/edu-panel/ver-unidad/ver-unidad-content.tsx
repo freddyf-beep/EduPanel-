@@ -350,8 +350,10 @@ function VerUnidadInner() {
   const [pdfPos, setPdfPos]             = useState({ right: 32, bottom: 32 })
   const [isDraggingPdf, setIsDraggingPdf] = useState(false)
   const pdfDragRef = useRef<{ startX: number, startY: number, startRight: number, startBottom: number } | null>(null)
+  const ignoreNextSaveRef = useRef(true)
+  const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
   const isMobile = useIsMobile()
-  
+
   const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     pdfDragRef.current = { startX: e.clientX, startY: e.clientY, startRight: pdfPos.right, startBottom: pdfPos.bottom }
     setIsDraggingPdf(true)
@@ -419,21 +421,20 @@ function VerUnidadInner() {
       }
     }
     cargar()
-  }, [cursoParam, unidadParam, unitIndex, ASIGNATURA])
+  }, [cursoParam, unidadParam, unidadLocalParam, unitIndex, ASIGNATURA])
 
-  const ignoreNextSaveRef = useRef(true);
   useEffect(() => {
     if (loading) return;
     if (ignoreNextSaveRef.current) {
       ignoreNextSaveRef.current = false;
       return;
     }
-    setSaveStatus("saving_silent");
     const timer = setTimeout(() => {
-      handleGuardar(true);
+      setSaveStatus("saving_silent");
+      void handleGuardarRef.current?.(true);
     }, 2500)
     return () => clearTimeout(timer);
-  }, [descripcion, contextoDocente, objetivoDocente, horas, clases, oas, habilidades, conocimientos, actitudes, actividades])
+  }, [descripcion, contextoDocente, objetivoDocente, horas, clases, oas, habilidades, conocimientos, actitudes, actividades, loading])
 
   // ── Warn al salir con cambios sin guardar ──
   useEffect(() => {
@@ -482,6 +483,10 @@ function VerUnidadInner() {
       if (!isAutoSave) setSaving(false)
     }
   }
+
+  useEffect(() => {
+    handleGuardarRef.current = handleGuardar
+  })
 
   const handleDescargarDocx = async () => {
     if (downloadingDocx) return
@@ -609,6 +614,14 @@ function VerUnidadInner() {
           <h1 className="text-[18px] sm:text-[22px] font-extrabold truncate">{unidad.nombre_unidad} — {cursoParam}</h1>
         </div>
         <div className="flex w-full flex-wrap items-center gap-2 sm:gap-2.5 print:hidden sm:w-auto sm:justify-end">
+          <Link
+            href={buildUrl("/actividades", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
+            className="flex items-center gap-[7px] border-none text-white rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-bold bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 transition-all shadow-md hover:shadow-lg"
+          >
+            <Sparkles className="w-[15px] h-[15px]" />
+            <span className="hidden sm:inline">Planificar con IA (Nuevo)</span>
+            <span className="sm:hidden">IA (Nuevo)</span>
+          </Link>
           <button onClick={() => setShowPdf(true)} className="flex items-center gap-[7px] border-[1.5px] border-primary text-primary rounded-[10px] px-3 sm:px-4 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-bold bg-pink-light/30 hover:bg-pink-light/60 transition-colors">
             <FileText className="w-[15px] h-[15px]" />
             <span className="hidden sm:inline">Programa Oficial</span>
@@ -910,7 +923,7 @@ function VerUnidadInner() {
 
       {/* Ventana Flotante Programa PDF (Estilo Sticky) */}
       {showPdf && (
-        <div 
+        <div
           className={cn(
             "fixed z-[600] border-[2px] border-border bg-card flex flex-col transition-shadow",
             isMobile ? "inset-3 rounded-[18px]" : "rounded-[18px]",
@@ -918,7 +931,7 @@ function VerUnidadInner() {
           )}
           style={isMobile ? { overflow: "hidden" } : { right: `${pdfPos.right}px`, bottom: `${pdfPos.bottom}px`, width: "520px", height: "70vh", resize: "both", overflow: "hidden" }}
         >
-          <div 
+          <div
             className={cn("flex items-center justify-between border-b border-border bg-background/95 px-4 py-3 backdrop-blur", isMobile ? "" : "cursor-move touch-none")}
             onPointerDown={isMobile ? undefined : handlePdfPointerDown}
             onPointerMove={isMobile ? undefined : handlePdfPointerMove}
@@ -935,11 +948,11 @@ function VerUnidadInner() {
               </div>
             </div>
             <div className="flex gap-1.5" onPointerDown={e => e.stopPropagation()}>
-              <button onClick={() => window.open(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${encodeURIComponent(`${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}`, "_blank")} 
+              <button onClick={() => window.open(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${encodeURIComponent(`${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}`, "_blank")}
                 className="w-8 h-8 rounded-full bg-background border border-border grid place-items-center text-muted-foreground hover:bg-muted transition-colors cursor-pointer" title="Abrir en pestaña nueva">
                 <Download className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => setShowPdf(false)} 
+              <button onClick={() => setShowPdf(false)}
                 className="w-8 h-8 rounded-full bg-background border border-border grid place-items-center text-muted-foreground hover:bg-muted transition-colors cursor-pointer" title="Cerrar ventana">
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -947,9 +960,9 @@ function VerUnidadInner() {
           </div>
           <div className="flex-1 bg-muted relative">
             {isDraggingPdf && <div className="absolute inset-0 z-10" />}
-            <iframe 
+            <iframe
               src={`https://docs.google.com/viewer?url=${encodeURIComponent(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}&embedded=true`}
-              className="absolute inset-0 w-full h-full border-none bg-white" 
+              className="absolute inset-0 w-full h-full border-none bg-white"
               title="Programa de Estudio"
             />
           </div>

@@ -16,6 +16,8 @@ build/
 .env.test.local
 .env.production.local
 .env.backup.local
+.env.example
+.env.backup.example
 
 # Firebase / credenciales
 firebase-adminsdk-*.json
@@ -30,6 +32,11 @@ service-account*.json
 # herramientas locales de agentes
 .claude/
 .codex/
+.kiro/
+.vscode/
+.clauderules
+.cursorrules
+.git.broken_*/
 
 # logs
 *.log
@@ -45,9 +52,28 @@ ts_errors.log
 next-env.d.ts
 
 # datos locales
+Archivos de Curriculum/
+PDF Y .JSON CURSOS/
+PDF-FREDDY/
+Pruebas y Ribricas 2026/
 backups/
+.backups/
 /tmp/
 /backup_*/
+ops/
+scripts/
+scratch/
+scratch_*.js
+inspect_*.py
+read_pdf.py
+search_config.py
 *.bak
 scratch.*
 *.zip
+
+# documentos internos / auditoria
+AUDITORIA*.md
+CHECKLIST_LANZAMIENTO.md
+PROXIMOS_PASOS_LANZAMIENTO.md
+BACKUPS_FIRESTORE.md
+abrir-3-ramas.ps1

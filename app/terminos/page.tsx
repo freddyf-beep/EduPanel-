@@ -22,7 +22,7 @@ export default function TerminosPage() {
           <section>
             <h2 className="text-lg font-bold mt-6 mb-2">1. Aceptación</h2>
             <p>
-              Al iniciar sesión en EduPanel ("la Plataforma") usted acepta estos Términos
+              Al iniciar sesión en EduPanel (&quot;la Plataforma&quot;) usted acepta estos Términos
               de Uso y la Política de Privacidad. Si no está de acuerdo, por favor no use
               la Plataforma.
             </p>
@@ -78,7 +78,7 @@ export default function TerminosPage() {
           <section>
             <h2 className="text-lg font-bold mt-6 mb-2">6. Sin garantía durante la alfa</h2>
             <p>
-              Durante la fase alfa, la Plataforma se entrega "tal cual". Pueden ocurrir
+              Durante la fase alfa, la Plataforma se entrega &quot;tal cual&quot;. Pueden ocurrir
               errores, pérdidas de datos o interrupciones. <strong>Le recomendamos
               respaldar manualmente</strong> sus planificaciones importantes mediante la
               función de exportación a Word.

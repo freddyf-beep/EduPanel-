@@ -14,11 +14,17 @@ service cloud.firestore {
 
     function isAdmin() {
       return isSignedIn()
-        && request.auth.token.email_verified == true
-        && request.auth.token.email in [
-          'freddyfigueroagea@gmail.com',
-          'freddyfiguea@gmail.com'
-        ];
+        && (
+          request.auth.token.admin == true
+          || (
+            request.auth.token.email_verified == true
+            && request.auth.token.email in [
+              'udefret34@gmail.com',
+              'freddyfigueroagea@gmail.com',
+              'freddyfiguea@gmail.com'
+            ]
+          )
+        );
     }
 
     // Datos privados del docente.
@@ -41,9 +47,30 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Allowlist por UID para sesiones de prueba anonimas.
+    match /allowlist_uids/{uid} {
+      allow get: if isOwner(uid);
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Permisos granulares para herramientas IA integradas.
+    // El usuario puede consultar su propio estado; solo admin puede conceder/revocar.
+    match /ai_access/{uid} {
+      allow get: if isOwner(uid) || isAdmin();
+      allow list: if isAdmin();
+      allow write: if isAdmin();
+    }
+
     // Invitaciones: administradas solo por API server-side/admin.
     match /invitaciones/{codigo} {
       allow read, write: if isAdmin();
+    }
+
+    // Configuracion publica para usuarios autenticados; escritura solo admin.
+    match /config/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
     }
 
     match /{document=**} {

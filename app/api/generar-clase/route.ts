@@ -11,7 +11,13 @@ import {
   type AIProvider,
   type LessonRequestBody,
 } from "@/lib/ai/copilot"
+import {
+  buildPedagogicalRepairPrompt,
+  findLessonQualityIssues,
+} from "@/lib/ai/pedagogical-engine"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 /**
  * Rate limiting in-memory por uid.
@@ -71,8 +77,35 @@ function resolveProvider(raw: string): AIProvider {
   return AI_PROVIDER_OPTIONS.some(option => option.value === raw) ? raw as AIProvider : "public"
 }
 
+function usesServerPaidCredentials(provider: AIProvider, body: LessonRequestBody): boolean {
+  if (provider === "public") return true
+  if (provider === "compatible") return false
+  return !cleanText(body.customToken)
+}
+
+function resolveTrackingModel(provider: AIProvider, body: LessonRequestBody, expectsJson: boolean): string {
+  if (provider === "public" || provider === "gemini") return resolveGeminiModel(body, expectsJson, provider)
+  if (provider === "groq") return cleanText(body.customModel) || getProviderMeta("groq").defaultModel
+  if (provider === "compatible") return cleanText(body.customModel) || getProviderMeta("compatible").defaultModel
+  return cleanText(body.customModel) || getProviderMeta(provider).defaultModel
+}
+
+function resolveGeminiModel(body: LessonRequestBody, expectsJson: boolean, provider: AIProvider) {
+  const requested = cleanText(body.customModel)
+  const defaultFast = cleanText(process.env.GEMINI_FAST_MODEL) || getProviderMeta("gemini").defaultModel
+  const defaultLesson = cleanText(process.env.GEMINI_LESSON_MODEL) || "gemini-2.5-pro"
+
+  if (body.engine === "pedagogical_v1" && expectsJson) {
+    if (provider === "public") return defaultLesson
+    return requested && requested !== getProviderMeta("gemini").defaultModel ? requested : defaultLesson
+  }
+
+  if (!expectsJson && provider === "public") return cleanText(process.env.GEMINI_FAST_MODEL) || defaultFast
+  return requested || defaultFast
+}
+
 async function callGemini(body: LessonRequestBody, prompt: string, expectsJson: boolean, signal?: AbortSignal, provider: AIProvider = "gemini") {
-  const model = cleanText(body.customModel) || getProviderMeta("gemini").defaultModel
+  const model = resolveGeminiModel(body, expectsJson, provider)
   const token = provider === "public"
     ? cleanText(process.env.GEMINI_API_KEY)
     : cleanText(body.customToken) || cleanText(process.env.GEMINI_API_KEY)
@@ -244,6 +277,8 @@ export async function POST(req: Request) {
   // 1) Auth: Bearer token de Firebase + allowlist obligatorios
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const auth = authCheck.auth
 
   // 2) Rate limit por uid (30/h)
@@ -264,8 +299,25 @@ export async function POST(req: Request) {
 
     const prompt = buildCopilotPrompt(body, mode)
     const expectsJson = mode !== "chat"
+    const shouldTrackUsage = usesServerPaidCredentials(provider, body)
+    const trackedModel = resolveTrackingModel(provider, body, expectsJson)
+
+    if (shouldTrackUsage) {
+      const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: prompt })
+      if (!budget.ok) return budget.response
+    }
 
     const rawText = await generateText(provider, body, prompt, expectsJson, req.signal)
+    if (shouldTrackUsage) {
+      await recordAiUsage({
+        uid: auth.uid,
+        feature: "generar-clase",
+        provider,
+        model: trackedModel,
+        inputText: prompt,
+        outputText: rawText,
+      })
+    }
 
     // Modo chat: respuesta libre en texto
     if (mode === "chat") {
@@ -285,7 +337,21 @@ export async function POST(req: Request) {
       console.warn("[generar-clase] Parse falló en primer intento, reintentando con prompt estricto...")
       const retryPrompt = `${prompt}\n\n---\nIMPORTANTE: Tu respuesta anterior contenía formato inválido. Devuelve SOLO un objeto JSON válido (sin texto antes, sin texto después, sin explicación, sin comentarios), envuelto en \`\`\`json ... \`\`\`. Sin comas finales antes de } o ].`
       try {
+        if (shouldTrackUsage) {
+          const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: retryPrompt })
+          if (!budget.ok) return budget.response
+        }
         const retryText = await generateText(provider, body, retryPrompt, expectsJson, req.signal)
+        if (shouldTrackUsage) {
+          await recordAiUsage({
+            uid: auth.uid,
+            feature: "generar-clase",
+            provider,
+            model: trackedModel,
+            inputText: retryPrompt,
+            outputText: retryText,
+          })
+        }
         parsed = parseJsonResponse(retryText || "{}")
       } catch (retryErr) {
         // El reintento también falló: devolver el texto crudo para que el cliente
@@ -298,7 +364,38 @@ export async function POST(req: Request) {
         }, { status: 200 })
       }
     }
-    const lesson = coerceGeneratedLesson(parsed)
+    let lesson = coerceGeneratedLesson(parsed)
+
+    if (body.engine === "pedagogical_v1" && mode === "crear_inicial") {
+      const issues = findLessonQualityIssues({
+        ...lesson,
+        actividadEvaluacion: lesson.actividadEvaluacion,
+      })
+      if (issues.length > 0) {
+        const repairPrompt = buildPedagogicalRepairPrompt(body, parsed, issues)
+        try {
+          if (shouldTrackUsage) {
+            const budget = await checkAiBudget(auth.uid, { feature: "generar-clase", inputText: repairPrompt })
+            if (!budget.ok) return budget.response
+          }
+          const repairText = await generateText(provider, body, repairPrompt, true, req.signal)
+          if (shouldTrackUsage) {
+            await recordAiUsage({
+              uid: auth.uid,
+              feature: "generar-clase",
+              provider,
+              model: trackedModel,
+              inputText: repairPrompt,
+              outputText: repairText,
+            })
+          }
+          parsed = parseJsonResponse(repairText || "{}")
+          lesson = coerceGeneratedLesson(parsed)
+        } catch (repairErr) {
+          console.warn("[generar-clase] Revision pedagogica no pudo reparar la salida:", repairErr)
+        }
+      }
+    }
 
     return NextResponse.json({
       ...lesson,
@@ -317,7 +414,11 @@ export async function POST(req: Request) {
     const rawMessage = error instanceof Error ? error.message : "Error interno del servidor"
     const message = normalizeProviderError(provider, rawMessage)
 
-    const status = error instanceof ProviderConfigError ? error.status : 500
+    const status = error instanceof ProviderConfigError
+      ? error.status
+      : /quota|rate limit|rate-limit|too many requests|resource_exhausted|exceeded|429/i.test(rawMessage)
+        ? 429
+        : 500
     return NextResponse.json({ error: message }, { status })
   }
 }

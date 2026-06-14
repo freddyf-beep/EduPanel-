@@ -55,6 +55,28 @@ function safeFilename(value: string): string {
   return normalized || "rubrica"
 }
 
+function isValidRubricaPayload(value: unknown): value is RubricaTemplate {
+  const rubrica = value as RubricaTemplate | undefined
+  return Boolean(
+    rubrica &&
+    typeof rubrica.nombre === "string" &&
+    typeof rubrica.asignatura === "string" &&
+    typeof rubrica.curso === "string" &&
+    typeof rubrica.puntajeMaximo === "number" &&
+    Array.isArray(rubrica.partes) &&
+    rubrica.partes.every(parte => parte && Array.isArray(parte.criterios))
+  )
+}
+
+function isValidEvaluacionPayload(value: unknown): value is EvaluacionRubrica {
+  const evaluacion = value as EvaluacionRubrica | undefined
+  return Boolean(
+    evaluacion &&
+    Array.isArray(evaluacion.grupos) &&
+    evaluacion.grupos.every(grupo => grupo && Array.isArray(grupo.estudiantes))
+  )
+}
+
 function celda(text: string, opts?: {
   bold?: boolean
   bg?: string
@@ -153,7 +175,6 @@ function seccionParte(
   const numColumnas = usaPonderaciones ? 7 : 6
   const tabla = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     borders: {
       top:    { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
       bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
@@ -409,16 +430,26 @@ export async function POST(req: NextRequest) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
   try {
-    const body: {
-      rubrica: RubricaTemplate
-      evaluacion: EvaluacionRubrica
+    const body = await req.json().catch(() => null) as {
+      rubrica?: RubricaTemplate
+      evaluacion?: EvaluacionRubrica
       modo?: "grupo" | "alumno" | "listado"
       estudianteId?: string
       profesorNombre?: string
       colegio?: string
       logoBase64?: string
-    } = await req.json()
+    } | null
+    if (!body) {
+      return NextResponse.json({ error: "Datos invalidos" }, { status: 400 })
+    }
+
     const { rubrica, evaluacion, modo = "grupo", estudianteId, profesorNombre, colegio, logoBase64 } = body
+    if (!isValidRubricaPayload(rubrica)) {
+      return NextResponse.json({ error: "Rubrica invalida" }, { status: 400 })
+    }
+    if (!isValidEvaluacionPayload(evaluacion)) {
+      return NextResponse.json({ error: "Evaluacion invalida" }, { status: 400 })
+    }
 
     const pageMargin = {
       top: convertInchesToTwip(0.8),
@@ -493,7 +524,6 @@ export async function POST(req: NextRequest) {
 
       const tablaListado = new Table({
         width: { size: 100, type: WidthType.PERCENTAGE },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         borders: {
           top:    { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
           bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },

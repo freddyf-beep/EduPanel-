@@ -13,7 +13,7 @@
  *  - lib/auth/verify-token.ts (DEFAULT_ADMIN_EMAILS)
  */
 export const DEFAULT_ADMIN_EMAILS = [
-  "freddyfigueroagea@gmail.com",
+  "udefret34@gmail.com",
   "freddyfiguea@gmail.com",
 ]
 

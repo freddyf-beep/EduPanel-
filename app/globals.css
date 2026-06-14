@@ -80,6 +80,12 @@
   --status-pie-bg:       #FFFBEB;
   --status-pie-text:     #92400E;
   --status-pie-border:   #FDE68A;
+
+  /* Pruebas/Guías unified flow accents (WCAG AA against --background/--card) */
+  --accent-pruebas:      #F03E6E;
+  --accent-pruebas-soft: #FFE4EC;
+  --accent-guias:        #7C3AED;
+  --accent-guias-soft:   #EDE9FE;
 }
 
 /* ─────────────────────────────────────────────────
@@ -187,6 +193,12 @@
   --status-pie-bg:       color-mix(in srgb, #F59E0B 12%, #111);
   --status-pie-text:     #FBBF24;
   --status-pie-border:   color-mix(in srgb, #F59E0B 25%, #333);
+
+  /* Pruebas/Guías unified flow accents — dark overrides (WCAG AA on dark surfaces) */
+  --accent-pruebas:      #FF6B91;
+  --accent-pruebas-soft: #3B1B25;
+  --accent-guias:        #A78BFA;
+  --accent-guias-soft:   #2A1F4A;
 }
 
 /* ─────────────────────────────────────────────────

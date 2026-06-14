@@ -3,6 +3,7 @@
 import { useAuth } from "@/components/auth/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { AlertCircle, KeyRound, Loader2, CheckCircle2 } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
@@ -39,7 +40,9 @@ export default function LoginPage() {
       await apiFetch("/api/redeem-invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: inviteCode.trim() }),
+        body: JSON.stringify({
+          code: inviteCode.trim(),
+        }),
       })
 
       setRedeemSuccess(true)
@@ -68,7 +71,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
       <div className="max-w-md w-full bg-card rounded-[20px] shadow-xl p-8 text-center border border-border">
-        <img src="/logos/logo-3.png" alt="EduPanel" className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-sm object-contain" />
+        <Image
+          src="/logos/logo-3.png"
+          alt="EduPanel"
+          width={80}
+          height={80}
+          className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-sm object-contain"
+        />
         <h1 className="text-2xl font-extrabold mb-2">Bienvenido a EduPanel</h1>
         <p className="text-muted-foreground mb-6">Inicia sesion para gestionar tus clases y planificaciones.</p>
 
@@ -124,14 +133,16 @@ export default function LoginPage() {
         )}
 
         {!user && (
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={signingIn}
-            className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
-          >
-            {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            {signingIn ? "Conectando..." : "Iniciar sesion con Google"}
-          </button>
+          <div className="space-y-4">
+            <button
+              onClick={handleGoogleSignIn}
+              disabled={signingIn}
+              className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+              {signingIn ? "Conectando..." : "Iniciar sesion con Google"}
+            </button>
+          </div>
         )}
 
         {signInError && (

@@ -14,13 +14,14 @@ import {
   AlertCircle,
   Loader2,
   CheckCircle2,
+  Sparkles,
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { toast } from "@/hooks/use-toast"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import { cargarNivelMapping, type NivelMapping } from "@/lib/nivel-mapping"
-import { apiFetch } from "@/lib/api-client"
+import { ApiError, apiFetch } from "@/lib/api-client"
 import { getUnidades } from "@/lib/curriculo"
 import type { Unidad } from "@/lib/curriculo"
 import {
@@ -41,6 +42,8 @@ import {
   type OAEditado,
 } from "@/lib/rubricas"
 import { RubricaOAEditor } from "./rubrica-oa-editor"
+import { CrearRubricaSelloModal } from "./crear-rubrica-sello-modal"
+import { getFeatureFlags } from "@/lib/feature-flags"
 
 interface Props {
   mode?: "blank" | "import"
@@ -90,6 +93,12 @@ export function RubricaImport({ mode = "import" }: Props) {
   const [nivelMapping, setNivelMapping] = useState<NivelMapping>({})
   const [unidadesDisponibles, setUnidadesDisponibles] = useState<Unidad[]>([])
   const [cargandoUnidades, setCargandoUnidades] = useState(false)
+  const [showSelloModal, setShowSelloModal] = useState(false)
+  const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({})
+
+  useEffect(() => {
+    getFeatureFlags().then(setFeatureFlags).catch(console.error)
+  }, [])
 
   const resolverCurriculo = useCallback(async (baseRubrica: RubricaTemplate) => {
     const requestId = ++curriculoRequestRef.current
@@ -365,7 +374,16 @@ export function RubricaImport({ mode = "import" }: Props) {
         setPartesExpandidas(new Set(data.partes.map((parte: RubricaParte) => parte.id)))
       }
     } catch (importError) {
-      setError(importError instanceof Error ? importError.message : "Error al leer el archivo")
+      if (importError instanceof ApiError) {
+        const body = importError.body
+        const message =
+          body && typeof body === "object" && "error" in body
+            ? String((body as { error?: unknown }).error)
+            : importError.message
+        setError(message)
+      } else {
+        setError(importError instanceof Error ? importError.message : "Error al leer el archivo")
+      }
     } finally {
       setImporting(false)
     }
@@ -788,13 +806,26 @@ export function RubricaImport({ mode = "import" }: Props) {
             </p>
           </div>
 
-          <button
-            onClick={agregarParte}
-            className="flex items-center gap-1.5 rounded-[10px] border border-border px-3 py-1.5 text-[12px] font-medium transition-colors hover:bg-muted/60"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            Agregar parte
-          </button>
+          <div className="flex items-center gap-2">
+            {featureFlags["rubricas-sello"]?.active && (
+              <button
+                type="button"
+                onClick={() => setShowSelloModal(true)}
+                className="flex items-center gap-1.5 rounded-[10px] bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 text-[12px] font-bold transition-colors shadow-sm cursor-pointer"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-white animate-pulse" />
+                Crear Rúbrica Sello (IA)
+              </button>
+            )}
+
+            <button
+              onClick={agregarParte}
+              className="flex items-center gap-1.5 rounded-[10px] border border-border px-3 py-1.5 text-[12px] font-medium transition-colors hover:bg-muted/60"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Agregar parte
+            </button>
+          </div>
         </div>
 
         {rubrica.partes.map((parte, index) => (
@@ -986,6 +1017,29 @@ export function RubricaImport({ mode = "import" }: Props) {
           </div>
         )}
       </div>
+      {showSelloModal && (
+        <CrearRubricaSelloModal
+          isOpen={showSelloModal}
+          onClose={() => setShowSelloModal(false)}
+          curso={rubrica.curso}
+          asignatura={rubrica.asignatura || asignatura}
+          onSelectRubrica={(partes, titulo) => {
+            updateRubrica(current => {
+              const updatedPartes = [...current.partes, ...partes]
+              return {
+                ...current,
+                nombre: current.nombre.trim() === "Nueva rúbrica" || current.nombre.trim() === "Nueva rubrica" ? titulo : current.nombre,
+                partes: updatedPartes,
+                puntajeMaximo: calcularPuntajeMaximo(updatedPartes),
+              }
+            })
+            // Expand all new parts
+            partes.forEach(p => {
+              setPartesExpandidas(prev => new Set([...prev, p.id]))
+            })
+          }}
+        />
+      )}
     </div>
   )
 }

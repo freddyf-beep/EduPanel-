@@ -136,9 +136,24 @@ function isTableHeaderLine(linea: string): boolean {
   )
 }
 
+function isChecklistHeaderLine(linea: string): boolean {
+  return (
+    /^Indicadores?\s+de\s+Evaluaci[oó]n$/i.test(linea) ||
+    /^S[ií]\s*\(\s*\d+\s*pts?\s*\)$/i.test(linea) ||
+    /^No\s*\(\s*\d+\s*pts?\s*\)$/i.test(linea)
+  )
+}
+
 function findTableStartIndex(lineas: string[]): number {
   const puntajeIndex = lineas.findIndex(linea => /^Puntaje$/i.test(linea))
   if (puntajeIndex !== -1) return puntajeIndex + 1
+
+  const checklistIndex = lineas.findIndex(linea => /^Indicadores?\s+de\s+Evaluaci[oó]n$/i.test(linea))
+  if (checklistIndex !== -1) {
+    let i = checklistIndex + 1
+    while (i < lineas.length && (isTableHeaderLine(lineas[i]) || isChecklistHeaderLine(lineas[i]))) i++
+    return i
+  }
 
   const criterioIndex = lineas.findIndex(linea => /^Criterio$/i.test(linea))
   if (criterioIndex !== -1) {
@@ -218,6 +233,57 @@ function extraerMetadatosCurriculares(lineas: string[]): RubricaMetadatosCurricu
   return metadatos
 }
 
+function getNextValueAfterLabel(lineas: string[], index: number): string {
+  for (let i = index + 1; i < lineas.length; i++) {
+    const value = normalizeLine(lineas[i])
+    if (!value) continue
+    if (/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñ\s/]+:\s*$/i.test(value)) return ""
+    return value
+  }
+  return ""
+}
+
+function extraerMetaListaCotejo(lineas: string[], metaBase: MetaRubrica): MetaRubrica {
+  const meta = { ...metaBase }
+  let contenidos = ""
+
+  lineas.forEach((raw, index) => {
+    const linea = normalizeLine(raw)
+    if (!linea) return
+
+    if (/^Curso:\s*$/i.test(linea)) {
+      meta.nivel = getNextValueAfterLabel(lineas, index) || meta.nivel
+      return
+    }
+    if (/^Curso:\s*.+/i.test(linea)) {
+      meta.nivel = linea.replace(/^Curso:\s*/i, "").trim() || meta.nivel
+      return
+    }
+
+    if (/^Asignatura:\s*$/i.test(linea)) {
+      meta.asignatura = getNextValueAfterLabel(lineas, index) || meta.asignatura
+      return
+    }
+    if (/^Asignatura:\s*.+/i.test(linea)) {
+      meta.asignatura = linea.replace(/^Asignatura:\s*/i, "").trim() || meta.asignatura
+      return
+    }
+
+    if (/^Contenidos?:\s*/i.test(linea)) {
+      contenidos = linea.replace(/^Contenidos?:\s*/i, "").trim()
+      meta.unidad = contenidos || meta.unidad
+    }
+  })
+
+  if (!meta.nombre && (meta.asignatura || meta.nivel || contenidos)) {
+    meta.nombre = ["Lista de cotejo", meta.asignatura, meta.nivel]
+      .filter(Boolean)
+      .join(" - ")
+  }
+
+  return meta
+}
+
 function parseSectionOrder(token: string, fallbackOrder: number): number {
   const limpio = token.trim().toUpperCase()
   const numeric = Number.parseInt(limpio, 10)
@@ -253,6 +319,22 @@ function extractCurricularRefs(texto: string): string[] {
   return Array.from(refs)
 }
 
+function esParteListaCotejo(
+  linea: string,
+  fallbackOrder: number
+): { esParte: boolean; nombre: string; oas: string[]; orden: number } {
+  const match = linea.match(/^([IVXLC]+)\.\s+(.+)$/i)
+  if (!match) return { esParte: false, nombre: "", oas: [], orden: fallbackOrder }
+  const orden = parseSectionOrder(match[1], fallbackOrder)
+  const titulo = match[2].trim()
+  return {
+    esParte: true,
+    nombre: `${match[1].toUpperCase()}. ${titulo}`,
+    oas: extractCurricularRefs(titulo),
+    orden,
+  }
+}
+
 function esParteSeparador(
   linea: string,
   fallbackOrder: number
@@ -279,7 +361,7 @@ function esPuntaje(linea: string): boolean {
 }
 
 function esLineaFinal(linea: string): boolean {
-  return /Total de puntos/i.test(linea) || /Nota Final/i.test(linea) || /Escala de notas/i.test(linea)
+  return /Total de puntos/i.test(linea) || /Puntaje\s+Total/i.test(linea) || /Nota Final/i.test(linea) || /Escala de notas/i.test(linea)
 }
 
 function buildEmptyCriterio(nombre: string, orden: number): CriterioRubrica {
@@ -349,10 +431,17 @@ export function parsearTextoRubrica(texto: string): ParsedData {
   const flushCriterio = () => {
     if (!criterioActual || !parteActual) return
     const [d0, d1, d2, d3] = resolveDescriptors(descBuffer)
-    criterioActual.niveles.logrado.descripcion = d0
-    criterioActual.niveles.casiLogrado.descripcion = d1
-    criterioActual.niveles.parcialmenteLogrado.descripcion = d2
-    criterioActual.niveles.porLograr.descripcion = d3
+    if (!d0 && !d1 && !d2 && !d3) {
+      criterioActual.niveles.logrado.descripcion = "Cumple completamente el indicador."
+      criterioActual.niveles.casiLogrado.descripcion = "Cumple el indicador con apoyos menores."
+      criterioActual.niveles.parcialmenteLogrado.descripcion = "Presenta avances, pero cumple el indicador de forma parcial."
+      criterioActual.niveles.porLograr.descripcion = "No cumple aun el indicador."
+    } else {
+      criterioActual.niveles.logrado.descripcion = d0
+      criterioActual.niveles.casiLogrado.descripcion = d1
+      criterioActual.niveles.parcialmenteLogrado.descripcion = d2
+      criterioActual.niveles.porLograr.descripcion = d3
+    }
     criterioActual.orden = parteActual.criterios.length + 1
     parteActual.criterios.push(criterioActual)
     criterioActual = null
@@ -374,7 +463,7 @@ export function parsearTextoRubrica(texto: string): ParsedData {
   for (let i = startIndex; i < lineas.length; i++) {
     const linea = lineas[i]
 
-    if (esLineaFinal(linea)) {
+    if (esLineaFinal(linea) && (criterioActual || parteActual || partes.length > 0)) {
       flushCriterio()
       for (let j = i; j < Math.min(i + 12, lineas.length); j++) {
         const puntajeMatch = lineas[j].match(/Puntaje total[:\s]+(\d+)/i)
@@ -416,7 +505,17 @@ export function parsearTextoRubrica(texto: string): ParsedData {
       }
     }
 
-    if (isTableHeaderLine(linea)) continue
+    if (isTableHeaderLine(linea) || isChecklistHeaderLine(linea)) continue
+
+    const parteListaInfo = esParteListaCotejo(linea, nextParteOrder)
+    if (parteListaInfo.esParte) {
+      flushCriterio()
+      flushParte()
+      parteActual = buildEmptyParte(parteListaInfo.orden, parteListaInfo.nombre)
+      parteActual.oasVinculados = parteListaInfo.oas
+      nextParteOrder = parteListaInfo.orden + 1
+      continue
+    }
 
     const parteInfo = esParteSeparador(linea, nextParteOrder)
     if (parteInfo.esParte) {
@@ -463,7 +562,7 @@ export function parsearTextoRubrica(texto: string): ParsedData {
   )
 
   return {
-    meta,
+    meta: extraerMetaListaCotejo(headerLines, meta),
     metadatosCurriculares,
     partes,
     puntajesPorCriterio,
