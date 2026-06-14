@@ -21,8 +21,15 @@ export function useActiveSubject(explicitSubject?: string | null) {
   )
 
   useEffect(() => {
-    const next = sanitizeAsignatura(urlSubject ?? readStoredSubject() ?? DEFAULT_ASIGNATURA)
-    setAsignaturaState((prev) => (prev === next ? prev : next))
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      const next = sanitizeAsignatura(urlSubject ?? readStoredSubject() ?? DEFAULT_ASIGNATURA)
+      setAsignaturaState((prev) => (prev === next ? prev : next))
+    })
+    return () => {
+      cancelled = true
+    }
   }, [urlSubject])
 
   useEffect(() => {

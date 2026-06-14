@@ -109,13 +109,20 @@ export function ImportWordModal({
   // Reset al abrir/cerrar
   useEffect(() => {
     if (!open) {
-      setSecciones([])
-      setMapping({})
-      setError("")
-      setStep("mapeo")
-      setOasSeleccionados([])
-      setHabilidadesSeleccionadas([])
-      setActitudesSeleccionadas([])
+      let cancelled = false
+      void Promise.resolve().then(() => {
+        if (cancelled) return
+        setSecciones([])
+        setMapping({})
+        setError("")
+        setStep("mapeo")
+        setOasSeleccionados([])
+        setHabilidadesSeleccionadas([])
+        setActitudesSeleccionadas([])
+      })
+      return () => {
+        cancelled = true
+      }
     } else {
       cargarMapeosFormatoPlanificacion().then(setMapeos).catch(() => setMapeos([]))
     }

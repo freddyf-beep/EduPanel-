@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="flex flex-1 items-center justify-center p-8">
-          <div className="w-full max-w-sm rounded-[14px] border border-red-200 bg-red-50 p-8 text-center dark:border-red-900 dark:bg-red-950">
+          <div className="w-full max-w-sm rounded-xl border border-red-200 bg-red-50 p-8 text-center dark:border-red-900 dark:bg-red-950">
             <AlertTriangle className="mx-auto mb-3 h-8 w-8 text-red-500" />
             <p className="mb-1 text-[14px] font-extrabold text-foreground">
               Algo salió mal{this.props.sectionName ? ` en ${this.props.sectionName}` : ""}
@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <p className="mb-5 text-[12px] text-muted-foreground">{this.state.message}</p>
             <button
               onClick={() => this.setState({ hasError: false, message: "" })}
-              className="flex items-center gap-2 mx-auto rounded-[10px] bg-primary px-4 py-2 text-[13px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 mx-auto rounded-lg bg-primary px-4 py-2 text-[13px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
             >
               <RefreshCw className="h-4 w-4" /> Reintentar
             </button>

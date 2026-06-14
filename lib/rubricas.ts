@@ -188,7 +188,7 @@ export async function resolverMetadatosCurricularesRubrica(
   rubrica: Pick<RubricaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<RubricaCurriculoResolucion> {
   const fallback = normalizeMetadatosCurriculares(rubrica.metadatosCurriculares)
-  const nivel = getCurriculoNivel(rubrica.curso)
+  const nivel = await getCurriculoNivel(rubrica.curso)
   const unidades = await getUnidades(rubrica.asignatura, nivel)
   if (!unidades.length) {
     return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
@@ -256,7 +256,7 @@ export async function cargarOAsParaRubrica(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 
@@ -595,7 +595,6 @@ export async function cargarRubrica(id: string): Promise<RubricaTemplate | null>
 }
 
 // Firestore rechaza campos con valor `undefined`. Este helper los elimina.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function stripUndefined(value: any): any {
   if (Array.isArray(value)) {
     return value.map(stripUndefined)

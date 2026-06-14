@@ -1,11 +1,21 @@
-import { VerUnidadV2Content } from "@/components/edu-panel/ver-unidad/ver-unidad-v2-content"
+import { Suspense } from "react"
 import { MainLayout } from "@/components/edu-panel"
+import { VerUnidadV3Dashboard } from "@/components/edu-panel/ver-unidad-v3/ver-unidad-v3-dashboard"
 
-// Página principal de Ver Unidad. La versión anterior está disponible en /ver-unidad-v1.
 export default function VerUnidadPage() {
   return (
     <MainLayout>
-      <VerUnidadV2Content />
+      <Suspense fallback={<VerUnidadFallback label="Cargando unidad..." />}>
+        <VerUnidadV3Dashboard />
+      </Suspense>
     </MainLayout>
+  )
+}
+
+function VerUnidadFallback({ label }: { label: string }) {
+  return (
+    <div className="flex min-h-[320px] items-center justify-center text-sm font-medium text-muted-foreground">
+      {label}
+    </div>
   )
 }

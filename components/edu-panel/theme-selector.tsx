@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Sun, Moon, Palette, Check } from "lucide-react"
+import { Sun, Moon, Palette, Check, Eye } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import {
   type ColorTheme,
@@ -16,11 +16,20 @@ import {
 export function ThemeSelector() {
   const [color, setColor] = useState<ColorTheme>("pink")
   const [dark, setDark]   = useState(false)
+  const [simpleMode, setSimpleMode] = useState(false)
 
   // Leer desde localStorage solo en cliente
   useEffect(() => {
-    setColor(getColorTheme())
-    setDark(getDarkMode())
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      setColor(getColorTheme())
+      setDark(getDarkMode())
+      setSimpleMode(window.localStorage.getItem("eduSimpleMode") === "true")
+    })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const handleColor = (c: ColorTheme) => {
@@ -32,6 +41,13 @@ export function ThemeSelector() {
     const next = !dark
     setDark(next)
     setDarkMode(next)
+  }
+
+  const handleSimpleMode = () => {
+    const next = !simpleMode
+    setSimpleMode(next)
+    localStorage.setItem("eduSimpleMode", String(next))
+    window.dispatchEvent(new Event("eduSimpleModeChange"))
   }
 
   return (
@@ -95,6 +111,7 @@ export function ThemeSelector() {
         <button
           onClick={handleDark}
           className="flex w-full items-center justify-between rounded-xl border border-border bg-background px-3 py-2.5 text-[13px] font-semibold transition-colors hover:border-primary"
+          aria-pressed={dark}
         >
           <span className="flex items-center gap-2">
             {dark
@@ -112,6 +129,27 @@ export function ThemeSelector() {
             <div
               className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform"
               style={{ transform: dark ? "translateX(18px)" : "translateX(2px)" }}
+            />
+          </div>
+        </button>
+
+        <button
+          onClick={handleSimpleMode}
+          className="mt-2 flex w-full items-center justify-between rounded-xl border border-border bg-background px-3 py-2.5 text-[13px] font-semibold transition-colors hover:border-primary"
+          aria-pressed={simpleMode}
+        >
+          <span className="flex items-center gap-2">
+            <Eye className="h-4 w-4 text-primary" />
+            Modo simple
+          </span>
+
+          <div
+            className="relative h-5 w-9 rounded-full transition-colors"
+            style={{ background: simpleMode ? THEME_META[color].hex : "var(--border)" }}
+          >
+            <div
+              className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform"
+              style={{ transform: simpleMode ? "translateX(18px)" : "translateX(2px)" }}
             />
           </div>
         </button>

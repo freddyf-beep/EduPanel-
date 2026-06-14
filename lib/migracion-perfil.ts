@@ -5,11 +5,11 @@
  * sin borrar los datos originales. Es seguro ejecutarlo varias veces.
  *
  * RUTAS ANTIGUAS (v1 / pre-perfil-v2):
- *   users/{uid}/perfil         → documento único con datos del perfil
- *   users/{uid}/colegio        → documento único con datos del colegio
- *   users/{uid}/horario        → documento único con array de clases
- *   users/{uid}/nivel_mapping  → documento único con mapping de curso→nivel
- *   users/{uid}/preferencias   → documento único con asignaturasHabilitadas
+ *   users/{uid}/perfil/{docId}        -> datos del perfil
+ *   users/{uid}/colegio/{docId}       -> datos del colegio
+ *   users/{uid}/horario/{docId}       -> array de clases
+ *   users/{uid}/nivel_mapping/{docId} -> mapping de curso-nivel
+ *   users/{uid}/preferencias/{docId}  -> asignaturasHabilitadas
  *
  * RUTAS NUEVAS (v2 actual):
  *   users/{uid}/perfil_info/main         → perfil profesional
@@ -49,8 +49,84 @@ export interface MigracionItem {
 
 // ── Helpers de ID legado ──────────────────────────────────────────────────────
 
-function legacyCursoId(curso: string): string {
-  return curso.toLowerCase().replace(/[^a-z0-9]/g, "_")
+const METADATA_KEYS = new Set(["updatedAt", "createdAt"])
+const LEGACY_DOC_PRIORITY = ["main", "config", "data", "default"]
+
+function hasMeaningfulValue(value: any): boolean {
+  if (value === null || value === undefined) return false
+  if (typeof value === "string") return value.trim().length > 0
+  if (typeof value === "number") return Number.isFinite(value) && value !== 0
+  if (typeof value === "boolean") return value
+  if (Array.isArray(value)) return value.some(hasMeaningfulValue)
+  if (typeof value === "object") {
+    return Object.entries(value).some(([key, nested]) => (
+      !METADATA_KEYS.has(key) && hasMeaningfulValue(nested)
+    ))
+  }
+  return false
+}
+
+function hasMeaningfulData(data: any): boolean {
+  if (!data || typeof data !== "object") return false
+  return Object.entries(data).some(([key, value]) => (
+    !METADATA_KEYS.has(key) && hasMeaningfulValue(value)
+  ))
+}
+
+function extractAlumnosFromDoc(data: any): any[] {
+  if (!data || typeof data !== "object") return []
+  if (Array.isArray(data.alumnos)) return data.alumnos
+  if (Array.isArray(data.estudiantes)) return data.estudiantes
+  return []
+}
+
+function extractClasesFromLegacyDoc(data: any): any[] {
+  if (!data || typeof data !== "object") return []
+  if (Array.isArray(data.clases)) return data.clases
+  if (Array.isArray(data.horario)) return data.horario
+  if (Array.isArray(data.bloques)) return data.bloques
+  return []
+}
+
+async function cargarDocumentoLegado(uid: string, colName: string): Promise<{ data: any; detalle: string } | null> {
+  const colSnap = await getDocs(collection(db, "users", uid, colName))
+  if (colSnap.empty) return null
+
+  const orderedDocs = [
+    ...LEGACY_DOC_PRIORITY
+      .map((docId) => colSnap.docs.find((oldDoc) => oldDoc.id === docId))
+      .filter(Boolean),
+    ...colSnap.docs.filter((oldDoc) => !LEGACY_DOC_PRIORITY.includes(oldDoc.id)),
+  ]
+
+  for (const oldDoc of orderedDocs) {
+    if (!oldDoc) continue
+    const data = oldDoc.data()
+    if (hasMeaningfulData(data)) {
+      return { data, detalle: `Desde users/{uid}/${colName}/${oldDoc.id}` }
+    }
+  }
+
+  return null
+}
+
+async function cargarHorarioLegado(uid: string): Promise<{ clases: any[]; detalle: string } | null> {
+  const colSnap = await getDocs(collection(db, "users", uid, "horario"))
+  const clases: any[] = []
+  const docsConDatos: string[] = []
+  colSnap.docs.forEach((oldDoc) => {
+    const oldDocClases = extractClasesFromLegacyDoc(oldDoc.data())
+    if (oldDocClases.length > 0) {
+      clases.push(...oldDocClases)
+      docsConDatos.push(oldDoc.id)
+    }
+  })
+
+  if (clases.length > 0) {
+    return { clases, detalle: `Desde users/{uid}/horario/{${docsConDatos.join(", ")}}` }
+  }
+
+  return null
 }
 
 // ── Función principal ─────────────────────────────────────────────────────────
@@ -63,17 +139,16 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
   // ── 1. Perfil profesional ──────────────────────────────────────────────────
   try {
     const nuevoSnap = await getDoc(doc(db, "users", uid, "perfil_info", "main"))
-    if (nuevoSnap.exists() && Object.keys(nuevoSnap.data() || {}).some(k => k !== "updatedAt")) {
+    if (nuevoSnap.exists() && hasMeaningfulData(nuevoSnap.data())) {
       items.push({ label: "Perfil profesional", estado: "ya_existe" })
     } else {
-      // Intentar desde ruta antigua
-      const viejoSnap = await getDoc(doc(db, "users", uid, "perfil"))
-      if (viejoSnap.exists()) {
+      const viejo = await cargarDocumentoLegado(uid, "perfil")
+      if (viejo) {
         await setDoc(doc(db, "users", uid, "perfil_info", "main"), {
-          ...viejoSnap.data(),
+          ...viejo.data,
           updatedAt: serverTimestamp(),
-        })
-        items.push({ label: "Perfil profesional", estado: "migrado", detalle: "Desde users/{uid}/perfil" })
+        }, { merge: true })
+        items.push({ label: "Perfil profesional", estado: "migrado", detalle: viejo.detalle })
       } else {
         items.push({ label: "Perfil profesional", estado: "no_encontrado" })
       }
@@ -86,17 +161,16 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
   // ── 2. Info del colegio ────────────────────────────────────────────────────
   try {
     const nuevoSnap = await getDoc(doc(db, "users", uid, "perfil_info", "colegio"))
-    if (nuevoSnap.exists() && Object.keys(nuevoSnap.data() || {}).some(k => k !== "updatedAt")) {
+    if (nuevoSnap.exists() && hasMeaningfulData(nuevoSnap.data())) {
       items.push({ label: "Info del colegio", estado: "ya_existe" })
     } else {
-      // Ruta antigua: users/{uid}/colegio (documento raíz, no subcolección)
-      const viejoSnap = await getDoc(doc(db, "users", uid, "colegio"))
-      if (viejoSnap.exists()) {
+      const viejo = await cargarDocumentoLegado(uid, "colegio")
+      if (viejo) {
         await setDoc(doc(db, "users", uid, "perfil_info", "colegio"), {
-          ...viejoSnap.data(),
+          ...viejo.data,
           updatedAt: serverTimestamp(),
-        })
-        items.push({ label: "Info del colegio", estado: "migrado", detalle: "Desde users/{uid}/colegio" })
+        }, { merge: true })
+        items.push({ label: "Info del colegio", estado: "migrado", detalle: viejo.detalle })
       } else {
         items.push({ label: "Info del colegio", estado: "no_encontrado" })
       }
@@ -109,16 +183,16 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
   // ── 3. Preferencias ────────────────────────────────────────────────────────
   try {
     const nuevoSnap = await getDoc(doc(db, "users", uid, "perfil_info", "preferencias"))
-    if (nuevoSnap.exists() && Object.keys(nuevoSnap.data() || {}).some(k => k !== "updatedAt")) {
+    if (nuevoSnap.exists() && hasMeaningfulData(nuevoSnap.data())) {
       items.push({ label: "Preferencias", estado: "ya_existe" })
     } else {
-      const viejoSnap = await getDoc(doc(db, "users", uid, "preferencias"))
-      if (viejoSnap.exists()) {
+      const viejo = await cargarDocumentoLegado(uid, "preferencias")
+      if (viejo) {
         await setDoc(doc(db, "users", uid, "perfil_info", "preferencias"), {
-          ...viejoSnap.data(),
+          ...viejo.data,
           updatedAt: serverTimestamp(),
-        })
-        items.push({ label: "Preferencias", estado: "migrado", detalle: "Desde users/{uid}/preferencias" })
+        }, { merge: true })
+        items.push({ label: "Preferencias", estado: "migrado", detalle: viejo.detalle })
       } else {
         items.push({ label: "Preferencias", estado: "no_encontrado" })
       }
@@ -134,18 +208,15 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
     if (nuevoSnap.exists() && (nuevoSnap.data()?.clases || []).length > 0) {
       items.push({ label: "Horario semanal", estado: "ya_existe" })
     } else {
-      // Ruta antigua: users/{uid}/horario (doc único, campo "clases" o raíz)
-      const viejoSnap = await getDoc(doc(db, "users", uid, "horario"))
-      if (viejoSnap.exists()) {
-        const data = viejoSnap.data()
-        // Algunos formatos antiguos guardaban el array directamente en "clases",
-        // otros lo guardaban en "horario" o en la raíz del doc.
-        const clases = data?.clases || data?.horario || []
+      // Ruta antigua real: users/{uid}/horario/{docId}
+      const horarioLegado = await cargarHorarioLegado(uid)
+      if (horarioLegado) {
+        const clases = horarioLegado.clases
         await setDoc(doc(db, "users", uid, "configuracion", "horario"), {
           clases,
           updatedAt: serverTimestamp(),
         })
-        items.push({ label: "Horario semanal", estado: "migrado", detalle: `${clases.length} bloques desde users/{uid}/horario` })
+        items.push({ label: "Horario semanal", estado: "migrado", detalle: `${clases.length} bloques ${horarioLegado.detalle}` })
       } else {
         items.push({ label: "Horario semanal", estado: "no_encontrado" })
       }
@@ -158,16 +229,15 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
   // ── 5. Nivel mapping ───────────────────────────────────────────────────────
   try {
     const nuevoSnap = await getDoc(doc(db, "users", uid, "configuracion", "nivel_mapping"))
-    if (nuevoSnap.exists() && Object.keys(nuevoSnap.data()?.mapping || {}).length > 0) {
+    if (nuevoSnap.exists() && hasMeaningfulData(nuevoSnap.data()?.mapping || {})) {
       items.push({ label: "Niveles por curso", estado: "ya_existe" })
     } else {
-      const viejoSnap = await getDoc(doc(db, "users", uid, "nivel_mapping"))
-      if (viejoSnap.exists()) {
-        const data = viejoSnap.data()
-        // El campo puede ser "mapping" (ya normalizado) o la raíz directamente
+      const viejo = await cargarDocumentoLegado(uid, "nivel_mapping")
+      if (viejo) {
+        const data = viejo.data
         const mapping = data?.mapping ?? data
         await setDoc(doc(db, "users", uid, "configuracion", "nivel_mapping"), { mapping })
-        items.push({ label: "Niveles por curso", estado: "migrado", detalle: `${Object.keys(mapping).length} cursos desde users/{uid}/nivel_mapping` })
+        items.push({ label: "Niveles por curso", estado: "migrado", detalle: `${Object.keys(mapping).length} cursos ${viejo.detalle}` })
       } else {
         items.push({ label: "Niveles por curso", estado: "no_encontrado" })
       }
@@ -182,7 +252,10 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
   // y también la subcolección "estudiantes" pero con IDs en formato legado.
   try {
     const estudiantesNuevos = await getDocs(collection(db, "users", uid, "estudiantes"))
-    const cursosConDatos = new Set(estudiantesNuevos.docs.map(d => d.id))
+    const cursosConDatos = new Set<string>()
+    estudiantesNuevos.docs.forEach((snap) => {
+      if (extractAlumnosFromDoc(snap.data()).length > 0) cursosConDatos.add(snap.id)
+    })
 
     // Subcolecciones candidatas de la ruta antigua
     const subcolAntiguas = ["cursos_estudiantes", "estudiantes_lista", "alumnos"]
@@ -193,18 +266,19 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
         const viejosSnap = await getDocs(collection(db, "users", uid, subCol))
         if (viejosSnap.empty) continue
 
-        encontradoAlguno = true
         for (const viejoDoc of viejosSnap.docs) {
           const cursoRaw = viejoDoc.id
           const cursoIdNuevo = buildCursoId(cursoRaw)
+          const data = viejoDoc.data()
+          const alumnos = extractAlumnosFromDoc(data)
+          if (alumnos.length === 0) continue
+
+          encontradoAlguno = true
 
           if (cursosConDatos.has(cursoIdNuevo)) {
             items.push({ label: `Estudiantes: ${cursoRaw}`, estado: "ya_existe" })
             continue
           }
-
-          const data = viejoDoc.data()
-          const alumnos = data?.alumnos || data?.estudiantes || []
 
           await setDoc(doc(db, "users", uid, "estudiantes", cursoIdNuevo), {
             alumnos,
@@ -227,8 +301,8 @@ export async function migrarDatosPerfil(): Promise<MigracionResultado> {
       const newId = buildCursoId(legacyId.replace(/_/g, " "))
       if (legacyId !== newId && !cursosConDatos.has(newId)) {
         try {
-          const data = snap.data()
-          const alumnos = data?.alumnos || []
+          const alumnos = extractAlumnosFromDoc(snap.data())
+          if (alumnos.length === 0) continue
           await setDoc(doc(db, "users", uid, "estudiantes", newId), { alumnos })
           items.push({
             label: `Estudiantes (normalización): ${legacyId} → ${newId}`,
@@ -267,29 +341,72 @@ export async function detectarDatosLegado(): Promise<{
 }> {
   const uid = getUid()
 
-  const [perfilViejo, colegioViejo, horarioViejo, mappingViejo] = await Promise.all([
-    getDoc(doc(db, "users", uid, "perfil")).catch(() => null),
-    getDoc(doc(db, "users", uid, "colegio")).catch(() => null),
-    getDoc(doc(db, "users", uid, "horario")).catch(() => null),
-    getDoc(doc(db, "users", uid, "nivel_mapping")).catch(() => null),
+  const [
+    perfilViejo,
+    colegioViejo,
+    horarioViejo,
+    mappingViejo,
+    perfilNuevo,
+    colegioNuevo,
+    horarioNuevo,
+    mappingNuevo,
+    estudiantesNuevos,
+  ] = await Promise.all([
+    cargarDocumentoLegado(uid, "perfil").catch(() => null),
+    cargarDocumentoLegado(uid, "colegio").catch(() => null),
+    cargarHorarioLegado(uid).catch(() => null),
+    cargarDocumentoLegado(uid, "nivel_mapping").catch(() => null),
+    getDoc(doc(db, "users", uid, "perfil_info", "main")).catch(() => null),
+    getDoc(doc(db, "users", uid, "perfil_info", "colegio")).catch(() => null),
+    getDoc(doc(db, "users", uid, "configuracion", "horario")).catch(() => null),
+    getDoc(doc(db, "users", uid, "configuracion", "nivel_mapping")).catch(() => null),
+    getDocs(collection(db, "users", uid, "estudiantes")).catch(() => null),
   ])
 
-  // Cursos en ruta antigua
+  const perfilNuevoData = perfilNuevo?.exists() ? perfilNuevo.data() : null
+  const colegioNuevoData = colegioNuevo?.exists() ? colegioNuevo.data() : null
+  const horarioNuevoClases = horarioNuevo?.exists()
+    ? extractClasesFromLegacyDoc(horarioNuevo.data())
+    : []
+  const mappingNuevoData = mappingNuevo?.exists()
+    ? (mappingNuevo.data()?.mapping || {})
+    : {}
+
+  const cursosConDatos = new Set<string>()
+  estudiantesNuevos?.docs.forEach((snap) => {
+    if (extractAlumnosFromDoc(snap.data()).length > 0) cursosConDatos.add(snap.id)
+  })
+
   const cursosSinMigrar: string[] = []
   for (const subCol of ["cursos_estudiantes", "estudiantes_lista", "alumnos"]) {
     try {
       const snap = await getDocs(collection(db, "users", uid, subCol))
       snap.docs.forEach(d => {
-        if (!cursosSinMigrar.includes(d.id)) cursosSinMigrar.push(d.id)
+        const alumnos = extractAlumnosFromDoc(d.data())
+        const cursoIdNuevo = buildCursoId(d.id)
+        if (alumnos.length > 0 && !cursosConDatos.has(cursoIdNuevo) && !cursosSinMigrar.includes(d.id)) {
+          cursosSinMigrar.push(d.id)
+        }
       })
     } catch { /* subcolección no existe */ }
   }
 
+  estudiantesNuevos?.docs.forEach((snap) => {
+    const alumnos = extractAlumnosFromDoc(snap.data())
+    if (alumnos.length === 0) return
+
+    const legacyId = snap.id
+    const newId = buildCursoId(legacyId.replace(/_/g, " "))
+    if (legacyId !== newId && !cursosConDatos.has(newId) && !cursosSinMigrar.includes(legacyId)) {
+      cursosSinMigrar.push(legacyId)
+    }
+  })
+
   return {
-    tienePerfilViejo: !!perfilViejo?.exists(),
-    tieneColegioViejo: !!colegioViejo?.exists(),
-    tieneHorarioViejo: !!horarioViejo?.exists() && (horarioViejo.data()?.clases || []).length > 0,
-    tieneMappingViejo: !!mappingViejo?.exists(),
+    tienePerfilViejo: !!perfilViejo && !hasMeaningfulData(perfilNuevoData),
+    tieneColegioViejo: !!colegioViejo && !hasMeaningfulData(colegioNuevoData),
+    tieneHorarioViejo: !!horarioViejo?.clases.length && horarioNuevoClases.length === 0,
+    tieneMappingViejo: !!mappingViejo && !hasMeaningfulData(mappingNuevoData),
     cursosSinMigrar,
   }
 }

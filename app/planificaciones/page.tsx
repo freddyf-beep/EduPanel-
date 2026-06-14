@@ -3,7 +3,6 @@ import { PlanificacionesV2Shell } from "@/components/edu-panel/planificaciones/p
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
 
-// Página principal de Planificaciones. La versión anterior está disponible en /planificaciones-v1.
 export default function PlanificacionesPage() {
   return (
     <MainLayout>

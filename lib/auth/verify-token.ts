@@ -79,6 +79,7 @@ export interface VerifiedAuth {
   uid: string
   email: string | null
   emailVerified: boolean
+  customClaims: Record<string, unknown>
 }
 
 export interface AllowedAuth extends VerifiedAuth {
@@ -111,6 +112,7 @@ export async function verifyIdToken(req: Request): Promise<VerifiedAuth | null> 
       uid: decoded.uid,
       email: decoded.email ?? null,
       emailVerified: decoded.email_verified ?? false,
+      customClaims: decoded as Record<string, unknown>,
     }
   } catch (err) {
     console.warn("[verifyIdToken] failed:", (err as Error).message)
@@ -137,6 +139,23 @@ async function isEmailAllowedServer(email: string): Promise<boolean> {
   }
 }
 
+async function isUidAllowedServer(uid: string): Promise<boolean> {
+  if (!uid) return false
+  if (process.env.NEXT_PUBLIC_ALLOWLIST_BYPASS === "true" && process.env.NODE_ENV !== "production") {
+    return true
+  }
+
+  try {
+    const app = await getAdminApp()
+    const { getFirestore } = await import("firebase-admin/firestore")
+    const snap = await getFirestore(app).collection("allowlist_uids").doc(uid).get()
+    return snap.exists
+  } catch (err) {
+    console.warn("[allowlist uid server] failed:", (err as Error).message)
+    return false
+  }
+}
+
 /**
  * Valida token y allowlist server-side para proteger cuotas y endpoints.
  */
@@ -146,11 +165,22 @@ export async function verifyAllowedUser(req: Request): Promise<VerifyAllowedUser
 
   const email = normalizeEmail(auth.email)
   if (!email) {
-    return { ok: false, response: forbidden("Tu cuenta no tiene email verificable.") }
+    const uidAllowed = await isUidAllowedServer(auth.uid)
+    if (!uidAllowed) {
+      return { ok: false, response: forbidden("Tu sesion de prueba no tiene invitacion activa.") }
+    }
+    return {
+      ok: true,
+      auth: {
+        ...auth,
+        email: `anon:${auth.uid}`,
+        isAdmin: false,
+      },
+    }
   }
 
-  const isAdmin = auth.emailVerified && isAdminEmail(email)
-  const allowed = isAdmin || await isEmailAllowedServer(email)
+  const isAdmin = auth.customClaims?.admin === true || (auth.emailVerified && isAdminEmail(email))
+  const allowed = isAdmin || await isEmailAllowedServer(email) || await isUidAllowedServer(auth.uid)
   if (!allowed) {
     return { ok: false, response: forbidden("Acceso solo por invitacion.") }
   }

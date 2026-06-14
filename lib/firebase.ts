@@ -1,8 +1,7 @@
 import { initializeApp, getApps } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
+import { getFirestore, initializeFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 import { getStorage } from "firebase/storage"
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check"
 
 // Las credenciales SOLO vienen de variables de entorno.
 // En desarrollo: definir en `.env.local`.
@@ -27,13 +26,22 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 // Initialize App Check if we're in the browser
 if (typeof window !== "undefined") {
   // Omitimos inicializar App Check en localhost por ahora, ya que la clave de reCaptcha
-  // era inventada y bloqueaba la petición (Error 401). 
+  // era inventada y bloqueaba la petición (Error 401).
   // Borramos cualquier token inválido que se haya cacheado accidentalmente en el navegador.
   try {
     window.indexedDB.deleteDatabase("firebase-app-check-database");
-  } catch (e) {}
+  } catch {}
 }
 
-export const db = getFirestore(app)
+let firestoreDb: ReturnType<typeof getFirestore>
+try {
+  firestoreDb = initializeFirestore(app, {
+    experimentalAutoDetectLongPolling: true,
+  })
+} catch {
+  firestoreDb = getFirestore(app)
+}
+
+export const db = firestoreDb
 export const auth = getAuth(app)
 export const storage = getStorage(app)

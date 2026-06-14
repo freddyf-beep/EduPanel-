@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
+import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
+import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
 interface OaInput {
   id: string
@@ -47,6 +50,8 @@ function normalizeDistribution(raw: unknown, totalClases: number, validIds: Set<
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   try {
     const body = await req.json()
     const oas = Array.isArray(body.oas) ? body.oas as OaInput[] : []
@@ -66,9 +71,12 @@ export async function POST(req: Request) {
 
 OAs:
 ${oas.map((oa) => `- ${oa.id}${oa.numero ? ` (OA ${oa.numero})` : ""}: ${oa.descripcion}`).join("\n")}`
+    const model = "gemini-2.0-flash"
+    const budget = await checkAiBudget(authCheck.auth.uid, { feature: "distribuir-oas", inputText: prompt })
+    if (!budget.ok) return budget.response
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + encodeURIComponent(token),
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` + encodeURIComponent(token),
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -81,13 +89,24 @@ ${oas.map((oa) => `- ${oa.id}${oa.numero ? ` (OA ${oa.numero})` : ""}: ${oa.desc
 
     const data = await response.json()
     if (!response.ok) {
-      return NextResponse.json({ error: cleanText(data?.error?.message) || "Gemini no pudo distribuir los OAs." }, { status: 500 })
+      return aiErrorResponse(
+        parseGeminiApiError(JSON.stringify(data), response.status, "Gemini no pudo distribuir los OAs."),
+      )
     }
 
     const text = (data?.candidates?.[0]?.content?.parts || [])
       .map((part: any) => cleanText(part?.text))
       .filter(Boolean)
       .join("\n")
+    await recordAiUsage({
+      uid: authCheck.auth.uid,
+      feature: "distribuir-oas",
+      provider: "gemini",
+      model,
+      inputText: prompt,
+      outputText: text,
+      usageMetadata: data?.usageMetadata,
+    })
     const parsed = parseJson(text || "{}")
     const validIds = new Set(oas.map((oa) => oa.id))
     const distribucion = normalizeDistribution(parsed, totalClases, validIds)
@@ -98,9 +117,6 @@ ${oas.map((oa) => `- ${oa.id}${oa.numero ? ` (OA ${oa.numero})` : ""}: ${oa.desc
 
     return NextResponse.json({ distribucion })
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Error interno." },
-      { status: 500 },
-    )
+    return aiErrorResponse(error, "Error interno.")
   }
 }

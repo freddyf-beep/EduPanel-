@@ -21,12 +21,14 @@ import {
   User,
   CheckSquare,
   Plus,
-  Sparkles
+  Sparkles,
+  FileText
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { toast } from "@/hooks/use-toast"
+import { apiFetch } from "@/lib/api-client"
 import { serverTimestamp } from "firebase/firestore"
 import {
   AlertDialog,
@@ -101,6 +103,20 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
   const [distribucionTipo, setDistribucionTipo] = useState<"porGrupo" | "totalGrupos">("porGrupo")
   const [distribucionValor, setDistribucionValor] = useState(2)
   const [reglaEvitarPieJuntos, setReglaEvitarPieJuntos] = useState(true)
+
+  const [mostrarAsistenteIA, setMostrarAsistenteIA] = useState(false)
+  const [analizandoIA, setAnalizandoIA] = useState(false)
+  const [progresoIA, setProgresoIA] = useState("")
+  const [errorIA, setErrorIA] = useState("")
+  const [fileBase64, setFileBase64] = useState<string | null>(null)
+  const [fileMime, setFileMime] = useState<string | null>(null)
+  const [fileName, setFileName] = useState<string | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [resultadoIA, setResultadoIA] = useState<{
+    transcripcion?: string
+    respuestas?: Record<string, { valor: boolean; justificacion?: string }>
+    observaciones?: string
+  } | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -228,7 +244,7 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
         if (parsed.listaId !== listaId) {
           throw new Error("Esta copia de seguridad corresponde a otra lista de cotejo.")
         }
-        
+
         let parsedEv = parsed
         if (!parsedEv.grupos && (parsedEv as any).estudiantes) {
           parsedEv.grupos = [
@@ -374,6 +390,84 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
         [indicadorId]: valor,
       },
     }))
+  }
+
+  const handleFileChangeIA = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setErrorIA("")
+    setFileName(file.name)
+    setFileMime(file.type)
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const result = reader.result as string
+      const base64String = result.split(",")[1]
+      setFileBase64(base64String)
+      setPreviewUrl(file.type.startsWith("image/") ? result : null)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleAnalizarConIA = async () => {
+    if (!fileBase64 || !fileMime || !lista || !alumnoActivoObj) return
+    setAnalizandoIA(true)
+    setProgresoIA("Procesando documento...")
+    setErrorIA("")
+    try {
+      setProgresoIA("Transcribiendo y contrastando indicadores...")
+      const response = await apiFetch("/api/corregir-con-foto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          imageBase64: fileBase64,
+          mimeType: fileMime,
+          lista,
+          studentName: alumnoActivoObj.nombre,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Error del servidor (${response.status})`)
+      }
+
+      const data = await response.json()
+      setResultadoIA(data)
+      setProgresoIA("")
+    } catch (err) {
+      setErrorIA(err instanceof Error ? err.message : "Error al analizar el trabajo.")
+    } finally {
+      setAnalizandoIA(false)
+    }
+  }
+
+  const aplicarEvaluacionIA = () => {
+    if (!resultadoIA || !alumnoActivoObj) return
+    const respuestasIA = resultadoIA.respuestas || {}
+    updateEstudiante(alumnoActivoObj.estudianteId, estudiante => {
+      const respuestas = { ...estudiante.respuestas }
+      Object.entries(respuestasIA).forEach(([indicadorId, data]) => {
+        if (typeof data?.valor === "boolean") {
+          respuestas[indicadorId] = data.valor
+        }
+      })
+      return {
+        ...estudiante,
+        respuestas,
+        observaciones: resultadoIA.observaciones
+          ? `${estudiante.observaciones ? `${estudiante.observaciones}\n` : ""}${resultadoIA.observaciones}`
+          : estudiante.observaciones,
+      }
+    })
+
+    setMostrarAsistenteIA(false)
+    setResultadoIA(null)
+    setFileBase64(null)
+    setFileMime(null)
+    setFileName(null)
+    setPreviewUrl(null)
   }
 
   const guardarManual = async () => {
@@ -592,8 +686,8 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
   const fechaBloqueo = formatearFechaBloqueo(evaluacion.bloqueadaEn)
 
   // Filtrado de secciones para mostrar en la grilla
-  const seccionesAMostrar = seccionActivaIdx === -1 
-    ? (lista.secciones || []) 
+  const seccionesAMostrar = seccionActivaIdx === -1
+    ? (lista.secciones || [])
     : (lista.secciones[seccionActivaIdx] ? [lista.secciones[seccionActivaIdx]] : [])
 
   return (
@@ -1153,7 +1247,35 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
                 {/* Resumen del estudiante */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-3 bg-muted/5 p-3 rounded-xl border gap-3">
                   <div>
-                    <h3 className="text-[16px] font-extrabold text-foreground">{alumnoActivoObj.nombre}</h3>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-[16px] font-extrabold text-foreground">{alumnoActivoObj.nombre}</h3>
+                      <button
+                        type="button"
+                        disabled={bloqueada}
+                        onClick={() => {
+                          setMostrarAsistenteIA(prev => {
+                            const next = !prev
+                            if (next) {
+                              setResultadoIA(null)
+                              setFileBase64(null)
+                              setFileMime(null)
+                              setFileName(null)
+                              setPreviewUrl(null)
+                              setErrorIA("")
+                              setProgresoIA("")
+                            }
+                            return next
+                          })
+                        }}
+                        className={`inline-flex h-8 items-center gap-1.5 rounded-lg border border-violet-200 bg-violet-50 px-2.5 text-[11px] font-extrabold text-violet-700 hover:bg-violet-100 ${
+                          bloqueada ? "cursor-not-allowed opacity-60" : ""
+                        }`}
+                        title="Corregir con foto o documento"
+                      >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        IA
+                      </button>
+                    </div>
                     <div className="mt-1 flex items-center gap-2 text-[11px] text-muted-foreground flex-wrap">
                       <span className="font-semibold text-foreground bg-muted px-1.5 py-0.5 rounded">{alumnoActivoObj.puntaje ?? 0}/{lista.puntajeMaximo} puntos</span>
                       {alumnoActivoObj.hasPie && <span className="bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded text-[9.5px]">PIE (Exigencia 50%)</span>}
@@ -1190,6 +1312,171 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
                     <div className="text-[10px] text-muted-foreground mt-1 font-medium">Nota formativa</div>
                   </div>
                 </div>
+
+                {mostrarAsistenteIA && (
+                  <div className="space-y-4 rounded-xl border border-violet-200 bg-violet-50/30 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2">
+                        <Sparkles className="mt-0.5 h-4 w-4 text-violet-700" />
+                        <div>
+                          <h4 className="text-[13px] font-extrabold text-violet-950">Asistente IA</h4>
+                          <p className="text-[11px] text-muted-foreground">
+                            Sube una foto, escaneo o PDF del trabajo para sugerir las marcas de esta lista.
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setMostrarAsistenteIA(false)}
+                        className="rounded-full p-1 text-muted-foreground hover:bg-background"
+                        title="Cerrar asistente"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    {!resultadoIA && !analizandoIA && (
+                      <div className="space-y-3">
+                        <div className="rounded-xl border-2 border-dashed border-violet-200 bg-background/70 p-5 text-center">
+                          <input
+                            type="file"
+                            id="lista-ai-file-upload"
+                            accept="image/*,application/pdf"
+                            onChange={handleFileChangeIA}
+                            className="hidden"
+                          />
+                          <label htmlFor="lista-ai-file-upload" className="flex cursor-pointer flex-col items-center gap-2">
+                            <span className="rounded-full bg-violet-50 p-3 text-violet-700">
+                              <Upload className="h-5 w-5" />
+                            </span>
+                            <span className="text-[12px] font-extrabold text-violet-950">
+                              {fileName || "Seleccionar archivo"}
+                            </span>
+                            <span className="text-[10px] text-muted-foreground">PNG, JPG o PDF</span>
+                          </label>
+                        </div>
+
+                        {previewUrl && (
+                          <div className="flex max-h-40 justify-center overflow-hidden rounded-lg border border-border bg-background p-2">
+                            <img src={previewUrl} alt="Vista previa" className="max-h-36 rounded object-contain" />
+                          </div>
+                        )}
+
+                        {fileName && (
+                          <button
+                            type="button"
+                            onClick={handleAnalizarConIA}
+                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-violet-700 px-3 py-2 text-[12px] font-extrabold text-white shadow-sm hover:bg-violet-800"
+                          >
+                            <Sparkles className="h-4 w-4" />
+                            Analizar con IA
+                          </button>
+                        )}
+                      </div>
+                    )}
+
+                    {analizandoIA && (
+                      <div className="flex flex-col items-center justify-center gap-3 py-6 text-center">
+                        <Loader2 className="h-7 w-7 animate-spin text-violet-700" />
+                        <p className="text-[12px] font-extrabold text-violet-950">{progresoIA}</p>
+                        <p className="max-w-md text-[10.5px] text-muted-foreground">
+                          Se esta leyendo el trabajo y contrastando la evidencia con los indicadores de la lista.
+                        </p>
+                      </div>
+                    )}
+
+                    {errorIA && (
+                      <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-[11px] text-red-700">
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                        <div>
+                          <p className="font-extrabold">Error al analizar</p>
+                          <p>{errorIA}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {resultadoIA && (
+                      <div className="space-y-4">
+                        {resultadoIA.transcripcion && (
+                          <div className="rounded-lg border border-border bg-background p-3">
+                            <p className="mb-1 flex items-center gap-1 text-[11px] font-extrabold text-violet-950">
+                              <FileText className="h-3.5 w-3.5 text-violet-700" />
+                              Texto transcrito
+                            </p>
+                            <p className="max-h-32 overflow-y-auto whitespace-pre-wrap rounded border border-border/60 bg-muted/30 p-2 text-[11px] leading-relaxed text-foreground">
+                              {resultadoIA.transcripcion}
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="space-y-2">
+                          <p className="text-[11px] font-extrabold text-violet-950">Marcas sugeridas por indicador</p>
+                          <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
+                            {lista.secciones.flatMap(seccion => seccion.indicadores).map(indicador => {
+                              const sugerencia = resultadoIA.respuestas?.[indicador.id]
+                              if (!sugerencia) return null
+                              const esSi = sugerencia.valor === true
+                              return (
+                                <div key={indicador.id} className="rounded-lg border border-border bg-background p-2.5">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <p className="text-[11.5px] font-semibold leading-snug text-foreground">{indicador.texto}</p>
+                                    <span className={`shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-extrabold ${
+                                      esSi
+                                        ? "border-green-200 bg-green-100 text-green-800"
+                                        : "border-red-200 bg-red-100 text-red-800"
+                                    }`}>
+                                      {esSi ? (lista.escalaDicotomica?.[0] || "Si") : (lista.escalaDicotomica?.[1] || "No")}
+                                    </span>
+                                  </div>
+                                  {sugerencia.justificacion && (
+                                    <p className="mt-1.5 text-[10.5px] italic leading-normal text-muted-foreground">
+                                      {sugerencia.justificacion}
+                                    </p>
+                                  )}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+
+                        {resultadoIA.observaciones && (
+                          <div className="rounded-lg border border-border bg-background p-3">
+                            <p className="mb-1 flex items-center gap-1 text-[11px] font-extrabold text-violet-950">
+                              <Check className="h-3.5 w-3.5 text-green-600" />
+                              Retroalimentacion sugerida
+                            </p>
+                            <p className="text-[11.5px] leading-relaxed text-foreground">{resultadoIA.observaciones}</p>
+                          </div>
+                        )}
+
+                        <div className="flex flex-col gap-2 sm:flex-row">
+                          <button
+                            type="button"
+                            onClick={aplicarEvaluacionIA}
+                            className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-green-600 px-3 py-2 text-[12px] font-extrabold text-white shadow-sm hover:bg-green-700"
+                          >
+                            <Check className="h-4 w-4" />
+                            Aplicar a la lista
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setResultadoIA(null)
+                              setFileBase64(null)
+                              setFileMime(null)
+                              setFileName(null)
+                              setPreviewUrl(null)
+                              setErrorIA("")
+                            }}
+                            className="rounded-lg border border-border px-3 py-2 text-[12px] font-bold text-muted-foreground hover:bg-muted"
+                          >
+                            Descartar
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Indicadores agrupados por sección */}
                 <div className="space-y-5 max-h-[380px] overflow-y-auto pr-1">
@@ -1332,7 +1619,7 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
             {/* Reglas seleccionables */}
             <div className="space-y-2 border-t border-border pt-3">
               <label className="text-[11.5px] font-bold uppercase text-muted-foreground block mb-1">Reglas de distribución</label>
-              
+
               <label className="flex items-start gap-2.5 cursor-pointer select-none rounded-lg border border-purple-100 bg-purple-50/20 p-3 hover:bg-purple-50/40 transition-colors">
                 <input
                   type="checkbox"

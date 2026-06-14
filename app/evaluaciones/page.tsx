@@ -3,10 +3,14 @@ import { Loader2 } from "lucide-react"
 import { MainLayout } from "@/components/edu-panel"
 import { ErrorBoundary } from "@/components/edu-panel/error-boundary"
 import { EvaluacionesShell } from "@/components/edu-panel/evaluaciones/evaluaciones-shell"
+import { Breadcrumbs } from "@/components/edu-panel/shared/breadcrumbs"
 
 export default function EvaluacionesPage() {
   return (
     <MainLayout>
+      <div className="mx-auto max-w-[1500px] px-3 pt-3 sm:px-5">
+        <Breadcrumbs items={[{ label: "Evaluaciones" }]} />
+      </div>
       <ErrorBoundary sectionName="Evaluaciones">
         <Suspense
           fallback={

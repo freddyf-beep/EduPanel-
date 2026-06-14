@@ -1,5 +1,5 @@
 import { db, auth } from "@/lib/firebase"
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore"
+import { doc, setDoc, getDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
 
 function getUid(): string {
   const uid = auth?.currentUser?.uid
@@ -132,8 +132,34 @@ export async function guardarHorarioSemanal(clases: ClaseHorario[]): Promise<voi
 
 export async function cargarHorarioSemanal(): Promise<ClaseHorario[]> {
   const snap = await getDoc(userDoc("configuracion", "horario"))
-  if (!snap.exists()) return []
-  return (snap.data() as HorarioGuardado).clases || []
+  const clases = snap.exists() ? ((snap.data() as HorarioGuardado).clases || []) : []
+
+  if (clases.length > 0) return clases
+
+  // Fallback: buscar en rutas legacy (v1) si la ruta v2 esta vacia
+  const legacyCols = ["horario", "horario_semanal"]
+  for (const colName of legacyCols) {
+    try {
+      const colSnap = await getDocs(collection(db, "users", getUid(), colName))
+      for (const oldDoc of colSnap.docs) {
+        const data = oldDoc.data()
+        const legacyClases =
+          (Array.isArray(data?.clases) && data.clases) ||
+          (Array.isArray(data?.horario) && data.horario) ||
+          (Array.isArray(data?.bloques) && data.bloques) ||
+          []
+        if (legacyClases.length > 0) {
+          // Migrar al nuevo path automaticamente
+          await guardarHorarioSemanal(legacyClases)
+          return legacyClases as ClaseHorario[]
+        }
+      }
+    } catch {
+      // coleccion no existe, continuar
+    }
+  }
+
+  return clases
 }
 
 export function getDiaActual(): string {

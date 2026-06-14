@@ -1,6 +1,6 @@
 /**
  * Logica compartida para escribir curriculum en Firestore (server-side).
- * Basada en la ruta /migrate pero extraida para reutilizar desde API admin.
+ * Utilidades extraidas para reutilizar desde API admin.
  *
  * Soporta 4 formatos de JSON:
  *  - Format 1: arreglo de objetos { unidad: {...} }

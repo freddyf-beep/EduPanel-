@@ -177,7 +177,7 @@ export function RubricasHub() {
   }, [asignatura, curso])
 
   const irA = (view: string, extra?: Record<string, string>) =>
-    router.push(buildUrl("/evaluaciones", withAsignatura({ view, ...extra }, asignatura)))
+    router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas", view, ...extra }, asignatura)))
 
   const handleEliminar = (id: string) => {
     setRubricas(prev => prev.filter(r => r.id !== id))
@@ -311,7 +311,7 @@ export function RubricasHub() {
       router.push(
         buildUrl(
           "/evaluaciones",
-          withAsignatura({ view: "resultados", rubricaId: zipPreview.rubrica.id }, asignatura)
+          withAsignatura({ tab: "rubricas", view: "resultados", rubricaId: zipPreview.rubrica.id }, asignatura)
         )
       )
     } catch (err) {

@@ -2,10 +2,28 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { AlertCircle, ArrowLeft, BarChart2, Check, Loader2, Pencil, X, Send, Lock, Unlock, Printer, Eye } from "lucide-react"
+import { AlertCircle, ArrowLeft, BarChart2, Check, ChevronDown, Download, HardDrive, List, Loader2, Pencil, X, Send, Lock, Unlock, Printer, Eye } from "lucide-react"
+import { useAuth } from "@/components/auth/auth-context"
+import {
+  ensureEduPanelWorkspaceForContext,
+  subirDocxYPdfADrive,
+  getGoogleDriveToken,
+  isGoogleDriveConnected,
+  getGoogleDriveErrorMessage
+} from "@/lib/google-drive"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
+import { auth } from "@/lib/firebase"
+import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
+import { apiFetch } from "@/lib/api-client"
 import { toast } from "@/hooks/use-toast"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
 import {
   AlertDialog,
@@ -47,6 +65,20 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
   const [sincronizandoCalif, setSincronizandoCalif] = useState(false)
   const [confirmSyncOpen, setConfirmSyncOpen] = useState(false)
   const [syncPendiente, setSyncPendiente] = useState<SincronizarCalificacionesResultado | null>(null)
+  const [infoColegio, setInfoColegio] = useState<InfoColegio | null>(null)
+
+  const [exportando, setExportando] = useState(false)
+  const [exportandoListado, setExportandoListado] = useState(false)
+  const [exportandoAlumno, setExportandoAlumno] = useState<string | null>(null)
+
+  const { signInWithGoogleDrive } = useAuth()
+  const [subiendoCompletoDrive, setSubiendoCompletoDrive] = useState(false)
+  const [subiendoListadoDrive, setSubiendoListadoDrive] = useState(false)
+  const [subiendoAlumnoDrive, setSubiendoAlumnoDrive] = useState<string | null>(null)
+
+  useEffect(() => {
+    cargarInfoColegio().then(c => { if (c) setInfoColegio(c) }).catch(() => {})
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -99,6 +131,177 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
     }
   }
 
+  const descargarBlob = (blob: Blob, nombre: string) => {
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = nombre
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const generarWordBlob = async (extra?: Record<string, unknown>) => {
+    const res = await apiFetch("/api/export-lista-cotejo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        lista,
+        evaluacion,
+        profesorNombre: lista?.docenteNombre || auth?.currentUser?.displayName || "",
+        colegio: infoColegio?.nombre ?? "",
+        logoBase64: infoColegio?.logoBase64,
+        ...extra,
+      }),
+    })
+    if (!res.ok) throw new Error("Error al generar Word")
+    return res.blob()
+  }
+
+  const handleExportarWord = async () => {
+    if (!lista || !evaluacion) return
+    setExportando(true)
+    try {
+      const blob = await generarWordBlob()
+      descargarBlob(blob, `lista_cotejo_${lista.nombre}_${lista.curso}.docx`.replace(/\s+/g, "_"))
+    } catch (e) {
+      toast({
+        title: "Error al exportar",
+        description: e instanceof Error ? e.message : "Inténtalo nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setExportando(false)
+    }
+  }
+
+  const handleExportarListado = async () => {
+    if (!lista || !evaluacion) return
+    setExportandoListado(true)
+    try {
+      const blob = await generarWordBlob({ modo: "listado" })
+      descargarBlob(blob, `lista_notas_${lista.nombre}_${lista.curso}.docx`.replace(/\s+/g, "_"))
+    } catch (e) {
+      toast({
+        title: "Error al exportar listado",
+        description: e instanceof Error ? e.message : "Inténtalo nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setExportandoListado(false)
+    }
+  }
+
+  const handleExportarAlumno = async (estudianteId: string, nombreAlumno: string) => {
+    if (!lista || !evaluacion) return
+    setExportandoAlumno(estudianteId)
+    try {
+      const blob = await generarWordBlob({ modo: "alumno", estudianteId })
+      descargarBlob(blob, `lista_cotejo_${nombreAlumno}.docx`.replace(/\s+/g, "_"))
+    } catch (e) {
+      toast({
+        title: "Error al exportar",
+        description: e instanceof Error ? e.message : "Inténtalo nuevamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setExportandoAlumno(null)
+    }
+  }
+
+  const ensureDriveToken = async () => {
+    let token = getGoogleDriveToken()
+    if (!token || !isGoogleDriveConnected()) {
+      await signInWithGoogleDrive()
+      token = getGoogleDriveToken()
+    }
+    if (!token) throw new Error("No se recibió autorización de Google Drive.")
+    return token
+  }
+
+  const subirWordADrive = async (extra: Record<string, unknown> | undefined, fileName: string) => {
+    if (!lista) throw new Error("Lista no disponible")
+    const token = await ensureDriveToken()
+    const blob = await generarWordBlob(extra)
+    const workspace = await ensureEduPanelWorkspaceForContext(token, {
+      tipo: "listas" as const,
+      asignatura: asignatura || "General",
+      curso: lista.curso,
+    })
+    const listasFolder = workspace.folders.listas
+    if (!listasFolder) throw new Error("No se pudo crear o encontrar la carpeta en Drive")
+    await subirDocxYPdfADrive(token, { docx: blob, folderId: listasFolder.id, fileName })
+    return listasFolder.name
+  }
+
+  const handleSubirCompletoDrive = async () => {
+    if (!lista || !evaluacion) return
+    setSubiendoCompletoDrive(true)
+    try {
+      const folderName = await subirWordADrive(
+        undefined,
+        `lista_cotejo_${lista.nombre}_${lista.curso}.docx`.replace(/\s+/g, "_")
+      )
+      toast({
+        title: "Archivo subido a Drive",
+        description: `Se subió la lista de cotejo completa (Word + PDF) a Drive en ${folderName}/.`,
+      })
+    } catch (e: any) {
+      toast({
+        title: "Error al subir a Drive",
+        description: getGoogleDriveErrorMessage(e),
+        variant: "destructive",
+      })
+    } finally {
+      setSubiendoCompletoDrive(false)
+    }
+  }
+
+  const handleSubirListadoDrive = async () => {
+    if (!lista || !evaluacion) return
+    setSubiendoListadoDrive(true)
+    try {
+      const folderName = await subirWordADrive(
+        { modo: "listado" },
+        `lista_notas_${lista.nombre}_${lista.curso}.docx`.replace(/\s+/g, "_")
+      )
+      toast({
+        title: "Listado subido a Drive",
+        description: `Se subió la lista de notas (Word + PDF) a Drive en ${folderName}/.`,
+      })
+    } catch (e: any) {
+      toast({
+        title: "Error al subir a Drive",
+        description: getGoogleDriveErrorMessage(e),
+        variant: "destructive",
+      })
+    } finally {
+      setSubiendoListadoDrive(false)
+    }
+  }
+
+  const handleSubirAlumnoDrive = async (estudianteId: string, nombreAlumno: string) => {
+    if (!lista || !evaluacion) return
+    setSubiendoAlumnoDrive(estudianteId)
+    try {
+      const folderName = await subirWordADrive(
+        { modo: "alumno", estudianteId },
+        `lista_cotejo_${nombreAlumno}_${lista.nombre}.docx`.replace(/\s+/g, "_")
+      )
+      toast({
+        title: "Ficha subida a Drive",
+        description: `Se subió la lista de cotejo de ${nombreAlumno} (Word + PDF) a Drive en ${folderName}/.`,
+      })
+    } catch (e: any) {
+      toast({
+        title: "Error al subir a Drive",
+        description: getGoogleDriveErrorMessage(e),
+        variant: "destructive",
+      })
+    } finally {
+      setSubiendoAlumnoDrive(null)
+    }
+  }
+
   const indicadoresStats = useMemo(() => {
     if (!lista || !evaluacion) return []
     const estudiantesList = (evaluacion.grupos || []).flatMap(g => g.estudiantes)
@@ -115,6 +318,10 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
       }
     })
   }, [lista, evaluacion])
+
+  const totalIndicadores = useMemo(() => {
+    return (lista?.secciones || []).reduce((acc, s) => acc + (s?.indicadores?.length || 0), 0)
+  }, [lista])
 
   const volver = () => {
     router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "listas", curso: lista?.curso }, asignatura)))
@@ -151,10 +358,6 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
       </div>
     )
   }
-
-  const totalIndicadores = useMemo(() => {
-    return (lista?.secciones || []).reduce((acc, s) => acc + (s?.indicadores?.length || 0), 0)
-  }, [lista])
 
   const estudiantes = (evaluacion?.grupos || []).flatMap(g => g.estudiantes)
   const completados = estudiantes.filter(estudiante => estudiante.completado).length
@@ -282,6 +485,55 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
             <Eye className="h-3.5 w-3.5" />
             Ficha UTP
           </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                disabled={(exportandoListado || subiendoListadoDrive) || !evaluacion || estudiantes.length === 0}
+                className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 text-[12px] font-bold text-muted-foreground transition-colors hover:bg-muted/60 disabled:opacity-50"
+              >
+                {exportandoListado || subiendoListadoDrive ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+                <span className="hidden sm:inline">Exportaciones</span>
+                <span className="sm:hidden">Exportar</span>
+                <ChevronDown className="h-3 w-3" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-52">
+              <DropdownMenuLabel className="text-[11px]">Word</DropdownMenuLabel>
+              <DropdownMenuItem onClick={handleExportarListado} disabled={exportandoListado}>
+                <List className="w-3.5 h-3.5" />
+                Lista de notas
+              </DropdownMenuItem>
+
+              <DropdownMenuLabel className="text-[11px] border-t border-border mt-1 pt-1">Google Drive</DropdownMenuLabel>
+              <DropdownMenuItem onClick={handleSubirListadoDrive} disabled={subiendoListadoDrive}>
+                {subiendoListadoDrive ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <HardDrive className="w-3.5 h-3.5 text-indigo-500" />}
+                Subir lista (PDF/Word)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <button
+            type="button"
+            onClick={handleExportarWord}
+            disabled={exportando || !evaluacion}
+            title="Descargar Word completo con la ficha de cada estudiante"
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] bg-primary px-3 text-[12px] font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            {exportando ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+            <span className="hidden sm:inline">Word completo</span>
+            <span className="sm:hidden">Word</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleSubirCompletoDrive}
+            disabled={subiendoCompletoDrive || !evaluacion}
+            title="Guardar Word completo y PDF en Google Drive"
+            className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-indigo-200 bg-indigo-50 px-3 text-[12px] font-bold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:opacity-50"
+          >
+            {subiendoCompletoDrive ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <HardDrive className="h-3.5 w-3.5" />}
+            <span className="hidden sm:inline">Subir a Drive</span>
+            <span className="sm:hidden">Drive</span>
+          </button>
           <button
             type="button"
             onClick={irEvaluacion}
@@ -396,7 +648,7 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
               <h2 className="text-[14px] font-extrabold text-foreground">Resumen por estudiante</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[720px] text-left text-[12px]">
+              <table className="w-full min-w-[820px] text-left text-[12px]">
                 <thead className="bg-muted/40 text-[11px] font-extrabold uppercase text-muted-foreground">
                   <tr>
                     <th className="px-4 py-3">Estudiante</th>
@@ -404,6 +656,7 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
                     <th className="px-4 py-3 text-center">%</th>
                     <th className="px-4 py-3 text-center">Nota</th>
                     <th className="px-4 py-3">Observaciones</th>
+                    <th className="px-4 py-3 text-center">Word</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -421,6 +674,28 @@ export function ListaCotejoResultadosView({ listaId }: Props) {
                         </td>
                         <td className="px-4 py-3 text-center font-bold text-foreground">{nota.toFixed(1)}</td>
                         <td className="px-4 py-3 text-muted-foreground">{estudiante.observaciones || "-"}</td>
+                        <td className="px-4 py-3 text-center">
+                          <div className="flex items-center justify-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleExportarAlumno(estudiante.estudianteId, estudiante.nombre)}
+                              disabled={exportandoAlumno === estudiante.estudianteId}
+                              title={`Descargar lista de cotejo individual de ${estudiante.nombre}`}
+                              className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] border border-border transition-colors hover:bg-muted/60 disabled:opacity-50"
+                            >
+                              {exportandoAlumno === estudiante.estudianteId ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleSubirAlumnoDrive(estudiante.estudianteId, estudiante.nombre)}
+                              disabled={subiendoAlumnoDrive === estudiante.estudianteId}
+                              title={`Subir lista de cotejo de ${estudiante.nombre} a Google Drive`}
+                              className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] border border-indigo-200 bg-indigo-50 text-indigo-700 transition-colors hover:bg-indigo-100 disabled:opacity-50"
+                            >
+                              {subiendoAlumnoDrive === estudiante.estudianteId ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <HardDrive className="h-3.5 w-3.5" />}
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     )
                   })}

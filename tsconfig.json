@@ -37,6 +37,11 @@
   ],
   "exclude": [
     "node_modules",
-    "backup_ia_antigua"
+    "backup_ia_antigua",
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
   ]
 }

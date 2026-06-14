@@ -1,3 +1,8 @@
+## v1.1 - 14/06/2026
+- Preparada version publica sanitizada para GitHub/Vercel.
+- Retirada la UI de administracion del build publico, conservando la configuracion protegida necesaria.
+- Retirados acceso anonimo de pruebas, endpoints de impersonacion, scripts locales, respaldos y documentos internos de auditoria.
+
 ## v1.0.1 - 08/04/2026 11:45
 
 ## v1.0.2 - 08/04/2026 12:04
