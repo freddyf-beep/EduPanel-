@@ -412,7 +412,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
   const cursoParam = cursoOverride || searchParams.get("curso") || "1° A"
   const rawUnitIdLocal = searchParams.get("unitIdLocal")
-  const unidadParam = unidadOverride || rawUnitIdLocal || searchParams.get("unidad") || "unidad_1"
+  const unidadParam = unidadOverride || searchParams.get("unidad") || rawUnitIdLocal || "unidad_1"
   const unidadCurricularParam = unidadCurricularOverride || searchParams.get("unidad") || unidadParam
   const claseParam = claseOverride || parseInt(searchParams.get("clase") || "1")
 

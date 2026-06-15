@@ -19,6 +19,7 @@ import {
   cargarPlanificacion,
   cargarVerUnidad,
   emptyMatrizSeleccion,
+  getUnidades,
   getUnidadCompleta,
   guardarPlanificacion,
   guardarVerUnidad,
@@ -295,6 +296,14 @@ export function VerUnidadV3Dashboard() {
           }
           setNivelAsignado(nivel)
           u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
+          if (!u) {
+            // Firestore doc ID may differ from the URL param; search by position
+            const todasUnidades = await getUnidades(ASIGNATURA, nivel)
+            const byIndex = todasUnidades.find(tu => tu.numero_unidad === unitIndex + 1)
+            if (byIndex?.id) {
+              u = await getUnidadCompleta(ASIGNATURA, nivel, byIndex.id)
+            }
+          }
           if (!u) {
             setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
             return
