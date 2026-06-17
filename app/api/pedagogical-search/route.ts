@@ -10,6 +10,7 @@ import { cleanText, type LessonRequestBody } from "@/lib/ai/copilot"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse } from "@/lib/server/gemini-error"
 import { isVertexSearchConfigured, searchCurriculumCorpus, type CurriculumSearchHit } from "@/lib/ai/vertex-search"
+import { getGlobalPromptSuffix } from "@/lib/server/remote-config"
 
 export const dynamic = "force-dynamic"
 
@@ -159,8 +160,14 @@ export async function POST(req: Request) {
       }
     }
 
+    // Sufijo institucional global desde Remote Config (vacío por defecto → sin cambio).
+    const promptSuffix = await getGlobalPromptSuffix()
+
     const ai = new GoogleGenAI({ apiKey })
-    const prompt = buildSearchPrompt(query, lessonRequestBody, buildCorpusContext(corpusHits))
+    const basePrompt = buildSearchPrompt(query, lessonRequestBody, buildCorpusContext(corpusHits))
+    const prompt = promptSuffix
+      ? `${basePrompt}\n\nInstrucciones institucionales (Remote Config):\n${promptSuffix}`
+      : basePrompt
     const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "pedagogical-search", inputText: prompt })
     if (!budget.ok) return budget.response
