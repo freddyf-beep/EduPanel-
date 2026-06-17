@@ -65,8 +65,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Falta la clave de API de Gemini." }, { status: 500 })
     }
 
-    // Intentar llamar a Imagen 3 en Gemini API
-    const model = "imagen-3.0-generate-002"
+    // Intentar llamar a Imagen 4 en Gemini API (Imagen 3 se retira el 24-jun-2026)
+    const model = "imagen-4.0-generate-001"
     const imagePrompt = `Educational illustration for school test, clear, simplified, vector/line-art style, white background, subject: ${prompt}`
     const budget = await checkAiBudget(authUser.uid, {
       feature: "ilustrador-casos",
@@ -128,7 +128,7 @@ export async function POST(req: Request) {
       isFallback = true
       const query = encodeURIComponent(`${tema || "education"} classroom diagram`)
       fallbackUrl = `https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80`
-
+      
       // Intentar mapear palabras clave específicas para buscar mejores imágenes
       const keyword = (tema || prompt || "").toLowerCase()
       if (keyword.includes("celula") || keyword.includes("biologia")) {

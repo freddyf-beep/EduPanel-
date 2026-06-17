@@ -96,7 +96,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildPrompt(textoLimpio)
-    const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.0-flash"
+    const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "corrector-tono", inputText: prompt })
     if (!budget.ok) return budget.response
 

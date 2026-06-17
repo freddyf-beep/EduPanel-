@@ -263,9 +263,9 @@ export function VerUnidadV3Cronograma() {
 
         let u: Unidad | null = null
         if (tipo === "oficial") {
-          const nivel = resolveNivel(cursoParam, mapping)
+          const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
-            setError(`No hay bases curriculares configuradas para "${cursoParam}".`)
+            setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}".`)
             return
           }
           u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
@@ -683,7 +683,7 @@ export function VerUnidadV3Cronograma() {
 
   return (
     <div className={cn("mx-auto px-4 py-6 sm:px-6", simpleMode ? "max-w-[1120px]" : "max-w-[1320px]")}>
-
+      
       {/* Header */}
       <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -828,11 +828,11 @@ export function VerUnidadV3Cronograma() {
               </div>
             </div>
           )}
-
+          
           {/* Controls Bar */}
           <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-card border border-border p-4 rounded-xl shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
-
+              
               {/* Clases Totales Indicator */}
               <div className="flex items-center gap-2 bg-muted/40 dark:bg-muted/10 px-3 py-1.5 rounded border border-border/80">
                 <ListOrdered className="h-4 w-4 text-muted-foreground" />
@@ -939,7 +939,7 @@ export function VerUnidadV3Cronograma() {
 
           {/* Matrix Table Area */}
           <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-
+            
             {/* Horizontal scroll support indicator */}
             <div className="flex items-center justify-between border-b border-border bg-muted/20 px-4 py-2">
               <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
@@ -1037,7 +1037,7 @@ export function VerUnidadV3Cronograma() {
                     )})}
                   </tr>
                 </thead>
-
+                
                 <tbody>
                   {oas.length === 0 ? (
                     <tr>
@@ -1055,7 +1055,7 @@ export function VerUnidadV3Cronograma() {
                   ) : (
                     oas.map((oa, ri) => (
                       <tr key={oa.id} className="border-b border-border last:border-b-0 hover:bg-muted/10 transition-colors">
-
+                        
                         {/* Sticky Left OA Cell */}
                         <td className="p-3 border-r border-border sticky left-0 z-10 bg-card align-middle">
                           <div className="flex items-start gap-2.5">
@@ -1126,7 +1126,7 @@ export function VerUnidadV3Cronograma() {
         {/* Sidebar Info Column */}
         {!simpleMode && (
         <div className="space-y-5">
-
+          
           {/* Cobertura Curricular Progress Card */}
           <div className="bg-card rounded-xl border border-border p-4.5 shadow-sm">
             <div className="flex items-center gap-2 mb-3.5 border-b pb-2 border-border/85">
@@ -1135,7 +1135,7 @@ export function VerUnidadV3Cronograma() {
                 Resumen de Cobertura
               </h3>
             </div>
-
+            
             {oas.length === 0 ? (
               <p className="text-[11.5px] text-muted-foreground leading-relaxed text-center py-2">
                 Sin objetivos asignados a la unidad.
@@ -1144,7 +1144,7 @@ export function VerUnidadV3Cronograma() {
               <div className="flex flex-col gap-3">
                 {oas.map((oa, ri) => {
                   const count = oasCoverageCounts.get(oa.id) || 0
-
+                  
                   // Coverage progress width & color mapping
                   let barColor = "bg-primary"
                   let progressPct = 0

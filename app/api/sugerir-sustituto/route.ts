@@ -22,7 +22,7 @@ function buildPrompt(
   bloqueDia: string,
   candidatos: Array<{ nombre: string; especialidad: string; libre: boolean; coincidenciaEspecialidad: boolean }>
 ) {
-  const candidatosTexto = candidatos.map(c =>
+  const candidatosTexto = candidatos.map(c => 
     `- Profesor: ${c.nombre} | Especialidad: ${c.especialidad} | Disponible en el bloque: ${c.libre ? "SÍ" : "NO"} | Coincide Especialidad: ${c.coincidenciaEspecialidad ? "SÍ" : "NO"}`
   ).join("\n")
 
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildPrompt(ausenteNombre, ausenteAsignatura, bloqueDia, candidatos)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "agent-sustituciones", inputText: prompt })
     if (!budget.ok) return budget.response
 

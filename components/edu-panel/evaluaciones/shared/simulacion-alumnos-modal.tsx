@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
-  Sparkles, Loader2, Award, AlertTriangle,
-  CheckCircle2, X, Clock, HelpCircle, ArrowRight, RefreshCw
+import { 
+  Sparkles, Loader2, Award, AlertTriangle, 
+  CheckCircle2, X, Clock, HelpCircle, ArrowRight, RefreshCw 
 } from "lucide-react"
 
 interface ErrorCometido {

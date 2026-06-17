@@ -104,7 +104,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildBitacoraPrompt(estudiantes, asignatura || "", curso || "")
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, {
       feature: "bitacora-por-voz",
       estimatedInputTokens: estimateAudioRequestTokens(prompt),

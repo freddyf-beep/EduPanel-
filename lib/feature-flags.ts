@@ -64,15 +64,35 @@ function mergeFeatureFlags(remote: Record<string, any> | undefined): Record<stri
   return merged
 }
 
+// Caché en memoria con TTL. El doc config/feature_flags cambia muy rara vez,
+// pero getFeatureFlags() se invoca en cada ruta de IA y en varios componentes
+// cliente de alto tráfico (dashboard, planificaciones, rúbricas). Cachear evita
+// re-leer el mismo documento en cada carga/llamada y reduce el costo de Firestore.
+// El caché es por instancia (proceso serverless o pestaña del navegador) y se
+// invalida automáticamente al vencer el TTL o al actualizar un flag.
+const FEATURE_FLAGS_TTL_MS = 60_000
+let featureFlagsCache: { data: Record<string, FeatureFlag>; expiresAt: number } | null = null
+
+/** Limpia el caché de feature flags (p. ej. tras actualizar un flag). */
+export function clearFeatureFlagsCache(): void {
+  featureFlagsCache = null
+}
+
 export async function getFeatureFlags(): Promise<Record<string, FeatureFlag>> {
+  const now = Date.now()
+  if (featureFlagsCache && featureFlagsCache.expiresAt > now) {
+    return featureFlagsCache.data
+  }
   try {
     const docRef = doc(db, "config", "feature_flags")
     const snap = await getDoc(docRef)
 
-    if (snap.exists()) return mergeFeatureFlags(snap.data())
-    return DEFAULT_FEATURE_FLAGS
+    const data = snap.exists() ? mergeFeatureFlags(snap.data()) : DEFAULT_FEATURE_FLAGS
+    featureFlagsCache = { data, expiresAt: now + FEATURE_FLAGS_TTL_MS }
+    return data
   } catch (error) {
     console.warn("[feature-flags] usando valores locales por falta de acceso a config/feature_flags", error)
+    // No cacheamos el fallback: queremos reintentar Firestore en la próxima llamada.
     return SAFE_FALLBACK_FEATURE_FLAGS
   }
 }
@@ -83,6 +103,8 @@ export async function updateFeatureFlag(id: string, active: boolean): Promise<vo
     await updateDoc(docRef, {
       [`${id}.active`]: active
     })
+    // Invalidar el caché para que el cambio se refleje de inmediato.
+    clearFeatureFlagsCache()
   } catch (error) {
     console.error("Error updating feature flag", error)
     throw error

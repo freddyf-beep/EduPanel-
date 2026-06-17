@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: 'EduPanel',
     statusBarStyle: 'default',
   },
-  icons: {
+  icons: { 
     icon: '/icon.svg',
     apple: '/logos/logo-3.png'
   },

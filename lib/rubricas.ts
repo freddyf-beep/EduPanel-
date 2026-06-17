@@ -188,7 +188,7 @@ export async function resolverMetadatosCurricularesRubrica(
   rubrica: Pick<RubricaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<RubricaCurriculoResolucion> {
   const fallback = normalizeMetadatosCurriculares(rubrica.metadatosCurriculares)
-  const nivel = await getCurriculoNivel(rubrica.curso)
+  const nivel = await getCurriculoNivel(rubrica.curso, rubrica.asignatura)
   const unidades = await getUnidades(rubrica.asignatura, nivel)
   if (!unidades.length) {
     return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
@@ -256,7 +256,7 @@ export async function cargarOAsParaRubrica(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = await getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso, asignatura)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 

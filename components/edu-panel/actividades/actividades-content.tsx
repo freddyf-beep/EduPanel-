@@ -989,7 +989,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         setNivelCurricular(nivel || cursoParam)
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadParam),
@@ -1075,7 +1075,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
       if (data) {
         setActividad({
           ...data,
-          // Forzamos fuente de verdad del cronograma
+          // Forzamos fuente de verdad del cronograma 
           oaIds: claseData?.oaIds || [],
         })
       } else {
@@ -3280,7 +3280,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
                         </p>
                         <div className="w-full mt-4">
                           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wide block mb-1 text-left">Tu propuesta base (Opcional)</label>
-                          <textarea
+                          <textarea 
                             value={actividad.contextoProfesor || ideaInicial}
                             onChange={(e) => {
                               setIdeaInicial(e.target.value)

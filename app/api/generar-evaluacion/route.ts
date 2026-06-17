@@ -63,7 +63,7 @@ function resolveProvider(raw: string): AIProvider {
 }
 
 async function callGemini(body: EvalCopilotRequest, prompt: string, signal?: AbortSignal) {
-  const model = cleanText(body.customModel) || "gemini-2.0-flash"
+  const model = cleanText(body.customModel) || "gemini-2.5-flash"
   const token = body.modelProvider === "public"
     ? cleanText(process.env.GEMINI_API_KEY)
     : cleanText(body.customToken) || cleanText(process.env.GEMINI_API_KEY)
@@ -81,7 +81,7 @@ async function callGemini(body: EvalCopilotRequest, prompt: string, signal?: Abo
   )
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-
+  
   const usage = json?.usageMetadata ? {
     inputTokens: Number(json.usageMetadata.promptTokenCount) || 0,
     outputTokens: Number(json.usageMetadata.candidatesTokenCount) || 0,
@@ -108,7 +108,7 @@ async function callOpenAI(body: EvalCopilotRequest, prompt: string, signal?: Abo
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-
+  
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.prompt_tokens) || 0,
     outputTokens: Number(json.usage.completion_tokens) || 0,
@@ -134,7 +134,7 @@ async function callAnthropic(body: EvalCopilotRequest, prompt: string, signal?: 
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-
+  
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.input_tokens) || 0,
     outputTokens: Number(json.usage.output_tokens) || 0,
@@ -164,7 +164,7 @@ async function callCompatible(body: EvalCopilotRequest, prompt: string, signal?:
   })
   const { rawText, json } = await readJsonOrText(response)
   if (!response.ok) throw new Error(cleanText(json?.error?.message) || rawText)
-
+  
   const usage = json?.usage ? {
     inputTokens: Number(json.usage.prompt_tokens) || 0,
     outputTokens: Number(json.usage.completion_tokens) || 0,

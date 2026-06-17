@@ -135,6 +135,9 @@ export function buildDocId(asignatura: string, nivel: string): string {
 
 const DOC_LEVEL_SUFFIXES = [
   "Párvulos",
+  "Sala Cuna",
+  "Nivel Medio",
+  "Nivel Transición",
   "1ro Básico",
   "2do Básico",
   "3ro Básico",
@@ -166,7 +169,35 @@ function fallbackLabelFromDocId(docId: string): string | null {
   return null
 }
 
+// ─── Caché en memoria para lecturas del currículo (data de referencia estática) ──
+// La colección `curriculo` es de solo lectura para los docentes y casi nunca cambia,
+// pero estas lecturas (sobre todo getUnidadCompleta, que abre 3 subcolecciones) se
+// repiten al navegar entre vistas y selectores, generando muchas lecturas de Firestore.
+// Cacheamos por clave durante CURRICULO_CACHE_TTL_MS. El caché es por instancia
+// (proceso serverless o pestaña): un refresh de página (F5) lo limpia. Tras editar el
+// currículo en el admin, llamar clearCurriculoCache() o recargar para ver los cambios.
+const CURRICULO_CACHE_TTL_MS = 5 * 60_000
+const curriculoCache = new Map<string, { value: unknown; expiresAt: number }>()
+
+function getCachedCurriculo<T>(key: string): T | undefined {
+  const hit = curriculoCache.get(key)
+  if (hit && hit.expiresAt > Date.now()) return hit.value as T
+  if (hit) curriculoCache.delete(key)
+  return undefined
+}
+
+function setCachedCurriculo(key: string, value: unknown): void {
+  curriculoCache.set(key, { value, expiresAt: Date.now() + CURRICULO_CACHE_TTL_MS })
+}
+
+/** Limpia el caché de lecturas del currículo (p. ej. tras editar curriculo en el admin). */
+export function clearCurriculoCache(): void {
+  curriculoCache.clear()
+}
+
 export async function getAsignaturasDisponibles(): Promise<string[]> {
+  const cached = getCachedCurriculo<string[]>("asignaturas")
+  if (cached) return cached
   const snap = await getDocs(collection(db, "curriculo"))
   const map = new Map<string, string>()
 
@@ -185,7 +216,7 @@ export async function getAsignaturasDisponibles(): Promise<string[]> {
   })
 
   const priority = SUBJECT_FALLBACK_OPTIONS.map((label) => normalizeKeyPart(label))
-  return Array.from(map.entries())
+  const result = Array.from(map.entries())
     .sort((a, b) => {
       const aIndex = priority.indexOf(a[0])
       const bIndex = priority.indexOf(b[0])
@@ -195,18 +226,25 @@ export async function getAsignaturasDisponibles(): Promise<string[]> {
       return a[1].localeCompare(b[1], "es")
     })
     .map(([, label]) => label)
+  setCachedCurriculo("asignaturas", result)
+  return result
 }
 
 // ─── Leer todas las unidades de una asignatura/nivel ─────────────────────────
 export async function getUnidades(asignatura: string, nivel: string): Promise<Unidad[]> {
   const docId = buildDocId(asignatura, nivel)
+  const cacheKey = `unidades:${docId}`
+  const cached = getCachedCurriculo<Unidad[]>(cacheKey)
+  if (cached) return cached
   const unidadesRef = collection(db, "curriculo", docId, "unidades")
   const snap = await getDocs(query(unidadesRef, orderBy("numero_unidad")))
 
-  return snap.docs.map(d => ({
+  const result = snap.docs.map(d => ({
     id: d.id,
     ...d.data()
   })) as Unidad[]
+  setCachedCurriculo(cacheKey, result)
+  return result
 }
 
 // ─── Leer una unidad específica con todos sus sub-datos ──────────────────────
@@ -216,6 +254,9 @@ export async function getUnidadCompleta(
   unidadId: string
 ): Promise<Unidad | null> {
   const docId = buildDocId(asignatura, nivel)
+  const cacheKey = `unidad:${docId}:${unidadId}`
+  const cached = getCachedCurriculo<Unidad>(cacheKey)
+  if (cached) return cached
   const unidadRef = doc(db, "curriculo", docId, "unidades", unidadId)
   const unidadSnap = await getDoc(unidadRef)
 
@@ -245,6 +286,7 @@ export async function getUnidadCompleta(
     ? (unidad.ejemplos_evaluacion || [])
     : (evalSnap.docs.map(d => ({ id: d.id, ...d.data() })) as EjemploEvaluacion[])
 
+  setCachedCurriculo(cacheKey, unidad)
   return unidad
 }
 
@@ -255,11 +297,16 @@ export async function getOADeUnidad(
   unidadId: string
 ): Promise<ObjetivoAprendizaje[]> {
   const docId = buildDocId(asignatura, nivel)
+  const cacheKey = `oa:${docId}:${unidadId}`
+  const cached = getCachedCurriculo<ObjetivoAprendizaje[]>(cacheKey)
+  if (cached) return cached
   const snap = await getDocs(query(
     collection(db, "curriculo", docId, "unidades", unidadId, "objetivos_aprendizaje"),
     orderBy("numero")
   ))
-  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as ObjetivoAprendizaje[]
+  const result = snap.docs.map(d => ({ id: d.id, ...d.data() })) as ObjetivoAprendizaje[]
+  setCachedCurriculo(cacheKey, result)
+  return result
 }
 
 // ─── Tipos para planificación guardada ───────────────────────────────────────

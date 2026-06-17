@@ -152,7 +152,7 @@ export async function POST(req: Request) {
       promedio || "Sin notas",
       dificultades || ""
     )
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "rutas-aprendizaje", inputText: prompt })
     if (!budget.ok) return budget.response
 

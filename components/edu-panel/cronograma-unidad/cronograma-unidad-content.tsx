@@ -138,7 +138,7 @@ export function CronogramaUnidadContent({ oas, totalClases, curso, unidadId, uni
       if (cancelled) return
 
       setHorarioBase(hData || [])
-
+      
       if (data && data.clases.length > 0) {
         // Si hay guardado, expandir/contraer al totalClases actual
         const saved = data.clases

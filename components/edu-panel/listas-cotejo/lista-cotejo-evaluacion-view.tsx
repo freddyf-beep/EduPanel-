@@ -244,7 +244,7 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
         if (parsed.listaId !== listaId) {
           throw new Error("Esta copia de seguridad corresponde a otra lista de cotejo.")
         }
-
+        
         let parsedEv = parsed
         if (!parsedEv.grupos && (parsedEv as any).estudiantes) {
           parsedEv.grupos = [
@@ -686,8 +686,8 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
   const fechaBloqueo = formatearFechaBloqueo(evaluacion.bloqueadaEn)
 
   // Filtrado de secciones para mostrar en la grilla
-  const seccionesAMostrar = seccionActivaIdx === -1
-    ? (lista.secciones || [])
+  const seccionesAMostrar = seccionActivaIdx === -1 
+    ? (lista.secciones || []) 
     : (lista.secciones[seccionActivaIdx] ? [lista.secciones[seccionActivaIdx]] : [])
 
   return (
@@ -1619,7 +1619,7 @@ export function ListaCotejoEvaluacionView({ listaId }: Props) {
             {/* Reglas seleccionables */}
             <div className="space-y-2 border-t border-border pt-3">
               <label className="text-[11.5px] font-bold uppercase text-muted-foreground block mb-1">Reglas de distribución</label>
-
+              
               <label className="flex items-start gap-2.5 cursor-pointer select-none rounded-lg border border-purple-100 bg-purple-50/20 p-3 hover:bg-purple-50/40 transition-colors">
                 <input
                   type="checkbox"

@@ -162,7 +162,7 @@ export async function POST(req: Request) {
     const docJson = JSON.stringify(resumirDocumento(documento), null, 2)
 
     const prompt = buildBloomPrompt(docJson)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "calibrador-bloom", inputText: prompt })
     if (!budget.ok) return budget.response
 

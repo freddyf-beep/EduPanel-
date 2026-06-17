@@ -267,6 +267,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
       return NextResponse.json({ success: true, eliminados })
     }
 
+    if (action === "generateImpersonationToken") {
+      // Genera un custom token para "iniciar sesion como" un usuario.
+      // USO CUIDADOSO: solo para debugging. El admin debe loguearse con el token
+      // en su propio cliente y recordar cerrar sesion.
+      const token = await authAdmin.createCustomToken(uid, { impersonation: true })
+      return NextResponse.json({ success: true, token })
+    }
+
     if (action === "updateAiLimit") {
       const { limit } = body as { limit: number }
       if (typeof limit !== "number" || limit < 0) {

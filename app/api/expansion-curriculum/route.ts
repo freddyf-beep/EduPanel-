@@ -115,7 +115,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildCurriculumPrompt(rawText, asignatura, curso)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "expansion-curriculum", inputText: prompt })
     if (!budget.ok) return budget.response
 

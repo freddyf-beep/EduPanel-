@@ -187,7 +187,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = lista ? buildCorregirListaPrompt(lista, studentName) : buildCorregirPrompt(rubrica, studentName)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, {
       feature: "corregir-con-foto",
       estimatedInputTokens: estimateTokensFromText(prompt) + 2500,

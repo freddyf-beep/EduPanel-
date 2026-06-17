@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
-  Sparkles, Loader2, X, PlusCircle, CheckCircle,
-  HelpCircle, Settings, BookOpen, Layers
+import { 
+  Sparkles, Loader2, X, PlusCircle, CheckCircle, 
+  HelpCircle, Settings, BookOpen, Layers 
 } from "lucide-react"
 
 interface FabricaPreguntasModalProps {

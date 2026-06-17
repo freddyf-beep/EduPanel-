@@ -58,16 +58,16 @@ export async function POST(req: NextRequest) {
 
     const prompt = `
       Eres un recomendador semántico curricular de IA para docentes. Tu objetivo es mapear una solicitud de un profesor con los Objetivos de Aprendizaje (OA) ministeriales correctos y proponer recursos, actividades o evaluaciones idóneas.
-
+      
       Solicitud del docente: "${query}"
       Asignatura: ${asignatura || "No especificada"}
       Curso: ${curso || "No especificado"}
-
+      
       Genera una respuesta en formato JSON (sin bloques markdown ni explicaciones externas) que contenga:
       1. Los OAs sugeridos (código y descripción resumida).
       2. Una justificación pedagógica de la recomendación.
       3. 3 recursos o actividades didácticas concretas para implementar esta recomendación.
-
+      
       Estructura del JSON:
       {
         "justificacion": "[Breve justificación de por qué estas recomendaciones responden a la consulta]",

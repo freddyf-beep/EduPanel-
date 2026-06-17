@@ -176,7 +176,7 @@ export interface GeneratedLesson {
 export const DEFAULT_AI_CONFIG: StoredAiConfig = {
   provider: "public",
   token: "",
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
   endpoint: "https://api.openai.com/v1",
   promptExtra: "",
   promptOverrides: {},
@@ -193,7 +193,7 @@ export const AI_PROVIDER_OPTIONS: Array<{
   {
     value: "public",
     label: "EduPanel Público (Gratis)",
-    defaultModel: "gemini-2.0-flash",
+    defaultModel: "gemini-2.5-flash",
     helper: "No pide API key al docente cuando el servidor tiene GEMINI_API_KEY configurada. En local, si falta esa variable, usa Gemini con tu key personal.",
   },
   {
@@ -206,7 +206,7 @@ export const AI_PROVIDER_OPTIONS: Array<{
   {
     value: "gemini",
     label: "Google Gemini",
-    defaultModel: "gemini-2.0-flash",
+    defaultModel: "gemini-2.5-flash",
     helper: "Obtén tu API key gratis en Google AI Studio.",
     apiKeyUrl: "https://aistudio.google.com/apikey",
   },

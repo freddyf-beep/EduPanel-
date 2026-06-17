@@ -425,7 +425,7 @@ export async function resolverMetadatosCurricularesPrueba(
   prueba: Pick<PruebaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<ResolucionCurricular> {
   const fallback = normalizeMetadatos(prueba.metadatosCurriculares)
-  const nivel = await getCurriculoNivel(prueba.curso)
+  const nivel = await getCurriculoNivel(prueba.curso, prueba.asignatura)
   const unidades = await getUnidades(prueba.asignatura, nivel)
   if (!unidades.length) {
     return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
@@ -486,7 +486,7 @@ export async function cargarOAsParaPrueba(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = await getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso, asignatura)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 

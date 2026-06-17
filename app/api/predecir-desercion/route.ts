@@ -24,7 +24,7 @@ function buildPrompt(
   observaciones: string[],
   alertasHeuristica: string[]
 ) {
-  const obsTexto = observaciones.length > 0
+  const obsTexto = observaciones.length > 0 
     ? observaciones.map((o, i) => `- ${o}`).join("\n")
     : "Sin observaciones registradas."
 
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       alertas || []
     )
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(uid, { feature: "radar-desercion", inputText: prompt })
     if (!budget.ok) return budget.response
 

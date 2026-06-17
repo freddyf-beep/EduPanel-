@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       detallesOas || []
     )
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "predictor-cobertura", inputText: prompt })
     if (!budget.ok) return budget.response
 

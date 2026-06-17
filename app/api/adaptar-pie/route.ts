@@ -157,7 +157,7 @@ export async function POST(req: Request) {
     const docJson = JSON.stringify(resumirDocumentoAdaptacion(tipoDoc, documento), null, 2)
 
     const prompt = buildAdaptarPiePrompt(tipoDoc, docJson, diagnostico || "", notasPie || "", especialista || "")
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "adaptar-pie", inputText: prompt })
     if (!budget.ok) return budget.response
 

@@ -8,7 +8,15 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "qa:smoke": "node scripts/qa-smoke.mjs",
+    "deploy:rules": "powershell -ExecutionPolicy Bypass -File scripts/deploy-firestore-rules.ps1",
+    "deploy:rules:yes": "powershell -ExecutionPolicy Bypass -File scripts/deploy-firestore-rules.ps1 -Yes",
+    "backup:firestore": "node scripts/firestore-backup.mjs",
+    "backup:firestore:remote": "node scripts/firestore-backup.mjs --remote",
+    "backup:firestore:schedule": "powershell -ExecutionPolicy Bypass -File scripts/register-firestore-backup-schedule.ps1",
+    "backup:firestore:schedule:hourly": "powershell -ExecutionPolicy Bypass -File scripts/register-firestore-backup-schedule.ps1 -Mode Hourly -EveryHours 1",
+    "backup:firestore:schedule:hourly:remote": "powershell -ExecutionPolicy Bypass -File scripts/register-firestore-backup-schedule.ps1 -Mode Hourly -EveryHours 1 -Remote"
   },
   "dependencies": {
     "@firebase/vertexai": "^1.2.4",

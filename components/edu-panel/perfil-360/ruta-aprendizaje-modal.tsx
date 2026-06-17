@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
-  Sparkles, Loader2, Copy, Check, Printer, FileText,
-  Settings2, BookOpen, CheckSquare, Target, HelpCircle, X
+import { 
+  Sparkles, Loader2, Copy, Check, Printer, FileText, 
+  Settings2, BookOpen, CheckSquare, Target, HelpCircle, X 
 } from "lucide-react"
 
 interface RutaAprendizajeModalProps {
@@ -158,7 +158,7 @@ MENSAJE FINAL: ${ruta.mensajeAliento}`
             <div><strong>Asignatura:</strong> ${asignatura}</div>
             <div><strong>Objetivo de Aprendizaje (Refuerzo):</strong> ${oaId}</div>
           </div>
-
+          
           <div class="section">
             <div class="section-title">1. Concepto Clave Explicado Fácil</div>
             <div class="box">${ruta.explicacionSimple}</div>
@@ -385,7 +385,7 @@ MENSAJE FINAL: ${ruta.mensajeAliento}`
           >
             Nueva ruta
           </button>
-
+          
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
@@ -395,7 +395,7 @@ MENSAJE FINAL: ${ruta.mensajeAliento}`
               {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
               {copied ? "Copiado" : "Copiar Guía"}
             </button>
-
+            
             <button
               onClick={handlePrint}
               disabled={!ruta}

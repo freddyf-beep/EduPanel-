@@ -58,12 +58,12 @@ export async function POST(req: NextRequest) {
 
     const prompt = `
       Eres un consultor de diseño curricular experto. Diseña una rúbrica de evaluación analítica que integre de forma transversal el sello educativo "${sello}" junto con el siguiente objetivo/contenido pedagógico: "${objetivo}".
-
+      
       Detalles del contexto:
       Curso: ${curso || "No especificado"}
       Asignatura: ${asignatura || "No especificada"}
       Niveles de desempeño requeridos: ${niveles || 4} (ej: Insatisfactorio, Básico, Competente, Destacado)
-
+      
       Genera exactamente de 3 a 5 criterios de evaluación. Al menos uno de los criterios debe evaluar explícitamente cómo se manifiesta el sello institucional "${sello}" (ej: si el sello es ecológico, evaluar conciencia ambiental; si es artístico, evaluar creatividad y expresión estética, etc.) en el desempeño del estudiante.
 
       Responde únicamente con un objeto JSON estructurado de la siguiente forma (sin envoltorios markdown, sin explicaciones adicionales):

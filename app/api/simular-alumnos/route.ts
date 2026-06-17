@@ -196,7 +196,7 @@ export async function POST(req: Request) {
     const docJson = JSON.stringify(resumirDocumento(documento, tipoDoc), null, 2)
 
     const prompt = buildSimulacionPrompt(docJson, tipoDoc)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "testeador-alumnos", inputText: prompt })
     if (!budget.ok) return budget.response
 

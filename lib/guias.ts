@@ -233,7 +233,7 @@ export async function resolverMetadatosCurricularesGuia(
   guia: Pick<GuiaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<ResolucionCurricularGuia> {
   const fallback = normalizeMetadatos(guia.metadatosCurriculares)
-  const nivel = await getCurriculoNivel(guia.curso)
+  const nivel = await getCurriculoNivel(guia.curso, guia.asignatura)
   const unidades = await getUnidades(guia.asignatura, nivel)
   if (!unidades.length) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
 
@@ -284,7 +284,7 @@ export async function cargarOAsParaGuia(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = await getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso, asignatura)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 

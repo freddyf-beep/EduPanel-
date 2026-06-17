@@ -353,7 +353,7 @@ function VerUnidadInner() {
   const ignoreNextSaveRef = useRef(true)
   const handleGuardarRef = useRef<((isAutoSave?: boolean) => Promise<void>) | null>(null)
   const isMobile = useIsMobile()
-
+  
   const handlePdfPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     pdfDragRef.current = { startX: e.clientX, startY: e.clientY, startRight: pdfPos.right, startBottom: pdfPos.bottom }
     setIsDraggingPdf(true)
@@ -384,10 +384,10 @@ function VerUnidadInner() {
       setLoading(true)
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         if (nivel) setNivelAsignado(nivel)
         if (!nivel) {
-          setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Planificaciones y selecciona el nivel en "Bases curriculares de".`)
+          setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}". Ve a Planificaciones y selecciona el nivel en "Bases curriculares de".`)
           return
         }
         const [u, guardada, planificacion] = await Promise.all([
@@ -923,7 +923,7 @@ function VerUnidadInner() {
 
       {/* Ventana Flotante Programa PDF (Estilo Sticky) */}
       {showPdf && (
-        <div
+        <div 
           className={cn(
             "fixed z-[600] border-[2px] border-border bg-card flex flex-col transition-shadow",
             isMobile ? "inset-3 rounded-[18px]" : "rounded-[18px]",
@@ -931,7 +931,7 @@ function VerUnidadInner() {
           )}
           style={isMobile ? { overflow: "hidden" } : { right: `${pdfPos.right}px`, bottom: `${pdfPos.bottom}px`, width: "520px", height: "70vh", resize: "both", overflow: "hidden" }}
         >
-          <div
+          <div 
             className={cn("flex items-center justify-between border-b border-border bg-background/95 px-4 py-3 backdrop-blur", isMobile ? "" : "cursor-move touch-none")}
             onPointerDown={isMobile ? undefined : handlePdfPointerDown}
             onPointerMove={isMobile ? undefined : handlePdfPointerMove}
@@ -948,11 +948,11 @@ function VerUnidadInner() {
               </div>
             </div>
             <div className="flex gap-1.5" onPointerDown={e => e.stopPropagation()}>
-              <button onClick={() => window.open(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${encodeURIComponent(`${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}`, "_blank")}
+              <button onClick={() => window.open(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${encodeURIComponent(`${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}`, "_blank")} 
                 className="w-8 h-8 rounded-full bg-background border border-border grid place-items-center text-muted-foreground hover:bg-muted transition-colors cursor-pointer" title="Abrir en pestaña nueva">
                 <Download className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => setShowPdf(false)}
+              <button onClick={() => setShowPdf(false)} 
                 className="w-8 h-8 rounded-full bg-background border border-border grid place-items-center text-muted-foreground hover:bg-muted transition-colors cursor-pointer" title="Cerrar ventana">
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -960,9 +960,9 @@ function VerUnidadInner() {
           </div>
           <div className="flex-1 bg-muted relative">
             {isDraggingPdf && <div className="absolute inset-0 z-10" />}
-            <iframe
+            <iframe 
               src={`https://docs.google.com/viewer?url=${encodeURIComponent(`https://www.curriculumnacional.cl/sites/default/files/adjuntos/recursos/2024-12/${ASIGNATURA} ${cursoParam.charAt(0)}.pdf`)}&embedded=true`}
-              className="absolute inset-0 w-full h-full border-none bg-white"
+              className="absolute inset-0 w-full h-full border-none bg-white" 
               title="Programa de Estudio"
             />
           </div>

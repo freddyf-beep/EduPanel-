@@ -59,7 +59,7 @@ export function PruebaResultados({ pruebaId, onClose }: Props) {
   const [estudianteActivo, setEstudianteActivo] = useState<string | null>(null)
   const [conflictos, setConflictos] = useState<Array<{ estudianteId: string; nombre: string; anterior: string; nueva: string }>>([])
   const [proyectando, setProyectando] = useState(false)
-
+  
   // Refs para debounce automático (1s)
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
   const aplicacionModificadaRef = useRef(false)

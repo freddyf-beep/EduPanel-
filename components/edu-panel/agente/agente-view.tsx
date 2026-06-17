@@ -79,8 +79,8 @@ export function AgenteView() {
       setMessages(prev => [...prev, aiThinking])
 
       setTimeout(() => {
-        setMessages(prev => prev.map(msg =>
-          msg.id === aiThinking.id
+        setMessages(prev => prev.map(msg => 
+          msg.id === aiThinking.id 
             ? {
                 ...msg,
                 isTyping: false,
@@ -94,7 +94,7 @@ export function AgenteView() {
 
   return (
     <div className="flex h-[calc(100vh-64px)] w-full overflow-hidden bg-background">
-
+      
       {/* Sidebar - Historial */}
       <AnimatePresence>
         {isSidebarOpen && (
@@ -110,7 +110,7 @@ export function AgenteView() {
                 <span className="text-[13px]">Nuevo Chat</span>
               </button>
             </div>
-
+            
             <div className="flex-1 overflow-y-auto p-3 space-y-6">
               <div>
                 <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2 px-2">Hoy</h3>
@@ -123,7 +123,7 @@ export function AgenteView() {
                   </button>
                 </div>
               </div>
-
+              
               <div>
                 <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2 px-2">Ayer</h3>
                 <div className="space-y-1">
@@ -133,7 +133,7 @@ export function AgenteView() {
                 </div>
               </div>
             </div>
-
+            
             <div className="p-4 border-t border-border/50 bg-secondary/30">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 grid place-items-center">
@@ -151,11 +151,11 @@ export function AgenteView() {
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col relative bg-gradient-to-b from-background to-secondary/20">
-
+        
         {/* Topbar */}
         <header className="h-14 flex items-center justify-between px-4 sm:px-6 border-b border-border/50 bg-background/80 backdrop-blur-md z-10">
           <div className="flex items-center gap-3">
-            <button
+            <button 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 rounded-lg hover:bg-secondary text-muted-foreground hidden md:block transition-colors"
             >
@@ -196,21 +196,21 @@ export function AgenteView() {
               >
                 <div className={cn(
                   "w-8 h-8 rounded-full flex-shrink-0 grid place-items-center mt-1",
-                  msg.role === "user"
-                    ? "bg-primary text-primary-foreground"
+                  msg.role === "user" 
+                    ? "bg-primary text-primary-foreground" 
                     : "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md shadow-fuchsia-500/20"
                 )}>
                   {msg.role === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                 </div>
-
+                
                 <div className={cn(
                   "flex flex-col gap-2 max-w-[85%]",
                   msg.role === "user" ? "items-end" : "items-start"
                 )}>
                   <div className={cn(
                     "px-4 py-3 rounded-[20px] text-[14px] leading-relaxed shadow-sm",
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-tr-sm"
+                    msg.role === "user" 
+                      ? "bg-primary text-primary-foreground rounded-tr-sm" 
                       : "bg-card border border-border/50 rounded-tl-sm text-foreground"
                   )}>
                     {msg.isTyping ? (
@@ -223,7 +223,7 @@ export function AgenteView() {
                       msg.content
                     )}
                   </div>
-
+                  
                   {/* Suggestions Bubbles */}
                   {msg.suggestions && msg.suggestions.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -252,7 +252,7 @@ export function AgenteView() {
               <button className="p-3 text-muted-foreground hover:text-primary transition-colors flex-shrink-0">
                 <Paperclip className="w-5 h-5" />
               </button>
-
+              
               <textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -266,12 +266,12 @@ export function AgenteView() {
                 className="flex-1 max-h-32 min-h-[44px] bg-transparent resize-none outline-none text-[14px] py-3 text-foreground placeholder:text-muted-foreground"
                 rows={1}
               />
-
+              
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button className="p-3 text-muted-foreground hover:text-primary transition-colors hidden sm:block">
                   <Mic className="w-5 h-5" />
                 </button>
-                <button
+                <button 
                   onClick={() => handleSend()}
                   disabled={!inputValue.trim()}
                   className="bg-primary text-primary-foreground p-3 rounded-full hover:bg-pink-dark transition-all disabled:opacity-50 disabled:hover:bg-primary"
@@ -285,7 +285,7 @@ export function AgenteView() {
             </p>
           </div>
         </div>
-
+        
       </div>
     </div>
   )

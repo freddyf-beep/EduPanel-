@@ -118,7 +118,7 @@ Responde con un JSON:
         return NextResponse.json({ error: "Tipo de sugerencia no reconocido." }, { status: 400 })
     }
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "clase-en-vivo", inputText: prompt })
     if (!budget.ok) return budget.response
 

@@ -74,20 +74,22 @@ export function CursoUnidadSelector({
     cargarHorarioSemanal()
       .then(horario => {
         if (cancelled) return
-        const map = new Map<string, string>()
+        const colorMap = new Map<string, string>()
+        const asignaturaMap = new Map<string, string>()
         horario
           .filter(h => !esTipoLibre(h.tipo))
           .forEach(h => {
             const nombre = h.resumen?.trim()
-            if (nombre && !map.has(nombre)) {
-              map.set(nombre, h.color || "#4f46e5")
-            }
+            if (!nombre) return
+            if (!colorMap.has(nombre)) colorMap.set(nombre, h.color || "#4f46e5")
+            if (!asignaturaMap.has(nombre) && h.asignatura) asignaturaMap.set(nombre, h.asignatura)
           })
-        const next = Array.from(map.entries()).map(([nombre, color]) => ({ nombre, color }))
+        const next = Array.from(colorMap.entries()).map(([nombre, color]) => ({ nombre, color }))
         setCursos(next)
-        // Si no hay curso seleccionado pero hay cursos disponibles, seleccionar el primero.
         if (!curso && next.length > 0) {
-          setCurso(next[0].nombre)
+          // Prefer a course whose asignatura matches the active subject
+          const match = next.find(c => asignaturaMap.get(c.nombre) === asignatura)
+          setCurso((match ?? next[0]).nombre)
         }
       })
       .catch((e: Error) => {

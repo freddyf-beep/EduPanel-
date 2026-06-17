@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
-  Sparkles, Loader2, Copy, Check, Printer, FileText,
-  Settings2, Heart, Award, ArrowRight, ShieldAlert, X
+import { 
+  Sparkles, Loader2, Copy, Check, Printer, FileText, 
+  Settings2, Heart, Award, ArrowRight, ShieldAlert, X 
 } from "lucide-react"
 
 interface RedactorInformeModalProps {
@@ -146,7 +146,7 @@ ${editedReport.conclusion}`
             <div><strong>Promedio:</strong> ${student.promedio || "Sin calificaciones"}</div>
             <div><strong>Asistencia:</strong> ${student.porcentajeAsistencia ? `${student.porcentajeAsistencia}%` : "Sin registro"}</div>
           </div>
-
+          
           <div class="section">
             <div class="section-title">Desarrollo Socioemocional y Conductual</div>
             <div>${editedReport.socioemocional}</div>
@@ -398,7 +398,7 @@ ${editedReport.conclusion}`
           >
             Volver a redactar
           </button>
-
+          
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
@@ -408,7 +408,7 @@ ${editedReport.conclusion}`
               {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
               {copied ? "Copiado" : "Copiar Texto"}
             </button>
-
+            
             <button
               onClick={handlePrint}
               disabled={!editedReport}

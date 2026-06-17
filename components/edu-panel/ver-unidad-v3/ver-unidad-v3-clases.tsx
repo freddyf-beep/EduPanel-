@@ -412,7 +412,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
   const cursoParam = cursoOverride || searchParams.get("curso") || "1° A"
   const rawUnitIdLocal = searchParams.get("unitIdLocal")
-  const unidadParam = unidadOverride || rawUnitIdLocal || searchParams.get("unidad") || "unidad_1"
+  const unidadParam = unidadOverride || searchParams.get("unidad") || rawUnitIdLocal || "unidad_1"
   const unidadCurricularParam = unidadCurricularOverride || searchParams.get("unidad") || unidadParam
   const claseParam = claseOverride || parseInt(searchParams.get("clase") || "1")
 
@@ -999,7 +999,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         setNivelCurricular(nivel || cursoParam)
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadParam),
@@ -1839,7 +1839,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           >
             {saving ? "Guardando…" : "Guardar cambios"}
           </button>
-
+          
           <div className="relative group">
             <button className="w-9 h-9 border border-border rounded-xl bg-card grid place-items-center text-muted-foreground hover:bg-muted/40 transition-colors flex-shrink-0">
               <SlidersHorizontal className="h-4.5 w-4.5" />
@@ -1902,7 +1902,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         "grid grid-cols-1 gap-6 items-start mt-6",
         isClassesRailCollapsed && !hasFloatingObjectivesPanel ? "lg:grid-cols-[64px_1fr]" : "lg:grid-cols-[220px_1fr]"
       )}>
-
+        
         {/* Left Rail (Classes List) */}
         <div className="self-start">
           <div className={cn(
@@ -2039,10 +2039,10 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           "min-w-0 gap-6 items-start",
           simpleMode ? "flex flex-col max-w-3xl mx-auto w-full" : "grid grid-cols-1 xl:grid-cols-[2.2fr_1fr]"
         )}>
-
+          
           {/* Left/Main Column: Editor Workspace */}
           <div className="relative space-y-6 w-full">
-
+            
             {/* Anchor point to detect scroll position */}
             <div ref={anchorRef} className="h-0 w-0" />
 
@@ -2083,7 +2083,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                 </div>
               </div>
             )}
-
+            
             {/* Class metadata badge row */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card border-[0.5px] border-border p-4.5 rounded-[18px] shadow-sm">
               <div className="flex items-center gap-2.5 flex-wrap">
@@ -2097,7 +2097,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   {unidadData?.horas ? `${unidadData.horas} HORAS` : "2 HORAS PEDAGÓGICAS"}
                 </span>
               </div>
-
+              
               {/* Selector de estado */}
               <div className="relative print:hidden">
                 <button
@@ -2134,7 +2134,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   rows={3}
                 />
               </div>
-
+              
               {/* Bloom Multinivel Cards - Omitidas en modo simple */}
               {!simpleMode && actividad.objetivoMultinivel && (
                 <div className="mt-3.5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -2294,7 +2294,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                     Adecuación Curricular (PIE / DUA)
                   </button>
                 </div>
-
+                
                 <div className="p-5">
                   {tabDerecho === "desarrollo" ? (
                     <div className="space-y-4">
@@ -2343,7 +2343,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                             <BrainCircuit className="w-3.5 h-3.5" /> Generar detallado
                           </button>
                         </div>
-
+                        
                         <div className="space-y-3.5">
                           {actividad.analisisBloom?.length ? (
                             <div className="bg-muted/10 border border-border p-3 rounded-lg">
@@ -2416,7 +2416,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           {/* Right Column: Tools Sidebar - Omitido por completo en modo simple */}
           {!simpleMode && (
             <div className="space-y-6">
-
+              
               {/* IA Pedagógica */}
               <div className="bg-card border border-border rounded-[18px] p-5.5 space-y-4 shadow-sm">
                 <span className="text-[11px] font-extrabold text-muted-foreground uppercase tracking-wider block">IA Pedagógica</span>
@@ -2469,7 +2469,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               {/* Habilidades y Actitudes */}
               <div className="bg-card border border-border rounded-[18px] p-5.5 space-y-4 shadow-sm">
                 <span className="text-[11px] font-extrabold text-muted-foreground uppercase tracking-wider block">Currículo Transversal</span>
-
+                
                 {/* Habilidades */}
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase">Habilidades</span>
@@ -2677,7 +2677,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               className="hidden md:block absolute left-0 top-0 bottom-0 w-1.5 cursor-col-resize hover:bg-primary/45 bg-transparent z-50 transition-colors"
               onMouseDown={() => setIsResizing(true)}
             />
-
+            
             {/* Copiloto Header */}
             <div className="flex-shrink-0 px-4 py-3.5 border-b border-border flex items-center justify-between bg-card">
               <div className="flex items-center gap-2.5">
@@ -2732,7 +2732,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   <input
                     value={aiConfig.model}
                     onChange={e => setAiConfig(prev => ({ ...prev, model: e.target.value }))}
-                    placeholder="gemini-1.5-pro"
+                    placeholder="gemini-2.5-flash"
                     className="w-full rounded border border-border bg-background px-3 py-1.5 text-[11.5px] font-medium outline-none focus:border-primary"
                   />
                 </div>

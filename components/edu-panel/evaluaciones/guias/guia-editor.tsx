@@ -301,7 +301,7 @@ export function GuiaEditor({
       setGuardando(true)
       const res = guiaToPrueba(guia)
       await guardarPruebaConSnapshot(res.documento)
-
+      
       if (res.omitidos.length > 0) {
         toast({
           title: "Duplicado como prueba (con omisiones)",
@@ -314,7 +314,7 @@ export function GuiaEditor({
           description: "Redirigiendo a la nueva prueba...",
         })
       }
-
+      
       router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas", view: "editor", pruebaId: res.documento.id }, asignatura)))
     } catch (e: any) {
       setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al duplicar como prueba" })

@@ -61,7 +61,7 @@ export function useContextoCurricular({
         cargarCronogramaUnidad(asignatura, curso, unidadId)
           .then(data => { if (!cancelled) setCronograma(data) })
           .catch(() => { if (!cancelled) setCronograma(null) }),
-        getCurriculoNivel(curso)
+        getCurriculoNivel(curso, asignatura)
           .then(nivel => { if (!cancelled) setNivelCurricular(nivel) })
           .catch(() => { if (!cancelled) setNivelCurricular("1ro Básico") }),
       ])

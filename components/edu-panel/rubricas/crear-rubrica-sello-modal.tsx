@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
+import { 
   Sparkles, Loader2, X, AlertCircle, Award, Check
 } from "lucide-react"
 import type { RubricaTemplate, RubricaParte } from "@/lib/rubricas"

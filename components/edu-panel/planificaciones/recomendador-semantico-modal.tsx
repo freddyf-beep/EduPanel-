@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { apiFetch } from "@/lib/api-client"
-import {
+import { 
   Sparkles, Loader2, Target, BookOpen, AlertCircle, X, Check, ArrowRight, Lightbulb
 } from "lucide-react"
 

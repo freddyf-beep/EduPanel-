@@ -58,17 +58,17 @@ export async function POST(req: NextRequest) {
 
     const prompt = `
       Eres un tutor escolar inteligente y empático. Redacta un reporte o mensaje informativo dirigido al apoderado (padre/madre/tutor) del estudiante "${student.nombre}".
-
+      
       Información del estudiante:
       Curso: ${curso || "No especificado"}
       Asignatura: ${asignatura || "No especificada"}
       Promedio actual: ${student.promedio !== undefined && student.promedio !== null ? student.promedio : "Sin notas aún"}
       Asistencia: ${student.porcentajeAsistencia !== undefined && student.porcentajeAsistencia !== null ? `${student.porcentajeAsistencia}%` : "No registrada"}
       PIE (Programa de Integración Escolar): ${student.pie ? "Sí (requiere adecuaciones)" : "No"}
-
+      
       Observaciones recientes del docente:
       ${observaciones && observaciones.length > 0 ? observaciones.join("\n") : "No hay observaciones negativas registradas."}
-
+      
       Instrucciones de redacción:
       1. El tono debe ser extremadamente constructivo, respetuoso y colaborativo. No debe sonar punitivo ni acusatorio.
       2. Divide el mensaje en 3 partes claras:

@@ -23,7 +23,7 @@ import Link from "next/link"
 import {
   Calendar, Plus, Trash2, Download,
   Loader2, ArrowLeft, BookOpen, Layers, AlertCircle,
-  UploadCloud,
+  UploadCloud, Link2,
 } from "lucide-react"
 import { useAuth } from "@/components/auth/auth-context"
 import { cn } from "@/lib/utils"
@@ -32,8 +32,9 @@ import {
   cargarActividadClase,
   cargarCronogramaUnidad,
   cargarVerUnidad,
+  getUnidades,
 } from "@/lib/curriculo"
-import type { UnidadPlan, ClaseCronograma } from "@/lib/curriculo"
+import type { UnidadPlan, ClaseCronograma, Unidad } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { toast } from "@/hooks/use-toast"
@@ -53,7 +54,9 @@ import {
 import {
   cargarCursoTipos,
   cargarNivelMapping,
+  isNivelParvularia,
   resolveTipoCurricular,
+  resolveNivel,
   type CursoTipoMap,
   type NivelMapping,
   type TipoCurricular,
@@ -132,6 +135,9 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   const [nivelMapping, setNivelMapping]          = useState<NivelMapping>({})
   const [tipoCurricular, setTipoCurricular]      = useState<TipoCurricular>("oficial")
   const [colegioInfo, setColegioInfo]            = useState<InfoColegio | null>(null)
+  const [curriculumUnits, setCurriculumUnits]    = useState<Unidad[]>([])
+  const nivelActual = resolveNivel(curso, nivelMapping, ASIGNATURA) || ""
+  const unidadWorkspacePath = isNivelParvularia(nivelActual) ? "/parvularia" : "/ver-unidad"
 
   // Auto-save
   const ignoreNextSaveRef = useRef(true)
@@ -280,6 +286,9 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       return
     }
     const id = nextId
+    const currId = curriculumUnits.length > 0
+      ? curriculumUnits[Math.min(units.length, curriculumUnits.length - 1)].id
+      : `unidad_${units.length + 1}`
     const nueva: UnidadPlan = {
       id,
       name: nombre,
@@ -288,7 +297,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       start: "",
       end: "",
       type: creandoTipo,
-      unidadCurricularId: `unidad_${units.length + 1}`,
+      unidadCurricularId: currId,
     }
     setUnits(prev => [...prev, nueva])
     setNextId(id + 1)
@@ -335,6 +344,17 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     )
   }, [curso])
 
+  useEffect(() => {
+    const nivel = resolveNivel(curso, nivelMapping, ASIGNATURA)
+    if (!nivel) {
+      setCurriculumUnits([])
+      return
+    }
+    getUnidades(ASIGNATURA, nivel)
+      .then(setCurriculumUnits)
+      .catch(() => setCurriculumUnits([]))
+  }, [ASIGNATURA, curso, nivelMapping])
+
   const descargarBlob = async (blob: Blob, fileName: string) => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
@@ -372,7 +392,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
   }
 
   const getNivelCurricularExport = () => tipoCurricular === "oficial"
-    ? (nivelMapping[curso] || "Sin nivel configurado")
+    ? (resolveNivel(curso, nivelMapping, ASIGNATURA) || "Sin nivel configurado")
     : tipoCurricular === "taller"
       ? "Taller / sin curriculum oficial"
       : "Libre / sin curriculum oficial"
@@ -497,7 +517,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
       const formato = pref.formato || "tabla"
       const semestre = pref.semestre || "ambos"
       const nivelCurricular = tipoCurricular === "oficial"
-        ? (nivelMapping[curso] || "Sin nivel configurado")
+        ? (resolveNivel(curso, nivelMapping, ASIGNATURA) || "Sin nivel configurado")
         : tipoCurricular === "taller"
           ? "Taller / sin curriculum oficial"
           : "Libre / sin curriculum oficial"
@@ -545,7 +565,7 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
     try {
       const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
       const nivelCurricular = tipoCurricular === "oficial"
-        ? (nivelMapping[curso] || "Sin nivel configurado")
+        ? (resolveNivel(curso, nivelMapping, ASIGNATURA) || "Sin nivel configurado")
         : tipoCurricular === "taller"
           ? "Taller / sin curriculum oficial"
           : "Libre / sin curriculum oficial"
@@ -935,6 +955,34 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
                         )}
                       </div>
 
+                      {/* Base Curricular: dropdown para vincular a unidad Mineduc */}
+                      {tipoCurricular === "oficial" && (
+                        <div className="flex items-center gap-1.5">
+                          <Link2 className="h-3 w-3 text-muted-foreground" />
+                          <select
+                            value={u.unidadCurricularId || "unidad_1"}
+                            onChange={e => {
+                              setUnits(prev => prev.map(x => x.id === u.id ? { ...x, unidadCurricularId: e.target.value } : x))
+                            }}
+                            className="bg-transparent text-[11px] font-semibold text-muted-foreground outline-none cursor-pointer hover:text-foreground"
+                          >
+                            {(curriculumUnits.length > 0
+                              ? curriculumUnits
+                              : [
+                                  { id: "unidad_1", numero_unidad: 1, nombre_unidad: "Unidad 1" } as Unidad,
+                                  { id: "unidad_2", numero_unidad: 2, nombre_unidad: "Unidad 2" } as Unidad,
+                                  { id: "unidad_3", numero_unidad: 3, nombre_unidad: "Unidad 3" } as Unidad,
+                                  { id: "unidad_4", numero_unidad: 4, nombre_unidad: "Unidad 4" } as Unidad,
+                                ]
+                            ).map((cu) => (
+                              <option key={cu.id} value={cu.id}>
+                                {cu.nombre_unidad || `Unidad ${cu.numero_unidad}`}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
                       {/* Cobertura */}
                       {total > 0 && (
                         <div className="flex items-center gap-2 flex-shrink-0">
@@ -950,11 +998,11 @@ export function PlanificacionesV2Detail({ curso }: { curso: string }) {
                       {/* Acciones */}
                       <div className="flex items-center gap-1 flex-shrink-0">
                         <Link
-                          href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
+                          href={buildUrl(unidadWorkspacePath, withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
                           className="flex items-center gap-1 text-[11px] font-bold text-primary border border-primary/40 rounded-lg px-2 py-1.5 hover:bg-pink-light"
-                          title="Ver y planificar la unidad"
+                          title={isNivelParvularia(nivelActual) ? "Planificar experiencia parvularia" : "Ver y planificar la unidad"}
                         >
-                          <BookOpen className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Ver</span>
+                          <BookOpen className="w-3.5 h-3.5" /> <span className="hidden sm:inline">{isNivelParvularia(nivelActual) ? "Parvularia" : "Ver"}</span>
                         </Link>
                         <Link
                           href={buildUrl("/cronograma", withAsignatura({ curso }, ASIGNATURA))}

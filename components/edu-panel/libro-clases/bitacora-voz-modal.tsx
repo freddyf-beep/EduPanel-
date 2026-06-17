@@ -69,7 +69,7 @@ export function BitacoraVozModal({
     chunksRef.current = []
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-
+      
       // Intentar usar un codec compatible, webm por defecto
       let options = { mimeType: "audio/webm" }
       if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
@@ -90,7 +90,7 @@ export function BitacoraVozModal({
       mediaRecorder.onstop = async () => {
         // Liberar el micrófono
         stream.getTracks().forEach((track) => track.stop())
-
+        
         const audioBlob = new Blob(chunksRef.current, { type: mediaRecorder.mimeType })
         await processAudio(audioBlob, mediaRecorder.mimeType)
       }
@@ -147,7 +147,7 @@ export function BitacoraVozModal({
       }
 
       const data = await res.json()
-
+      
       toast({
         title: "¡Análisis completado!",
         description: "Se han extraído el objetivo, actividad y la asistencia del relato.",
@@ -172,7 +172,7 @@ export function BitacoraVozModal({
   return (
     <div className="fixed inset-0 z-[700] flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4 print:hidden animate-fade-in">
       <div className="flex w-full max-w-lg flex-col overflow-hidden rounded-[24px] border border-white/10 bg-card/95 shadow-2xl backdrop-blur-md">
-
+        
         {/* Cabecera */}
         <div className="flex items-start justify-between gap-4 border-b border-border/60 px-6 py-5">
           <div className="min-w-0">
@@ -204,7 +204,7 @@ export function BitacoraVozModal({
 
         {/* Contenido Principal */}
         <div className="px-6 py-8 flex flex-col items-center justify-center bg-gradient-to-b from-card to-muted/20">
-
+          
           {error && (
             <div className="mb-6 flex w-full items-start gap-2.5 rounded-[12px] border border-red-500/20 bg-red-500/5 px-4 py-3 text-[13px] text-red-500 font-medium">
               <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
@@ -236,14 +236,14 @@ export function BitacoraVozModal({
                     <div className="absolute inset-0 scale-[1.4] rounded-full bg-red-500/20 animate-pulse"></div>
                   </>
                 )}
-
+                
                 <button
                   type="button"
                   onClick={isRecording ? stopRecording : startRecording}
                   className={cn(
                     "relative z-10 flex h-24 w-24 flex-col items-center justify-center gap-1 rounded-full shadow-xl transition-all duration-300",
-                    isRecording
-                      ? "bg-red-500 text-white hover:bg-red-600 scale-110 shadow-red-500/30 ring-4 ring-red-500/20"
+                    isRecording 
+                      ? "bg-red-500 text-white hover:bg-red-600 scale-110 shadow-red-500/30 ring-4 ring-red-500/20" 
                       : "bg-gradient-to-br from-violet-500 to-indigo-600 text-white hover:scale-105 hover:shadow-violet-500/25 ring-4 ring-violet-500/10"
                   )}
                 >
@@ -277,7 +277,7 @@ export function BitacoraVozModal({
           )}
 
         </div>
-
+        
         {/* Footer */}
         {!isProcessing && (
           <div className="border-t border-border/60 bg-muted/30 px-6 py-4 flex justify-end">

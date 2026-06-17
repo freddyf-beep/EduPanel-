@@ -19,6 +19,7 @@ import {
   cargarPlanificacion,
   cargarVerUnidad,
   emptyMatrizSeleccion,
+  getUnidades,
   getUnidadCompleta,
   guardarPlanificacion,
   guardarVerUnidad,
@@ -288,13 +289,21 @@ export function VerUnidadV3Dashboard() {
 
         let u: Unidad | null = null
         if (tipo === "oficial") {
-          const nivel = resolveNivel(cursoParam, mapping)
+          const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
-            setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
+            setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
             return
           }
           setNivelAsignado(nivel)
           u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
+          if (!u) {
+            // Firestore doc ID may differ from the URL param; search by position
+            const todasUnidades = await getUnidades(ASIGNATURA, nivel)
+            const byIndex = todasUnidades.find(tu => tu.numero_unidad === unitIndex + 1)
+            if (byIndex?.id) {
+              u = await getUnidadCompleta(ASIGNATURA, nivel, byIndex.id)
+            }
+          }
           if (!u) {
             setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
             return

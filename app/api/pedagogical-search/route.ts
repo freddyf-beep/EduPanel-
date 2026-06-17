@@ -9,6 +9,8 @@ import {
 import { cleanText, type LessonRequestBody } from "@/lib/ai/copilot"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse } from "@/lib/server/gemini-error"
+import { isVertexSearchConfigured, searchCurriculumCorpus, type CurriculumSearchHit } from "@/lib/ai/vertex-search"
+import { getGlobalPromptSuffix } from "@/lib/server/remote-config"
 
 export const dynamic = "force-dynamic"
 
@@ -71,7 +73,15 @@ function extractResponseText(response: any): string {
     .join("\n")
 }
 
-function buildSearchPrompt(query: string, body: LessonRequestBody) {
+function buildCorpusContext(hits: CurriculumSearchHit[]): string {
+  if (!hits.length) return ""
+  const lines = hits
+    .map((h, i) => `${i + 1}. ${h.title}: ${h.snippet}`.trim())
+    .join("\n")
+  return `\n\nFuentes del corpus curricular oficial (Vertex AI Search — prioriza estas, son del MINEDUC):\n${lines}\n`
+}
+
+function buildSearchPrompt(query: string, body: LessonRequestBody, corpusContext = "") {
   const brief = buildPedagogicalBrief(body)
   const oas = (body.oas || [])
     .slice(0, 4)
@@ -79,6 +89,7 @@ function buildSearchPrompt(query: string, body: LessonRequestBody) {
     .join("\n")
 
   return `Busca estrategias pedagogicas y didacticas especificas para enriquecer una clase chilena.
+${corpusContext}
 
 Solicitud del docente:
 ${query}
@@ -138,8 +149,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Falta GEMINI_API_KEY para busqueda externa." }, { status: 500 })
     }
 
+    // Grounding opcional sobre el corpus de currículum (Vertex AI Search).
+    // No-breaking: si no está configurado o falla, seguimos solo con búsqueda web.
+    let corpusHits: CurriculumSearchHit[] = []
+    if (isVertexSearchConfigured()) {
+      try {
+        corpusHits = await searchCurriculumCorpus(query, 5)
+      } catch (e) {
+        console.warn("[pedagogical-search] Vertex AI Search no disponible:", (e as Error).message)
+      }
+    }
+
+    // Sufijo institucional global desde Remote Config (vacío por defecto → sin cambio).
+    const promptSuffix = await getGlobalPromptSuffix()
+
     const ai = new GoogleGenAI({ apiKey })
-    const prompt = buildSearchPrompt(query, lessonRequestBody)
+    const basePrompt = buildSearchPrompt(query, lessonRequestBody, buildCorpusContext(corpusHits))
+    const prompt = promptSuffix
+      ? `${basePrompt}\n\nInstrucciones institucionales (Remote Config):\n${promptSuffix}`
+      : basePrompt
     const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "pedagogical-search", inputText: prompt })
     if (!budget.ok) return budget.response
@@ -176,7 +204,12 @@ export async function POST(req: Request) {
       consultasUsadas: Array.isArray(parsed.consultasUsadas)
         ? parsed.consultasUsadas.map(cleanText).filter(Boolean).slice(0, 4)
         : [],
-      fuentes: extractSources(response),
+      fuentes: [
+        ...extractSources(response),
+        ...corpusHits
+          .filter((h) => h.uri)
+          .map((h) => ({ title: h.title, uri: h.uri as string })),
+      ].slice(0, 8),
     })
   } catch (error) {
     console.error("[pedagogical-search]", error)

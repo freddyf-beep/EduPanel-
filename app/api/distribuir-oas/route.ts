@@ -71,7 +71,7 @@ export async function POST(req: Request) {
 
 OAs:
 ${oas.map((oa) => `- ${oa.id}${oa.numero ? ` (OA ${oa.numero})` : ""}: ${oa.descripcion}`).join("\n")}`
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "distribuir-oas", inputText: prompt })
     if (!budget.ok) return budget.response
 

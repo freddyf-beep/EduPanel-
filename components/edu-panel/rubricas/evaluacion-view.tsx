@@ -426,7 +426,7 @@ export function EvaluacionView({ rubricaId }: Props) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-
+    
     setErrorIA("")
     setFileName(file.name)
     setFileMime(file.type)
@@ -479,7 +479,7 @@ export function EvaluacionView({ rubricaId }: Props) {
 
   const aplicarEvaluacionIA = () => {
     if (!resultadoIA || !alumnoObj) return
-
+    
     const levelMap: Record<string, number> = {
       logrado: 4,
       casiLogrado: 3,
@@ -508,7 +508,7 @@ export function EvaluacionView({ rubricaId }: Props) {
       puntajes: nuevosPuntajes,
       nota,
       completado,
-      observaciones: resultadoIA.observaciones
+      observaciones: resultadoIA.observaciones 
         ? `${est.observaciones ? est.observaciones + "\n" : ""}${resultadoIA.observaciones}`
         : est.observaciones,
     }))
@@ -1068,7 +1068,7 @@ export function EvaluacionView({ rubricaId }: Props) {
                           {rubrica.partes.flatMap(p => p.criterios).map(crit => {
                             const evalSugerida = resultadoIA.evaluaciones?.[crit.id]
                             if (!evalSugerida) return null
-
+                            
                             const labelMap: Record<string, string> = {
                               logrado: "L",
                               casiLogrado: "CL",
