@@ -18,6 +18,7 @@ import {
   ArrowLeft,
 } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
+import { clearCurriculoCache } from "@/lib/curriculo"
 
 interface AsignaturaItem {
   id: string
@@ -145,6 +146,7 @@ export default function AdminCurriculumPage() {
     if (!confirm(`⚠️ Eliminar PERMANENTEMENTE la asignatura "${docId}" con todas sus unidades, OAs, actividades y evaluaciones? Esta acción no se puede deshacer.`)) return
     try {
       await apiFetch(`/api/admin/curriculum/${docId}`, { method: "DELETE" })
+      clearCurriculoCache() // invalidar caché de lecturas tras editar el currículo
       await fetchList()
       if (detalleAbierto === docId) cerrarDetalle()
     } catch (err) {
@@ -463,6 +465,7 @@ function UploadCard({ onUploaded }: UploadCardProps) {
       })
       const data = await res.json()
       const r = data.result
+      clearCurriculoCache() // invalidar caché de lecturas tras subir/editar el currículo
       setUploadStatus({
         success: true,
         message: `✅ ${r.unidadesEscritas} unidades · ${r.oasEscritos} OA · ${r.actividadesEscritas} actividades · ${r.evaluacionesEscritas} evaluaciones escritas.`,
