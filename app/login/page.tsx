@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { AlertCircle, KeyRound, Loader2, CheckCircle2, UserRound } from "lucide-react"
+import { AlertCircle, KeyRound, Loader2, CheckCircle2 } from "lucide-react"
 import { apiFetch, ApiError } from "@/lib/api-client"
 
 function getApiErrorMessage(error: unknown, fallback: string) {
@@ -17,17 +17,13 @@ function getApiErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function LoginPage() {
-  const { user, signInWithGoogle, signInWithTestInvite, logout, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
+  const { user, signInWithGoogle, logout, loading, blockedByAllowlist, recheckAllowlist } = useAuth()
   const router = useRouter()
   const [inviteCode, setInviteCode] = useState("")
-  const [testInviteCode, setTestInviteCode] = useState("")
-  const [testerName, setTesterName] = useState("")
   const [redeeming, setRedeeming] = useState(false)
   const [redeemError, setRedeemError] = useState("")
   const [signInError, setSignInError] = useState("")
   const [signingIn, setSigningIn] = useState(false)
-  const [testSigningIn, setTestSigningIn] = useState(false)
-  const [testSignInError, setTestSignInError] = useState("")
   const [redeemSuccess, setRedeemSuccess] = useState(false)
 
   useEffect(() => {
@@ -41,13 +37,10 @@ export default function LoginPage() {
     setRedeeming(true)
     setRedeemError("")
     try {
-      await apiFetch(user.isAnonymous ? "/api/redeem-test-invite" : "/api/redeem-invite", {
+      await apiFetch("/api/redeem-invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          code: inviteCode.trim(),
-          testerName: testerName.trim() || "Tester EduPanel",
-        }),
+        body: JSON.stringify({ code: inviteCode.trim() }),
       })
 
       setRedeemSuccess(true)
@@ -68,25 +61,6 @@ export default function LoginPage() {
       setSignInError(getApiErrorMessage(error, "No se pudo iniciar sesion con Google."))
     } finally {
       setSigningIn(false)
-    }
-  }
-
-  const handleTestSignIn = async () => {
-    if (!testInviteCode.trim()) return
-    setTestSigningIn(true)
-    setTestSignInError("")
-    setRedeemError("")
-    try {
-      await signInWithTestInvite(testInviteCode.trim(), testerName.trim() || "Tester EduPanel")
-      setRedeemSuccess(true)
-      await recheckAllowlist()
-    } catch (error) {
-      const message = getApiErrorMessage(error, "No se pudo activar el acceso de prueba.")
-      setInviteCode(testInviteCode.trim())
-      setRedeemError(message)
-      setTestSignInError(message)
-    } finally {
-      setTestSigningIn(false)
     }
   }
 
@@ -114,9 +88,7 @@ export default function LoginPage() {
                   Aun no tienes acceso
                 </p>
                 <p className="text-amber-800 dark:text-amber-300">
-                  {user?.isAnonymous
-                    ? "Ingresa tu codigo de invitacion para activar esta sesion de prueba."
-                    : "EduPanel esta en alfa cerrada. Ingresa tu codigo de invitacion para entrar."}
+                  EduPanel esta en alfa cerrada. Ingresa tu codigo de invitacion para entrar.
                 </p>
               </div>
             </div>
@@ -151,7 +123,7 @@ export default function LoginPage() {
                   onClick={logout}
                   className="mt-2 text-left text-xs font-semibold text-amber-800 underline hover:text-amber-950"
                 >
-                  {user?.isAnonymous ? "Cerrar esta sesion de prueba" : "Cambiar cuenta de Google"}
+                  Cambiar cuenta de Google
                 </button>
               </div>
             )}
@@ -162,59 +134,12 @@ export default function LoginPage() {
           <div className="space-y-4">
             <button
               onClick={handleGoogleSignIn}
-              disabled={signingIn || testSigningIn}
+              disabled={signingIn}
               className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
             >
               {signingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               {signingIn ? "Conectando..." : "Iniciar sesion con Google"}
             </button>
-
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-border" />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Pruebas</span>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-
-            <div className="rounded-2xl border border-border bg-secondary/40 p-4 text-left space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 rounded-xl bg-background border border-border p-2">
-                  <UserRound className="w-4 h-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold">Acceso de pruebas</p>
-                  <p className="text-xs text-muted-foreground">
-                    Usa un codigo de invitacion para entrar sin Google y probar rutas, modulos e IA.
-                  </p>
-                </div>
-              </div>
-              <input
-                type="text"
-                placeholder="Nombre del tester"
-                value={testerName}
-                onChange={(e) => setTesterName(e.target.value)}
-                disabled={testSigningIn || signingIn}
-                className="w-full bg-background border border-border rounded-xl px-3 py-2.5 text-sm outline-none focus:border-primary"
-              />
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="EDU-ABCD-1234"
-                  value={testInviteCode}
-                  onChange={(e) => setTestInviteCode(e.target.value)}
-                  disabled={testSigningIn || signingIn}
-                  className="flex-1 bg-background border border-border rounded-xl px-3 py-2.5 text-sm outline-none focus:border-primary uppercase"
-                />
-                <button
-                  onClick={handleTestSignIn}
-                  disabled={testSigningIn || signingIn || !testInviteCode.trim()}
-                  className="bg-foreground text-background font-bold px-4 rounded-xl hover:opacity-90 disabled:opacity-50 text-sm flex items-center gap-1.5"
-                >
-                  {testSigningIn ? <Loader2 className="w-4 h-4 animate-spin" /> : <KeyRound className="w-4 h-4" />}
-                  Entrar
-                </button>
-              </div>
-              {testSignInError && <p className="text-red-500 text-xs font-semibold">{testSignInError}</p>}
-            </div>
           </div>
         )}
 

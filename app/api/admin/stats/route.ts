@@ -1,8 +1,3 @@
-/*
-=============================================================================
-🤖 USO LOCAL (edupanel_local). EXCLUIR DE SINCRONIZACION PUBLICA/VERCEL.
-=============================================================================
-*/
 import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser, getAdminApp } from "@/lib/auth/verify-token"
 import { getAuth } from "firebase-admin/auth"

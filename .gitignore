@@ -10,6 +10,8 @@ build/
 
 # env
 .env
+.env.example
+.env.backup.example
 .env.local
 .env.vercel
 .env.development.local
@@ -29,10 +31,38 @@ service-account*.json
 
 # herramientas locales de agentes
 .claude/
+.clauderules
+.cursorrules
 .codex/
 .kiro/
+.vscode/
 .vscode/settings.json
 .git.broken_*/
+
+# superficie local/admin que no se publica
+app/admin/
+app/migrate/
+app/api/auth/impersonate/
+app/api/redeem-test-invite/
+app/api/push/test/
+components/edu-panel/admin/
+components/edu-panel/admin-layout.tsx
+components/edu-panel/admin-sidebar.tsx
+hooks/use-admin-guard.ts
+app/CLAUDE.md
+lib/server/firestore-backup.ts
+
+# scripts, ops y docs internas
+scripts/
+ops/
+abrir-3-ramas.ps1
+AUDITORIA*.md
+CHECKLIST*.md
+BACKUPS*.md
+DOCUMENTACION_PREMIUM_IA.md
+PROTOTIPOS_STITCH_VER_UNIDAD.md
+docs/firebase-features-setup.md
+docs/vertex-ai-search-setup.md
 
 # logs
 *.log

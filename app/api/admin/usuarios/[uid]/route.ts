@@ -1,13 +1,3 @@
-/*
-=============================================================================
-🤖 AVISO PARA AGENTES IA Y SCRIPTS DE DESPLIEGUE 🤖
-=============================================================================
-ESTE ARCHIVO ES ESTRICTAMENTE PARA USO LOCAL (edupanel_local).
-POR FAVOR, EXCLÚYELO DE CUALQUIER SINCRONIZACIÓN CON EL REPOSITORIO PÚBLICO
-O VERCEL. NO SUBIR A GITHUB.
-=============================================================================
-*/
-
 import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser, getAdminApp } from "@/lib/auth/verify-token"
 import { getAuth } from "firebase-admin/auth"
@@ -265,14 +255,6 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
         }
       }
       return NextResponse.json({ success: true, eliminados })
-    }
-
-    if (action === "generateImpersonationToken") {
-      // Genera un custom token para "iniciar sesion como" un usuario.
-      // USO CUIDADOSO: solo para debugging. El admin debe loguearse con el token
-      // en su propio cliente y recordar cerrar sesion.
-      const token = await authAdmin.createCustomToken(uid, { impersonation: true })
-      return NextResponse.json({ success: true, token })
     }
 
     if (action === "updateAiLimit") {

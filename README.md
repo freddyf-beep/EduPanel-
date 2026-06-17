@@ -27,8 +27,9 @@ La app local corre por defecto en `http://localhost:3000`.
 
 ## Variables
 
-Copia `.env.example` como `.env.local` y completa Firebase, Firebase Admin y
-Gemini. No subir `.env.local`, `.env.vercel` ni archivos de service account.
+Las variables de Firebase, Firebase Admin, Gemini y servicios de Google se
+configuran fuera del repositorio, en el entorno local privado o en Vercel. No
+subir archivos `.env*`, service accounts, claves ni tokens.
 
 ## Rutas actuales
 
@@ -54,29 +55,11 @@ Gemini. No subir `.env.local`, `.env.vercel` ni archivos de service account.
 | `/privacidad` | Politica de privacidad |
 | `/terminos` | Terminos de uso |
 
-## Admin
-
-| Ruta | Uso |
-| --- | --- |
-| `/admin` | Panel admin |
-| `/admin/usuarios` | Usuarios y permisos |
-| `/admin/invitaciones` | Invitaciones |
-| `/admin/establecimientos` | Establecimientos |
-| `/admin/curriculum` | Curriculum |
-| `/admin/mantenimiento` | Backups y salud operacional |
-| `/admin/features` | Feature flags |
-| `/admin/consumo-ia` | Consumo de IA |
-| `/admin/predictor-cobertura` | Cobertura curricular |
-| `/admin/radar-desercion` | Riesgo de desercion |
-| `/admin/sustituciones` | Sugerencias de reemplazo |
-
 ## Documentos vivos
 
-- `BACKUPS_FIRESTORE.md`: operacion de backups y restauracion.
 - `DESIGN.md`: direccion visual para Pruebas y Guias.
-- `DOCUMENTACION_PREMIUM_IA.md`: activacion de modulos premium IA.
 - `ESPECIFICACION_RUBRICAS.md`: decisiones tecnicas del modulo rubricas.
 - `CHANGELOG.md`: historial heredado del proyecto.
 
-Los documentos de auditoria antigua, pendientes cerrados, notas de Claude y
-briefs de Stitch fueron retirados para mantener una base mas limpia.
+Los documentos de auditoria, operacion interna, backups y configuracion privada
+se mantienen fuera del repositorio publico.
