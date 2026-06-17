@@ -26,6 +26,8 @@ export const RC_DEFAULTS = {
 export type RemoteConfigKey = keyof typeof RC_DEFAULTS
 
 const RC_CACHE_TTL_MS = 5 * 60_000
+// TTL corto al fallar (API no habilitada): evita reintentar en cada request.
+const RC_FAILURE_TTL_MS = 60_000
 let cache: { values: Record<string, string>; expiresAt: number } | null = null
 
 /** Limpia el caché de Remote Config (p. ej. para forzar recarga). */
@@ -59,7 +61,11 @@ export async function getRemoteConfigValues(): Promise<Record<string, string>> {
     return values
   } catch (e) {
     console.warn("[remote-config] no disponible, usando defaults:", (e as Error).message)
-    return { ...RC_DEFAULTS }
+    // Cacheamos los defaults por un lapso corto para no reintentar en cada request
+    // mientras la API no esté habilitada; se reintenta al vencer RC_FAILURE_TTL_MS.
+    const values = { ...RC_DEFAULTS }
+    cache = { values, expiresAt: now + RC_FAILURE_TTL_MS }
+    return values
   }
 }
 
