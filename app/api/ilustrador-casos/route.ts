@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { checkAiBudget, estimateImageGenerationCost, recordAiUsage } from "@/lib/server/ai-usage"
 
@@ -28,6 +29,8 @@ function cleanText(text: any): string {
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -62,8 +65,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Falta la clave de API de Gemini." }, { status: 500 })
     }
 
-    // Intentar llamar a Imagen 3 en Gemini API
-    const model = "imagen-3.0-generate-002"
+    // Intentar llamar a Imagen 4 en Gemini API (Imagen 3 se retira el 24-jun-2026)
+    const model = "imagen-4.0-generate-001"
     const imagePrompt = `Educational illustration for school test, clear, simplified, vector/line-art style, white background, subject: ${prompt}`
     const budget = await checkAiBudget(authUser.uid, {
       feature: "ilustrador-casos",

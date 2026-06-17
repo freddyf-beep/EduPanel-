@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
@@ -27,6 +28,8 @@ function extractGeminiText(data: any): string {
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   if (!checkRateLimit(authCheck.auth.uid)) {
     return NextResponse.json({ error: "Límite de solicitudes alcanzado." }, { status: 429 })
   }
@@ -115,7 +118,7 @@ Responde con un JSON:
         return NextResponse.json({ error: "Tipo de sugerencia no reconocido." }, { status: 400 })
     }
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "clase-en-vivo", inputText: prompt })
     if (!budget.ok) return budget.response
 

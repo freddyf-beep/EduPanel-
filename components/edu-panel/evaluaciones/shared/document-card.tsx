@@ -61,6 +61,7 @@ export interface DocumentCardProps {
   objetivoPreview?: string
   miniStats: DocumentCardMiniStat[]
   coberturaOA?: DocumentCardCobertura
+  topActions?: DocumentCardAction[]
   actions: DocumentCardAction[]
   onClick?: () => void
 }
@@ -76,6 +77,7 @@ export function DocumentCard({
   objetivoPreview,
   miniStats,
   coberturaOA,
+  topActions = [],
   actions,
   onClick,
 }: DocumentCardProps) {
@@ -154,10 +156,15 @@ export function DocumentCard({
           ) : null}
         </div>
 
-        <Icon
-          aria-hidden="true"
-          className={cn("h-5 w-5 flex-shrink-0", accentStyles.icon)}
-        />
+        <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+          {topActions.map((a, i) => (
+            <TopActionButton key={`${a.label}-${i}`} action={a} accent={accent} />
+          ))}
+          <Icon
+            aria-hidden="true"
+            className={cn("h-5 w-5", accentStyles.icon)}
+          />
+        </div>
       </div>
 
       {/* Mini-grid de contadores (1–4 columnas según cantidad de stats). */}
@@ -301,6 +308,41 @@ function ActionButton({
       <span className={cn(tone === "primary" ? "" : "sr-only sm:not-sr-only")}>
         {action.label}
       </span>
+    </button>
+  )
+}
+
+function TopActionButton({
+  action,
+  accent,
+}: {
+  action: DocumentCardAction
+  accent: Accent
+}) {
+  const tone: ActionTone = action.tone ?? "neutral"
+  const Icon = action.icon
+  const styles = getActionToneClass(tone, accent)
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation()
+        action.onClick()
+      }}
+      disabled={action.disabled}
+      aria-label={action.label}
+      title={action.label}
+      className={cn(
+        "inline-flex h-8 w-8 items-center justify-center rounded-[9px] text-[12px] font-semibold transition",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        styles.base,
+        styles.focus,
+      )}
+    >
+      <Icon aria-hidden="true" className="h-3.5 w-3.5" />
+      <span className="sr-only">{action.label}</span>
     </button>
   )
 }

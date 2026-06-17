@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { GoogleGenAI } from "@google/genai"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
@@ -27,6 +28,8 @@ export async function POST(req: NextRequest) {
   try {
     const authCheck = await verifyAllowedUser(req)
     if (!authCheck.ok) return authCheck.response
+    const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+    if (aiAccessResponse) return aiAccessResponse
     const authUser = authCheck.auth
 
     // Rate Limiting

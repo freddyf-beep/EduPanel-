@@ -406,19 +406,15 @@ export function BloqueWizard({
                     <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">
                       Asignatura
                     </label>
-                    <input
-                      type="text"
+                    <select
                       value={asignatura}
                       onChange={e => setAsignatura(e.target.value)}
-                      placeholder="Ej. Música, Lenguaje..."
-                      list="asignaturas-sugeridas-wizard"
                       disabled={!!presetAsignatura}
                       className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-[13px] font-medium outline-none focus:border-primary disabled:bg-muted/40"
-                      autoFocus={!!presetCurso && !presetAsignatura}
-                    />
-                    <datalist id="asignaturas-sugeridas-wizard">
-                      {asignaturasSugeridas.map(a => <option key={a} value={a} />)}
-                    </datalist>
+                    >
+                      <option value="">— Seleccionar —</option>
+                      {asignaturasSugeridas.map(a => <option key={a} value={a}>{a}</option>)}
+                    </select>
                   </div>
                 </>
               )}

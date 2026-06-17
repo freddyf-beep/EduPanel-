@@ -8,7 +8,6 @@ export const SUBJECT_FALLBACK_OPTIONS = [
   DEFAULT_ASIGNATURA,
   "Educación Física",
   "Lenguaje",
-  "Corporalidad y Movimiento",
 ]
 
 export const UNIT_COLORS = [
@@ -51,9 +50,9 @@ export function withAsignatura<T extends Record<string, string | null | undefine
   return merged
 }
 
-export async function getCurriculoNivel(curso: string): Promise<string> {
+export async function getCurriculoNivel(curso: string, asignatura?: string): Promise<string> {
   const mapping = await cargarNivelMapping()
-  return resolveNivel(curso, mapping) ?? "1ro Básico"
+  return resolveNivel(curso, mapping, asignatura) ?? "1ro Básico"
 }
 
 export function buildUrl(base: string, params: Record<string, string | null | undefined>): string {

@@ -12,6 +12,7 @@ import {
   type AIProvider,
 } from "@/lib/ai/copilot"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 
 // Stub for missing quota check in public repository
 const checkAiQuota = async (uid: string) => ({ ok: true, error: "" });
@@ -62,7 +63,7 @@ function resolveProvider(raw: string): AIProvider {
 }
 
 async function callGemini(body: EvalCopilotRequest, prompt: string, signal?: AbortSignal) {
-  const model = cleanText(body.customModel) || "gemini-2.0-flash"
+  const model = cleanText(body.customModel) || "gemini-2.5-flash"
   const token = body.modelProvider === "public"
     ? cleanText(process.env.GEMINI_API_KEY)
     : cleanText(body.customToken) || cleanText(process.env.GEMINI_API_KEY)
@@ -192,6 +193,8 @@ async function generateText(provider: AIProvider, body: EvalCopilotRequest, prom
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const auth = authCheck.auth
 
   const quotaCheck = await checkAiQuota(auth.uid)

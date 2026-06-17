@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils"
 import { cargarCronogramaUnidad, cargarPlanCurso, listarPlanesCurso, type ClaseCronograma, type PlanificacionCurso, type UnidadPlan } from "@/lib/curriculo"
 import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
-import { UNIT_COLORS, buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
+import { UNIT_COLORS, buildUrl, unidadIdFromIndex, withAsignatura, SUBJECT_FALLBACK_OPTIONS } from "@/lib/shared"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -142,6 +142,8 @@ export function PlanificacionesList() {
   const [cursos, setCursos] = useState<CursoInfo[]>([])
   const [todasUnidades, setTodasUnidades] = useState<UnidadConCurso[]>([])
   const [loading, setLoading] = useState(true)
+  const [asignaturasPorCurso, setAsignaturasPorCurso] = useState<Map<string, string[]>>(new Map())
+  const [subjectPicker, setSubjectPicker] = useState<{ curso: string; asignaturas: string[] } | null>(null)
 
   const [search, setSearch] = useState("")
   const [filtroCurso, setFiltroCurso] = useState<string[]>([])
@@ -163,6 +165,26 @@ export function PlanificacionesList() {
     setVista(v)
   }, [router, searchParams])
 
+  const navigateToCurso = useCallback((cursoName: string, asig: string) => {
+    router.push(buildUrl("/planificaciones", withAsignatura({ curso: cursoName }, asig)))
+  }, [router])
+
+  const handleSelectCurso = useCallback((cursoName: string, asig: string) => {
+    if (asig) {
+      navigateToCurso(cursoName, asig)
+      return
+    }
+    const asigs = asignaturasPorCurso.get(cursoName) || []
+    if (asigs.length === 1) {
+      navigateToCurso(cursoName, asigs[0])
+      return
+    }
+    const allSubjects = new Set<string>()
+    asignaturasPorCurso.forEach(a => a.forEach(s => allSubjects.add(s)))
+    if (allSubjects.size === 0) allSubjects.add(ASIGNATURA)
+    setSubjectPicker({ curso: cursoName, asignaturas: asigs.length > 0 ? asigs : Array.from(allSubjects).sort() })
+  }, [asignaturasPorCurso, ASIGNATURA, navigateToCurso])
+
   // Carga datos
   useEffect(() => {
     let cancel = false
@@ -171,21 +193,46 @@ export function PlanificacionesList() {
       try {
         const horario = await cargarHorarioSemanal()
         const cursosColor = new Map<string, string>()
+        const asignatsPorCurso = new Map<string, string[]>()
         horario.filter(h => !esTipoLibre(h.tipo)).forEach(h => {
-          if (!cursosColor.has(h.resumen.trim())) {
-            cursosColor.set(h.resumen.trim(), h.color)
-          }
+          const c = h.resumen.trim()
+          if (!cursosColor.has(c)) cursosColor.set(c, h.color)
+          if (!asignatsPorCurso.has(c)) asignatsPorCurso.set(c, [])
+          const a = (h.asignatura || "").trim()
+          if (a && !asignatsPorCurso.get(c)!.includes(a)) asignatsPorCurso.get(c)!.push(a)
         })
+        setAsignaturasPorCurso(asignatsPorCurso)
+
         const cursosHorario = Array.from(cursosColor.keys()).filter(Boolean)
-        const planesGuardados = await listarPlanesCurso(ASIGNATURA).catch(() => [] as PlanificacionCurso[])
-        const cursosPorPlan = planesGuardados.map(plan => plan.curso).filter(Boolean)
-        const cursosUnique = Array.from(new Set([...cursosHorario, ...cursosPorPlan]))
+        const allSubjects = new Set<string>()
+        asignatsPorCurso.forEach(asigs => asigs.forEach(a => allSubjects.add(a)))
+        if (allSubjects.size === 0) allSubjects.add(ASIGNATURA)
+        SUBJECT_FALLBACK_OPTIONS.forEach(s => allSubjects.add(s))
+
+        const planesPorAsignatura = new Map<string, PlanificacionCurso[]>()
+        await Promise.all(
+          Array.from(allSubjects).map(async subject => {
+            const planes = await listarPlanesCurso(subject).catch(() => [] as PlanificacionCurso[])
+            planesPorAsignatura.set(subject, planes)
+          })
+        )
+
+        const cursosUnique = cursosHorario
 
         const planes = await Promise.all(
-          cursosUnique.map(c => {
-            const cached = planesGuardados.find(plan => plan.curso === c)
-            if (cached) return Promise.resolve({ curso: c, plan: cached })
-            return cargarPlanCurso(ASIGNATURA, c).then(p => ({ curso: c, plan: p })).catch(() => ({ curso: c, plan: null as PlanificacionCurso | null }))
+          cursosUnique.map(async c => {
+            const asigsCurso = asignatsPorCurso.get(c)
+            const subjectsToTry = asigsCurso && asigsCurso.length > 0 ? asigsCurso : Array.from(allSubjects)
+            for (const asig of subjectsToTry) {
+              const planesList = planesPorAsignatura.get(asig) || []
+              const cached = planesList.find(plan => plan.curso === c)
+              if (cached) return { curso: c, plan: cached, asignatura: asig }
+            }
+            for (const asig of subjectsToTry) {
+              const p = await cargarPlanCurso(asig, c).catch(() => null as PlanificacionCurso | null)
+              if (p?.units?.length) return { curso: c, plan: p, asignatura: asig }
+            }
+            return { curso: c, plan: null as PlanificacionCurso | null, asignatura: subjectsToTry[0] || ASIGNATURA }
           })
         )
 
@@ -193,12 +240,13 @@ export function PlanificacionesList() {
 
         const cursosArr: CursoInfo[] = []
         const unidadesAll: UnidadConCurso[] = []
-        for (const { curso, plan } of planes) {
+        for (const { curso, plan, asignatura: planAsig } of planes) {
           const color = cursosColor.get(curso) || "var(--primary)"
           const baseUnits = plan?.units || []
+          const asigForCrono = planAsig || ASIGNATURA
           const units = await Promise.all(baseUnits.map(async (unit, idx) => {
             if (unit.start && unit.end) return unit
-            const cronograma = await cargarCronogramaUnidadConFallback(ASIGNATURA, curso, unit, idx)
+            const cronograma = await cargarCronogramaUnidadConFallback(asigForCrono, curso, unit, idx)
             const rango = rangoDesdeCronograma(cronograma)
             if (!rango) return unit
             return {
@@ -211,7 +259,7 @@ export function PlanificacionesList() {
           const totalHoras = units.reduce((s, u) => s + (u.hours || 0), 0)
           const cobertura = units.length > 0 ? Math.round((completas / units.length) * 100) : 0
           cursosArr.push({ curso, color, unidades: units, totalHoras, cobertura })
-          units.forEach(u => unidadesAll.push({ ...u, curso, cursoColor: color, asignatura: ASIGNATURA }))
+          units.forEach(u => unidadesAll.push({ ...u, curso, cursoColor: color, asignatura: planAsig }))
         }
 
         setCursos(cursosArr)
@@ -272,6 +320,14 @@ export function PlanificacionesList() {
     return { total, conFechas, enCurso, proximas, incompletas, cobertura, totalHoras }
   }, [todasUnidades])
 
+  const mainSubject = useMemo(() => {
+    const subjects = new Set<string>()
+    todasUnidades.forEach(u => subjects.add(u.asignatura))
+    if (subjects.size > 0) return Array.from(subjects).sort()[0]
+    asignaturasPorCurso.forEach(asigs => asigs.forEach(a => subjects.add(a)))
+    return subjects.size > 0 ? Array.from(subjects).sort()[0] : ASIGNATURA
+  }, [todasUnidades, asignaturasPorCurso, ASIGNATURA])
+
   return (
     <div className="mx-auto max-w-[1500px] px-3 sm:px-5 pb-10">
       {/* Hero */}
@@ -283,21 +339,31 @@ export function PlanificacionesList() {
               <Sparkles className="h-3 w-3" /> MIS PLANIFICACIONES · V3 BETA
             </div>
             <h1 className="mt-1 text-[22px] sm:text-[26px] font-extrabold leading-tight">
-              {ASIGNATURA} · {cursos.length} curso{cursos.length === 1 ? "" : "s"}
+              Mis Planificaciones · {cursos.length} curso{cursos.length === 1 ? "" : "s"}
             </h1>
+            {(() => {
+              const subjects = new Set<string>()
+              todasUnidades.forEach(u => subjects.add(u.asignatura))
+              if (subjects.size === 0) asignaturasPorCurso.forEach(asigs => asigs.forEach(a => subjects.add(a)))
+              return subjects.size > 0 ? (
+                <p className="mt-1 text-[12px] text-white/75">
+                  {Array.from(subjects).sort().join(" · ")}
+                </p>
+              ) : null
+            })()}
             <p className="mt-1 text-[12.5px] text-white/85">
               Vista global de tus unidades didácticas: timeline anual, calendario de hitos y métricas en tiempo real.
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <DriveSheet
-                context={{ tipo: "planificaciones", asignatura: ASIGNATURA }}
+                context={{ tipo: "planificaciones", asignatura: mainSubject }}
                 title="Drive de planificaciones"
                 description="Tu Drive personal para revisar carpetas y documentos sin salir de EduPanel."
                 label="Drive"
                 buttonClassName="border-white/20 bg-white/15 text-white hover:border-white/50 hover:bg-white/25 hover:text-white"
               />
               <DriveWorkspaceActions
-                context={{ tipo: "planificaciones", asignatura: ASIGNATURA }}
+                context={{ tipo: "planificaciones", asignatura: mainSubject }}
                 compact
                 setupLabel="Crear carpeta"
                 openLabel="Abrir carpeta"
@@ -456,13 +522,13 @@ export function PlanificacionesList() {
       ) : (
         <>
           {vista === "timeline" && (
-            <TimelineView unidades={unidadesFiltradas} cursos={cursos} asignatura={ASIGNATURA} />
+            <TimelineView unidades={unidadesFiltradas} cursos={cursos} asignatura={mainSubject} onSelectCurso={handleSelectCurso} />
           )}
           {vista === "cursos" && (
-            <CursosGrid cursos={cursos} asignatura={ASIGNATURA} />
+            <CursosGrid cursos={cursos} asignatura={mainSubject} asignaturasPorCurso={asignaturasPorCurso} onSelectCurso={handleSelectCurso} />
           )}
           {vista === "calendario" && (
-            <CalendarioView mes={mesActual} setMes={setMesActual} unidades={unidadesFiltradas} asignatura={ASIGNATURA} />
+            <CalendarioView mes={mesActual} setMes={setMesActual} unidades={unidadesFiltradas} asignatura={mainSubject} onSelectCurso={handleSelectCurso} />
           )}
           {vista === "insights" && (
             <InsightsView cursos={cursos} unidades={todasUnidades} stats={stats} />
@@ -475,8 +541,44 @@ export function PlanificacionesList() {
         isOpen={showRecomendador}
         onClose={() => setShowRecomendador(false)}
         curso={cursos[0]?.curso || ""}
-        asignatura={ASIGNATURA}
+        asignatura={mainSubject}
       />
+
+      {/* Modal: elegir asignatura para curso con múltiples */}
+      {subjectPicker && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setSubjectPicker(null)}>
+          <div
+            className="bg-card border border-border rounded-[16px] shadow-xl p-6 w-full max-w-sm mx-4 animate-in slide-in-from-bottom-4"
+            onClick={e => e.stopPropagation()}
+          >
+            <h3 className="text-[14px] font-extrabold mb-1">Elegir asignatura</h3>
+            <p className="text-[12px] text-muted-foreground mb-4">
+              ¿Cuál asignatura querés ver en <strong>{subjectPicker.curso}</strong>?
+            </p>
+            <div className="space-y-2">
+              {subjectPicker.asignaturas.map(asig => (
+                <button
+                  key={asig}
+                  onClick={() => {
+                    setSubjectPicker(null)
+                    navigateToCurso(subjectPicker.curso, asig)
+                  }}
+                  className="w-full rounded-[10px] border border-border bg-background px-4 py-2.5 text-[13px] font-semibold text-left hover:border-primary hover:bg-pink-light transition-colors flex items-center gap-2"
+                >
+                  <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
+                  {asig}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setSubjectPicker(null)}
+              className="mt-3 w-full rounded-[10px] border border-border px-4 py-2 text-[12px] font-semibold text-muted-foreground hover:bg-muted/50"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -498,7 +600,12 @@ function KpiBox({ label, value, sub, variant }: { label: string; value: string; 
 }
 
 // ─── Vista Timeline anual ─────────────────────────────────────────────────────
-function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCurso[]; cursos: CursoInfo[]; asignatura: string }) {
+function TimelineView({ unidades, cursos, asignatura, onSelectCurso }: {
+  unidades: UnidadConCurso[]
+  cursos: CursoInfo[]
+  asignatura: string
+  onSelectCurso: (curso: string, asig: string) => void
+}) {
   const hoy = new Date()
   const yearActual = hoy.getFullYear()
 
@@ -553,9 +660,7 @@ function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCur
             <div className="flex items-center gap-2 mb-1">
               <div className="w-32 flex-shrink-0 inline-flex items-center gap-1.5 truncate text-[11.5px] font-bold">
                 <span className="inline-block h-3 w-3 rounded-sm flex-shrink-0" style={{ background: c.color }} />
-                <Link href={buildUrl("/planificaciones", withAsignatura({ curso: c.curso }, asignatura))} className="truncate hover:underline hover:text-primary">
-                  {c.curso}
-                </Link>
+                <button onClick={() => onSelectCurso(c.curso, "")} className="truncate hover:underline hover:text-primary text-left">{c.curso}</button>
                 <Badge variant="outline" className="text-[8.5px] h-4 px-1 ml-auto">{c.unidadesFiltradas.length}u</Badge>
               </div>
               <div className="flex-1 relative h-9 bg-muted/20 rounded-[6px] border border-border overflow-hidden">
@@ -615,18 +720,31 @@ function TimelineView({ unidades, cursos, asignatura }: { unidades: UnidadConCur
 }
 
 // ─── Vista Cursos (grid mejorado) ─────────────────────────────────────────────
-function CursosGrid({ cursos, asignatura }: { cursos: CursoInfo[]; asignatura: string }) {
+function CursosGrid({ cursos, asignatura, asignaturasPorCurso, onSelectCurso }: {
+  cursos: CursoInfo[]
+  asignatura: string
+  asignaturasPorCurso: Map<string, string[]>
+  onSelectCurso: (curso: string, asignaturaElegida: string) => void
+}) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {cursos.map((c, i) => {
         const hoy = new Date()
         const enCurso = c.unidades.filter(u => estadoUnidad(u, hoy) === "actual")
         const proximas = c.unidades.filter(u => estadoUnidad(u, hoy) === "futura")
+        const asigsCurso = asignaturasPorCurso.get(c.curso) || []
+        const tieneMultiplesAsigs = asigsCurso.length > 1
         return (
-          <Link
+          <button
             key={`${c.curso}-${i}`}
-            href={buildUrl("/planificaciones", withAsignatura({ curso: c.curso }, asignatura))}
-            className="group rounded-[14px] border border-border bg-card p-4 hover:-translate-y-0.5 hover:shadow-md hover:border-primary transition-all"
+            onClick={() => {
+              if (tieneMultiplesAsigs) {
+                onSelectCurso(c.curso, "")
+              } else {
+                onSelectCurso(c.curso, asigsCurso[0] || asignatura)
+              }
+            }}
+            className="group rounded-[14px] border border-border bg-card p-4 hover:-translate-y-0.5 hover:shadow-md hover:border-primary transition-all text-left w-full"
           >
             <div className="flex items-center gap-3 mb-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-[12px] text-white font-bold text-[12px] shadow-sm" style={{ background: c.color }}>
@@ -634,7 +752,16 @@ function CursosGrid({ cursos, asignatura }: { cursos: CursoInfo[]; asignatura: s
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-[13.5px] font-extrabold group-hover:text-primary transition-colors truncate">{c.curso}</h3>
-                <p className="text-[11px] text-muted-foreground truncate">{asignatura}</p>
+                <p className="text-[11px] text-muted-foreground truncate">
+                  {tieneMultiplesAsigs ? (
+                    <span className="inline-flex items-center gap-1">
+                      {asigsCurso.length} asignaturas
+                      <Badge variant="secondary" className="text-[9px] h-4 px-1">elegir</Badge>
+                    </span>
+                  ) : (
+                    asigsCurso[0] || asignatura
+                  )}
+                </p>
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
@@ -677,7 +804,7 @@ function CursosGrid({ cursos, asignatura }: { cursos: CursoInfo[]; asignatura: s
                 </Badge>
               </div>
             </div>
-          </Link>
+          </button>
         )
       })}
     </div>
@@ -685,11 +812,12 @@ function CursosGrid({ cursos, asignatura }: { cursos: CursoInfo[]; asignatura: s
 }
 
 // ─── Vista Calendario ─────────────────────────────────────────────────────────
-function CalendarioView({ mes, setMes, unidades, asignatura }: {
+function CalendarioView({ mes, setMes, unidades, asignatura, onSelectCurso }: {
   mes: Date
   setMes: (d: Date) => void
   unidades: UnidadConCurso[]
   asignatura: string
+  onSelectCurso: (curso: string, asig: string) => void
 }) {
   const { ini, fin } = rangoDeMes(mes)
   const startWeekday = ini.getDay()
@@ -814,9 +942,9 @@ function CalendarioView({ mes, setMes, unidades, asignatura }: {
           <ul className="space-y-2">
             {activasMes.map((u, index) => (
               <li key={`${u.curso}-${u.id}-${index}`}>
-                <Link
-                  href={buildUrl("/planificaciones", withAsignatura({ curso: u.curso }, asignatura))}
-                  className="block rounded-[10px] border border-border bg-background p-2.5 hover:border-primary transition-colors"
+                <button
+                  onClick={() => onSelectCurso(u.curso, "")}
+                  className="block rounded-[10px] border border-border bg-background p-2.5 hover:border-primary transition-colors text-left w-full"
                 >
                   <div className="flex items-center gap-1.5">
                     <span className="inline-block h-2 w-2 rounded-sm flex-shrink-0" style={{ background: u.color || u.cursoColor }} />
@@ -828,7 +956,7 @@ function CalendarioView({ mes, setMes, unidades, asignatura }: {
                   <div className="text-[10px] text-muted-foreground mt-0.5 font-mono">
                     {u.start} → {u.end}
                   </div>
-                </Link>
+                </button>
               </li>
             ))}
           </ul>

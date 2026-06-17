@@ -1,16 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Bell, BookOpen, LogOut, Menu, WifiOff } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useOnlineStatus } from "@/hooks/use-online-status"
 import { useAuth } from "@/components/auth/auth-context"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { useActiveSubject } from "@/hooks/use-active-subject"
-import { getAsignaturasDisponibles } from "@/lib/curriculo"
-import { cargarPreferencias } from "@/lib/perfil"
-import { SUBJECT_FALLBACK_OPTIONS, buildUrl, withAsignatura } from "@/lib/shared"
 import { ThemeSelector } from "./theme-selector"
 
 const DAYS   = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
@@ -23,12 +18,7 @@ interface HeaderProps {
 export function Header({ onOpenMenu }: HeaderProps) {
   const [fecha, setFecha]               = useState("")
   const [year, setYear]                 = useState<number | null>(null)
-  const [subjectOptions, setSubjectOptions] = useState<string[]>(SUBJECT_FALLBACK_OPTIONS)
   const { user, logout } = useAuth()
-  const pathname    = usePathname()
-  const router      = useRouter()
-  const searchParams = useSearchParams()
-  const { asignatura, setAsignatura } = useActiveSubject()
   const isOnline = useOnlineStatus()
 
   useEffect(() => {
@@ -36,46 +26,6 @@ export function Header({ onOpenMenu }: HeaderProps) {
     setFecha(`${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`)
     setYear(d.getFullYear())
   }, [])
-
-  useEffect(() => {
-    Promise.all([
-      getAsignaturasDisponibles().catch(() => SUBJECT_FALLBACK_OPTIONS as string[]),
-      cargarPreferencias().catch(() => null),
-    ])
-      .then(([options, pref]) => {
-        const habilitadas = pref?.asignaturasHabilitadas
-        // Si el usuario configuró asignaturas habilitadas, filtrar.
-        // Siempre incluir la asignatura activa actual para no romper navegación.
-        const filtradas = habilitadas && habilitadas.length > 0
-          ? options.filter(opt => habilitadas.includes(opt))
-          : options
-        setSubjectOptions(Array.from(new Set([...filtradas, asignatura])))
-      })
-      .catch(() => setSubjectOptions((prev) => Array.from(new Set([...prev, asignatura]))))
-  }, [asignatura])
-
-  const handleSubjectChange = (nextSubject: string) => {
-    setAsignatura(nextSubject)
-    const currentParams = Object.fromEntries(searchParams.entries())
-    router.replace(buildUrl(pathname, withAsignatura(currentParams, nextSubject)))
-  }
-
-  const subjectControl = (
-    <div className="flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1">
-      <BookOpen className="h-3.5 w-3.5 text-primary" />
-      <select
-        value={asignatura}
-        onChange={(event) => handleSubjectChange(event.target.value)}
-        className="bg-transparent pr-4 text-[12px] font-semibold text-foreground outline-none"
-      >
-        {subjectOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
 
   return (
     <header className="sticky top-0 z-50 flex h-[58px] items-center justify-between border-b border-border bg-card px-3.5 shadow-[0_1px_0_0_rgba(0,0,0,0.04)] sm:px-5">
@@ -108,7 +58,6 @@ export function Header({ onOpenMenu }: HeaderProps) {
             {year}
           </span>
         )}
-        {subjectControl}
         {fecha && <span className="text-[12px]">· {fecha}</span>}
       </div>
 
@@ -118,7 +67,6 @@ export function Header({ onOpenMenu }: HeaderProps) {
             {year}
           </span>
         )}
-        {subjectControl}
       </div>
 
       <div className="flex items-center gap-2 sm:gap-2.5">

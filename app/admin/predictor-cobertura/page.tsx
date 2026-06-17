@@ -100,7 +100,7 @@ export default function PredictorCoberturaPage() {
 
       try {
         const mapping = await cargarNivelMapping()
-        const resolvedNivel = resolveNivel(selectedCurso, mapping)
+        const resolvedNivel = resolveNivel(selectedCurso, mapping, ASIGNATURA)
         if (!resolvedNivel) {
           if (!isCancelled) {
             setNivel(null)

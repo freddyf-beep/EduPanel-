@@ -5,20 +5,18 @@
 // ─────────────────────────────────────────────────────────────────────────
 // Compone los componentes shared del flujo unificado:
 //   • CursoUnidadSelector (sticky bar) — task 2.2
-//   • HubHeader (accent rose) con acciones IA / manual / Word — task 1.9
+//   • HubHeader (accent rose) con acciones manual / Word — task 1.9
 //   • MetricsGrid con las 4 métricas de Req 2.3 — task 1.7
 //   • FilterBar con búsqueda normalizada y segmented control — task 1.8
 //   • DocumentCard variant="prueba" para cada prueba — task 1.10
 //   • EmptyState (sin docs / sin coincidencias) — task 1.3
 //   • ErrorBanner para errores de carga — task 1.5
 //   • HubSkeleton durante la carga — task 1.4
-//   • IAStructuredModalPrueba para "Crear con IA" — task 5.1
 //   • PruebaImportModal para "Importar Word" — task 5.5
 //
 // El hub mantiene el contrato actual con `lib/pruebas.ts`:
 //   - `cargarPruebas(asignatura, curso)` para cargar el listado.
 //   - `eliminarPrueba(id)` y `duplicarPrueba(p)` desde las acciones de card.
-//   - `abrirPruebaImprimible({...})` para Vista alumno y Pauta.
 // No se modifican firmas ni interfaces de `lib/pruebas.ts`.
 //
 // Refs: Req 2.1, Req 2.2, Req 2.3, Req 2.4, Req 2.5, Req 2.6, Req 2.7,
@@ -31,30 +29,26 @@ import { useRouter, useSearchParams } from "next/navigation"
 import {
   Copy,
   Edit2,
-  Eye,
-  FileCheck,
   FileText,
   Plus,
   Search,
-  Sparkles,
+  ShieldCheck,
   Trash2,
   Upload,
   Users,
 } from "lucide-react"
 
 import { useActiveSubject } from "@/hooks/use-active-subject"
+import { useAiAccess } from "@/hooks/use-ai-access"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import {
   cargarPruebas,
-  cargarOAsParaPrueba,
   duplicarPrueba,
   eliminarPrueba,
   type PruebaTemplate,
 } from "@/lib/pruebas"
 import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
 import { cargarGuias, type GuiaTemplate } from "@/lib/guias"
-import { abrirPruebaImprimible } from "@/lib/export/prueba-pdf"
-import { cargarInfoColegio } from "@/lib/perfil"
 
 import { CursoUnidadSelector } from "@/components/edu-panel/evaluaciones/shared/curso-unidad-selector"
 import { VerCoberturaButton } from "@/components/edu-panel/evaluaciones/shared/ver-cobertura-button"
@@ -68,11 +62,7 @@ import {
 } from "@/components/edu-panel/evaluaciones/shared/document-card"
 import { EmptyState } from "@/components/edu-panel/evaluaciones/shared/empty-state"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
-import { HubSkeleton } from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
-import {
-  IAStructuredModalPrueba,
-  type IAStructuredModalPruebaParams,
-} from "@/components/edu-panel/evaluaciones/shared/ia-structured-modal-prueba"
+import LoadingSkeleton from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
 import { PruebaImportModal } from "./prueba-import-modal"
 
 // ─── Constantes ─────────────────────────────────────────────────────────────
@@ -107,6 +97,7 @@ export function PruebasHub() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { asignatura } = useActiveSubject()
+  const { hasAiAccess, loading: aiAccessLoading } = useAiAccess()
 
   // Estado lifteado desde URL params para el selector sticky.
   // El componente CursoUnidadSelector empuja los cambios al URL; aquí los
@@ -138,12 +129,8 @@ export function PruebasHub() {
   const [busquedaNormalizada, setBusquedaNormalizada] = useState("")
   const [filtroTipo, setFiltroTipo] = useState<FiltroTipo>("todas")
 
-  // Modales de creación
+  // Modales
   const [importAbierto, setImportAbierto] = useState(false)
-  const [iaAbierto, setIaAbierto] = useState(false)
-  const [oasDisponibles, setOasDisponibles] = useState<
-    Array<{ code: string; descripcion: string }>
-  >([])
 
   // ─── Carga de pruebas ────────────────────────────────────────────────────
   const refrescarRef = useRef<() => void>(undefined)
@@ -180,32 +167,6 @@ export function PruebasHub() {
   const unidadActiva = useMemo(() => {
     return unidades.find((u) => String(u.id) === String(unidadId)) || null
   }, [unidades, unidadId])
-
-  // ─── Carga de OAs sugeridos para el modal IA ─────────────────────────────
-  // Se dispara al abrir el modal cuando hay unidad activa. Si la carga falla
-  // o no hay unidad, el modal mostrará "No hay OAs definidos en esta unidad."
-  useEffect(() => {
-    if (!iaAbierto) return
-    if (!curso || !unidadId) {
-      setOasDisponibles([])
-      return
-    }
-    let cancelled = false
-    cargarOAsParaPrueba(asignatura, curso, unidadId)
-      .then((oas) => {
-        if (cancelled) return
-        const filtrados = oas
-          .filter((oa) => oa.tipo !== "oat")
-          .map((oa) => ({ code: oa.id, descripcion: oa.descripcion }))
-        setOasDisponibles(filtrados)
-      })
-      .catch(() => {
-        if (!cancelled) setOasDisponibles([])
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [iaAbierto, asignatura, curso, unidadId])
 
   // ─── Métricas (Req 2.3) ──────────────────────────────────────────────────
   const metricas = useMemo(() => {
@@ -284,6 +245,18 @@ export function PruebasHub() {
     )
   }
 
+  const irAAdaptar = (prueba: PruebaTemplate) => {
+    router.push(
+      buildUrl(
+        "/evaluaciones",
+        withAsignatura(
+          { tab: "pruebas", view: "evaluacion", pruebaId: prueba.id },
+          asignatura,
+        ),
+      ),
+    )
+  }
+
   const irAResultados = (prueba: PruebaTemplate) => {
     router.push(
       buildUrl(
@@ -294,14 +267,6 @@ export function PruebasHub() {
         ),
       ),
     )
-  }
-
-  const exportar = async (
-    prueba: PruebaTemplate,
-    modo: "para_alumno" | "con_pauta",
-  ) => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirPruebaImprimible({ prueba, colegio, modo })
   }
 
   const handleDuplicar = async (prueba: PruebaTemplate) => {
@@ -335,8 +300,6 @@ export function PruebasHub() {
       )
     }
   }
-
-  // handleIASubmit removido para usar la generación de IA real en el modal.
 
   const limpiarFiltros = () => {
     setBusqueda("")
@@ -382,20 +345,14 @@ export function PruebasHub() {
         accent="rose"
         icon={FileText}
         title="Pruebas"
-        subtitle="Evaluaciones sumativas, formativas y diagnósticas con corrección automática y exportación a PDF."
+        subtitle="Evaluaciones sumativas, formativas y diagnósticas con revisión, aplicación y corrección automática."
         primary={{
-          label: "Crear con IA",
-          icon: Sparkles,
-          onClick: () => setIaAbierto(true),
+          label: "Crear manual",
+          icon: Plus,
+          onClick: irACrearManual,
           disabled: !curso,
         }}
         secondary={[
-          {
-            label: "Crear manual",
-            icon: Plus,
-            onClick: irACrearManual,
-            disabled: !curso,
-          },
           {
             label: "Importar Word",
             icon: Upload,
@@ -442,7 +399,7 @@ export function PruebasHub() {
 
       {/* Listado / loading / empty */}
       {cargando ? (
-        <HubSkeleton accent="rose" />
+        <LoadingSkeleton.HubSkeleton accent="rose" />
       ) : pruebasFiltradas.length === 0 ? (
         pruebas.length === 0 ? (
           // Sin documentos para el curso (Req 2.17).
@@ -454,22 +411,22 @@ export function PruebasHub() {
                 ? `Aún no hay pruebas para ${curso}`
                 : "Selecciona un curso para empezar"
             }
-            text="Crea tu primera prueba con IA, manualmente o importa un .docx existente. Vincula los OAs y deja que el sistema calcule los puntajes automáticamente."
+            text="Crea tu primera prueba manualmente o importa un .docx existente. Vincula los OAs y deja que el sistema calcule los puntajes automáticamente."
             action={
               curso
                 ? {
-                    label: "Crear con IA",
-                    icon: Sparkles,
-                    onClick: () => setIaAbierto(true),
+                    label: "Crear manual",
+                    icon: Plus,
+                    onClick: irACrearManual,
                   }
                 : undefined
             }
             secondaryAction={
               curso
                 ? {
-                    label: "Crear manual",
-                    icon: Plus,
-                    onClick: irACrearManual,
+                    label: "Importar Word",
+                    icon: Upload,
+                    onClick: () => setImportAbierto(true),
                   }
                 : undefined
             }
@@ -500,30 +457,26 @@ export function PruebasHub() {
               title={p.nombre || "Sin nombre"}
               subtitle={buildSubtitle(p)}
               miniStats={buildMiniStats(p)}
+              topActions={[
+                {
+                  label: "Duplicar",
+                  icon: Copy,
+                  onClick: () => handleDuplicar(p),
+                },
+              ]}
               actions={buildActions(p, {
+                onAdaptar: () => irAAdaptar(p),
                 onEditar: () => irAEditor(p),
                 onAplicar: () => irAResultados(p),
-                onVistaAlumno: () => exportar(p, "para_alumno"),
-                onPauta: () => exportar(p, "con_pauta"),
-                onDuplicar: () => handleDuplicar(p),
                 onEliminar: () => handleEliminar(p),
+                canAdaptar: hasAiAccess,
+                adaptarLoading: aiAccessLoading,
               })}
-              onClick={() => irAEditor(p)}
+              onClick={() => (hasAiAccess ? irAAdaptar(p) : irAEditor(p))}
             />
           ))}
         </div>
       )}
-
-      {/* Modal IA (tarea 5.1) */}
-      <IAStructuredModalPrueba
-        open={iaAbierto}
-        onClose={() => setIaAbierto(false)}
-        oasDisponibles={oasDisponibles}
-        cursoLabel={curso}
-        unidadLabel={unidadActiva?.name}
-        asignatura={asignatura}
-        curso={curso}
-      />
 
       {/* Modal de importación Word (Req 4.8) */}
       <PruebaImportModal
@@ -534,6 +487,7 @@ export function PruebasHub() {
           refrescarRef.current?.()
         }}
       />
+
     </div>
   )
 }
@@ -592,12 +546,12 @@ function buildMiniStats(p: PruebaTemplate) {
 }
 
 interface CardActionHandlers {
+  onAdaptar: () => void
   onEditar: () => void
   onAplicar: () => void
-  onVistaAlumno: () => void
-  onPauta: () => void
-  onDuplicar: () => void
   onEliminar: () => void
+  canAdaptar: boolean
+  adaptarLoading: boolean
 }
 
 function buildActions(
@@ -605,11 +559,9 @@ function buildActions(
   h: CardActionHandlers,
 ): DocumentCardAction[] {
   return [
-    { label: "Editar", icon: Edit2, onClick: h.onEditar, tone: "primary" },
+    { label: h.adaptarLoading ? "Verificando IA" : "Adaptar", icon: ShieldCheck, onClick: h.onAdaptar, tone: "primary", disabled: h.adaptarLoading || !h.canAdaptar },
     { label: "Aplicar", icon: Users, onClick: h.onAplicar },
-    { label: "Vista alumno", icon: Eye, onClick: h.onVistaAlumno },
-    { label: "Pauta", icon: FileCheck, onClick: h.onPauta },
-    { label: "Duplicar", icon: Copy, onClick: h.onDuplicar },
+    { label: "Editar", icon: Edit2, onClick: h.onEditar },
     { label: "Eliminar", icon: Trash2, onClick: h.onEliminar, tone: "danger" },
   ]
 }

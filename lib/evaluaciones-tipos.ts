@@ -60,4 +60,43 @@ export function metadatosCurricularesVaciosEval(): MetadatosCurricularesEval {
 
 // ─── Re-export tipo OA ──────────────────────────────────────────────────────
 
+export function metadatosDesdeOAsEval(oas: OAEditado[] | undefined): MetadatosCurricularesEval {
+  const objetivos: string[] = []
+  const indicadores: string[] = []
+  const objetivosTransversales: string[] = []
+
+  ;(oas || []).forEach((oa) => {
+    if (!oa.seleccionado) return
+    const numero = typeof oa.numero === "number" ? ` ${oa.numero}` : ""
+    const label = oa.tipo === "oat" ? `OAA${numero}` : `OA${numero}`
+    const texto = `${label}: ${oa.descripcion}`.trim()
+    if (oa.tipo === "oat") {
+      objetivosTransversales.push(texto)
+    } else {
+      objetivos.push(texto)
+    }
+    ;(oa.indicadores || [])
+      .filter((indicador) => indicador.seleccionado)
+      .forEach((indicador) => indicadores.push(`${label}: ${indicador.texto}`))
+  })
+
+  return { objetivos, indicadores, objetivosTransversales }
+}
+
+export function stripUndefined(value: any): any {
+  if (Array.isArray(value)) return value.map(stripUndefined)
+  if (value !== null && typeof value === "object" &&
+      (value as any)._methodName === undefined &&
+      typeof (value as any).toDate !== "function" &&
+      !(value?.constructor?.name?.includes("Timestamp"))) {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === undefined) continue
+      out[k] = stripUndefined(v)
+    }
+    return out
+  }
+  return value
+}
+
 export type { OAEditado }

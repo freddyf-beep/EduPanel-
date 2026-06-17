@@ -120,7 +120,7 @@ export function PlanificacionesMatriz({ cursoParam }: { cursoParam: string }) {
       setLoading(true)
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
 
         const planData = await cargarPlanCurso(ASIGNATURA, cursoParam)
         const units = planData?.units ?? []

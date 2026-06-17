@@ -85,7 +85,7 @@ export default function MigratePage() {
       log("✅ Planificaciones y datos curriculares del usuario limpiados.")
 
       // 2. Cargar datos reales desde JSON
-      const filesToLoad = [
+      const filesToLoad: Array<{ name: string; path: string; docId: string; isParvularia?: boolean }> = [
         // Música (Ya existentes)
         { name: "Música 1ro Básico (Ud 1-2)", path: "/musica_1ro_basico_unidades_1_2.json", docId: "musica_1ro_basico" },
         { name: "Música 1ro Básico (Ud 3-4)", path: "/musica_1ro_basico_unidades_3_4.json", docId: "musica_1ro_basico" },
@@ -201,14 +201,14 @@ export default function MigratePage() {
 
   const handleAddNuevasAsignaturas = async () => {
     if (!user) return
-    if (!confirm("¿Añadir Educación Física y Parvularia? Esto NO borrará nada de tu currículo actual, solo sumará.")) return
+    if (!confirm("¿Añadir Educación Física? Esto NO borrará nada de tu currículo actual, solo sumará.")) return
 
     setRunning(true)
     setProgress([])
     log("🚀 Iniciando anexo de nuevas asignaturas...")
 
     try {
-      const filesToLoad = [
+      const filesToLoad: Array<{ name: string; path: string; docId: string; isParvularia?: boolean }> = [
         { name: "Ed. Física 1ro Básico", path: "/curriculum/educacion_fisica_1ro_literal_corregido.json", docId: "educacion_fisica_1ro_basico" },
         { name: "Ed. Física 2do Básico", path: "/curriculum/educacion_fisica_2do_literal_corregido.json", docId: "educacion_fisica_2do_basico" },
         { name: "Ed. Física 3ro Básico", path: "/curriculum/educacion_fisica_3ro_literal_corregido.json", docId: "educacion_fisica_3ro_basico" },
@@ -216,8 +216,7 @@ export default function MigratePage() {
         { name: "Ed. Física 5to Básico", path: "/curriculum/educacion_fisica_5to_literal_corregido.json", docId: "educacion_fisica_5to_basico" },
         { name: "Ed. Física 6to Básico", path: "/curriculum/educacion_fisica_6to_literal_corregido.json", docId: "educacion_fisica_6to_basico" },
         { name: "Ed. Física 7mo Básico", path: "/curriculum/educacion_fisica_7mo_literal_corregido.json", docId: "educacion_fisica_7mo_basico" },
-        { name: "Ed. Física 8vo Básico", path: "/curriculum/educacion_fisica_8vo_literal_corregido.json", docId: "educacion_fisica_8vo_basico" },
-        { name: "Parvularia Corporalidad", path: "/curriculum/parvularia_corporalidad_movimiento_niveles.json", docId: "corporalidad_y_movimiento_parvulos", isParvularia: true }
+        { name: "Ed. Física 8vo Básico", path: "/curriculum/educacion_fisica_8vo_literal_corregido.json", docId: "educacion_fisica_8vo_basico" }
       ]
 
       for (const fileDef of filesToLoad) {
@@ -420,7 +419,7 @@ export default function MigratePage() {
               className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 shadow-lg"
             >
               {running ? <Loader2 className="w-5 h-5 animate-spin" /> : <Database className="w-5 h-5" />}
-              {running ? "Añadiendo Datos..." : "Añadir Edu. Física y Parvularia (Sin Borrar Nada)"}
+              {running ? "Añadiendo Datos..." : "Añadir Edu. Física (Sin Borrar Nada)"}
             </button>
           </div>
         )}

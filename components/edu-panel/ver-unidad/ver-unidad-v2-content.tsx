@@ -678,9 +678,9 @@ function VerUnidadV2Inner({ initialTab }: { initialTab: TabKey }) {
 
         let u: Unidad | null = null
         if (tipo === "oficial") {
-          const nivel = resolveNivel(cursoParam, mapping)
+          const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
-            setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
+            setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
             return
           }
           setNivelAsignado(nivel)

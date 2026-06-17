@@ -2,13 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Edit2, Copy, Trash2, Printer, FileText, Clock, Users, Hash, Eye, FileCheck } from "lucide-react"
+import { Edit2, Copy, Trash2, FileText, Clock, Users, Hash, ShieldCheck } from "lucide-react"
+import { useAiAccess } from "@/hooks/use-ai-access"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import {
   eliminarPrueba, duplicarPrueba, type PruebaTemplate,
 } from "@/lib/pruebas"
-import { abrirPruebaImprimible } from "@/lib/export/prueba-pdf"
-import { cargarInfoColegio } from "@/lib/perfil"
 
 interface Props {
   prueba: PruebaTemplate
@@ -19,6 +18,7 @@ interface Props {
 
 export function PruebaCard({ prueba, asignatura, onEliminar, onDuplicar }: Props) {
   const router = useRouter()
+  const { hasAiAccess, loading: aiAccessLoading } = useAiAccess()
   const [confirmando, setConfirmando] = useState(false)
   const [eliminando, setEliminando] = useState(false)
 
@@ -30,15 +30,17 @@ export function PruebaCard({ prueba, asignatura, onEliminar, onDuplicar }: Props
     }, asignatura)))
   }
 
+  const irAAdaptar = () => {
+    if (!hasAiAccess) return
+    router.push(buildUrl("/evaluaciones", withAsignatura({
+      tab: "pruebas", view: "evaluacion", pruebaId: prueba.id,
+    }, asignatura)))
+  }
+
   const irAResultados = () => {
     router.push(buildUrl("/evaluaciones", withAsignatura({
       tab: "pruebas", view: "resultados", pruebaId: prueba.id,
     }, asignatura)))
-  }
-
-  const exportar = async (modo: "para_alumno" | "con_pauta") => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirPruebaImprimible({ prueba, colegio, modo })
   }
 
   const handleEliminar = async () => {
@@ -83,6 +85,19 @@ export function PruebaCard({ prueba, asignatura, onEliminar, onDuplicar }: Props
           </h3>
           <p className="text-[12px] text-muted-foreground mt-0.5">{prueba.curso}</p>
         </div>
+        <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+          {onDuplicar && (
+            <button
+              onClick={handleDuplicar}
+              className="grid h-8 w-8 place-items-center rounded-[9px] border border-border bg-card text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+              title="Duplicar"
+              aria-label="Duplicar"
+            >
+              <Copy className="h-3.5 w-3.5" />
+            </button>
+          )}
+          <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3 text-[11.5px] text-muted-foreground">
@@ -126,11 +141,13 @@ export function PruebaCard({ prueba, asignatura, onEliminar, onDuplicar }: Props
 
       <div className="flex flex-wrap gap-1.5 pt-1 mt-auto">
         <button
-          onClick={irAEditor}
-          className="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 transition-opacity"
+          onClick={irAAdaptar}
+          disabled={aiAccessLoading || !hasAiAccess}
+          title={hasAiAccess ? "Adaptar" : "IA bloqueada para este usuario"}
+          className="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-2 text-[12px] font-medium bg-primary text-primary-foreground rounded-[10px] hover:opacity-90 transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <Edit2 className="w-3.5 h-3.5" />
-          Editar
+          <ShieldCheck className="w-3.5 h-3.5" />
+          Adaptar
         </button>
         <button
           onClick={irAResultados}
@@ -141,28 +158,12 @@ export function PruebaCard({ prueba, asignatura, onEliminar, onDuplicar }: Props
           Aplicar
         </button>
         <button
-          onClick={() => exportar("para_alumno")}
+          onClick={irAEditor}
           className="flex items-center gap-1.5 px-2.5 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
-          title="Imprimir"
+          title="Editar"
         >
-          <Printer className="w-3.5 h-3.5" />
+          <Edit2 className="w-3.5 h-3.5" />
         </button>
-        <button
-          onClick={() => exportar("con_pauta")}
-          className="flex items-center gap-1.5 px-2.5 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
-          title="Imprimir con pauta"
-        >
-          <FileCheck className="w-3.5 h-3.5" />
-        </button>
-        {onDuplicar && (
-          <button
-            onClick={handleDuplicar}
-            className="flex items-center gap-1.5 px-2.5 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
-            title="Duplicar"
-          >
-            <Copy className="w-3.5 h-3.5" />
-          </button>
-        )}
         <button
           onClick={handleEliminar}
           disabled={eliminando}

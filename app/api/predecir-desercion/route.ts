@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
@@ -61,6 +62,8 @@ Mantén un tono confidencial, profesional, constructivo y pedagógicamente étic
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
   const uid = authUser.uid
 
@@ -97,7 +100,7 @@ export async function POST(req: Request) {
       alertas || []
     )
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(uid, { feature: "radar-desercion", inputText: prompt })
     if (!budget.ok) return budget.response
 

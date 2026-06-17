@@ -16,6 +16,7 @@ import {
 import {
   cargarNivelMapping, guardarNivelMapping, NIVELES_CURRICULARES, type NivelMapping,
   cargarCursoTipos, guardarCursoTipos, type CursoTipoMap, type TipoCurricular,
+  getNivelAsignaturaMapping, setNivelAsignaturaLocal, setNivelCursoLocal, removeCursoNivelLocal, renameCursoNivelLocal,
 } from "@/lib/nivel-mapping"
 import {
   cargarEstudiantes, guardarEstudiantes, compareEstudiantes, Estudiante,
@@ -264,13 +265,28 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
 
   // ── Derivados ──
   const cursosDisponibles = useMemo(
-    () => Array.from(new Set(horario.filter(h => !esTipoLibre(h.tipo)).map(h => h.resumen))),
-    [horario]
+    () => Array.from(new Set([
+      ...horario.filter(h => !esTipoLibre(h.tipo)).map(h => h.resumen),
+      ...Object.keys(nivelMapping),
+    ])),
+    [horario, nivelMapping]
   )
   const horarioPorCurso = useMemo(
     () => Array.from(agruparHorarioPorCurso(horario).entries()).sort((a, b) => a[0].localeCompare(b[0], "es")),
     [horario]
   )
+  const asignaturasPorCurso = useMemo(() => {
+    const map = new Map<string, string[]>()
+    horario.forEach(b => {
+      if (esTipoLibre(b.tipo) || !b.asignatura?.trim()) return
+      const a = b.asignatura.trim()
+      if (!map.has(b.resumen)) map.set(b.resumen, [])
+      const arr = map.get(b.resumen)!
+      if (!arr.includes(a)) arr.push(a)
+    })
+    for (const [, arr] of map) arr.sort((a, b) => a.localeCompare(b, "es"))
+    return map
+  }, [horario])
   const bloquesLibres = useMemo(
     () => {
       const order: Record<string, number> = { Lunes: 1, Martes: 2, Miércoles: 3, Jueves: 4, Viernes: 5 }
@@ -300,9 +316,13 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
   const cursosSinNivel = useMemo(
     () => cursosDisponibles.filter(c => {
       const tipo = cursoTipos[c] ?? "oficial"
-      return tipo === "oficial" && !nivelMapping[c]
+      if (tipo !== "oficial") return false
+      if (nivelMapping[c]) return false
+      const asigs = asignaturasPorCurso.get(c) || []
+      const asignaturaMapping = getNivelAsignaturaMapping(nivelMapping)
+      return !asigs.some(a => asignaturaMapping[c]?.[a])
     }),
-    [cursosDisponibles, nivelMapping, cursoTipos]
+    [cursosDisponibles, nivelMapping, cursoTipos, asignaturasPorCurso]
   )
 
   // ── Carga inicial ──
@@ -491,12 +511,8 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
   const renombrarCurso = (oldName: string, newName: string) => {
     if (!newName.trim() || oldName === newName) return
     setHorario(prev => prev.map(x => x.resumen === oldName ? { ...x, resumen: newName } : x))
-    if (nivelMapping[oldName]) {
-      setNivelMapping(prev => {
-        const next = { ...prev, [newName]: prev[oldName] }
-        delete next[oldName]
-        return next
-      })
+    if (nivelMapping[oldName] || getNivelAsignaturaMapping(nivelMapping)[oldName]) {
+      setNivelMapping(prev => renameCursoNivelLocal(prev, oldName, newName))
     }
   }
   const cambiarColorCurso = (curso: string, color: string) => {
@@ -606,10 +622,16 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
     const base = (asignaturasHabilitadas && asignaturasHabilitadas.length > 0)
       ? asignaturasHabilitadas
       : asignaturasDisponibles
-    // Añadir cualquier asignatura que ya esté en uso pero no esté en la lista (compatibilidad)
     const enUso = new Set(horario.map(b => (b.asignatura || "").trim()).filter(Boolean))
-    const merged = new Set([...base, ...enUso])
-    return Array.from(merged).sort((a, b) => a.localeCompare(b, "es"))
+    const map = new Map<string, string>()
+    ;[...base, ...enUso].forEach(a => {
+      const key = a
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "_")
+      if (!map.has(key)) map.set(key, a)
+    })
+    return Array.from(map.values()).sort((a, b) => a.localeCompare(b, "es"))
   }, [asignaturasHabilitadas, asignaturasDisponibles, horario])
 
   if (loading) {
@@ -744,6 +766,7 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
             saveHorario={saveHorario}
             saveMapping={saveMapping}
             asignaturasSugeridas={asignaturasSugeridas}
+            asignaturasPorCurso={asignaturasPorCurso}
           />
         )}
         {tab === "asignaturas" && (
@@ -758,6 +781,7 @@ export function PerfilShell({ isOnboardingMode = false }: { isOnboardingMode?: b
             cursoTipos={cursoTipos}
             setCursoTipos={setCursoTipos}
             saveMapping={saveMapping}
+            asignaturasPorCurso={asignaturasPorCurso}
           />
         )}
         {tab === "identidad" && (
@@ -1310,18 +1334,15 @@ function BloqueForm({
       {!tipoLibre && (
         <div className="flex min-w-[160px] flex-1 flex-col gap-1">
           <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Asignatura</label>
-          <input
-            type="text"
+          <select
             value={form.asignatura || ""}
             onChange={e => setForm(p => ({ ...p, asignatura: e.target.value }))}
-            placeholder="Ej. Música, Lenguaje..."
-            list="asignaturas-sugeridas"
             disabled={!!presetAsignatura}
             className="h-9 rounded-lg border border-border bg-card px-2 text-[12.5px] outline-none focus:border-primary disabled:bg-muted/40"
-          />
-          <datalist id="asignaturas-sugeridas">
-            {(asignaturasSugeridas || []).map(a => <option key={a} value={a} />)}
-          </datalist>
+          >
+            <option value="">— Seleccionar —</option>
+            {(asignaturasSugeridas || []).map(a => <option key={a} value={a}>{a}</option>)}
+          </select>
         </div>
       )}
 
@@ -1916,7 +1937,13 @@ function CursosView({
   upsertBloque, removeBloque, removeCursoCompleto, renombrarCurso, cambiarColorCurso,
   saveHorario, saveMapping, asignaturasSugeridas,
 }: any) {
-  const cursos: Array<[string, ClaseHorario[]]> = horarioPorCurso
+  const cursos: Array<[string, ClaseHorario[]]> = useMemo(() => {
+    const map = new Map(horarioPorCurso as Array<[string, ClaseHorario[]]>)
+    for (const curso of Object.keys(nivelMapping || {})) {
+      if (!map.has(curso)) map.set(curso, [])
+    }
+    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0], "es"))
+  }, [horarioPorCurso, nivelMapping])
 
   if (cursos.length === 0) {
     return (
@@ -1947,7 +1974,9 @@ function CursosView({
           colorIndex={i}
           allHorario={horario}
           nivel={nivelMapping[curso] || ""}
-          setNivel={(v: string) => setNivelMapping((prev: NivelMapping) => ({ ...prev, [curso]: v }))}
+          setNivel={(v: string) => setNivelMapping((prev: NivelMapping) => setNivelCursoLocal(prev, curso, v))}
+          setNivelAsignatura={(asig: string, v: string) => setNivelMapping((prev: NivelMapping) => setNivelAsignaturaLocal(prev, curso, asig, v))}
+          nivelMapping={nivelMapping}
           tipoCurricular={(cursoTipos?.[curso] ?? "oficial") as TipoCurricular}
           setTipoCurricular={(t: TipoCurricular) => {
             setCursoTipos((prev: CursoTipoMap) => {
@@ -1958,11 +1987,7 @@ function CursosView({
             })
             // Si el tipo deja de ser oficial, limpia el nivel para evitar mostrar uno obsoleto
             if (t !== "oficial") {
-              setNivelMapping((prev: NivelMapping) => {
-                const next = { ...prev }
-                delete next[curso]
-                return next
-              })
+              setNivelMapping((prev: NivelMapping) => removeCursoNivelLocal(prev, curso))
             }
           }}
           estudiantes={estudiantesPorCurso[curso] || []}
@@ -1986,7 +2011,7 @@ function CursoCard({
   tipoCurricular, setTipoCurricular,
   estudiantes, estudiantesLoaded, setEstudiantes, onSaveEstudiantes,
   upsertBloque, removeBloque, removeCurso, renombrarCurso, cambiarColor,
-  asignaturasSugeridas,
+  asignaturasSugeridas, setNivelAsignatura, nivelMapping,
 }: any) {
   const [expanded, setExpanded] = useState<"estudiantes" | null>(null)
   const [editingBloque, setEditingBloque] = useState<ClaseHorario | null>(null)
@@ -2315,22 +2340,18 @@ Si la imagen no contiene segundos nombres o segundos apellidos, omite esos campo
           <div className="mb-3 flex flex-wrap items-end gap-2 rounded-[12px] border border-primary bg-pink-light/30 p-3">
             <div className="min-w-[200px] flex-1">
               <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">Nombre de la asignatura</label>
-              <input
+              <select
                 autoFocus
-                type="text"
                 value={nuevaAsignatura}
                 onChange={e => setNuevaAsignatura(e.target.value)}
                 onKeyDown={e => {
-                  if (e.key === "Enter") handleAgregarAsignatura()
                   if (e.key === "Escape") { setShowAddAsignatura(false); setNuevaAsignatura("") }
                 }}
-                placeholder="Ej. Música, Lenguaje, Matemáticas…"
-                list="asignaturas-sugeridas-card"
                 className="mt-1 h-9 w-full rounded-lg border border-border bg-card px-2 text-[12.5px] outline-none focus:border-primary"
-              />
-              <datalist id="asignaturas-sugeridas-card">
-                {(asignaturasSugeridas || []).map((a: string) => <option key={a} value={a} />)}
-              </datalist>
+              >
+                <option value="">— Seleccionar —</option>
+                {(asignaturasSugeridas || []).map((a: string) => <option key={a} value={a}>{a}</option>)}
+              </select>
             </div>
             <button
               onClick={handleAgregarAsignatura}
@@ -2416,6 +2437,25 @@ Si la imagen no contiene segundos nombres o segundos apellidos, omite esos campo
                           <span className="text-[11px] text-muted-foreground">
                             · {bs.length} bloque{bs.length === 1 ? "" : "s"} · {formatHorasMin(minutosAsig)}
                           </span>
+                          {/* Nivel curricular por asignatura */}
+                          {!sinAsignatura && tipoCurricular === "oficial" && (
+                            <div className="flex items-center gap-1 ml-1">
+                              <GraduationCap className="h-3 w-3 text-muted-foreground/50" />
+                              <select
+                                value={(() => {
+                                  const asignaturaMapping = getNivelAsignaturaMapping(nivelMapping || {})
+                                  return asignaturaMapping[curso]?.[asignatura] || nivel || ""
+                                })()}
+                                onChange={e => setNivelAsignatura?.(asignatura, e.target.value)}
+                                className="h-7 rounded border border-border bg-background px-1.5 text-[10.5px] font-semibold text-muted-foreground outline-none hover:border-primary focus:border-primary"
+                              >
+                                <option value="">(usa default: {nivel || "sin configurar"})</option>
+                                {NIVELES_CURRICULARES.map(n => (
+                                  <option key={n} value={n}>{n}</option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
                         </>
                       )}
                     </div>
@@ -2818,6 +2858,7 @@ Si la imagen no contiene segundos nombres o segundos apellidos, omite esos campo
 function AsignaturasView({
   asignaturasDisponibles, asignaturasHabilitadas, handleToggleAsignatura, saveStatus,
   cursosDisponibles, nivelMapping, setNivelMapping, cursoTipos, setCursoTipos, saveMapping,
+  asignaturasPorCurso,
 }: any) {
   return (
     <div className="space-y-5">
@@ -2861,67 +2902,104 @@ function AsignaturasView({
       {/* Mapeo de niveles */}
       <div className="rounded-[16px] border border-border bg-card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <SectionTitle icon={GraduationCap} title="Mapeo de niveles curriculares" hint="Vincula tus cursos al currículo Mineduc" />
+          <SectionTitle icon={GraduationCap} title="Mapeo de niveles curriculares" hint="Vincula tus cursos al currículo Mineduc por curso y asignatura" />
           <SaveBadge status={saveMapping} />
         </div>
         <p className="mb-4 text-[12px] text-muted-foreground">
-          Esto permite que el copiloto IA y el currículum carguen los contenidos correctos al planificar.
+          Selecciona el nivel por defecto para cada curso. Puedes sobrescribirlo por asignatura si un mismo curso tiene materias de distintos niveles.
         </p>
         {cursosDisponibles.length === 0 ? (
           <div className="rounded-[12px] border border-dashed border-border bg-background p-6 text-center text-[12.5px] text-muted-foreground">
             Primero agrega cursos en <strong>Mi Semana</strong>.
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {cursosDisponibles.map((curso: string) => {
               const tipo = (cursoTipos?.[curso] ?? "oficial") as TipoCurricular
               const esOficial = tipo === "oficial"
+              const asigsDelCurso = asignaturasPorCurso?.get(curso) || []
               return (
-                <div key={curso} className="flex flex-wrap items-center gap-3 rounded-[12px] border border-border bg-background px-4 py-3">
-                  <span className="min-w-[100px] text-[13px] font-extrabold text-foreground">{curso}</span>
-                  <select
-                    value={tipo}
-                    onChange={e => {
-                      const next = e.target.value as TipoCurricular
-                      setCursoTipos?.((prev: CursoTipoMap) => {
-                        const map = { ...prev }
-                        if (next === "oficial") delete map[curso]
-                        else map[curso] = next
-                        return map
-                      })
-                      if (next !== "oficial") {
-                        setNivelMapping((prev: NivelMapping) => {
-                          const m = { ...prev }
-                          delete m[curso]
-                          return m
-                        })
-                      }
-                    }}
-                    className="h-9 rounded-lg border border-border bg-card px-2 text-[11.5px] font-bold outline-none focus:border-primary"
-                  >
-                    <option value="oficial">Oficial Mineduc</option>
-                    <option value="taller">Taller</option>
-                    <option value="libre">Libre</option>
-                  </select>
-                  <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
-                  {esOficial ? (
+                <div key={curso} className="rounded-[12px] border border-border bg-background px-4 py-3 space-y-2">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="min-w-[100px] text-[13px] font-extrabold text-foreground">{curso}</span>
                     <select
-                      value={nivelMapping[curso] ?? ""}
-                      onChange={e => setNivelMapping((prev: NivelMapping) => ({ ...prev, [curso]: e.target.value }))}
-                      className={cn(
-                        "h-9 flex-1 min-w-[200px] rounded-lg border bg-card px-3 text-[12.5px] font-semibold outline-none transition-colors focus:border-primary",
-                        nivelMapping[curso] ? "border-border" : "border-amber-300 bg-amber-50/30 text-amber-700"
-                      )}
+                      value={tipo}
+                      onChange={e => {
+                        const next = e.target.value as TipoCurricular
+                        setCursoTipos?.((prev: CursoTipoMap) => {
+                          const map = { ...prev }
+                          if (next === "oficial") delete map[curso]
+                          else map[curso] = next
+                          return map
+                        })
+                        if (next !== "oficial") {
+                          setNivelMapping((prev: NivelMapping) => removeCursoNivelLocal(prev, curso))
+                        }
+                      }}
+                      className="h-9 rounded-lg border border-border bg-card px-2 text-[11.5px] font-bold outline-none focus:border-primary"
                     >
-                      <option value="">— Sin configurar —</option>
-                      {NIVELES_CURRICULARES.map(n => (
-                        <option key={n} value={n}>{n}</option>
-                      ))}
+                      <option value="oficial">Oficial Mineduc</option>
+                      <option value="taller">Taller</option>
+                      <option value="libre">Libre</option>
                     </select>
-                  ) : (
-                    <span className="flex-1 min-w-[200px] text-[11.5px] italic text-muted-foreground">
-                      {tipo === "taller" ? "Sin nivel curricular (taller / electivo)" : "Sin currículum oficial (uso libre)"}
-                    </span>
+                    <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
+                    {esOficial ? (
+                      <select
+                        value={nivelMapping[curso] ?? ""}
+                        onChange={e => setNivelMapping((prev: NivelMapping) => setNivelCursoLocal(prev, curso, e.target.value))}
+                        className={cn(
+                          "h-9 flex-1 min-w-[200px] rounded-lg border bg-card px-3 text-[12.5px] font-semibold outline-none transition-colors focus:border-primary",
+                          nivelMapping[curso] ? "border-border" : "border-amber-300 bg-amber-50/30 text-amber-700"
+                        )}
+                      >
+                        <option value="">— Sin configurar —</option>
+                        {NIVELES_CURRICULARES.map(n => (
+                          <option key={n} value={n}>{n}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <span className="flex-1 min-w-[200px] text-[11.5px] italic text-muted-foreground">
+                        {tipo === "taller" ? "Sin nivel curricular (taller / electivo)" : "Sin currículum oficial (uso libre)"}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Per-asignatura overrides */}
+                  {esOficial && asigsDelCurso.length > 0 && (
+                    <div className="ml-[136px] space-y-1.5 border-t border-dashed border-border pt-2">
+                      <p className="text-[10.5px] font-semibold text-muted-foreground">Sobrescribir nivel por asignatura:</p>
+                      {asigsDelCurso.map((asig: string) => {
+                        const asignaturaMapping = getNivelAsignaturaMapping(nivelMapping)
+                        const nivelPerAsig = asignaturaMapping[curso]?.[asig] || ""
+                        const defaultNivel = nivelMapping[curso] || ""
+                        return (
+                          <div key={asig} className="flex items-center gap-2">
+                            <span className="min-w-[120px] text-[11.5px] font-medium text-foreground truncate">{asig}</span>
+                            <select
+                              value={nivelPerAsig}
+                              onChange={e => {
+                                const val = e.target.value
+                                setNivelMapping((prev: NivelMapping) => setNivelAsignaturaLocal(prev, curso, asig, val))
+                              }}
+                              className="h-8 flex-1 min-w-[200px] rounded-lg border border-border bg-card px-2 text-[11.5px] outline-none focus:border-primary"
+                            >
+                              <option value="">Usar default ({defaultNivel || "sin configurar"})</option>
+                              {NIVELES_CURRICULARES.map(n => (
+                                <option key={n} value={n}>{n}</option>
+                              ))}
+                            </select>
+                            {nivelPerAsig && (
+                              <button
+                                onClick={() => setNivelMapping((prev: NivelMapping) => setNivelAsignaturaLocal(prev, curso, asig, ""))}
+                                className="text-[10px] text-red-500 hover:text-red-700 flex-shrink-0"
+                              >
+                                quitar
+                              </button>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
                   )}
                 </div>
               )

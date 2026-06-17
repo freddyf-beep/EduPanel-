@@ -14,7 +14,16 @@ import { guardarPlanCurso, cargarPlanCurso, getAsignaturasDisponibles, getUnidad
 import type { UnidadPlan, Unidad } from "@/lib/curriculo"
 import { buildUrl, unidadIdFromIndex, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
-import { cargarNivelMapping, guardarNivelMapping, getNivelesDisponibles, NivelMapping } from "@/lib/nivel-mapping"
+import {
+  cargarNivelMapping,
+  guardarNivelMapping,
+  getNivelesDisponibles,
+  isNivelParvularia,
+  resolveNivel,
+  setNivelAsignaturaLocal,
+  setNivelCursoLocal,
+  NivelMapping,
+} from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { FormatoDescargaModal, type FormatoDescarga, type SemestreDescarga } from "./formato-descarga-modal"
@@ -153,7 +162,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
   }, [cursoParam, ASIGNATURA])
 
   useEffect(() => {
-    const nivelSeleccionado = curso ? (nivelMapping[curso] ?? "") : ""
+    const nivelSeleccionado = curso ? resolveNivel(curso, nivelMapping, ASIGNATURA) ?? "" : ""
     if (!nivelSeleccionado) {
       setCurriculumUnits([])
       return
@@ -260,7 +269,8 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
 
   // ── Guardar nivel mapping ─────────────────────────────────────────────────
   const handleSaveNivel = async (nivel: string) => {
-    const updated = { ...nivelMapping, [curso]: nivel }
+    let updated = setNivelAsignaturaLocal(nivelMapping, curso, ASIGNATURA, nivel)
+    if (!nivelMapping[curso]) updated = setNivelCursoLocal(updated, curso, nivel)
     setNivelMapping(updated)
     setSavingNivel(true)
     setSavedNivel(false)
@@ -371,6 +381,11 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
   }
 
   const completadas = units.filter(u => u.start && u.end).length
+  const nivelActual = curso ? resolveNivel(curso, nivelMapping, ASIGNATURA) ?? "" : ""
+  const unidadWorkspacePath = isNivelParvularia(nivelActual) ? "/parvularia" : "/ver-unidad"
+  const unidadWorkspaceLabel = isNivelParvularia(nivelActual)
+    ? "Experiencia parvularia"
+    : "Probar Ver Unidad V3 (Rediseñado)"
 
   const [downloading, setDownloading]       = useState(false)
   const [showFormatoModal, setShowFormatoModal] = useState(false)
@@ -389,7 +404,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
     try {
       const { cargarVerUnidad, cargarActividadClase } = await import("@/lib/curriculo")
 
-      const nivelCurricular = nivelMapping[curso] || "Sin nivel configurado"
+      const nivelCurricular = resolveNivel(curso, nivelMapping, ASIGNATURA) || "Sin nivel configurado"
 
       const encabezado = usarEncabezado && colegioInfo ? {
         logoIzqBase64: colegioInfo.logoBase64,
@@ -642,7 +657,7 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
             </label>
             <div className="flex flex-wrap items-center gap-2">
               <select
-                value={nivelMapping[curso] ?? ""}
+                value={resolveNivel(curso, nivelMapping, ASIGNATURA) ?? ""}
                 onChange={e => handleSaveNivel(e.target.value)}
                 className="w-full appearance-none rounded-[10px] border-[1.5px] border-amber-400 bg-amber-500/10 px-3.5 py-2.5 pr-9 text-[13px] font-semibold text-foreground outline-none focus:shadow-[0_0_0_3px_rgba(245,158,11,0.2)] transition-shadow cursor-pointer sm:min-w-[200px]"
                 style={{ backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 24 24' stroke='%23D97706' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E\")", backgroundRepeat:"no-repeat", backgroundPosition:"right 10px center" }}
@@ -865,20 +880,20 @@ function PlanificacionesInner({ cursoParam }: { cursoParam: string }) {
                     </select>
                   </div>
                   <Link
-                    href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
+                    href={buildUrl(unidadWorkspacePath, withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
                     className="flex items-center justify-between rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/30 px-3 py-2 text-[13px] font-extrabold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors"
                   >
                     <span className="flex items-center gap-1">
                       <Sparkles className="w-3.5 h-3.5 text-indigo-500 animate-pulse" />
-                      Probar Ver Unidad V3 (Rediseñado)
+                      {unidadWorkspaceLabel}
                     </span>
                     <ChevronRight className="h-3.5 w-3.5 text-indigo-400" />
                   </Link>
                   <Link
-                    href={buildUrl("/ver-unidad", withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
+                    href={buildUrl(unidadWorkspacePath, withAsignatura({ curso, unidad: u.unidadCurricularId || "unidad_1", unitIdLocal: String(u.id) }, ASIGNATURA))}
                     className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-[13px] font-semibold text-foreground hover:bg-background hover:border-primary transition-colors"
                   >
-                    Ver unidad <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                    {isNivelParvularia(nivelActual) ? "Abrir parvularia" : "Ver unidad"} <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                   </Link>
                   <Link
                     href={buildUrl("/cronograma", withAsignatura({ curso }, ASIGNATURA))}

@@ -384,10 +384,10 @@ function VerUnidadInner() {
       setLoading(true)
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         if (nivel) setNivelAsignado(nivel)
         if (!nivel) {
-          setError(`No hay bases curriculares configuradas para "${cursoParam}". Ve a Planificaciones y selecciona el nivel en "Bases curriculares de".`)
+          setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}". Ve a Planificaciones y selecciona el nivel en "Bases curriculares de".`)
           return
         }
         const [u, guardada, planificacion] = await Promise.all([

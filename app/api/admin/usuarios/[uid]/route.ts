@@ -70,6 +70,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
 
     // Estadísticas de uso de IA
     const aiStatsDoc = await db.collection("ai_usage_stats").doc(uid).get()
+    const aiAccessDoc = await db.collection("ai_access").doc(uid).get()
     let aiStats: Record<string, any> | null = null
     if (aiStatsDoc.exists) {
       const summary = summarizeAiUsageData(aiStatsDoc.data() as Record<string, any>)
@@ -119,6 +120,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
       horario: horario.exists ? horario.data() : null,
       conteos,
       allowlist: allowlistEntry,
+      aiAccess: aiAccessDoc.exists ? aiAccessDoc.data() : null,
       ai: aiStats,
     })
   } catch (err: any) {
@@ -283,6 +285,20 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
         { merge: true }
       )
       return NextResponse.json({ success: true, limit })
+    }
+
+    if (action === "toggleAiAccess") {
+      const enabled = body.enabled === true
+      await db.collection("ai_access").doc(uid).set(
+        {
+          uid,
+          enabled,
+          updatedAt: FieldValue.serverTimestamp(),
+          updatedBy: authUser.email,
+        },
+        { merge: true }
+      )
+      return NextResponse.json({ success: true, enabled })
     }
 
     return NextResponse.json({ error: "Acción no válida" }, { status: 400 })

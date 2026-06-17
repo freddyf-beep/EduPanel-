@@ -30,7 +30,11 @@ interface AdaptarPieModalProps {
     instruccionesGenerales: string[]
     secciones: any[]
     notasAdecuacion: string
-  }) => void
+  }, contexto: {
+    estudianteId?: string
+    estudianteNombre?: string
+    diagnostico: string
+  }) => void | Promise<void>
 }
 
 export function AdaptarPieModal({
@@ -85,10 +89,22 @@ export function AdaptarPieModal({
     }
   }
 
-  const handleAplicar = () => {
+  const handleAplicar = async () => {
     if (!resultado) return
-    onAdaptado(resultado)
-    onOpenChange(false)
+    setError("")
+    setIsProcessing(true)
+    try {
+      await onAdaptado(resultado, {
+        estudianteId: selectedEstudiante?.id,
+        estudianteNombre: selectedEstudiante?.nombre,
+        diagnostico: diagnosticoActual || "",
+      })
+      onOpenChange(false)
+    } catch (err: any) {
+      setError(err?.message || "No se pudo guardar la adecuación.")
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   if (!open) return null

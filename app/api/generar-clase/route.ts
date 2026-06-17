@@ -16,6 +16,7 @@ import {
   findLessonQualityIssues,
 } from "@/lib/ai/pedagogical-engine"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
 /**
@@ -276,6 +277,8 @@ export async function POST(req: Request) {
   // 1) Auth: Bearer token de Firebase + allowlist obligatorios
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const auth = authCheck.auth
 
   // 2) Rate limit por uid (30/h)

@@ -22,7 +22,7 @@ import {
 } from "@/lib/curriculo"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
 import type { BloqueContenido, MetadatosCurricularesEval, OAEditado } from "@/lib/evaluaciones-tipos"
-import { metadatosCurricularesVaciosEval } from "@/lib/evaluaciones-tipos"
+import { metadatosCurricularesVaciosEval, stripUndefined } from "@/lib/evaluaciones-tipos"
 
 // ─── Helpers Firestore ──────────────────────────────────────────────────────
 
@@ -233,7 +233,7 @@ export async function resolverMetadatosCurricularesGuia(
   guia: Pick<GuiaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<ResolucionCurricularGuia> {
   const fallback = normalizeMetadatos(guia.metadatosCurriculares)
-  const nivel = await getCurriculoNivel(guia.curso)
+  const nivel = await getCurriculoNivel(guia.curso, guia.asignatura)
   const unidades = await getUnidades(guia.asignatura, nivel)
   if (!unidades.length) return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
 
@@ -284,7 +284,7 @@ export async function cargarOAsParaGuia(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = await getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso, asignatura)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 
@@ -301,22 +301,6 @@ export async function cargarOAsParaGuia(
 }
 
 // ─── Persistencia ────────────────────────────────────────────────────────
-
-function stripUndefined(value: any): any {
-  if (Array.isArray(value)) return value.map(stripUndefined)
-  if (value !== null && typeof value === "object" &&
-      (value as any)._methodName === undefined &&
-      typeof (value as any).toDate !== "function" &&
-      !(value?.constructor?.name?.includes("Timestamp"))) {
-    const out: Record<string, unknown> = {}
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      if (v === undefined) continue
-      out[k] = stripUndefined(v)
-    }
-    return out
-  }
-  return value
-}
 
 export async function cargarGuias(asignatura: string, curso: string): Promise<GuiaTemplate[]> {
   const col = userCol("guias")

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, estimateTokensFromText, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
@@ -156,6 +157,8 @@ Debes responder estrictamente con un objeto JSON que siga esta estructura exacta
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -184,7 +187,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = lista ? buildCorregirListaPrompt(lista, studentName) : buildCorregirPrompt(rubrica, studentName)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, {
       feature: "corregir-con-foto",
       estimatedInputTokens: estimateTokensFromText(prompt) + 2500,

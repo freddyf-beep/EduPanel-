@@ -23,7 +23,7 @@ import {
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
 import type { BloqueContenido, MetadatosCurricularesEval, OAEditado } from "@/lib/evaluaciones-tipos"
-import { metadatosCurricularesVaciosEval } from "@/lib/evaluaciones-tipos"
+import { metadatosCurricularesVaciosEval, stripUndefined } from "@/lib/evaluaciones-tipos"
 
 // ─── Helpers Firestore ──────────────────────────────────────────────────────
 
@@ -181,6 +181,19 @@ export interface SeccionPrueba {
   items: ItemPrueba[]
 }
 
+export interface AdecuacionPiePrueba {
+  id: string
+  nombre: string
+  estudianteId?: string
+  estudianteNombre?: string
+  diagnostico: string
+  notasAdecuacion: string
+  instruccionesGenerales: string[]
+  secciones: SeccionPrueba[]
+  createdAt?: unknown
+  updatedAt?: unknown
+}
+
 // ─── Plantilla de Prueba ────────────────────────────────────────────────────
 
 export interface PruebaTemplate {
@@ -212,6 +225,7 @@ export interface PruebaTemplate {
 
   /** Secciones con preguntas */
   secciones: SeccionPrueba[]
+  adaptacionesPie?: AdecuacionPiePrueba[]
 
   /** Puntaje máximo calculado */
   puntajeMaximo: number
@@ -298,20 +312,44 @@ export function calcularPuntajeMaximoPrueba(secciones: SeccionPrueba[]): number 
   return secciones.reduce((acc, sec) => acc + calcularPuntajeMaximoSeccion(sec), 0)
 }
 
-export function normalizarPrueba(prueba: PruebaTemplate): PruebaTemplate {
-  const seccionesOrdenadas = sortByOrder(prueba.secciones || []).map((sec, index) => ({
+function normalizeSeccionesPrueba(secciones: SeccionPrueba[] | undefined): SeccionPrueba[] {
+  return sortByOrder(secciones || []).map((sec, index) => ({
     ...sec,
     orden: index + 1,
     instrucciones: sec.instrucciones?.trim() || "",
     titulo: sec.titulo?.trim() || `Ítem ${romano(index + 1)}`,
     items: (sec.items || []).map(it => normalizeItem(it)),
   }))
+}
+
+function normalizeAdaptacionesPie(value: unknown): AdecuacionPiePrueba[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const adaptaciones = value
+    .filter((raw): raw is Partial<AdecuacionPiePrueba> => !!raw && typeof raw === "object")
+    .map((raw, index) => ({
+      id: typeof raw.id === "string" && raw.id.trim() ? raw.id : `pie_${index + 1}`,
+      nombre: typeof raw.nombre === "string" && raw.nombre.trim() ? raw.nombre.trim() : `Adecuación PIE ${index + 1}`,
+      estudianteId: typeof raw.estudianteId === "string" && raw.estudianteId.trim() ? raw.estudianteId : undefined,
+      estudianteNombre: typeof raw.estudianteNombre === "string" && raw.estudianteNombre.trim() ? raw.estudianteNombre.trim() : undefined,
+      diagnostico: typeof raw.diagnostico === "string" ? raw.diagnostico.trim() : "",
+      notasAdecuacion: typeof raw.notasAdecuacion === "string" ? raw.notasAdecuacion.trim() : "",
+      instruccionesGenerales: normalizeStringList(raw.instruccionesGenerales),
+      secciones: normalizeSeccionesPrueba(raw.secciones),
+      createdAt: raw.createdAt,
+      updatedAt: raw.updatedAt,
+    }))
+  return adaptaciones.length ? adaptaciones : undefined
+}
+
+export function normalizarPrueba(prueba: PruebaTemplate): PruebaTemplate {
+  const seccionesOrdenadas = normalizeSeccionesPrueba(prueba.secciones)
 
   return {
     ...prueba,
     metadatosCurriculares: normalizeMetadatos(prueba.metadatosCurriculares),
     instruccionesGenerales: normalizeStringList(prueba.instruccionesGenerales),
     secciones: seccionesOrdenadas,
+    adaptacionesPie: normalizeAdaptacionesPie(prueba.adaptacionesPie),
     puntajeMaximo: calcularPuntajeMaximoPrueba(seccionesOrdenadas),
     exigencia: typeof prueba.exigencia === "number" ? prueba.exigencia : 0.6,
   }
@@ -387,7 +425,7 @@ export async function resolverMetadatosCurricularesPrueba(
   prueba: Pick<PruebaTemplate, "asignatura" | "curso" | "unidadNombre" | "metadatosCurriculares">
 ): Promise<ResolucionCurricular> {
   const fallback = normalizeMetadatos(prueba.metadatosCurriculares)
-  const nivel = await getCurriculoNivel(prueba.curso)
+  const nivel = await getCurriculoNivel(prueba.curso, prueba.asignatura)
   const unidades = await getUnidades(prueba.asignatura, nivel)
   if (!unidades.length) {
     return { metadatosCurriculares: fallback, resolvedFromDatabase: false }
@@ -448,7 +486,7 @@ export async function cargarOAsParaPrueba(
   unidadId: string,
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
-  const nivel = await getCurriculoNivel(curso)
+  const nivel = await getCurriculoNivel(curso, asignatura)
   const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
   if (!unidad) return oasExistentes ?? []
 
@@ -471,22 +509,23 @@ export async function cargarOAsParaPrueba(
 /** Calcula el puntaje obtenido de un ítem según la respuesta del alumno */
 export function calcularPuntajeItem(item: ItemPrueba, respuesta: RespuestaAlumno | undefined): number {
   if (!respuesta) return 0
+  const maxScore = normalizarPuntaje(item.puntaje)
 
   switch (item.tipo) {
     case "seleccion_multiple": {
       if (respuesta.tipo !== "seleccion_multiple") return 0
       const correcta = item.alternativas.find(a => a.id === respuesta.alternativaId)
-      return correcta?.esCorrecta ? item.puntaje : 0
+      return correcta?.esCorrecta ? maxScore : 0
     }
     case "verdadero_falso": {
       if (respuesta.tipo !== "verdadero_falso") return 0
-      return respuesta.valor === item.respuestaCorrecta ? item.puntaje : 0
+      return respuesta.valor === item.respuestaCorrecta ? maxScore : 0
     }
     case "pareados": {
       if (respuesta.tipo !== "pareados") return 0
       const total = item.columnaA.length
       if (!total) return 0
-      const valorPorPar = item.puntaje / total
+      const valorPorPar = maxScore / total
       let correctos = 0
       item.columnaA.forEach(a => {
         const expected = item.columnaB.find(b => b.correctaParaAId === a.id)
@@ -504,14 +543,14 @@ export function calcularPuntajeItem(item: ItemPrueba, respuesta: RespuestaAlumno
       item.pasos.forEach((paso, i) => {
         if (respuesta.orden[i] === paso.id) correctos += 1
       })
-      const valorPorPaso = item.puntaje / total
+      const valorPorPaso = maxScore / total
       return Math.round(correctos * valorPorPaso * 10) / 10
     }
     case "completar": {
       if (respuesta.tipo !== "completar") return 0
       const total = item.respuestas.length
       if (!total) return 0
-      const valorPorBlanco = item.puntaje / total
+      const valorPorBlanco = maxScore / total
       let correctos = 0
       item.respuestas.forEach((esperada, i) => {
         const dada = (respuesta.respuestas[i] || "").trim().toLowerCase()
@@ -524,15 +563,16 @@ export function calcularPuntajeItem(item: ItemPrueba, respuesta: RespuestaAlumno
     case "desarrollo": {
       if (respuesta.tipo !== item.tipo) return 0
       if (typeof respuesta.puntajeManual === "number") {
-        return Math.max(0, Math.min(item.puntaje, respuesta.puntajeManual))
+        return Math.max(0, Math.min(maxScore, normalizarPuntaje(respuesta.puntajeManual)))
       }
       // Si tiene desglose por criterios
       if (respuesta.tipo === "desarrollo" && respuesta.puntajePorCriterio && item.tipo === "desarrollo") {
         const criterios = item.criterios || []
-        return criterios.reduce((acc, c) => {
+        const total = criterios.reduce((acc, c) => {
           const v = respuesta.puntajePorCriterio?.[c.id] || 0
-          return acc + Math.max(0, Math.min(c.puntaje, v))
+          return acc + Math.max(0, Math.min(normalizarPuntaje(c.puntaje), normalizarPuntaje(v)))
         }, 0)
+        return Math.max(0, Math.min(maxScore, Math.round(total * 10) / 10))
       }
       return 0
     }
@@ -572,9 +612,11 @@ function exigenciaParaResultado(r: Pick<ResultadoEstudiantePrueba, "hasPie">, ba
 
 /** Escala chilena 1.0–7.0 con exigencia configurable */
 export function calcularNotaPrueba(puntaje: number, max: number, exigencia = 0.6): number {
-  if (max <= 0) return 1.0
-  const porcentaje = Math.min(1, Math.max(0, puntaje / max))
-  const exig = Math.min(0.95, Math.max(0.05, exigencia))
+  if (!Number.isFinite(max) || max <= 0) return 1.0
+  const puntos = Number.isFinite(puntaje) ? puntaje : 0
+  const porcentaje = Math.min(1, Math.max(0, puntos / max))
+  const exigenciaBase = Number.isFinite(exigencia) ? exigencia : 0.6
+  const exig = Math.min(0.95, Math.max(0.05, exigenciaBase))
   const nota = porcentaje < exig
     ? 1 + (3 * porcentaje) / exig
     : 4 + (3 * (porcentaje - exig)) / (1 - exig)
@@ -583,20 +625,8 @@ export function calcularNotaPrueba(puntaje: number, max: number, exigencia = 0.6
 
 // ─── Persistencia Firestore ────────────────────────────────────────────────
 
-function stripUndefined(value: any): any {
-  if (Array.isArray(value)) return value.map(stripUndefined)
-  if (value !== null && typeof value === "object" &&
-      (value as any)._methodName === undefined &&
-      typeof (value as any).toDate !== "function" &&
-      !(value?.constructor?.name?.includes("Timestamp"))) {
-    const out: Record<string, unknown> = {}
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      if (v === undefined) continue
-      out[k] = stripUndefined(v)
-    }
-    return out
-  }
-  return value
+function normalizarPuntaje(value: number | undefined): number {
+  return Number.isFinite(value) ? Math.max(0, value ?? 0) : 0
 }
 
 export async function cargarPruebas(asignatura: string, curso: string): Promise<PruebaTemplate[]> {

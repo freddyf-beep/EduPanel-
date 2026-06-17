@@ -51,6 +51,9 @@ interface DetalleResponse {
 
 const NIVELES_DISPONIBLES = [
   "Párvulos",
+  "Sala Cuna",
+  "Nivel Medio",
+  "Nivel Transición",
   "1ro Básico",
   "2do Básico",
   "3ro Básico",
@@ -67,6 +70,9 @@ const NIVELES_DISPONIBLES = [
 
 const ASIGNATURAS_COMUNES = [
   "Música",
+  "Comunicación Integral",
+  "Desarrollo Personal y Social",
+  "Interacción y Comprensión del Entorno",
   "Lenguaje",
   "Matemática",
   "Ciencias Naturales",
@@ -75,7 +81,6 @@ const ASIGNATURAS_COMUNES = [
   "Inglés",
   "Artes Visuales",
   "Tecnología",
-  "Corporalidad y Movimiento",
 ]
 
 function getErrorMessage(error: unknown, fallback: string): string {

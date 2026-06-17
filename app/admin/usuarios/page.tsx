@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { useAdminGuard } from "@/hooks/use-admin-guard"
+import { isAdminEmail } from "@/lib/admin-helpers"
 import {
   Users,
   Search,
@@ -43,11 +44,14 @@ interface FirebaseUser {
   disabled: boolean
   emailVerified: boolean
   isAdmin: boolean
+  aiEnabled: boolean
+  aiAccessManual: boolean
+  aiAccessSource: string | null
   inAllowlist: boolean
   allowlistSource: string | null
 }
 
-type FilterMode = "todos" | "activos7d" | "activos30d" | "nuevos30d" | "sin_acceso" | "allowlist" | "admins" | "suspendidos"
+type FilterMode = "todos" | "activos7d" | "activos30d" | "nuevos30d" | "sin_acceso" | "allowlist" | "admins" | "ia" | "suspendidos"
 
 function getApiErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof ApiError) {
@@ -183,9 +187,39 @@ export default function AdminUsuariosPage() {
           method: "PATCH",
           body: JSON.stringify({ action: "toggleAdmin", makeAdmin }),
         })
-        setUsuarios((prev) => prev.map((x) => (x.uid === u.uid ? { ...x, isAdmin: makeAdmin } : x)))
+        setUsuarios((prev) => prev.map((x) => {
+          if (x.uid !== u.uid) return x
+          const keepsManualAi = x.aiAccessManual
+          return {
+            ...x,
+            isAdmin: makeAdmin,
+            aiEnabled: makeAdmin || keepsManualAi,
+            aiAccessSource: makeAdmin ? "admin" : keepsManualAi ? "manual" : null,
+          }
+        }))
       } catch (err) {
         alert(getApiErrorMessage(err, "Error al cambiar rol."))
+      }
+    })
+
+  const handleToggleAiAccess = (u: FirebaseUser) =>
+    runAction(`ai-${u.uid}`, async () => {
+      if (u.isAdmin) return
+      const enabled = !u.aiEnabled
+      const action = enabled ? "habilitar IA" : "revocar IA"
+      if (!confirm(`Confirmas ${action} para ${u.email}?`)) return
+      try {
+        await apiFetch(`/api/admin/usuarios/${u.uid}`, {
+          method: "PATCH",
+          body: JSON.stringify({ action: "toggleAiAccess", enabled }),
+        })
+        setUsuarios((prev) => prev.map((x) => (
+          x.uid === u.uid
+            ? { ...x, aiEnabled: enabled, aiAccessManual: enabled, aiAccessSource: enabled ? "manual" : null }
+            : x
+        )))
+      } catch (err) {
+        alert(getApiErrorMessage(err, "Error al cambiar acceso IA."))
       }
     })
 
@@ -231,6 +265,8 @@ export default function AdminUsuariosPage() {
           return u.inAllowlist
         case "admins":
           return u.isAdmin
+        case "ia":
+          return u.aiEnabled
         case "suspendidos":
           return u.disabled
         default:
@@ -247,7 +283,7 @@ export default function AdminUsuariosPage() {
   }, [usuarios, searchTerm, filter, sortBy, nowTs])
 
   const exportCSV = () => {
-    const headers = ["UID", "Email", "Nombre", "Creado", "Ultimo login", "Activo", "Admin", "Allowlist"]
+    const headers = ["UID", "Email", "Nombre", "Creado", "Ultimo login", "Activo", "Admin", "IA", "Allowlist"]
     const rows = filtered.map((u) => [
       u.uid,
       u.email,
@@ -256,6 +292,7 @@ export default function AdminUsuariosPage() {
       u.lastSignInTime,
       u.disabled ? "No" : "Si",
       u.isAdmin ? "Si" : "No",
+      u.aiEnabled ? "Si" : "No",
       u.inAllowlist ? "Si" : "No",
     ])
     const csv = "\uFEFF" + [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n")
@@ -279,6 +316,7 @@ export default function AdminUsuariosPage() {
       sin_acceso: usuarios.filter((u) => !u.inAllowlist && !u.isAdmin).length,
       allowlist: usuarios.filter((u) => u.inAllowlist).length,
       admins: usuarios.filter((u) => u.isAdmin).length,
+      ia: usuarios.filter((u) => u.aiEnabled).length,
       suspendidos: usuarios.filter((u) => u.disabled).length,
     }
   }, [usuarios, nowTs])
@@ -337,6 +375,7 @@ export default function AdminUsuariosPage() {
         <FilterChip active={filter === "allowlist"} onClick={() => setFilter("allowlist")} label={`En allowlist (${filterCounts.allowlist})`} />
         <FilterChip active={filter === "sin_acceso"} onClick={() => setFilter("sin_acceso")} label={`Sin acceso (${filterCounts.sin_acceso})`} />
         <FilterChip active={filter === "admins"} onClick={() => setFilter("admins")} label={`Admins (${filterCounts.admins})`} />
+        <FilterChip active={filter === "ia"} onClick={() => setFilter("ia")} label={`IA habilitada (${filterCounts.ia})`} />
         <FilterChip active={filter === "suspendidos"} onClick={() => setFilter("suspendidos")} label={`Suspendidos (${filterCounts.suspendidos})`} />
       </div>
 
@@ -393,6 +432,7 @@ export default function AdminUsuariosPage() {
                     onToggleStatus={() => handleToggleStatus(u)}
                     onAssignSchool={() => handleAssignSchool(u)}
                     onToggleAdmin={() => handleToggleAdmin(u)}
+                    onToggleAiAccess={() => handleToggleAiAccess(u)}
                     onAddAllowlist={() => handleAddToAllowlist(u)}
                     onRemoveAllowlist={() => handleRemoveFromAllowlist(u)}
                     onResetData={() => handleResetData(u)}
@@ -430,6 +470,7 @@ function UserRow({
   onToggleStatus,
   onAssignSchool,
   onToggleAdmin,
+  onToggleAiAccess,
   onAddAllowlist,
   onRemoveAllowlist,
   onResetData,
@@ -441,6 +482,7 @@ function UserRow({
   onToggleStatus: () => void
   onAssignSchool: () => void
   onToggleAdmin: () => void
+  onToggleAiAccess: () => void
   onAddAllowlist: () => void
   onRemoveAllowlist: () => void
   onResetData: () => void
@@ -482,6 +524,9 @@ function UserRow({
           />
           {u.inAllowlist && (
             <StatusBadge type="info" icon={Key} label={u.allowlistSource === "admin_manual" ? "Allowlist (manual)" : "Allowlist"} />
+          )}
+          {u.aiEnabled && (
+            <StatusBadge type="accent" icon={Brain} label={u.aiAccessSource === "admin" ? "IA (admin)" : "IA habilitada"} />
           )}
           {!u.inAllowlist && !u.isAdmin && <StatusBadge type="warning" icon={UserMinus} label="Sin acceso" />}
         </div>
@@ -525,6 +570,14 @@ function UserRow({
             loading={actionLoading === `admin-${u.uid}`}
             icon={<Crown className={`w-4 h-4 ${u.isAdmin ? "text-amber-500" : ""}`} />}
             color="amber"
+          />
+          <IconButton
+            title={u.isAdmin ? "Admin: IA siempre habilitada" : u.aiEnabled ? "Revocar IA" : "Habilitar IA"}
+            onClick={onToggleAiAccess}
+            disabled={actionLoading !== null || u.isAdmin}
+            loading={actionLoading === `ai-${u.uid}`}
+            icon={<Brain className={`w-4 h-4 ${u.aiEnabled ? "text-fuchsia-600" : ""}`} />}
+            color="fuchsia"
           />
           <IconButton
             title="Asignar colegio"
@@ -572,7 +625,7 @@ function IconButton({
   disabled?: boolean
   loading?: boolean
   icon: React.ReactNode
-  color: "slate" | "red" | "blue" | "emerald" | "amber"
+  color: "slate" | "red" | "blue" | "emerald" | "amber" | "fuchsia"
 }) {
   const colors: Record<string, string> = {
     slate: "text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800",
@@ -580,6 +633,7 @@ function IconButton({
     blue: "text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30",
     emerald: "text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30",
     amber: "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30",
+    fuchsia: "text-fuchsia-600 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-950/30",
   }
   return (
     <button
@@ -593,12 +647,13 @@ function IconButton({
   )
 }
 
-function StatusBadge({ type, icon: Icon, label }: { type: "success" | "danger" | "info" | "warning"; icon: any; label: string }) {
+function StatusBadge({ type, icon: Icon, label }: { type: "success" | "danger" | "info" | "warning" | "accent"; icon: any; label: string }) {
   const classes: Record<string, string> = {
     success: "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400",
     danger: "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400",
     info: "bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400",
     warning: "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400",
+    accent: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-950/40 dark:text-fuchsia-300",
   }
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold w-fit ${classes[type]}`}>
@@ -631,6 +686,11 @@ interface UserDetail {
   horario: any
   conteos: Record<string, number>
   allowlist: any
+  aiAccess: {
+    enabled?: boolean
+    updatedAt?: any
+    updatedBy?: string
+  } | null
   ai: {
     tokens_input: number
     tokens_output: number
@@ -650,6 +710,7 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
   const [editingLimit, setEditingLimit] = useState(false)
   const [tempLimit, setTempLimit] = useState("")
   const [savingLimit, setSavingLimit] = useState(false)
+  const [savingAiAccess, setSavingAiAccess] = useState(false)
 
   const fetchDetalle = useCallback(async () => {
     setLoading(true)
@@ -714,6 +775,33 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
     }
   }
 
+  const handleToggleDetailAiAccess = async () => {
+    if (!detalle) return
+    const isFirebaseAdmin = detalle.auth.customClaims?.admin === true || isAdminEmail(detalle.auth.email)
+    if (isFirebaseAdmin) return
+    const enabled = detalle.aiAccess?.enabled !== true
+    setSavingAiAccess(true)
+    try {
+      await apiFetch(`/api/admin/usuarios/${uid}`, {
+        method: "PATCH",
+        body: JSON.stringify({ action: "toggleAiAccess", enabled }),
+      })
+      setDetalle((prev) => prev ? {
+        ...prev,
+        aiAccess: {
+          ...(prev.aiAccess || {}),
+          enabled,
+          updatedAt: new Date().toISOString(),
+        },
+      } : prev)
+      onRefresh()
+    } catch (err) {
+      alert(getApiErrorMessage(err, "Error al cambiar acceso IA."))
+    } finally {
+      setSavingAiAccess(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -741,10 +829,13 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
     )
   }
 
-  const { auth: a, perfil, horario, conteos, allowlist, ai } = detalle
+  const { auth: a, perfil, horario, conteos, allowlist, ai, aiAccess } = detalle
   const totalContenido = Object.values(conteos).reduce((acc, n) => acc + n, 0)
   const aiPct = ai && ai.limit > 0 ? Math.min((ai.cost / ai.limit) * 100, 100) : 0
   const aiStatus = ai && ai.cost >= ai.limit ? "exceeded" : ai && ai.cost >= ai.limit * 0.8 ? "warning" : "active"
+  const isFirebaseAdmin = a.customClaims?.admin === true || isAdminEmail(a.email)
+  const explicitAiAccess = aiAccess?.enabled === true
+  const effectiveAiAccess = isFirebaseAdmin || explicitAiAccess
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -774,6 +865,7 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
               {a.customClaims?.admin && <StatusBadge type="warning" icon={Crown} label="Admin" />}
               {a.disabled ? <StatusBadge type="danger" icon={ShieldOff} label="Suspendido" /> : <StatusBadge type="success" icon={Shield} label="Activo" />}
               {a.emailVerified && <StatusBadge type="info" icon={CheckCircle2} label="Verificado" />}
+              {effectiveAiAccess && <StatusBadge type="accent" icon={Brain} label={isFirebaseAdmin ? "IA (admin)" : "IA habilitada"} />}
             </div>
             <div className="text-sm text-muted-foreground mt-1">{a.email}</div>
             <div className="text-xs text-muted-foreground font-mono mt-1">{a.uid}</div>
@@ -863,10 +955,22 @@ function UserDetailPane({ uid, onClose, onRefresh }: { uid: string; onClose: () 
 
       {/* Tarjeta de Inteligencia Artificial */}
       <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
           <h2 className="font-bold flex items-center gap-2 text-sm">
             <Brain className="w-4 h-4 text-fuchsia-500" /> Consumo de Inteligencia Artificial
           </h2>
+          <button
+            onClick={handleToggleDetailAiAccess}
+            disabled={savingAiAccess || isFirebaseAdmin}
+            className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition-colors disabled:opacity-60 ${
+              effectiveAiAccess
+                ? "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200 dark:bg-fuchsia-950/40 dark:text-fuchsia-300 dark:border-fuchsia-900"
+                : "bg-muted text-muted-foreground border-border hover:bg-fuchsia-50"
+            }`}
+            title={isFirebaseAdmin ? "Los admins de Firebase siempre tienen acceso IA" : effectiveAiAccess ? "Revocar acceso IA" : "Habilitar acceso IA"}
+          >
+            {savingAiAccess ? "Guardando..." : isFirebaseAdmin ? "IA por admin" : effectiveAiAccess ? "IA habilitada" : "IA bloqueada"}
+          </button>
           {ai && (
             <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
               aiStatus === "exceeded" ? "bg-red-100 text-red-700" :

@@ -4,15 +4,11 @@
 // Editor de un ítem de prueba (uno de los 7 tipos)
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useMemo, useState, useEffect } from "react"
 import {
   CheckCircle2, Circle, GripVertical, Plus, Trash2, X,
   Hash, ListChecks, ToggleLeft, ArrowDownUp, FileText,
-  PenLine, AlignLeft, Library, Sparkles, Loader2
+  PenLine, AlignLeft, Library
 } from "lucide-react"
-import { apiFetch } from "@/lib/api-client"
-import { getFeatureFlags } from "@/lib/feature-flags"
-import { subirImagenEvaluacion } from "@/lib/evaluaciones-storage"
 import type {
   ItemPrueba, ItemSeleccionMultiple, ItemVerdaderoFalso,
   ItemPareados, ItemOrdenar, ItemCompletar,
@@ -32,15 +28,6 @@ const TIPO_LABEL: Record<TipoItem, { label: string; icon: any; color: string }> 
   completar: { label: "Completar", icon: PenLine, color: "bg-pink-100 text-pink-700 border-pink-300" },
   respuesta_corta: { label: "Respuesta corta", icon: AlignLeft, color: "bg-cyan-100 text-cyan-700 border-cyan-300" },
   desarrollo: { label: "Desarrollo", icon: FileText, color: "bg-indigo-100 text-indigo-700 border-indigo-300" },
-}
-
-function dataUrlToFile(dataUrl: string, fileName: string): File {
-  const [meta, data] = dataUrl.split(",")
-  const mime = meta.match(/data:([^;]+);base64/)?.[1] || "image/jpeg"
-  const binary = atob(data || "")
-  const bytes = new Uint8Array(binary.length)
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-  return new File([bytes], fileName, { type: mime })
 }
 
 interface Props {
@@ -68,71 +55,6 @@ export function ItemEditor({
 }: Props) {
   const tipoConfig = TIPO_LABEL[item.tipo]
   const Icon = tipoConfig.icon
-
-  const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({})
-  const [loadingIlustrar, setLoadingIlustrar] = useState(false)
-  const [errorIlustrar, setErrorIlustrar] = useState<string | null>(null)
-
-  useEffect(() => {
-    getFeatureFlags().then(setFeatureFlags).catch(console.error)
-  }, [])
-
-  const ilustrarConIA = async () => {
-    if (!item.enunciado) {
-      setErrorIlustrar("Por favor escribe un enunciado primero para usarlo como prompt.")
-      return
-    }
-    setLoadingIlustrar(true)
-    setErrorIlustrar(null)
-    try {
-      const res = await apiFetch("/api/ilustrador-casos", {
-        method: "POST",
-        body: JSON.stringify({
-          prompt: item.enunciado,
-          tema: "educativo"
-        })
-      })
-
-      const data = await res.json()
-      const image = typeof data.image === "string" ? data.image : typeof data.url === "string" ? data.url : ""
-      if (!image) throw new Error("No se obtuvo ninguna imagen desde la IA.")
-
-      let imageUrl = image
-      let storagePath: string | undefined
-      if (image.startsWith("data:image/")) {
-        const extension = image.match(/^data:image\/([^;]+)/)?.[1] || "jpg"
-        const file = dataUrlToFile(image, `ilustracion_ia_${Date.now()}.${extension}`)
-        const subida = await subirImagenEvaluacion(tipoDoc, docId, file)
-        imageUrl = subida.url
-        storagePath = subida.storagePath
-      }
-
-      const nuevoBloque = {
-        id: `img_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-        tipo: "imagen" as const,
-        data: {
-          url: imageUrl,
-          storagePath,
-          ancho: "medium" as const,
-          alineacion: "centro" as const,
-          alt: item.enunciado,
-          caption: "Ilustración educativa (IA)"
-        }
-      }
-
-      const actuales = item.recursos || []
-      onChange({
-        ...item,
-        recursos: [...actuales, nuevoBloque]
-      } as ItemPrueba)
-
-    } catch (err: any) {
-      console.error(err)
-      setErrorIlustrar(err.message || "Error al ilustrar con IA.")
-    } finally {
-      setLoadingIlustrar(false)
-    }
-  }
 
   return (
     <div
@@ -238,34 +160,10 @@ export function ItemEditor({
 
       {/* Recursos visuales asociados al ítem */}
       <details className="mb-3 rounded border border-border bg-background/40">
-        <summary className="cursor-pointer select-none px-3 py-1.5 text-[11px] font-bold text-muted-foreground hover:bg-muted/30 flex items-center justify-between">
+        <summary className="cursor-pointer select-none px-3 py-1.5 text-[11px] font-bold text-muted-foreground hover:bg-muted/30">
           <span>+ Imagen / texto adicional para este ítem</span>
-          {featureFlags["ilustrador-casos"]?.active && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-                ilustrarConIA()
-              }}
-              disabled={loadingIlustrar}
-              className="mr-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded px-2 py-0.5 flex items-center gap-1 text-[9px] font-bold transition-all shadow-sm cursor-pointer"
-            >
-              {loadingIlustrar ? (
-                <Loader2 className="h-2.5 w-2.5 animate-spin" />
-              ) : (
-                <Sparkles className="h-2.5 w-2.5 text-white animate-pulse" />
-              )}
-              Ilustrar con IA
-            </button>
-          )}
         </summary>
         <div className="border-t border-border p-2 space-y-2">
-          {errorIlustrar && (
-            <div className="text-[10px] text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200/50 p-1.5 rounded">
-              {errorIlustrar}
-            </div>
-          )}
           <BloquesEditor
             bloques={item.recursos || []}
             onChange={recursos => onChange({ ...item, recursos } as ItemPrueba)}

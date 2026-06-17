@@ -7,11 +7,11 @@
 //
 //   • StickyEditorToolbar (accent="violet") con slot `numero`, badge de
 //     estado, contador "{N} actividades · {M} min", indicador de cambios
-//     sin guardar y cluster de acciones (Vista alumno, Pauta, Guardar, IA,
-//     Banco, Historial, Duplicar, Eliminar).
+//     sin guardar y cluster mínimo de acciones (Guardar)
+//     más un menú secundario para Banco, Historial, Duplicar y Eliminar.
 //   • LoadingSkeleton.EditorSkeleton mientras se carga la guía.
 //   • UnsavedChangesGuard envolviendo todo el editor con `onSaveAndExit`.
-//   • useShortcuts: Ctrl+S, Ctrl+P, Ctrl+Shift+P, Ctrl+I, Ctrl+B, Ctrl+H,
+//   • useShortcuts: Ctrl+S, Ctrl+P, Ctrl+Shift+P, Ctrl+B, Ctrl+H,
 //     Ctrl+Shift+N y Esc.
 //   • SnapshotPanel para historial de versiones (Ctrl+H).
 //   • guardarGuiaConSnapshot para versionar al guardar manualmente.
@@ -30,14 +30,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  ArrowLeft, Save, Loader2, Eye, Printer, Copy, Trash2, Plus,
-  Settings, RefreshCw, BookOpen, FileCheck, Lightbulb, Sparkles,
-  History, Library, FileQuestion, Music, FileText, Heart,
+  ArrowLeft, Save, Loader2, Copy, Trash2, Plus,
+  Settings, RefreshCw, BookOpen, Lightbulb,
+  History, Library, FileQuestion, Music, FileText,
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
-import { cargarInfoColegio, type InfoColegio } from "@/lib/perfil"
-import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
+import { cargarPerfil } from "@/lib/perfil"
+import { cargarPlanCurso, type OAEditado, type UnidadPlan } from "@/lib/curriculo"
 import {
   cargarGuia, eliminarGuia, duplicarGuia,
   nuevaGuia, nuevaSeccionGuia, nuevaActividadGuia, nuevoIdGuia, normalizarGuia,
@@ -45,31 +45,30 @@ import {
   type GuiaTemplate, type SeccionGuia, type ActividadGuia, type TipoActividadGuia,
 } from "@/lib/guias"
 import { guardarGuiaConSnapshot, guardarPruebaConSnapshot } from "@/lib/snapshots-hook"
-import { abrirGuiaImprimible } from "@/lib/export/guia-pdf"
 import { ActividadGuiaEditor } from "../editor/actividad-guia-editor"
 import { BloquesEditor } from "../editor/bloques-editor"
 import { SelectorTipoItem } from "../editor/selector-tipo-item"
-import { AIPanel } from "../shared/ai-panel"
 import { ItemBank } from "../shared/item-bank"
 import { guardarItemAlBanco, type ItemBankEntry } from "@/lib/item-bank"
 import { ItemPrueba } from "@/lib/pruebas"
 import { itemPruebaAActividadGuia, guiaToPrueba } from "@/lib/cross-mapping"
 import { toast } from "@/components/ui/use-toast"
-import { useContextoCurricular } from "@/hooks/use-contexto-curricular"
 import { cn } from "@/lib/utils"
+import { metadatosDesdeOAsEval } from "@/lib/evaluaciones-tipos"
+import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
 import {
   StickyEditorToolbar,
   type StickyEditorToolbarBadge,
 } from "../shared/sticky-editor-toolbar"
+import { ToolbarButton, Section, Field } from "../shared/editor-primitives"
 import LoadingSkeleton from "../shared/loading-skeleton"
 import { UnsavedChangesGuard } from "../shared/unsaved-changes-guard"
 import { ErrorBanner } from "../shared/error-banner"
 import { EmptyState } from "../shared/empty-state"
 import { SnapshotPanel } from "../shared/snapshot-panel"
 import { useShortcuts, COMMON_SHORTCUTS } from "@/lib/keyboard-shortcuts"
-import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
-import { AdaptarPieModal } from "../shared/adaptar-pie-modal"
-import { SimulacionAlumnosModal } from "../shared/simulacion-alumnos-modal"
+import { EditorActionsMenu, type EditorActionMenuItem } from "../shared/editor-actions-menu"
+import { DocumentCreationSteps, type DocumentCreationStep } from "../shared/document-creation-steps"
 
 interface Props {
   guiaId?: string
@@ -90,16 +89,14 @@ export function GuiaEditor({
   const { asignatura } = useActiveSubject()
 
   const [guia, setGuia] = useState<GuiaTemplate | null>(null)
-  const [colegio, setColegio] = useState<InfoColegio | null>(null)
-  const [profesorNombre] = useState("")
+  const [profesorNombre, setProfesorNombre] = useState("")
   const [unidadesCurso, setUnidadesCurso] = useState<UnidadPlan[]>([])
   const [cargando, setCargando] = useState(true)
   const [errorCarga, setErrorCarga] = useState<string | null>(null)
   const [guardando, setGuardando] = useState(false)
-  const [mensaje, setMensaje] = useState<{ tipo: "ok" | "err"; texto: string } | null>(null)
+  const [mensajeGuardado, setMensajeGuardado] = useState<{ tipo: "ok" | "err"; texto: string } | null>(null)
   const [confirmarEliminar, setConfirmarEliminar] = useState(false)
-  const [panelIA, setPanelIA] = useState(false)
-  const [panelBanco, setPanelBanco] = useState(false)
+  const [bancoAbierto, setBancoAbierto] = useState(false)
   const [panelHistorial, setPanelHistorial] = useState(false)
   const [modoMusical, setModoMusical] = useState(false)
 
@@ -107,17 +104,9 @@ export function GuiaEditor({
   // Lo serializamos para comparar de forma simple vs el documento actual.
   const lastSavedRef = useRef<string>("")
   const [dirty, setDirty] = useState(false)
-  const [panelPie, setPanelPie] = useState(false)
-  const [estudiantesPie, setEstudiantesPie] = useState<Estudiante[]>([])
-  const [showSimulacion, setShowSimulacion] = useState(false)
-
-  // Hook de vinculación curricular automática para el panel IA
-  const { contexto: contextoCurricular } = useContextoCurricular({
-    asignatura,
-    curso: guia?.curso || "",
-    unidadId: guia?.unidadId,
-    unidadNombre: guia?.unidadNombre,
-  })
+  const [creationStep, setCreationStep] = useState<DocumentCreationStep>("config")
+  const [oasCargando, setOasCargando] = useState(false)
+  const oasRequestRef = useRef(0)
 
   // Marcar como guardado el snapshot actual.
   const marcarGuardado = useCallback((g: GuiaTemplate) => {
@@ -144,8 +133,17 @@ export function GuiaEditor({
       if (cancel) return
     setCargando(true)
     setErrorCarga(null)
-    cargarInfoColegio()
-      .then(c => { if (!cancel) setColegio(c) })
+    cargarPerfil()
+      .then(perfil => {
+        if (cancel) return
+        const nombre = [
+          (perfil as any)?.nombre,
+          (perfil as any)?.nombreCompleto,
+          (perfil as any)?.displayName,
+          (perfil as any)?.profesorNombre,
+        ].find((v) => typeof v === "string" && v.trim()) as string | undefined
+        setProfesorNombre(nombre || "")
+      })
       .catch(() => {})
 
     if (guiaId) {
@@ -154,8 +152,7 @@ export function GuiaEditor({
           if (cancel) return
           if (g) {
             setGuia(g)
-            lastSavedRef.current = JSON.stringify(g)
-            setDirty(false)
+            marcarGuardado(g)
             setModoMusical(g.asignatura?.toLowerCase() === "música")
             if (g.curso) {
               cargarPlanCurso(g.asignatura, g.curso)
@@ -178,8 +175,7 @@ export function GuiaEditor({
       if (unidadNombreInicial) nueva.unidadNombre = unidadNombreInicial
       nueva.secciones = [nuevaSeccionGuia(1)]
       setGuia(nueva)
-      lastSavedRef.current = JSON.stringify(nueva)
-      setDirty(false)
+      marcarGuardado(nueva)
       setModoMusical(asignatura?.toLowerCase() === "música")
       if (cursoInicial) {
         cargarPlanCurso(asignatura, cursoInicial)
@@ -202,20 +198,29 @@ export function GuiaEditor({
       .catch(() => setUnidadesCurso([]))
   }, [guia?.curso, guia?.asignatura])
 
-  // Cargar estudiantes PIE del curso
   useEffect(() => {
-    let cancel = false
-    if (!guia?.curso) {
-      Promise.resolve().then(() => {
-        if (!cancel) setEstudiantesPie([])
+    if (!guia?.unidadId || !guia.curso || !guia.asignatura) return
+    const uid = guia.unidadId
+    const reqId = ++oasRequestRef.current
+    setOasCargando(true)
+    cargarOAsParaGuia(guia.asignatura, guia.curso, uid, guia.oas)
+      .then((oas) => {
+        if (oasRequestRef.current !== reqId) return
+        setGuia((prev) => {
+          if (!prev || prev.unidadId !== uid) return prev
+          return {
+            ...prev,
+            oas,
+            metadatosCurriculares: metadatosDesdeOAsEval(oas),
+          }
+        })
       })
-      return () => { cancel = true }
-    }
-    cargarEstudiantes(guia.curso)
-      .then(est => { if (!cancel) setEstudiantesPie(est.filter(e => e.pie)) })
-      .catch(() => { if (!cancel) setEstudiantesPie([]) })
-    return () => { cancel = true }
-  }, [guia?.curso])
+      .catch(console.error)
+      .finally(() => {
+        if (oasRequestRef.current === reqId) setOasCargando(false)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guia?.unidadId, guia?.curso, guia?.asignatura])
 
   // ─── Sincronizar con currículum ────────────────────────────────
   const sincronizarCurriculo = async () => {
@@ -230,13 +235,13 @@ export function GuiaEditor({
         ...g,
         unidadId: resol.unidadId || g.unidadId,
         unidadNombre: resol.unidadNombre || g.unidadNombre,
-        metadatosCurriculares: resol.metadatosCurriculares,
+        metadatosCurriculares: oas ? metadatosDesdeOAsEval(oas) : resol.metadatosCurriculares,
         oas,
       } : g)
-      setMensaje({ tipo: "ok", texto: "Currículum sincronizado" })
-      setTimeout(() => setMensaje(null), 2500)
+      setMensajeGuardado({ tipo: "ok", texto: "Currículum sincronizado" })
+      setTimeout(() => setMensajeGuardado(null), 2500)
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al sincronizar" })
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al sincronizar" })
     }
   }
 
@@ -246,7 +251,7 @@ export function GuiaEditor({
   const handleGuardar = useCallback(async () => {
     if (!guia) return
     if (!guia.curso) {
-      setMensaje({ tipo: "err", texto: "Selecciona un curso antes de guardar" })
+      setMensajeGuardado({ tipo: "err", texto: "Selecciona un curso antes de guardar" })
       return
     }
     setGuardando(true)
@@ -257,10 +262,10 @@ export function GuiaEditor({
       await guardarGuiaConSnapshot(normalizada)
       setGuia(normalizada)
       marcarGuardado(normalizada)
-      setMensaje({ tipo: "ok", texto: "Guardado" })
-      setTimeout(() => setMensaje(null), 2000)
+      setMensajeGuardado({ tipo: "ok", texto: "Guardado" })
+      setTimeout(() => setMensajeGuardado(null), 2000)
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al guardar" })
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al guardar" })
     } finally {
       setGuardando(false)
     }
@@ -276,7 +281,7 @@ export function GuiaEditor({
       if (onClose) onClose()
       else router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "guias" }, asignatura)))
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al eliminar" })
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al eliminar" })
     }
   }
 
@@ -286,7 +291,7 @@ export function GuiaEditor({
       const copia = await duplicarGuia(guia)
       router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "guias", view: "editor", guiaId: copia.id }, asignatura)))
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al duplicar" })
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al duplicar" })
     }
   }
 
@@ -312,43 +317,7 @@ export function GuiaEditor({
       
       router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas", view: "editor", pruebaId: res.documento.id }, asignatura)))
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al duplicar como prueba" })
-    } finally {
-      setGuardando(false)
-    }
-  }
-
-  const handleSugerirPrueba = async () => {
-    if (!guia) return
-    try {
-      setGuardando(true)
-      const { nuevaPrueba } = await import("@/lib/pruebas")
-      const prueba = nuevaPrueba(guia.asignatura, guia.curso)
-      prueba.nombre = `Prueba sugerida: ${guia.nombre || "Guía"}`
-      prueba.unidadId = guia.unidadId
-      prueba.unidadNombre = guia.unidadNombre
-      if (guia.metadatosCurriculares) {
-        prueba.metadatosCurriculares = {
-          objetivos: [...(guia.metadatosCurriculares.objetivos || [])],
-          indicadores: [...(guia.metadatosCurriculares.indicadores || [])],
-          objetivosTransversales: [...(guia.metadatosCurriculares.objetivosTransversales || [])],
-        }
-      }
-      if (guia.oas) {
-        prueba.oas = JSON.parse(JSON.stringify(guia.oas))
-      }
-      prueba.docenteNombre = guia.docenteNombre
-      prueba.tiempoMinutos = guia.tiempoMinutos
-      
-      await guardarPruebaConSnapshot(prueba)
-      toast({
-        title: "Prueba sugerida creada",
-        description: "Se ha creado una prueba a partir de los OAs de esta guía. Redirigiendo...",
-      })
-      
-      router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas", view: "editor", pruebaId: prueba.id }, asignatura)))
-    } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al sugerir prueba" })
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al duplicar como prueba" })
     } finally {
       setGuardando(false)
     }
@@ -358,11 +327,6 @@ export function GuiaEditor({
     if (onClose) onClose()
     else router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "guias" }, asignatura)))
   }, [asignatura, onClose, router])
-
-  const exportarPara = useCallback((modo: "para_alumno" | "con_pauta") => {
-    if (!guia) return
-    abrirGuiaImprimible({ guia, colegio, profesorNombre, modo })
-  }, [guia, colegio, profesorNombre])
 
   // ─── Operaciones secciones ─────────────────────────────────────
   const agregarSeccion = useCallback(() => {
@@ -423,11 +387,11 @@ export function GuiaEditor({
         origen: "guia",
         autor: profesorNombre || "",
       })
-      setMensaje({ tipo: "ok", texto: "Actividad guardada en el banco" })
-      setTimeout(() => setMensaje(null), 2000)
+      setMensajeGuardado({ tipo: "ok", texto: "Actividad guardada en el banco" })
+      setTimeout(() => setMensajeGuardado(null), 2000)
     } catch (e: any) {
-      setMensaje({ tipo: "err", texto: e?.message || "Error al guardar en el banco" })
-      setTimeout(() => setMensaje(null), 3000)
+      setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al guardar en el banco" })
+      setTimeout(() => setMensajeGuardado(null), 3000)
     }
   }
 
@@ -444,8 +408,8 @@ export function GuiaEditor({
         if (entry.metadata.origen === "prueba") {
           const converted = itemPruebaAActividadGuia(payload as ItemPrueba)
           if (!converted) {
-            setMensaje({ tipo: "err", texto: "El ítem no es compatible con el editor de guías" })
-            setTimeout(() => setMensaje(null), 3000)
+            setMensajeGuardado({ tipo: "err", texto: "El ítem no es compatible con el editor de guías" })
+            setTimeout(() => setMensajeGuardado(null), 3000)
             return
           }
           payload = converted
@@ -470,8 +434,8 @@ export function GuiaEditor({
           }
         })
         setDirty(true)
-        setMensaje({ tipo: "ok", texto: "Actividad insertada" })
-        setTimeout(() => setMensaje(null), 1500)
+        setMensajeGuardado({ tipo: "ok", texto: "Actividad insertada" })
+        setTimeout(() => setMensajeGuardado(null), 1500)
       } catch (err) {}
       return
     }
@@ -555,8 +519,8 @@ export function GuiaEditor({
           }
         })
         setDirty(true)
-        setMensaje({ tipo: "ok", texto: "Actividad insertada" })
-        setTimeout(() => setMensaje(null), 1500)
+        setMensajeGuardado({ tipo: "ok", texto: "Actividad insertada" })
+        setTimeout(() => setMensajeGuardado(null), 1500)
       } catch (err) {}
       return
     }
@@ -613,8 +577,8 @@ export function GuiaEditor({
     if (entry.metadata.origen === "prueba") {
       const converted = itemPruebaAActividadGuia(payload as ItemPrueba)
       if (!converted) {
-        setMensaje({ tipo: "err", texto: "El ítem no es compatible con el editor de guías" })
-        setTimeout(() => setMensaje(null), 3000)
+        setMensajeGuardado({ tipo: "err", texto: "El ítem no es compatible con el editor de guías" })
+        setTimeout(() => setMensajeGuardado(null), 3000)
         return
       }
       payload = converted
@@ -639,8 +603,8 @@ export function GuiaEditor({
     })
     setDirty(true)
 
-    setMensaje({ tipo: "ok", texto: "Actividad insertada" })
-    setTimeout(() => setMensaje(null), 1500)
+    setMensajeGuardado({ tipo: "ok", texto: "Actividad insertada" })
+    setTimeout(() => setMensajeGuardado(null), 1500)
   }
 
   const moverActividad = (seccionId: string, actId: string, dir: -1 | 1) => {
@@ -673,22 +637,18 @@ export function GuiaEditor({
   // ─── Atajos de teclado ─────────────────────────────────────────
   // Refs: Req 6.13 — mismos shortcuts que Editor_Prueba (Req 5.17).
   const cerrarPaneles = useCallback(() => {
-    setPanelIA(false)
-    setPanelBanco(false)
+    setBancoAbierto(false)
     setPanelHistorial(false)
     setConfirmarEliminar(false)
   }, [])
 
   useShortcuts(useMemo(() => ([
     { keys: COMMON_SHORTCUTS.GUARDAR, handler: () => { void handleGuardar() } },
-    { keys: COMMON_SHORTCUTS.VISTA_ALUMNO, handler: () => exportarPara("para_alumno") },
-    { keys: COMMON_SHORTCUTS.PAUTA, handler: () => exportarPara("con_pauta") },
-    { keys: COMMON_SHORTCUTS.PANEL_IA, handler: () => setPanelIA(p => !p) },
-    { keys: COMMON_SHORTCUTS.BANCO, handler: () => setPanelBanco(p => !p) },
+    { keys: COMMON_SHORTCUTS.BANCO, handler: () => setBancoAbierto(p => !p) },
     { keys: COMMON_SHORTCUTS.HISTORIAL, handler: () => setPanelHistorial(p => !p) },
     { keys: COMMON_SHORTCUTS.NUEVA_SECCION, handler: () => agregarSeccion() },
     { keys: COMMON_SHORTCUTS.CERRAR, handler: () => cerrarPaneles() },
-  ]), [handleGuardar, exportarPara, agregarSeccion, cerrarPaneles]))
+  ]), [handleGuardar, agregarSeccion, cerrarPaneles]))
 
   // ─── Render ──────────────────────────────────────────────────
   if (cargando) {
@@ -733,6 +693,52 @@ export function GuiaEditor({
     return { label: "Borrador", tone: "warning" }
   })()
 
+  const isMusica = guia.asignatura?.toLowerCase() === "música" || asignatura?.toLowerCase() === "música"
+  const secondaryActions: EditorActionMenuItem[] = [
+    ...(isMusica
+      ? [{
+          label: modoMusical ? "Desactivar modo musical" : "Modo musical",
+          icon: Music,
+          onClick: () => setModoMusical((value) => !value),
+        }]
+      : []),
+    {
+      label: bancoAbierto ? "Cerrar banco de ítems" : "Banco de ítems",
+      icon: Library,
+      onClick: () => setBancoAbierto((value) => !value),
+    },
+    {
+      label: panelHistorial ? "Cerrar historial" : "Historial",
+      icon: History,
+      onClick: () => setPanelHistorial((value) => !value),
+    },
+    ...(guiaId
+      ? [
+          {
+            label: "Duplicar",
+            icon: Copy,
+            onClick: handleDuplicar,
+          },
+          {
+            label: "Duplicar como prueba",
+            icon: FileText,
+            onClick: handleDuplicarComoPrueba,
+          },
+          {
+            label: confirmarEliminar ? "Confirmar eliminación" : "Eliminar",
+            icon: Trash2,
+            onClick: handleEliminar,
+            danger: true,
+          },
+        ]
+      : []),
+  ]
+  const isCreating = !guiaId
+  const showConfigStep = !isCreating || creationStep === "config"
+  const showContentStep = !isCreating || creationStep === "contenido"
+  const showReviewStep = !isCreating || creationStep === "revisar"
+  const configReady = Boolean(guia.nombre.trim() && guia.curso.trim())
+
   return (
     <>
       <UnsavedChangesGuard dirty={dirty} onSaveAndExit={handleGuardar} />
@@ -753,253 +759,47 @@ export function GuiaEditor({
           counter={counterTexto}
           badge={badge}
           dirty={dirty}
-          actionsLeft={
-            (guia.asignatura?.toLowerCase() === "música" || asignatura?.toLowerCase() === "música") ? (
-              <button
-                type="button"
-                onClick={() => setModoMusical(v => !v)}
-                title="Alternar Modo Musical"
-                aria-pressed={modoMusical}
-                className={cn(
-                  "inline-flex h-9 items-center gap-1.5 rounded-[10px] px-3 text-[11.5px] font-bold transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                  modoMusical
-                    ? "bg-violet-600 text-white hover:bg-violet-700"
-                    : "border border-border bg-card text-foreground hover:bg-muted/60"
-                )}
-              >
-                <Music className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Modo Musical</span>
-              </button>
-            ) : null
-          }
           actionsRight={
             <>
-              {mensaje && (
+              {mensajeGuardado && (
                 <span className={cn(
                   "rounded-full px-2.5 py-0.5 text-[10.5px] font-bold",
-                  mensaje.tipo === "ok"
+                  mensajeGuardado.tipo === "ok"
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
                     : "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300"
                 )}>
-                  {mensaje.texto}
+                  {mensajeGuardado.texto}
                 </span>
               )}
 
-              <button
-                type="button"
-                onClick={() => exportarPara("para_alumno")}
-                title="Vista alumno (Ctrl+P)"
-                aria-label="Vista alumno"
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] border border-border bg-card px-2.5 py-1.5",
-                  "text-[11.5px] font-semibold text-foreground transition-colors hover:bg-muted/60",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                )}
-              >
-                <Eye className="h-3.5 w-3.5" />
-                <span className="hidden md:inline">Vista alumno</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => exportarPara("con_pauta")}
-                title="Pauta (Ctrl+Shift+P)"
-                aria-label="Pauta"
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] border border-border bg-card px-2.5 py-1.5",
-                  "text-[11.5px] font-semibold text-foreground transition-colors hover:bg-muted/60",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                )}
-              >
-                <FileCheck className="h-3.5 w-3.5" />
-                <span className="hidden md:inline">Pauta</span>
-              </button>
-
-              <button
-                type="button"
+              <ToolbarButton
+                icon={guardando ? Loader2 : Save}
+                label={guardando ? "Guardando…" : "Guardar"}
+                shortcut={COMMON_SHORTCUTS.GUARDAR}
                 onClick={handleGuardar}
                 disabled={guardando}
-                title="Guardar (Ctrl+S)"
-                aria-label="Guardar"
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-3 py-1.5 text-[11.5px] font-bold text-white transition-opacity",
-                  "bg-[var(--accent-guias)] hover:opacity-90",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                  "disabled:cursor-not-allowed disabled:opacity-60",
-                )}
-              >
-                {guardando ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
-                Guardar
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPanelIA(p => !p)}
-                title="Panel IA (Ctrl+I)"
-                aria-label="Panel IA"
-                aria-pressed={panelIA}
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-3 py-1.5 text-[11.5px] font-bold transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                  panelIA
-                    ? "bg-[var(--accent-guias)] text-white hover:opacity-90"
-                    : "border border-[var(--accent-guias)]/40 bg-[var(--accent-guias-soft)] text-[var(--accent-guias)] hover:opacity-90",
-                )}
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                <span className="hidden md:inline">IA</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowSimulacion(true)}
-                title="Simular Alumnos"
-                aria-label="Simular Alumnos"
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-3 py-1.5 text-[11.5px] font-bold transition-colors border border-border bg-card text-foreground hover:bg-muted/60",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                )}
-              >
-                <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
-                <span className="hidden md:inline">Simular Alumnos</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPanelBanco(p => !p)}
-                title="Banco de ítems (Ctrl+B)"
-                aria-label="Banco"
-                aria-pressed={panelBanco}
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                  panelBanco
-                    ? "bg-[var(--accent-guias)] text-white hover:opacity-90"
-                    : "border border-border bg-card text-foreground hover:bg-muted/60"
-                )}
-              >
-                <Library className="h-3.5 w-3.5" />
-                <span className="hidden lg:inline">Banco</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPanelHistorial(p => !p)}
-                title="Historial (Ctrl+H)"
-                aria-label="Historial"
-                aria-pressed={panelHistorial}
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                  panelHistorial
-                    ? "bg-[var(--accent-guias)] text-white hover:opacity-90"
-                    : "border border-border bg-card text-foreground hover:bg-muted/60"
-                )}
-              >
-                <History className="h-3.5 w-3.5" />
-                <span className="hidden lg:inline">Historial</span>
-              </button>
-
-              {guiaId && (
-                <>
-                  <button
-                    type="button"
-                    onClick={handleDuplicar}
-                    title="Duplicar"
-                    aria-label="Duplicar"
-                    className={cn(
-                      "inline-flex items-center gap-1 rounded-[10px] border border-border bg-card px-2.5 py-1.5",
-                      "text-[11.5px] font-semibold text-foreground transition-colors hover:bg-muted/60",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                      "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                    )}
-                  >
-                    <Copy className="h-3.5 w-3.5" />
-                    <span className="hidden md:inline">Duplicar</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleDuplicarComoPrueba}
-                    title="Duplicar como prueba"
-                    aria-label="Duplicar como prueba"
-                    className={cn(
-                      "inline-flex items-center gap-1 rounded-[10px] border border-border bg-card px-2.5 py-1.5",
-                      "text-[11.5px] font-semibold text-foreground transition-colors hover:bg-muted/60",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                      "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                    )}
-                  >
-                    <FileText className="h-3.5 w-3.5" />
-                    <span className="hidden md:inline">Duplicar como prueba</span>
-                  </button>
-                  {guia && guia.tipoGuia === "evaluacion_formativa" && (
-                    <button
-                      type="button"
-                      onClick={handleSugerirPrueba}
-                      title="Sugerir prueba"
-                      aria-label="Sugerir prueba"
-                      className={cn(
-                        "inline-flex items-center gap-1 rounded-[10px] border border-border bg-card px-2.5 py-1.5",
-                        "text-[11.5px] font-semibold text-foreground transition-colors hover:bg-muted/60",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                        "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-                      )}
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      <span className="hidden md:inline">Sugerir prueba</span>
-                    </button>
-                  )}
-                </>
-              )}
-
-              {/* Botón Adaptar PIE */}
-              <button
-                type="button"
-                onClick={() => setPanelPie(true)}
-                title="Adaptar para PIE"
-                aria-label="Adaptar para PIE"
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-[10px] px-2.5 py-1.5",
-                  "text-[11.5px] font-semibold transition-colors",
-                  "bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border border-teal-500/20 text-teal-600",
-                  "hover:from-teal-500/20 hover:to-emerald-500/20",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                  "focus-visible:ring-offset-background focus-visible:ring-teal-500",
-                )}
-              >
-                <Heart className="h-3.5 w-3.5" />
-                <span className="hidden md:inline">Adaptar PIE</span>
-              </button>
-
-              {guiaId && (
-                <button
-                  type="button"
-                  onClick={handleEliminar}
-                  title="Eliminar"
-                  aria-label={confirmarEliminar ? "Confirmar eliminar" : "Eliminar"}
-                  className={cn(
-                    "inline-flex items-center gap-1 rounded-[10px] border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                    "focus-visible:ring-offset-background focus-visible:ring-red-500",
-                    confirmarEliminar
-                      ? "border-red-500 bg-red-500 text-white hover:bg-red-600"
-                      : "border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-200 dark:hover:bg-red-900/40",
-                  )}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                  {confirmarEliminar && <span>¿Confirmar?</span>}
-                </button>
-              )}
+                primary
+                spinning={guardando}
+                accent="violet"
+              />
+              <EditorActionsMenu accent="violet" actions={secondaryActions} />
             </>
           }
         />
 
+        {isCreating && (
+          <DocumentCreationSteps
+            current={creationStep}
+            onChange={setCreationStep}
+            accent="violet"
+            contentCount={totalActividades}
+            contentLabel={totalActividades === 1 ? "actividad" : "actividades"}
+            ready={configReady}
+          />
+        )}
+
+        {showConfigStep && (
+        <>
         {/* Configuración */}
         <Section title="Configuración" icon={Settings}>
           <div className="grid gap-3 md:grid-cols-3">
@@ -1016,7 +816,13 @@ export function GuiaEditor({
                 value={guia.unidadId || ""}
                 onChange={e => {
                   const u = unidadesCurso.find(x => String(x.id) === e.target.value)
-                  setGuia({ ...guia, unidadId: e.target.value || undefined, unidadNombre: u?.name })
+                  setGuia({
+                    ...guia,
+                    unidadId: e.target.value || undefined,
+                    unidadNombre: u?.name,
+                    oas: undefined,
+                    metadatosCurriculares: metadatosDesdeOAsEval(undefined),
+                  })
                 }}
                 className={inputBaseClass}
               >
@@ -1090,25 +896,38 @@ export function GuiaEditor({
             </Field>
           </div>
 
-          <div className="mt-4">
-            <Field label="OAs vinculados (uno por línea)">
-              <textarea
-                value={(guia.metadatosCurriculares?.objetivos || []).join("\n")}
-                onChange={e => setGuia({
-                  ...guia,
-                  metadatosCurriculares: {
-                    ...(guia.metadatosCurriculares || { objetivos: [], indicadores: [], objetivosTransversales: [] }),
-                    objetivos: e.target.value.split("\n").map(s => s.trim()).filter(Boolean),
-                  },
-                })}
-                rows={3}
-                placeholder="OA 1: ..."
-                className={cn(textareaBaseClass, "text-[11.5px]")}
-              />
-            </Field>
+          <div className="mt-4 rounded-[12px] border border-border bg-card/50 p-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div>
+                <h3 className="text-[13px] font-extrabold text-foreground">Objetivos e indicadores</h3>
+                <p className="mt-0.5 text-[12px] text-muted-foreground">
+                  {oasCargando
+                    ? "Cargando OA desde la base curricular..."
+                    : guia.unidadId
+                      ? "Haz clic en los puntos para seleccionar/deseleccionar OA e indicadores."
+                      : "Selecciona una unidad para cargar los OA automáticamente, o agrega uno propio."}
+                </p>
+              </div>
+              {oasCargando && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+            </div>
+            <RubricaOAEditor
+              oas={guia.oas ?? []}
+              onChange={(oas: OAEditado[]) => setGuia({
+                ...guia,
+                oas,
+                metadatosCurriculares: metadatosDesdeOAsEval(oas),
+              })}
+              asignatura={guia.asignatura || asignatura}
+              cargando={oasCargando}
+            />
           </div>
-        </Section>
 
+        </Section>
+        </>
+        )}
+
+        {showContentStep && (
+        <>
         {/* Secciones */}
         {guia.secciones.map((sec, idx) => {
           const puntosSec = sec.actividades.reduce((a, x) => a + (x.puntaje || 0), 0)
@@ -1278,7 +1097,11 @@ export function GuiaEditor({
             modoMusical={modoMusical}
           />
         </Section>
+        </>
+        )}
 
+        {showReviewStep && (
+        <>
         {/* Resumen final */}
         <div className="rounded-[12px] border border-[var(--accent-guias)]/30 bg-[var(--accent-guias-soft)]/40 p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1293,87 +1116,16 @@ export function GuiaEditor({
                 {guia.tiempoMinutos ? ` · ${guia.tiempoMinutos} min` : ""}
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => exportarPara("para_alumno")}
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-[8px] px-3 py-1.5 text-[11.5px] font-bold transition-colors",
-                "border border-[var(--accent-guias)]/40 bg-card text-[var(--accent-guias)] hover:bg-[var(--accent-guias-soft)]",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-              )}
-            >
-              <Printer className="h-3.5 w-3.5" />
-              Imprimir guía
-            </button>
           </div>
         </div>
+        </>
+        )}
 
       </div>
-
-        {/* Panel de IA */}
-        <AIPanel
-          tipoDoc="guia"
-          open={panelIA}
-          onClose={() => setPanelIA(false)}
-          contexto={contextoCurricular}
-          documentoActual={guia as unknown as Record<string, unknown>}
-          onAplicar={(data) => {
-            if (data.seccionesGuia && Array.isArray(data.seccionesGuia)) {
-              const nuevasSecciones = (data.seccionesGuia as any[]).map((sec, i) => {
-                const base = nuevaSeccionGuia(guia.secciones.length + i + 1)
-                return {
-                  ...base,
-                  titulo: sec.titulo || base.titulo,
-                  descripcion: sec.descripcion || "",
-                  contenido: sec.contenidoHtml
-                    ? [{ id: `bl_${base.id}_${i}`, tipo: "texto" as const, data: { html: sec.contenidoHtml, estilo: "normal" as const } }]
-                    : [],
-                  actividades: (sec.actividades || []).filter((act: any) => act && act.enunciado).map((act: any) => {
-                    const baseAct = nuevaActividadGuia(act.tipo || "abierta")
-                    return {
-                      ...baseAct,
-                      enunciado: act.enunciado || "",
-                      puntaje: act.puntaje,
-                      oaVinculado: act.oaVinculado,
-                      datos: act.datos || baseAct.datos,
-                    }
-                  }),
-                }
-              })
-              setGuia(g => g ? { ...g, secciones: [...g.secciones, ...nuevasSecciones] } : g)
-            }
-            if (data.seccionGuia && typeof data.seccionGuia === "object") {
-              const sec = data.seccionGuia as any
-              const base = nuevaSeccionGuia(guia.secciones.length + 1)
-              const nueva = {
-                ...base,
-                titulo: sec.titulo || base.titulo,
-                descripcion: sec.descripcion || "",
-                contenido: sec.contenidoHtml
-                  ? [{ id: `bl_${base.id}`, tipo: "texto" as const, data: { html: sec.contenidoHtml, estilo: "normal" as const } }]
-                  : [],
-                actividades: (sec.actividades || []).filter((act: any) => act && act.enunciado).map((act: any) => {
-                  const baseAct = nuevaActividadGuia(act.tipo || "abierta")
-                  return {
-                    ...baseAct,
-                    enunciado: act.enunciado || "",
-                    puntaje: act.puntaje,
-                    oaVinculado: act.oaVinculado,
-                    datos: act.datos || baseAct.datos,
-                  }
-                }),
-              }
-              setGuia(g => g ? { ...g, secciones: [...g.secciones, nueva] } : g)
-            }
-            setPanelIA(false)
-          }}
-        />
-
         {/* Banco de ítems */}
         <ItemBank
-          open={panelBanco}
-          onClose={() => setPanelBanco(false)}
+          open={bancoAbierto}
+          onClose={() => setBancoAbierto(false)}
           editorTipo="guia"
           asignatura={guia.asignatura}
           onInsertarItem={handleInsertarItemDelBanco}
@@ -1390,59 +1142,12 @@ export function GuiaEditor({
             if (snap.payload) {
               setGuia(snap.payload)
               setDirty(true)
-              setMensaje({ tipo: "ok", texto: "Versión restaurada en el editor" })
-              setTimeout(() => setMensaje(null), 2500)
+              setMensajeGuardado({ tipo: "ok", texto: "Versión restaurada en el editor" })
+              setTimeout(() => setMensajeGuardado(null), 2500)
             }
           }}
         />
 
-        {/* Adaptación PIE/DUA */}
-        <AdaptarPieModal
-          open={panelPie}
-          onOpenChange={setPanelPie}
-          tipo="guia"
-          documento={guia}
-          estudiantesPie={estudiantesPie}
-          onAdaptado={async (resultado) => {
-            const nuevaId = nuevoIdGuia("guia_pie")
-            const copiaGuia: GuiaTemplate = {
-              ...guia,
-              id: nuevaId,
-              nombre: resultado.nombre || `${guia.nombre} (Adecuación PIE)`,
-              instrucciones: resultado.instruccionesGenerales || guia.instrucciones || [],
-              secciones: (resultado.secciones || []).map((sec: any, sIdx: number) => ({
-                ...sec,
-                id: sec.id || nuevoIdGuia(`sec_pie_${sIdx + 1}`),
-                orden: sIdx + 1,
-                actividades: (sec.items || sec.actividades || []).map((act: any) => ({
-                  ...act,
-                  id: nuevoIdGuia("act_pie"),
-                })),
-              })),
-              estado: "borrador" as const,
-              createdAt: undefined,
-              updatedAt: undefined,
-            }
-            try {
-              await guardarGuiaConSnapshot(copiaGuia)
-              toast({
-                title: "Guía PIE creada",
-                description: resultado.notasAdecuacion || "La adecuación curricular se guardó correctamente.",
-              })
-              router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "guias", view: "editor", guiaId: nuevaId }, asignatura)))
-            } catch (e: any) {
-              setMensaje({ tipo: "err", texto: e?.message || "Error al guardar la guía adaptada" })
-            }
-          }}
-        />
-
-        {/* Simulador de Alumnos */}
-        <SimulacionAlumnosModal
-          isOpen={showSimulacion}
-          onClose={() => setShowSimulacion(false)}
-          documento={guia}
-          tipo="guia"
-        />
       </div>
     </>
   )
@@ -1460,66 +1165,3 @@ const textareaBaseClass = cn(
   "text-foreground outline-none",
   "focus-visible:ring-2 focus-visible:ring-[var(--accent-guias)]",
 )
-
-// ─── Sub-componentes locales ──────────────────────────────────────────────
-
-function Section({
-  title,
-  children,
-  icon: Icon,
-}: {
-  title: string
-  children: React.ReactNode
-  icon?: any
-}) {
-  return (
-    <div className="rounded-[14px] border border-border bg-card p-4 shadow-sm">
-      <div className="mb-3 flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-wide text-foreground">
-        {Icon && <Icon className="h-4 w-4 text-[var(--accent-guias)]" />}
-        {title}
-      </div>
-      {children}
-    </div>
-  )
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="mb-1 block text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">
-        {label}
-      </label>
-      {children}
-    </div>
-  )
-}
-
-/**
- * Placeholder visual hasta que la tarea 8.6 monte el `ItemBank` real.
- * Mantiene la UX consistente al abrir/cerrar con Ctrl+B aunque el drawer
- * todavía no exponga ítems guardados.
- */
-function BancoPlaceholder({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="rounded-[12px] border-2 border-dashed border-[var(--accent-guias)]/40 bg-[var(--accent-guias-soft)]/30 p-4 text-center">
-      <Library className="mx-auto h-6 w-6 text-[var(--accent-guias)]/70" aria-hidden="true" />
-      <p className="mt-2 text-[12.5px] font-semibold text-foreground">
-        Banco de ítems
-      </p>
-      <p className="mt-1 text-[11.5px] text-muted-foreground">
-        Próximamente — podrás reutilizar actividades guardadas desde aquí.
-      </p>
-      <button
-        type="button"
-        onClick={onClose}
-        className={cn(
-          "mt-3 inline-flex items-center justify-center rounded-[8px] border border-border bg-card px-3 py-1.5 text-[11.5px] font-medium text-foreground transition-colors hover:bg-muted/60",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-          "focus-visible:ring-offset-background focus-visible:ring-[var(--accent-guias)]",
-        )}
-      >
-        Cerrar
-      </button>
-    </div>
-  )
-}

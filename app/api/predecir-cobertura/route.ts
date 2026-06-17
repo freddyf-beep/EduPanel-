@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
@@ -62,6 +63,8 @@ Mantén un tono técnico, realista, pragmático y de apoyo al docente para optim
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   // Verificar Feature Flag
@@ -111,7 +114,7 @@ export async function POST(req: Request) {
       detallesOas || []
     )
 
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "predictor-cobertura", inputText: prompt })
     if (!budget.ok) return budget.response
 

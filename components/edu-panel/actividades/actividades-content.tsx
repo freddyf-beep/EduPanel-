@@ -989,7 +989,7 @@ function ActividadesInner({ cursoOverride, unidadOverride, unidadCurricularOverr
 
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         setNivelCurricular(nivel || cursoParam)
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadParam),

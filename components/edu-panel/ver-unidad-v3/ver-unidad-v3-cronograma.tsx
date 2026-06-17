@@ -263,9 +263,9 @@ export function VerUnidadV3Cronograma() {
 
         let u: Unidad | null = null
         if (tipo === "oficial") {
-          const nivel = resolveNivel(cursoParam, mapping)
+          const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
-            setError(`No hay bases curriculares configuradas para "${cursoParam}".`)
+            setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}".`)
             return
           }
           u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)

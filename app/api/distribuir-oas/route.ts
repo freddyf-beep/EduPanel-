@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
@@ -49,6 +50,8 @@ function normalizeDistribution(raw: unknown, totalClases: number, validIds: Set<
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   try {
     const body = await req.json()
     const oas = Array.isArray(body.oas) ? body.oas as OaInput[] : []
@@ -68,7 +71,7 @@ export async function POST(req: Request) {
 
 OAs:
 ${oas.map((oa) => `- ${oa.id}${oa.numero ? ` (OA ${oa.numero})` : ""}: ${oa.descripcion}`).join("\n")}`
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authCheck.auth.uid, { feature: "distribuir-oas", inputText: prompt })
     if (!budget.ok) return budget.response
 

@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Layers, Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { BookOpen, Layers, Loader2 } from "lucide-react"
 import { cargarPlanCurso } from "@/lib/curriculo"
 import { UNIT_COLORS, buildUrl, withAsignatura } from "@/lib/shared"
 import { agruparHorarioPorCurso, cargarHorarioSemanal } from "@/lib/horario"
@@ -11,10 +11,13 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 
 export function PlanificacionesV2Hub() {
   const { asignatura: ASIGNATURA } = useActiveSubject()
+  const router = useRouter()
   const [cursosData, setCursosData] = useState<Record<string, { total: number; completas: number }>>({})
   const [cursosDisponibles, setCursosDisponibles] = useState<string[]>([])
   const [cursoTipos, setCursoTipos] = useState<CursoTipoMap>({})
   const [loading, setLoading] = useState(true)
+  const [asignaturasPorCurso, setAsignaturasPorCurso] = useState<Map<string, string[]>>(new Map())
+  const [subjectPicker, setSubjectPicker] = useState<{ curso: string; asignaturas: string[] } | null>(null)
 
   useEffect(() => {
     async function loadCursos() {
@@ -27,16 +30,32 @@ export function PlanificacionesV2Hub() {
         setCursosDisponibles(uniqueCursos)
         setCursoTipos(tipos)
 
+        const asignatsPorCurso = new Map<string, string[]>()
+        hData.forEach(h => {
+          const c = h.resumen.trim()
+          const a = (h.asignatura || "").trim()
+          if (!a) return
+          if (!asignatsPorCurso.has(c)) asignatsPorCurso.set(c, [])
+          if (!asignatsPorCurso.get(c)!.includes(a)) asignatsPorCurso.get(c)!.push(a)
+        })
+        setAsignaturasPorCurso(asignatsPorCurso)
+
         const data: Record<string, { total: number; completas: number }> = {}
         for (const curso of uniqueCursos) {
-          try {
-            const planData = await cargarPlanCurso(ASIGNATURA, curso)
-            const units = planData?.units ?? []
-            const completas = units.filter((u: any) => u.start && u.end).length
-            data[curso] = { total: units.length, completas }
-          } catch (e) {
-            data[curso] = { total: 0, completas: 0 }
+          const asigsCurso = asignatsPorCurso.get(curso) || [ASIGNATURA]
+          let bestPlan: any = null
+          for (const asig of asigsCurso) {
+            try {
+              const planData = await cargarPlanCurso(asig, curso)
+              if (planData?.units?.length) { bestPlan = planData; break }
+            } catch (e) { /* seguir probando */ }
           }
+          if (!bestPlan) {
+            try { bestPlan = await cargarPlanCurso(ASIGNATURA, curso) } catch (e) { bestPlan = null }
+          }
+          const units = bestPlan?.units ?? []
+          const completas = units.filter((u: any) => u.start && u.end).length
+          data[curso] = { total: units.length, completas }
         }
         setCursosData(data)
       } catch (err) {
@@ -47,6 +66,22 @@ export function PlanificacionesV2Hub() {
     }
     loadCursos()
   }, [ASIGNATURA])
+
+  const navigateToCurso = (cursoName: string, asig: string) => {
+    router.push(buildUrl("/planificaciones", withAsignatura({ curso: cursoName }, asig)))
+  }
+
+  const handleSelectCurso = (cursoName: string) => {
+    const asigs = asignaturasPorCurso.get(cursoName) || []
+    if (asigs.length === 1) {
+      navigateToCurso(cursoName, asigs[0])
+      return
+    }
+    const allSubjects = new Set<string>()
+    asignaturasPorCurso.forEach(a => a.forEach(s => allSubjects.add(s)))
+    if (allSubjects.size === 0) allSubjects.add(ASIGNATURA)
+    setSubjectPicker({ curso: cursoName, asignaturas: asigs.length > 0 ? asigs : Array.from(allSubjects).sort() })
+  }
 
   return (
     <div className="mx-auto max-w-[1320px] px-0 pt-2 sm:pt-4 lg:pt-8">
@@ -81,10 +116,10 @@ export function PlanificacionesV2Hub() {
             const tipo = (cursoTipos[curso] ?? "oficial") as TipoCurricular
             const tipoLabel = tipo === "oficial" ? "Curriculo oficial" : tipo === "taller" ? "Taller" : "Libre"
             return (
-              <Link
+              <button
                 key={curso}
-                href={buildUrl("/planificaciones", withAsignatura({ curso }, ASIGNATURA))}
-                className="bg-card border border-border rounded-[14px] p-5 hover:border-primary hover:shadow-md transition-all group block cursor-pointer"
+                onClick={() => handleSelectCurso(curso)}
+                className="bg-card border border-border rounded-[14px] p-5 hover:border-primary hover:shadow-md transition-all group cursor-pointer text-left w-full"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-sm" style={{ background: UNIT_COLORS[i % UNIT_COLORS.length] }}>
@@ -92,7 +127,13 @@ export function PlanificacionesV2Hub() {
                   </div>
                   <div>
                     <h3 className="text-[16px] font-bold group-hover:text-primary transition-colors">{curso}</h3>
-                    <p className="text-[12px] text-muted-foreground">{ASIGNATURA} · {tipoLabel}</p>
+                    <p className="text-[12px] text-muted-foreground">
+                      {(() => {
+                        const asigs = asignaturasPorCurso.get(curso) || []
+                        return asigs.length > 1
+                          ? `${asigs.length} asignaturas`
+                          : asigs[0] || ASIGNATURA
+                      })()} · {tipoLabel}</p>
                   </div>
                 </div>
 
@@ -111,9 +152,45 @@ export function PlanificacionesV2Hub() {
                     <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${coverPct}%` }} />
                   </div>
                 </div>
-              </Link>
+              </button>
             )
           })}
+        </div>
+      )}
+
+      {/* Modal: elegir asignatura */}
+      {subjectPicker && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setSubjectPicker(null)}>
+          <div
+            className="bg-card border border-border rounded-[16px] shadow-xl p-6 w-full max-w-sm mx-4"
+            onClick={e => e.stopPropagation()}
+          >
+            <h3 className="text-[14px] font-extrabold mb-1">Elegir asignatura</h3>
+            <p className="text-[12px] text-muted-foreground mb-4">
+              ¿Cuál asignatura querés ver en <strong>{subjectPicker.curso}</strong>?
+            </p>
+            <div className="space-y-2">
+              {subjectPicker.asignaturas.map(asig => (
+                <button
+                  key={asig}
+                  onClick={() => {
+                    setSubjectPicker(null)
+                    navigateToCurso(subjectPicker.curso, asig)
+                  }}
+                  className="w-full rounded-[10px] border border-border bg-background px-4 py-2.5 text-[13px] font-semibold text-left hover:border-primary hover:bg-pink-light transition-colors flex items-center gap-2"
+                >
+                  <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
+                  {asig}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setSubjectPicker(null)}
+              className="mt-3 w-full rounded-[10px] border border-border px-4 py-2 text-[12px] font-semibold text-muted-foreground hover:bg-muted/50"
+            >
+              Cancelar
+            </button>
+          </div>
         </div>
       )}
     </div>

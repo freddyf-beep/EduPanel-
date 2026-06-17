@@ -70,6 +70,9 @@ export function buildDocId(asignatura, nivel) {
 }
 
 export const CURRICULO_LEVEL_LABELS = [
+  "Sala Cuna",
+  "Nivel Medio",
+  "Nivel Transición",
   "1ro Básico",
   "2do Básico",
   "3ro Básico",

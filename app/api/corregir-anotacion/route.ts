@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
@@ -53,6 +54,8 @@ Si el texto es completamente profesional y no infringe ninguna directriz (ej. de
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -93,7 +96,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildPrompt(textoLimpio)
-    const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.0-flash"
+    const model = cleanText(process.env.GEMINI_FAST_MODEL) || "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "corrector-tono", inputText: prompt })
     if (!budget.ok) return budget.response
 

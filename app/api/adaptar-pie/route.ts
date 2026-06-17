@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
@@ -129,6 +130,8 @@ function resumirDocumentoAdaptacion(tipo: "prueba" | "guia", documento: any): Re
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -154,7 +157,7 @@ export async function POST(req: Request) {
     const docJson = JSON.stringify(resumirDocumentoAdaptacion(tipoDoc, documento), null, 2)
 
     const prompt = buildAdaptarPiePrompt(tipoDoc, docJson, diagnostico || "", notasPie || "", especialista || "")
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "adaptar-pie", inputText: prompt })
     if (!budget.ok) return budget.response
 

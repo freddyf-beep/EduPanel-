@@ -12,7 +12,7 @@
 
 import { useEffect, useState } from "react"
 import {
-  X, Library, Loader2, Search, BookOpen, Sparkles
+  X, Library, Loader2, Search, BookOpen
 } from "lucide-react"
 import {
   cargarItemsDelBanco,
@@ -23,8 +23,6 @@ import {
   tipoCompatibleHaciaPrueba,
 } from "@/lib/cross-mapping"
 import { cn } from "@/lib/utils"
-import { FabricaPreguntasModal } from "./fabrica-preguntas-modal"
-import { getFeatureFlags } from "@/lib/feature-flags"
 
 // ─── Props ────────────────────────────────────────────────────────────────
 
@@ -111,15 +109,6 @@ export function ItemBank({
   const [filtroAsignatura, setFiltroAsignatura] = useState(asignatura || "")
   const [filtroCurso, setFiltroCurso] = useState("")
   const [filtroOa, setFiltroOa] = useState("")
-  const [showFabricaModal, setShowFabricaModal] = useState(false)
-  const [reloadTrigger, setReloadTrigger] = useState(0)
-  const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({})
-
-  useEffect(() => {
-    getFeatureFlags().then(setFeatureFlags).catch(console.error)
-  }, [])
-
-  const recargarBanco = () => setReloadTrigger(prev => prev + 1)
 
   // Sincronizar filtro de asignatura con la prop activa al abrir
   useEffect(() => {
@@ -151,7 +140,7 @@ export function ItemBank({
         }
       })
     return () => { cancel = true }
-  }, [open, filtroAsignatura, filtroCurso, reloadTrigger])
+  }, [open, filtroAsignatura, filtroCurso])
 
   // Filtros cliente
   const itemsFiltrados = items.filter(entry => {
@@ -203,16 +192,6 @@ export function ItemBank({
             <span className="text-[13px] font-extrabold uppercase tracking-wide text-foreground">
               Banco
             </span>
-            {featureFlags["fabrica-preguntas"]?.active && (
-              <button
-                type="button"
-                onClick={() => setShowFabricaModal(true)}
-                className="ml-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-1.5 py-1 flex items-center gap-1 text-[10px] font-bold transition-all shadow-sm cursor-pointer"
-              >
-                <Sparkles className="h-2.5 w-2.5 text-white animate-pulse" />
-                Fábrica IA
-              </button>
-            )}
           </div>
           <button
             type="button"
@@ -432,13 +411,6 @@ export function ItemBank({
           })}
         </div>
       </div>
-
-      <FabricaPreguntasModal
-        isOpen={showFabricaModal}
-        onClose={() => setShowFabricaModal(false)}
-        onSuccess={recargarBanco}
-        defaultAsignatura={filtroAsignatura}
-      />
     </>
   )
 }

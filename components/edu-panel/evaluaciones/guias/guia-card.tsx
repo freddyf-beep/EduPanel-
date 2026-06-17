@@ -2,11 +2,9 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Edit2, Copy, Trash2, Printer, ClipboardList, Clock, BookOpen, Lightbulb, Hash } from "lucide-react"
+import { Edit2, Copy, Trash2, ClipboardList, Clock, Lightbulb, Hash } from "lucide-react"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import { eliminarGuia, duplicarGuia, type GuiaTemplate } from "@/lib/guias"
-import { abrirGuiaImprimible } from "@/lib/export/guia-pdf"
-import { cargarInfoColegio } from "@/lib/perfil"
 
 interface Props {
   guia: GuiaTemplate
@@ -26,11 +24,6 @@ export function GuiaCard({ guia, asignatura, onEliminar, onDuplicar }: Props) {
     router.push(buildUrl("/evaluaciones", withAsignatura({
       tab: "guias", view: "editor", guiaId: guia.id,
     }, asignatura)))
-  }
-
-  const exportar = async () => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirGuiaImprimible({ guia, colegio, modo: "para_alumno" })
   }
 
   const handleEliminar = async () => {
@@ -85,6 +78,19 @@ export function GuiaCard({ guia, asignatura, onEliminar, onDuplicar }: Props) {
           </h3>
           <p className="text-[12px] text-muted-foreground mt-0.5">{guia.curso}</p>
         </div>
+        <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+          {onDuplicar && (
+            <button
+              onClick={handleDuplicar}
+              className="grid h-8 w-8 place-items-center rounded-[9px] border border-border bg-card text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+              title="Duplicar"
+              aria-label="Duplicar"
+            >
+              <Copy className="h-3.5 w-3.5" />
+            </button>
+          )}
+          <ClipboardList className="h-5 w-5 text-violet-600" aria-hidden="true" />
+        </div>
       </div>
 
       {guia.objetivo && (
@@ -129,22 +135,6 @@ export function GuiaCard({ guia, asignatura, onEliminar, onDuplicar }: Props) {
           <Edit2 className="w-3.5 h-3.5" />
           Editar
         </button>
-        <button
-          onClick={exportar}
-          className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
-          title="Imprimir"
-        >
-          <Printer className="w-3.5 h-3.5" />
-        </button>
-        {onDuplicar && (
-          <button
-            onClick={handleDuplicar}
-            className="flex items-center gap-1.5 px-2.5 py-2 text-[12px] font-medium border border-border rounded-[10px] hover:bg-muted/60 transition-colors"
-            title="Duplicar"
-          >
-            <Copy className="w-3.5 h-3.5" />
-          </button>
-        )}
         <button
           onClick={handleEliminar}
           disabled={eliminando}

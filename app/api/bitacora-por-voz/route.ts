@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { checkAiBudget, estimateAudioRequestTokens, recordAiUsage } from "@/lib/server/ai-usage"
 import { aiErrorResponse, parseGeminiApiError } from "@/lib/server/gemini-error"
 
@@ -79,6 +80,8 @@ Devuelve estrictamente un objeto JSON plano que cumpla exactamente la siguiente 
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -101,7 +104,7 @@ export async function POST(req: Request) {
     }
 
     const prompt = buildBitacoraPrompt(estudiantes, asignatura || "", curso || "")
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, {
       feature: "bitacora-por-voz",
       estimatedInputTokens: estimateAudioRequestTokens(prompt),

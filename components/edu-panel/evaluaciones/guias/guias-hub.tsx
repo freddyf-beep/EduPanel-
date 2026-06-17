@@ -3,17 +3,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
-  ClipboardList, Loader2, Plus, Sparkles,
-  Pencil, Eye, BookOpen, Printer, Copy, Trash2,
+  ClipboardList, Plus,
+  Pencil, Copy, Trash2,
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
-import { cargarHorarioSemanal, esTipoLibre } from "@/lib/horario"
 import { cargarGuias, duplicarGuia, eliminarGuia, type GuiaTemplate } from "@/lib/guias"
-import { cargarPruebas, cargarOAsParaPrueba, type PruebaTemplate } from "@/lib/pruebas"
+import { cargarPruebas, type PruebaTemplate } from "@/lib/pruebas"
 import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
-import { cargarInfoColegio } from "@/lib/perfil"
-import { abrirGuiaImprimible } from "@/lib/export/guia-pdf"
 
 import { HubHeader } from "@/components/edu-panel/evaluaciones/shared/hub-header"
 import { MetricsGrid } from "@/components/edu-panel/evaluaciones/shared/metrics-grid"
@@ -21,7 +18,7 @@ import { FilterBar } from "@/components/edu-panel/evaluaciones/shared/filter-bar
 import { DocumentCard } from "@/components/edu-panel/evaluaciones/shared/document-card"
 import { EmptyState } from "@/components/edu-panel/evaluaciones/shared/empty-state"
 import { ErrorBanner } from "@/components/edu-panel/evaluaciones/shared/error-banner"
-import { IAStructuredModalGuia } from "@/components/edu-panel/evaluaciones/shared/ia-structured-modal-guia"
+import LoadingSkeleton from "@/components/edu-panel/evaluaciones/shared/loading-skeleton"
 import { CursoUnidadSelector } from "@/components/edu-panel/evaluaciones/shared/curso-unidad-selector"
 import { VerCoberturaButton } from "@/components/edu-panel/evaluaciones/shared/ver-cobertura-button"
 
@@ -51,18 +48,10 @@ export function GuiasHub() {
   const [unidadId, setUnidadId] = useState<string>(unidadIdFromUrl)
 
   useEffect(() => {
-    let cancelled = false
-    Promise.resolve().then(() => {
-      if (!cancelled) setCurso(cursoFromUrl)
-    })
-    return () => { cancelled = true }
+    setCurso(cursoFromUrl)
   }, [cursoFromUrl])
   useEffect(() => {
-    let cancelled = false
-    Promise.resolve().then(() => {
-      if (!cancelled) setUnidadId(unidadIdFromUrl)
-    })
-    return () => { cancelled = true }
+    setUnidadId(unidadIdFromUrl)
   }, [unidadIdFromUrl])
 
   // ── Estado de guías y otros para cobertura ─────────────────────────────
@@ -78,15 +67,9 @@ export function GuiasHub() {
   const [filtroOA, setFiltroOA] = useState<string | null>(null)
   const [busqueda, setBusqueda] = useState("")
 
-  // ── Modal IA ──────────────────────────────────────────────────────────
-  const [iaModalAbierto, setIaModalAbierto] = useState(false)
-  const [oasParaIa, setOasParaIa] = useState<Array<{ code: string; descripcion: string }>>([])
-
   // ── Cargar guías, pruebas y unidades ──────────────────────────────────
   const refrescar = useCallback(() => {
     let cancelled = false
-    Promise.resolve().then(() => {
-      if (cancelled) return
     if (!curso) {
       setGuias([])
       setPruebas([])
@@ -107,40 +90,11 @@ export function GuiasHub() {
     cargarPlanCurso(asignatura, curso)
       .then(plan => { if (!cancelled) setUnidades(plan?.units || []) })
       .catch(() => {})
-    })
     return () => {
       cancelled = true
     }
   }, [asignatura, curso])
   useEffect(() => refrescar(), [refrescar])
-
-  // ── Carga de OAs sugeridos para el modal IA ─────────────────────────────
-  useEffect(() => {
-    if (!iaModalAbierto) return
-    let cancelled = false
-    if (!curso || !unidadId) {
-      Promise.resolve().then(() => {
-        if (!cancelled) setOasParaIa([])
-      })
-      return () => {
-        cancelled = true
-      }
-    }
-    cargarOAsParaPrueba(asignatura, curso, unidadId)
-      .then((oas) => {
-        if (cancelled) return
-        const filtrados = oas
-          .filter((oa) => oa.tipo !== "oat")
-          .map((oa) => ({ code: oa.id, descripcion: oa.descripcion }))
-        setOasParaIa(filtrados)
-      })
-      .catch(() => {
-        if (!cancelled) setOasParaIa([])
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [iaModalAbierto, asignatura, curso, unidadId])
 
   const unidadActiva = useMemo(() => {
     return unidades.find(u => String(u.id) === String(unidadId)) || null
@@ -212,6 +166,7 @@ export function GuiasHub() {
 
   // ── Navegación ────────────────────────────────────────────────────────
   const irACrear = () => {
+    if (!curso) return
     router.push(buildUrl("/evaluaciones", withAsignatura({
       tab: "guias", view: "editor", curso, unidadId: unidadId || undefined
     }, asignatura)))
@@ -222,21 +177,6 @@ export function GuiasHub() {
     router.push(buildUrl("/evaluaciones", withAsignatura({
       tab: "guias", view: "editor", guiaId: g.id,
     }, asignatura)))
-  }
-
-  const handleVistaAlumno = async (g: GuiaTemplate) => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirGuiaImprimible({ guia: g, colegio, modo: "para_alumno" })
-  }
-
-  const handlePauta = async (g: GuiaTemplate) => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirGuiaImprimible({ guia: g, colegio, modo: "con_pauta" })
-  }
-
-  const handleImprimir = async (g: GuiaTemplate) => {
-    const colegio = await cargarInfoColegio().catch(() => null)
-    abrirGuiaImprimible({ guia: g, colegio, modo: "para_alumno" })
   }
 
   const handleDuplicar = (g: GuiaTemplate) => {
@@ -287,28 +227,28 @@ export function GuiasHub() {
         title="Guías"
         subtitle="Material didáctico imprimible: contenido, actividades, cierre y vínculo curricular."
         accent="violet"
-        primary={{ label: "Crear con IA", icon: Sparkles, onClick: () => setIaModalAbierto(true) }}
-        secondary={[
-          { label: "Crear manual", icon: Plus, onClick: () => irACrear() },
-        ]}
+        primary={{
+          label: "Crear manual",
+          icon: Plus,
+          onClick: irACrear,
+          disabled: !curso,
+        }}
+        secondary={[]}
       />
 
       {/* Métricas (tarea 4.2) */}
-      {guias.length > 0 && (
-        <MetricsGrid
-          accent="violet"
-          items={[
-            { label: "Total", value: total },
-            { label: "Con contenido", value: conContenido },
-            { label: "Con actividades", value: conActividades },
-            { label: "Listas", value: listas },
-          ]}
-        />
-      )}
+      <MetricsGrid
+        accent="violet"
+        items={[
+          { label: "Total", value: total },
+          { label: "Con contenido", value: conContenido },
+          { label: "Con actividades", value: conActividades },
+          { label: "Listas", value: listas },
+        ]}
+      />
 
       {/* Filtros y búsqueda (tarea 4.3) */}
-      {guias.length > 0 && (
-        <div className="space-y-3">
+      <div className="space-y-3">
           <FilterBar
             q={busqueda}
             setQ={setBusqueda}
@@ -389,8 +329,7 @@ export function GuiasHub() {
               </select>
             </div>
           )}
-        </div>
-      )}
+      </div>
 
       {/* Error de carga (tarea 4.5) */}
       {error && (
@@ -403,17 +342,14 @@ export function GuiasHub() {
 
       {/* Contenido principal */}
       {cargandoGuias ? (
-        <div className="flex h-32 items-center justify-center text-muted-foreground">
-          <Loader2 className="h-5 w-5 animate-spin mr-2" />
-          Cargando guías…
-        </div>
+        <LoadingSkeleton.HubSkeleton accent="violet" />
       ) : guias.length === 0 ? (
         /* Empty state: sin guías (tarea 4.5) */
         <EmptyState
           icon={ClipboardList}
           title={`Aún no hay guías para ${curso || "este curso"}`}
-          text="Crea material didáctico con IA o manualmente."
-          action={{ label: "Crear con IA", onClick: () => setIaModalAbierto(true), icon: Sparkles }}
+          text="Crea material didáctico manualmente, con contenido, actividades y pauta imprimible."
+          action={curso ? { label: "Crear manual", onClick: irACrear, icon: Plus } : undefined}
           accent="violet"
         />
       ) : guiasFiltradas.length === 0 ? (
@@ -423,7 +359,12 @@ export function GuiasHub() {
           title="No hay guías que coincidan"
           action={{
             label: "Limpiar filtros",
-            onClick: () => { setBusqueda(""); setFiltroTipo("todas") },
+            onClick: () => {
+              setBusqueda("")
+              setFiltroTipo("todas")
+              setFiltroEstado("todas")
+              setFiltroOA(null)
+            },
           }}
           accent="violet"
         />
@@ -451,6 +392,14 @@ export function GuiasHub() {
                 { label: "Pts", value: g.puntajeMaximo || 0 },
                 { label: "Min", value: g.tiempoMinutos || 0 },
               ]}
+              topActions={[
+                {
+                  label: "Duplicar",
+                  icon: Copy,
+                  tone: "neutral",
+                  onClick: () => handleDuplicar(g),
+                },
+              ]}
               actions={[
                 {
                   label: "Editar",
@@ -459,51 +408,17 @@ export function GuiasHub() {
                   onClick: () => handleEditar(g),
                 },
                 {
-                  label: "Vista alumno",
-                  icon: Eye,
-                  tone: "neutral",
-                  onClick: () => handleVistaAlumno(g),
-                },
-                {
-                  label: "Pauta",
-                  icon: BookOpen,
-                  tone: "neutral",
-                  onClick: () => handlePauta(g),
-                },
-                {
-                  label: "Imprimir",
-                  icon: Printer,
-                  tone: "neutral",
-                  onClick: () => handleImprimir(g),
-                },
-                {
-                  label: "Duplicar",
-                  icon: Copy,
-                  tone: "neutral",
-                  onClick: () => handleDuplicar(g),
-                },
-                {
                   label: "Eliminar",
                   icon: Trash2,
                   tone: "danger",
                   onClick: () => handleEliminar(g),
                 },
               ]}
+              onClick={() => handleEditar(g)}
             />
           ))}
         </div>
       )}
-
-      {/* Modal IA (tarea 4.5) */}
-      <IAStructuredModalGuia
-        open={iaModalAbierto}
-        onClose={() => setIaModalAbierto(false)}
-        oasDisponibles={oasParaIa}
-        cursoLabel={curso}
-        unidadLabel={unidadActiva?.name}
-        asignatura={asignatura}
-        curso={curso}
-      />
     </div>
   )
 }

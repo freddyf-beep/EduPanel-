@@ -999,7 +999,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
       try {
         const mapping = await cargarNivelMapping()
-        const nivel = resolveNivel(cursoParam, mapping)
+        const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         setNivelCurricular(nivel || cursoParam)
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadParam),
@@ -2732,7 +2732,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   <input
                     value={aiConfig.model}
                     onChange={e => setAiConfig(prev => ({ ...prev, model: e.target.value }))}
-                    placeholder="gemini-1.5-pro"
+                    placeholder="gemini-2.5-flash"
                     className="w-full rounded border border-border bg-background px-3 py-1.5 text-[11.5px] font-medium outline-none focus:border-primary"
                   />
                 </div>

@@ -135,6 +135,9 @@ export function buildDocId(asignatura: string, nivel: string): string {
 
 const DOC_LEVEL_SUFFIXES = [
   "Párvulos",
+  "Sala Cuna",
+  "Nivel Medio",
+  "Nivel Transición",
   "1ro Básico",
   "2do Básico",
   "3ro Básico",

@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import {
   Save, Users, AlertCircle, CheckCircle2, Circle, X,
   RefreshCw, Monitor, AlertTriangle, TrendingUp, Loader2,
+  Download,
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
@@ -283,6 +284,37 @@ export function PruebaResultados({ pruebaId, onClose }: Props) {
     setProyectando(true)
   }
 
+  const csvCell = (value: unknown) => {
+    const text = String(value ?? "")
+    return `"${text.replace(/"/g, '""')}"`
+  }
+
+  const exportarResultados = () => {
+    if (!prueba) return
+    const rows = [
+      ["Estudiante", "PIE", "Estado", "Puntaje", "Puntaje maximo", "Nota", "Observaciones"],
+      ...resultadosConPuntaje.map(r => [
+        r.nombre,
+        r.hasPie ? "Si" : "No",
+        r.ausente ? "Ausente" : r.completado ? "Completado" : "Sin resolver",
+        r.puntajeTotal,
+        prueba.puntajeMaximo,
+        r.nota ?? "",
+        r.observaciones ?? "",
+      ]),
+    ]
+    const csv = rows.map(row => row.map(csvCell).join(",")).join("\r\n")
+    const blob = new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `${(prueba.nombre || "resultados").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9._-]+/g, "-")}-resultados.csv`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    URL.revokeObjectURL(url)
+  }
+
   // ─── Render ──────────────────────────────────────────────────────
   if (cargando) {
     return <LoadingSkeleton.EditorSkeleton />
@@ -309,6 +341,15 @@ export function PruebaResultados({ pruebaId, onClose }: Props) {
 
   const acciones = (
     <>
+      <button
+        type="button"
+        onClick={exportarResultados}
+        aria-label="Exportar resultados"
+        className="inline-flex h-9 items-center gap-1.5 rounded-[10px] border border-border bg-card px-3 text-[12px] font-semibold text-foreground transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-pruebas)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
+        <Download aria-hidden="true" className="h-3.5 w-3.5" />
+        Exportar resultados
+      </button>
       <button
         type="button"
         onClick={handleProyectar}

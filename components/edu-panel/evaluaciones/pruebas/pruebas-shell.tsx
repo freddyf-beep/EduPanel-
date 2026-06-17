@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { PruebasHub } from "./pruebas-hub"
 import { PruebaEditor } from "./prueba-editor"
+import { PruebaEvaluacionView } from "./prueba-evaluacion-view"
 import { PruebaResultados } from "./prueba-resultados"
 
 export function PruebasShell() {
@@ -26,6 +27,10 @@ export function PruebasShell() {
 
   if (view === "resultados" && pruebaId) {
     return <PruebaResultados pruebaId={pruebaId} />
+  }
+
+  if (view === "evaluacion" && pruebaId) {
+    return <PruebaEvaluacionView pruebaId={pruebaId} />
   }
 
   return <PruebasHub />

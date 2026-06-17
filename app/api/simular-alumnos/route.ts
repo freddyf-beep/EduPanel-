@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import { getFeatureFlags } from "@/lib/feature-flags"
 import { checkAiBudget, recordAiUsage } from "@/lib/server/ai-usage"
 
@@ -155,6 +156,8 @@ function resumirDocumento(documento: any, tipo: "prueba" | "guia"): Record<strin
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
   const authUser = authCheck.auth
 
   const rl = checkRateLimit(authUser.uid)
@@ -193,7 +196,7 @@ export async function POST(req: Request) {
     const docJson = JSON.stringify(resumirDocumento(documento, tipoDoc), null, 2)
 
     const prompt = buildSimulacionPrompt(docJson, tipoDoc)
-    const model = "gemini-2.0-flash"
+    const model = "gemini-2.5-flash"
     const budget = await checkAiBudget(authUser.uid, { feature: "testeador-alumnos", inputText: prompt })
     if (!budget.ok) return budget.response
 

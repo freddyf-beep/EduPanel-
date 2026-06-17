@@ -6,11 +6,10 @@
 // Refactor (Task 6.2):
 //   • Toolbar inline reemplazada por <StickyEditorToolbar accent="rose" />.
 //     Counter "{N} ítems · {P} pts", badge de estado y action cluster:
-//     Vista alumno · Pauta · Guardar · IA · Banco · Historial · Duplicar ·
-//     Eliminar.
+  //     Guardar · menú secundario.
 //   • Loading state usa LoadingSkeleton.EditorSkeleton mientras hidrata.
 //   • <UnsavedChangesGuard dirty onSaveAndExit /> intercepta navegaciones.
-//   • useShortcuts mapea Ctrl+S/P/Shift+P/I/B/H/Shift+N + Esc.
+  //   • useShortcuts mapea Ctrl+S/P/Shift+P/B/H/Shift+N + Esc.
 //   • Save persiste con `guardarPruebaConSnapshot` (versionado automático).
 //   • Acento rose en toda la superficie (var(--accent-pruebas)).
 //   • Conserva estructura existente de configuración, secciones e ítems
@@ -21,50 +20,48 @@
 //       Req 5.17, Req 5.18, Req 5.19, Req 13.1.
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  Save, Loader2, Eye, Printer, Copy, Trash2, Plus,
-  ChevronDown, ChevronUp, Settings, FileCheck, RefreshCw,
-  Sparkles, Library, History, FileX, AlertTriangle, ClipboardList, Heart, Award
+  Save, Loader2, Copy, Trash2, Plus,
+  Settings, RefreshCw,
+  Library, History, FileX, AlertTriangle, ClipboardList, ShieldCheck
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
-import { cargarInfoColegio, cargarPerfil, type InfoColegio } from "@/lib/perfil"
-import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
+import { cargarPerfil } from "@/lib/perfil"
+import { cargarPlanCurso, type OAEditado, type UnidadPlan } from "@/lib/curriculo"
 import {
   cargarPrueba, eliminarPrueba, duplicarPrueba,
   nuevaPrueba, nuevaSeccion, nuevoItem, nuevoItemId,
-  resolverMetadatosCurricularesPrueba, cargarOAsParaPrueba,
-  romano, calcularPuntajeMaximoPrueba,
+  normalizarPrueba, resolverMetadatosCurricularesPrueba, cargarOAsParaPrueba,
+  romano,
   type PruebaTemplate, type SeccionPrueba, type ItemPrueba, type TipoItem,
 } from "@/lib/pruebas"
-import { abrirPruebaImprimible } from "@/lib/export/prueba-pdf"
 import { guardarPruebaConSnapshot } from "@/lib/snapshots-hook"
 import { ItemEditor } from "../editor/item-editor"
 import { BloquesEditor } from "../editor/bloques-editor"
 import { SelectorTipoItem } from "../editor/selector-tipo-item"
-import { AIPanel } from "../shared/ai-panel"
 import { ItemBank } from "../shared/item-bank"
 import { guardarItemAlBanco, type ItemBankEntry } from "@/lib/item-bank"
 import { ActividadGuia } from "@/lib/guias"
 import { actividadGuiaAItemPrueba, pruebaToGuia } from "@/lib/cross-mapping"
 import { guardarGuiaConSnapshot } from "@/lib/snapshots-hook"
 import { toast } from "@/components/ui/use-toast"
-import { useContextoCurricular } from "@/hooks/use-contexto-curricular"
 import { cn } from "@/lib/utils"
+import { metadatosDesdeOAsEval } from "@/lib/evaluaciones-tipos"
+import { RubricaOAEditor } from "@/components/edu-panel/shared/oa-editor"
 import { StickyEditorToolbar, type StickyEditorToolbarBadge } from "../shared/sticky-editor-toolbar"
-import { EditorSkeleton } from "../shared/loading-skeleton"
+import { ToolbarButton, Section, Field } from "../shared/editor-primitives"
+import { EditorActionsMenu, type EditorActionMenuItem } from "../shared/editor-actions-menu"
+import LoadingSkeleton from "../shared/loading-skeleton"
 import { UnsavedChangesGuard } from "../shared/unsaved-changes-guard"
 import { ErrorBanner } from "../shared/error-banner"
 import { EmptyState } from "../shared/empty-state"
 import { SnapshotPanel } from "../shared/snapshot-panel"
 import { useShortcuts, COMMON_SHORTCUTS, formatShortcut } from "@/lib/keyboard-shortcuts"
-import { cargarEstudiantes, type Estudiante } from "@/lib/estudiantes"
-import { AdaptarPieModal } from "../shared/adaptar-pie-modal"
-import { SimulacionAlumnosModal } from "../shared/simulacion-alumnos-modal"
-import { CalibradorBloomModal } from "../shared/calibrador-bloom-modal"
-import { getFeatureFlags } from "@/lib/feature-flags"
+import { DocumentCreationSteps, type DocumentCreationStep } from "../shared/document-creation-steps"
+import { useAiAccess } from "@/hooks/use-ai-access"
 
 interface Props {
   /** Si se pasa, se carga existente; si no, se crea nueva */
@@ -79,9 +76,9 @@ interface Props {
 export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNombreInicial, onClose }: Props) {
   const router = useRouter()
   const { asignatura } = useActiveSubject()
+  const { hasAiAccess, loading: aiAccessLoading } = useAiAccess()
 
   const [prueba, setPrueba] = useState<PruebaTemplate | null>(null)
-  const [colegio, setColegio] = useState<InfoColegio | null>(null)
   const [profesorNombre, setProfesorNombre] = useState("")
   const [unidadesCurso, setUnidadesCurso] = useState<UnidadPlan[]>([])
   const [cargando, setCargando] = useState(true)
@@ -90,30 +87,31 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
   const [mensajeGuardado, setMensajeGuardado] = useState<{ tipo: "ok" | "err"; texto: string } | null>(null)
   const [mostrarConfig, setMostrarConfig] = useState(true)
   const [confirmarEliminar, setConfirmarEliminar] = useState(false)
-  const [panelIA, setPanelIA] = useState(false)
   const [bancoAbierto, setBancoAbierto] = useState(false)
   const [panelHistorial, setPanelHistorial] = useState(false)
+  const lastSavedRef = useRef<string>("")
   const [dirty, setDirty] = useState(false)
-  const [panelPie, setPanelPie] = useState(false)
-  const [estudiantesPie, setEstudiantesPie] = useState<Estudiante[]>([])
-  const [showSimulacion, setShowSimulacion] = useState(false)
-  const [showBloom, setShowBloom] = useState(false)
-  const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({})
-
-  useEffect(() => {
-    getFeatureFlags().then(setFeatureFlags).catch(console.error)
-  }, [])
+  const [creationStep, setCreationStep] = useState<DocumentCreationStep>("config")
+  const [oasCargando, setOasCargando] = useState(false)
+  const oasRequestRef = useRef(0)
 
   const estado = prueba?.estado || "borrador"
   const isAplicada = estado === "aplicada"
 
-  // Hook de vinculación curricular automática
-  const { contexto: contextoCurricular } = useContextoCurricular({
-    asignatura,
-    curso: prueba?.curso || "",
-    unidadId: prueba?.unidadId,
-    unidadNombre: prueba?.unidadNombre,
-  })
+  const marcarGuardado = useCallback((p: PruebaTemplate) => {
+    lastSavedRef.current = JSON.stringify(p)
+    setDirty(false)
+  }, [])
+
+  useEffect(() => {
+    if (!prueba) return
+    if (!lastSavedRef.current) {
+      lastSavedRef.current = JSON.stringify(prueba)
+      setDirty(false)
+      return
+    }
+    setDirty(JSON.stringify(prueba) !== lastSavedRef.current)
+  }, [prueba])
 
   /**
    * Wrapper de `setPrueba` que marca el editor como dirty automáticamente.
@@ -128,7 +126,6 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       const value = typeof next === "function" ? (next as (p: PruebaTemplate) => PruebaTemplate)(prev) : next
       return value
     })
-    setDirty(true)
   }
 
   // ─── Guardar al banco ──────────────────────────────────────────────
@@ -353,13 +350,9 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       if (cancelled) return
     setCargando(true)
     setErrorCarga(null)
-    Promise.all([
-      cargarInfoColegio(),
-      cargarPerfil(),
-    ]).then(([col, perf]) => {
+    cargarPerfil().then((perf) => {
       if (cancelled) return
-      setColegio(col)
-      setProfesorNombre(perf?.especialidad ? "" : "")  // sin nombre forzado
+      setProfesorNombre(perf?.tipoProfesor || perf?.especialidad || "")
     }).catch(() => {})
 
     if (pruebaId) {
@@ -367,7 +360,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
         if (cancelled) return
         if (p) {
           setPrueba(p)
-          setDirty(false)
+          marcarGuardado(p)
           if (p.curso) {
             cargarPlanCurso(p.asignatura, p.curso).then(plan => {
               if (!cancelled) setUnidadesCurso(plan?.units || [])
@@ -389,7 +382,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       // Empezar con una sección
       nueva.secciones = [nuevaSeccion(1, "seleccion_multiple")]
       setPrueba(nueva)
-      setDirty(false)
+      marcarGuardado(nueva)
       if (cursoInicial) {
         cargarPlanCurso(asignatura, cursoInicial).then(plan => {
           if (!cancelled) setUnidadesCurso(plan?.units || [])
@@ -412,20 +405,29 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       .catch(() => setUnidadesCurso([]))
   }, [prueba?.curso, prueba?.asignatura])
 
-  // Cargar estudiantes PIE del curso
   useEffect(() => {
-    let cancelled = false
-    if (!prueba?.curso) {
-      Promise.resolve().then(() => {
-        if (!cancelled) setEstudiantesPie([])
+    if (!prueba?.unidadId || !prueba.curso || !prueba.asignatura) return
+    const uid = prueba.unidadId
+    const reqId = ++oasRequestRef.current
+    setOasCargando(true)
+    cargarOAsParaPrueba(prueba.asignatura, prueba.curso, uid, prueba.oas)
+      .then((oas) => {
+        if (oasRequestRef.current !== reqId) return
+        setPrueba((prev) => {
+          if (!prev || prev.unidadId !== uid) return prev
+          return {
+            ...prev,
+            oas,
+            metadatosCurriculares: metadatosDesdeOAsEval(oas),
+          }
+        })
       })
-      return () => { cancelled = true }
-    }
-    cargarEstudiantes(prueba.curso)
-      .then(est => { if (!cancelled) setEstudiantesPie(est.filter(e => e.pie)) })
-      .catch(() => { if (!cancelled) setEstudiantesPie([]) })
-    return () => { cancelled = true }
-  }, [prueba?.curso])
+      .catch(console.error)
+      .finally(() => {
+        if (oasRequestRef.current === reqId) setOasCargando(false)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prueba?.unidadId, prueba?.curso, prueba?.asignatura])
 
   // ─── Resolver OAs y metadatos cuando cambia la unidad ────────────
   const sincronizarConCurriculo = async () => {
@@ -440,7 +442,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
         ...p,
         unidadId: resol.unidadId || p.unidadId,
         unidadNombre: resol.unidadNombre || p.unidadNombre,
-        metadatosCurriculares: resol.metadatosCurriculares,
+        metadatosCurriculares: oas ? metadatosDesdeOAsEval(oas) : resol.metadatosCurriculares,
         oas,
       }))
       setMensajeGuardado({ tipo: "ok", texto: "Currículum sincronizado" })
@@ -451,7 +453,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
   }
 
   // ─── Guardar ──────────────────────────────────────────────────────
-  const handleGuardar = async () => {
+  const handleGuardar = useCallback(async () => {
     if (!prueba) return
     if (!prueba.curso) {
       setMensajeGuardado({ tipo: "err", texto: "Selecciona un curso antes de guardar" })
@@ -460,8 +462,10 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
     setGuardando(true)
     try {
       // Persistir + crear snapshot inmutable (best-effort).
-      await guardarPruebaConSnapshot(prueba)
-      setDirty(false)
+      const normalizada = normalizarPrueba(prueba)
+      await guardarPruebaConSnapshot(normalizada)
+      setPrueba(normalizada)
+      marcarGuardado(normalizada)
       setMensajeGuardado({ tipo: "ok", texto: "Guardado" })
       setTimeout(() => setMensajeGuardado(null), 2000)
     } catch (e: any) {
@@ -469,14 +473,14 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
     } finally {
       setGuardando(false)
     }
-  }
+  }, [prueba, marcarGuardado])
 
   const handleEliminar = async () => {
     if (!prueba) return
     if (!confirmarEliminar) { setConfirmarEliminar(true); return }
     try {
       await eliminarPrueba(prueba.id)
-      setDirty(false)
+      marcarGuardado(prueba)
       if (onClose) onClose()
       else router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas" }, asignatura)))
     } catch (e: any) {
@@ -529,9 +533,10 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
     else router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas" }, asignatura)))
   }
 
-  const exportarPara = (modo: "para_alumno" | "con_pauta") => {
-    if (!prueba) return
-    abrirPruebaImprimible({ prueba, colegio, profesorNombre, modo })
+  const handleAdaptar = () => {
+    if (!pruebaId) return
+    if (!hasAiAccess) return
+    router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas", view: "evaluacion", pruebaId }, asignatura)))
   }
 
   // ─── Operaciones sobre secciones ─────────────────────────────────
@@ -612,7 +617,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
 
   // ─── Atajos de teclado (Req 5.17) ────────────────────────────────
   // El hook recibe la lista de atajos a registrar. Cuando se cambia algún
-  // estado (panelIA, prueba, etc.) la lista se reconstruye y `useShortcuts`
+  // estado del editor, la lista se reconstruye y `useShortcuts`
   // re-registra el listener. La closure captura los valores actuales.
   useShortcuts([
     {
@@ -620,24 +625,6 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       handler: () => { if (!isAplicada) handleGuardar() },
       allowInInputs: true,
       description: "Guardar",
-    },
-    {
-      keys: COMMON_SHORTCUTS.VISTA_ALUMNO,
-      handler: () => { exportarPara("para_alumno") },
-      allowInInputs: true,
-      description: "Vista alumno",
-    },
-    {
-      keys: COMMON_SHORTCUTS.PAUTA,
-      handler: () => { exportarPara("con_pauta") },
-      allowInInputs: true,
-      description: "Pauta",
-    },
-    {
-      keys: COMMON_SHORTCUTS.PANEL_IA,
-      handler: () => { if (!isAplicada) setPanelIA(v => !v) },
-      allowInInputs: true,
-      description: "Panel IA",
     },
     {
       keys: COMMON_SHORTCUTS.BANCO,
@@ -660,7 +647,6 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
     {
       keys: COMMON_SHORTCUTS.CERRAR,
       handler: () => {
-        if (panelIA) setPanelIA(false)
         if (bancoAbierto) setBancoAbierto(false)
         if (panelHistorial) setPanelHistorial(false)
       },
@@ -670,7 +656,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
 
   // ─── Render: loading + error ─────────────────────────────────────
   if (cargando) {
-    return <EditorSkeleton />
+    return <LoadingSkeleton.EditorSkeleton />
   }
 
   if (errorCarga || !prueba) {
@@ -714,6 +700,54 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       : "warning",
   }
 
+  const secondaryActions: EditorActionMenuItem[] = [
+    ...(!isAplicada
+      ? [
+          {
+            label: "Banco de ítems",
+            icon: Library,
+            onClick: () => setBancoAbierto((value) => !value),
+          },
+        ]
+      : []),
+    {
+      label: "Historial",
+      icon: History,
+      onClick: () => setPanelHistorial((value) => !value),
+    },
+    ...(pruebaId
+      ? [
+          {
+            label: aiAccessLoading ? "Verificando IA" : "Adaptar",
+            icon: ShieldCheck,
+            onClick: handleAdaptar,
+            disabled: aiAccessLoading || !hasAiAccess,
+          },
+          {
+            label: "Duplicar",
+            icon: Copy,
+            onClick: handleDuplicar,
+          },
+          {
+            label: "Duplicar como guía",
+            icon: ClipboardList,
+            onClick: handleDuplicarComoGuia,
+          },
+          {
+            label: confirmarEliminar ? "Confirmar eliminación" : "Eliminar",
+            icon: Trash2,
+            onClick: handleEliminar,
+            danger: true,
+          },
+        ]
+      : []),
+  ]
+  const isCreating = !pruebaId
+  const showConfigStep = !isCreating || creationStep === "config"
+  const showContentStep = !isCreating || creationStep === "contenido"
+  const showReviewStep = !isCreating || creationStep === "revisar"
+  const configReady = Boolean(prueba.nombre.trim() && prueba.curso.trim())
+
   return (
     <div className="mx-auto max-w-7xl flex flex-col lg:flex-row items-start gap-4">
       {/* Guard de cambios sin guardar (Req 5.19) */}
@@ -754,18 +788,6 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
                 {mensajeGuardado.texto}
               </span>
             )}
-            <ToolbarButton
-              icon={Eye}
-              label="Vista alumno"
-              shortcut={COMMON_SHORTCUTS.VISTA_ALUMNO}
-              onClick={() => exportarPara("para_alumno")}
-            />
-            <ToolbarButton
-              icon={FileCheck}
-              label="Pauta"
-              shortcut={COMMON_SHORTCUTS.PAUTA}
-              onClick={() => exportarPara("con_pauta")}
-            />
             {!isAplicada && (
               <ToolbarButton
                 icon={guardando ? Loader2 : Save}
@@ -777,89 +799,29 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
                 spinning={guardando}
               />
             )}
-            {!isAplicada && (
-              <ToolbarButton
-                icon={Sparkles}
-                label="IA"
-                shortcut={COMMON_SHORTCUTS.PANEL_IA}
-                onClick={() => setPanelIA(v => !v)}
-                active={panelIA}
-              />
-            )}
-            {!isAplicada && (
-              <ToolbarButton
-                icon={Library}
-                label="Banco"
-                shortcut={COMMON_SHORTCUTS.BANCO}
-                onClick={() => {
-                  setBancoAbierto(v => !v)
-                }}
-                active={bancoAbierto}
-              />
-            )}
-            <ToolbarButton
-              icon={History}
-              label="Historial"
-              shortcut={COMMON_SHORTCUTS.HISTORIAL}
-              onClick={() => {
-                setPanelHistorial(v => !v)
-              }}
-              active={panelHistorial}
-            />
-            {!isAplicada && (
-              <ToolbarButton
-                icon={Heart}
-                label="Adaptar PIE"
-                onClick={() => setPanelPie(true)}
-              />
-            )}
-            {!isAplicada && featureFlags["testeador-alumnos"]?.active && (
-              <ToolbarButton
-                icon={Sparkles}
-                label="Simular Alumnos"
-                onClick={() => setShowSimulacion(true)}
-              />
-            )}
-            {!isAplicada && featureFlags["calibrador-bloom"]?.active && (
-              <ToolbarButton
-                icon={Award}
-                label="Calibrar Bloom"
-                onClick={() => setShowBloom(true)}
-              />
-            )}
-            {pruebaId && (
-              <>
-                <ToolbarButton
-                  icon={Copy}
-                  label="Duplicar"
-                  onClick={handleDuplicar}
-                />
-                <ToolbarButton
-                  icon={ClipboardList}
-                  label="Duplicar como guía"
-                  onClick={handleDuplicarComoGuia}
-                />
-              </>
-            )}
-            {pruebaId && (
-              <ToolbarButton
-                icon={Trash2}
-                label={confirmarEliminar ? "¿Confirmar?" : "Eliminar"}
-                onClick={handleEliminar}
-                danger={confirmarEliminar}
-                tone="danger"
-              />
-            )}
+            <EditorActionsMenu accent="rose" actions={secondaryActions} />
           </>
         }
       />
 
+      {isCreating && (
+        <DocumentCreationSteps
+          current={creationStep}
+          onChange={setCreationStep}
+          accent="rose"
+          contentCount={totalItems}
+          contentLabel={totalItems === 1 ? "ítem" : "ítems"}
+          ready={configReady}
+        />
+      )}
+
       {/* ─── Configuración general ─── */}
+      {showConfigStep && (
       <div className={cn(isAplicada && "pointer-events-none opacity-85 select-none")}>
         <Section
           title="Configuración"
-          expanded={mostrarConfig}
-          onToggle={() => setMostrarConfig(v => !v)}
+          expanded={isCreating ? true : mostrarConfig}
+          onToggle={isCreating ? undefined : () => setMostrarConfig(v => !v)}
           icon={Settings}
         >
         <div className="grid gap-3 md:grid-cols-3">
@@ -880,6 +842,8 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
                   ...p,
                   unidadId: e.target.value || undefined,
                   unidadNombre: u?.name,
+                  oas: undefined,
+                  metadatosCurriculares: metadatosDesdeOAsEval(undefined),
                 }))
               }}
               className="h-9 w-full rounded border border-border bg-background px-3 text-[13px]"
@@ -968,47 +932,38 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
         </div>
 
         {/* OAs e indicadores */}
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <div>
-            <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">
-              Objetivos de aprendizaje
-            </label>
-            <textarea
-              value={(prueba.metadatosCurriculares?.objetivos || []).join("\n")}
-              onChange={e => updatePrueba(p => ({
-                ...p,
-                metadatosCurriculares: {
-                  ...p.metadatosCurriculares!,
-                  objetivos: e.target.value.split("\n").map(s => s.trim()).filter(Boolean),
-                },
-              }))}
-              rows={4}
-              placeholder="OA 1: ...&#10;OA 2: ..."
-              className="w-full resize-y rounded border border-border bg-background px-3 py-2 text-[11.5px]"
-            />
+        <div className="mt-4 rounded-[12px] border border-border bg-card/50 p-4">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-[13px] font-extrabold text-foreground">Objetivos e indicadores</h3>
+              <p className="mt-0.5 text-[12px] text-muted-foreground">
+                {oasCargando
+                  ? "Cargando OA desde la base curricular..."
+                  : prueba.unidadId
+                    ? "Haz clic en los puntos para seleccionar/deseleccionar OA e indicadores."
+                    : "Selecciona una unidad para cargar los OA automáticamente, o agrega uno propio."}
+              </p>
+            </div>
+            {oasCargando && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
           </div>
-          <div>
-            <label className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">
-              Indicadores de evaluación
-            </label>
-            <textarea
-              value={(prueba.metadatosCurriculares?.indicadores || []).join("\n")}
-              onChange={e => updatePrueba(p => ({
-                ...p,
-                metadatosCurriculares: {
-                  ...p.metadatosCurriculares!,
-                  indicadores: e.target.value.split("\n").map(s => s.trim()).filter(Boolean),
-                },
-              }))}
-              rows={4}
-              placeholder="Indicador 1...&#10;Indicador 2..."
-              className="w-full resize-y rounded border border-border bg-background px-3 py-2 text-[11.5px]"
-            />
-          </div>
+          <RubricaOAEditor
+            oas={prueba.oas ?? []}
+            onChange={(oas: OAEditado[]) => updatePrueba(p => ({
+              ...p,
+              oas,
+              metadatosCurriculares: metadatosDesdeOAsEval(oas),
+            }))}
+            asignatura={prueba.asignatura || asignatura}
+            cargando={oasCargando}
+          />
         </div>
+
       </Section>
       </div>
+      )}
 
+      {showContentStep && (
+      <>
       {/* ─── Secciones de la prueba ─── */}
       <div className={cn(isAplicada && "pointer-events-none opacity-85 select-none")}>
       {prueba.secciones.map((seccion, idx) => {
@@ -1143,7 +1098,11 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
           </span>
         </button>
       )}
+      </>
+      )}
 
+      {showReviewStep && (
+      <>
       {/* Resumen final (Req 5.18) */}
       <div className="rounded-[12px] border border-emerald-200 bg-emerald-50/50 p-4 dark:border-emerald-900/40 dark:bg-emerald-950/20">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1158,57 +1117,12 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
               {prueba.tiempoMinutos ? ` · ${prueba.tiempoMinutos} min` : ""}
             </div>
           </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => exportarPara("para_alumno")}
-              className="flex items-center gap-1.5 rounded-[8px] border border-emerald-300 bg-white px-3 py-1.5 text-[11.5px] font-bold text-emerald-700 hover:bg-emerald-50 dark:bg-emerald-900/40 dark:text-emerald-200"
-            >
-              <Printer className="h-3.5 w-3.5" />
-              Imprimir prueba
-            </button>
-          </div>
         </div>
       </div>
+      </>
+      )}
 
       </div>
-
-      {/* Panel de IA */}
-      <AIPanel
-        tipoDoc="prueba"
-        open={panelIA}
-        onClose={() => setPanelIA(false)}
-        contexto={contextoCurricular}
-        documentoActual={prueba as unknown as Record<string, unknown>}
-        onAplicar={(data) => {
-          // Aplicar secciones generadas por IA
-          if (data.secciones && Array.isArray(data.secciones)) {
-            const nuevasSecciones = (data.secciones as any[]).map((sec, i) => {
-              const tipoPred = normalizarTipoItem(sec.tipoPredominante)
-              const seccion = nuevaSeccion(prueba.secciones.length + i + 1, tipoPred)
-              seccion.titulo = sec.titulo || seccion.titulo
-              seccion.instrucciones = sec.instrucciones || seccion.instrucciones
-              seccion.items = (sec.items || [])
-                .filter((it: any) => it && (it.enunciado || it.tipo))
-                .map((it: any) => convertirItemIA(it))
-              return seccion
-            })
-            updatePrueba(p => ({ ...p, secciones: [...p.secciones, ...nuevasSecciones] }))
-          }
-          if (data.seccion && typeof data.seccion === "object") {
-            const sec = data.seccion as any
-            const tipoPred = normalizarTipoItem(sec.tipoPredominante)
-            const seccion = nuevaSeccion(prueba.secciones.length + 1, tipoPred)
-            seccion.titulo = sec.titulo || seccion.titulo
-            seccion.instrucciones = sec.instrucciones || seccion.instrucciones
-            seccion.items = (sec.items || [])
-              .filter((it: any) => it && (it.enunciado || it.tipo))
-              .map((it: any) => convertirItemIA(it))
-            updatePrueba(p => ({ ...p, secciones: [...p.secciones, seccion] }))
-          }
-          setPanelIA(false)
-        }}
-      />
 
       {/* Banco de ítems drawer */}
       <ItemBank
@@ -1236,299 +1150,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
         }}
       />
 
-      {/* Adaptación PIE/DUA */}
-      <AdaptarPieModal
-        open={panelPie}
-        onOpenChange={setPanelPie}
-        tipo="prueba"
-        documento={prueba}
-        estudiantesPie={estudiantesPie}
-        onAdaptado={async (resultado) => {
-          // Crear una copia adaptada de la prueba
-          const ts = Date.now()
-          const nuevaId = `prueba_pie_${ts}`
-          const copiaPie: PruebaTemplate = {
-            ...prueba,
-            id: nuevaId,
-            nombre: resultado.nombre || `${prueba.nombre} (Adecuación PIE)`,
-            instruccionesGenerales: resultado.instruccionesGenerales || prueba.instruccionesGenerales,
-            secciones: (resultado.secciones || []).map((sec: any, sIdx: number) => ({
-              ...sec,
-              id: sec.id || `sec_pie_${ts}_${sIdx}`,
-              orden: sIdx + 1,
-              items: (sec.items || []).map((it: any) => convertirItemIA(it)),
-            })),
-            estado: "borrador" as const,
-            bloqueada: false,
-            createdAt: undefined,
-            updatedAt: undefined,
-            puntajeMaximo: 0,
-          }
-          copiaPie.puntajeMaximo = calcularPuntajeMaximoPrueba(copiaPie.secciones)
-          try {
-            await guardarPruebaConSnapshot(copiaPie)
-            toast({
-              title: "Prueba PIE creada",
-              description: resultado.notasAdecuacion || "La adecuación curricular se guardó correctamente.",
-            })
-            router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "pruebas", view: "editor", pruebaId: nuevaId }, asignatura)))
-          } catch (e: any) {
-            setMensajeGuardado({ tipo: "err", texto: e?.message || "Error al guardar la prueba adaptada" })
-          }
-        }}
-      />
-
-      {/* Simulador de Alumnos */}
-      <SimulacionAlumnosModal
-        isOpen={showSimulacion}
-        onClose={() => setShowSimulacion(false)}
-        documento={prueba}
-        tipo="prueba"
-      />
-
-      {/* Calibrador de Rigor Cognitivo (Bloom IA) */}
-      <CalibradorBloomModal
-        isOpen={showBloom}
-        onClose={() => setShowBloom(false)}
-        documento={prueba}
-      />
     </div>
   )
-}
-
-// ─── Componentes auxiliares ──────────────────────────────────────
-
-interface ToolbarButtonProps {
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  onClick: () => void
-  shortcut?: string
-  disabled?: boolean
-  primary?: boolean
-  active?: boolean
-  danger?: boolean
-  tone?: "danger"
-  spinning?: boolean
-}
-
-/**
- * Botón compacto del cluster derecho de la toolbar. Muestra el icono siempre
- * y la etiqueta a partir de `md:`. Usa el acento rose para `primary`/`active`
- * y el set rojo cuando `tone="danger"` (eliminar). El atajo se concatena al
- * `title` para descubrirse desde el hover.
- */
-function ToolbarButton({
-  icon: Icon, label, onClick, shortcut, disabled, primary, active, danger, tone, spinning,
-}: ToolbarButtonProps) {
-  const titleText = shortcut ? `${label} (${formatShortcut(shortcut)})` : label
-  const isDanger = tone === "danger"
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      title={titleText}
-      aria-label={label}
-      className={cn(
-        "inline-flex items-center gap-1 rounded-[8px] px-2.5 py-1.5 text-[11px] font-semibold transition-colors",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        primary && "bg-[var(--accent-pruebas)] text-white hover:opacity-90 focus-visible:ring-[var(--accent-pruebas)]",
-        !primary && active && "bg-[var(--accent-pruebas)] text-white focus-visible:ring-[var(--accent-pruebas)]",
-        !primary && !active && !isDanger && "border border-border bg-card text-foreground hover:bg-muted/60 focus-visible:ring-[var(--accent-pruebas)]",
-        isDanger && !danger && "border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300 focus-visible:ring-red-500",
-        isDanger && danger && "border border-red-500 bg-red-500 text-white focus-visible:ring-red-500",
-      )}
-    >
-      <Icon className={cn("h-3.5 w-3.5", spinning && "animate-spin")} />
-      <span className="hidden md:inline">{label}</span>
-    </button>
-  )
-}
-
-function Section({
-  title, children, icon: Icon, expanded, onToggle,
-}: {
-  title: string
-  children: React.ReactNode
-  icon?: any
-  expanded: boolean
-  onToggle: () => void
-}) {
-  return (
-    <div className="rounded-[14px] border border-border bg-card p-4 shadow-sm">
-      <button
-        type="button"
-        onClick={onToggle}
-        className={cn(
-          "mb-3 flex w-full items-center gap-2 text-[13px] font-extrabold uppercase tracking-wide text-foreground",
-          "hover:text-[var(--accent-pruebas)]",
-        )}
-      >
-        {Icon && <Icon className="h-4 w-4 text-[var(--accent-pruebas)]" />}
-        {title}
-        <span className="ml-auto">
-          {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </span>
-      </button>
-      {expanded && children}
-    </div>
-  )
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block mb-1 text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground">
-        {label}
-      </label>
-      {children}
-    </div>
-  )
-}
-
-// ─── Helpers para convertir JSON de IA a ItemPrueba ─────────────────────────
-
-function normalizarTipoItem(raw: string | undefined): TipoItem {
-  if (!raw) return "seleccion_multiple"
-  const map: Record<string, TipoItem> = {
-    seleccion_multiple: "seleccion_multiple",
-    seleccion: "seleccion_multiple",
-    multiple: "seleccion_multiple",
-    alternativas: "seleccion_multiple",
-    verdadero_falso: "verdadero_falso",
-    verdadero: "verdadero_falso",
-    vf: "verdadero_falso",
-    pareados: "pareados",
-    pareado: "pareados",
-    terminos_pareados: "pareados",
-    ordenar: "ordenar",
-    orden: "ordenar",
-    secuencia: "ordenar",
-    completar: "completar",
-    rellenar: "completar",
-    respuesta_corta: "respuesta_corta",
-    respuesta: "respuesta_corta",
-    desarrollo: "desarrollo",
-    desarrollo_visual: "desarrollo",
-    abierta: "desarrollo",
-  }
-  const normalized = raw.toLowerCase().replace(/[\s-]+/g, "_")
-  return map[normalized] || "desarrollo"
-}
-
-function convertirItemIA(it: any): ItemPrueba {
-  const tipo = normalizarTipoItem(it.tipo)
-  const puntaje = Math.max(1, Number(it.puntaje) || 1)
-  const id = `it_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
-  const enunciado = it.enunciado || ""
-  const oaVinculado = it.oaVinculado || undefined
-
-  switch (tipo) {
-    case "seleccion_multiple": {
-      const alts = Array.isArray(it.alternativas) ? it.alternativas : []
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        alternativas: alts.map((a: any, idx: number) => ({
-          id: a.id || `alt_${Date.now()}_${idx}`,
-          texto: a.texto || String(a) || "",
-          esCorrecta: a.esCorrecta === true || a.correcta === true,
-        })),
-      }
-    }
-    case "verdadero_falso":
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        respuestaCorrecta: it.respuestaCorrecta === true || it.correcta === true,
-        pideJustificacion: it.pideJustificacion || false,
-      }
-    case "pareados": {
-      const colA = Array.isArray(it.columnaA) ? it.columnaA : []
-      const colB = Array.isArray(it.columnaB) ? it.columnaB : []
-      // Si tiene paresCorrectos, usarlos para mapear correctaParaAId
-      const pares = Array.isArray(it.paresCorrectos) ? it.paresCorrectos : []
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        columnaA: colA.map((a: any, idx: number) => ({
-          id: a.id || `a_${Date.now()}_${idx}`,
-          texto: a.texto || "",
-        })),
-        columnaB: colB.map((b: any, idx: number) => {
-          let correctaParaAId = b.correctaParaAId || ""
-          if (!correctaParaAId && pares.length > 0) {
-            const par = pares.find((p: any) => p.columnaB === (b.id || `B${idx + 1}`))
-            if (par) correctaParaAId = par.columnaA || ""
-          }
-          return {
-            id: b.id || `b_${Date.now()}_${idx}`,
-            texto: b.texto || "",
-            correctaParaAId,
-          }
-        }),
-      }
-    }
-    case "ordenar": {
-      // Soportar tanto "pasos" como "opciones" con "ordenCorrecto"
-      let pasos: Array<{ id: string; texto: string }> = []
-      if (Array.isArray(it.pasos)) {
-        pasos = it.pasos.map((p: any, idx: number) => ({
-          id: p.id || `p_${Date.now()}_${idx}`,
-          texto: p.texto || "",
-        }))
-      } else if (Array.isArray(it.opciones) && Array.isArray(it.ordenCorrecto)) {
-        // Reordenar según ordenCorrecto
-        const opcionesMap = new Map((it.opciones as any[]).map((o: any) => [o.id, o.texto || ""]))
-        pasos = (it.ordenCorrecto as string[]).map((opId: string, idx: number) => ({
-          id: `p_${Date.now()}_${idx}`,
-          texto: opcionesMap.get(opId) || opId,
-        }))
-      }
-      return { id, tipo, enunciado, puntaje, oaVinculado, pasos }
-    }
-    case "completar": {
-      // Soportar "respuestaCorrecta" (string) o "respuestas" (array)
-      let textoConBlancos = it.textoConBlancos || it.enunciado || ""
-      let respuestas: string[] = []
-      if (Array.isArray(it.respuestas)) {
-        respuestas = it.respuestas
-      } else if (typeof it.respuestaCorrecta === "string") {
-        respuestas = [it.respuestaCorrecta]
-        // Si el enunciado tiene __, usarlo como textoConBlancos
-        if (textoConBlancos.includes("__")) {
-          // ya está bien
-        } else {
-          textoConBlancos = enunciado
-        }
-      }
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        textoConBlancos,
-        respuestas,
-        bancoPalabras: Array.isArray(it.bancoPalabras) ? it.bancoPalabras : undefined,
-      }
-    }
-    case "respuesta_corta":
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        lineasRespuesta: it.lineasRespuesta || 3,
-        respuestaEsperada: it.respuestaEsperada || it.respuestaCorrecta || undefined,
-      }
-    case "desarrollo": {
-      const criterios = Array.isArray(it.criterios)
-        ? it.criterios.map((c: any, idx: number) => ({
-            id: c.id || `crit_${Date.now()}_${idx}`,
-            texto: c.texto || c.descripcion || "",
-            puntaje: c.puntaje || 1,
-          }))
-        : undefined
-      return {
-        id, tipo, enunciado, puntaje, oaVinculado,
-        lineasRespuesta: it.lineasRespuesta || 5,
-        pautaCorreccion: it.pautaCorreccion || undefined,
-        criterios,
-      }
-    }
-  }
 }
 

@@ -79,6 +79,7 @@ export interface VerifiedAuth {
   uid: string
   email: string | null
   emailVerified: boolean
+  customClaims: Record<string, unknown>
 }
 
 export interface AllowedAuth extends VerifiedAuth {
@@ -111,6 +112,7 @@ export async function verifyIdToken(req: Request): Promise<VerifiedAuth | null> 
       uid: decoded.uid,
       email: decoded.email ?? null,
       emailVerified: decoded.email_verified ?? false,
+      customClaims: decoded as Record<string, unknown>,
     }
   } catch (err) {
     console.warn("[verifyIdToken] failed:", (err as Error).message)
@@ -177,7 +179,7 @@ export async function verifyAllowedUser(req: Request): Promise<VerifyAllowedUser
     }
   }
 
-  const isAdmin = auth.emailVerified && isAdminEmail(email)
+  const isAdmin = auth.customClaims?.admin === true || (auth.emailVerified && isAdminEmail(email))
   const allowed = isAdmin || await isEmailAllowedServer(email) || await isUidAllowedServer(auth.uid)
   if (!allowed) {
     return { ok: false, response: forbidden("Acceso solo por invitacion.") }

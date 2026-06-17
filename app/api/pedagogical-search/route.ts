@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai"
 import { NextResponse } from "next/server"
 import { verifyAllowedUser } from "@/lib/auth/verify-token"
+import { requireIntegratedAiAccess } from "@/lib/auth/ai-access"
 import {
   buildPedagogicalBrief,
   type PedagogicalExternalSource,
@@ -113,6 +114,8 @@ JSON:
 export async function POST(req: Request) {
   const authCheck = await verifyAllowedUser(req)
   if (!authCheck.ok) return authCheck.response
+  const aiAccessResponse = await requireIntegratedAiAccess(authCheck.auth)
+  if (aiAccessResponse) return aiAccessResponse
 
   const rl = checkRateLimit(authCheck.auth.uid)
   if (!rl.ok) {
