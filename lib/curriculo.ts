@@ -589,6 +589,70 @@ export async function cargarPlanCurso(
   return snap.data() as PlanificacionCurso
 }
 
+export interface UnidadIdsCurriculares {
+  unidadEntradaId: string
+  unidadCurricularId: string
+  unidadLocalId: string
+}
+
+function fallbackUnidadCurricularId(unidadId: string): string {
+  const clean = unidadId.trim()
+  if (/^unidad_\d+$/i.test(clean)) return clean.toLowerCase()
+  if (/^\d+$/.test(clean)) return `unidad_${clean}`
+  return clean
+}
+
+function unidadCurricularIdFromPlanUnit(unit: UnidadPlan): string | undefined {
+  const explicit = unit.unidadCurricularId?.trim()
+  if (explicit) return explicit
+  return Number.isFinite(unit.id) ? `unidad_${unit.id}` : undefined
+}
+
+export async function resolverUnidadIdsCurriculares(
+  asignatura: string,
+  curso: string,
+  unidadId: string
+): Promise<UnidadIdsCurriculares> {
+  const unidadEntradaId = unidadId.trim()
+  let unidadCurricularId = fallbackUnidadCurricularId(unidadEntradaId)
+  let unidadLocalId = unidadEntradaId
+
+  try {
+    const plan = await cargarPlanCurso(asignatura, curso)
+    const planUnit = plan?.units?.find(unit =>
+      String(unit.id) === unidadEntradaId ||
+      unit.unidadCurricularId === unidadEntradaId
+    )
+
+    if (planUnit) {
+      unidadLocalId = String(planUnit.id)
+      unidadCurricularId = unidadCurricularIdFromPlanUnit(planUnit) || unidadCurricularId
+    }
+  } catch {
+    // Si no hay planificacion o usuario disponible, usamos el fallback estable.
+  }
+
+  return { unidadEntradaId, unidadCurricularId, unidadLocalId }
+}
+
+export async function cargarVerUnidadConFallback(
+  asignatura: string,
+  curso: string,
+  ids: Pick<UnidadIdsCurriculares, "unidadLocalId" | "unidadCurricularId">
+): Promise<VerUnidadGuardada | null> {
+  const candidates = Array.from(new Set([
+    ids.unidadLocalId,
+    ids.unidadCurricularId,
+  ].filter(Boolean)))
+
+  for (const candidate of candidates) {
+    const guardada = await cargarVerUnidad(asignatura, curso, candidate)
+    if (guardada) return guardada
+  }
+
+  return null
+}
+
 
 // ─── Tipos para Libro de clases digital ─────────────────────────────────────
 
@@ -749,6 +813,8 @@ export interface ClaseCronograma {
   fecha: string           // "DD/MM/YYYY" o ""
   oaIds: string[]         // IDs de OA asignados a esta clase (ej: ["OA1","OA2"])
   duplicadaDe?: number    // si es copia de otra clase
+  suspendida?: boolean    // si la clase está suspendida por feriado/evento
+  motivoSuspension?: string // explicación o motivo de la suspensión
 }
 
 export interface CronogramaUnidadData {

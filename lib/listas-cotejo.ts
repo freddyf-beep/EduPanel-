@@ -432,6 +432,16 @@ export async function cargarListasCotejo(
   asignatura: string,
   curso: string
 ): Promise<ListaCotejoTemplate[]> {
+  const all = await cargarTodasLasListasCotejo()
+  return all.filter(lista => lista.asignatura === asignatura && lista.curso === curso)
+}
+
+export async function cargarListasCotejoCurso(curso: string): Promise<ListaCotejoTemplate[]> {
+  const all = await cargarTodasLasListasCotejo()
+  return all.filter(lista => lista.curso === curso)
+}
+
+async function cargarTodasLasListasCotejo(): Promise<ListaCotejoTemplate[]> {
   let all: ListaCotejoTemplate[] = []
   try {
     const snap = await getDocs(query(userCol("listas_cotejo"), orderBy("createdAt", "desc")))
@@ -459,7 +469,7 @@ export async function cargarListasCotejo(
     } catch { /* noop */ }
   }
 
-  return all.filter(lista => lista.asignatura === asignatura && lista.curso === curso)
+  return all
 }
 
 export async function cargarListaCotejo(id: string): Promise<ListaCotejoTemplate | null> {

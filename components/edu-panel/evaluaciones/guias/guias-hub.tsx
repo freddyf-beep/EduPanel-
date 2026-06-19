@@ -8,8 +8,8 @@ import {
 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { buildUrl, withAsignatura } from "@/lib/shared"
-import { cargarGuias, duplicarGuia, eliminarGuia, type GuiaTemplate } from "@/lib/guias"
-import { cargarPruebas, type PruebaTemplate } from "@/lib/pruebas"
+import { cargarGuiasCurso, duplicarGuia, eliminarGuia, type GuiaTemplate } from "@/lib/guias"
+import { cargarPruebasCurso, type PruebaTemplate } from "@/lib/pruebas"
 import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
 
 import { HubHeader } from "@/components/edu-panel/evaluaciones/shared/hub-header"
@@ -31,6 +31,29 @@ type FiltroEstado = "todas" | "borrador" | "lista" | "archivada"
 
 function normalizar(s: string) {
   return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+}
+
+function unidadIdsDePlan(unidad: UnidadPlan): string[] {
+  const ids = [String(unidad.id)]
+  if (unidad.unidadCurricularId) ids.push(unidad.unidadCurricularId)
+  else if (Number.isFinite(unidad.id)) ids.push(`unidad_${unidad.id}`)
+  return Array.from(new Set(ids.filter(Boolean)))
+}
+
+function unidadIdsEquivalentes(unidadId: string, unidad?: UnidadPlan | null): string[] {
+  const ids = [unidadId]
+  if (unidad) ids.push(...unidadIdsDePlan(unidad))
+  else if (/^\d+$/.test(unidadId)) ids.push(`unidad_${unidadId}`)
+  return Array.from(new Set(ids.filter(Boolean)))
+}
+
+function agruparPorAsignatura<T extends { asignatura?: string }>(items: T[]) {
+  const grupos = new Map<string, T[]>()
+  items.forEach(item => {
+    const key = item.asignatura?.trim() || "Sin asignatura"
+    grupos.set(key, [...(grupos.get(key) || []), item])
+  })
+  return Array.from(grupos, ([asignatura, documentos]) => ({ asignatura, documentos }))
 }
 
 // ─── Componente principal ─────────────────────────────────────────────────
@@ -78,12 +101,12 @@ export function GuiasHub() {
     }
     setCargandoGuias(true)
     setError(null)
-    cargarGuias(asignatura, curso)
+    cargarGuiasCurso(curso)
       .then(guias => { if (!cancelled) setGuias(guias) })
       .catch(e => { if (!cancelled) setError(e?.message || "Error cargando guías") })
       .finally(() => { if (!cancelled) setCargandoGuias(false) })
 
-    cargarPruebas(asignatura, curso)
+    cargarPruebasCurso(curso)
       .then(pruebas => { if (!cancelled) setPruebas(pruebas) })
       .catch(() => {})
 
@@ -97,8 +120,13 @@ export function GuiasHub() {
   useEffect(() => refrescar(), [refrescar])
 
   const unidadActiva = useMemo(() => {
-    return unidades.find(u => String(u.id) === String(unidadId)) || null
+    return unidades.find(u => unidadIdsDePlan(u).includes(String(unidadId))) || null
   }, [unidades, unidadId])
+
+  const unidadIdsFiltro = useMemo(
+    () => unidadIdsEquivalentes(unidadId, unidadActiva),
+    [unidadId, unidadActiva],
+  )
 
   // ── Métricas (tarea 4.2) ──────────────────────────────────────────────
   const { total, conContenido, conActividades, listas } = useMemo(() => ({
@@ -158,11 +186,16 @@ export function GuiasHub() {
 
     // 5. Filtrar por unidadId del query param
     if (unidadId) {
-      r = r.filter(g => g.unidadId === unidadId)
+      r = r.filter(g => unidadIdsFiltro.includes(String(g.unidadId || "")))
     }
 
     return r
-  }, [guias, busqueda, filtroTipo, filtroEstado, filtroOA, unidadId])
+  }, [guias, busqueda, filtroTipo, filtroEstado, filtroOA, unidadId, unidadIdsFiltro])
+
+  const guiasPorAsignatura = useMemo(
+    () => agruparPorAsignatura(guiasFiltradas),
+    [guiasFiltradas],
+  )
 
   // ── Navegación ────────────────────────────────────────────────────────
   const irACrear = () => {
@@ -176,7 +209,7 @@ export function GuiasHub() {
   const handleEditar = (g: GuiaTemplate) => {
     router.push(buildUrl("/evaluaciones", withAsignatura({
       tab: "guias", view: "editor", guiaId: g.id,
-    }, asignatura)))
+    }, g.asignatura || asignatura)))
   }
 
   const handleDuplicar = (g: GuiaTemplate) => {
@@ -210,7 +243,7 @@ export function GuiasHub() {
                   "/evaluaciones",
                   withAsignatura(
                     { tab: "pruebas", view: "editor", pruebaId: p.id },
-                    asignatura,
+                    p.asignatura || asignatura,
                   ),
                 ),
               )
@@ -370,52 +403,66 @@ export function GuiasHub() {
         />
       ) : (
         /* Grid de cards (tarea 4.4) */
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {guiasFiltradas.map(g => (
-            <DocumentCard
-              key={g.id}
-              variant="guia"
-              accent="violet"
-              icon={ClipboardList}
-              badges={[
-                { label: g.tipoGuia || "aprendizaje", tone: "primary" },
-                {
-                  label: g.estado || "borrador",
-                  tone: g.estado === "lista" ? "success" : "neutral",
-                },
-              ]}
-              title={(g.numeroGuia ? g.numeroGuia + " — " : "") + (g.nombre || "Guía sin nombre")}
-              subtitle={g.curso + (g.unidadNombre ? " · " + g.unidadNombre : "")}
-              miniStats={[
-                { label: "Sec.", value: g.secciones.length },
-                { label: "Act.", value: g.secciones.reduce((acc, s) => acc + s.actividades.length, 0) },
-                { label: "Pts", value: g.puntajeMaximo || 0 },
-                { label: "Min", value: g.tiempoMinutos || 0 },
-              ]}
-              topActions={[
-                {
-                  label: "Duplicar",
-                  icon: Copy,
-                  tone: "neutral",
-                  onClick: () => handleDuplicar(g),
-                },
-              ]}
-              actions={[
-                {
-                  label: "Editar",
-                  icon: Pencil,
-                  tone: "primary",
-                  onClick: () => handleEditar(g),
-                },
-                {
-                  label: "Eliminar",
-                  icon: Trash2,
-                  tone: "danger",
-                  onClick: () => handleEliminar(g),
-                },
-              ]}
-              onClick={() => handleEditar(g)}
-            />
+        <div className="space-y-5">
+          {guiasPorAsignatura.map(({ asignatura: grupoAsignatura, documentos }) => (
+            <section key={grupoAsignatura} className="space-y-3">
+              <div className="flex items-center justify-between border-b border-border pb-2">
+                <h3 className="text-[13px] font-black uppercase tracking-wide text-foreground">
+                  {grupoAsignatura}
+                </h3>
+                <span className="text-[12px] font-semibold text-muted-foreground">
+                  {documentos.length} {documentos.length === 1 ? "guía" : "guías"}
+                </span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {documentos.map(g => (
+                  <DocumentCard
+                    key={g.id}
+                    variant="guia"
+                    accent="violet"
+                    icon={ClipboardList}
+                    badges={[
+                      { label: g.tipoGuia || "aprendizaje", tone: "primary" },
+                      {
+                        label: g.estado || "borrador",
+                        tone: g.estado === "lista" ? "success" : "neutral",
+                      },
+                    ]}
+                    title={(g.numeroGuia ? g.numeroGuia + " - " : "") + (g.nombre || "Guía sin nombre")}
+                    subtitle={[g.asignatura, g.curso, g.unidadNombre].filter(Boolean).join(" - ")}
+                    miniStats={[
+                      { label: "Sec.", value: g.secciones.length },
+                      { label: "Act.", value: g.secciones.reduce((acc, s) => acc + s.actividades.length, 0) },
+                      { label: "Pts", value: g.puntajeMaximo || 0 },
+                      { label: "Min", value: g.tiempoMinutos || 0 },
+                    ]}
+                    topActions={[
+                      {
+                        label: "Duplicar",
+                        icon: Copy,
+                        tone: "neutral",
+                        onClick: () => handleDuplicar(g),
+                      },
+                    ]}
+                    actions={[
+                      {
+                        label: "Editar",
+                        icon: Pencil,
+                        tone: "primary",
+                        onClick: () => handleEditar(g),
+                      },
+                      {
+                        label: "Eliminar",
+                        icon: Trash2,
+                        tone: "danger",
+                        onClick: () => handleEliminar(g),
+                      },
+                    ]}
+                    onClick={() => handleEditar(g)}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}

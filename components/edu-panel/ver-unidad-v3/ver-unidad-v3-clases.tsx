@@ -413,6 +413,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   const cursoParam = cursoOverride || searchParams.get("curso") || "1° A"
   const rawUnitIdLocal = searchParams.get("unitIdLocal")
   const unidadParam = unidadOverride || searchParams.get("unidad") || rawUnitIdLocal || "unidad_1"
+  const unidadLocalParam = rawUnitIdLocal || unidadParam
   const unidadCurricularParam = unidadCurricularOverride || searchParams.get("unidad") || unidadParam
   const claseParam = claseOverride || parseInt(searchParams.get("clase") || "1")
 
@@ -517,7 +518,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     setShowExternalImport(false)
     setExternalJsonInput("")
     setExternalImportError("")
-  }, [cursoParam, unidadParam, selectedClase])
+  }, [cursoParam, unidadParam, unidadLocalParam, selectedClase])
 
   const saveAiConfig = (cfg: StoredAiConfig) => {
     const normalized = normalizeAiConfig(cfg)
@@ -1002,8 +1003,8 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
         setNivelCurricular(nivel || cursoParam)
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
-          cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadParam),
-          cargarVerUnidad(ASIGNATURA, cursoParam, unidadParam),
+          cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam),
+          cargarVerUnidad(ASIGNATURA, cursoParam, unidadLocalParam),
           nivel ? getUnidadCompleta(ASIGNATURA, nivel, unidadCurricularParam).catch(() => null) : Promise.resolve(null),
         ])
 
@@ -1070,17 +1071,18 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
     void cargarContexto()
     return () => { cancelled = true }
-  }, [cursoParam, unidadParam, unidadCurricularParam, claseOverride, oasOverride])
+  }, [cursoParam, unidadParam, unidadLocalParam, unidadCurricularParam, claseOverride, oasOverride])
 
   // Cargar clase
   useEffect(() => {
-    cargarActividadClase(cursoParam, unidadParam, selectedClase).then(data => {
+    cargarActividadClase(cursoParam, unidadLocalParam, selectedClase).then(data => {
       const claseData = clases.find(c => c.numero === selectedClase)
       if (data) {
         setActividad({
           ...data,
           oaIds: claseData?.oaIds || [],
         })
+        setIdeaInicial(data.contextoProfesor || "")
       } else {
         setActividad({
           estado: "no_planificada",
@@ -1088,11 +1090,13 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           objetivo: "",
           oaIds: claseData?.oaIds || [],
           habilidades: [], actitudes: [], materiales: [], tics: [], archivos: [], sincronizada: false,
+          contextoProfesor: "",
         })
+        setIdeaInicial("")
       }
       ignoreNextSaveRef.current = true;
     })
-  }, [selectedClase, clases, cursoParam, unidadParam])
+  }, [selectedClase, clases, cursoParam, unidadLocalParam])
 
   // Autoguardado
   const ignoreNextSaveRef = useRef(true);
@@ -1115,10 +1119,10 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     try {
       const claseData = clases.find(c => c.numero === selectedClase)
       const actGuardada = {
-        id: `${cursoParam}_${unidadParam}_clase${selectedClase}`,
+        id: `${cursoParam}_${unidadLocalParam}_clase${selectedClase}`,
         asignatura: ASIGNATURA,
         curso: cursoParam,
-        unidadId: unidadParam,
+        unidadId: unidadLocalParam,
         numeroClase: selectedClase,
         fecha: claseData?.fecha || "",
         oaIds: actividad.oaIds || [],
@@ -1234,7 +1238,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     setDeleting(true)
     try {
       await Promise.allSettled((actividad.archivos || []).map(f => eliminarArchivoClase(f.storagePath)))
-      await eliminarActividadClase(cursoParam, unidadParam, selectedClase, ASIGNATURA)
+      await eliminarActividadClase(cursoParam, unidadLocalParam, selectedClase, ASIGNATURA)
       const claseData = clases.find(c => c.numero === selectedClase)
       ignoreNextSaveRef.current = true
       setActividad({
@@ -1288,7 +1292,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     tipo: "unidad" as const,
     asignatura: ASIGNATURA,
     curso: cursoParam,
-    unidadId: unidadParam,
+    unidadId: unidadLocalParam,
     unidadNombre: unidadData?.nombre_unidad || unidadParam,
   }
 
@@ -1449,7 +1453,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
       await actualizarUnidadEnRespaldoVivoDrive(token, {
         context: driveContext,
         data: {
-          unidadId: unidadParam,
+          unidadId: unidadLocalParam,
           unidadNombre: unidadData?.nombre_unidad || unidadParam,
           clases: { [String(selectedClase).padStart(2, "0")]: act },
         },
@@ -1688,8 +1692,8 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     dispActitudes.length,
   ])
 
-  const queryParams = { curso: cursoParam, unidad: unidadParam, unitIdLocal: rawUnitIdLocal || unidadParam }
-  const unitIndex = Number(unidadParam.replace(/\D/g, "")) || 1
+  const queryParams = { curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }
+  const unitIndex = Number(unidadLocalParam.replace(/\D/g, "")) || 1
   const unitColor = UNIT_COLORS[(unitIndex - 1) % UNIT_COLORS.length]
 
   if (loading) {
@@ -1739,7 +1743,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         onOpenChange={setShowNotebookPptModal}
         asignatura={ASIGNATURA}
         curso={cursoParam}
-        unidadId={unidadParam}
+        unidadId={unidadLocalParam}
         unidadNombre={unidadData?.nombre_unidad || unidadCurricularParam || unidadParam}
         unidadProposito={unidadData?.proposito || ""}
         nivelCurricular={nivelCurricular}
@@ -1756,7 +1760,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         onOpenChange={setShowGenerarEvaluacionIaModal}
         asignatura={ASIGNATURA}
         curso={cursoParam}
-        unidadId={unidadParam}
+        unidadId={unidadLocalParam}
         unidadNombre={unidadData?.nombre_unidad || unidadCurricularParam || unidadParam}
         unidadProposito={unidadData?.proposito || ""}
         nivelCurricular={nivelCurricular}
@@ -1872,7 +1876,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
 
       {/* Navigation Sub-Tabs */}
       {(() => {
-        const qParams = { curso: cursoParam, unidad: unidadParam, unitIdLocal: rawUnitIdLocal || unidadParam }
+        const qParams = { curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }
         return (
           <div className="flex items-center gap-6 border-b border-border mb-6">
             <Link
@@ -2441,6 +2445,23 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   >
                     <BrainCircuit className="h-4 w-4 text-primary" /> Bloom Analysis
                   </button>
+                </div>
+
+                <div className="space-y-1.5 pt-3 border-t border-border/60">
+                  <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide block">Contexto de la clase</label>
+                  <textarea
+                    value={actividad.contextoProfesor || ideaInicial}
+                    onChange={e => {
+                      setIdeaInicial(e.target.value)
+                      setActividad(p => ({ ...p, contextoProfesor: e.target.value }))
+                    }}
+                    placeholder="Ej: reproducir música por YouTube y que la representen corporalmente..."
+                    rows={3}
+                    className="w-full resize-none rounded-[10px] border border-border bg-background px-3 py-2 text-[12px] text-foreground outline-none transition-colors focus:border-primary"
+                  />
+                  <p className="text-[9.5px] text-muted-foreground leading-relaxed">
+                    Este contexto alimenta a la IA para planificar o proponer mejoras a esta clase.
+                  </p>
                 </div>
               </div>
 

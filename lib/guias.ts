@@ -18,7 +18,8 @@ import {
 } from "firebase/firestore"
 import {
   getUnidadCompleta, getUnidades,
-  initOAs, mergeOAs, cargarVerUnidad,
+  initOAs, mergeOAs,
+  resolverUnidadIdsCurriculares, cargarVerUnidadConFallback,
 } from "@/lib/curriculo"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
 import type { BloqueContenido, MetadatosCurricularesEval, OAEditado } from "@/lib/evaluaciones-tipos"
@@ -285,13 +286,14 @@ export async function cargarOAsParaGuia(
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
   const nivel = await getCurriculoNivel(curso, asignatura)
-  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
+  const unidadIds = await resolverUnidadIdsCurriculares(asignatura, curso, unidadId)
+  const unidad = await getUnidadCompleta(asignatura, nivel, unidadIds.unidadCurricularId)
   if (!unidad) return oasExistentes ?? []
 
   const base = initOAs(unidad, asignatura)
   let verUnidadOas: OAEditado[] = []
   try {
-    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
+    const guardada = await cargarVerUnidadConFallback(asignatura, curso, unidadIds)
     verUnidadOas = guardada?.oas ?? []
   } catch {}
 
@@ -307,6 +309,13 @@ export async function cargarGuias(asignatura: string, curso: string): Promise<Gu
   const snap = await getDocs(query(col, orderBy("createdAt", "desc")))
   const all = snap.docs.map(d => normalizarGuia({ id: d.id, ...d.data() } as GuiaTemplate))
   return all.filter(g => g.asignatura === asignatura && g.curso === curso)
+}
+
+export async function cargarGuiasCurso(curso: string): Promise<GuiaTemplate[]> {
+  const col = userCol("guias")
+  const snap = await getDocs(query(col, orderBy("createdAt", "desc")))
+  const all = snap.docs.map(d => normalizarGuia({ id: d.id, ...d.data() } as GuiaTemplate))
+  return all.filter(g => g.curso === curso)
 }
 
 export async function cargarGuia(id: string): Promise<GuiaTemplate | null> {

@@ -73,6 +73,20 @@ interface Props {
   onClose?: () => void
 }
 
+function unidadCursoByAnyId(unidades: UnidadPlan[], unidadId?: string) {
+  if (!unidadId) return undefined
+  return unidades.find(u =>
+    String(u.id) === unidadId ||
+    u.unidadCurricularId === unidadId ||
+    (!u.unidadCurricularId && `unidad_${u.id}` === unidadId)
+  )
+}
+
+function unidadIdParaSelect(unidadId: string | undefined, unidades: UnidadPlan[]): string {
+  const unidad = unidadCursoByAnyId(unidades, unidadId)
+  return unidad ? String(unidad.id) : unidadId || ""
+}
+
 export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNombreInicial, onClose }: Props) {
   const router = useRouter()
   const { asignatura } = useActiveSubject()
@@ -440,7 +454,7 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
       }
       updatePrueba(p => ({
         ...p,
-        unidadId: resol.unidadId || p.unidadId,
+        unidadId: p.unidadId || resol.unidadId,
         unidadNombre: resol.unidadNombre || p.unidadNombre,
         metadatosCurriculares: oas ? metadatosDesdeOAsEval(oas) : resol.metadatosCurriculares,
         oas,
@@ -835,9 +849,9 @@ export function PruebaEditor({ pruebaId, cursoInicial, unidadIdInicial, unidadNo
           </Field>
           <Field label="Unidad">
             <select
-              value={prueba.unidadId || ""}
+              value={unidadIdParaSelect(prueba.unidadId, unidadesCurso)}
               onChange={e => {
-                const u = unidadesCurso.find(x => String(x.id) === e.target.value)
+                const u = unidadCursoByAnyId(unidadesCurso, e.target.value)
                 updatePrueba(p => ({
                   ...p,
                   unidadId: e.target.value || undefined,

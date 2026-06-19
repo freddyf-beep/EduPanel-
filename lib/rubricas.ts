@@ -5,7 +5,8 @@ import {
 } from "firebase/firestore"
 import {
   getUnidadCompleta, getUnidades,
-  initOAs, mergeOAs, cargarVerUnidad,
+  initOAs, mergeOAs,
+  resolverUnidadIdsCurriculares, cargarVerUnidadConFallback,
   type OAEditado,
 } from "@/lib/curriculo"
 import { cargarEstudiantes } from "@/lib/estudiantes"
@@ -257,7 +258,8 @@ export async function cargarOAsParaRubrica(
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
   const nivel = await getCurriculoNivel(curso, asignatura)
-  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
+  const unidadIds = await resolverUnidadIdsCurriculares(asignatura, curso, unidadId)
+  const unidad = await getUnidadCompleta(asignatura, nivel, unidadIds.unidadCurricularId)
   if (!unidad) return oasExistentes ?? []
 
   // OAs base del ministerio
@@ -266,7 +268,7 @@ export async function cargarOAsParaRubrica(
   // OAs guardados en /ver-unidad (si el profe ya trabajó esa unidad)
   let verUnidadOas: OAEditado[] = []
   try {
-    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
+    const guardada = await cargarVerUnidadConFallback(asignatura, curso, unidadIds)
     verUnidadOas = guardada?.oas ?? []
   } catch {
     // si no existe ver_unidad, no pasa nada
@@ -586,6 +588,13 @@ export async function cargarRubricas(
   return all.filter(
     r => r.asignatura === asignatura && r.curso === curso
   )
+}
+
+export async function cargarRubricasCurso(curso: string): Promise<RubricaTemplate[]> {
+  const col = userCol("rubricas")
+  const snap = await getDocs(query(col, orderBy("createdAt", "desc")))
+  const all = snap.docs.map(d => normalizarRubricaTemplate({ id: d.id, ...d.data() } as RubricaTemplate))
+  return all.filter(r => r.curso === curso)
 }
 
 export async function cargarRubrica(id: string): Promise<RubricaTemplate | null> {

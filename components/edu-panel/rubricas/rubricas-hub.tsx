@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Plus, Upload, LayoutList, FileArchive, Loader2, AlertCircle, Save, X, CheckCircle2 } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -8,7 +8,7 @@ import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import {
   buildRubricaId,
-  cargarRubricas,
+  cargarRubricasCurso,
   guardarRubrica,
   guardarEvaluacion,
   resolverMetadatosCurricularesRubrica,
@@ -63,6 +63,15 @@ function resolverCursoImportado(cursoImportado: string, cursosDisponibles: strin
   }
 
   return cursoActual || parsed
+}
+
+function agruparPorAsignatura<T extends { asignatura?: string }>(items: T[]) {
+  const grupos = new Map<string, T[]>()
+  items.forEach(item => {
+    const key = item.asignatura?.trim() || "Sin asignatura"
+    grupos.set(key, [...(grupos.get(key) || []), item])
+  })
+  return Array.from(grupos, ([asignatura, documentos]) => ({ asignatura, documentos }))
 }
 
 function normalizarEstudiantesDetectados(value: unknown): Estudiante[] {
@@ -170,11 +179,16 @@ export function RubricasHub() {
   useEffect(() => {
     if (!curso) return
     setLoading(true)
-    cargarRubricas(asignatura, curso)
+    cargarRubricasCurso(curso)
       .then(setRubricas)
       .catch(console.error)
       .finally(() => setLoading(false))
-  }, [asignatura, curso])
+  }, [curso])
+
+  const rubricasPorAsignatura = useMemo(
+    () => agruparPorAsignatura(rubricas),
+    [rubricas],
+  )
 
   const irA = (view: string, extra?: Record<string, string>) =>
     router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "rubricas", view, ...extra }, asignatura)))
@@ -311,7 +325,7 @@ export function RubricasHub() {
       router.push(
         buildUrl(
           "/evaluaciones",
-          withAsignatura({ tab: "rubricas", view: "resultados", rubricaId: zipPreview.rubrica.id }, asignatura)
+          withAsignatura({ tab: "rubricas", view: "resultados", rubricaId: zipPreview.rubrica.id }, zipPreview.rubrica.asignatura || asignatura)
         )
       )
     } catch (err) {
@@ -573,15 +587,29 @@ export function RubricasHub() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {rubricas.map(rubrica => (
-            <RubricaCard
-              key={rubrica.id}
-              rubrica={rubrica}
-              asignatura={asignatura}
-              onEliminar={handleEliminar}
-              onDuplicar={abrirDuplicar}
-            />
+        <div className="space-y-5">
+          {rubricasPorAsignatura.map(({ asignatura: grupoAsignatura, documentos }) => (
+            <section key={grupoAsignatura} className="space-y-3">
+              <div className="flex items-center justify-between border-b border-border pb-2">
+                <h3 className="text-[13px] font-black uppercase tracking-wide text-foreground">
+                  {grupoAsignatura}
+                </h3>
+                <span className="text-[12px] font-semibold text-muted-foreground">
+                  {documentos.length} {documentos.length === 1 ? "rubrica" : "rubricas"}
+                </span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {documentos.map(rubrica => (
+                  <RubricaCard
+                    key={rubrica.id}
+                    rubrica={rubrica}
+                    asignatura={rubrica.asignatura || asignatura}
+                    onEliminar={handleEliminar}
+                    onDuplicar={abrirDuplicar}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}

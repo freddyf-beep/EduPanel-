@@ -78,6 +78,20 @@ interface Props {
   onClose?: () => void
 }
 
+function unidadCursoByAnyId(unidades: UnidadPlan[], unidadId?: string) {
+  if (!unidadId) return undefined
+  return unidades.find(u =>
+    String(u.id) === unidadId ||
+    u.unidadCurricularId === unidadId ||
+    (!u.unidadCurricularId && `unidad_${u.id}` === unidadId)
+  )
+}
+
+function unidadIdParaSelect(unidadId: string | undefined, unidades: UnidadPlan[]): string {
+  const unidad = unidadCursoByAnyId(unidades, unidadId)
+  return unidad ? String(unidad.id) : unidadId || ""
+}
+
 export function GuiaEditor({
   guiaId,
   cursoInicial,
@@ -233,7 +247,7 @@ export function GuiaEditor({
       }
       setGuia(g => g ? {
         ...g,
-        unidadId: resol.unidadId || g.unidadId,
+        unidadId: g.unidadId || resol.unidadId,
         unidadNombre: resol.unidadNombre || g.unidadNombre,
         metadatosCurriculares: oas ? metadatosDesdeOAsEval(oas) : resol.metadatosCurriculares,
         oas,
@@ -813,9 +827,9 @@ export function GuiaEditor({
             </Field>
             <Field label="Unidad">
               <select
-                value={guia.unidadId || ""}
+                value={unidadIdParaSelect(guia.unidadId, unidadesCurso)}
                 onChange={e => {
-                  const u = unidadesCurso.find(x => String(x.id) === e.target.value)
+                  const u = unidadCursoByAnyId(unidadesCurso, e.target.value)
                   setGuia({
                     ...guia,
                     unidadId: e.target.value || undefined,

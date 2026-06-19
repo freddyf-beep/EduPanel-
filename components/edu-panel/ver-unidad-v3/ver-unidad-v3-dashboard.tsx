@@ -205,6 +205,7 @@ export function VerUnidadV3Dashboard() {
   const { signInWithGoogleDrive } = useAuth()
   const searchParams = useSearchParams()
   const [simpleMode, setSimpleMode] = useState(false)
+  const [showContextoIaModal, setShowContextoIaModal] = useState(false)
 
   useEffect(() => {
     void Promise.resolve().then(() => {
@@ -841,6 +842,14 @@ export function VerUnidadV3Dashboard() {
           )}
           <button
             type="button"
+            onClick={() => setShowContextoIaModal(true)}
+            className="inline-flex h-10 items-center gap-2 rounded-lg border border-primary/40 bg-card px-4 text-[13px] font-extrabold text-primary shadow-sm transition-colors hover:bg-pink-light"
+            title="Editar contexto del profesor para la IA"
+          >
+            <Sparkles className="h-4 w-4" /> Contexto IA
+          </button>
+          <button
+            type="button"
             onClick={() => handleGuardar(false)}
             disabled={saving || saveStatus === "saving_silent"}
             className="inline-flex h-10 items-center gap-2 rounded-lg border border-primary bg-primary px-4 text-[13px] font-extrabold text-primary-foreground shadow-sm transition-colors hover:bg-pink-dark disabled:opacity-60"
@@ -1287,6 +1296,81 @@ export function VerUnidadV3Dashboard() {
               {renderEstrategiasEvaluacion()}
             </section>
           </aside>
+        </div>
+      )}
+
+      {showContextoIaModal && (
+        <div
+          className="fixed inset-0 z-[650] flex items-center justify-center bg-black/45 p-3 sm:p-6"
+          onClick={() => setShowContextoIaModal(false)}
+        >
+          <div
+            className="w-full max-w-2xl overflow-hidden rounded-[16px] border border-border bg-card shadow-2xl"
+            onClick={event => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
+              <div className="min-w-0">
+                <h2 className="text-[16px] font-extrabold text-foreground">Contexto IA de la unidad</h2>
+                <p className="mt-0.5 text-[12px] font-medium text-muted-foreground">{cursoParam} / {ASIGNATURA}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowContextoIaModal(false)}
+                className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                title="Cerrar"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-4 px-5 py-4">
+              <div>
+                <label className="mb-1.5 block text-[12px] font-extrabold text-muted-foreground">
+                  Contexto del profesor
+                </label>
+                <textarea
+                  value={contextoDocente}
+                  onChange={event => setContextoDocente(event.target.value)}
+                  rows={6}
+                  placeholder="Caracteristicas del curso, ritmos, necesidades, acuerdos o foco real de trabajo."
+                  className="w-full resize-none rounded-lg border border-border bg-background p-3 text-[13px] leading-relaxed text-foreground outline-none transition-colors focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-[12px] font-extrabold text-muted-foreground">
+                  Meta pedagogica del docente
+                </label>
+                <textarea
+                  value={objetivoDocente}
+                  onChange={event => setObjetivoDocente(event.target.value)}
+                  rows={4}
+                  placeholder="Objetivo propio que quieres priorizar cuando la IA planifique."
+                  className="w-full resize-none rounded-lg border border-border bg-background p-3 text-[13px] leading-relaxed text-foreground outline-none transition-colors focus:border-primary"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border px-5 py-4">
+              <button
+                type="button"
+                onClick={() => setShowContextoIaModal(false)}
+                className="inline-flex h-9 items-center rounded-lg border border-border px-3 text-[12px] font-bold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  const ok = await handleGuardar(false)
+                  if (ok) setShowContextoIaModal(false)
+                }}
+                disabled={saving || saveStatus === "saving_silent"}
+                className="inline-flex h-9 items-center gap-2 rounded-lg bg-primary px-3 text-[12px] font-extrabold text-primary-foreground transition-colors hover:bg-pink-dark disabled:opacity-60"
+              >
+                {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Guardando</> : <><Bookmark className="h-4 w-4" /> Guardar contexto</>}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

@@ -18,7 +18,8 @@ import {
 } from "firebase/firestore"
 import {
   getUnidadCompleta, getUnidades,
-  initOAs, mergeOAs, cargarVerUnidad,
+  initOAs, mergeOAs,
+  resolverUnidadIdsCurriculares, cargarVerUnidadConFallback,
 } from "@/lib/curriculo"
 import { cargarEstudiantes } from "@/lib/estudiantes"
 import { getCurriculoNivel, normalizeKeyPart } from "@/lib/shared"
@@ -487,13 +488,14 @@ export async function cargarOAsParaPrueba(
   oasExistentes?: OAEditado[]
 ): Promise<OAEditado[]> {
   const nivel = await getCurriculoNivel(curso, asignatura)
-  const unidad = await getUnidadCompleta(asignatura, nivel, unidadId)
+  const unidadIds = await resolverUnidadIdsCurriculares(asignatura, curso, unidadId)
+  const unidad = await getUnidadCompleta(asignatura, nivel, unidadIds.unidadCurricularId)
   if (!unidad) return oasExistentes ?? []
 
   const base = initOAs(unidad, asignatura)
   let verUnidadOas: OAEditado[] = []
   try {
-    const guardada = await cargarVerUnidad(asignatura, curso, unidadId)
+    const guardada = await cargarVerUnidadConFallback(asignatura, curso, unidadIds)
     verUnidadOas = guardada?.oas ?? []
   } catch {}
 
@@ -634,6 +636,13 @@ export async function cargarPruebas(asignatura: string, curso: string): Promise<
   const snap = await getDocs(query(col, orderBy("createdAt", "desc")))
   const all = snap.docs.map(d => normalizarPrueba({ id: d.id, ...d.data() } as PruebaTemplate))
   return all.filter(p => p.asignatura === asignatura && p.curso === curso)
+}
+
+export async function cargarPruebasCurso(curso: string): Promise<PruebaTemplate[]> {
+  const col = userCol("pruebas")
+  const snap = await getDocs(query(col, orderBy("createdAt", "desc")))
+  const all = snap.docs.map(d => normalizarPrueba({ id: d.id, ...d.data() } as PruebaTemplate))
+  return all.filter(p => p.curso === curso)
 }
 
 export async function cargarPrueba(id: string): Promise<PruebaTemplate | null> {

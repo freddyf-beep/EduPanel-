@@ -770,7 +770,7 @@ export function VerUnidadV3Cronograma() {
 
         {/* Main Column */}
         <div className={cn("space-y-5", simpleMode && "mx-auto w-full max-w-[980px]")}>
-          {!simpleMode && selectedClaseData && (
+          {selectedClaseData && (
             <div className="rounded-[18px] border border-border bg-card p-5 shadow-sm">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                 <div className="min-w-0 flex-1">
@@ -796,16 +796,22 @@ export function VerUnidadV3Cronograma() {
                     className="h-10 rounded-xl border border-border bg-background px-3 text-[12px] font-bold text-foreground outline-none focus:border-primary"
                     title="Fecha de esta clase"
                   />
-                  <Link
-                    href={buildUrl("/ver-unidad/clases", withAsignatura({
-                      curso: cursoParam,
-                      unidad: unidadLocalParam,
-                      clase: String(selectedClaseData.numero)
-                    }, ASIGNATURA))}
-                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-[12px] font-extrabold text-primary-foreground shadow-sm transition-colors hover:bg-pink-dark"
-                  >
-                    Planificar clase <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
+                  {!selectedClaseData.suspendida ? (
+                    <Link
+                      href={buildUrl("/ver-unidad/clases", withAsignatura({
+                        curso: cursoParam,
+                        unidad: unidadLocalParam,
+                        clase: String(selectedClaseData.numero)
+                      }, ASIGNATURA))}
+                      className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-[12px] font-extrabold text-primary-foreground shadow-sm transition-colors hover:bg-pink-dark"
+                    >
+                      Planificar clase <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  ) : (
+                    <span className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-red-100 dark:bg-red-950/20 px-4 text-[12px] font-extrabold text-red-700 dark:text-red-300">
+                      🚫 Clase Suspendida
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -824,6 +830,39 @@ export function VerUnidadV3Cronograma() {
                       color={UNIT_COLORS[oas.indexOf(oa) % UNIT_COLORS.length]}
                     />
                   ))
+                )}
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-border flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id={`suspendida-${selectedClaseData.numero}`}
+                    checked={!!selectedClaseData.suspendida}
+                    onChange={e => {
+                      const val = e.target.checked
+                      setClases(prev => prev.map(c => c.numero === selectedClaseData.numero ? { ...c, suspendida: val, oaIds: val ? [] : c.oaIds } : c))
+                    }}
+                    className="h-4 w-4 rounded border-border text-primary focus:ring-primary cursor-pointer"
+                  />
+                  <label htmlFor={`suspendida-${selectedClaseData.numero}`} className="text-[12px] font-bold text-foreground cursor-pointer select-none">
+                    Suspender clase (Feriado, evento interno, etc.)
+                  </label>
+                </div>
+
+                {selectedClaseData.suspendida && (
+                  <div className="flex-1 max-w-md">
+                    <input
+                      type="text"
+                      value={selectedClaseData.motivoSuspension || ""}
+                      onChange={e => {
+                        const val = e.target.value
+                        setClases(prev => prev.map(c => c.numero === selectedClaseData.numero ? { ...c, motivoSuspension: val } : c))
+                      }}
+                      placeholder="Motivo (ej: Feriado nacional, Día del colegio...)"
+                      className="w-full h-9 rounded-lg border border-border bg-background px-3 text-[12px] font-medium outline-none focus:border-primary text-foreground"
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -953,7 +992,7 @@ export function VerUnidadV3Cronograma() {
             </div>
 
             {/* Table Container with native scroll styling */}
-            <div className="overflow-x-auto scrollbar-none w-full scroll-hint-x">
+            <div className="overflow-x-auto w-full scroll-hint-x">
               <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
@@ -970,24 +1009,30 @@ export function VerUnidadV3Cronograma() {
                         key={clase.numero}
                         className={cn(
                           "p-3 border-r border-border last:border-r-0 align-top min-w-[100px] hover:bg-muted/10 transition-colors",
-                          isActiveClass && "bg-primary/10 shadow-[inset_0_3px_0_hsl(var(--primary))]"
+                          isActiveClass && "bg-primary/10 shadow-[inset_0_3px_0_hsl(var(--primary))]",
+                          clase.suspendida && "bg-red-50/20 dark:bg-red-950/5 text-muted-foreground"
                         )}
                       >
                         <div className="flex items-center justify-between">
                           <button
                             type="button"
                             onClick={() => setSelectedClase(clase.numero)}
-                            className="font-bold text-[12px] text-primary hover:underline"
+                            className={cn(
+                              "font-bold text-[12px] hover:underline",
+                              clase.suspendida ? "text-red-600 dark:text-red-400" : "text-primary"
+                            )}
                           >
                             C{clase.numero}
                           </button>
-                          <button
-                            onClick={() => duplicarClase(clase.numero)}
-                            className="text-muted-foreground hover:text-primary transition-colors p-0.5 rounded"
-                            title="Duplicar clase"
-                          >
-                            <Copy className="h-3 w-3" />
-                          </button>
+                          {!clase.suspendida && (
+                            <button
+                              onClick={() => duplicarClase(clase.numero)}
+                              className="text-muted-foreground hover:text-primary transition-colors p-0.5 rounded"
+                              title="Duplicar clase"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </button>
+                          )}
                         </div>
 
                         {/* Editable Date */}
@@ -1013,7 +1058,8 @@ export function VerUnidadV3Cronograma() {
                               }}
                               className={cn(
                                 "text-[11px] text-left hover:bg-muted/40 px-1 py-0.5 rounded transition-colors w-full block truncate",
-                                clase.fecha ? "text-foreground font-semibold" : "text-muted-foreground italic"
+                                clase.fecha ? "text-foreground font-semibold" : "text-muted-foreground italic",
+                                clase.suspendida && "text-red-700 dark:text-red-300 opacity-80"
                               )}
                               title="Hacer click para editar la fecha"
                             >
@@ -1022,17 +1068,30 @@ export function VerUnidadV3Cronograma() {
                           )}
                         </div>
 
-                        {/* Link to activities */}
-                        <Link
-                          href={buildUrl("/ver-unidad/clases", withAsignatura({
-                            curso: cursoParam,
-                            unidad: unidadLocalParam,
-                            clase: String(clase.numero)
-                          }, ASIGNATURA))}
-                          className="font-semibold text-[10px] text-edu-blue hover:underline mt-2 block transition-colors"
-                        >
-                          Ver →
-                        </Link>
+                        {/* Link to activities / Suspended Badge */}
+                        {clase.suspendida ? (
+                          <div className="mt-1.5 flex flex-col gap-0.5" title={clase.motivoSuspension || "Clase suspendida"}>
+                            <span className="inline-flex items-center gap-0.5 rounded bg-red-100 dark:bg-red-950/30 px-1 py-0.5 text-[8.5px] font-extrabold uppercase text-red-700 dark:text-red-300 w-fit">
+                              🚫 Feriado/Event
+                            </span>
+                            {clase.motivoSuspension && (
+                              <span className="text-[9.5px] text-red-600 dark:text-red-400 font-medium truncate block max-w-[90px]">
+                                {clase.motivoSuspension}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <Link
+                            href={buildUrl("/ver-unidad/clases", withAsignatura({
+                              curso: cursoParam,
+                              unidad: unidadLocalParam,
+                              clase: String(clase.numero)
+                            }, ASIGNATURA))}
+                            className="font-semibold text-[10px] text-edu-blue hover:underline mt-2 block transition-colors"
+                          >
+                            Ver →
+                          </Link>
+                        )}
                       </th>
                     )})}
                   </tr>
@@ -1085,23 +1144,33 @@ export function VerUnidadV3Cronograma() {
                             <td
                               key={clase.numero}
                               onClick={() => {
+                                if (clase.suspendida) return
                                 setSelectedClase(clase.numero)
                                 toggleOA(clase.numero, oa.id)
                               }}
                               className={cn(
-                                "p-0 text-center align-middle border-r border-border last:border-r-0 cursor-pointer hover:bg-muted/20 transition-colors",
+                                "p-0 text-center align-middle border-r border-border last:border-r-0 transition-colors",
+                                clase.suspendida
+                                  ? "bg-red-50/20 dark:bg-red-950/5 cursor-not-allowed"
+                                  : "cursor-pointer hover:bg-muted/20",
                                 isActiveClass && "bg-primary/5"
                               )}
-                              title={`${isAssigned ? "Quitar" : "Asignar"} ${oa.esPropio ? "Objetivo Propio" : `OA ${oa.numero}`} de la Clase ${clase.numero}`}
+                              title={
+                                clase.suspendida
+                                  ? `Esta clase está suspendida: ${clase.motivoSuspension || "Feriado/Evento"}`
+                                  : `${isAssigned ? "Quitar" : "Asignar"} ${oa.esPropio ? "Objetivo Propio" : `OA ${oa.numero}`} de la Clase ${clase.numero}`
+                              }
                             >
                               <div className="flex items-center justify-center h-12">
-                                <span
-                                  className={cn(
-                                    "w-3.5 h-3.5 rounded-full inline-block transition-all transform duration-150",
-                                    isAssigned ? "scale-100 hover:scale-120" : "scale-0"
-                                  )}
-                                  style={{ background: UNIT_COLORS[ri % UNIT_COLORS.length] }}
-                                />
+                                {!clase.suspendida && (
+                                  <span
+                                    className={cn(
+                                      "w-3.5 h-3.5 rounded-full inline-block transition-all transform duration-150",
+                                      isAssigned ? "scale-100 hover:scale-120" : "scale-0"
+                                    )}
+                                    style={{ background: UNIT_COLORS[ri % UNIT_COLORS.length] }}
+                                  />
+                                )}
                               </div>
                             </td>
                           )

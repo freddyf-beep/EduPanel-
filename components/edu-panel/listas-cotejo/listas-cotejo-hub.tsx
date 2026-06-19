@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { AlertCircle, CheckCircle2, CheckSquare, Copy, FileArchive, Loader2, Plus, Save, Upload, X } from "lucide-react"
 import { useActiveSubject } from "@/hooks/use-active-subject"
@@ -8,7 +8,7 @@ import { buildUrl, withAsignatura } from "@/lib/shared"
 import { cargarHorarioSemanal } from "@/lib/horario"
 import {
   buildListaCotejoId,
-  cargarListasCotejo,
+  cargarListasCotejoCurso,
   guardarEvaluacionLista,
   guardarListaCotejo,
   type ListaCotejoEvaluacion,
@@ -62,6 +62,15 @@ function resolverCursoImportado(cursoImportado: string, cursosDisponibles: strin
   }
 
   return cursoActual || parsed
+}
+
+function agruparPorAsignatura<T extends { asignatura?: string }>(items: T[]) {
+  const grupos = new Map<string, T[]>()
+  items.forEach(item => {
+    const key = item.asignatura?.trim() || "Sin asignatura"
+    grupos.set(key, [...(grupos.get(key) || []), item])
+  })
+  return Array.from(grupos, ([asignatura, documentos]) => ({ asignatura, documentos }))
 }
 
 function normalizarEstudiantesDetectados(value: unknown): Estudiante[] {
@@ -174,11 +183,16 @@ export function ListasCotejoHub() {
 
     setLoading(true)
     setError("")
-    cargarListasCotejo(asignatura, curso)
+    cargarListasCotejoCurso(curso)
       .then(setListas)
       .catch(err => setError(err instanceof Error ? err.message : "Error al cargar listas"))
       .finally(() => setLoading(false))
-  }, [asignatura, curso])
+  }, [curso])
+
+  const listasPorAsignatura = useMemo(
+    () => agruparPorAsignatura(listas),
+    [listas],
+  )
 
   const irA = (view: string, extra?: Record<string, string>) => {
     router.push(buildUrl("/evaluaciones", withAsignatura({ tab: "listas", view, curso, ...extra }, asignatura)))
@@ -299,7 +313,7 @@ export function ListasCotejoHub() {
       router.push(
         buildUrl(
           "/evaluaciones",
-          withAsignatura({ tab: "listas", view: "resultados", listaId: zipPreview.lista.id }, asignatura)
+          withAsignatura({ tab: "listas", view: "resultados", listaId: zipPreview.lista.id }, zipPreview.lista.asignatura || asignatura)
         )
       )
     } catch (err) {
@@ -566,15 +580,29 @@ export function ListasCotejoHub() {
               Duplicando lista...
             </div>
           )}
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {listas.map(lista => (
-              <ListaCotejoCard
-                key={lista.id}
-                lista={lista}
-                asignatura={asignatura}
-                onEliminar={id => setListas(prev => prev.filter(item => item.id !== id))}
-                onDuplicar={abrirDuplicar}
-              />
+          <div className="space-y-5">
+            {listasPorAsignatura.map(({ asignatura: grupoAsignatura, documentos }) => (
+              <section key={grupoAsignatura} className="space-y-3">
+                <div className="flex items-center justify-between border-b border-border pb-2">
+                  <h3 className="text-[13px] font-black uppercase tracking-wide text-foreground">
+                    {grupoAsignatura}
+                  </h3>
+                  <span className="text-[12px] font-semibold text-muted-foreground">
+                    {documentos.length} {documentos.length === 1 ? "lista" : "listas"}
+                  </span>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {documentos.map(lista => (
+                    <ListaCotejoCard
+                      key={lista.id}
+                      lista={lista}
+                      asignatura={lista.asignatura || asignatura}
+                      onEliminar={id => setListas(prev => prev.filter(item => item.id !== id))}
+                      onDuplicar={abrirDuplicar}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </>

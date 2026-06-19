@@ -42,13 +42,13 @@ import { useActiveSubject } from "@/hooks/use-active-subject"
 import { useAiAccess } from "@/hooks/use-ai-access"
 import { buildUrl, withAsignatura } from "@/lib/shared"
 import {
-  cargarPruebas,
+  cargarPruebasCurso,
   duplicarPrueba,
   eliminarPrueba,
   type PruebaTemplate,
 } from "@/lib/pruebas"
 import { cargarPlanCurso, type UnidadPlan } from "@/lib/curriculo"
-import { cargarGuias, type GuiaTemplate } from "@/lib/guias"
+import { cargarGuiasCurso, type GuiaTemplate } from "@/lib/guias"
 
 import { CursoUnidadSelector } from "@/components/edu-panel/evaluaciones/shared/curso-unidad-selector"
 import { VerCoberturaButton } from "@/components/edu-panel/evaluaciones/shared/ver-cobertura-button"
@@ -89,6 +89,32 @@ function normalizeQuery(s: string): string {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim()
+}
+
+function unidadIdsDePlan(unidad: UnidadPlan): string[] {
+  const ids = [String(unidad.id)]
+  if (unidad.unidadCurricularId) ids.push(unidad.unidadCurricularId)
+  else if (Number.isFinite(unidad.id)) ids.push(`unidad_${unidad.id}`)
+  return Array.from(new Set(ids.filter(Boolean)))
+}
+
+function unidadIdsEquivalentes(unidadId: string, unidad?: UnidadPlan | null): string[] {
+  const ids = [unidadId]
+  if (unidad) {
+    ids.push(...unidadIdsDePlan(unidad))
+  } else if (/^\d+$/.test(unidadId)) {
+    ids.push(`unidad_${unidadId}`)
+  }
+  return Array.from(new Set(ids.filter(Boolean)))
+}
+
+function agruparPorAsignatura<T extends { asignatura?: string }>(items: T[]) {
+  const grupos = new Map<string, T[]>()
+  items.forEach(item => {
+    const key = item.asignatura?.trim() || "Sin asignatura"
+    grupos.set(key, [...(grupos.get(key) || []), item])
+  })
+  return Array.from(grupos, ([asignatura, documentos]) => ({ asignatura, documentos }))
 }
 
 // ─── Componente principal ──────────────────────────────────────────────────
@@ -144,7 +170,7 @@ export function PruebasHub() {
     }
     setCargando(true)
     setError(null)
-    cargarPruebas(asignatura, curso)
+    cargarPruebasCurso(curso)
       .then(setPruebas)
       .catch((e: Error) =>
         setError(e?.message || "No pude cargar las pruebas."),
@@ -155,7 +181,7 @@ export function PruebasHub() {
       .then((plan) => setUnidades(plan?.units || []))
       .catch(() => {})
 
-    cargarGuias(asignatura, curso)
+    cargarGuiasCurso(curso)
       .then(setGuias)
       .catch(() => {})
   }
@@ -165,8 +191,13 @@ export function PruebasHub() {
   }, [asignatura, curso])
 
   const unidadActiva = useMemo(() => {
-    return unidades.find((u) => String(u.id) === String(unidadId)) || null
+    return unidades.find((u) => unidadIdsDePlan(u).includes(String(unidadId))) || null
   }, [unidades, unidadId])
+
+  const unidadIdsFiltro = useMemo(
+    () => unidadIdsEquivalentes(unidadId, unidadActiva),
+    [unidadId, unidadActiva],
+  )
 
   // ─── Métricas (Req 2.3) ──────────────────────────────────────────────────
   const metricas = useMemo(() => {
@@ -187,7 +218,7 @@ export function PruebasHub() {
 
     // Filtro por unidad activa (Req 2.7).
     if (unidadId) {
-      r = r.filter((p) => String(p.unidadId || "") === String(unidadId))
+      r = r.filter((p) => unidadIdsFiltro.includes(String(p.unidadId || "")))
     }
 
     // Segmented filter (Req 2.6).
@@ -213,7 +244,12 @@ export function PruebasHub() {
     }
 
     return r
-  }, [pruebas, filtroTipo, busquedaNormalizada, unidadId])
+  }, [pruebas, filtroTipo, busquedaNormalizada, unidadId, unidadIdsFiltro])
+
+  const pruebasPorAsignatura = useMemo(
+    () => agruparPorAsignatura(pruebasFiltradas),
+    [pruebasFiltradas],
+  )
 
   const tieneFiltrosActivos =
     filtroTipo !== "todas" || !!busqueda.trim() || !!unidadId
@@ -239,7 +275,7 @@ export function PruebasHub() {
         "/evaluaciones",
         withAsignatura(
           { tab: "pruebas", view: "editor", pruebaId: prueba.id },
-          asignatura,
+          prueba.asignatura || asignatura,
         ),
       ),
     )
@@ -251,7 +287,7 @@ export function PruebasHub() {
         "/evaluaciones",
         withAsignatura(
           { tab: "pruebas", view: "evaluacion", pruebaId: prueba.id },
-          asignatura,
+          prueba.asignatura || asignatura,
         ),
       ),
     )
@@ -263,7 +299,7 @@ export function PruebasHub() {
         "/evaluaciones",
         withAsignatura(
           { tab: "pruebas", view: "resultados", pruebaId: prueba.id },
-          asignatura,
+          prueba.asignatura || asignatura,
         ),
       ),
     )
@@ -330,7 +366,7 @@ export function PruebasHub() {
                   "/evaluaciones",
                   withAsignatura(
                     { tab: "guias", view: "editor", guiaId: g.id },
-                    asignatura,
+                    g.asignatura || asignatura,
                   ),
                 ),
               )
@@ -446,34 +482,48 @@ export function PruebasHub() {
           />
         )
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {pruebasFiltradas.map((p) => (
-            <DocumentCard
-              key={p.id}
-              variant="prueba"
-              accent="rose"
-              icon={FileText}
-              badges={buildBadges(p)}
-              title={p.nombre || "Sin nombre"}
-              subtitle={buildSubtitle(p)}
-              miniStats={buildMiniStats(p)}
-              topActions={[
-                {
-                  label: "Duplicar",
-                  icon: Copy,
-                  onClick: () => handleDuplicar(p),
-                },
-              ]}
-              actions={buildActions(p, {
-                onAdaptar: () => irAAdaptar(p),
-                onEditar: () => irAEditor(p),
-                onAplicar: () => irAResultados(p),
-                onEliminar: () => handleEliminar(p),
-                canAdaptar: hasAiAccess,
-                adaptarLoading: aiAccessLoading,
-              })}
-              onClick={() => (hasAiAccess ? irAAdaptar(p) : irAEditor(p))}
-            />
+        <div className="space-y-5">
+          {pruebasPorAsignatura.map(({ asignatura: grupoAsignatura, documentos }) => (
+            <section key={grupoAsignatura} className="space-y-3">
+              <div className="flex items-center justify-between border-b border-border pb-2">
+                <h3 className="text-[13px] font-black uppercase tracking-wide text-foreground">
+                  {grupoAsignatura}
+                </h3>
+                <span className="text-[12px] font-semibold text-muted-foreground">
+                  {documentos.length} {documentos.length === 1 ? "prueba" : "pruebas"}
+                </span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {documentos.map((p) => (
+                  <DocumentCard
+                    key={p.id}
+                    variant="prueba"
+                    accent="rose"
+                    icon={FileText}
+                    badges={buildBadges(p)}
+                    title={p.nombre || "Sin nombre"}
+                    subtitle={buildSubtitle(p)}
+                    miniStats={buildMiniStats(p)}
+                    topActions={[
+                      {
+                        label: "Duplicar",
+                        icon: Copy,
+                        onClick: () => handleDuplicar(p),
+                      },
+                    ]}
+                    actions={buildActions(p, {
+                      onAdaptar: () => irAAdaptar(p),
+                      onEditar: () => irAEditor(p),
+                      onAplicar: () => irAResultados(p),
+                      onEliminar: () => handleEliminar(p),
+                      canAdaptar: hasAiAccess,
+                      adaptarLoading: aiAccessLoading,
+                    })}
+                    onClick={() => (hasAiAccess ? irAAdaptar(p) : irAEditor(p))}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}
@@ -529,7 +579,7 @@ function buildBadges(p: PruebaTemplate): DocumentCardBadge[] {
 }
 
 function buildSubtitle(p: PruebaTemplate): string {
-  return [p.curso, p.unidadNombre].filter(Boolean).join(" · ")
+  return [p.asignatura, p.curso, p.unidadNombre].filter(Boolean).join(" - ")
 }
 
 function buildMiniStats(p: PruebaTemplate) {
