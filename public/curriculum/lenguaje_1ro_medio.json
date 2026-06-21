@@ -1,0 +1,1374 @@
+[
+  {
+    "nivel": "1ro Medio",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 1",
+      "titulo": "La libertad como tema literario (narrativa y lírica)",
+      "semestre": 1,
+      "tiempo_estimado": "58 horas pedagógicas",
+      "proposito": "El propósito de la unidad La libertad como tema literario es enriquecer la comprensión de obras narrativas y líricas a través del análisis de temas, conflictos, personajes, ambientes, símbolos, recursos expresivos y relaciones intertextuales, considerando como eje el tema de la libertad. Se ha escogido esta temática debido a su estrecha relación con el periodo del Romanticismo, en el que la subjetividad y la libertad creadora están presentes con fuerza.",
+      "conocimientos_previos": [
+        "Componentes del mundo narrativo y lírico",
+        "Texto expositivo",
+        "Comunicación dialógica"
+      ],
+      "palabras_clave": [
+        "Conflicto de la narración",
+        "personajes tipo",
+        "lenguaje figurado"
+      ],
+      "conocimientos": [
+        "Elementos del género narrativo y género lírico",
+        "Características del Romanticismo",
+        "Debate como intercambio de ideas"
+      ],
+      "habilidades": [
+        "Analizar obras narrativas y líricas",
+        "Interpretar lenguaje figurado y símbolos",
+        "Formular hipótesis",
+        "Escribir informes, comentarios y noticias",
+        "Debatir sobre temas literarios"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "numero": 1,
+          "titulo": "Programa de televisión sobre los tipos literarios en Martín Rivas",
+          "oas": [
+            "OA 3",
+            "OA 21"
+          ],
+          "descripcion": "Debate televisivo sobre personajes tipo de Martín Rivas evaluado con escala de apreciación de 10 descriptores.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Describen adecuadamente el personaje seleccionado",
+              "Organizan eficientemente el programa de debate",
+              "Desempeñan adecuadamente el rol asignado",
+              "Argumentan con marcas textuales suficientes",
+              "Argumentan considerando el contexto social cuando es pertinente",
+              "Presentan ideas clave suficientes en sus argumentos",
+              "Se explican con claridad sobre el tema",
+              "Se respetan las opiniones de los participantes",
+              "Se negocian acuerdos de aspectos esenciales del personaje",
+              "Participan todos(as) los(as) integrantes de manera activa"
+            ]
+          },
+          "oas_evaluados": [
+            3,
+            21
+          ],
+          "actividad_evaluacion": "Debate televisivo sobre personajes tipo de Martín Rivas evaluado con escala de apreciación de 10 descriptores."
+        },
+        {
+          "numero": 2,
+          "titulo": "Interpretación de símbolos y lenguaje figurado en poemas",
+          "oas": [
+            "OA 4"
+          ],
+          "descripcion": "Análisis e interpretación de poemas de autores chilenos, elaborando informe escrito con rúbrica de 4 criterios (tema, motivos líricos, lenguaje poético, comentario personal).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Tema del poema: se establece y es considerado a lo largo de todo el trabajo",
+              "Motivos líricos: se establecen y se entregan ejemplos",
+              "Análisis del lenguaje poético: se identifican figuras literarias y/o símbolos con ejemplos",
+              "Comentario personal: considera contexto sociocultural, análisis efectuado y experiencia personal"
+            ]
+          },
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Análisis e interpretación de poemas de autores chilenos, elaborando informe escrito con rúbrica de 4 criterios (tema, motivos líricos, lenguaje poético, comentario personal)."
+        }
+      ],
+      "numero_unidad": 1,
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "actividades_sugeridas": [
+        {
+          "nombre": "Análisis de un cuento",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Lectura y análisis del cuento \"La tía Chila\" de Ángeles Mastretta, identificando conflicto, tipo de narrador, características de personajes y discutiendo sobre el machismo."
+        },
+        {
+          "nombre": "Motivaciones y características de los personajes en un cuento de Chéjov",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Lectura y análisis de \"Un niño maligno\" de Chéjov, elaborando cuadro comparativo de personajes y sus interrelaciones."
+        },
+        {
+          "nombre": "Reconocimiento de personajes tipo y su relación con obras literarias",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Identificación de personajes tipo en la vida cotidiana y su correspondencia con obras literarias usando una pauta de análisis."
+        },
+        {
+          "nombre": "Elaboración de una noticia a partir de una obra literaria",
+          "oas_asociados": [
+            3,
+            7,
+            12
+          ],
+          "descripcion": "Lectura de cuentos de Cortázar o Quiroga, análisis y redacción de una noticia basada en la narración para publicar en un blog literario."
+        },
+        {
+          "nombre": "Lectura domiciliaria de Martín Rivas de Alberto Blest Gana",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Lectura de la novela con guía de preguntas para la comprensión, analizando contexto histórico y social de Chile."
+        },
+        {
+          "nombre": "Rasgos del Romanticismo en Martín Rivas de Alberto Blest Gana",
+          "oas_asociados": [
+            3,
+            7,
+            21
+          ],
+          "descripcion": "Selección de fragmentos de Martín Rivas que presentan rasgos románticos y analogía con el mundo actual."
+        },
+        {
+          "nombre": "Programa de televisión sobre los tipos literarios en Martín Rivas",
+          "oas_asociados": [
+            3,
+            7,
+            21
+          ],
+          "descripcion": "Creación de un programa de debate televisivo sobre personajes tipo de la novela Martín Rivas."
+        },
+        {
+          "nombre": "Los motivos líricos en Bécquer",
+          "oas_asociados": [
+            1,
+            4,
+            7,
+            8
+          ],
+          "descripcion": "Lectura y análisis de rimas de Gustavo Adolfo Bécquer identificando motivos románticos como el amor desgraciado y la muerte."
+        },
+        {
+          "nombre": "Símbolos y lenguaje figurado en la poesía",
+          "oas_asociados": [
+            1,
+            4,
+            7,
+            8
+          ],
+          "descripcion": "Análisis interpretativo de poemas de autores chilenos (Gabriela Mistral, Pablo Neruda, Gonzalo Rojas, Nicanor Parra y otros) en grupos, elaborando presentación y comentario crítico."
+        },
+        {
+          "nombre": "Tratamiento de temas en poemas y canciones",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Análisis comparativo de canciones (\"Penélope\" de Serrat, \"En el muelle de San Blas\" de Maná) con poemas sobre temas comunes, identificando lenguaje figurado."
+        },
+        {
+          "nombre": "La libertad como tema literario: elaboración de una antología",
+          "oas_asociados": [
+            1,
+            4,
+            8,
+            12
+          ],
+          "descripcion": "Creación en grupos de una antología de poemas latinoamericanos sobre el tema de la libertad con introducción, comentarios e ilustraciones."
+        },
+        {
+          "nombre": "Investigando escritores en el tiempo",
+          "oas_asociados": [
+            8,
+            24
+          ],
+          "descripcion": "Investigación literaria comparando dos obras de temas similares analizando recursos narrativos, visión de mundo y contexto sociocultural."
+        },
+        {
+          "nombre": "Análisis de dos poemas biográficos",
+          "oas_asociados": [
+            4,
+            7
+          ],
+          "descripcion": "Análisis de la canción \"1977\" de Anita Tijoux y \"Canto para una semilla\" basada en Décimas de Violeta Parra, reflexionando sobre autobiografía poética."
+        },
+        {
+          "nombre": "Investigación acerca de las características de la literatura gótica",
+          "oas_asociados": [
+            8,
+            12,
+            24
+          ],
+          "descripcion": "Investigación sobre literatura gótica (orígenes, representantes, temas) y lectura de obras como Poe, Stoker o Wilde."
+        },
+        {
+          "nombre": "Creación de un cuento gótico ilustrado",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Creación e ilustración de un cuento gótico para publicar en blog o red social, con autoevaluación mediante pauta."
+        },
+        {
+          "nombre": "Relación entre mitos y obras literarias",
+          "oas_asociados": [
+            8,
+            24
+          ],
+          "descripcion": "Lectura y comparación de mitos de creación (Génesis, Prometeo, Popol Vuh, Domo y Lituche) y su relación con obras literarias como Frankenstein."
+        }
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propósitos.",
+          "indicadores": [
+            "Leen mensualmente una novela o un libro de cuentos o de poemas.",
+            "Leen semanalmente, en clases, textos literarios y no literarios.",
+            "Recomiendan, a través de exposiciones o comentarios, obras de su interés a sus compañeros y compañeras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Analizar las narraciones leídas para enriquecer su comprensión, considerando, cuando sea pertinente: el o los conflictos de la historia; un análisis de los personajes que considere su relación con otros personajes, qué dicen, qué se dice de ellos, sus acciones y motivaciones, sus convicciones y los dilemas que enfrentan; la relación de un fragmento de la obra con el total; cómo influye en el relato la narración en primera o tercera persona; personajes tipo, símbolos y tópicos literarios presentes en el texto; las creencias, prejuicios y estereotipos presentes en el relato, a la luz de la visión de mundo de la época en la que fue escrito y su conexión con el mundo actual; el efecto producido por el orden en que se presentan los acontecimientos; relaciones intertextuales con otras obras.",
+          "indicadores": [
+            "Explican el conflicto de la obra leída recurriendo a ejemplos textuales.",
+            "Comparan personajes de una misma obra en relación con sus acciones, motivaciones y convicciones.",
+            "Describen personajes importantes de la obra.",
+            "Establecen relaciones entre un fragmento de un relato con la obra completa.",
+            "Comparan tipos de narradores en diferentes relatos.",
+            "Relacionan personajes tipo de una obra, con otra diferente.",
+            "Explican el significado de diferentes tópicos y símbolos en obras narrativas.",
+            "Comparan obras narrativas con su mundo cotidiano.",
+            "Analizan la secuencia de los hechos en una narración.",
+            "Comparan obras literarias con otras obras, estableciendo relaciones entre personajes, temas, acontecimientos y ambientes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar los poemas leídos para enriquecer su comprensión, considerando, cuando sea pertinente: los símbolos presentes en el texto; la actitud del hablante hacia el tema que aborda; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones (de estructuras, sonidos, palabras o ideas) en el poema; la relación entre los aspectos formales y el significado del poema; relaciones intertextuales con otras obras.",
+          "indicadores": [
+            "Explican con sus propias palabras los símbolos presentes en el poema.",
+            "Ejemplifican a partir de diversos poemas las diferentes actitudes líricas que adopta el hablante.",
+            "Interpretan el lenguaje figurado en poemas.",
+            "Evalúan la pertinencia del uso de repeticiones, tanto de sonidos como de ideas, en poemas estudiados en clases.",
+            "Elaboran un comentario acerca de un poema leído, considerando tema, motivos líricos, actitud del hablante lírico, figuras literarias, tipo de rima y versos.",
+            "Comparan poemas estableciendo relaciones con otras obras; por ejemplo, narraciones, pinturas, canciones, entre otras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Comprender la relevancia de las obras del Romanticismo, considerando sus características y el contexto en el que se enmarcan.",
+          "indicadores": [
+            "Investigan acerca de la obra de autores representativos del Romanticismo.",
+            "Fundamentan, con marcas textuales, por qué un determinado texto pertenece al Romanticismo.",
+            "Identifican características del Romanticismo en obras literarias y en otras obras artísticas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Formular una interpretación de los textos literarios leídos o vistos, que sea coherente con su análisis, considerando: una hipótesis sobre el sentido de la obra, que muestre un punto de vista personal, histórico, social o universal; una crítica de la obra sustentada en citas o ejemplos; la presencia o alusión a personajes, temas o símbolos de algún mito, leyenda, cuento folclórico o texto sagrado; la relación de la obra con la visión de mundo y el contexto histórico en el que se ambienta y/o en el que fue creada, ejemplificando dicha relación.",
+          "indicadores": [
+            "Contrastan la visión de mundo presente en dos textos literarios de diferentes culturas.",
+            "Formulan hipótesis considerando su postura personal, el contexto histórico y social, y la visión de mundo presente en diferentes tipos de textos literarios, considerando marcas textuales.",
+            "Investigan acerca de narraciones de diferentes culturas, considerando símbolos, personajes, temas y exponen sus resultados."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Aplicar flexiblemente y creativamente las habilidades de escritura adquiridas en clases como medio de expresión personal y cuando se enfrentan a nuevos géneros: investigando las características del género antes de escribir; adecuando el texto a los propósitos de escritura y a la situación.",
+          "indicadores": [
+            "Escriben una narración o un poema considerando las estructuras básicas de cada texto.",
+            "Elaboran un informe que dé cuenta del análisis efectuado a los textos.",
+            "Corrigen sus textos adecuándolos al propósito y al destinatario."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprensión de lo dicho por el interlocutor; fundamentando su postura de manera pertinente y usando información que permita cumplir los propósitos establecidos; distinguiendo afirmaciones basadas en evidencias de aquellas que no lo están; formulando preguntas o comentarios que estimulen o hagan avanzar la discusión o profundicen un aspecto del tema; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos.",
+          "indicadores": [
+            "Exponen oralmente su punto de vista sobre un tema, manteniendo el hilo conductor y fundamentando con citas y datos que respaldan su postura.",
+            "Discuten las ideas presentadas por otros, profundizando en ellas y desarrollándolas para aclarar puntos.",
+            "Responden acertadamente a preguntas formuladas por su profesor o profesora, acerca de lo expuesto por el grupo.",
+            "Replantean su punto de vista sobre un tema a partir de lo expuesto por sus interlocutores, si es pertinente.",
+            "Comentan lo expuesto por sus compañeros y compañeras considerando la validez de sus afirmaciones.",
+            "Respetan las instrucciones dadas por el moderador en un debate para intervenir."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_1",
+          "descripcion": "Manifestar una disposición a reflexionar sobre sí mismo y sobre las cuestiones sociales y éticas que emanan de las lecturas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_2",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democrática.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "OA 1",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "OA 24",
+          "indicadores": []
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Medio",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 2",
+      "titulo": "Ciudadanos y opinión (texto argumentativo)",
+      "semestre": 1,
+      "tiempo_estimado": "58 horas pedagógicas",
+      "proposito": "En esta unidad, los y las estudiantes tendrán la oportunidad de leer y escuchar distintos tipos de textos argumentativos para analizar las opiniones y evaluar las ideas que fundamentan algunas tesis propuestas en ellos. Al mismo tiempo, podrán asumir una postura crítica, expresada a partir de textos orales y escritos, elaborados por ellos mismos, considerando que la sociedad actual demanda una mirada oportuna y fundada en conceptos claros sobre cuestiones personales, sociales, ambientales, económicas y de contingencia política.",
+      "conocimientos_previos": [
+        "Hecho",
+        "Opinión",
+        "Texto argumentativo"
+      ],
+      "palabras_clave": [
+        "Ensayo",
+        "textos no literarios",
+        "persuasión"
+      ],
+      "conocimientos": [
+        "Estructura del género ensayo",
+        "Escritura de un ensayo",
+        "Recursos persuasivos en los textos argumentativos"
+      ],
+      "habilidades": [
+        "Analizar textos argumentativos",
+        "Argumentar puntos de vista sobre diversos temas",
+        "Persuadir a través de la escritura de textos argumentativos",
+        "Dialogar para compartir ideas"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "numero": 1,
+          "titulo": "Análisis e interpretación de un ensayo",
+          "oas": [
+            "OA 9",
+            "OA 24"
+          ],
+          "descripcion": "Comentario escrito sobre el ensayo \"Paraíso escandinavo\" con rúbrica de 5 criterios (estructura textual, coherencia temática, punto de vista, citas y ejemplos, manejo de la lengua).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Estructura textual: posee introducción, desarrollo y conclusión",
+              "Coherencia temática: mantiene el foco temático a lo largo de todo el texto",
+              "Punto de vista: es claro y bien fundamentado",
+              "Citas y ejemplos: incluye citas y ejemplos extraídos del texto para fundamentar su punto de vista",
+              "Manejo de la lengua: la ortografía y redacción del texto es correcta"
+            ]
+          },
+          "oas_evaluados": [
+            9,
+            24
+          ],
+          "actividad_evaluacion": "Comentario escrito sobre el ensayo \"Paraíso escandinavo\" con rúbrica de 5 criterios (estructura textual, coherencia temática, punto de vista, citas y ejemplos, manejo de la lengua)."
+        },
+        {
+          "numero": 2,
+          "titulo": "Elaboración de un ensayo",
+          "oas": [
+            "OA 14",
+            "OA 17"
+          ],
+          "descripcion": "Ensayo sobre importancia del cuidado del medioambiente u otro tema de actualidad, con pauta de 11 criterios (estructura, coherencia, cohesión, correferencia, tesis, argumentos, propósito comunicativo, vocabulario, registro, concordancia gramatical, ortografía).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Estructura básica: texto organizado en introducción, desarrollo y conclusión",
+              "Coherencia: adecuada progresión temática y agrupación de ideas",
+              "Cohesión: ideas relacionadas lógicamente mediante conectores",
+              "Uso de mecanismos de correferencia léxica compleja (metonimias o metáforas)",
+              "Tesis: clara, concisa y bien articulada",
+              "Argumentos: al menos un argumento claramente definido",
+              "Propósito comunicativo: manifiesta claramente el propósito de convencer",
+              "Vocabulario: amplio, pertinente al tema y preciso",
+              "Registro: adecuado a situación formal",
+              "Concordancia gramatical: género, número y persona en los enunciados",
+              "Ortografía: normas de ortografía literal, acentual y puntual"
+            ]
+          },
+          "oas_evaluados": [
+            14,
+            17
+          ],
+          "actividad_evaluacion": "Ensayo sobre importancia del cuidado del medioambiente u otro tema de actualidad, con pauta de 11 criterios (estructura, coherencia, cohesión, correferencia, tesis, argumentos, propósito comunicativo, vocabulario, registro, concordancia gramatical, ortografía)."
+        }
+      ],
+      "numero_unidad": 2,
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "actividades_sugeridas": [
+        {
+          "nombre": "Analizando una columna de opinión acerca del deporte chileno",
+          "oas_asociados": [
+            1,
+            9,
+            11
+          ],
+          "descripcion": "Lectura y análisis de columna de opinión sobre el deporte chileno, identificando tesis, hechos, opiniones y recursos argumentativos."
+        },
+        {
+          "nombre": "Leyendo textos de diferentes géneros con temas comunes",
+          "oas_asociados": [
+            1,
+            9,
+            11
+          ],
+          "descripcion": "Comparación entre la columna \"Odio al árbol\" de Cristián Warnken y el poema \"Defensa del árbol\" de Nicanor Parra."
+        },
+        {
+          "nombre": "Lectura y análisis de un ensayo",
+          "oas_asociados": [
+            1,
+            9
+          ],
+          "descripcion": "Lectura de \"El paraíso escandinavo\" de María Elena Walsh, analizando tesis, argumentos, hechos/opiniones y figuras retóricas mediante organizador gráfico."
+        },
+        {
+          "nombre": "Análisis de \"Menos cóndor y más huemul\" de Gabriela Mistral",
+          "oas_asociados": [
+            9,
+            14,
+            17,
+            18
+          ],
+          "descripcion": "Lectura y análisis de texto argumentativo de Gabriela Mistral, identificando tesis, metáforas y metonimias."
+        },
+        {
+          "nombre": "Mecanismos de correferencia",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Identificación y uso de metáforas y metonimias como recursos de correferencia en textos periodísticos y literarios."
+        },
+        {
+          "nombre": "Corrección de un texto empleando recursos de correferencia",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Reemplazo de términos repetidos usando diversos mecanismos de correferencia, especialmente metáforas y metonimias."
+        },
+        {
+          "nombre": "Escritura de una carta a modo de respuesta al texto \"Menos cóndor y más huemul\"",
+          "oas_asociados": [
+            14,
+            18
+          ],
+          "descripcion": "Redacción de carta formal dirigida a Gabriela Mistral expresando postura frente al tema, con argumentos y marcas textuales."
+        },
+        {
+          "nombre": "Escritura de una carta a una autoridad comunal",
+          "oas_asociados": [
+            14,
+            15,
+            24
+          ],
+          "descripcion": "Investigación sobre problemas comunales y redacción de carta de solicitud a autoridad local con argumentos respaldados."
+        },
+        {
+          "nombre": "Redacción de un ensayo sobre el medioambiente",
+          "oas_asociados": [
+            14,
+            15
+          ],
+          "descripcion": "Escritura de ensayo sobre tema medioambiental de interés, con tesis, argumentos y citas."
+        },
+        {
+          "nombre": "Elaboración de un ensayo para ser publicado en un blog",
+          "oas_asociados": [
+            14,
+            15,
+            24
+          ],
+          "descripcion": "Escritura de ensayo breve con introducción, desarrollo y conclusión para publicación en blog, aplicando proceso de escritura."
+        },
+        {
+          "nombre": "Análisis de un discurso argumentativo",
+          "oas_asociados": [
+            9,
+            20
+          ],
+          "descripcion": "Visionado y análisis de un discurso argumentativo, identificando tesis, argumentos y evaluando su validez."
+        },
+        {
+          "nombre": "Resumen de un discurso argumentativo emitido por televisión",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Resumen y evaluación de discurso argumentativo televisivo, identificando argumentos principales."
+        },
+        {
+          "nombre": "Contexto sociocultural de producción de La rebelión de la granja de George Orwell",
+          "oas_asociados": [
+            11,
+            24
+          ],
+          "descripcion": "Investigación sobre el contexto histórico y sociocultural de la novela y su relación con hechos políticos."
+        },
+        {
+          "nombre": "Redacción de un comentario a una obra literaria",
+          "oas_asociados": [
+            14,
+            15
+          ],
+          "descripcion": "Escritura de comentario sobre una obra literaria leída, aplicando estructura y argumentación."
+        },
+        {
+          "nombre": "Análisis literario de La ópera de dos centavos de Bertolt Brecht",
+          "oas_asociados": [
+            9,
+            11
+          ],
+          "descripcion": "Lectura y análisis de la obra relacionándola con su contexto de producción y temas sociales."
+        },
+        {
+          "nombre": "Influencia de la Primera y la Segunda Guerra Mundial en la literatura",
+          "oas_asociados": [
+            11,
+            24
+          ],
+          "descripcion": "Investigación sobre el impacto de las guerras mundiales en la producción literaria del siglo XX."
+        }
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propósitos.",
+          "indicadores": [
+            "Leen mensualmente una novela o un libro de cuentos o de poemas.",
+            "Leen semanalmente en clases textos literarios y no literarios.",
+            "Recomiendan, a través de exposiciones o comentarios, obras de su interés a sus compañeros y compañeras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa, como columnas de opinión, cartas, discursos y ensayos, considerando: la tesis, ya sea explícita o implícita, y los argumentos e información que la sostienen; la diferencia entre hecho y opinión; si la información del texto es suficiente y pertinente para sustentar la tesis del autor; la manera en que el autor organiza el texto; con qué intención el autor usa preguntas retóricas, oraciones desiderativas y oraciones dubitativas; su postura personal frente a lo leído y argumentos que la sustentan.",
+          "indicadores": [
+            "Explican con sus palabras la tesis que sustenta un discurso, un ensayo, una columna de opinión y una carta al director.",
+            "Explican por escrito el efecto que provoca la presencia de figuras retóricas, oraciones desiderativas y dubitativas en textos argumentativos.",
+            "Extraen ejemplos de afirmaciones que constituyen un hecho, y otras que corresponden a opiniones en textos de carácter argumentativo.",
+            "Contrastan su postura personal frente a una situación planteada en una carta al director.",
+            "Evalúan la estructura de un discurso escrito por un compañero o compañera, y la validez de sus argumentos.",
+            "Diseñan un mapa conceptual de un texto argumentativo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases.",
+          "indicadores": [
+            "Establecen relaciones entre la información obtenida de textos no literarios y las obras literarias leídas.",
+            "Investigan en internet acerca del contexto sociocultural de producción de una obra literaria."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir, con el propósito de persuadir, textos de diversos géneros, en particular ensayos sobre los temas o lecturas propuestos para el nivel, caracterizados por: la presentación de una hipótesis o afirmación referida a temas contingentes o literarios; la presencia de evidencias e información pertinente, extraídas de textos literarios y no literarios; la mantención de la coherencia temática; una conclusión coherente con los argumentos presentados; el uso de citas y referencias según un formato previamente acordado.",
+          "indicadores": [
+            "Escriben un ensayo o comentario a partir de una obra literaria leída, siguiendo la estructura de introducción, desarrollo y conclusión.",
+            "Fundamentan la hipótesis de su trabajo con citas extraídas de textos literarios y no literarios, siguiendo una norma uniforme.",
+            "Elaboran un texto que mantiene un eje temático.",
+            "Investigan acerca de un tema, obteniendo evidencias para respaldar argumentos y referencias a ser citadas en el ensayo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en función del contexto, el destinatario y el propósito.",
+          "indicadores": [
+            "Elaboran un esquema con las ideas centrales a desarrollar en la escritura de un texto del género periodístico.",
+            "Adecuan el registro y la sintaxis de sus textos según el destinatario y el contexto.",
+            "Adaptan los contenidos de su texto según los conocimientos que tiene el destinatario acerca del tema.",
+            "Reescriben su texto corrigiendo los problemas de coherencia y cohesión.",
+            "Sustituyen palabras poco precisas o muy generales por términos más específicos.",
+            "Modifican sus escritos para incorporar nuevas ideas relevantes.",
+            "Reescriben fragmentos que presentan incoherencias, fallas ortográficas y gramaticales.",
+            "Reorganizan los párrafos para una progresión temática coherente.",
+            "Utilizan el procesador de textos y sus herramientas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Usar en sus textos recursos de correferencia léxica compleja, empleando adecuadamente la metáfora y la metonimia para este fin.",
+          "indicadores": [
+            "Elaboran textos publicitarios, propagandísticos y noticias, haciendo uso de metonimias y metáforas como recursos de correferencia léxica.",
+            "Sustituyen términos que se repiten, usando adecuadamente sinónimos, pronombres y otros términos de correferencia."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Escribir correctamente para facilitar la comprensión al lector: aplicando todas las reglas de ortografía literal y acentual; verificando la escritura de las palabras cuya ortografía no está sujeta a reglas; usando correctamente punto, coma, raya, dos puntos, paréntesis, puntos suspensivos y comillas.",
+          "indicadores": [
+            "Escriben textos usando una ortografía literal, acentual y puntual adecuada.",
+            "Investigan la escritura correcta de las palabras cuya ortografía no está sujeta a reglas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Resumir un discurso argumentativo escuchado, explicando y evaluando los argumentos usados por el emisor.",
+          "indicadores": [
+            "Explican oralmente cuáles son los principales argumentos usados por los panelistas de un debate televisivo.",
+            "Elaboran un esquema con las ideas centrales de un debate efectuado en clases.",
+            "Evalúan con una pauta la calidad de los argumentos expuestos por sus compañeros y compañeras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura.",
+          "indicadores": [
+            "Determinan temas relativos a literatura o lenguaje para investigar.",
+            "Seleccionan en diferentes fuentes información pertinente al tema.",
+            "Comparan distintas fuentes de información.",
+            "Seleccionan la información que será considerada en la investigación.",
+            "Organizan la información categorizándola desde lo más general a lo más específico.",
+            "Elaboran una bibliografía que incluye todas las referencias utilizadas.",
+            "Elaboran algún tipo de texto, adecuándose al más pertinente para comunicar lo investigado."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_1",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestación de la libertad, creatividad y dignidad humana.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_2",
+          "descripcion": "Valorar la evidencia y la búsqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_3",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologías de la comunicación, dando crédito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "OA 1",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "OA 24",
+          "indicadores": []
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Medio",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 3",
+      "titulo": "Relaciones humanas en el teatro y la literatura (género dramático)",
+      "semestre": 2,
+      "tiempo_estimado": "40 horas pedagógicas",
+      "proposito": "El propósito de esta unidad es que los y las estudiantes, al identificar las características del género dramático, especialmente la tragedia, reconozcan en este tipo de obras una manifestación literaria que desde sus orígenes ha trascendido debido a la universalidad de su temática. Al ahondar en este género, tendrán la oportunidad de reflexionar acerca de la naturaleza de las relaciones que establecen y han establecido hombres y mujeres en la historia de la humanidad.",
+      "conocimientos_previos": [
+        "Género dramático",
+        "Texto argumentativo",
+        "Texto expositivo"
+      ],
+      "palabras_clave": [
+        "Tragedia",
+        "personajes",
+        "motivaciones",
+        "diálogo",
+        "conflicto"
+      ],
+      "conocimientos": [
+        "Características de la tragedia",
+        "Representación teatral",
+        "Relaciones intertextuales en obras literarias"
+      ],
+      "habilidades": [
+        "Comprender y analizar obras literarias",
+        "Relacionar obras literarias de diferentes géneros",
+        "Argumentar a partir del análisis de textos dramáticos",
+        "Analizar los efectos del uso de elementos lingüísticos, paralingüísticos y no lingüísticos",
+        "Expresión de ideas de forma escrita y oral"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "numero": 1,
+          "titulo": "Exposición sobre los mitos griegos de la Antigüedad",
+          "oas": [
+            "OA 6",
+            "OA 24"
+          ],
+          "descripcion": "Investigación y exposición sobre mitos griegos que dieron origen a tragedias, con rúbrica de 9 criterios (narración del mito, calidad del análisis, calidad de la reflexión personal, relaciones con otras manifestaciones artísticas, dominio del contenido, adecuación del registro, uso del paralenguaje, calidad del material de apoyo, calidad de las fuentes).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Narración del mito: correcta y mantiene el interés de la audiencia",
+              "Calidad del análisis efectuado: relación de personajes con dioses, consecuencias de acciones",
+              "Calidad de la reflexión personal: consistente con el análisis",
+              "Relaciones entre el mito analizado y otras manifestaciones artísticas",
+              "Dominio del contenido: responde adecuadamente a las preguntas",
+              "Adecuación del registro: uso de lenguaje formal durante toda la exposición",
+              "Uso del paralenguaje y lenguaje no verbal",
+              "Calidad del material de apoyo: síntesis de información, adecuada al propósito",
+              "Calidad de las fuentes consultadas: confiables"
+            ]
+          },
+          "oas_evaluados": [
+            6,
+            24
+          ],
+          "actividad_evaluacion": "Investigación y exposición sobre mitos griegos que dieron origen a tragedias, con rúbrica de 9 criterios (narración del mito, calidad del análisis, calidad de la reflexión personal, relaciones con otras manifestaciones artísticas, dominio del contenido, adecuación del registro, uso del paralenguaje, calidad del material de apoyo, calidad de las fuentes)."
+        },
+        {
+          "numero": 2,
+          "titulo": "Montaje de una obra dramática",
+          "oas": [
+            "OA 5",
+            "OA 23"
+          ],
+          "descripcion": "Selección, análisis e interpretación de una escena de obra dramática estudiada, con rúbrica de 11 descriptores (cumplimiento de tareas, diálogo constructivo, recursos verbales y paralingüísticos, escenografía, vestuario, maquillaje, sonido, actuación, memorización, dirección, calidad del montaje).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cada integrante cumplió con las tareas asignadas para cada rol",
+              "Cada integrante hizo uso del diálogo constructivo para resolver conflictos",
+              "Recursos verbales y paralingüísticos contribuyeron a la interpretación de personajes",
+              "Escenografía y utilería: adecuada, pertinente y creativa",
+              "Vestuario: se adecua a las características del personaje",
+              "Maquillaje: se adecua a las características del personaje",
+              "Sonido: música, efectos sonoros y otros recursos crean atmósferas adecuadas",
+              "Actuación: personajes encarnan adecuadamente sus características",
+              "Memorización del texto: actores memorizan sus textos",
+              "Dirección: conduce eficientemente a los distintos integrantes",
+              "Calidad del montaje: resultado final respeta la esencia de la obra"
+            ]
+          },
+          "oas_evaluados": [
+            5,
+            23
+          ],
+          "actividad_evaluacion": "Selección, análisis e interpretación de una escena de obra dramática estudiada, con rúbrica de 11 descriptores (cumplimiento de tareas, diálogo constructivo, recursos verbales y paralingüísticos, escenografía, vestuario, maquillaje, sonido, actuación, memorización, dirección, calidad del montaje)."
+        }
+      ],
+      "numero_unidad": 3,
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "actividades_sugeridas": [
+        {
+          "nombre": "Investigación y exposición sobre las características de la tragedia",
+          "oas_asociados": [
+            1,
+            6,
+            24
+          ],
+          "descripcion": "Investigación en grupos sobre la tragedia griega (orígenes, contexto, estructura, protagonistas, catarsis, hybris) y exposición frente al curso."
+        },
+        {
+          "nombre": "Análisis y reflexión sobre las tragedias Medea y Antígona",
+          "oas_asociados": [
+            2,
+            5
+          ],
+          "descripcion": "Lectura y análisis de Medea y Antígona, reflexionando sobre los conflictos humanos, personajes y visión de mundo."
+        },
+        {
+          "nombre": "Análisis de Romeo y Julieta y La verdadera historia de la bella durmiente",
+          "oas_asociados": [
+            2,
+            5
+          ],
+          "descripcion": "Comparación de la visión del amor en Romeo y Julieta de Shakespeare con un texto contemporáneo."
+        },
+        {
+          "nombre": "Comparación entre la visión de hombre y de mujer presente en obras dramáticas",
+          "oas_asociados": [
+            5,
+            6
+          ],
+          "descripcion": "Análisis comparativo de roles de género en obras dramáticas de diferentes épocas."
+        },
+        {
+          "nombre": "Visionado de La casa de Bernarda Alba",
+          "oas_asociados": [
+            5,
+            23
+          ],
+          "descripcion": "Visionado y análisis de la obra de García Lorca, considerando elementos de puesta en escena."
+        },
+        {
+          "nombre": "Elaboración de un cómic sobre La casa de Bernarda Alba",
+          "oas_asociados": [
+            5,
+            16
+          ],
+          "descripcion": "Creación de un cómic basado en la obra, usando estilo directo e indirecto."
+        },
+        {
+          "nombre": "Análisis del primer acto de El zoológico de cristal de Tennessee Williams",
+          "oas_asociados": [
+            5,
+            6
+          ],
+          "descripcion": "Lectura y análisis del primer acto, identificando conflictos, personajes y elementos dramáticos."
+        },
+        {
+          "nombre": "Visionado e interpretación de La viuda de Apablaza de Germán Luco Cruchaga",
+          "oas_asociados": [
+            5,
+            23
+          ],
+          "descripcion": "Análisis de la obra del teatro chileno considerando elementos de puesta en escena y contexto."
+        },
+        {
+          "nombre": "Análisis de La Negra Ester de Roberto Parra",
+          "oas_asociados": [
+            5,
+            6
+          ],
+          "descripcion": "Lectura y análisis de la obra teatral chilena, relacionando con su contexto sociocultural."
+        },
+        {
+          "nombre": "Elaboración de un informe de Bodas de sangre de Federico García Lorca",
+          "oas_asociados": [
+            5,
+            6
+          ],
+          "descripcion": "Redacción de informe de lectura con análisis de la obra considerando contexto, personajes y temas."
+        },
+        {
+          "nombre": "Relaciones intertextuales entre Bodas de sangre de García Lorca y otras obras",
+          "oas_asociados": [
+            5,
+            6,
+            24
+          ],
+          "descripcion": "Establecimiento de relaciones intertextuales entre Bodas de sangre y otras manifestaciones artísticas."
+        },
+        {
+          "nombre": "Lectura colectiva de Edipo rey de Sófocles",
+          "oas_asociados": [
+            2,
+            5,
+            6
+          ],
+          "descripcion": "Lectura compartida de la tragedia clásica, analizando conflicto, personajes y visión de mundo."
+        },
+        {
+          "nombre": "Análisis de temas en la obra Romeo y Julieta de William Shakespeare",
+          "oas_asociados": [
+            5,
+            6,
+            23
+          ],
+          "descripcion": "Análisis de temas universales en la tragedia de Shakespeare y exposición grupal."
+        },
+        {
+          "nombre": "Panel sobre la visión del amor en Bodas de sangre de Federico García Lorca",
+          "oas_asociados": [
+            21,
+            23
+          ],
+          "descripcion": "Panel de discusión sobre la visión del amor en la obra, relacionando con noticias de actualidad sobre violencia de pareja."
+        },
+        {
+          "nombre": "Puesta en escena de un episodio de una tragedia",
+          "oas_asociados": [
+            5,
+            23
+          ],
+          "descripcion": "Montaje y representación de un fragmento de tragedia, aplicando elementos de actuación, vestuario y escenografía."
+        },
+        {
+          "nombre": "Lectura dramatizada de un fragmento de obra dramática",
+          "oas_asociados": [
+            5,
+            23
+          ],
+          "descripcion": "Lectura en voz alta de fragmento de obra dramática con entonación y expresión adecuadas."
+        },
+        {
+          "nombre": "Análisis de los recursos paraverbales usados en un radioteatro",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Audición y análisis de radioteatro, identificando elementos paralingüísticos y no lingüísticos."
+        },
+        {
+          "nombre": "Análisis y reescritura de un fragmento de estilo directo a uno de estilo indirecto",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Transformación de textos dramáticos de estilo directo a indirecto, aplicando cambios de tiempos verbales."
+        },
+        {
+          "nombre": "Uso de los tiempos verbales en el estilo indirecto",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Ejercitación del uso de tiempos verbales al transformar citas de estilo directo a indirecto."
+        },
+        {
+          "nombre": "Reflexión y escritura de un diálogo dramático a partir del mito de Kran",
+          "oas_asociados": [
+            5,
+            6,
+            16
+          ],
+          "descripcion": "Creación de un diálogo dramático basado en mito mapuche, incorporando acotaciones."
+        }
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propósitos.",
+          "indicadores": [
+            "Leen mensualmente una novela o un libro de cuentos o de poemas.",
+            "Leen semanalmente en clases textos literarios y no literarios.",
+            "Recomiendan, a través de exposiciones o comentarios, obras de su interés a sus compañeros y compañeras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno.",
+          "indicadores": [
+            "Comentan acerca de un tema propio de la tradición literaria, considerando las obras leídas y su propia experiencia.",
+            "Investigan en obras que han trascendido en el tiempo por su valor y carácter universal, la presencia de un tema propio de la tradición literaria.",
+            "Recomiendan obras literarias, fundamentando su elección en que estas obras son trascendentales en la historia de la literatura."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Analizar los textos dramáticos leídos o vistos, para enriquecer su comprensión, considerando, cuando sea pertinente: el conflicto y qué problema humano se expresa a través de él; un análisis de los personajes principales que considere su evolución, su relación con otros personajes, qué dicen, qué se dice de ellos, lo que hacen, cómo reaccionan, qué piensan y cuáles son sus motivaciones; personajes tipo, símbolos y tópicos literarios; las creencias, prejuicios y estereotipos presentes en el relato; los elementos que gatillan o anuncian futuros eventos en la tragedia; cómo los elementos propios de la puesta en escena aportan a la comprensión de la obra; relaciones intertextuales con otras obras.",
+          "indicadores": [
+            "Explican el conflicto de la obra leída recurriendo a ejemplos textuales.",
+            "Comparan la complejidad de los personajes en cuanto a su evolución, acciones, relaciones con otros personajes y motivaciones.",
+            "Investigan acerca del tratamiento dado a personajes tipo, recurrentes en la historia de la literatura.",
+            "Comparan el tratamiento dado a los tópicos literarios presentes en una obra dramática, con otro tipo de obras.",
+            "Relacionan la visión de mundo de la época en que la obra fue escrita con la época actual.",
+            "Explican con sus palabras el significado de símbolos y eventos que provocan la acción en las tragedias leídas.",
+            "Evalúan la puesta en escena de una obra vista aplicando una pauta de evaluación.",
+            "Establecen relaciones intertextuales con obras narrativas o líricas, utilizando marcas textuales.",
+            "Elaboran un comentario escrito acerca de una obra teatral y su puesta en escena."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Comprender la visión de mundo que se expresa a través de las tragedias leídas, considerando sus características y el contexto en el que se enmarcan.",
+          "indicadores": [
+            "Explican temas claves presentes en una tragedia, por ejemplo, el amor que mata, el destino inexorable, entre otros.",
+            "Investigan acerca de datos del ambiente social y cultural en que se desarrolla la acción de diferentes obras dramáticas.",
+            "Reflexionan acerca de la visión de mundo presente en una tragedia, y su relación con nuestra época.",
+            "Comparan dos tragedias sobre un mismo tema y elaboran un cuadro resumen con los rasgos característicos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Usar consistentemente el estilo directo y el indirecto en textos escritos y orales: empleando adecuadamente los tiempos verbales en el estilo indirecto; reflexionando sobre el contraste en aspectos formales y de significado entre estilo directo e indirecto, especialmente en textos del ámbito académico.",
+          "indicadores": [
+            "Identifican las diferencias en el uso del estilo indirecto y directo en distintos tipos de textos.",
+            "Utilizan adecuadamente en sus escritos el estilo directo y el estilo indirecto.",
+            "Expresan en sus exposiciones orales el estilo indirecto al citar afirmaciones de otras personas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Analizar los posibles efectos de los elementos lingüísticos, paralingüísticos y no lingüísticos que usa un hablante en una situación determinada.",
+          "indicadores": [
+            "Producen un comentario escrito de una obra teatral, teniendo como foco su puesta en escena.",
+            "Identifican los elementos lingüísticos y no lingüísticos presentes en una obra dramática, considerando para ello las acotaciones presentes en el texto.",
+            "Ejemplifican los elementos lingüísticos, paralingüísticos y no lingüísticos, a través de una disertación.",
+            "Usan recursos paralingüísticos y no lingüísticos para representar a un personaje."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura.",
+          "indicadores": [
+            "Determinan temas relativos a literatura o lenguaje para investigar.",
+            "Seleccionan en diferentes fuentes información pertinente al tema.",
+            "Comparan distintas fuentes de información.",
+            "Seleccionan la información que será considerada en la investigación.",
+            "Organizan la información categorizándola desde lo más general a lo más específico.",
+            "Elaboran una bibliografía que incluye todas las referencias utilizadas en su investigación.",
+            "Elaboran algún tipo de texto, adecuándose al más pertinente para comunicar lo investigado."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_1",
+          "descripcion": "Manifestar una disposición a reflexionar sobre sí mismo y sobre las cuestiones sociales y éticas que emanan de las lecturas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_2",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demás, utilizando la lectura y el diálogo para el enriquecimiento personal y para la construcción de buenas relaciones con los demás.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "OA 1",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "OA 24",
+          "indicadores": []
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Medio",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 4",
+      "titulo": "Comunicación y sociedad (medios de comunicación)",
+      "semestre": 2,
+      "tiempo_estimado": "40 horas pedagógicas",
+      "proposito": "Es indiscutible que los mensajes transmitidos por los medios de comunicación influyen en la construcción de la visión de la sociedad por parte de la juventud. El propósito de esta unidad es fomentar la lectura crítica de estos mensajes, los cuales persiguen diversos fines, desde difundir una idea hasta promover la adquisición de un determinado producto. Varias actividades están orientadas al reconocimiento de los recursos persuasivos usados en publicidad o en otro tipo de mensajes, para que los y las estudiantes sean consumidores o consumidoras responsables, tomen decisiones conscientemente y se formen su propia opinión acerca de los hechos que se muestran en los medios.",
+      "conocimientos_previos": [
+        "Medios masivos de comunicación",
+        "Convencer y persuadir",
+        "Texto expositivo",
+        "Géneros periodísticos: columna de opinión, noticia, editorial"
+      ],
+      "palabras_clave": [
+        "Medios de comunicación",
+        "recursos persuasivos",
+        "publicidad",
+        "propaganda",
+        "estereotipo"
+      ],
+      "conocimientos": [
+        "Estructura de la columna de opinión, reportaje y crónica",
+        "Recursos usados en publicidad y propaganda",
+        "Uso de la argumentación"
+      ],
+      "habilidades": [
+        "Analizar textos periodísticos y mensajes publicitarios",
+        "Escribir textos periodísticos",
+        "Evaluar recursos persuasivos",
+        "Evaluar coherencia y cohesión de textos"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "numero": 1,
+          "titulo": "Creación de un programa de televisión sobre el tema \"Hombres y mujeres en literatura\"",
+          "oas": [
+            "OA 19",
+            "OA 22"
+          ],
+          "descripcion": "Elaboración en grupos de un programa de conversación televisivo sobre literatura, incluyendo publicidad ficticia, con pauta de 6 criterios (dominio del tema, progresión temática, coherencia y cohesión, gestos y postura, lenguaje formal y vocabulario, pronunciación y velocidad).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Los participantes muestran dominio del tema y presentan información veraz",
+              "La conversación presenta una progresión temática desde lo general hasta lo particular",
+              "Presentan un discurso coherente y cohesionado",
+              "Los gestos y su postura corporal apoyan la comprensión del mensaje",
+              "Utilizan un lenguaje formal e incorporan vocabulario propio del tema literario",
+              "La pronunciación y velocidad del mensaje es adecuada"
+            ]
+          },
+          "oas_evaluados": [
+            19,
+            22
+          ],
+          "actividad_evaluacion": "Elaboración en grupos de un programa de conversación televisivo sobre literatura, incluyendo publicidad ficticia, con pauta de 6 criterios (dominio del tema, progresión temática, coherencia y cohesión, gestos y postura, lenguaje formal y vocabulario, pronunciación y velocidad)."
+        },
+        {
+          "numero": 2,
+          "titulo": "Escritura de una crónica a partir de una obra literaria",
+          "oas": [
+            "OA 13",
+            "OA 15"
+          ],
+          "descripcion": "Redacción de crónica periodística a partir de cuento o novela con problemática social, evaluada con rúbrica de 5 criterios (cronología de hechos, temática, estilo, diagramación y uso de imágenes, normas de ortografía y sintaxis).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cronología de los hechos: narrados cronológicamente y en forma detallada",
+              "Temática: corresponde a una obra literaria de problemática social",
+              "Estilo: se emplea tercera persona y se incorporan comentarios del autor o autora",
+              "Diagramación y uso de imágenes: atractiva y coherente con lo comunicado",
+              "Normas de ortografía y sintaxis: ortografía correcta y redacción adecuada"
+            ]
+          },
+          "oas_evaluados": [
+            13,
+            15
+          ],
+          "actividad_evaluacion": "Redacción de crónica periodística a partir de cuento o novela con problemática social, evaluada con rúbrica de 5 criterios (cronología de hechos, temática, estilo, diagramación y uso de imágenes, normas de ortografía y sintaxis)."
+        }
+      ],
+      "numero_unidad": 4,
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "actividades_sugeridas": [
+        {
+          "nombre": "Análisis de una columna de opinión",
+          "oas_asociados": [
+            10,
+            22
+          ],
+          "descripcion": "Análisis en grupos de columnas de opinión de diversos temas, identificando medio, autor, tesis y argumentos."
+        },
+        {
+          "nombre": "Comparación de una noticia en diferentes fuentes impresas",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Comparación del tratamiento de una misma noticia en dos periódicos diferentes, usando pauta de análisis."
+        },
+        {
+          "nombre": "Lectura de un reportaje",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Análisis de reportajes identificando tema, propósito, estructura, estrategias de persuasión y diagramación."
+        },
+        {
+          "nombre": "Semejanzas y diferencias entre publicidad y propaganda",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Investigación sobre características, objetivos y recursos de la publicidad y la propaganda, con ejemplos."
+        },
+        {
+          "nombre": "Análisis de cartas al director",
+          "oas_asociados": [
+            10,
+            21
+          ],
+          "descripcion": "Lectura y análisis de cartas al director, identificando postura del autor y argumentos."
+        },
+        {
+          "nombre": "Escritura de una columna de opinión",
+          "oas_asociados": [
+            13,
+            15
+          ],
+          "descripcion": "Redacción de columna de opinión sobre tema de interés, aplicando estructura y proceso de escritura."
+        },
+        {
+          "nombre": "Escritura de un reportaje",
+          "oas_asociados": [
+            13,
+            15
+          ],
+          "descripcion": "Redacción de reportaje periodístico sobre tema investigado, con imágenes y estructura adecuada."
+        },
+        {
+          "nombre": "Creación de una revista literaria electrónica",
+          "oas_asociados": [
+            13,
+            15,
+            22
+          ],
+          "descripcion": "Creación en grupos de revista literaria electrónica con columna de opinión, comentarios críticos y mensajes publicitarios."
+        },
+        {
+          "nombre": "Revisión ortográfica y de estilo de un texto escrito",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Revisión colaborativa de textos aplicando normas ortográficas y mejorando redacción y estilo."
+        },
+        {
+          "nombre": "Análisis de conectores utilizados en una noticia",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Identificación y análisis de conectores en textos periodísticos para evaluar coherencia y cohesión."
+        },
+        {
+          "nombre": "Análisis de mensajes publicitarios",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Identificación de estereotipos y recursos persuasivos en publicidad gráfica y audiovisual."
+        },
+        {
+          "nombre": "Estereotipos presentes en una publicidad",
+          "oas_asociados": [
+            10,
+            19
+          ],
+          "descripcion": "Análisis crítico de estereotipos de género y otros en mensajes publicitarios."
+        },
+        {
+          "nombre": "Análisis de una noticia presentada en TV",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Visionado y análisis de noticia televisiva usando pauta con ítems como título, duración, hechos/opiniones, fuentes, objetividad."
+        },
+        {
+          "nombre": "Análisis de un documental chileno",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Visionado de documental chileno y análisis de elementos audiovisuales y contenido."
+        },
+        {
+          "nombre": "Creación de un espacio booktubers",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Creación de video-reseña literaria al estilo booktuber para recomendar obras leídas."
+        },
+        {
+          "nombre": "Elaboración de un fanfiction a partir de El guardián entre el centeno de J. D. Salinger",
+          "oas_asociados": [
+            13,
+            15
+          ],
+          "descripcion": "Creación de relato de ficción (fanfiction) basado en la novela leída, para publicar en blog."
+        }
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Analizar y evaluar textos de los medios de comunicación, como noticias, reportajes, cartas al director, propaganda o crónicas, considerando: los propósitos explícitos e implícitos del texto; las estrategias de persuasión utilizadas en el texto (uso del humor, presencia de estereotipos, apelación a los sentimientos, etc.) y evaluándolas; la veracidad y consistencia de la información; los efectos causados por recursos no lingüísticos presentes en el texto, como diseño, imágenes, disposición gráfica y efectos de audio; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho; qué elementos del texto influyen en las propias opiniones, percepción de sí mismo y opciones que tomamos.",
+          "indicadores": [
+            "Sintetizan los propósitos implícitos de los mensajes divulgados por los medios de comunicación.",
+            "Explican con ejemplos las estrategias de persuasión utilizada en un mensaje publicitario y una propaganda.",
+            "Comparan los recursos utilizados por diferentes medios de comunicación para comunicar la misma noticia.",
+            "Describen la eficacia de los recursos no verbales usados en un mensaje publicitario para persuadir al receptor.",
+            "Comparan los recursos utilizados por distintas marcas para promocionar un mismo producto.",
+            "Comentan los recursos usados por los medios de comunicación para apelar al receptor."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Escribir, con el propósito de explicar un tema, textos de diversos géneros (por ejemplo, artículos, informes, reportajes, etc.) caracterizados por: una presentación clara del tema en que se esbozan los aspectos que se abordarán; una organización y redacción propias de la información; la inclusión de hechos, descripciones, ejemplos o explicaciones que reflejen una reflexión personal sobre el tema; una progresión temática clara, con especial atención al empleo de recursos anafóricos y conectores; el uso de imágenes u otros recursos gráficos pertinentes; un cierre coherente con las características del género y el propósito del autor; el uso de citas y referencias según un formato previamente acordado.",
+          "indicadores": [
+            "Elaboran una introducción que da cuenta de un tema a tratar en un texto periodístico escrito por ellos y ellas.",
+            "Organizan la información según lo requerido por el tipo de texto.",
+            "Respaldan su punto de vista con descripciones y hechos sobre un tema.",
+            "Incorporan información nueva a la ya conocida, haciendo uso de recursos anafóricos y conectores.",
+            "Integran imágenes que complementan la información contenida en el texto.",
+            "Elaboran un cierre coherente con el tipo de texto.",
+            "Seleccionan información para citarla en sus textos escritos, cuando corresponda, haciendo uso de la norma estipulada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en función del contexto, el destinatario y el propósito.",
+          "indicadores": [
+            "Elaboran un esquema con las ideas centrales a desarrollar en la escritura de un texto del género periodístico.",
+            "Adecuan el registro y la sintaxis de sus textos según el destinatario de estos y el contexto.",
+            "Adaptan los contenidos de su texto según los conocimientos que tiene el destinatario acerca del tema.",
+            "Reescriben su texto corrigiendo los problemas de coherencia y cohesión.",
+            "Sustituyen palabras poco precisas o muy generales por términos más específicos.",
+            "Modifican sus escritos para incorporar nuevas ideas relevantes.",
+            "Reescriben fragmentos que presentan incoherencias, fallas ortográficas y gramaticales.",
+            "Reorganizan los párrafos para que tengan una progresión temática coherente.",
+            "Utilizan el procesador de textos y las herramientas que este ofrece."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado y argumentos que la sustenten; una ordenación de la información en términos de su relevancia; el contexto en el que se enmarcan los textos; el uso de estereotipos, clichés y generalizaciones; los hechos y las opiniones expresadas y su valor argumentativo; diferentes puntos de vista expresados en los textos; la contribución de imágenes y sonido al significado del texto; las relaciones que se establecen entre imágenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso.",
+          "indicadores": [
+            "Relacionan los mensajes de los medios de comunicación con su postura personal frente al tema tratado.",
+            "Jerarquizan la información escuchada según su relevancia.",
+            "Vinculan un mensaje de los medios de comunicación con el contexto sociocultural en que se emite, para así establecer los efectos en quien los recibe.",
+            "Comparan los estereotipos, clichés y generalizaciones que aparecen en un texto y los relacionan con otros vistos o escuchados.",
+            "Diferencian entre hecho y opinión en un mensaje de los medios de comunicación.",
+            "Juzgan la validez de las argumentaciones en los mensajes emitidos por los medios de comunicación.",
+            "Comparan el punto de vista presentado en varias noticias sobre un mismo tema.",
+            "Establecen el efecto que producen las imágenes y el sonido que acompaña un texto oral o audiovisual.",
+            "Analizan la pertinencia de la imagen y el sonido que acompaña a un texto.",
+            "Relacionan el tema presentado en un texto de los medios de comunicación con una obra literaria."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprensión de lo dicho por el interlocutor; fundamentando su postura de manera pertinente y usando información que permita cumplir los propósitos establecidos; distinguiendo afirmaciones basadas en evidencias de aquellas que no lo están; formulando preguntas o comentarios que estimulen o hagan avanzar la discusión o profundicen un aspecto del tema; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos.",
+          "indicadores": [
+            "Exponen oralmente su punto de vista sobre un tema, manteniendo el hilo conductor y fundamentando con citas y datos que respaldan su postura.",
+            "Discuten las ideas presentadas por otros, profundizando en ellas y desarrollándolas para aclarar puntos.",
+            "Responden acertadamente a preguntas formuladas por su profesor o profesora acerca de lo expuesto por el grupo.",
+            "Replantean su punto de vista sobre un tema a partir de lo expuesto por sus interlocutores, si es pertinente.",
+            "Comentan lo expuesto por sus compañeros y compañeras considerando la validez de sus afirmaciones.",
+            "Respetan las instrucciones dadas por el moderador en un debate, para intervenir."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situación para comunicar temas de su interés: presentando información fidedigna y que denota una investigación previa; siguiendo una progresión temática clara; relacionando la información ya dicha con la que están explicando; usando un vocabulario que denota dominio del tema; usando conectores adecuados para hilar la presentación; usando material visual que se relacione directamente con lo que se explica y destaque solo lo más relevante.",
+          "indicadores": [
+            "Exponen entregando información que proviene de fuentes confiables.",
+            "Establecen relaciones entre lo ya dicho y la información nueva.",
+            "Incorporan palabras de vocabulario nuevas relacionadas con el tema.",
+            "Relacionan las ideas a través de conectores adecuados.",
+            "Elaboran material visual que resume las ideas centrales sobre un tema, para apoyar sus exposiciones."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_1",
+          "descripcion": "Manifestar una disposición a reflexionar sobre sí mismo y sobre las cuestiones sociales y éticas que emanan de las lecturas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OAT",
+          "numero": "OAT_2",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demás, utilizando la lectura y el diálogo para el enriquecimiento personal y para la construcción de buenas relaciones con los demás.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "OA 21",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "OA 22",
+          "indicadores": []
+        }
+      ]
+    }
+  }
+]

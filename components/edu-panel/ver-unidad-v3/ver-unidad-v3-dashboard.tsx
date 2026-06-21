@@ -13,22 +13,25 @@ import { useAuth } from "@/components/auth/auth-context"
 import { cn } from "@/lib/utils"
 import {
   applyPlanSelection,
+  ajustarClasesCronograma,
   buildMatrixCellKey,
   cargarCronogramaUnidad,
   cargarPlanCurso,
   cargarPlanificacion,
   cargarVerUnidad,
   emptyMatrizSeleccion,
-  getUnidades,
-  getUnidadCompleta,
+  getUnidadCompletaConFallback,
+  guardarCronogramaUnidad,
   guardarPlanificacion,
   guardarVerUnidad,
   initElems,
   initOAs,
   mergeElementos,
   mergeOAs,
+  resolverTotalClasesUnidad,
 } from "@/lib/curriculo"
 import type {
+  ClaseCronograma,
   ElementoCurricular,
   EstrategiaEvaluacionUnidad,
   OAEditado,
@@ -47,6 +50,7 @@ import {
 import { cargarHorarioSemanal } from "@/lib/horario"
 import type { ClaseHorario } from "@/lib/horario"
 import { buildUrl, UNIT_COLORS, withAsignatura } from "@/lib/shared"
+import { preservarSeleccionLegacyOa, sanitizeOaIds } from "@/lib/oa-selection"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { TermometroV3 } from "./termometro-v3"
@@ -250,7 +254,7 @@ export function VerUnidadV3Dashboard() {
   const [tipoCurricular, setTipoCurricular] = useState<TipoCurricular>("oficial")
   const [nivelAsignado, setNivelAsignado] = useState("")
   const [cronogramaDates, setCronogramaDates] = useState<{ start: string; end: string; datedCount: number; totalCount: number } | null>(null)
-  const [cronogramaClases, setCronogramaClases] = useState<any[]>([])
+  const [cronogramaClases, setCronogramaClases] = useState<ClaseCronograma[]>([])
   const [horarioBase, setHorarioBase] = useState<ClaseHorario[]>([])
   const [editDesc, setEditDesc] = useState(false)
   const [subiendoRecursoDrive, setSubiendoRecursoDrive] = useState(false)
@@ -289,22 +293,16 @@ export function VerUnidadV3Dashboard() {
         const planUnitEncontrada = findPlanUnit(planCurso?.units || [], unidadLocalParam, unidadParam)
 
         let u: Unidad | null = null
+        let preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam)
         if (tipo === "oficial") {
           const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
             setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}". Ve a Mi Perfil > Asignaturas y selecciona el nivel curricular, o marca el curso como Taller/Libre.`)
             return
           }
+          preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivel)
           setNivelAsignado(nivel)
-          u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
-          if (!u) {
-            // Firestore doc ID may differ from the URL param; search by position
-            const todasUnidades = await getUnidades(ASIGNATURA, nivel)
-            const byIndex = todasUnidades.find(tu => tu.numero_unidad === unitIndex + 1)
-            if (byIndex?.id) {
-              u = await getUnidadCompleta(ASIGNATURA, nivel, byIndex.id)
-            }
-          }
+          u = await getUnidadCompletaConFallback(ASIGNATURA, nivel, unidadParam, unitIndex)
           if (!u) {
             setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
             return
@@ -329,22 +327,33 @@ export function VerUnidadV3Dashboard() {
           }
         }
 
-        const baseOas = mergeOAs(initOAs(u, ASIGNATURA), guardada?.oas || [])
+        const baseOas = mergeOAs(
+          initOAs(u, ASIGNATURA, { seleccionarPorDefecto: preservarLegacyOa }),
+          guardada?.oas || [],
+          { conservarHuerfanosComoPropios: preservarLegacyOa },
+        )
+        const validOaIds = new Set(baseOas.map(oa => oa.id))
         const baseHabilidades = mergeElementos(initElems(u.habilidades || [], "habilidades"), guardada?.habilidades || [])
         const baseConocimientos = mergeElementos(initElems(u.conocimientos || [], "conocimientos"), guardada?.conocimientos || [])
         const baseActitudes = mergeElementos(initElems(u.actitudes || [], "actitudes"), guardada?.actitudes || [])
 
         setUnidad(u)
         setPlanUnit(planUnitEncontrada)
-        setCronogramaDates(deriveCronogramaDates(cronograma?.clases))
-        setCronogramaClases(cronograma?.clases || [])
+        const totalClases = resolverTotalClasesUnidad(cronograma, guardada, 8)
+        const clasesNormalizadas = ajustarClasesCronograma(cronograma?.clases, totalClases).map(clase => ({
+          ...clase,
+          oaIds: preservarLegacyOa ? clase.oaIds : sanitizeOaIds(clase.oaIds, validOaIds),
+        }))
+        setCronogramaDates(deriveCronogramaDates(clasesNormalizadas))
+        setCronogramaClases(clasesNormalizadas)
         setHorarioBase(horario || [])
         setDescripcion(guardada?.descripcion || u.proposito || "")
         setContextoDocente(guardada?.contextoDocente || "")
         setObjetivoDocente(guardada?.objetivoDocente || "")
         setHoras(guardada?.horas || 16)
-        setClases(cronograma?.totalClases || cronograma?.clases?.length || guardada?.clases || 8)
-        setOas(applyPlanSelection(baseOas, planificacion?.matriz.oa, unitIndex))
+        setClases(totalClases)
+        const matrizOa = preservarLegacyOa || guardada ? planificacion?.matriz.oa : undefined
+        setOas(applyPlanSelection(baseOas, matrizOa, unitIndex))
         setHabilidades(applyPlanSelection(baseHabilidades, planificacion?.matriz.habilidades, unitIndex))
         setConocimientos(applyPlanSelection(baseConocimientos, planificacion?.matriz.conocimientos, unitIndex))
         setActitudes(applyPlanSelection(baseActitudes, planificacion?.matriz.actitudes, unitIndex))
@@ -395,6 +404,16 @@ export function VerUnidadV3Dashboard() {
         recursosMaterialesUnidadArchivos,
         estrategiasEvaluacion,
       })
+
+      const preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivelAsignado)
+      const validOaIds = new Set(oas.map(oa => oa.id))
+      const clasesCronograma = ajustarClasesCronograma(cronogramaClases, clases).map(clase => ({
+        ...clase,
+        oaIds: preservarLegacyOa ? clase.oaIds : sanitizeOaIds(clase.oaIds, validOaIds),
+      }))
+      await guardarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam, clases, clasesCronograma)
+      setCronogramaClases(clasesCronograma)
+      setCronogramaDates(deriveCronogramaDates(clasesCronograma))
 
       const planificacion = await cargarPlanificacion(ASIGNATURA, cursoParam)
       const matriz = planificacion?.matriz || emptyMatrizSeleccion()
@@ -452,6 +471,7 @@ export function VerUnidadV3Dashboard() {
 
   // Computed Values
   const oasSeleccionados = useMemo(() => selectedOas(oas), [oas])
+  const oasDisponiblesBasales = useMemo(() => oas.filter(oa => oa.tipo !== "oat"), [oas])
   const oasBasales = useMemo(() => oasSeleccionados.filter(oa => oa.tipo !== "oat"), [oasSeleccionados])
   const oatSeleccionados = useMemo(() => oasSeleccionados.filter(oa => oa.tipo === "oat"), [oasSeleccionados])
   const indicadoresSeleccionados = useMemo(
@@ -491,6 +511,36 @@ export function VerUnidadV3Dashboard() {
   const ajustarTotalClases = (next: number) => {
     const safe = Math.min(60, Math.max(1, Math.round(next || 1)))
     setClases(safe)
+    setCronogramaClases(prev => ajustarClasesCronograma(prev, safe))
+  }
+
+  const toggleOASeleccion = (oaId: string) => {
+    setOas(prev => prev.map(oa => {
+      if (oa.id !== oaId) return oa
+      const nextSelected = !oa.seleccionado
+      return {
+        ...oa,
+        seleccionado: nextSelected,
+        indicadores: (oa.indicadores || []).map(ind => ({
+          ...ind,
+          seleccionado: nextSelected,
+        })),
+      }
+    }))
+  }
+
+  const toggleIndicadorSeleccion = (oaId: string, indicadorId: string) => {
+    setOas(prev => prev.map(oa => {
+      if (oa.id !== oaId) return oa
+      const indicadores = (oa.indicadores || []).map(ind => (
+        ind.id === indicadorId ? { ...ind, seleccionado: !ind.seleccionado } : ind
+      ))
+      return {
+        ...oa,
+        seleccionado: oa.seleccionado || indicadores.some(ind => ind.seleccionado),
+        indicadores,
+      }
+    }))
   }
 
   const ensureDriveToken = async () => {
@@ -1093,26 +1143,66 @@ export function VerUnidadV3Dashboard() {
               </div>
 
               <div className="space-y-3">
-                {oasBasales.length > 0 ? (
-                  oasBasales.map(oa => {
-                    const indicadores = (oa.indicadores || []).filter(ind => ind.seleccionado)
+                {oasDisponiblesBasales.length > 0 ? (
+                  oasDisponiblesBasales.map(oa => {
+                    const indicadores = oa.indicadores || []
+                    const indicadoresSeleccionadosOA = indicadores.filter(ind => ind.seleccionado)
                     return (
-                      <div key={oa.id} className="rounded-lg border border-border bg-background p-3">
+                      <div
+                        key={oa.id}
+                        className={cn(
+                          "rounded-lg border bg-background p-3 transition-colors",
+                          oa.seleccionado ? "border-primary/40 bg-primary/5" : "border-border"
+                        )}
+                      >
                         <div className="flex items-start gap-2.5">
-                          <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-status-green-text" />
+                          <input
+                            type="checkbox"
+                            checked={!!oa.seleccionado}
+                            onChange={() => toggleOASeleccion(oa.id)}
+                            className="mt-1 h-4 w-4 flex-shrink-0 rounded border-border text-primary focus:ring-primary"
+                            aria-label={`Seleccionar OA ${oa.numero ?? ""}`}
+                          />
                           <div className="min-w-0 flex-1">
-                            <p className="text-[13px] font-bold leading-snug text-foreground">
-                              <span className="font-extrabold">OA {oa.numero ?? ""}:</span> {oa.descripcion}
-                            </p>
+                            <button
+                              type="button"
+                              onClick={() => toggleOASeleccion(oa.id)}
+                              className="block w-full text-left"
+                            >
+                              <p className="text-[13px] font-bold leading-snug text-foreground">
+                                <span className="font-extrabold">{oa.esPropio ? "Propio" : `OA ${oa.numero ?? ""}`}:</span> {oa.descripcion}
+                              </p>
+                              <p className="mt-1 text-[11px] font-bold text-muted-foreground">
+                                {oa.seleccionado
+                                  ? `${indicadoresSeleccionadosOA.length}/${indicadores.length} indicadores seleccionados`
+                                  : "Disponible para seleccionar"}
+                              </p>
+                            </button>
                             {indicadores.length > 0 && (
-                              <ul className="mt-2 space-y-1 pl-3 text-[12px] leading-snug text-muted-foreground">
-                                {indicadores.slice(0, 4).map(ind => (
-                                  <li key={ind.id} className="list-disc">{ind.texto}</li>
+                              <div className="mt-2 space-y-1.5">
+                                {indicadores.slice(0, 6).map(ind => (
+                                  <label
+                                    key={ind.id}
+                                    className={cn(
+                                      "flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-[12px] leading-snug transition-colors",
+                                      oa.seleccionado ? "hover:bg-background" : "opacity-60 hover:bg-muted/30"
+                                    )}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={!!ind.seleccionado}
+                                      onChange={() => toggleIndicadorSeleccion(oa.id, ind.id)}
+                                      className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 rounded border-border text-primary focus:ring-primary"
+                                    />
+                                    <span className={ind.seleccionado ? "text-foreground" : "text-muted-foreground"}>
+                                      {ind.texto}
+                                    </span>
+                                  </label>
                                 ))}
-                                {indicadores.length > 4 && (
-                                  <li className="list-none font-extrabold text-primary">+{indicadores.length - 4} indicadores</li>
+                                {indicadores.length > 6 && (
+                                  <p className="px-2 text-[11px] font-extrabold text-primary">+{indicadores.length - 6} indicadores</p>
                                 )}
-                              </ul>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -1121,7 +1211,7 @@ export function VerUnidadV3Dashboard() {
                   })
                 ) : (
                   <div className="rounded-lg border border-dashed border-border bg-muted/10 p-4 text-center text-[12px] font-medium text-muted-foreground">
-                    Sin OA seleccionados para esta unidad.
+                    No se encontraron OA disponibles para esta unidad. Revisa la vinculacion curricular del curso en Perfil.
                   </div>
                 )}
 

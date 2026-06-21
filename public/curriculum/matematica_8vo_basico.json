@@ -1,0 +1,1430 @@
+[
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad, los estudiantes continúan profundizando en las operaciones con números enteros; se pone énfasis en que comprendan tanto las operaciones como el significado de número entero, por medio de representaciones y de la resolución de problemas contextualizados. Asimismo, completan el trabajo con números racionales, ejercitando especialmente el proceso de representar números y operaciones, que ha comenzado en la básica y culmina aquí, de manera internalizada. Profundizan el trabajo con potencias, ampliando el ámbito numérico de la base y trabajando con conceptos de área y volumen. Continúan utilizando las representaciones concretas, pictóricas y simbólicas del concepto potencia, trabajadas en el curso anterior, para resolver problemas en contexto. Se empieza el trabajo con raíces cuadradas para que las usen para calcular alturas de triángulos y para ampliar el registro simbólico; esto se empezó con medición concreta, en la básica. También se vuelve al concepto de porcentaje para profundizar su comprensión y tratar las variaciones porcentuales en la resolución de problemas contextualizados.",
+      "conocimientos_previos": [
+        "Adición y sustracción de números enteros.",
+        "Multiplicación y división de fracciones positivas.",
+        "Multiplicación y división de decimales positivos.",
+        "Porcentaje.",
+        "Potencias de base 10 con exponente natural."
+      ],
+      "palabras_clave": [
+        "Multiplicación de números enteros",
+        "división de números enteros",
+        "números racionales",
+        "potencias",
+        "raíces cuadradas",
+        "variaciones porcentuales"
+      ],
+      "conocimientos": [
+        "Multiplicación y división de números enteros.",
+        "Multiplicación y división con los números racionales.",
+        "Multiplicación y división de potencias de base y exponente natural hasta 3.",
+        "Raíces cuadradas de números naturales.",
+        "Variaciones porcentuales."
+      ],
+      "habilidades": [
+        "Resolver problemas, utilizando estrategias como: destacar la información dada; usar un proceso de ensayo y error sistemático; aplicar procesos reversibles; descartar información irrelevante; usar problemas similares. (OA a)",
+        "Usar modelos, realizando cálculos, estimaciones y simulaciones, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)",
+        "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para enunciados y situaciones en contextos diversos (tablas, gráficos, recta numérica, entre otros). (OA k)",
+        "Representar y ejemplificar, utilizando analogías, metáforas y situaciones familiares para resolver problemas. (OA m)"
+      ],
+      "actitudes": [
+        "Abordar de manera flexible y creativa la búsqueda de soluciones a problemas de la vida diaria, de la sociedad en general, o propios de otras asignaturas. (OA A)",
+        "Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales. (OA C)",
+        "Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas. (OA D)"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Mostrar que comprenden la multiplicación y la división de números enteros:\n> Representándolos de manera concreta, pictórica y simbólica.\n> Aplicando procedimientos usados en la multiplicación y la división de números naturales.\n> Aplicando la regla de los signos de la operación.\n> Resolviendo problemas rutinarios y no rutinarios.",
+          "indicadores": [
+            "Representan la multiplicación por -1 de manera concreta; por ejemplo: con situaciones o procesos inversos (estar en contra de, reflexión de luz, etc.).",
+            "Desarrollan la regla de los signos en ejemplos concretos o en la recta numérica: + • + = +; + • - = -; - • + = -; - • - = +.",
+            "Representan la multiplicación de números enteros positivos y negativos de forma pictórica (recta numérica) o simbólica.",
+            "Aplican la regla de los signos de las multiplicaciones y de las divisiones en ejercicios rutinarios.",
+            "Representan, de forma concreta o pictórica, la división de un número negativo por un número natural.",
+            "Multiplican números enteros positivos y/o negativos, utilizando la multiplicación de números naturales y la regla de los signos.",
+            "Resuelven problemas cotidianos que requieren la multiplicación o división de números enteros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Utilizar las operaciones de multiplicación y división con los números racionales en el contexto de la resolución de problemas:\n> Representándolos en la recta numérica.\n> Involucrando diferentes conjuntos numéricos (fracciones, decimales y números enteros).",
+          "indicadores": [
+            "Representan las cuatro operaciones con fracciones negativas y decimales negativos en la recta numérica.",
+            "Realizan ejercicios rutinarios que involucren las cuatro operaciones con fracciones y decimales.",
+            "Reconocen la operación matemática adecuada en problemas sencillos para resolverlos.",
+            "Resuelven problemas que involucren la multiplicación y la división de números racionales.",
+            "Utilizan diferente notación simbólica para un número racional (decimal, fraccionaria, mixta)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Explicar la multiplicación y la división de potencias de base natural y exponente natural hasta 3, de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Representan potencias de base y exponente natural hasta 3 con material concreto, como candados con clave de dígitos, trompo poligonal con números, dados didácticos, diagramas de árbol, etc.",
+            "Representan pictóricamente la multiplicación de potencias de igual base o de igual exponente natural hasta 3.",
+            "Representan la división de potencias de igual base o de igual exponente natural hasta 3.",
+            "Descubren, comunican y aplican las propiedades de la multiplicación y división de potencias, incluyendo el significado del exponente cero, en forma pictórica o simbólica.",
+            "Representan la potencia de potencias de manera concreta (combinación de máquinas que amplifican imágenes).",
+            "Relacionan situaciones reales con multiplicación, división y potencias de potencias.",
+            "Resuelven ejercicios rutinarios, aplicando la multiplicación, la división y la potenciación de potencias."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Mostrar que comprenden las raíces cuadradas de números naturales:\n> Estimándolas de manera intuitiva.\n> Representándolas de manera concreta, pictórica y simbólica.\n> Aplicándolas en situaciones geométricas y en la vida diaria.",
+          "indicadores": [
+            "Estiman en cm, hasta el primer decimal, el largo de un cuadrado cuya área en cm² no tiene un número cuadrado, y comparan la estimación con multiplicación por sí mismo, utilizando la calculadora.",
+            "Ubican la posición aproximada de raíces no exactas en la recta numérica.",
+            "Resuelven problemas de transformación de rectángulos (u otras figuras 2D) en cuadrados del mismo contenido del área, calculando el lado del cuadrado.",
+            "Calculan el perímetro en situaciones de la vida diaria que involucran cuadrados; por ejemplo: áreas de deporte, escenarios, parques, etc.",
+            "Aplican la raíz cuadrada en la solución de problemas de la vida cotidiana o de ciencias."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Resolver problemas que involucran variaciones porcentuales en contextos diversos, usando representaciones pictóricas y registrando el proceso de manera simbólica; por ejemplo: el interés anual del ahorro.",
+          "indicadores": [
+            "Relacionan porcentajes rebajados y aumentados con situaciones reales; por ejemplo: ofertas de venta, aumento del sueldo, inflación, etc.",
+            "Identifican, en expresiones de la vida diaria, los tres términos involucrados en el cálculo porcentual: el porcentaje, el valor inicial que corresponde al porcentaje y el valor que corresponde a la base.",
+            "Expresan porcentajes aumentados o rebajados con números decimales y viceversa; por ejemplo: un aumento de 15% es equivalente a multiplicar el valor inicial por 1,15; la rebaja de 12% es equivalente a multiplicar el valor inicial por 0,88, etc.",
+            "Determinan el porcentaje de promociones; por ejemplo: \"lleve 4 – pague 3\", etc.",
+            "Comparan críticamente varias ofertas de la compra en cuotas y calculan el costo total de la compra."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Determinación de sentidos de rotación de discos combinados",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Determinan los sentidos de la rotación de discos combinados. El disco blanco se gira en el sentido positivo. Determinan en qué sentido se gira el 4° disco a la izquierda y el 3° disco a la derecha. Luego se generaliza a una larga fila de discos conectados. Con nueve discos conectados, determinan el sentido de giro de los 8 discos que rodean el disco blanco del centro. Formulan una regla con la cual se puede determinar el sentido de la rotación de un disco en una cadena de discos conectados. Desafío: determinan el sentido de rotación de discos conectados en un plano."
+        },
+        {
+          "nombre": "Conexión de rueda dentada y multiplicación por (-1)",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Identifican la conexión de una rueda dentada con otra rueda dentada con la multiplicación con el factor (-1). Completan una tabla que relaciona el sentido de rotación del primer disco, la cantidad de conexiones con los discos, el producto de factores iguales de (-1) y el sentido de rotación del último disco."
+        },
+        {
+          "nombre": "Amigos y adversarios",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Determinan si son amigos o adversarios de una persona A completando una tabla con situaciones como: 'Es amigo de los adversarios de la persona A', 'Es amigo de los amigos de la persona A', etc., usando la analogía con multiplicación de signos."
+        },
+        {
+          "nombre": "Multiplicación en la recta numérica",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Determinan productos dibujando para cada caso una recta numérica: 5·(-1), 5·(-1)·(-1), 5·(-1)·(-1)·(-1), y generalizan para cantidad impar y par de factores (-1)."
+        },
+        {
+          "nombre": "Regla de los signos de productos de números enteros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Completan una tabla con el signo del primer factor, signo del segundo factor y signo del producto. Determinan primero el signo del producto y después calculan mentalmente productos como (-5)·3·(-2)·4 y (-2)·(-1)·(-6)·3·(-5)·(-4)."
+        },
+        {
+          "nombre": "Repartición sistemática de factores negativos y positivos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Determinan sistemáticamente todas las posibilidades de repartir factores negativos y positivos en un producto negativo de 5 factores y de 13 factores de números enteros."
+        },
+        {
+          "nombre": "Patrones de salto en la recta numérica",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "En la recta numérica se hacen saltos según patrón: empezando por 0, se salta una unidad en dirección negativa, después el doble del salto anterior en dirección positiva, después el doble del salto anterior en dirección negativa, etc. Anotan los números marcados por las flechas, determinan pictóricamente los próximos dos saltos, conjeturan acerca del signo y calculan hasta el décimo salto."
+        },
+        {
+          "nombre": "Ecuación recursiva de saltos (desafío)",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Desarrollan, para la actividad de patrones de salto, una ecuación en forma recursiva que determina los números resultantes. Calculan potencias de (-1)ⁿ y 2ⁿ, y combinan los resultados para desarrollar la expresión algebraica de la ecuación recursiva: a_n = a_{n-1} + (-1)ⁿ · 2ⁿ⁻¹ con a₀ = 0."
+        },
+        {
+          "nombre": "El ascensor de una mina",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Resuelven problemas sobre la rueda de un ascensor en una mina de carbón. Con cada giro completo de la rueda en el sentido del reloj, la cabina sube 15 m; por cada giro en sentido contrario, baja 15 m. Las profundidades bajo tierra se expresan con números negativos. Calculan profundidades después de determinada cantidad de giros combinados."
+        },
+        {
+          "nombre": "Tiempos de asistencia con números racionales negativos",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "En una fábrica, se registran los tiempos de asistencia de los trabajadores. Si uno llega atrasado dentro de una hora, se registra como tiempo negativo y se ofrece la posibilidad de recuperar el tiempo dentro de una semana. Calculan el tiempo perdido con atrasos de -1/2 h y -1/4 h, y determinan el saldo de horas después de quedarse 1 1/4 h más."
+        },
+        {
+          "nombre": "Relación de números racionales negativos con magnitudes",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Relacionan los números racionales negativos con medidas y unen los números con las magnitudes: -18,3°C (Temperatura), -416,5m (Nivel del Mar Muerto), -33,3% (IPC en un mes negativa), -8,9°C (Temperatura), -0,35% (Rebaja del precio), -12,4V (Voltaje), -3mm/m² (Déficit de agua). Relación con Ciencias Naturales OA 12 de 7° básico y OA 8 de 8° básico."
+        },
+        {
+          "nombre": "Representación de números racionales en la recta numérica",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Para cada uno de los números racionales, hay dos representaciones: una como fracción y otra como número decimal. Ponen las dos representaciones en los marcos pegados a las flechas de la recta numérica, eligiendo entre números como -0,7, -0,75, -0,4, -0,8, -0,5, 1/2, -1/4, -3/4, 0,25, 1,1, 0,75, -1,1, 0,2, 0,5, -1,25, etc."
+        },
+        {
+          "nombre": "Bidón de aceite y envases fraccionarios",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Un bidón de aceite tiene 6 litros de volumen. Se quiere echar todo el contenido en diferentes envases. Calculan el número de envases para capacidades de 1/2 L, 1/3 L, 1/4 L, 1/5 L, 1/6 L. Determinan el patrón para calcular el número de envases necesarios y generalizan para k litros en envases de 1/n litros y de m/n litros."
+        },
+        {
+          "nombre": "Saltos fraccionarios en la recta numérica",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Expresan el número marcado con una fracción irreducible en la recta numérica. Determinan cuántos saltos del tamaño de 2/5 se deben realizar para llegar al número 0, resuelven pictóricamente y con cálculo. Conjeturan sin cálculo acerca de los saltos necesarios para tamaño 4/5 y 3/5."
+        },
+        {
+          "nombre": "Recarga de cartuchos de impresora",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Una impresora de un computador tiene un sistema de cuatro cartuchos: tres de color (12,5 mL cada uno) y uno negro (22,5 mL). Los envases de recarga son de 62,5 mL (color) y 180 mL (negro). Calculan cuántas recargas se pueden hacer. Con un nuevo cartucho negro con 50% más de contenido, determinan la cantidad de tinta necesaria para 6 recargas."
+        },
+        {
+          "nombre": "Codificación y decodificación de palabras",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Las letras del alfabeto se ponen de manera ordenada en la recta numérica (A en -12, M en 0, Z en 12). La regla 1M ubica M en el cero. Codifican la palabra 'secreto', decodifican secuencias de números, intercambian mensajes entre compañeros y cambian la codificación inicial considerando la regla de codificación 1/10 U."
+        },
+        {
+          "nombre": "Ruletas triangulares y potencias",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan la cantidad de números diferentes de tres cifras que se pueden presentar en ruletas con forma de triángulo equilátero con cifras 1, 2 y 3. Calculan números de una, dos, tres y cuatro cifras que se pueden representar, y expresan los resultados como potencia. Agregan ruletas y calculan combinaciones."
+        },
+        {
+          "nombre": "Combinaciones de letras con ruletas",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan el número de combinaciones de letras con ruletas de 5 letras y completan una tabla con la cantidad de ruletas, número de combinaciones de letras y expresión del número como potencia."
+        },
+        {
+          "nombre": "Cuadrículas y potencias (cuadrado verde)",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan mediante dos métodos la cantidad de cuadritos de 1 mm² que hay dentro del cuadrado verde. Calculan el largo en mm, expresan cantidades con potencias, y expresan el resultado como producto de potencias y como potencia de potencias."
+        },
+        {
+          "nombre": "Cuadrículas y división de potencias (cuadrado azul)",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan mediante dos métodos la cantidad de cuadritos de 1 mm² en el cuadrado azul aplicando cociente de potencias. Expresan el resultado como división de potencias y generalizan algebraicamente."
+        },
+        {
+          "nombre": "Árboles de potencias",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "El dibujo muestra los árboles que representan las potencias de 2² y 3². Elaboran un árbol compuesto que representa la multiplicación de 2² por 3², y un árbol simple de la potencia con base natural y exponente 2 que representa el producto. Reconocen regularidades en los productos."
+        },
+        {
+          "nombre": "Potenciación de potencias con cuadrados",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "El dibujo muestra tres cuadrados compuestos de cuadrículas. A partir de la subdivisión de los cuadrados, determinan qué potencia de exponente 2 representa cada cuadrado, determinan el número de cuadrículas, conjeturan sobre una regla para potenciar potencias, y formulan y comunican la regla."
+        },
+        {
+          "nombre": "Árbol para presentar (2²)²",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Completan el árbol para presentar el término (2²)²."
+        },
+        {
+          "nombre": "Ejercicios rutinarios de potencias",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Calculan los productos y cocientes de potencias y transforman los resultados en números naturales: 2³·2², 5²·5¹, 10³·10³, 4²·4³, 8²·8², 125³:125², 100³:100¹, 27³:27², etc., incluyendo potencias de igual exponente y potencia de potencias."
+        },
+        {
+          "nombre": "Exponente desconocido en igualdades",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan el exponente desconocido para obtener igualdad de las expresiones: 2□·2³=2⁵, 5³:5□=5², 100³:□³=8, 2²·□²=144, (10□)³=10⁶, 100□:100=100², (4³)□=4⁹."
+        },
+        {
+          "nombre": "Clave digital de seguridad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Una clave digital de seguridad consiste en tres posiciones que pueden ser ocupadas por 12 símbolos diferentes. Para aumentar la seguridad, se decide considerar claves de 5 posiciones. Calculan cuántas listas con repeticiones se pueden generar, expresan con potencias, y comparan la cantidad de listas de 5 posiciones respecto a la de 3 posiciones."
+        },
+        {
+          "nombre": "Marco de madera para un cuadro",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Jaime quiere confeccionar un marco de madera para un cuadro de su hermana Andrea. El marco debe tener la forma de un cuadrado que enmarca el área de 900 cm². Están disponibles listones de 1 cm de ancho de los siguientes largos: 20 cm, 25 cm, 30 cm, 35 cm, 40 cm, 50 cm. Calculan la medida del lado del cuadrado y determinan qué listones elegir para un mínimo de material sobrante."
+        },
+        {
+          "nombre": "Determinación de cuadrados a partir del área",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "A partir de áreas dadas (6500 m², 4900 m², 800 m², 144 m², 64 m², 264 m²), determinan si es posible que la figura tenga la forma de un cuadrado con lado de medida un número natural y completan una tabla con la forma concreta para la forma detectada y el lado del cuadrado."
+        },
+        {
+          "nombre": "Cálculo de lados de cuadrados",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Calculan los lados de los cuadrados dadas sus áreas: 121, 144, 81, 625, 400, 225, 256, 484, 49, 361, 729, 1600, 2500 m²."
+        },
+        {
+          "nombre": "Estimación de raíces de macizos de flores",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Macizos de flores de forma cuadrada tienen las siguientes áreas: 50 m², 20 m² y 80 m². Calculan aproximadamente los lados en unidades de metros, verifican el resultado por medio de la multiplicación y lo redondean al primer decimal."
+        },
+        {
+          "nombre": "Raíces cuadradas en la recta numérica",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Dibujan en papel milimetrado una recta numérica y marcan las posiciones de los números del 0 al 10. Determinan las raíces cuadradas no exactas y marcan sus posiciones aproximadas: √2, √5, √8, √10, √20, √30, √50, √70."
+        },
+        {
+          "nombre": "Relación de raíces con intervalos",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Relacionan las raíces cuadradas no exactas con los intervalos correspondientes uniendo casillas con flechas (ej. [7,7; 7,8], [5,9; 6,0], [5,1; 5,2], [6,4; 6,5], [4,6; 4,7], [7,0; 7,1])."
+        },
+        {
+          "nombre": "Índice de masa corporal (IMC)",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Mediante el índice de masa corporal (IMC), se puede calcular la estatura necesaria de una persona para tener un peso adecuado. La fórmula es: x = √(p/i), donde x es la estatura en metros, p la masa en kg e i el IMC. Usando tablas de IMC para 12-14 años, calculan la estatura mínima y máxima para tener un peso normal. Para un aumento de peso de 5 kg, calculan el aumento de estatura necesario. Relación con Educación Física y Salud OA 5 de 8° básico."
+        },
+        {
+          "nombre": "Situaciones de rebajas y aumentos porcentuales",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Unen con flechas las situaciones de rebajas o aumentos con los porcentajes finales correspondientes: aumento del sueldo por 3,5% → 103,5%; rebaja del precio por un cuarto → 75%; agregar IVA de 19% → 119%; reducción del precio a la mitad → 50%; oferta 'lleve 5 pague 4' → 80%; aumento del número de pasajeros por un quinto → 120%; reducción de los ingresos por un tercio → 66,6%. Relación con Historia, Geografía y Ciencias Sociales (Formación económica)."
+        },
+        {
+          "nombre": "Rebaja y aumento de una estufa eléctrica",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En una venta especial al inicio del invierno, se hizo una rebaja de 25% a una estufa eléctrica. Después de haber terminado la promoción, el vendedor aumentó el precio ya rebajado por el mismo porcentaje de 25%. Determinan si se llegó al precio anterior, explican la respuesta y la comunican a sus compañeros. Relación con Historia, Geografía y Ciencias Sociales (Formación económica)."
+        },
+        {
+          "nombre": "Producción de ampolletas con falla",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En una fábrica se producen ampolletas para el uso doméstico. Según la experiencia de los controles que se realizan al azar, se estima que un 4% de la producción tiene una falla. Determinan el porcentaje estimado de las ampolletas sin falla y cuántas ampolletas se deben producir para obtener 120.000 ampolletas sin falla. Relación con Historia, Geografía y Ciencias Sociales (Formación económica)."
+        },
+        {
+          "nombre": "Financiamiento de un auto",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "El precio de un auto nuevo es de $10.400.000. La tienda ofrece una alternativa para financiar la compra: se paga un pie de $4.000.000 y el resto se cancela en 12 cuotas de $685.000. Si se deciden por esta oferta de financiamiento, reciben un bono de $1.000.000 respecto del precio original. Calculan el precio total del auto si optan por el financiamiento de la tienda y determinan el porcentaje total de la compra en comparación con el precio original. Relación con Historia, Geografía y Ciencias Sociales (Formación económica)."
+        },
+        {
+          "nombre": "Viaje de estudios con descuento por grupo",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Para el viaje de estudios de un curso de 80 alumnos, una empresa de turismo ofrece las siguientes condiciones: cada 10 alumnos, uno no paga y se reparte el ahorro a todos los alumnos. El precio del viaje sin la oferta sería de $9.600.000. Calculan el porcentaje de la rebaja y el precio rebajado que debe pagar cada uno de los alumnos."
+        },
+        {
+          "nombre": "Variación porcentual en cuadrados",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los siguientes cuadrados representan una variación porcentual en la medida de sus lados. Miden los lados y determinan la variación porcentual de la medida de los lados. Dibujan dos de los cuadrados, respetando el cambio porcentual. Calculan el área y el cambio porcentual del área de un cuadrado al siguiente. Explican la relación entre el aumento de la medida del lado y el aumento del área."
+        },
+        {
+          "nombre": "Crecimiento de un elefante",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Un elefante recién nacido pesa aproximadamente 90 kg (3% del peso de un elefante adulto). Calculan el peso adulto y, considerando que estabiliza su masa a los 30 años con aumento proporcional, determinan el porcentaje de aumento año a año. Las orejas miden el 60% de la altura del elefante (330 cm adulto); calculan su medida y el porcentaje de crecimiento hasta los 25 años."
+        },
+        {
+          "nombre": "Cálculo de intereses en cuentas de ahorro",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Calculan, redondeando cuando sea necesario, los datos faltantes en una tabla de tres cuentas de ahorro (A: capital inicial 16.400 CLP, tasa 4%, interés anual 1.200 CLP; B: capital 7.000 CLP, tasa 6%, interés 420 CLP; C: interés 920 CLP, tasa 6%) con variables de capital inicial, tasa de interés, tipo de interés, tiempo de ahorro e interés. Relación con Historia, Geografía y Ciencias Sociales (Formación económica)."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Operaciones con números enteros",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "Esta actividad se presta para que los alumnos se autoevalúen y para que el docente asesore a uno o más estudiantes por medio de una entrevista individual. Los alumnos responden preguntas del tipo: ¿Qué se puede decir con respecto al número -10? ¿Qué operaciones con números tienen como resultado el valor -10? Por ejemplo: -10 = (-2) + (-8); -10 = (-2) • 5. Prueban con otros números (-20, -24, -32). Dan 10 posibilidades de operaciones con dos números enteros para obtener -6. Dan 10 o 15 posibilidades para obtener -8, -12, -16, 8, 12, 16. Elaboran ejercicios mixtos con 8 números enteros para obtener como resultado -124 y -156.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Responden de manera variada frente a la primera pregunta, relacionando el número con operaciones entre números y con un valor que indica algo en contexto.",
+              "Determinan diferentes operaciones entre números que tienen como resultado el número -10.",
+              "Prueban calculando adiciones y/o multiplicaciones de números para verificar que siempre un número entero se puede escribir como adición y/o multiplicación de otros números enteros.",
+              "Encuentran por lo menos 10 posibilidades de operaciones con dos números enteros para obtener el mismo resultado.",
+              "Relacionan cálculos de adiciones, sustracciones, multiplicación y división de números enteros para obtener un resultado.",
+              "Elaboran y calculan correctamente ejercicios mixtos, respetando el uso de paréntesis y la prioridad de la multiplicación sobre la adición y la sustracción."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Crecimiento de un cristal y potencias",
+          "oas_evaluados": [
+            3
+          ],
+          "actividad_evaluacion": "El desarrollo de esta evaluación se puede registrar en el diario de vida matemático. Los alumnos utilizan la siguiente información sobre el crecimiento de un cristal: un cristal con forma de cubo de 1 mm³ crece 4 mm en las tres direcciones (ancho, alto y largo) cada 100 años (1 siglo). Calculan el volumen del cristal después de: 100 años, 2 siglos, 5 siglos, 10 siglos.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Elaboran una tabla de valores sobre el crecimiento del cristal por siglo.",
+              "Identifican el crecimiento para el lado, de ancho y alto del cristal por siglo.",
+              "Calculan el volumen del cristal de manera adecuada para cada uno de los años.",
+              "Utilizan las potencias para el volumen de un cubo.",
+              "Expresan la cantidad de años en notación científica para hacer una transferencia entre representaciones.",
+              "Conjeturan sobre el crecimiento del cubo en siglos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Interés y más intereses",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Esta evaluación incluye una presentación individual o en pares de la resolución de uno de los problemas planteados. Los alumnos trabajan el ejercicio 1: Interés y más intereses. Completan una tabla que muestra el desarrollo del capital para una tarjeta de ahorro del tipo A, con tasas de interés anuales del 0,50%, 1,05%, 1,75%, 2,25%, 3,25% y 4,50% para 6 años. Comienzan con un capital inicial que crean adecuado para ellos, luego cambian el capital inicial y comparan.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen cada uno de los términos que se presentan en la tabla.",
+              "Traspasan información del recuadro a la tabla identificando correctamente la variable y la tasa de interés correspondiente a cada año.",
+              "Calculan de manera adecuada el interés obtenido y el capital final de cada año.",
+              "Completan la tabla de manera adecuada.",
+              "Comparan dos capitales iniciales y sus variaciones anuales y al final de los 6 años.",
+              "Comentan beneficios y perjuicios del ahorro a largo plazo (6 años).",
+              "Averiguan sobre las tasas de interés de diferentes bancos."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad, los estudiantes avanzan en las operaciones de expresiones algebraicas respecto de conceptos de geometría como el área y el volumen, para poder manipular las factorizaciones. El foco de esta unidad está en el concepto de función, que se introduce como un cambio lineal. El primer acercamiento se efectúa por medio de tablas y nociones sencillas sobre lo que es un cambio; se debe utilizar la noción de proporcionalidad directa para comenzar con esta introducción. La noción de función y sus representaciones toma mayor fuerza en la habilidad de modelar situaciones de la vida diaria y de otras asignaturas, considerando problemas abiertos y que pueden ser resueltos por medio de la función y de sus representaciones. Los alumnos trabajan con ecuaciones e inecuaciones; el ámbito numérico ha sido ampliado desde los números enteros, trabajado en 7°, a los números racionales. Este avance se puede trabajar desde lo concreto, con las representaciones utilizadas en años anteriores, hasta llegar a la manipulación simbólica que implican las ecuaciones y las inecuaciones. También conocerán la función afín y su relación con la función lineal; por lo tanto, los conocimientos iniciales de esta unidad son un prerrequisito para el último objetivo de la unidad. La función afín se relaciona con el interés simple para que los alumnos traspasen sus conocimientos de situaciones financieras conocidas de su entorno, a los nuevos conceptos.",
+      "conocimientos_previos": [
+        "Operaciones de números enteros.",
+        "Operaciones de números decimales y fracciones.",
+        "Variaciones porcentuales.",
+        "Reducción de expresiones algebraicas.",
+        "Concepto de proporción directa.",
+        "Ecuaciones e inecuaciones con números enteros."
+      ],
+      "palabras_clave": [
+        "Factorización",
+        "función",
+        "cambio lineal",
+        "función lineal",
+        "ecuaciones",
+        "inecuaciones",
+        "función afín",
+        "interés simple"
+      ],
+      "conocimientos": [
+        "Factorización de expresiones algebraicas.",
+        "Concepto de función.",
+        "Función lineal.",
+        "Ecuaciones con números racionales.",
+        "Inecuaciones con números racionales.",
+        "Función afín."
+      ],
+      "habilidades": [
+        "Evaluar procedimientos y comprobar resultados propios y de otros, de un problema matemático. (OA b)",
+        "Explicar y fundamentar: soluciones propias y los procedimientos utilizados; resultados mediante definiciones, axiomas, propiedades y teoremas. (OA e)",
+        "Seleccionar y ajustar modelos para resolver problemas asociados a ecuaciones e inecuaciones de la forma ax + b >, <, = c, con a, b, c ∈ N, comparando dependencias lineales. (OA i)",
+        "Evaluar la pertinencia de modelos: en relación con el problema presentado; considerando sus limitaciones. (OA j)",
+        "Relacionar y contrastar información entre distintos niveles de representación. (OA l)"
+      ],
+      "actitudes": [
+        "Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales. (OA C)",
+        "Mostrar una actitud crítica al evaluar las evidencias e informaciones matemáticas y valorar el aporte de los datos cuantitativos en la comprensión de la realidad social. (OA E)",
+        "Usar de manera responsable y efectiva las tecnologías de la comunicación en la obtención de información, dando crédito al trabajo de otros y respetando la propiedad y la privacidad de las personas. (OA F)"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Mostrar que comprenden las operaciones de expresiones algebraicas:\n> Representándolas de manera pictórica y simbólica.\n> Relacionándolas con el área de cuadrados, rectángulos y volúmenes de paralelepípedos.\n> Determinando formas factorizadas.",
+          "indicadores": [
+            "Modelan concreta o pictóricamente (área de rectángulos) la propiedad distributiva de la multiplicación sobre la suma: (a + b) · c = ac + bc, (a + b) · (c + d) = ac + ad + bc + bd.",
+            "Transforman productos en sumas y sumas en productos, en ejercicios rutinarios.",
+            "Elaboran expresiones algebraicas a base de composiciones de áreas y perímetros de figuras 2D.",
+            "Representan composiciones de áreas y perímetros de figuras 2D, basándose en expresiones algebraicas.",
+            "Desarrollan y reducen términos algebraicos que incluyen sumas y productos, en ejercicios rutinarios."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Mostrar que comprenden la noción de función por medio de un cambio lineal:\n> Utilizando tablas.\n> Usando metáforas de máquinas.\n> Estableciendo reglas entre x e y.\n> Representando de manera gráfica (plano cartesiano, diagramas de Venn), de manera manual y/o con software educativo.",
+          "indicadores": [
+            "Elaboran, completan y analizan tablas de valores y gráficos, y descubren que todos los pares de valores tienen el mismo cociente (\"constante de proporcionalidad\").",
+            "Descubren el concepto de función mediante la relación de proporcionalidad directa.",
+            "Descubren que la inclinación (pendiente) de la gráfica depende de la constante de la proporcionalidad.",
+            "Representan la noción de función de manera concreta (utilizando metáforas de máquinas), pictórica o simbólica.",
+            "Elaboran las tablas de valores y gráficos correspondientes, basados en ecuaciones de funciones lineales f(x) = a · x (y = a · x).",
+            "Representan la linealidad f(kx) = kf(x) y f(x₁ + x₂) = f(x₁) + f(x₂) en tablas y gráficos.",
+            "Identifican la pendiente del gráfico de la función f(x) = a · x con Δy/Δx el factor a.",
+            "Verifican que las coordenadas de puntos pertenecientes al gráfico son soluciones de la ecuación f(x) = a · x.",
+            "Modelan situaciones de la vida cotidiana o de ciencias con funciones lineales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Modelar situaciones de la vida diaria y de otras asignaturas, usando ecuaciones lineales de la forma: ax = b; x/a = b, a ≠ 0; ax + b = c; x/a + b = c; ax = b + cx; a(x + b) = c; ax + b = cx + d (a, b, c, d, e ∈ Q).",
+          "indicadores": [
+            "Representan pictóricamente, mediante balanzas, ecuaciones de la forma: ax = b; x/a = b, a ≠ 0; ax + b = c; x/a + b = c; ax = b + cx; a(x + b) = c; ax + b = cx + d.",
+            "Identifican las actividades \"agregar a la balanza\" con la adición y \"sacar de la balanza\" con la sustracción.",
+            "Modelan transformaciones equivalentes con actividades que mantienen el equilibrio de la balanza.",
+            "Modelan situaciones que requieren de una ecuación o inecuación para responder a un problema.",
+            "Resuelven ecuaciones de la forma: ax = b; x/a = b, a ≠ 0; ax + b = c; x/a + b = c; ax = b + cx; a(x + b) = c; ax + b = cx + d en ejercicios rutinarios.",
+            "Resuelven problemas cotidianos, utilizando ecuaciones e inecuaciones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Resolver inecuaciones lineales con coeficientes racionales en el contexto de la resolución de problemas, por medio de representaciones gráficas, simbólicas, de manera manual y/o con software educativo.",
+          "indicadores": [
+            "Representan inecuaciones de manera concreta (balanzas en estado de desequilibrio), pictórica o simbólica.",
+            "Reconocen que una transformación equivalente de una inecuación no debe alterar el sentido de la desigualdad.",
+            "Verifican en la recta numérica que la multiplicación (división) de una inecuación con un número negativo invierte el sentido de los símbolos <, >.",
+            "Resuelven inecuaciones de la forma ax + b < c o ax + b > c en ejercicios rutinarios.",
+            "Resuelven problemas de la vida cotidiana que tienen una base fija y cambio constante, mediante ecuaciones e inecuaciones de la forma mencionada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Mostrar que comprenden la función afín:\n> Generalizándola como la suma de una constante con una función lineal.\n> Trasladando funciones lineales en el plano cartesiano.\n> Determinando el cambio constante de un intervalo a otro, de manera gráfica y simbólica, de manera manual y/o con software educativo.\n> Relacionándola con el interés simple.\n> Utilizándola para resolver problemas de la vida diaria y de otras asignaturas.",
+          "indicadores": [
+            "Representan, completan y corrigen tablas y gráficos pertenecientes a cambios con una base fija y tasa de cambio constante.",
+            "Elaboran, basados en los gráficos, la ecuación de la función afín: f(x) = a · x + b.",
+            "Determinan las regiones en el plano cartesiano cuyos puntos p(x,y) representan soluciones (x,y) de las inecuaciones: y < a · x + b o y > a · x + b.",
+            "Diferencian modelos afines, lineales y de proporcionalidad inversa.",
+            "Modelan situaciones de la vida diaria o de ciencias con funciones afines.",
+            "Identifican, en la ecuación funcional, el factor a con la pendiente Δy/Δx de la recta y el sumando b con el segmento entre el punto de intersección del gráfico con el eje vertical y el origen o(0,0).",
+            "Elaboran gráficos de funciones afines a y b dadas o con dos puntos dados y verifican que las coordenadas de puntos pertenecientes al gráfico son soluciones de la ecuación f(x) = a · x + b.",
+            "Resuelven problemas de la vida diaria o de ciencias que involucran el cambio constante expresado mediante ecuaciones recursivas de la forma f(x + 1) – f(x) = c."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Rectángulos de igual área",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "El dibujo muestra dos rectángulos que tienen la misma área. Expresan algebraicamente ambas áreas, utilizando las variables a y b, y mencionan las propiedades con las cuales se transforma la primera expresión algebraica a la segunda expresión algebraica."
+        },
+        {
+          "nombre": "Transformaciones algebraicas con figuras",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Expresan el siguiente proceso con una transformación algebraica a partir de figuras rectangulares. Elaboran una expresión aritmética de la situación 1, la transforman en la expresión 2 mencionando la propiedad algebraica aplicada, y luego transforman la expresión 2 en un producto mencionando la propiedad aplicada."
+        },
+        {
+          "nombre": "Rectángulo con palitos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Un rectángulo se construye con 10 palitos del largo x y 6 palitos del largo y. Los palitos del mismo largo se utilizan en lados opuestos. Elaboran una expresión algebraica para el área del rectángulo, transforman algebraicamente esta expresión en otro producto y visualizan con rectángulos la transformación realizada."
+        },
+        {
+          "nombre": "Composición de cuatro figuras 2D y producto notable",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En el dibujo se muestra la composición de cuatro figuras 2D (cuadrados y rectángulos con lados r y s). Elaboran una expresión aritmética que representa el área, reagrupan las cuatro figuras en un cuadrado con lado r + s, elaboran el término algebraico del área del cuadrado, transforman a la expresión del primer producto notable y verifican la equivalencia de ambas expresiones."
+        },
+        {
+          "nombre": "Composición de cuadrados y rectángulos (x e y)",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En el dibujo se muestra una composición de cuadrados y rectángulos con lados x e y. Elaboran una expresión aritmética de la composición, reagrupan las 8 figuras en dos cuadrados grandes de lado x + y, elaboran una expresión algebraica multiplicativa que representa el área de los cuadrados, y factorizan la expresión verificando la equivalencia."
+        },
+        {
+          "nombre": "Cálculo de áreas y reducción de expresiones",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Consideran figuras rectangulares con dimensiones: 2x, 5x, x, 4x, 3x y 2x+1. Calculan el área de cada una de las regiones que componen cada figura, describen qué tienen en común las expresiones resultantes, agrupan aquellas que tengan el mismo factor literal y las reducen, expresando la expresión final como un polinomio. Calculan el área de cada figura sin considerar la subdivisión."
+        },
+        {
+          "nombre": "La copiadora y la función lineal",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "En el dibujo se muestra una copiadora que puede aumentar o reducir el tamaño de los originales. Con el foco para duplicar la altura de las letras, completan una tabla con alturas originales (6, 8, 10, 12, 16, 20, 36, 48, 72 mm) y las alturas de las copias f(x). Luego con foco para reducir a la mitad, completan otra tabla (alturas originales: 11, 12, 16, 18, 22, 26, 28, 64, 90 mm)."
+        },
+        {
+          "nombre": "Modelación de aumento y reducción con funciones lineales",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Una función lineal f con la ecuación funcional f(x) = a · x modela una máquina que aumenta o reduce los ingresos según un factor constante. Una función se puede representar por pares de números ordenados (x, f(x)). Escriben una función lineal que modele el aumento de ingresos y otra que modele la reducción. Grafican ambas e indican pares de números ordenados."
+        },
+        {
+          "nombre": "Identificación de funciones lineales en gráficos",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "En el sistema de coordenadas aparecen cuatro gráficos de funciones lineales: f, g, h, m. Determinan las ecuaciones funcionales de las funciones. Identifican cuáles representan un crecimiento y cuáles un decrecimiento, determinan el punto que tienen los gráficos en común, y relacionan puntos dados P(-14,2), Q(10,6), R(8,16), S(-3,12) con los gráficos respectivos."
+        },
+        {
+          "nombre": "Funciones lineales y sectores del plano",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Dadas las ecuaciones funcionales f(x)=-0,75x, g(x)=1,5x, h(x)=0,25x, k(x)=-2,5x, m(x)=3/5x, n(x)=-5/4x, determinan cuáles de ellas pasan por los sectores A, B, C, D, E, F, G, H del plano cartesiano, sin dibujar los gráficos."
+        },
+        {
+          "nombre": "Velocidad de un avión",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Un avión vuela a velocidad constante con el autopiloto prendido. Sofía anotó los datos del vuelo: a las 4:00 del destino, distancia 720 km; a las 3:58, distancia 716 km. Calculan la velocidad del avión, predicen datos media hora después, determinan la ecuación funcional del vuelo a velocidad constante y completan una tabla de valores."
+        },
+        {
+          "nombre": "Proyector y función lineal (triplicar tamaño)",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Con el foco ajustado, un proyector triplica el tamaño de los objetos que aparecen en el original. Para una presentación, se necesitan imágenes 6 veces más grande. Conjeturan sobre dos soluciones: aumentar el foco existente o aumentar previamente el tamaño del original. Describen la función del proyector con una ecuación funcional y verifican la igualdad f(2x) = 2 · f(x)."
+        },
+        {
+          "nombre": "Proyección con data show y linealidad de la función",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Con un data show, se proyecta el logo de una empresa. La franja inferior verde tiene 12 mm de altura, la franja superior amarilla tiene 6 mm. El data show está enfocado para proyectar con el factor 30. Calculan la altura total del logo proyectado, calculan por separado las alturas de las franjas, describen la función del proyector y verifican f(x₁ + x₂) = f(x₁) + f(x₂)."
+        },
+        {
+          "nombre": "Aplicación de la linealidad de funciones",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Aplican la linealidad de la siguiente función lineal f(x) = 5 · x y completan una tabla con variables x₁, x₂, términos funcionales y valores funcionales como 0,5·f(x₁)=18, f(x₁+x₂)=12 con x₂=20, 2·f(x₂)=100, f(x₁–x₂) con x₁=5 y x₂=8, f(x₁+x₂) con valores 0,5 y 7,5, etc."
+        },
+        {
+          "nombre": "Verificación gráfica de la linealidad",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Verifican en el gráfico la linealidad de la función f(x) = 1/2 · x, representando las igualdades f(k·x) = k·f(x) para x=2 y k=4, f(x₁+x₂)=f(x₁)+f(x₂) para x₁=2 y x₂=-6, y k·f(x₁+x₂)=k·f(x₁)+k·f(x₂) para x₁=-8, x₂=10 y k=4."
+        },
+        {
+          "nombre": "Modelación de balanzas y ecuaciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Modelan la situación de la balanza de la figura 1 con una ecuación de la forma ax + b = cx + d. Describen el cambio que se realiza en la balanza y anotan la operación matemática correspondiente que se aplica a la ecuación original. Elaboran la ecuación que modela la balanza en la figura 2 y describen el cambio realizado."
+        },
+        {
+          "nombre": "Clase sugerida: Construcción de un túnel con ecuaciones recursivas (OA 10)",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Dos máquinas gigantes excavan un túnel partiendo de ambos extremos. La máquina izquierda avanza 4 m/día y la derecha 5 m/día. El túnel tendrá un largo total de 283 m. Las máquinas trabajan en forma simultánea y después de cada 5 días, se realizan trabajos de mantención por 2 días. El 1° de marzo comienzan los trabajos. Elaboran la ecuación recursiva que determina la distancia entre ambas máquinas por intervalos de días, determinan la distancia después del cuarto día, la distancia para el día 25 de marzo, y el día en que caerá la unión de ambas máquinas."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Factorización de expresiones algebraicas",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se evalúa mediante una actividad de portafolio. Los estudiantes recogen evidencias de su trabajo con factorizaciones, mostrando el proceso de transformación de sumas en productos y viceversa, con representaciones pictóricas y simbólicas de las propiedades algebraicas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Modelan concreta o pictóricamente la propiedad distributiva de la multiplicación sobre la suma.",
+              "Transforman productos en sumas y sumas en productos, en ejercicios rutinarios.",
+              "Elaboran expresiones algebraicas a base de composiciones de áreas y perímetros de figuras 2D.",
+              "Representan composiciones de áreas y perímetros de figuras 2D, basándose en expresiones algebraicas.",
+              "Desarrollan y reducen términos algebraicos que incluyen sumas y productos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Función lineal",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "Se evalúa mediante presentación o conferencia matemática. Los estudiantes presentan la resolución de un problema que involucra funciones lineales, indicando el proceso y los procedimientos usados para fundamentar el resultado obtenido, usando tablas, gráficos y ecuaciones funcionales.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Elaboran, completan y analizan tablas de valores y gráficos, descubriendo la constante de proporcionalidad.",
+              "Descubren el concepto de función mediante la relación de proporcionalidad directa.",
+              "Representan la noción de función de manera concreta, pictórica o simbólica.",
+              "Elaboran las tablas de valores y gráficos correspondientes basados en ecuaciones de funciones lineales.",
+              "Modelan situaciones de la vida cotidiana o de ciencias con funciones lineales."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Ecuaciones lineales",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Se evalúa mediante trabajo colaborativo. Los estudiantes trabajan en grupos para modelar y resolver problemas de la vida diaria usando ecuaciones lineales, representando pictóricamente con balanzas y simbólicamente con ecuaciones.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Representan pictóricamente, mediante balanzas, ecuaciones lineales.",
+              "Identifican las actividades de agregar y sacar de la balanza con adición y sustracción.",
+              "Modelan transformaciones equivalentes manteniendo el equilibrio de la balanza.",
+              "Modelan situaciones que requieren de una ecuación para responder a un problema.",
+              "Resuelven ecuaciones lineales en ejercicios rutinarios y problemas cotidianos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 4: Función afín",
+          "oas_evaluados": [
+            10
+          ],
+          "actividad_evaluacion": "Se evalúa mediante un proyecto de modelamiento. Los estudiantes resuelven problemas de la vida diaria que involucran cambio constante, usando funciones afines. Por ejemplo: el problema de la construcción de un túnel con máquinas que avanzan a distinta velocidad, trabajando con ecuaciones recursivas de la forma f(x+1) – f(x) = c.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Representan, completan y corrigen tablas y gráficos pertenecientes a cambios con base fija y tasa de cambio constante.",
+              "Elaboran, basados en los gráficos, la ecuación de la función afín f(x) = a · x + b.",
+              "Diferencian modelos afines, lineales y de proporcionalidad inversa.",
+              "Modelan situaciones de la vida diaria o de ciencias con funciones afines.",
+              "Resuelven problemas que involucran cambio constante expresado mediante ecuaciones recursivas."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad, los estudiantes descubren y aplican las fórmulas del área de superficies y del volumen de prismas rectos y de cilindros. Para ello, comienzan con cuerpos conocidos, como el cubo, y trabajan con sus redes para determinar las relaciones entre largo, ancho y alto, necesarias para desarrollar el nuevo conocimiento. El foco de esta unidad está en el teorema de Pitágoras, que se introduce desde lo concreto de sus aplicaciones, con dibujos explicativos y con una demostración matemática, pero sencilla del mismo. Los alumnos deben resolver problemas que involucren dicho teorema en contextos como la geometría, la construcción y el arte. Se recomienda integrar material concreto o algún medio tecnológico visual que les permita aprovechar al máximo la riqueza del teorema. Otro foco radica en la descripción de movimientos como la traslación, la rotación y la reflexión. Los alumnos se pueden apoyar en el plano cartesiano y en las posibilidades que ofrece para este tema. Dentro de la descripción de movimientos, se comienza con algunos sencillos para continuar con la composición de dos o más de estos movimientos; la motivación puede provenir del arte o la matemática. También se sugiere usar aquí medios visuales o material concreto para ayudar a los estudiantes a desarrollar su capacidad espacial.",
+      "conocimientos_previos": [
+        "Operaciones con números racionales.",
+        "Ecuaciones con soluciones racionales.",
+        "Construcción de triángulos.",
+        "Área de superficie de cubos y paralelepípedos.",
+        "Traslaciones, reflexiones y rotaciones."
+      ],
+      "palabras_clave": [
+        "Prismas rectos",
+        "cilindros",
+        "redes de cuerpos",
+        "teorema de Pitágoras",
+        "plano cartesiano",
+        "espacio",
+        "rotación",
+        "traslación",
+        "reflexión",
+        "composición de movimientos"
+      ],
+      "conocimientos": [
+        "Área de superficies y volumen de prismas rectos con diferentes bases.",
+        "Área de superficies y volumen de cilindros.",
+        "Teorema de Pitágoras.",
+        "La posición y el movimiento de figuras 2D.",
+        "Movimientos de figuras 2D.",
+        "Composición de rotaciones, traslaciones y reflexiones en el plano cartesiano y en el espacio."
+      ],
+      "habilidades": [
+        "Explicar y fundamentar: soluciones propias y los procedimientos utilizados; resultados mediante definiciones, axiomas, propiedades y teoremas. (OA e)",
+        "Fundamentar conjeturas, dando ejemplos y contraejemplos. (OA f)",
+        "Evaluar la argumentación de otros, dando razones. (OA g)",
+        "Describir relaciones y situaciones matemáticas de manera verbal y usando símbolos. (OA d)",
+        "Usar modelos, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)"
+      ],
+      "actitudes": [
+        "Demostrar curiosidad e interés por resolver desafíos matemáticos, con confianza en las propias capacidades, incluso cuando no se consigue un resultado inmediato. (OA B)",
+        "Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales. (OA C)",
+        "Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas. (OA D)"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Desarrollar las fórmulas para encontrar el área de superficies y el volumen de prismas rectos con diferentes bases y cilindros:\n> Estimando de manera intuitiva área de superficie y volumen.\n> Desplegando la red de prismas rectos para encontrar la fórmula del área de superficie aplicando las aproximaciones del perímetro y del área en la resolución de problemas.\n> Aplicando las aproximaciones del perímetro y del área en la resolución de problemas.\n> Aplicando las fórmulas a la resolución de problemas geométricos y de la vida diaria.",
+          "indicadores": [
+            "Arman y despliegan cajas de forma de prismas rectos.",
+            "Reconocen que las áreas laterales de todos los prismas rectos son rectángulos.",
+            "Elaboran redes de prismas rectos de diferentes bases y calculan las áreas de las superficies.",
+            "Resuelven problemas cotidianos que involucran el volumen y el área de prismas rectos.",
+            "Reconocen en forma intuitiva que los prismas a base de polígonos regulares se acercan a cilindros si se aumenta el número de los lados del prisma.",
+            "Confeccionan de manera concreta modelos de cilindros y los comparan con modelos o dibujos de prismas a base de polígonos regulares.",
+            "Transfieren la fórmula del volumen de un cubo para determinar la fórmula del volumen de un cilindro.",
+            "Calculan el área de cilindros en ejercicios rutinarios.",
+            "Resuelven problemas cotidianos y de ciencias relacionados con el área de la superficie y el volumen de cilindros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Explicar, de manera concreta, pictórica y simbólica, la validez del teorema de Pitágoras y aplicar a la resolución de problemas geométricos y de la vida cotidiana, de manera manual y/o con software educativo.",
+          "indicadores": [
+            "Descubren el teorema de Pitágoras concreta o pictóricamente, mediante descomposición o composición de cuadrados y triángulos rectángulos.",
+            "Dibujan triángulos rectángulos con los cuadrados respectivos encima los catetos y la hipotenusa, y verifican la validez del teorema de Pitágoras.",
+            "Reconocen que con dos lados del triángulo rectángulo dados, se puede calcular el tercer lado.",
+            "Despejan algebraicamente la fórmula c² = a² + b² para cualquier variable.",
+            "Estiman o calculan correctamente con la calculadora, las raíces cuadradas que resultan al aplicar el teorema de Pitágoras.",
+            "Verifican con las medidas dadas de un triángulo si es rectángulo o no.",
+            "Calculan el largo del lado faltante para que un triángulo sea rectángulo y lo verifican por construcción, aplicando el teorema de Tales (triángulos inscritos en una semicircunferencia).",
+            "Calculan los componentes perpendiculares de vectores dados.",
+            "Resuelven problemas cotidianos para calcular el largo de lados desconocidos y no accesibles en el plano y en el espacio, determinando primero los triángulos rectángulos respectivos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Describir la posición y el movimiento (traslaciones, rotaciones y reflexiones) de figuras 2D, de manera manual y/o con software educativo, utilizando:\n> Los vectores para la traslación.\n> Los ejes del plano cartesiano como ejes de reflexión.\n> Los puntos del plano para las rotaciones.",
+          "indicadores": [
+            "Realizan traslaciones en el plano con vectores dados.",
+            "Determinan el vector entre la imagen y la pre-imagen de 2 figuras 2D trasladadas y modelan la traslación y la combinación de traslaciones, por medio de vectores y la suma de ellos.",
+            "Reflexionan figuras 2D según los ejes dados, de manera concreta y pictórica.",
+            "Determinan el eje de reflexión entre la imagen y la pre-imagen de dos figuras 2D.",
+            "Reconocen que la rotación por 180° es una reflexión en un punto, llamado punto de simetría.",
+            "Identifican rotaciones, reflexiones y traslaciones en situaciones cotidianas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Componer rotaciones, traslaciones y reflexiones en el plano cartesiano y en el espacio, de manera manual y/o con software educativo, y aplicar a las simetrías de polígonos y poliedros, y a la resolución de problemas geométricos relacionados con el arte.",
+          "indicadores": [
+            "Realizan diferentes combinaciones de traslaciones, reflexiones y rotaciones y reconocen las propiedades.",
+            "Realizan teselados con figuras 2D, según los patrones dados.",
+            "Identifican patrones de teselados dados, descubriendo experimentalmente las propiedades de la congruencia; es decir, la conservación de la medida de segmentos y de ángulos.",
+            "Reconocen transformaciones isométricas dadas en el plano, identificando puntos importantes, como vector de traslación, centro de rotación, ángulo de rotación, eje o punto de reflexión."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Red de una figura 3D",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "El dibujo muestra la red de una figura 3D. Denominan la figura 3D, indicando sus características. Calculan el volumen de la figura. Dado un prisma recto con área A y altura h, desarrollan la fórmula para calcular el volumen del prisma. Miden los lados a, b y c y calculan el área de la superficie de la figura 3D."
+        },
+        {
+          "nombre": "Prisma recto de base triangular",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "En el recuadro se muestra el dibujo 3D de un prisma recto con la base de un triángulo equilátero. Denominan los pares de polígonos, miden los lados y elaboran la red del prisma. Calculan la superficie y el volumen del prisma."
+        },
+        {
+          "nombre": "Panales de abejas",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "La foto muestra el sistema de panales de abejas. La diagonal de una celda hexagonal es de aproximadamente 6 mm. Calculan el área de un triángulo central de una celda (altura ≈ 87% del lado), el área de una celda, el volumen de una celda (h=12 mm), y aproximadamente el número de celdas y el volumen de miel en 1 dm²."
+        },
+        {
+          "nombre": "Cuatro figuras 3D y prisma octagonal",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "El dibujo muestra cuatro figuras 3D. Identifican y denominan las figuras. Dibujan un círculo con r=3 cm y construyen el octágono regular inscrito. Dibujan la red del prisma octagonal (altura=5 cm) y marcan con colores el perímetro de la base y el manto. Conjeturan sobre la forma de los prismas al aumentar los vértices."
+        },
+        {
+          "nombre": "Cilindro inscrito en prisma de base cuadrada",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Un cilindro inscrito en un prisma de base cuadrada (lado d, altura h). El cilindro inscrito toca las cuatro paredes del prisma. Estiman el volumen del cilindro en comparación con el prisma circunscrito y lo expresan en porcentaje. Calculan la razón entre el área de la circunferencia y el cuadrado circunscrito en porcentaje. Comparan los porcentajes y conjeturan sobre la fórmula del volumen del cilindro, transfiriendo el resultado a un cilindro con radio r y altura h."
+        },
+        {
+          "nombre": "Medidas faltantes de cilindros",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Determinan las medidas faltantes de un cilindro despejando de la fórmula del cilindro. Calculan con π=3,14 para diferentes casos: dado r=8cm, h=25cm, volumen V; dada h=16cm, V=1,256l, radio r; dado V=14,139dm³, r=15cm, altura h; dada área basal A=200,96cm², V=3,0144dm³, altura h; dado diámetro d=2,0m, V=15,7m³, altura h."
+        },
+        {
+          "nombre": "Superficie del cilindro",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "El dibujo muestra un cilindro cerrado con base y tapa. Toman las medidas del diámetro y de la altura. Se imaginan un recorte del cilindro a lo largo de la línea negra punteada y un recorte a lo largo de la orilla de la tapa y de la base. Construyen el área que se obtendrá al abrir el cilindro y aplanar el material. Comparan el área desenrollada con las redes de prismas y la identifican con la superficie del cilindro. Calculan el área de la superficie del cilindro."
+        },
+        {
+          "nombre": "Desafío: Curvaturas en cañerías",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "A veces es necesario hacer curvaturas en cañerías, como las del desagüe. Comparan el cilindro estirado con el cilindro curvado con forma de medio anillo. Derivan la fórmula del volumen del tubo con forma de medio anillo y calculan el volumen para r=5cm (radio interior), R=15cm (radio del medio anillo). Describen las partes de una tubería 2D y calculan el volumen total para r=6cm, R=18cm, h=12cm."
+        },
+        {
+          "nombre": "Desafío: Rollo de plástico adherente",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Un rollo de plástico adherente tiene diámetro interior d₁=8cm, exterior d₂=16cm, altura a=50cm y grosor g=0,025mm. Estiman el área aproximada de plástico que tiene el rollo, calculan la cantidad de vueltas que da el plástico alrededor del rollo, conjeturan sobre el diámetro a usar para calcular el área de una vuelta (interior, exterior o promedio), calculan el área total del material y explican el procedimiento utilizado."
+        },
+        {
+          "nombre": "Volumen de sangre en arterias",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "En el cuerpo humano, la arteria del abdomen tiene un diámetro interior de 5,2 mm en promedio y un largo de 80 cm. Las dos arterias de la pierna tienen un largo de 120 cm cada una y un diámetro interior promedio de 3,8 mm. Calculan el volumen de sangre en la arteria del abdomen (en ml), en ambas arterias de la pierna, y el porcentaje de la sangre total (5 litros) en estas arterias. Relación con Ciencias Naturales OA 5 de 8° básico."
+        },
+        {
+          "nombre": "Descubrimiento del teorema de Pitágoras con cuadrados de 1 cm²",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Descubren el teorema de Pitágoras en el caso especial de dos cuadrados de 1 cm² de área, utilizando material concreto o en forma pictórica. Determinan el valor del área de la figura 1, identifican transformaciones para convertir la figura 1 en la figura 2, determinan el área de la figura 2, verifican que la figura interior de la figura 3 es un triángulo rectángulo isósceles, y comparan el área del cuadrado sobre la hipotenusa con las áreas de los cuadrados sobre los catetos, verbalizando y comunicando el resultado."
+        },
+        {
+          "nombre": "Verificación del teorema de Pitágoras en triángulos no isósceles",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Verifican, midiendo lados y calculando áreas, la validez del teorema de Pitágoras en triángulos rectángulos que no son isósceles, utilizando figuras o dibujos."
+        },
+        {
+          "nombre": "Demostración algebraica del teorema de Pitágoras",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "En el recuadro hay dos cuadrados de igual área: en el cuadrado al lado izquierdo hay dos cuadrados grises de distinto valor de área, en el cuadrado al lado derecho hay un solo cuadrado gris. Reemplazan los signos de interrogación por los términos algebraicos del área respectiva. Razonan por qué los dos cuadrados grises juntos del lado izquierdo tienen el mismo valor del área que el valor del área del cuadrado gris en el lado derecho. Expresan simbólicamente el resultado con los términos algebraicos de las áreas."
+        },
+        {
+          "nombre": "Cálculo de lados con el teorema de Pitágoras",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Determinan el largo del lado que falta en triángulos rectángulos mediante el teorema de Pitágoras: hipotenusa c=10cm, cateto a=6cm, cateto b=?; catetos e=5cm, f=12cm, hipotenusa h=?; cateto x=15cm, hipotenusa z=17cm, cateto y=?. Determinan cuáles triángulos son rectángulos: 21-20-30 vs 21-20-29; 7-25-24 vs 7-25-20."
+        },
+        {
+          "nombre": "Aplicación del teorema de Pitágoras: techo de una casa",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Aparece el dibujo de una casa con largo a=10m, ancho b=8m y altura del techo h=3m. Determinan el ancho s del techo de la casa, calculan el área total del techo, y determinan cuántos envases de pintura (rendimiento 80 m²) se debe comprar y qué cantidad de pintura sobra."
+        },
+        {
+          "nombre": "Identificación de triángulos rectángulos sin dibujar",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Dadas las medidas de los lados de un triángulo, determinan cuáles de los siguientes triángulos son rectángulos, sin dibujarlos: d=40cm, f=41cm, g=9cm; h=125cm, i=120cm, j=25cm; k=24cm, l=26cm, k=12cm; n=51cm, o=40cm, p=45cm."
+        },
+        {
+          "nombre": "Altura máxima de un mueble",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Un mueble tiene una profundidad de 60 cm y se lo quiere ubicar en una pieza que tiene una altura de 2,40 m. Estiman la altura máxima del mueble para ponerlo de pie sin rayar el techo, elaboran una ecuación con la cual se puede determinar la altura máxima, calculan la altura máxima del mueble y la redondean a cm."
+        },
+        {
+          "nombre": "Ancho de una carpa",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Una carpa tiene las medidas que indica el dibujo. Estiman el ancho de la carpa, elaboran una ecuación para determinar dicho ancho, calculan el ancho y lo redondean a cm."
+        },
+        {
+          "nombre": "Demostraciones geométricas del teorema de Pitágoras",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Trabajan las demostraciones geométricas del teorema de Pitágoras, de manera concreta y pictórica, basándose en imágenes con cuadrados sobre los catetos y la hipotenusa de triángulos rectángulos, acompañadas de símbolos algebraicos."
+        },
+        {
+          "nombre": "Puzles pitagóricos",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Elaboran de manera concreta algunos puzles pitagóricos y los resuelven."
+        },
+        {
+          "nombre": "Bote a remos cruzando el río (vectores)",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Un bote a remos cruza el río Futaleufú en dirección perpendicular a la corriente. Por cada 5 m que avanza en dirección perpendicular, la corriente lo desplaza 0,8 m en su dirección. El bote se desplaza 75 m desde la orilla A hacia la orilla opuesta B. Calculan los metros que flota en la dirección de la corriente, marcan la posición del bote usando escala (10m=1cm), miden el desplazamiento en el plano y lo convierten en desplazamiento real, y calculan mediante el teorema de Pitágoras."
+        },
+        {
+          "nombre": "Traslaciones en el sistema cartesiano (triángulo ABC)",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "En el sistema cartesiano de coordenadas está marcado el triángulo ABC. Determinan las coordenadas de los puntos A, B, C. Determinan las coordenadas de los vectores de traslación y los representan en la forma (x,y). Trasladan el triángulo ABC mediante los vectores, marcan las imágenes en rojo y verde, leen y representan las coordenadas con pares ordenados, determinan el vector que representa la composición de las traslaciones y conjeturan acerca de la posibilidad de calcular las coordenadas de las imágenes mediante los vectores."
+        },
+        {
+          "nombre": "Traslación y reflexión de rectángulo",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "En el sistema cartesiano de coordenadas está marcado el rectángulo P, Q, R, S. Determinan las coordenadas de los puntos y las representan con pares ordenados (x,y). Determinan las coordenadas del vector de traslación. Trasladan el rectángulo y marcan la imagen en rojo. Reflejan la imagen en el eje a y marcan la segunda imagen en verde. Comparan coordenadas de la pre-imagen con la segunda imagen y comparan la orientación de los puntos."
+        },
+        {
+          "nombre": "Reflexiones compuestas de figura 2D",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "En el sistema cartesiano está marcada la figura 2D I, J, K, L, M, N. Determinan las coordenadas de los puntos. Reflejan la figura en el eje a (vertical) y denominan los vértices en rojo. Reflejan la imagen en el eje b (horizontal) y denominan los vértices en verde. Comparan la figura 2D original con la segunda imagen y determinan con qué transformación isométrica se podría transformar la figura original a la segunda imagen en forma directa."
+        },
+        {
+          "nombre": "Identificación de transformaciones isométricas",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Determinan los ejes de reflexión, los vectores de traslación o el centro de rotación. Las figuras 2D en rojo son las imágenes de las figuras 2D originales. La figura 2D en color verde es la segunda imagen de la figura 2D original."
+        },
+        {
+          "nombre": "Simetría de rotación de figura 2D",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "En el recuadro aparece una figura 2D que tiene simetría de rotación. Identifican qué figura especial es, determinan el centro de simetría de rotación con regla y compás, determinan el sentido de rotación y el ángulo de la rotación que lleva la figura original a las figuras A'B'C' y A''B''C'', e identifican la imagen correspondiente a una rotación de -120°."
+        },
+        {
+          "nombre": "Composición de reflexiones equivale a traslación",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Reflejan cuadriláteros en el plano cartesiano según las rectas dadas y luego determinan qué traslación expresa la composición de las dos reflexiones."
+        },
+        {
+          "nombre": "Composición de transformaciones isométricas (triángulos X, P, Q)",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Se entregan diferentes transformaciones de una figura isométrica en el plano cartesiano. Los alumnos determinan cada transformación isométrica y luego la composición realizada entre los triángulos X, P y Q. Escriben la transformación isométrica en términos de las variables x e y en su forma matricial."
+        },
+        {
+          "nombre": "Arte y transformaciones isométricas",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Investigan sobre composiciones de transformaciones isométricas que han usado artistas en sus pinturas, y exponen sobre ellas."
+        },
+        {
+          "nombre": "Vectores de desplazamiento entre figuras idénticas",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Anotan las coordenadas de dos figuras 2D que tienen formas idénticas. Conjeturan sobre el desplazamiento de una figura al lugar de la otra. Describen el desplazamiento mediante un vector representado por un par ordenado (x,y). Dibujan la flecha del vector y determinan cómo se pueden calcular las coordenadas del vector mediante las coordenadas del punto original y del punto imagen."
+        },
+        {
+          "nombre": "Rotación y reflexión compuestas",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "En una hoja cuadriculada está el dibujo de una figura 2D. Realizan una rotación por 45° (a la izquierda) con el centro A. Reflejan la imagen de la figura en la recta representada de color rojo. Explican el proceder de sus compañeros de grupo."
+        },
+        {
+          "nombre": "Composición de dos transformaciones isométricas a un rectángulo",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Aplican una composición de dos transformaciones isométricas al rectángulo marcado en verde. Explican el procedimiento a sus compañeros de grupo."
+        },
+        {
+          "nombre": "Reflexiones compuestas de rectángulo y conmutatividad",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Determinan las coordenadas de un rectángulo (largo de cuadrícula = 1 unidad). Reflejan el rectángulo al eje horizontal y marcan la imagen en rojo. Reflejan la imagen al eje vertical y la marcan en azul. Constatan regularidades y conjeturan, sin realizar transformación alguna, acerca de la conmutatividad de la composición de las reflexiones."
+        },
+        {
+          "nombre": "Teselados con figura 2D",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "La imagen muestra el teselado con una figura 2D. Los lados verticales tienen el largo de una cuadrícula. Calculan el área de una de las figuras que componen el teselado y confeccionan un teselado de 18 figuras 2D en una hoja cuadriculada."
+        },
+        {
+          "nombre": "Simetrías de una figura 3D",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "La imagen muestra una figura 3D. Describen la figura y mencionan si es regular o no. Marcan planos de simetría dentro de la figura 3D y dibujan ejes de rotación de simetría."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Redes y superficie de prismas",
+          "oas_evaluados": [
+            11
+          ],
+          "actividad_evaluacion": "Esta evaluación se puede registrar en el diario de vida matemático. Consideran redes de prismas dibujadas. Los estudiantes completan una tabla: escriben su primera impresión sobre si las frases son ciertas o falsas sobre los dibujos, comprueban sus impresiones recortando y plegando las redes, y calculan el área de superficie de los prismas de dos formas distintas. Las frases incluyen: 'De la red (1) se obtiene un prisma que tiene la superficie más pequeña', 'De la red (2) se obtiene un prisma que tiene la superficie más grande', 'De la red (4) se obtiene un prisma especial y tiene el área de superficie más grande que los otros prismas'.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen cuáles de las diferentes redes corresponden a un prisma.",
+              "Trabajan de manera adecuada con el material que se les presenta.",
+              "Calculan el área de superficie, midiendo y contando los cuadrados de las redes.",
+              "Calculan el área de superficie, utilizando la fórmula.",
+              "Completan la tabla y comparan con sus primeras impresiones."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Reflexiones y rotaciones en el plano cartesiano",
+          "oas_evaluados": [
+            13
+          ],
+          "actividad_evaluacion": "Esta actividad se presta para que el docente asesore a uno o más alumnos por medio de una entrevista individual. Los alumnos utilizan el plano cartesiano para: reflejar el punto A(-4,2) sobre el eje Y obteniendo B; reflejar B sobre el eje X obteniendo C; construir la recta l que tiene todos los puntos que son simétricos al punto A y al punto C. Dibujan el triángulo determinado por A(5,4), B(9,6) y C(6,8); reflejan el triángulo ABC sobre el punto A y determinan los nuevos puntos; reflejan el triángulo ABC sobre el punto medio del trazo AC y determinan las nuevas coordenadas. Conjeturan sobre la relación entre una rotación y una reflexión sobre un punto o sobre un eje y comparten sus conjeturas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reflejan los puntos de manera adecuada sobre los ejes.",
+              "Siguen indicaciones de manera adecuada y obtienen el resultado esperado.",
+              "Conocen lo que significa el término simétrico.",
+              "Determinan la recta de todos los puntos que están a la misma distancia de A y de C.",
+              "Reflejan el triángulo de manera adecuada sobre los puntos mencionados.",
+              "Determinan el punto medio del trazo AC para reflejar el triángulo ABC.",
+              "Conjeturan que la rotación en 180° es lo mismo que la reflexión sobre un punto.",
+              "Comparten sus conjeturas y argumentan al respecto."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Composición de transformaciones isométricas",
+          "oas_evaluados": [
+            14
+          ],
+          "actividad_evaluacion": "La resolución de esta actividad se puede agregar al portafolio. Los alumnos determinan el eje de simetría de una figura y encuentran al menos una composición de transformaciones para obtener el triángulo A'B'C' a partir del triángulo ABC. Determinan el ángulo de rotación y encuentran una composición de transformaciones. Componen una traslación por el vector (0,5) con una rotación en 180°. Responden preguntas: ¿Qué se obtiene después de repetir seis veces esta secuencia de composición de transformaciones simétricas? ¿Obtienen todos los compañeros el mismo dibujo? ¿Con qué otra figura inicial se podría comenzar?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Determinan de manera adecuada el eje de simetría y el ángulo de rotación.",
+              "Determinan composiciones de transformaciones para obtener los triángulos.",
+              "Aplican composiciones de rotación y de traslación a una figura.",
+              "Componen una secuencia de transformaciones a una figura y la relacionan con los teselados.",
+              "Explican variaciones en el inicio del dibujo."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad, los estudiantes trabajan los conceptos de medidas de posición, percentiles y cuartiles, representan los datos, utilizando varios tipos de gráficos, y pueden trabajar con datos agrupados o no agrupados. El objetivo es que comparen dos poblaciones, para lo cual manejan diferentes conceptos estadísticos; entre ellos, las medidas de tendencia central vistas el año anterior y las medidas de posición, que aprenden en esta unidad. Pueden trabajar datos categóricos, numéricos o cuantitativos a fin de presentar datos y evaluar la forma en que están presentados; para esto, utilizan gráficos, tablas o esquemas (diagramas de árbol) y justifican su elección. También se espera que aprendan a detectar la manipulación de la información: aprenden a reconocerla en los medios informativos y a discutir sobre su conveniencia y consecuencias. Además, trabajan con el principio combinatorio, comenzando con experimentos concretos, representándolos con tablas y árboles y llegando a calcular las probabilidades de un evento compuesto.",
+      "conocimientos_previos": [
+        "Muestreo.",
+        "Tablas de frecuencias absolutas y relativas.",
+        "Medidas de tendencia central y rango.",
+        "Probabilidades de eventos."
+      ],
+      "palabras_clave": [
+        "Medidas de posición",
+        "percentiles",
+        "cuartiles",
+        "datos agrupados",
+        "datos categóricos",
+        "datos numéricos",
+        "datos cuantitativos",
+        "principio combinatorio",
+        "evento compuesto"
+      ],
+      "conocimientos": [
+        "Medidas de posición, percentiles y cuartiles.",
+        "Principio combinatorio."
+      ],
+      "habilidades": [
+        "Describir relaciones y situaciones matemáticas de manera verbal y usando símbolos. (OA d)",
+        "Fundamentar conjeturas, dando ejemplos y contraejemplos. (OA f)",
+        "Usar modelos, realizando cálculos, estimaciones y simulaciones, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)",
+        "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para enunciados y situaciones en contextos diversos (tablas, gráficos, entre otros). (OA k)",
+        "Relacionar y contrastar información entre distintos niveles de representación. (OA l)"
+      ],
+      "actitudes": [
+        "Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas. (OA D)",
+        "Mostrar una actitud crítica al evaluar las evidencias e informaciones matemáticas y valorar el aporte de los datos cuantitativos en la comprensión de la realidad social. (OA E)",
+        "Usar de manera responsable y efectiva las tecnologías de la comunicación en la obtención de información, dando crédito al trabajo de otros y respetando la propiedad y la privacidad de las personas. (OA F)"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Mostrar que comprenden las medidas de posición, percentiles y cuartiles:\n> Identificando la población que está sobre o bajo el percentil.\n> Representándolas con diagramas, incluyendo el diagrama de cajón, de manera manual y/o con software educativo.\n> Utilizándolas para comparar poblaciones.",
+          "indicadores": [
+            "Organizan y agrupan datos en tablas o esquemas para formar distribuciones de frecuencias.",
+            "Calculan, describen e interpretan las medidas de posición (cuartiles y percentiles).",
+            "Representan las medidas de posición por medio de diagramas de cajón.",
+            "Reconocen cuándo es adecuado utilizar alguna de las medidas para analizar una muestra.",
+            "Comparan muestras de poblaciones, utilizando algunas de las medidas de tendencia."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Evaluar la forma en que los datos están presentados:\n> Comparando la información de los mismos datos representada en distintos tipos de gráficos para determinar fortalezas y debilidades de cada uno.\n> Representándolas con diagramas, incluyendo el diagrama de cajón, de manera manual y/o con software educativo.\n> Detectando manipulaciones de gráficos para representar datos.",
+          "indicadores": [
+            "Comparan información recolectada con su respectivo gráfico y hacen inferencias a partir de ella.",
+            "Determinan cuándo un gráfico representa la muestra y cuándo no.",
+            "Comparan muestras de poblaciones con distintos gráficos y estiman cuál representa mejor la información.",
+            "Explican la elección de tipos de gráficos para representar determinada información.",
+            "Explican de manera adecuada cuándo hay manipulación de la información y de su representación."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Explicar el principio combinatorio multiplicativo:\n> A partir de situaciones concretas.\n> Representándolo con tablas y árboles regulares, de manera manual y/o con software educativo.\n> Utilizándolo para calcular la probabilidad de un evento compuesto.",
+          "indicadores": [
+            "Simulan experimentos que involucran elecciones al azar equiprobables reiteradas (de pocos pasos) y describen pictóricamente los resultados, vía árboles; por ejemplo: en situaciones como componer menús o tenidas mediante elecciones sucesivas equiprobables de platos y prendas de ropa; o caminos de pocos pasos en un paseo al azar, con elecciones equiprobables entre cada encrucijada con 2, 3 o 4 opciones.",
+            "Simulan experimentos que involucran elecciones al azar equiprobables reiteradas (de pocos pasos)."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Encuesta de libros leídos en vacaciones",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Al inicio del año escolar, los alumnos del 8° nivel de un colegio efectuaron una encuesta con la pregunta: ¿cuántos libros leíste en tus vacaciones? Analizan la distribución (0 libros: 14 alumnos, 1: 9, 2: 3, 3: 1, 4: 1, 5: 2, 6-9: 0, 10: faltante). Calculan la media sin los alumnos que leyeron 10 libros, calculan el percentil 50 (mediana) comparándola con la media, determinan la moda y determinan cuál de las medidas de tendencia central representa mejor la distribución de los datos."
+        },
+        {
+          "nombre": "Encuesta de horas de deporte en TV (niñas vs niños)",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "En un curso del 8° nivel, se hizo una encuesta acerca de las horas semanales que los alumnos están viendo programas de deporte en la televisión, separando niñas y niños. Con las listas de horas para 16 alumnas y 14 alumnos, calculan la media redondeada al primer decimal, determinan los cuartiles y marcan sus posiciones, y evalúan enunciados como verdaderos o falsos sobre porcentajes de horas de deporte. Relación con Educación Física y Salud OA 5 de 8° básico."
+        },
+        {
+          "nombre": "Encuesta de número de amigos",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "En el 8° nivel se realizó una encuesta acerca del número de amigas y amigos que tiene cada uno de los alumnos encuestados. Con la tabla de frecuencias (0 amigos: 3, 1: 6, 2: 6, 3: 9, 4: 11, 5: 8, 6: 2, 7: 3, 8: 1, 9: 0, 10: 1), calculan la media, completan la tabla con las frecuencias acumuladas, determinan los cuartiles, y elaboran tres enunciados que pueden ser concluidos mediante los cuartiles."
+        },
+        {
+          "nombre": "Tiempo de reacción y alcohol en la sangre",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Se sabe que la existencia de alcohol en la sangre disminuye la capacidad de reaccionar. En la tabla se registra el resultado de un experimento que midió el tiempo de reacción de 100 personas en estado sobrio y con 0,5g de alcohol por litro en la sangre. Determinan para ambas partes del test el valor mínimo, el valor máximo y los tres cuartiles. Elaboran para ambas poblaciones los diagramas de caja y bigotes."
+        },
+        {
+          "nombre": "Gráficos de caja y bigotes: cine",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Se refleja en los gráficos de caja y bigotes la respuesta a la pregunta ¿cuántas veces fue al cine durante todo el año? El gráfico superior corresponde a menores de edad y el inferior a personas adultas. Completan una tabla con las medidas (mínimo, máximo, 1er cuartil, 2do cuartil, 3er cuartil) para ambos grupos. Interpretan los gráficos y comparan las distribuciones."
+        },
+        {
+          "nombre": "Encuesta de 'amigos' en redes sociales",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Los alumnos encargados de la revista escolar Ventana hicieron una encuesta sobre los 'amigos' registrados en redes sociales. Agrupan las frecuencias absolutas en 6 intervalos del ancho 10, determinan las medidas de tendencia central (media, mediana y moda), confeccionan un gráfico de barras marcando las medidas de tendencia central, y elaboran un gráfico de líneas. Relación con Historia, Geografía y Ciencias Sociales OA 21 y OA d de 8° básico."
+        },
+        {
+          "nombre": "Tabla incompleta de cuatro poblaciones",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "La tabla de las cuatro poblaciones A, B, C y D está incompleta con datos de máximo, mínimo, mediana, cuartil superior, cuartil inferior, distancia y rango. Completan la tabla basándose en los datos puestos. Elaboran un gráfico de cajón para cada población."
+        },
+        {
+          "nombre": "Crecimiento de un río y gráficos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "La imagen muestra el crecimiento de un río en cm durante un año (365 días) con una tabla de frecuencias acumuladas. Determinan el gráfico que representa adecuadamente dicha información, determinan la media de acuerdo al gráfico, y comparan los gráficos con sus compañeros determinando cuál representa mejor la información. Relación con Historia, Geografía y Ciencias Sociales OA d de 8° básico."
+        },
+        {
+          "nombre": "Empresa de buses: comparación de gráficos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Una empresa de buses realiza diariamente viajes entre dos ciudades. Durante dos semanas se anotó el número de pasajeros que viajaron en la mañana (salidas 7:00, 8:00 y 9:00). Los números se registraron en una tabla de dos semanas. Determinan cuál de los gráficos representa mejor la cantidad diaria de usuarios de la empresa y mencionan fortalezas y debilidades comparando los gráficos. Relación con Historia, Geografía y Ciencias Sociales OA 21 y OA d de 8° básico."
+        },
+        {
+          "nombre": "Manipulación de gráficos: PSU",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "En la revista de un colegio aparece un artículo sobre el desarrollo de los resultados en la PSU del colegio en los últimos 8 años, calificando el último resultado como 'un tremendo salto en el rendimiento de la PSU'. Describen el gráfico, comentan el enunciado 'tremendo salto' y analizan qué pasaría si apareciera el origen en el sistema de coordenadas del gráfico."
+        },
+        {
+          "nombre": "Comparación de agua caída en dos regiones",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Comparan dos muestras representadas por un gráfico de doble barra que se refiere al agua caída en dos regiones (enero a diciembre, en mm por m²). Evalúan si el gráfico de doble barra compara de buena forma las coherencias y las diferencias del agua caída y dibujan en el gráfico de barras un gráfico de línea correspondiente. Relación con Ciencias Naturales OA 12 de 8° básico; Historia, Geografía y Ciencias Sociales OA d de 8° básico."
+        },
+        {
+          "nombre": "SMS enviados por mes: Paula y Marco",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Las tablas muestran el número mensual de los SMS mandados por dos alumnos del curso 7b (Paula y Marco, de enero a diciembre). Basados en los datos de la tabla, conjeturan acerca del gráfico que representaría mejor el desarrollo anual de la cantidad de los SMS enviados cada mes y confeccionan el gráfico más adecuado."
+        },
+        {
+          "nombre": "Revista escolar: elección de gráficos para actividades",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "El Centro de Alumnos quiere publicar los resultados de varias actividades realizadas entre el alumnado de los 7° y 8° en su revista trimestral. Con tres tablas de datos (pruebas por curso durante semanas, participación en actividades de la 'semana de proyectos' por área, y planes para vacaciones de invierno), conjeturan acerca de las ventajas que tienen los distintos gráficos (barra, línea, circulares) y confeccionan el gráfico más adecuado para representar cada actividad."
+        },
+        {
+          "nombre": "Tetraedro y principio combinatorio",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Un tetraedro tiene los colores verde (v), naranjo (n), amarillo (a) y celeste (c). El evento de un lanzamiento es la base en la cual se cae. Se lanza al azar dos veces. Explican por qué se puede determinar sistemáticamente el número total de los pares mediante una tabla de 4x4. Completan la tabla con todos los pares que son eventos del doble lanzamiento. Marcan en la tabla los pares con ambos colores iguales y los pares que no tienen naranjo ni celeste."
+        },
+        {
+          "nombre": "Mini-loto de futbolito",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "El Centro de Alumnos organiza una liga del futbolito. Cuando quedan dos partidos, un grupo quiere realizar un mini-loto para apostar los resultados. Para cada partido hay tres eventos posibles: gana A (1), empatan (0) o gana B (2). Determinan todas las apuestas posibles mediante una tabla y mediante un árbol. Relación con Educación Física y Salud OA 5 de 8° básico."
+        },
+        {
+          "nombre": "Ruedas de fortuna y moneda",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Se presentan tres experimentos aleatorios: una rueda de fortuna hexagonal (sectores A-F), una rueda pentagonal (sectores V-Z) y una moneda (n y c). Para cada experimento, elaboran un árbol y determinan todas las posibilidades de los eventos. Calculan sin presentación pictórica cuántas posibilidades hay si se gira cuatro veces una rueda de tres sectores."
+        },
+        {
+          "nombre": "Patentes de automóviles",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Calculan cuántas patentes diferentes de automóviles se pueden generar en las siguientes situaciones: un par de letras (25 caracteres) con un cuádruple de cifras (0-9); un cuádruple de letras (25 caracteres) con un par de cifras (0-9)."
+        },
+        {
+          "nombre": "Corte Suprema: combinaciones de fallos",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "La Corte Suprema se compone de 3 jueces independientes que deciden definitivamente sobre un fallo. Cada juez debe decidir con un 'sí' o un 'no'. Determinan mediante árboles o tablas todas las combinaciones de los 'sí' y 'no'. Calculan cuántas posibilidades del rechazo hay y contestan para el caso de 5 jueces integrantes."
+        },
+        {
+          "nombre": "Rueda de fortuna de 6 colores",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Una rueda de fortuna tiene 6 sectores de igual tamaño pintados en 6 colores diferentes. Se combinan 5 ruedas y se las gira; al pararlas, resulta un quíntuple ordenado de los colores. Determinan el número total de las combinaciones y calculan la probabilidad de que todas las ruedas muestren el mismo color."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Lectura de diagramas de cajón - préstamo de libros",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "Con esta actividad se puede iniciar un proyecto. La revista anual del colegio muestra el gráfico de una estadística sobre la cantidad de libros prestados anualmente por los alumnos en diferentes niveles (7°/8° y 9°/10°). Determinan el valor mínimo, el valor máximo y los cuartiles para ambos niveles. Determinan la diferencia entre el cuartil inferior y el superior. Determinan cuántos libros pide prestado el 50% de los alumnos en ambos niveles. Evalúan enunciados como verdaderos o falsos sobre porcentajes de libros prestados.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican correctamente los cuartiles.",
+              "Leen y anotan los valores que corresponden a los cuartiles.",
+              "Relacionan la diferencia entre el cuartil inferior y el superior con el 50% de la población.",
+              "Comparan la información de los enunciados con los datos del gráfico y contestan correctamente las preguntas.",
+              "Presentan las respuestas en frases completas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Construcción de diagrama de cajón - correos electrónicos",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "La resolución de esta actividad se puede agregar al portafolio. Un diario encuestó a personas de entre 18 y 30 años para saber cuántos correos electrónicos mandan diariamente. Con la tabla de frecuencias (0 correos: 2 personas, 1: 5, 2: 18, 3: 23, 4: 20, 5: 31, 6: 15, 7: 7, 8: 8, 9: 2, 10: 5, 12: 2), determinan el valor mínimo, el valor máximo y los cuartiles. Confeccionan un diagrama de cajón y marcan los cuartiles. Responden preguntas sobre porcentajes de la población encuestada.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Elaboran una lista ordenada.",
+              "Determinan correctamente los cuartiles.",
+              "Elaboran el gráfico de cajón en dimensiones adecuadas.",
+              "Marcan correctamente los cuartiles.",
+              "Relacionan los porcentajes de las preguntas con los valores de los cuartiles.",
+              "Presentan las respuestas en frases completas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Principio combinatorio multiplicativo - experimento combinado",
+          "oas_evaluados": [
+            17
+          ],
+          "actividad_evaluacion": "Esta evaluación incluye una presentación individual o en pares de la resolución de uno de los problemas planteados. También se podría agregar al portafolio. En un experimento aleatorio combinado, se gira primero un pentágono con los números de 1 a 5; después se saca al azar una bolita de color azul, rojo o verde; y finalmente se lanza una moneda. Un evento es un triple ordenado (número, color, lado de moneda). Completan el árbol de posibilidades. Determinan cuántos eventos posibles hay combinando los primeros dos experimentos y cuántos en total. Marcan ramas de eventos específicos. Analizan si al cambiar el orden de los experimentos cambia el total de posibilidades. Transfieren el principio multiplicativo a otro experimento (dado, rueda de 4 sectores, moneda y 5 bolitas).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Muestran una forma sistemática en completar el árbol.",
+              "Reconocen que las posibilidades de los experimentos se multiplican.",
+              "Relacionan los triples ordenados con los ramos del árbol.",
+              "Reconocen que el cambio del orden no altera el total de las posibilidades, refiriéndose a la conmutatividad de la multiplicación.",
+              "Transfieren el principio multiplicativo a otros experimentos."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

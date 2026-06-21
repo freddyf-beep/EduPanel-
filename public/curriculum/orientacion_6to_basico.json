@@ -1,0 +1,2479 @@
+[
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad, los estudiantes aprenderán y practicarán conductas y actitudes que favorezcan la convivencia, estableciendo relaciones empáticas, siendo respetuosos y solidarios en el trato con los demás y evitando y rechazando toda forma de violencia y discriminación, tanto en las relaciones directas como a través de las redes sociales. Por otra parte, se pretende que reconozcan sus fortalezas y los aspectos que requieren mejorar, y expresándolos y proponiéndose metas de superación en los diferentes ámbitos de su vida, para afianzar una valoración positiva de sí mismos.",
+      "conocimientos_previos": [],
+      "palabras_clave": [
+        "Actitudes",
+        "convivencia",
+        "empatía",
+        "solidaridad",
+        "respeto",
+        "violencia",
+        "discriminación",
+        "relaciones",
+        "emociones",
+        "habilidades",
+        "fortalezas",
+        "superación",
+        "autonomía",
+        "participación",
+        "valoración positiva"
+      ],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Demostrar una valoración positiva de sí mismo, reconociendo habilidades, fortalezas y aspectos que requiera superar.",
+          "indicadores": [
+            "Identifican y destacan características personales positivas.",
+            "Reconocen fortalezas y logros que los hacen sentirse orgullosos de sí.",
+            "Reconocen características o fortalezas personales que les han permitido alcanzar logros o metas.",
+            "Toman en cuenta las opiniones de otras personas significativas al formar juicios respecto de sus fortalezas y debilidades.",
+            "Identifican aspectos personales posibles de superar y proponen sugerencias para ello.",
+            "Establecen metas concretas de superación personal a partir de la evaluación de sus desempeños y dificultades.",
+            "Definen y llevan a cabo cursos de acción para el logro de metas de superación."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 6,
+          "descripcion": "Manifestar actitudes de solidaridad y respeto que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo: saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda, especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Explican el concepto de empatía.",
+            "Escuchan de manera atenta y activa los problemas e ideas de otros.",
+            "Establecen normas de convivencia y se esfuerzan por cumplirlas.",
+            "Proponen actividades o acuerdos para evitar la discriminación y favorecer la participación de todos.",
+            "Ofrecen ayuda a sus compañeros y a quien lo necesite.",
+            "Proponen formas de manifestar solidaridad ante amigos u otras personas (por ejemplo: brindarles apoyo cuando tienen problemas, mantener los compromisos asumidos hacia ellos, preocuparse por el bienestar del otro, etc.).",
+            "Muestran respeto por el ambiente de aprendizaje, manteniendo silencio cuando es necesario.",
+            "Describen los protocolos de violencia en el establecimiento.",
+            "Proponen medidas para prevenir y resolver casos de violencia.",
+            "Organizan actividades recreativas en las que se practiquen el respeto, la empatía y la integración."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 8,
+          "descripcion": "Participar activa y colaborativamente en la comunidad escolar y en la organización del curso: planificando y evaluando actividades encaminadas a un objetivo; organizándose para resolver problemas cotidianos de la comunidad; asumiendo y cumpliendo responsabilidades; participando en las elecciones de curso y aceptando los resultados; respetando los derechos de los demás, sin discriminar en la distribución de roles y responsabilidades, entre otros; estableciendo acuerdos por medio del diálogo y la toma de decisiones democráticas; evaluando el cumplimiento de los acuerdos de curso.",
+          "indicadores": [
+            "Definen los objetivos del consejo de curso.",
+            "Definen roles y funciones de la directiva.",
+            "Eligen directiva de curso democráticamente.",
+            "Respetan los acuerdos y votaciones realizadas en el curso.",
+            "Proponen estrategias para abordar necesidades del curso.",
+            "Planifican líneas de acción para resolver algún problema de la comunidad.",
+            "Se organizan para desarrollar iniciativas destinadas a favorecer el bienestar escolar.",
+            "Proponen iniciativas y acogen las de sus compañeros.",
+            "Distribuyen responsabilidades equitativamente entre hombres y mujeres.",
+            "Permiten la participación de todos en las decisiones de curso.",
+            "Asumen sus responsabilidades y cumplen con sus compromisos.",
+            "Participan activamente en el Consejo de Curso, aportando con opiniones e ideas en debates y reflexiones de grupo.",
+            "Aportan con sus habilidades e ideas para desarrollar proyectos e iniciativas de curso.",
+            "Evalúan el funcionamiento de la directiva y de las actividades.",
+            "Evalúan el cumplimiento de los acuerdos de curso."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 9,
+          "descripcion": "Practicar en forma autónoma y perseverante, hábitos y actitudes orientadas a favorecer el aprendizaje y a desarrollar sus intereses, tales como: establecer metas de aprendizaje; estudiar con anticipación, organizando su tiempo; trabajar en forma colaborativa; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Explican la importancia de proponerse metas y definir las acciones necesarias para alcanzarlas.",
+            "Se plantean metas de superación académica.",
+            "Se proponen metas de aprendizaje y señalan las acciones para lograrlas.",
+            "Explican razones por las cuales es importante esforzarse para cumplir metas.",
+            "Persisten en el desarrollo de actividades o trabajos que les han resultado difíciles, buscando diversas maneras de desarrollarlos.",
+            "Identifican obstáculos que podrían entorpecer la consecución de la meta y definen estrategias para enfrentarlos.",
+            "Evalúan su rendimiento académico, guiados por el docente, y se proponen estrategias para mejorar.",
+            "Evalúan el cumplimiento de acciones propuestas para mejorar su organización y estudio.",
+            "Evalúan el uso del tiempo dedicado al trabajo escolar.",
+            "Definen los valores del esfuerzo, la responsabilidad y la honestidad.",
+            "Explican la importancia del esfuerzo, la responsabilidad y la honestidad para el aprendizaje.",
+            "Explican las consecuencias del plagio.",
+            "Realizan sus trabajos señalando la fuente o la autoría de las ideas presentadas.",
+            "Buscan información en relación con sus intereses.",
+            "Realizan diversas actividades de su interés de manera organizada y planificada."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Afiche publicitario de características positivas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes preparan un afiche publicitario. En él deben señalar características positivas de sí mismos por las cuales ellos serían beneficiosos para los demás. Pueden indicar talentos, virtudes, habilidades, etc. con el fin de persuadir al receptor. Deben incluir imágenes como apoyo. Los afiches se presentan al curso y posteriormente se exponen en la sala. (Lenguaje y Comunicación; Artes Visuales)"
+        },
+        {
+          "nombre": "Aspectos por superar en ámbitos familiar, escolar y social",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cada estudiante determina una dificultad o un aspecto por superar que presente en el ámbito familiar, escolar y social respectivamente. Por ejemplo: \"Me cuesta obedecer a mis padres\", \"me cuesta concentrarme en clases\", \"quiero ser más generoso con mis amigos\"; para cada uno señala una propuesta de superación y las acciones necesarias para lograrlo. Posteriormente el alumno que lo considere necesario podrá comentar este trabajo con sus padres y/o el profesor, quienes podrán realizar un seguimiento de las propuestas junto al estudiante."
+        },
+        {
+          "nombre": "Entrevista personal de desafío de superación",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "El profesor conversa en entrevista personal con cada estudiante y le plantea un desafío de superación respecto de alguna dificultad que haya observado en el ámbito escolar. Juntos acuerdan un plan de trabajo para abordar el desafío."
+        },
+        {
+          "nombre": "Características positivas de los compañeros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los alumnos reciben la lista del curso. Al lado de cada nombre escriben una característica positiva de sus compañeros. Luego el docente entrega a cada uno lo que escribieron sobre él y ellos hacen una síntesis para comentar con el curso en forma voluntaria."
+        },
+        {
+          "nombre": "Desafío de superación desde los padres",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "El docente pide a los alumnos que soliciten a sus padres o apoderados que les planteen un desafío de superación respecto de alguna dificultad observada por ellos en el ámbito familiar. Juntos acuerdan un plan de trabajo para abordar el desafío."
+        },
+        {
+          "nombre": "Disertación: Lo que más me gusta de mí",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cada estudiante prepara una breve disertación para mostrar al curso, que dé cuenta de lo que más le gusta de sí mismo y su fundamentación: \"Lo que más me gusta de mí es..., porque...\". Pueden utilizar material de apoyo. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Carta de presentación personal",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Escriben una carta de presentación en la cual incluyen sus principales características, habilidades, gustos y fortalezas. Dirigen las cartas a niños de su edad que vivan en otras regiones. Las envían por correo electrónico. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Jornada de talentos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Organizan una jornada de curso sobre el tema de los talentos. Cada alumno muestra al curso, en forma creativa, la actividad en la que se destaca."
+        },
+        {
+          "nombre": "Película sobre superación personal",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Ven una película que trate el tema de la superación personal. Reflexionan junto al docente sobre cómo pueden relacionar lo visto con sus propias necesidades de superación personal y las acciones a realizar al respecto. Anotan las principales conclusiones en su cuaderno. Se sugieren las siguientes películas: The blind side, Rudy, Cadena de favores, En busca de la felicidad."
+        },
+        {
+          "nombre": "Revista de biografías de deportistas chilenos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "En grupos de tres, los estudiantes leen biografías de diferentes deportistas chilenos que hayan tenido logros y se hayan destacado por su esfuerzo y perseverancia. Subrayan las partes de la biografía que indiquen superación personal. Cada grupo sintetiza los principales aspectos de la biografía y elabora una página con la información. Entre todos reúnen las páginas y confeccionan una revista. Guiados por el profesor, concluyen que para obtener logros hay que tener primero metas de superación y luego establecer estrategias para alcanzarlas."
+        },
+        {
+          "nombre": "Definición y práctica de la empatía",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Con una lluvia de ideas, definen lo que es actuar con empatía. Escuchan una explicación sobre lo que es y cómo se manifiesta; por ejemplo: haciendo preguntas, ofreciendo ayuda, escuchando activamente (sin interrupciones, mirando a los ojos), no centrar la conversación en el que escucha, (yo... a mí...), no dar consejos en forma inmediata, entre otras. Registran ejemplos de empatía en su cuaderno."
+        },
+        {
+          "nombre": "Práctica de escucha activa",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes practican la \"escucha activa\" como elemento fundamental de las relaciones interpersonales positivas y empáticas. Para ello, forman parejas y adoptan papeles de \"A\" y \"B\" respectivamente. \"A\" elige una anécdota para contar a \"B\" y luego intercambian roles. Mientras \"A\" cuenta su anécdota, \"B\" debe escuchar usando el parafraseo, mirando a los ojos, evitando interrupciones, asintiendo con la cabeza, entre otras. Posteriormente, comparten en plenario si se sintieron realmente escuchados por su compañero y en qué lo notaron. Concluyen junto al profesor la importancia de escuchar activamente al otro cuando nos cuenta algo y reconocen que esto es fundamental para establecer relaciones positivas con los demás. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Dramatización de respuestas empáticas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dramatizan situaciones y las analizan de acuerdo a una pauta. Al final de la sesión, escriben respuestas empáticas en su cuaderno. Se presentan ejemplos de respuestas no empáticas y se analizan, proponiendo alternativas empáticas."
+        },
+        {
+          "nombre": "Ejemplos de solidaridad",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dan ejemplos de situaciones (propias o de otros, reales o ficticias) en las cuales se observe el valor de la solidaridad o en las que ellos hayan sido solidarios. Junto al profesor, reflexionan sobre la importancia de este valor en la amistad y en las relaciones interpersonales positivas."
+        },
+        {
+          "nombre": "Decálogo para el Buen Trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos de cuatro, escriben al menos tres o cuatro normas de convivencia que consideren importantes de respetar y que respondan a las necesidades del curso; por ejemplo: \"No hablar mal de los compañeros\", \"Respetar las diferencias individuales\", \"Escuchar sin interrumpir cuando otra persona está hablando\", etc. Luego llegan a un consenso sobre la norma que mejor represente los pensamientos del grupo; un alumno por grupo lee la norma y el profesor las anota en el pizarrón. Cuando todos han expuesto su trabajo, cada alumno vota por la norma que le parece más importante. Las 10 normas más votadas formarán un \"Decálogo para el Buen Trato\" que se escribirá en una cartulina, se pondrá en un lugar visible y quedará como documento oficial de buen trato en el curso. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Campeonatos deportivos y recreativos con buen trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes organizan campeonatos deportivos o recreativos y concursos de acuerdo a las posibilidades del colegio y los intereses de los miembros, siendo respetuosos de las diferencias individuales, manteniendo un buen trato e integrando a todos."
+        },
+        {
+          "nombre": "Análisis de la Ley sobre Violencia Escolar",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes forman grupos y reciben el artículo n° 16 B de la ley sobre Violencia Escolar n° 20.536. Elaboran una opinión de grupo al respecto y la comunican al curso. Junto al docente, reflexionan sobre que intimidar, agredir, hostigar a otros constituye un delito penado por la ley (tanto si se ejerce en forma directa o a través de internet). Averiguan la política o protocolos que tiene el establecimiento al respecto, dirigiéndose al encargado de convivencia escolar. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión en el curso",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos, discuten acerca de las consecuencias que puede tener el agredir o ser agredido por otros, ya sea física o psicológicamente. Guiados por el docente, identifican si se dan situaciones de agresión entre compañeros en el curso, las analizan en conjunto y proponen formas de resolver los conflictos que las causan, de evitar las agresiones y de pedir ayuda cuando lo necesiten."
+        },
+        {
+          "nombre": "Aviso de ofrecimiento de ayuda",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes escriben un aviso en el cual se ofrecen para ayudar a sus compañeros en distintas áreas de acuerdo a sus posibilidades y características; por ejemplo: \"Me ofrezco para ayudar a estudiar matemática\", \"Me ofrezco para enseñar a hacer pulseras\"."
+        },
+        {
+          "nombre": "Acuerdos para el ambiente de aprendizaje",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Por medio de una lluvia de ideas, proponen ideas para respetar el ambiente de aprendizaje y así tener un buen clima que permita que todos aprendan. Se establecen acuerdos junto al docente para mantener silencio cuando sea necesario."
+        },
+        {
+          "nombre": "Definición de objetivos del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A modo de lluvia de ideas, los estudiantes definen y enumeran los objetivos del Consejo de Curso de acuerdo a su experiencia y los anotan en la pizarra. Luego, guiados por el docente, identifican las actividades propias de su organización (elección de directiva y comisiones de trabajo) y de la participación y trabajo en torno a la identificación y el logro de metas y objetivos comunes."
+        },
+        {
+          "nombre": "Definición de roles y funciones de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, el profesor pide que definan en conjunto qué es y qué hace una directiva de curso, estableciendo los diferentes roles y funciones de cada participante e incluyendo a todos los miembros del curso."
+        },
+        {
+          "nombre": "Preparación de programa para postular como directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Motivados por el profesor, se agrupan por afinidad y/o intereses comunes, dialogan, toman acuerdos y preparan un programa de trabajo que los represente para postular como directiva de curso. El programa debe incluir nombre de la lista, división de los cargos y propuestas a desarrollar durante el año, entre otros. Pueden también diseñar una pequeña \"campaña\" de elecciones. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Organización de la primera actividad del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza su primera actividad, definiendo los temas a tratar (tabla de consejo), los tiempos asignados y las decisiones y acuerdos a tomar."
+        },
+        {
+          "nombre": "Encuesta de necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Realizan una encuesta para indagar las diferentes necesidades en torno a las actividades de aprendizaje del curso, o intereses en temas que se quieran trabajar, como las relaciones entre compañeros, el cumplimiento de responsabilidades, las metas académicas y de convivencia que se quieren plantear como curso para el año, entre otros. La directiva tabula la encuesta, organiza los resultados y los presenta al curso. (Matemática)"
+        },
+        {
+          "nombre": "Plan de acción para necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, se divide al curso en grupos. Cada grupo propone un plan a implementar para las necesidades observadas o para abordar los temas propuestos, lo exponen al curso, y acuerdan y organizan los planes más urgentes a implementar."
+        },
+        {
+          "nombre": "Organización de convivencias y celebraciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "El docente acompaña a la directiva de curso en la construcción de una tabla de consejo para la organización de alguna convivencia o celebración. Guiados por el presidente de curso, los alumnos proponen ideas para organizar convivencias y celebraciones, luego se organizan y se dividen responsabilidades."
+        },
+        {
+          "nombre": "Actividad de colaboración con la comunidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para colaborar con la comunidad escolar (por ejemplo: reunir fondos, alimentos, ropa u otro elemento) que vaya en beneficio de algún integrante de la comunidad educativa. Establecen responsables y tiempos."
+        },
+        {
+          "nombre": "Jornada de evaluación y afianzamiento de vínculos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una jornada para evaluar lo aprendido, valorar las experiencias vividas y afianzar los vínculos entre compañeros. Cada alumno recibe el nombre de un compañero y le prepara un pequeño regalo. Durante la jornada, se hace un plenario para agradecer a los compañeros y se entregan los regalos."
+        },
+        {
+          "nombre": "Recaudación de fondos para fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para reunir fondos para el paseo o la convivencia de fin de año. Establecen acuerdos, responsables y tiempos."
+        },
+        {
+          "nombre": "Actividad para fomentar el buen trato en el curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una actividad para fomentar el buen trato y una buena convivencia en el curso. Toman acuerdos y, luego de un tiempo, evalúan su cumplimiento."
+        },
+        {
+          "nombre": "Consulta sobre problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de las funciones que debe asumir la directiva de curso y los temas que son pertinentes de abordar en la hora de Consejo de Curso, el docente puede sugerir al presidente de curso que trate algún problema que se esté dando en el curso, relacionado con la convivencia, la disciplina, el rendimiento del curso, entre otros, y recomendarle realizar una consulta o encuesta anónima."
+        },
+        {
+          "nombre": "Resolución de problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, la directiva de curso tabula los resultados y el presidente los expone. Bajo la supervisión y guía del docente, los estudiantes enfrentan el problema que se está dando. Identifican cuáles son los mayores problemas y elaboran un plan para resolverlo."
+        },
+        {
+          "nombre": "Estrategias de resolución de conflictos para actividades de fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes, en forma autónoma, aplican estrategias de resolución de conflictos para analizar un problema o tomar una decisión respecto de las actividades de fin de año (por ejemplo: paseo de curso, convivencia, exámenes finales). Acuerdan poner en práctica una solución."
+        },
+        {
+          "nombre": "Balance del funcionamiento de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Cuando se considere necesario, se realiza un balance del funcionamiento de la directiva de curso: cómo se han asumido las responsabilidades, resultado de las actividades propuestas y desarrolladas, participación del curso en las actividades del establecimiento, entre otras."
+        },
+        {
+          "nombre": "Evaluación de la gestión de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes evalúan la gestión de la directiva y el aporte del curso al mejoramiento de la convivencia escolar dentro de la comunidad educativa."
+        },
+        {
+          "nombre": "Importancia de tener metas y desafíos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Dirigidos por el profesor, conversan acerca de la importancia de tener metas y desafíos por los cuales esforzarse para alcanzarlos. Anotan conclusiones en su cuaderno."
+        },
+        {
+          "nombre": "Establecimiento de metas académicas personales",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, reflexionan individualmente sobre las metas que quieren plantearse en lo académico y escriben un listado. Luego seleccionan una de las metas (la selección se hace sobre la base de criterios como que sea alcanzable, concreta y que se pueda medir o evaluar sus avances) y establecen pasos y/o acciones que deben realizar para alcanzarla, tomando en cuenta los obstáculos que se pueden presentar en el proceso y definiendo estrategias para enfrentar esas dificultades."
+        },
+        {
+          "nombre": "Encuesta sobre organización del estudio",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En forma individual, responden una encuesta para luego, junto al profesor, analizar las respuestas en plenario, concluyendo que ciertas acciones nos ayudan a organizar mejor el estudio."
+        },
+        {
+          "nombre": "Entrevista personal de seguimiento de metas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En entrevista personal, el docente puede conversar con cada alumno y supervisar el cumplimiento de las metas planteadas."
+        },
+        {
+          "nombre": "Horario personal y distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los alumnos completan un esquema indicando las actividades que realizan diariamente y sus horarios correspondientes (aproximadamente). Luego lo conversan en parejas y analizan la forma en que distribuyen su tiempo fuera del colegio. Los compañeros se aportan ideas mutuamente. Algunos voluntarios pueden mostrar su horario al resto del curso. A partir de esto, el docente los motiva a hacer ajustes en la distribución de horarios en los casos que corresponda (distribución real versus ideal)."
+        },
+        {
+          "nombre": "Propuesta de modificación de distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, los alumnos escriben al menos dos ideas que señalen lo que harán para modificar la distribución de su tiempo en caso de necesitarlo."
+        },
+        {
+          "nombre": "Autoevaluación del cumplimiento del horario",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Después de algunas semanas, los estudiantes revisan su horario personal, realizando una autoevaluación sobre su cumplimiento y utilidad para la obtención de los aprendizajes."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Al finalizar cada clase, escriben en su agenda las tareas, trabajos y evaluaciones que han sido fijadas ese día."
+        },
+        {
+          "nombre": "Reflexión sobre el valor del esfuerzo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En grupos de cuatro, cuentan experiencias vividas por ellos o por otros, en las cuales haya sido fundamental el valor del esfuerzo. Escriben cuatro razones por las que es importante esforzarse para alcanzar metas."
+        },
+        {
+          "nombre": "Responsabilidad en tareas y deberes escolares",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los estudiantes anotan un listado de tareas y deberes escolares y reflexionan sobre si cumplen responsablemente con ellas o no. Luego proponen formas de responsabilizarse en los casos en que sea necesario de acuerdo a su reflexión."
+        },
+        {
+          "nombre": "Conductas que favorecen y dificultan el clima de aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Mediante una lluvia de ideas, señalan conductas y actitudes que favorecen y dificultan el clima de aprendizaje y el trabajo escolar. Seleccionan algunas de estas conductas que deben mantener y otras que deben esforzarse por cambiar, tomando acuerdos individuales y de curso para lograrlo."
+        },
+        {
+          "nombre": "Reflexión sobre honestidad y aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Conversan con el profesor sobre la importancia de ser honestos, especialmente en relación con el aprendizaje, evaluando críticamente situaciones como la copia, en las que se falta a este valor."
+        },
+        {
+          "nombre": "Trabajo colaborativo sobre tema de interés",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Agrupados por intereses afines, realizan un trabajo colaborativo de investigación sobre el tema de interés seleccionado. Preparan una disertación para el curso e invitan a sus compañeros a participar en una actividad grupal relacionada con el tema expuesto."
+        },
+        {
+          "nombre": "Identificación de intereses y desarrollo sistemático",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "El docente promueve en el curso una conversación en la que los estudiantes van señalando el tipo de actividades que les interesa realizar (por ejemplo: practicar algún deporte, participar en algún grupo de danza, desarrollar actividades de expresión dramática o musical, participar en actividades sociales, etc.). El profesor va registrando estas actividades en el pizarrón. Luego explica la relevancia de desarrollar sus intereses por medio de actividades llevadas a cabo de manera sistemática y sostenida para progresar en el desarrollo de ellas. Una vez abordado este punto, analizan la sistematicidad con la que desarrollan estas actividades e identifican cómo se puede favorecer su desarrollo sostenido y progresivo."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Autoevaluación de valoración positiva de sí mismo",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "Los estudiantes reflexionan sobre su capacidad de valorarse positivamente y aceptar desafíos de superación personal, utilizando para ello una pauta de autoevaluación. Posteriormente, pueden conversar con el profesor en forma individual si lo requieren.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen algunas de sus cualidades.",
+              "Conocen sus debilidades e intentan superarlas.",
+              "Reconocen lo positivo que los otros ven en ellos.",
+              "Aceptan las correcciones de otros."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de solidaridad y respeto",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se sugiere completar una pauta de autoevaluación al final de la unidad. Los estudiantes evalúan conductas como el trato respetuoso a los compañeros, mantener silencio cuando es necesario, reconocer características positivas en los demás, ofrecer ayuda a quien lo necesita y cumplir con las normas de convivencia acordadas como curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Tratan con respeto a todos sus compañeros.",
+              "Mantienen silencio cuando es necesario para no interrumpir el aprendizaje.",
+              "Pueden reconocer características positivas en los demás.",
+              "Ofrecen ayuda a quien lo necesita.",
+              "Cumplen con las normas de convivencia que han acordado como curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de la participación en el Consejo de Curso",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "El docente evalúa la participación de los alumnos en las actividades de Consejo de Curso con una pauta de observación. Se recomienda que la complete al final del bimestre y comparta los resultados con los estudiantes en forma general o individual, si se requiere.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participan en el Consejo de Curso, intercambiando sus ideas.",
+              "Proponen iniciativas y acogen las de sus compañeros.",
+              "Colaboran con los proyectos de curso.",
+              "Respetan el derecho de que todos los alumnos participen en el Consejo de Curso.",
+              "Asumen responsabilidades y cumplen con los compromisos de curso en forma autónoma."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación del año escolar y de la directiva",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes preparan la jornada de final de curso y evalúan el año, respondiendo por escrito preguntas sobre el momento más significativo, lo aprendido, cómo consideran que fue su año escolar, qué mejorarían y comentarios. Luego las entregan al profesor.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Evalúan el funcionamiento de la directiva y de las actividades.",
+              "Evalúan el cumplimiento de los acuerdos de curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de organización del tiempo y metas",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes responden un cuestionario de autoevaluación que los ayude a tomar conciencia de la forma en que organizan su tiempo y evaluar si es necesario hacer algunos cambios que los favorecerían. Posteriormente, el alumno que lo necesite puede solicitar una entrevista con el profesor para que, en conjunto, busquen mejores estrategias.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se proponen metas para mejorar sus resultados académicos.",
+              "Saben definir las acciones necesarias para cumplir con sus metas.",
+              "Piensan que pueden alcanzar las metas que se propusieron.",
+              "Usan la agenda para anotar sus tareas, trabajos y pruebas.",
+              "Pueden tener un horario organizado y cumplirlo.",
+              "Creen que su tiempo está bien distribuido.",
+              "Piden ayuda para estudiar si lo necesitan.",
+              "Se ofrecen para ayudar a otros a estudiar las materias que les resultan más fáciles."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de esfuerzo, responsabilidad y honestidad",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes reflexionan y se autoevalúan con respecto a sus actitudes (esfuerzo, responsabilidad, honestidad). Para ello, pueden utilizar una pauta, en la cual se sugieren algunos indicadores a evaluar, pero se recomienda que el docente los adapte de acuerdo a la realidad de su curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuando algo no les resulta, perseveran hasta lograrlo.",
+              "Dedican tiempo extra para estudiar o ejercitar las materias que les cuestan.",
+              "Entregan los trabajos y tareas a tiempo.",
+              "Cumplen con los encargos o funciones que tienen en el curso.",
+              "Hacen los trabajos ellos mismos, sin copiar la información de otros compañeros.",
+              "Cuando usan información textual de internet o libros, se preocupan de citar la fuente y/o a los autores."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad, se espera que los estudiantes reconozcan y distingan sus emociones y practiquen formas apropiadas de expresarlas, considerando las consecuencias que sus manifestaciones pueden tener en otras personas y en sí mismos. Asimismo, se pretende que participen en forma activa y autónoma de todas las instancias educativas, resolviendo conflictos cotidianos que puedan emerger, aplicando diferentes estrategias de resolución en un marco de respeto hacia las otras personas.",
+      "conocimientos_previos": [],
+      "palabras_clave": [
+        "Expresión de emociones",
+        "acuerdos",
+        "respeto",
+        "diversidad",
+        "actitudes",
+        "autonomía",
+        "estrategias de resolución de conflictos",
+        "participación activa"
+      ],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Distinguir y describir emociones y reconocer y practicar formas apropiadas de expresarlas, considerando el posible impacto en sí mismo y en otros.",
+          "indicadores": [
+            "Nombran y describen las causas de algunas emociones que hayan experimentado.",
+            "Identifican el tipo de emoción que puede provocar una situación determinada.",
+            "Describen las sensaciones, deseos y pensamientos de una persona que experimenta una emoción determinada.",
+            "Identifican las formas en que se manifiestan las emociones en obras de arte, personajes de películas o cuentos.",
+            "Explican de qué formas su conducta puede ser influenciada por sus emociones.",
+            "Describen consecuencias que puede tener en otros y en sí mismo la forma en que expresan sus emociones.",
+            "Proponen formas en las que se puede mejorar o corregir la manera de expresar una emoción.",
+            "Expresan sus emociones de una manera consonante con lo que sienten y, a la vez, respetuosa con los demás.",
+            "Modifican la forma de expresar sus emociones cuando las han manifestado de manera impulsiva y dañina o hiriente para otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Resolver conflictos de convivencia en forma autónoma, seleccionando y aplicando diversas estrategias de resolución de problemas.",
+          "indicadores": [
+            "Identifican, junto a algunos compañeros, situaciones de conflicto, reconociendo sus posibles causas y evaluando soluciones posibles.",
+            "Establecen estrategias que pueden utilizar autónomamente para enfrentar una situación de conflicto determinada.",
+            "Aplican por iniciativa propia estrategias de resolución de conflicto ante situaciones específicas que se presenten en el establecimiento u otros ámbitos de su vida cotidiana.",
+            "Identifican las formas en que suelen resolver algunos conflictos y distinguen en qué aspectos podrían mejorarlas.",
+            "Identifican y explican las oportunidades de crecimiento que aporta un conflicto.",
+            "Señalan la importancia de resolver conflictos por sí mismos y reconocen las limitaciones de recurrir a un adulto todas las veces que se presenta algún conflicto."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 6,
+          "descripcion": "Manifestar actitudes de solidaridad y respeto que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo: saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda, especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Explican el concepto de empatía.",
+            "Escuchan de manera atenta y activa los problemas e ideas de otros.",
+            "Establecen normas de convivencia y se esfuerzan por cumplirlas.",
+            "Proponen actividades o acuerdos para evitar la discriminación y favorecer la participación de todos.",
+            "Ofrecen ayuda a sus compañeros y a quien lo necesite.",
+            "Proponen formas de manifestar solidaridad ante amigos u otras personas (por ejemplo: brindarles apoyo cuando tienen problemas, mantener los compromisos asumidos hacia ellos, preocuparse por el bienestar del otro, etc.).",
+            "Muestran respeto por el ambiente de aprendizaje, manteniendo silencio cuando es necesario.",
+            "Describen los protocolos de violencia en el establecimiento.",
+            "Proponen medidas para prevenir y resolver casos de violencia.",
+            "Organizan actividades recreativas en las que se practiquen el respeto, la empatía y la integración."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 8,
+          "descripcion": "Participar activa y colaborativamente en la comunidad escolar y en la organización del curso: planificando y evaluando actividades encaminadas a un objetivo; organizándose para resolver problemas cotidianos de la comunidad; asumiendo y cumpliendo responsabilidades; participando en las elecciones de curso y aceptando los resultados; respetando los derechos de los demás, sin discriminar en la distribución de roles y responsabilidades, entre otros; estableciendo acuerdos por medio del diálogo y la toma de decisiones democráticas; evaluando el cumplimiento de los acuerdos de curso.",
+          "indicadores": [
+            "Definen los objetivos del consejo de curso.",
+            "Definen roles y funciones de la directiva.",
+            "Eligen directiva de curso democráticamente.",
+            "Respetan los acuerdos y votaciones realizadas en el curso.",
+            "Proponen estrategias para abordar necesidades del curso.",
+            "Planifican líneas de acción para resolver algún problema de la comunidad.",
+            "Se organizan para desarrollar iniciativas destinadas a favorecer el bienestar escolar.",
+            "Proponen iniciativas y acogen las de sus compañeros.",
+            "Distribuyen responsabilidades equitativamente entre hombres y mujeres.",
+            "Permiten la participación de todos en las decisiones de curso.",
+            "Asumen sus responsabilidades y cumplen con sus compromisos.",
+            "Participan activamente en el Consejo de Curso, aportando con opiniones e ideas en debates y reflexiones de grupo.",
+            "Aportan con sus habilidades e ideas para desarrollar proyectos e iniciativas de curso.",
+            "Evalúan el funcionamiento de la directiva y de las actividades.",
+            "Evalúan el cumplimiento de los acuerdos de curso."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 9,
+          "descripcion": "Practicar en forma autónoma y perseverante, hábitos y actitudes orientadas a favorecer el aprendizaje y a desarrollar sus intereses, tales como: establecer metas de aprendizaje; estudiar con anticipación, organizando su tiempo; trabajar en forma colaborativa; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Explican la importancia de proponerse metas y definir las acciones necesarias para alcanzarlas.",
+            "Se plantean metas de superación académica.",
+            "Se proponen metas de aprendizaje y señalan las acciones para lograrlas.",
+            "Explican razones por las cuales es importante esforzarse para cumplir metas.",
+            "Persisten en el desarrollo de actividades o trabajos que les han resultado difíciles, buscando diversas maneras de desarrollarlos.",
+            "Identifican obstáculos que podrían entorpecer la consecución de la meta y definen estrategias para enfrentarlos.",
+            "Evalúan su rendimiento académico, guiados por el docente, y se proponen estrategias para mejorar.",
+            "Evalúan el cumplimiento de acciones propuestas para mejorar su organización y estudio.",
+            "Evalúan el uso del tiempo dedicado al trabajo escolar.",
+            "Definen los valores del esfuerzo, la responsabilidad y la honestidad.",
+            "Explican la importancia del esfuerzo, la responsabilidad y la honestidad para el aprendizaje.",
+            "Explican las consecuencias del plagio.",
+            "Realizan sus trabajos señalando la fuente o la autoría de las ideas presentadas.",
+            "Buscan información en relación con sus intereses.",
+            "Realizan diversas actividades de su interés de manera organizada y planificada."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Identificación de emociones en un libro",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de un libro que han leído, identifican las emociones expresadas por los personajes y describen cómo se manifiestan en lo que piensan, desean, sienten y realizan. A continuación señalan las consecuencias que tuvo para sí mismo y los demás las acciones motivadas a partir de las emociones. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Emociones en obras de arte abstractas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes observan una serie de cuadros abstractos y señalan qué emociones transmite la obra y a partir de qué elemento del cuadro las identifican (color, formas, etc.). Comparan sus apreciaciones con las de sus compañeros. Concluyen junto al docente que todos podemos sentir diferente a partir del mismo estímulo. (Artes Visuales)"
+        },
+        {
+          "nombre": "Identificación de situaciones que producen emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Identifican por escrito situaciones que le produzcan ciertas emociones y señalan la manera en que las expresan y otras formas alternativas. Voluntariamente comentan al curso su trabajo. Se sugiere trabajar primero con las emociones básicas (alegría, tristeza, rabia, miedo) y luego ejercitar con otras como frustración, entusiasmo, ansiedad, tranquilidad, entre otras."
+        },
+        {
+          "nombre": "Reflexión sobre formas apropiadas de expresar emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la actividad anterior y guiados por el profesor, reflexionan sobre la importancia de saber qué situaciones nos causan ciertas emociones y las variadas formas de expresarlas, identificando cuáles son más apropiadas en relación con el contexto."
+        },
+        {
+          "nombre": "Expresión de emociones mediante gestos corporales",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Forman parejas y se colocan de pie uno frente al otro, guardando una distancia de un metro y tomando los papeles de \"A\" y \"B\" respectivamente. El profesor señala una emoción determinada y \"A\" debe expresarla principalmente por medio de gestos corporales y expresiones faciales (no puede hablar). \"B\" debe expresar (usando gestos corporales y expresiones faciales, sin hablar) cómo se siente al observar y recibir la emoción de \"A\". Se repite esta operación al menos tres veces y luego intercambian los papeles. Guiados por el docente, comentan cómo se sintieron al interpretar a \"A\" y \"B\" respectivamente, concluyendo que nuestras emociones generan efectos en los que nos rodean."
+        },
+        {
+          "nombre": "Relación entre emociones y reacciones físicas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los alumnos relacionan las emociones con sus correspondientes correlatos fisiológicos. Para ello, trabajan individualmente primero y luego en plenario. Dirigidos por el docente, conversan sobre el trabajo realizado, enfatizando la idea de que nuestro cuerpo también reacciona frente a las emociones, dependiendo de las características propias de cada uno."
+        },
+        {
+          "nombre": "Efectos de las emociones en otros",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Reflexionan acerca de los efectos que producen sus propias emociones en otros. Oralmente, uno a uno completa la oración: \"Cuando yo me siento (alegre), los que están conmigo (reaccionan riéndose conmigo)\", \"cuando yo me siento (triste), los que están conmigo (me acompañan)\", y así sucesivamente, señalando diferentes emociones. Pueden registrar algunas afirmaciones en su cuaderno."
+        },
+        {
+          "nombre": "Conversación con padres sobre expresión de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes conversan con sus padres o apoderados sobre la forma en que estos últimos sienten y expresan sus emociones. Les piden consejos sobre cómo expresar mejor sus emociones. Registran en su cuaderno las ideas recibidas."
+        },
+        {
+          "nombre": "Análisis de causas y consecuencias de expresiones emocionales",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Se dividen en grupos y, a partir de una situación presentada por el docente, analizan las causas de las emociones involucradas y las consecuencias que puede tener para los demás la forma en que se expresan. Luego hacen un cuadro comparativo sobre las posibles consecuencias que tiene para los demás (amigos, familiares, entre otros) que las emociones se expresen en forma inadecuada. Ponen en común sus conclusiones."
+        },
+        {
+          "nombre": "Análisis de experiencias de expresión emocional inadecuada",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Cada alumno escribe en forma anónima una situación en la que haya experimentado pena, frustración o rabia como consecuencia de la expresión emocional de otra persona. Entregan los ejemplos al docente, quien selecciona algunos y los analiza con los alumnos. Concluyen destacando la influencia que tiene para los demás una apropiada o inapropiada expresión de las emociones."
+        },
+        {
+          "nombre": "Análisis y resolución de conflictos en grupos",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "En grupos, los estudiantes identifican una situación de conflicto que conozcan o hayan experimentado y que consideren relevante solucionar. Luego, cada grupo analiza la manera en que el conflicto escogido puede resolverse, aplicando los siguientes pasos: definen del problema, analizan el problema, generan alternativas de solución, evalúan alternativas de solución, eligen la alternativa más adecuada, implementan la opción elegida. Por último, toman los compromisos necesarios para llevar a cabo la propuesta de solución. En sesiones posteriores, evalúan junto al profesor cómo funcionó la medida y en qué estado se encuentra el conflicto seleccionado."
+        },
+        {
+          "nombre": "Análisis de conflictos personales en parejas",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "En parejas formadas en función de la cercanía y la afinidad entre los alumnos, adoptan roles \"A\" y \"B\" respectivamente. \"A\" debe contar a \"B\" un conflicto que le esté ocurriendo a nivel personal. \"B\" debe escuchar en silencio y, si lo requiere, anotar elementos que le llamen la atención. Luego, \"B\" le comenta a \"A\" algunas posibles causas del problema que él observa y le propone algunas soluciones que \"A\" puede anotar si lo requiere. Se invierten los roles. En sesiones posteriores, el profesor podrá dar tiempo para que \"A\" y \"B\" se reúnan nuevamente y se comenten cómo les ha ido con la implementación de las soluciones que se sugirieron respectivamente."
+        },
+        {
+          "nombre": "Conversación con padres sobre resolución de problemas",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes llevan de tarea una pregunta para conversar con sus padres o apoderados sobre la resolución de problemas; puede ser ¿cómo resolvemos los problemas en esta familia? Registran la respuesta y la comentan voluntariamente en la próxima sesión."
+        },
+        {
+          "nombre": "Análisis de toma de decisiones cotidianas",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Profesor y alumnos dan ejemplos de decisiones que tengan que tomar; por ejemplo: quedarse después del horario a jugar fútbol o ir a casa a estudiar. Juntos analizan las consecuencias de cada opción y los alumnos comentan y escriben qué haría cada uno."
+        },
+        {
+          "nombre": "Role-playing de mediación de conflictos",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Dos alumnos junto al profesor representan frente al curso una situación de conflicto. El profesor actuará como mediador, modelando intencionadamente la conducta deseada. Luego en tríos, los alumnos representan distintas situaciones conflictivas, cambiando siempre el rol de mediador, para que los tres estudiantes del grupo tengan la posibilidad de ejercerlo."
+        },
+        {
+          "nombre": "Presentación creativa de estrategias de resolución de conflictos",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Forman grupos de cinco alumnos y elaboran una presentación con las estrategias de resolución de conflictos aprendidas, expresándolas en forma creativa (dramatización, imágenes, canción) y parafraseando los pasos señalados con sus propias palabras."
+        },
+        {
+          "nombre": "Reflexión sobre conflictos resueltos y aprendizaje",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Entre todos, eligen un conflicto del curso que se haya resuelto satisfactoriamente. Guiados por el docente, reflexionan y discuten sobre las oportunidades de crecimiento y los aprendizajes que surgieron fruto de la experiencia. Lo registran en su cuaderno."
+        },
+        {
+          "nombre": "Seguimiento de conflictos en noticias",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Guiados por el docente, buscan una noticia sobre algún problema que suponga un conflicto entre personas o grupos de personas y siguen su desarrollo a lo largo de los días. Luego hacen un plenario, comentan cómo se resolvió el conflicto y se exponen las reflexiones de cada estudiante. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Resolución de conflictos con situaciones al azar",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El profesor pone en una caja o bolsa, papeles con diversas situaciones de conflicto. Los estudiantes se dividen en grupos. Uno saca un papel y lo entrega al docente, quien lo lee en voz alta. Cada grupo debe proponer una resolución al conflicto leído. Luego escogen entre todos la mejor resolución al problema."
+        },
+        {
+          "nombre": "Definición y práctica de la empatía",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Con una lluvia de ideas, definen lo que es actuar con empatía. Escuchan una explicación sobre lo que es y cómo se manifiesta; por ejemplo: haciendo preguntas, ofreciendo ayuda, escuchando activamente (sin interrupciones, mirando a los ojos), no centrar la conversación en el que escucha, (yo... a mí...), no dar consejos en forma inmediata, entre otras. Registran ejemplos de empatía en su cuaderno."
+        },
+        {
+          "nombre": "Práctica de escucha activa",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes practican la \"escucha activa\" como elemento fundamental de las relaciones interpersonales positivas y empáticas. Para ello, forman parejas y adoptan papeles de \"A\" y \"B\" respectivamente. \"A\" elige una anécdota para contar a \"B\" y luego intercambian roles. Mientras \"A\" cuenta su anécdota, \"B\" debe escuchar usando el parafraseo, mirando a los ojos, evitando interrupciones, asintiendo con la cabeza, entre otras. Posteriormente, comparten en plenario si se sintieron realmente escuchados por su compañero y en qué lo notaron. Concluyen junto al profesor la importancia de escuchar activamente al otro cuando nos cuenta algo y reconocen que esto es fundamental para establecer relaciones positivas con los demás. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Dramatización de respuestas empáticas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dramatizan situaciones y las analizan de acuerdo a una pauta. Al final de la sesión, escriben respuestas empáticas en su cuaderno. Se presentan ejemplos de respuestas no empáticas y se analizan, proponiendo alternativas empáticas."
+        },
+        {
+          "nombre": "Ejemplos de solidaridad",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dan ejemplos de situaciones (propias o de otros, reales o ficticias) en las cuales se observe el valor de la solidaridad o en las que ellos hayan sido solidarios. Junto al profesor, reflexionan sobre la importancia de este valor en la amistad y en las relaciones interpersonales positivas."
+        },
+        {
+          "nombre": "Decálogo para el Buen Trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos de cuatro, escriben al menos tres o cuatro normas de convivencia que consideren importantes de respetar y que respondan a las necesidades del curso; por ejemplo: \"No hablar mal de los compañeros\", \"Respetar las diferencias individuales\", \"Escuchar sin interrumpir cuando otra persona está hablando\", etc. Luego llegan a un consenso sobre la norma que mejor represente los pensamientos del grupo; un alumno por grupo lee la norma y el profesor las anota en el pizarrón. Cuando todos han expuesto su trabajo, cada alumno vota por la norma que le parece más importante. Las 10 normas más votadas formarán un \"Decálogo para el Buen Trato\" que se escribirá en una cartulina, se pondrá en un lugar visible y quedará como documento oficial de buen trato en el curso. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Campeonatos deportivos y recreativos con buen trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes organizan campeonatos deportivos o recreativos y concursos de acuerdo a las posibilidades del colegio y los intereses de los miembros, siendo respetuosos de las diferencias individuales, manteniendo un buen trato e integrando a todos."
+        },
+        {
+          "nombre": "Análisis de la Ley sobre Violencia Escolar",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes forman grupos y reciben el artículo n° 16 B de la ley sobre Violencia Escolar n° 20.536. Elaboran una opinión de grupo al respecto y la comunican al curso. Junto al docente, reflexionan sobre que intimidar, agredir, hostigar a otros constituye un delito penado por la ley (tanto si se ejerce en forma directa o a través de internet). Averiguan la política o protocolos que tiene el establecimiento al respecto, dirigiéndose al encargado de convivencia escolar. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión en el curso",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos, discuten acerca de las consecuencias que puede tener el agredir o ser agredido por otros, ya sea física o psicológicamente. Guiados por el docente, identifican si se dan situaciones de agresión entre compañeros en el curso, las analizan en conjunto y proponen formas de resolver los conflictos que las causan, de evitar las agresiones y de pedir ayuda cuando lo necesiten."
+        },
+        {
+          "nombre": "Aviso de ofrecimiento de ayuda",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes escriben un aviso en el cual se ofrecen para ayudar a sus compañeros en distintas áreas de acuerdo a sus posibilidades y características; por ejemplo: \"Me ofrezco para ayudar a estudiar matemática\", \"Me ofrezco para enseñar a hacer pulseras\"."
+        },
+        {
+          "nombre": "Acuerdos para el ambiente de aprendizaje",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Por medio de una lluvia de ideas, proponen ideas para respetar el ambiente de aprendizaje y así tener un buen clima que permita que todos aprendan. Se establecen acuerdos junto al docente para mantener silencio cuando sea necesario."
+        },
+        {
+          "nombre": "Definición de objetivos del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A modo de lluvia de ideas, los estudiantes definen y enumeran los objetivos del Consejo de Curso de acuerdo a su experiencia y los anotan en la pizarra. Luego, guiados por el docente, identifican las actividades propias de su organización (elección de directiva y comisiones de trabajo) y de la participación y trabajo en torno a la identificación y el logro de metas y objetivos comunes."
+        },
+        {
+          "nombre": "Definición de roles y funciones de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, el profesor pide que definan en conjunto qué es y qué hace una directiva de curso, estableciendo los diferentes roles y funciones de cada participante e incluyendo a todos los miembros del curso."
+        },
+        {
+          "nombre": "Preparación de programa para postular como directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Motivados por el profesor, se agrupan por afinidad y/o intereses comunes, dialogan, toman acuerdos y preparan un programa de trabajo que los represente para postular como directiva de curso. El programa debe incluir nombre de la lista, división de los cargos y propuestas a desarrollar durante el año, entre otros. Pueden también diseñar una pequeña \"campaña\" de elecciones. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Organización de la primera actividad del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza su primera actividad, definiendo los temas a tratar (tabla de consejo), los tiempos asignados y las decisiones y acuerdos a tomar."
+        },
+        {
+          "nombre": "Encuesta de necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Realizan una encuesta para indagar las diferentes necesidades en torno a las actividades de aprendizaje del curso, o intereses en temas que se quieran trabajar, como las relaciones entre compañeros, el cumplimiento de responsabilidades, las metas académicas y de convivencia que se quieren plantear como curso para el año, entre otros. La directiva tabula la encuesta, organiza los resultados y los presenta al curso. (Matemática)"
+        },
+        {
+          "nombre": "Plan de acción para necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, se divide al curso en grupos. Cada grupo propone un plan a implementar para las necesidades observadas o para abordar los temas propuestos, lo exponen al curso, y acuerdan y organizan los planes más urgentes a implementar."
+        },
+        {
+          "nombre": "Organización de convivencias y celebraciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "El docente acompaña a la directiva de curso en la construcción de una tabla de consejo para la organización de alguna convivencia o celebración. Guiados por el presidente de curso, los alumnos proponen ideas para organizar convivencias y celebraciones, luego se organizan y se dividen responsabilidades."
+        },
+        {
+          "nombre": "Actividad de colaboración con la comunidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para colaborar con la comunidad escolar (por ejemplo: reunir fondos, alimentos, ropa u otro elemento) que vaya en beneficio de algún integrante de la comunidad educativa. Establecen responsables y tiempos."
+        },
+        {
+          "nombre": "Jornada de evaluación y afianzamiento de vínculos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una jornada para evaluar lo aprendido, valorar las experiencias vividas y afianzar los vínculos entre compañeros. Cada alumno recibe el nombre de un compañero y le prepara un pequeño regalo. Durante la jornada, se hace un plenario para agradecer a los compañeros y se entregan los regalos."
+        },
+        {
+          "nombre": "Recaudación de fondos para fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para reunir fondos para el paseo o la convivencia de fin de año. Establecen acuerdos, responsables y tiempos."
+        },
+        {
+          "nombre": "Actividad para fomentar el buen trato en el curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una actividad para fomentar el buen trato y una buena convivencia en el curso. Toman acuerdos y, luego de un tiempo, evalúan su cumplimiento."
+        },
+        {
+          "nombre": "Consulta sobre problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de las funciones que debe asumir la directiva de curso y los temas que son pertinentes de abordar en la hora de Consejo de Curso, el docente puede sugerir al presidente de curso que trate algún problema que se esté dando en el curso, relacionado con la convivencia, la disciplina, el rendimiento del curso, entre otros, y recomendarle realizar una consulta o encuesta anónima."
+        },
+        {
+          "nombre": "Resolución de problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, la directiva de curso tabula los resultados y el presidente los expone. Bajo la supervisión y guía del docente, los estudiantes enfrentan el problema que se está dando. Identifican cuáles son los mayores problemas y elaboran un plan para resolverlo."
+        },
+        {
+          "nombre": "Estrategias de resolución de conflictos para actividades de fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes, en forma autónoma, aplican estrategias de resolución de conflictos para analizar un problema o tomar una decisión respecto de las actividades de fin de año (por ejemplo: paseo de curso, convivencia, exámenes finales). Acuerdan poner en práctica una solución."
+        },
+        {
+          "nombre": "Balance del funcionamiento de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Cuando se considere necesario, se realiza un balance del funcionamiento de la directiva de curso: cómo se han asumido las responsabilidades, resultado de las actividades propuestas y desarrolladas, participación del curso en las actividades del establecimiento, entre otras."
+        },
+        {
+          "nombre": "Evaluación de la gestión de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes evalúan la gestión de la directiva y el aporte del curso al mejoramiento de la convivencia escolar dentro de la comunidad educativa."
+        },
+        {
+          "nombre": "Importancia de tener metas y desafíos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Dirigidos por el profesor, conversan acerca de la importancia de tener metas y desafíos por los cuales esforzarse para alcanzarlos. Anotan conclusiones en su cuaderno."
+        },
+        {
+          "nombre": "Establecimiento de metas académicas personales",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, reflexionan individualmente sobre las metas que quieren plantearse en lo académico y escriben un listado. Luego seleccionan una de las metas (la selección se hace sobre la base de criterios como que sea alcanzable, concreta y que se pueda medir o evaluar sus avances) y establecen pasos y/o acciones que deben realizar para alcanzarla, tomando en cuenta los obstáculos que se pueden presentar en el proceso y definiendo estrategias para enfrentar esas dificultades."
+        },
+        {
+          "nombre": "Encuesta sobre organización del estudio",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En forma individual, responden una encuesta para luego, junto al profesor, analizar las respuestas en plenario, concluyendo que ciertas acciones nos ayudan a organizar mejor el estudio."
+        },
+        {
+          "nombre": "Entrevista personal de seguimiento de metas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En entrevista personal, el docente puede conversar con cada alumno y supervisar el cumplimiento de las metas planteadas."
+        },
+        {
+          "nombre": "Horario personal y distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los alumnos completan un esquema indicando las actividades que realizan diariamente y sus horarios correspondientes (aproximadamente). Luego lo conversan en parejas y analizan la forma en que distribuyen su tiempo fuera del colegio. Los compañeros se aportan ideas mutuamente. Algunos voluntarios pueden mostrar su horario al resto del curso. A partir de esto, el docente los motiva a hacer ajustes en la distribución de horarios en los casos que corresponda (distribución real versus ideal)."
+        },
+        {
+          "nombre": "Propuesta de modificación de distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, los alumnos escriben al menos dos ideas que señalen lo que harán para modificar la distribución de su tiempo en caso de necesitarlo."
+        },
+        {
+          "nombre": "Autoevaluación del cumplimiento del horario",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Después de algunas semanas, los estudiantes revisan su horario personal, realizando una autoevaluación sobre su cumplimiento y utilidad para la obtención de los aprendizajes."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Al finalizar cada clase, escriben en su agenda las tareas, trabajos y evaluaciones que han sido fijadas ese día."
+        },
+        {
+          "nombre": "Reflexión sobre el valor del esfuerzo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En grupos de cuatro, cuentan experiencias vividas por ellos o por otros, en las cuales haya sido fundamental el valor del esfuerzo. Escriben cuatro razones por las que es importante esforzarse para alcanzar metas."
+        },
+        {
+          "nombre": "Responsabilidad en tareas y deberes escolares",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los estudiantes anotan un listado de tareas y deberes escolares y reflexionan sobre si cumplen responsablemente con ellas o no. Luego proponen formas de responsabilizarse en los casos en que sea necesario de acuerdo a su reflexión."
+        },
+        {
+          "nombre": "Conductas que favorecen y dificultan el clima de aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Mediante una lluvia de ideas, señalan conductas y actitudes que favorecen y dificultan el clima de aprendizaje y el trabajo escolar. Seleccionan algunas de estas conductas que deben mantener y otras que deben esforzarse por cambiar, tomando acuerdos individuales y de curso para lograrlo."
+        },
+        {
+          "nombre": "Reflexión sobre honestidad y aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Conversan con el profesor sobre la importancia de ser honestos, especialmente en relación con el aprendizaje, evaluando críticamente situaciones como la copia, en las que se falta a este valor."
+        },
+        {
+          "nombre": "Trabajo colaborativo sobre tema de interés",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Agrupados por intereses afines, realizan un trabajo colaborativo de investigación sobre el tema de interés seleccionado. Preparan una disertación para el curso e invitan a sus compañeros a participar en una actividad grupal relacionada con el tema expuesto."
+        },
+        {
+          "nombre": "Identificación de intereses y desarrollo sistemático",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "El docente promueve en el curso una conversación en la que los estudiantes van señalando el tipo de actividades que les interesa realizar (por ejemplo: practicar algún deporte, participar en algún grupo de danza, desarrollar actividades de expresión dramática o musical, participar en actividades sociales, etc.). El profesor va registrando estas actividades en el pizarrón. Luego explica la relevancia de desarrollar sus intereses por medio de actividades llevadas a cabo de manera sistemática y sostenida para progresar en el desarrollo de ellas. Una vez abordado este punto, analizan la sistematicidad con la que desarrollan estas actividades e identifican cómo se puede favorecer su desarrollo sostenido y progresivo."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Cuestionario de reacciones frente a conflictos",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "A partir de un cuestionario, los estudiantes identifican sus reacciones más comunes al enfrentar un conflicto. En parejas, comparten sus respuestas. Luego, en plenario de curso, conversan sobre las mejores formas de reaccionar frente a un conflicto o problema de convivencia.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Establecen estrategias que pueden utilizar autónomamente para enfrentar una situación de conflicto determinada.",
+              "Identifican las formas en que suelen resolver algunos conflictos y distinguen en qué aspectos podrían mejorarlas."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de solidaridad y respeto",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se sugiere completar una pauta de autoevaluación al final de la unidad. Los estudiantes evalúan conductas como el trato respetuoso a los compañeros, mantener silencio cuando es necesario, reconocer características positivas en los demás, ofrecer ayuda a quien lo necesita y cumplir con las normas de convivencia acordadas como curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Tratan con respeto a todos sus compañeros.",
+              "Mantienen silencio cuando es necesario para no interrumpir el aprendizaje.",
+              "Pueden reconocer características positivas en los demás.",
+              "Ofrecen ayuda a quien lo necesita.",
+              "Cumplen con las normas de convivencia que han acordado como curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de la participación en el Consejo de Curso",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "El docente evalúa la participación de los alumnos en las actividades de Consejo de Curso con una pauta de observación. Se recomienda que la complete al final del bimestre y comparta los resultados con los estudiantes en forma general o individual, si se requiere.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participan en el Consejo de Curso, intercambiando sus ideas.",
+              "Proponen iniciativas y acogen las de sus compañeros.",
+              "Colaboran con los proyectos de curso.",
+              "Respetan el derecho de que todos los alumnos participen en el Consejo de Curso.",
+              "Asumen responsabilidades y cumplen con los compromisos de curso en forma autónoma."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación del año escolar y de la directiva",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes preparan la jornada de final de curso y evalúan el año, respondiendo por escrito preguntas sobre el momento más significativo, lo aprendido, cómo consideran que fue su año escolar, qué mejorarían y comentarios. Luego las entregan al profesor.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Evalúan el funcionamiento de la directiva y de las actividades.",
+              "Evalúan el cumplimiento de los acuerdos de curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de organización del tiempo y metas",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes responden un cuestionario de autoevaluación que los ayude a tomar conciencia de la forma en que organizan su tiempo y evaluar si es necesario hacer algunos cambios que los favorecerían. Posteriormente, el alumno que lo necesite puede solicitar una entrevista con el profesor para que, en conjunto, busquen mejores estrategias.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se proponen metas para mejorar sus resultados académicos.",
+              "Saben definir las acciones necesarias para cumplir con sus metas.",
+              "Piensan que pueden alcanzar las metas que se propusieron.",
+              "Usan la agenda para anotar sus tareas, trabajos y pruebas.",
+              "Pueden tener un horario organizado y cumplirlo.",
+              "Creen que su tiempo está bien distribuido.",
+              "Piden ayuda para estudiar si lo necesitan.",
+              "Se ofrecen para ayudar a otros a estudiar las materias que les resultan más fáciles."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de esfuerzo, responsabilidad y honestidad",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes reflexionan y se autoevalúan con respecto a sus actitudes (esfuerzo, responsabilidad, honestidad). Para ello, pueden utilizar una pauta, en la cual se sugieren algunos indicadores a evaluar, pero se recomienda que el docente los adapte de acuerdo a la realidad de su curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuando algo no les resulta, perseveran hasta lograrlo.",
+              "Dedican tiempo extra para estudiar o ejercitar las materias que les cuestan.",
+              "Entregan los trabajos y tareas a tiempo.",
+              "Cumplen con los encargos o funciones que tienen en el curso.",
+              "Hacen los trabajos ellos mismos, sin copiar la información de otros compañeros.",
+              "Cuando usan información textual de internet o libros, se preocupan de citar la fuente y/o a los autores."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad, se pretende que los estudiantes reconozcan y comprendan que los cambios físicos y psicológicos experimentados en la etapa de la pubertad y la adolescencia están estrechamente relacionados con sus motivaciones, sus formas de relacionarse y expresar afecto. Por otra parte, se pretende que aprendan a practicar en forma autónoma conductas protectoras y de autocuidado en relación con su cuerpo e intimidad.",
+      "conocimientos_previos": [],
+      "palabras_clave": [
+        "Adolescencia",
+        "pubertad",
+        "cambios",
+        "motivaciones",
+        "autocuidado",
+        "formas de relacionarse",
+        "afecto",
+        "autonomía",
+        "intimidad",
+        "protección",
+        "desarrollo",
+        "sexualidad"
+      ],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Reconocer y valorar el proceso de desarrollo afectivo y sexual que aprecia en sí mismo y en los demás, describiendo los cambios físicos, afectivos y sociales que ocurren en la pubertad, considerando la manifestación de estos en las motivaciones, formas de relacionarse y expresar afecto a los demás.",
+          "indicadores": [
+            "Describen los cambios experimentados en la pubertad, considerando aquellos de carácter físico, afectivo y social.",
+            "Comparan las características de los cambios que tienen lugar en hombres y mujeres durante la pubertad.",
+            "Describen cambios en sí mismos relativos a sus intereses, formas de recreación y de relacionarse con sus padres y adultos en general.",
+            "Explican algunos de los desafíos que les presentan los cambios experimentados en la pubertad.",
+            "Identifican y evalúan distintas formas de relacionarse con otros.",
+            "Nombran modos de expresar afecto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar en forma autónoma conductas protectoras y de autocuidado, como: mantener una comunicación efectiva con la familia o adulto de su confianza; resguardar la intimidad (por ejemplo: evitar exponer información personal, fotos íntimas a través de redes sociales, protegerse de manifestaciones de índole sexual inapropiadas); seleccionar y acudir a fuentes de información confiables (personas significativas, libros y páginas de internet especializadas); realizar un uso seguro de redes sociales.",
+          "indicadores": [
+            "Identifican adultos de su confianza a los cuales recurrir ante dudas o problemas que involucran el resguardo y cuidado de su cuerpo e intimidad.",
+            "Distinguen conductas protectoras en relación con el cuidado de su cuerpo e intimidad.",
+            "Identifican en su entorno situaciones o condiciones de riesgo para su integridad física y su intimidad.",
+            "Identifican consecuencias de exponer información personal en internet.",
+            "Discriminan entre fuentes de informaciones seguras e inseguras.",
+            "Explican riesgos que puede traer consigo consultar fuentes de información inseguras.",
+            "Resguardan su información personal en las redes sociales.",
+            "Contrastan beneficios y riesgos del uso de las redes sociales.",
+            "Promueven el uso seguro de las redes sociales."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 6,
+          "descripcion": "Manifestar actitudes de solidaridad y respeto que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo: saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda, especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Explican el concepto de empatía.",
+            "Escuchan de manera atenta y activa los problemas e ideas de otros.",
+            "Establecen normas de convivencia y se esfuerzan por cumplirlas.",
+            "Proponen actividades o acuerdos para evitar la discriminación y favorecer la participación de todos.",
+            "Ofrecen ayuda a sus compañeros y a quien lo necesite.",
+            "Proponen formas de manifestar solidaridad ante amigos u otras personas (por ejemplo: brindarles apoyo cuando tienen problemas, mantener los compromisos asumidos hacia ellos, preocuparse por el bienestar del otro, etc.).",
+            "Muestran respeto por el ambiente de aprendizaje, manteniendo silencio cuando es necesario.",
+            "Describen los protocolos de violencia en el establecimiento.",
+            "Proponen medidas para prevenir y resolver casos de violencia.",
+            "Organizan actividades recreativas en las que se practiquen el respeto, la empatía y la integración."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 8,
+          "descripcion": "Participar activa y colaborativamente en la comunidad escolar y en la organización del curso: planificando y evaluando actividades encaminadas a un objetivo; organizándose para resolver problemas cotidianos de la comunidad; asumiendo y cumpliendo responsabilidades; participando en las elecciones de curso y aceptando los resultados; respetando los derechos de los demás, sin discriminar en la distribución de roles y responsabilidades, entre otros; estableciendo acuerdos por medio del diálogo y la toma de decisiones democráticas; evaluando el cumplimiento de los acuerdos de curso.",
+          "indicadores": [
+            "Definen los objetivos del consejo de curso.",
+            "Definen roles y funciones de la directiva.",
+            "Eligen directiva de curso democráticamente.",
+            "Respetan los acuerdos y votaciones realizadas en el curso.",
+            "Proponen estrategias para abordar necesidades del curso.",
+            "Planifican líneas de acción para resolver algún problema de la comunidad.",
+            "Se organizan para desarrollar iniciativas destinadas a favorecer el bienestar escolar.",
+            "Proponen iniciativas y acogen las de sus compañeros.",
+            "Distribuyen responsabilidades equitativamente entre hombres y mujeres.",
+            "Permiten la participación de todos en las decisiones de curso.",
+            "Asumen sus responsabilidades y cumplen con sus compromisos.",
+            "Participan activamente en el Consejo de Curso, aportando con opiniones e ideas en debates y reflexiones de grupo.",
+            "Aportan con sus habilidades e ideas para desarrollar proyectos e iniciativas de curso.",
+            "Evalúan el funcionamiento de la directiva y de las actividades.",
+            "Evalúan el cumplimiento de los acuerdos de curso."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 9,
+          "descripcion": "Practicar en forma autónoma y perseverante, hábitos y actitudes orientadas a favorecer el aprendizaje y a desarrollar sus intereses, tales como: establecer metas de aprendizaje; estudiar con anticipación, organizando su tiempo; trabajar en forma colaborativa; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Explican la importancia de proponerse metas y definir las acciones necesarias para alcanzarlas.",
+            "Se plantean metas de superación académica.",
+            "Se proponen metas de aprendizaje y señalan las acciones para lograrlas.",
+            "Explican razones por las cuales es importante esforzarse para cumplir metas.",
+            "Persisten en el desarrollo de actividades o trabajos que les han resultado difíciles, buscando diversas maneras de desarrollarlos.",
+            "Identifican obstáculos que podrían entorpecer la consecución de la meta y definen estrategias para enfrentarlos.",
+            "Evalúan su rendimiento académico, guiados por el docente, y se proponen estrategias para mejorar.",
+            "Evalúan el cumplimiento de acciones propuestas para mejorar su organización y estudio.",
+            "Evalúan el uso del tiempo dedicado al trabajo escolar.",
+            "Definen los valores del esfuerzo, la responsabilidad y la honestidad.",
+            "Explican la importancia del esfuerzo, la responsabilidad y la honestidad para el aprendizaje.",
+            "Explican las consecuencias del plagio.",
+            "Realizan sus trabajos señalando la fuente o la autoría de las ideas presentadas.",
+            "Buscan información en relación con sus intereses.",
+            "Realizan diversas actividades de su interés de manera organizada y planificada."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Lluvia de ideas sobre cambios en la pubertad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "En una lluvia de ideas, señalan los cambios experimentados en la pubertad según lo visto el año pasado en Orientación y conversan sobre la evolución que han tenido durante el último año. Luego, en grupos de cuatro alumnos, agrupan los cambios según el ámbito en que se producen, reconociendo los cambios fisiológicos (caracteres sexuales secundarios, cambio de estatura, fisonomía del cuerpo), los psicológicos (sentimientos, emociones, intereses, formas de percibirse a sí mismos) y sociales (relaciones entre hombres y mujeres; formas de relacionarse con pares y adultos...). Después comparten sus trabajos."
+        },
+        {
+          "nombre": "Análisis de desafíos de los cambios por ámbito",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "A partir de la actividad anterior, se dividen en cuatro grupos. Cada uno trabajará uno de los siguientes ámbitos: físico, psicológico, social y motivacional. Conversan sobre las tareas más desafiantes que tiene un joven al experimentar cambios en esa área y sobre las dificultades que conllevan esos cambios. Presentan en un plenario lo conversado en cada grupo."
+        },
+        {
+          "nombre": "Reflexión sobre semejanzas y diferencias con el curso",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Responden individualmente las siguientes preguntas: ¿en qué me parezco al resto del curso?, ¿en qué me diferencio?, ¿en qué me gustaría parecerme? Luego lo comparten en parejas. Junto al profesor, concluyen que todos somos únicos e irrepetibles y, a la vez, formamos parte de distintos grupos (familia, curso, amigos...) con los que compartimos características comunes y en los cuales podemos ser un aporte y aprender de ellos."
+        },
+        {
+          "nombre": "Debate sobre relaciones con los padres en la pubertad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Se prepara un debate sobre los cambios que ocurren en la pubertad en la relación con los padres: un grupo del curso busca argumentos que sostengan que las relaciones con los padres son más cercanas en la adolescencia, más fáciles de llevar y que los padres pueden conversar más cosas con ellos; otro grupo prepara el argumento de que en la adolescencia las relaciones con los padres son difíciles, que tienen menos comunicación y que hay más conflictos. Hay un grupo de observador. Cada grupo que debate expone sus ideas durante cinco minutos. Luego el grupo observador hace preguntas que deben contestar en 5 minutos."
+        },
+        {
+          "nombre": "Conversación con padres sobre su propia adolescencia",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes llevan de tarea conversar con sus padres o apoderados con respecto a las siguientes preguntas: ¿cómo eras tú a mi edad? ¿cómo era la relación con tus papás? ¿qué piensas que podríamos mejorar en nuestra relación? A la sesión siguiente, los estudiantes comparten voluntariamente su trabajo y reflexionan junto al docente en torno a las respuestas de los padres o apoderados."
+        },
+        {
+          "nombre": "Buzón de preguntas sobre afectividad y sexualidad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "En forma individual, elaboran una lista de preguntas con respecto a la afectividad y la sexualidad, las recortan y las ponen en un buzón destinado para ello, en forma anónima. El docente responde a estas inquietudes en sesiones posteriores."
+        },
+        {
+          "nombre": "Collage de representación personal en la nueva etapa",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los alumnos hacen un collage con recortes de revistas, diarios, dibujos u otros materiales, que los representa en esta nueva etapa de vida. Los collages se pegan en la pared de la sala."
+        },
+        {
+          "nombre": "Lista de formas de expresar atracción y cariño",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Guiados por el profesor, elaboran una lista de las formas en que se puede expresar atracción, cariño, enamoramiento o amor por personas del sexo opuesto y las anotan en un cuadro en el pizarrón. Luego analizan y reflexionan sobre la importancia de una adecuada manifestación de los sentimientos."
+        },
+        {
+          "nombre": "Cuento sobre el desarrollo en la pubertad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes elaboran un cuento en que los personajes estén en el proceso de desarrollo de la pubertad, dando cuenta del conocimiento y la valoración de este momento de sus vidas y reconociendo los cambios físicos y los relativos a sus intereses y sus relaciones con sus pares y adultos en general. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Lluvia de ideas sobre comunicación familiar",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Mediante una lluvia de ideas, comentan las ventajas y desventajas de mantener una buena o mala comunicación con su familia, estableciendo un paralelo. Proponen formas para mejorar la comunicación y acercarse a sus padres y hermanos."
+        },
+        {
+          "nombre": "Carta a los padres sobre sentimientos en esta etapa",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes escriben una carta a sus padres o apoderados, explicándoles cómo se sienten en esta nueva etapa de desarrollo y qué necesitan de ellos."
+        },
+        {
+          "nombre": "Identificación de adultos de confianza",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Reflexionan y determinan quiénes son los adultos de confianza a los cuales pueden acudir en caso de tener inquietudes en relación con la sexualidad o en caso de verse expuestos a situaciones de riesgo. Cada alumno puede plantearse las siguientes preguntas: ¿con qué adulto me siento cómodo y seguro? De las personas adultas que conozco, ¿quiénes me inspiran confianza? ¿a quién o quienes podría recurrir si necesito ayuda o tengo dudas?"
+        },
+        {
+          "nombre": "Análisis de beneficios y riesgos de redes sociales",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Mediante una lluvia de ideas, señalan qué redes sociales utilizan, qué información intercambian y con quiénes se relacionan. A partir de la información anterior, trabajan en grupos de cuatro, estableciendo beneficios y riesgos del uso de las redes sociales. Un representante por grupo comenta las conclusiones de su trabajo."
+        },
+        {
+          "nombre": "Encuesta sobre información recibida sobre sexualidad",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En relación con la información que los estudiantes manejan sobre la sexualidad, responden preguntas sobre cómo ha sido la información recibida, de quién o quiénes la han recibido y con quién o quiénes conversan sobre sexualidad."
+        },
+        {
+          "nombre": "Reflexión sobre confiabilidad de fuentes de información",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "A partir de la actividad anterior, el docente tabula los resultados y presenta la información al curso para generar una reflexión sobre la información y las fuentes. Argumentan por qué una fuente de información es confiable o no."
+        },
+        {
+          "nombre": "Clasificación de conductas protectoras de la intimidad",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En forma individual, clasifican una serie de conductas de acuerdo a si las consideran protectoras en relación con la propia intimidad o de otros. Las afirmaciones incluyen: buscar información sobre sexualidad en revistas no especializadas de circulación masiva; compartir claves de seguridad con amigos; reunirse con alguien que se conoció en foros o chats de internet; conversar con los padres o un adulto de confianza sobre dudas e inquietudes sobre la sexualidad; aceptar a desconocidos en los grupos de redes sociales para conocer más gente; ser grabado o grabar a otros en situaciones personales sin su consentimiento; decir a otros cuando nos sentimos incómodos con sus manifestaciones de cariño; publicar fotografías íntimas, propias o de otras personas; cerrar las cuentas de internet o sesiones en redes sociales una vez que se dejan de utilizar; avisar al salir de la casa."
+        },
+        {
+          "nombre": "Discusión grupal sobre conductas protectoras",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "A partir de lo anterior, los estudiantes forman grupos, comentan su trabajo y discuten los resultados. Se sugiere concluir que hay conductas que nos protegen y otras que nos ponen en riesgo."
+        },
+        {
+          "nombre": "Identificación de focos de riesgo en el entorno",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes se reúnen en grupos según los lugares donde viven (barrio, comuna). Escriben una lista de los focos de riesgo que existen cerca o en su lugar de residencia (esquinas oscuras, pandillas, personas que consumen drogas en la plaza, calles peligrosas, entre otras). Analizan qué es lo riesgoso de cada uno y proponen una forma de protegerse o evitarlos."
+        },
+        {
+          "nombre": "Tríptico sobre uso seguro de internet",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Elaboran un tríptico para entregar a los alumnos del establecimiento a partir de la información del sitio web de Enlaces, relacionada con el uso seguro de internet."
+        },
+        {
+          "nombre": "Código cibernético de buen trato",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los alumnos, reunidos en grupos, elaboran un \"código cibernético\" que contenga 10 normas básicas para resguardar el buen trato en las relaciones interpersonales que se mantienen en las redes sociales (por ejemplo: no revelar claves ni datos personales de otras personas por internet; no enviar mensajes que puedan asustar o incomodar a otros, entre otros). Una vez que los grupos han expuesto su trabajo, cada alumno vota por la norma que le parece más importante. Las 10 normas más votadas formarán el \"Código cibernético\", que se escribirá en una cartulina y se pondrá en un lugar visible."
+        },
+        {
+          "nombre": "Afiches sobre uso responsable de redes sociales",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes crean afiches que promuevan el uso responsable y seguro de las redes sociales (Facebook, Twitter) y de espacios de mensajería instantánea como Messenger, Fotologs, Foros de opinión, entre otros, destacando la idea del buen trato y el respeto entre los usuarios. (Lenguaje y Comunicación; Artes Visuales)"
+        },
+        {
+          "nombre": "Investigación sobre ciberbullying",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En grupos, investigan sobre el ciberbullying en http://www.policia.cl/paginas/brigadas/bg-bricib/bg-bricib.htm. Preparan una presentación al curso, señalando formas de enfrentar la violencia en internet."
+        },
+        {
+          "nombre": "Definición y práctica de la empatía",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Con una lluvia de ideas, definen lo que es actuar con empatía. Escuchan una explicación sobre lo que es y cómo se manifiesta; por ejemplo: haciendo preguntas, ofreciendo ayuda, escuchando activamente (sin interrupciones, mirando a los ojos), no centrar la conversación en el que escucha, (yo... a mí...), no dar consejos en forma inmediata, entre otras. Registran ejemplos de empatía en su cuaderno."
+        },
+        {
+          "nombre": "Práctica de escucha activa",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes practican la \"escucha activa\" como elemento fundamental de las relaciones interpersonales positivas y empáticas. Para ello, forman parejas y adoptan papeles de \"A\" y \"B\" respectivamente. \"A\" elige una anécdota para contar a \"B\" y luego intercambian roles. Mientras \"A\" cuenta su anécdota, \"B\" debe escuchar usando el parafraseo, mirando a los ojos, evitando interrupciones, asintiendo con la cabeza, entre otras. Posteriormente, comparten en plenario si se sintieron realmente escuchados por su compañero y en qué lo notaron. Concluyen junto al profesor la importancia de escuchar activamente al otro cuando nos cuenta algo y reconocen que esto es fundamental para establecer relaciones positivas con los demás. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Dramatización de respuestas empáticas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dramatizan situaciones y las analizan de acuerdo a una pauta. Al final de la sesión, escriben respuestas empáticas en su cuaderno. Se presentan ejemplos de respuestas no empáticas y se analizan, proponiendo alternativas empáticas."
+        },
+        {
+          "nombre": "Ejemplos de solidaridad",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dan ejemplos de situaciones (propias o de otros, reales o ficticias) en las cuales se observe el valor de la solidaridad o en las que ellos hayan sido solidarios. Junto al profesor, reflexionan sobre la importancia de este valor en la amistad y en las relaciones interpersonales positivas."
+        },
+        {
+          "nombre": "Decálogo para el Buen Trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos de cuatro, escriben al menos tres o cuatro normas de convivencia que consideren importantes de respetar y que respondan a las necesidades del curso; por ejemplo: \"No hablar mal de los compañeros\", \"Respetar las diferencias individuales\", \"Escuchar sin interrumpir cuando otra persona está hablando\", etc. Luego llegan a un consenso sobre la norma que mejor represente los pensamientos del grupo; un alumno por grupo lee la norma y el profesor las anota en el pizarrón. Cuando todos han expuesto su trabajo, cada alumno vota por la norma que le parece más importante. Las 10 normas más votadas formarán un \"Decálogo para el Buen Trato\" que se escribirá en una cartulina, se pondrá en un lugar visible y quedará como documento oficial de buen trato en el curso. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Campeonatos deportivos y recreativos con buen trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes organizan campeonatos deportivos o recreativos y concursos de acuerdo a las posibilidades del colegio y los intereses de los miembros, siendo respetuosos de las diferencias individuales, manteniendo un buen trato e integrando a todos."
+        },
+        {
+          "nombre": "Análisis de la Ley sobre Violencia Escolar",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes forman grupos y reciben el artículo n° 16 B de la ley sobre Violencia Escolar n° 20.536. Elaboran una opinión de grupo al respecto y la comunican al curso. Junto al docente, reflexionan sobre que intimidar, agredir, hostigar a otros constituye un delito penado por la ley (tanto si se ejerce en forma directa o a través de internet). Averiguan la política o protocolos que tiene el establecimiento al respecto, dirigiéndose al encargado de convivencia escolar. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión en el curso",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos, discuten acerca de las consecuencias que puede tener el agredir o ser agredido por otros, ya sea física o psicológicamente. Guiados por el docente, identifican si se dan situaciones de agresión entre compañeros en el curso, las analizan en conjunto y proponen formas de resolver los conflictos que las causan, de evitar las agresiones y de pedir ayuda cuando lo necesiten."
+        },
+        {
+          "nombre": "Aviso de ofrecimiento de ayuda",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes escriben un aviso en el cual se ofrecen para ayudar a sus compañeros en distintas áreas de acuerdo a sus posibilidades y características; por ejemplo: \"Me ofrezco para ayudar a estudiar matemática\", \"Me ofrezco para enseñar a hacer pulseras\"."
+        },
+        {
+          "nombre": "Acuerdos para el ambiente de aprendizaje",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Por medio de una lluvia de ideas, proponen ideas para respetar el ambiente de aprendizaje y así tener un buen clima que permita que todos aprendan. Se establecen acuerdos junto al docente para mantener silencio cuando sea necesario."
+        },
+        {
+          "nombre": "Definición de objetivos del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A modo de lluvia de ideas, los estudiantes definen y enumeran los objetivos del Consejo de Curso de acuerdo a su experiencia y los anotan en la pizarra. Luego, guiados por el docente, identifican las actividades propias de su organización (elección de directiva y comisiones de trabajo) y de la participación y trabajo en torno a la identificación y el logro de metas y objetivos comunes."
+        },
+        {
+          "nombre": "Definición de roles y funciones de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, el profesor pide que definan en conjunto qué es y qué hace una directiva de curso, estableciendo los diferentes roles y funciones de cada participante e incluyendo a todos los miembros del curso."
+        },
+        {
+          "nombre": "Preparación de programa para postular como directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Motivados por el profesor, se agrupan por afinidad y/o intereses comunes, dialogan, toman acuerdos y preparan un programa de trabajo que los represente para postular como directiva de curso. El programa debe incluir nombre de la lista, división de los cargos y propuestas a desarrollar durante el año, entre otros. Pueden también diseñar una pequeña \"campaña\" de elecciones. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Organización de la primera actividad del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza su primera actividad, definiendo los temas a tratar (tabla de consejo), los tiempos asignados y las decisiones y acuerdos a tomar."
+        },
+        {
+          "nombre": "Encuesta de necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Realizan una encuesta para indagar las diferentes necesidades en torno a las actividades de aprendizaje del curso, o intereses en temas que se quieran trabajar, como las relaciones entre compañeros, el cumplimiento de responsabilidades, las metas académicas y de convivencia que se quieren plantear como curso para el año, entre otros. La directiva tabula la encuesta, organiza los resultados y los presenta al curso. (Matemática)"
+        },
+        {
+          "nombre": "Plan de acción para necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, se divide al curso en grupos. Cada grupo propone un plan a implementar para las necesidades observadas o para abordar los temas propuestos, lo exponen al curso, y acuerdan y organizan los planes más urgentes a implementar."
+        },
+        {
+          "nombre": "Organización de convivencias y celebraciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "El docente acompaña a la directiva de curso en la construcción de una tabla de consejo para la organización de alguna convivencia o celebración. Guiados por el presidente de curso, los alumnos proponen ideas para organizar convivencias y celebraciones, luego se organizan y se dividen responsabilidades."
+        },
+        {
+          "nombre": "Actividad de colaboración con la comunidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para colaborar con la comunidad escolar (por ejemplo: reunir fondos, alimentos, ropa u otro elemento) que vaya en beneficio de algún integrante de la comunidad educativa. Establecen responsables y tiempos."
+        },
+        {
+          "nombre": "Jornada de evaluación y afianzamiento de vínculos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una jornada para evaluar lo aprendido, valorar las experiencias vividas y afianzar los vínculos entre compañeros. Cada alumno recibe el nombre de un compañero y le prepara un pequeño regalo. Durante la jornada, se hace un plenario para agradecer a los compañeros y se entregan los regalos."
+        },
+        {
+          "nombre": "Recaudación de fondos para fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para reunir fondos para el paseo o la convivencia de fin de año. Establecen acuerdos, responsables y tiempos."
+        },
+        {
+          "nombre": "Actividad para fomentar el buen trato en el curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una actividad para fomentar el buen trato y una buena convivencia en el curso. Toman acuerdos y, luego de un tiempo, evalúan su cumplimiento."
+        },
+        {
+          "nombre": "Consulta sobre problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de las funciones que debe asumir la directiva de curso y los temas que son pertinentes de abordar en la hora de Consejo de Curso, el docente puede sugerir al presidente de curso que trate algún problema que se esté dando en el curso, relacionado con la convivencia, la disciplina, el rendimiento del curso, entre otros, y recomendarle realizar una consulta o encuesta anónima."
+        },
+        {
+          "nombre": "Resolución de problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, la directiva de curso tabula los resultados y el presidente los expone. Bajo la supervisión y guía del docente, los estudiantes enfrentan el problema que se está dando. Identifican cuáles son los mayores problemas y elaboran un plan para resolverlo."
+        },
+        {
+          "nombre": "Estrategias de resolución de conflictos para actividades de fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes, en forma autónoma, aplican estrategias de resolución de conflictos para analizar un problema o tomar una decisión respecto de las actividades de fin de año (por ejemplo: paseo de curso, convivencia, exámenes finales). Acuerdan poner en práctica una solución."
+        },
+        {
+          "nombre": "Balance del funcionamiento de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Cuando se considere necesario, se realiza un balance del funcionamiento de la directiva de curso: cómo se han asumido las responsabilidades, resultado de las actividades propuestas y desarrolladas, participación del curso en las actividades del establecimiento, entre otras."
+        },
+        {
+          "nombre": "Evaluación de la gestión de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes evalúan la gestión de la directiva y el aporte del curso al mejoramiento de la convivencia escolar dentro de la comunidad educativa."
+        },
+        {
+          "nombre": "Importancia de tener metas y desafíos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Dirigidos por el profesor, conversan acerca de la importancia de tener metas y desafíos por los cuales esforzarse para alcanzarlos. Anotan conclusiones en su cuaderno."
+        },
+        {
+          "nombre": "Establecimiento de metas académicas personales",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, reflexionan individualmente sobre las metas que quieren plantearse en lo académico y escriben un listado. Luego seleccionan una de las metas (la selección se hace sobre la base de criterios como que sea alcanzable, concreta y que se pueda medir o evaluar sus avances) y establecen pasos y/o acciones que deben realizar para alcanzarla, tomando en cuenta los obstáculos que se pueden presentar en el proceso y definiendo estrategias para enfrentar esas dificultades."
+        },
+        {
+          "nombre": "Encuesta sobre organización del estudio",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En forma individual, responden una encuesta para luego, junto al profesor, analizar las respuestas en plenario, concluyendo que ciertas acciones nos ayudan a organizar mejor el estudio."
+        },
+        {
+          "nombre": "Entrevista personal de seguimiento de metas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En entrevista personal, el docente puede conversar con cada alumno y supervisar el cumplimiento de las metas planteadas."
+        },
+        {
+          "nombre": "Horario personal y distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los alumnos completan un esquema indicando las actividades que realizan diariamente y sus horarios correspondientes (aproximadamente). Luego lo conversan en parejas y analizan la forma en que distribuyen su tiempo fuera del colegio. Los compañeros se aportan ideas mutuamente. Algunos voluntarios pueden mostrar su horario al resto del curso. A partir de esto, el docente los motiva a hacer ajustes en la distribución de horarios en los casos que corresponda (distribución real versus ideal)."
+        },
+        {
+          "nombre": "Propuesta de modificación de distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, los alumnos escriben al menos dos ideas que señalen lo que harán para modificar la distribución de su tiempo en caso de necesitarlo."
+        },
+        {
+          "nombre": "Autoevaluación del cumplimiento del horario",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Después de algunas semanas, los estudiantes revisan su horario personal, realizando una autoevaluación sobre su cumplimiento y utilidad para la obtención de los aprendizajes."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Al finalizar cada clase, escriben en su agenda las tareas, trabajos y evaluaciones que han sido fijadas ese día."
+        },
+        {
+          "nombre": "Reflexión sobre el valor del esfuerzo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En grupos de cuatro, cuentan experiencias vividas por ellos o por otros, en las cuales haya sido fundamental el valor del esfuerzo. Escriben cuatro razones por las que es importante esforzarse para alcanzar metas."
+        },
+        {
+          "nombre": "Responsabilidad en tareas y deberes escolares",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los estudiantes anotan un listado de tareas y deberes escolares y reflexionan sobre si cumplen responsablemente con ellas o no. Luego proponen formas de responsabilizarse en los casos en que sea necesario de acuerdo a su reflexión."
+        },
+        {
+          "nombre": "Conductas que favorecen y dificultan el clima de aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Mediante una lluvia de ideas, señalan conductas y actitudes que favorecen y dificultan el clima de aprendizaje y el trabajo escolar. Seleccionan algunas de estas conductas que deben mantener y otras que deben esforzarse por cambiar, tomando acuerdos individuales y de curso para lograrlo."
+        },
+        {
+          "nombre": "Reflexión sobre honestidad y aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Conversan con el profesor sobre la importancia de ser honestos, especialmente en relación con el aprendizaje, evaluando críticamente situaciones como la copia, en las que se falta a este valor."
+        },
+        {
+          "nombre": "Trabajo colaborativo sobre tema de interés",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Agrupados por intereses afines, realizan un trabajo colaborativo de investigación sobre el tema de interés seleccionado. Preparan una disertación para el curso e invitan a sus compañeros a participar en una actividad grupal relacionada con el tema expuesto."
+        },
+        {
+          "nombre": "Identificación de intereses y desarrollo sistemático",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "El docente promueve en el curso una conversación en la que los estudiantes van señalando el tipo de actividades que les interesa realizar (por ejemplo: practicar algún deporte, participar en algún grupo de danza, desarrollar actividades de expresión dramática o musical, participar en actividades sociales, etc.). El profesor va registrando estas actividades en el pizarrón. Luego explica la relevancia de desarrollar sus intereses por medio de actividades llevadas a cabo de manera sistemática y sostenida para progresar en el desarrollo de ellas. Una vez abordado este punto, analizan la sistematicidad con la que desarrollan estas actividades e identifican cómo se puede favorecer su desarrollo sostenido y progresivo."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Cuento sobre el desarrollo en la pubertad",
+          "oas_evaluados": [
+            3
+          ],
+          "actividad_evaluacion": "Los estudiantes elaboran un cuento en que los personajes estén en el proceso de desarrollo de la pubertad, dando cuenta del conocimiento y la valoración de este momento de sus vidas y reconociendo los cambios físicos y los relativos a sus intereses y sus relaciones con sus pares y adultos en general.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Da cuenta de cambios físicos que se experimentan en este proceso de desarrollo.",
+              "Reconoce un cambio en los intereses y las formas de recreación.",
+              "Muestra un cambio en las relaciones con sus padres y adultos en general.",
+              "Distingue diferencias en las características del hombre y la mujer en este proceso de desarrollo."
+            ]
+          }
+        },
+        {
+          "titulo": "Discriminación de fuentes de información confiables",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes discriminan entre fuentes confiables (o seguras) o no confiables (o inseguras) de información, respondiendo una ficha de evaluación en la que marcan sí o no de acuerdo a la confiabilidad de la fuente de información y fundamentan su elección.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Discriminan entre fuentes de informaciones seguras e inseguras."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de solidaridad y respeto",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se sugiere completar una pauta de autoevaluación al final de la unidad. Los estudiantes evalúan conductas como el trato respetuoso a los compañeros, mantener silencio cuando es necesario, reconocer características positivas en los demás, ofrecer ayuda a quien lo necesita y cumplir con las normas de convivencia acordadas como curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Tratan con respeto a todos sus compañeros.",
+              "Mantienen silencio cuando es necesario para no interrumpir el aprendizaje.",
+              "Pueden reconocer características positivas en los demás.",
+              "Ofrecen ayuda a quien lo necesita.",
+              "Cumplen con las normas de convivencia que han acordado como curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de la participación en el Consejo de Curso",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "El docente evalúa la participación de los alumnos en las actividades de Consejo de Curso con una pauta de observación. Se recomienda que la complete al final del bimestre y comparta los resultados con los estudiantes en forma general o individual, si se requiere.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participan en el Consejo de Curso, intercambiando sus ideas.",
+              "Proponen iniciativas y acogen las de sus compañeros.",
+              "Colaboran con los proyectos de curso.",
+              "Respetan el derecho de que todos los alumnos participen en el Consejo de Curso.",
+              "Asumen responsabilidades y cumplen con los compromisos de curso en forma autónoma."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación del año escolar y de la directiva",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes preparan la jornada de final de curso y evalúan el año, respondiendo por escrito preguntas sobre el momento más significativo, lo aprendido, cómo consideran que fue su año escolar, qué mejorarían y comentarios. Luego las entregan al profesor.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Evalúan el funcionamiento de la directiva y de las actividades.",
+              "Evalúan el cumplimiento de los acuerdos de curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de organización del tiempo y metas",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes responden un cuestionario de autoevaluación que los ayude a tomar conciencia de la forma en que organizan su tiempo y evaluar si es necesario hacer algunos cambios que los favorecerían. Posteriormente, el alumno que lo necesite puede solicitar una entrevista con el profesor para que, en conjunto, busquen mejores estrategias.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se proponen metas para mejorar sus resultados académicos.",
+              "Saben definir las acciones necesarias para cumplir con sus metas.",
+              "Piensan que pueden alcanzar las metas que se propusieron.",
+              "Usan la agenda para anotar sus tareas, trabajos y pruebas.",
+              "Pueden tener un horario organizado y cumplirlo.",
+              "Creen que su tiempo está bien distribuido.",
+              "Piden ayuda para estudiar si lo necesitan.",
+              "Se ofrecen para ayudar a otros a estudiar las materias que les resultan más fáciles."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de esfuerzo, responsabilidad y honestidad",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes reflexionan y se autoevalúan con respecto a sus actitudes (esfuerzo, responsabilidad, honestidad). Para ello, pueden utilizar una pauta, en la cual se sugieren algunos indicadores a evaluar, pero se recomienda que el docente los adapte de acuerdo a la realidad de su curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuando algo no les resulta, perseveran hasta lograrlo.",
+              "Dedican tiempo extra para estudiar o ejercitar las materias que les cuestan.",
+              "Entregan los trabajos y tareas a tiempo.",
+              "Cumplen con los encargos o funciones que tienen en el curso.",
+              "Hacen los trabajos ellos mismos, sin copiar la información de otros compañeros.",
+              "Cuando usan información textual de internet o libros, se preocupan de citar la fuente y/o a los autores."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "Esta unidad tiene como objetivo que los estudiantes puedan reconocer y describir las posibles causas y consecuencias del consumo de drogas (por ejemplo: tabaco, alcohol, marihuana), identifiquen factores protectores que lo previenen y propongan estrategias para enfrentarlo.",
+      "conocimientos_previos": [],
+      "palabras_clave": [
+        "Drogas",
+        "prevención",
+        "factores protectores",
+        "factores de riesgo",
+        "autocuidado",
+        "autonomía",
+        "conductas protectoras",
+        "causas",
+        "consecuencias",
+        "consumo",
+        "estrategias"
+      ],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Reconocer y describir causas y consecuencias del consumo de drogas (por ejemplo: tabaco, alcohol, marihuana), identificar factores que lo previenen y proponer estrategias para enfrentarlo, como mantener hábitos de vida saludable y aprender a manejar el estrés.",
+          "indicadores": [
+            "Distinguen creencias verdaderas y falsas en relación con el consumo de drogas.",
+            "Describen causas y consecuencias del consumo de drogas.",
+            "Identifican riesgos a los que se exponen los consumidores.",
+            "Reconocen la influencia (positiva o negativa) del grupo de pares en la toma de decisiones.",
+            "Proponen estrategias para enfrentar la presión de pares hacia el consumo de drogas.",
+            "Identifican de qué maneras la publicidad incentiva el consumo de alcohol.",
+            "Proponen ideas para prevenir y rechazar el consumo de drogas.",
+            "Reconocen los beneficios de realizar actividad física para la prevención del consumo de drogas.",
+            "Mantienen hábitos de vida saludable.",
+            "Dan ideas para evitar el consumo de drogas."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 6,
+          "descripcion": "Manifestar actitudes de solidaridad y respeto que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo: saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda, especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Explican el concepto de empatía.",
+            "Escuchan de manera atenta y activa los problemas e ideas de otros.",
+            "Establecen normas de convivencia y se esfuerzan por cumplirlas.",
+            "Proponen actividades o acuerdos para evitar la discriminación y favorecer la participación de todos.",
+            "Ofrecen ayuda a sus compañeros y a quien lo necesite.",
+            "Proponen formas de manifestar solidaridad ante amigos u otras personas (por ejemplo: brindarles apoyo cuando tienen problemas, mantener los compromisos asumidos hacia ellos, preocuparse por el bienestar del otro, etc.).",
+            "Muestran respeto por el ambiente de aprendizaje, manteniendo silencio cuando es necesario.",
+            "Describen los protocolos de violencia en el establecimiento.",
+            "Proponen medidas para prevenir y resolver casos de violencia.",
+            "Organizan actividades recreativas en las que se practiquen el respeto, la empatía y la integración."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 8,
+          "descripcion": "Participar activa y colaborativamente en la comunidad escolar y en la organización del curso: planificando y evaluando actividades encaminadas a un objetivo; organizándose para resolver problemas cotidianos de la comunidad; asumiendo y cumpliendo responsabilidades; participando en las elecciones de curso y aceptando los resultados; respetando los derechos de los demás, sin discriminar en la distribución de roles y responsabilidades, entre otros; estableciendo acuerdos por medio del diálogo y la toma de decisiones democráticas; evaluando el cumplimiento de los acuerdos de curso.",
+          "indicadores": [
+            "Definen los objetivos del consejo de curso.",
+            "Definen roles y funciones de la directiva.",
+            "Eligen directiva de curso democráticamente.",
+            "Respetan los acuerdos y votaciones realizadas en el curso.",
+            "Proponen estrategias para abordar necesidades del curso.",
+            "Planifican líneas de acción para resolver algún problema de la comunidad.",
+            "Se organizan para desarrollar iniciativas destinadas a favorecer el bienestar escolar.",
+            "Proponen iniciativas y acogen las de sus compañeros.",
+            "Distribuyen responsabilidades equitativamente entre hombres y mujeres.",
+            "Permiten la participación de todos en las decisiones de curso.",
+            "Asumen sus responsabilidades y cumplen con sus compromisos.",
+            "Participan activamente en el Consejo de Curso, aportando con opiniones e ideas en debates y reflexiones de grupo.",
+            "Aportan con sus habilidades e ideas para desarrollar proyectos e iniciativas de curso.",
+            "Evalúan el funcionamiento de la directiva y de las actividades.",
+            "Evalúan el cumplimiento de los acuerdos de curso."
+          ]
+        },
+        {
+          "tipo": "OAT",
+          "numero": 9,
+          "descripcion": "Practicar en forma autónoma y perseverante, hábitos y actitudes orientadas a favorecer el aprendizaje y a desarrollar sus intereses, tales como: establecer metas de aprendizaje; estudiar con anticipación, organizando su tiempo; trabajar en forma colaborativa; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Explican la importancia de proponerse metas y definir las acciones necesarias para alcanzarlas.",
+            "Se plantean metas de superación académica.",
+            "Se proponen metas de aprendizaje y señalan las acciones para lograrlas.",
+            "Explican razones por las cuales es importante esforzarse para cumplir metas.",
+            "Persisten en el desarrollo de actividades o trabajos que les han resultado difíciles, buscando diversas maneras de desarrollarlos.",
+            "Identifican obstáculos que podrían entorpecer la consecución de la meta y definen estrategias para enfrentarlos.",
+            "Evalúan su rendimiento académico, guiados por el docente, y se proponen estrategias para mejorar.",
+            "Evalúan el cumplimiento de acciones propuestas para mejorar su organización y estudio.",
+            "Evalúan el uso del tiempo dedicado al trabajo escolar.",
+            "Definen los valores del esfuerzo, la responsabilidad y la honestidad.",
+            "Explican la importancia del esfuerzo, la responsabilidad y la honestidad para el aprendizaje.",
+            "Explican las consecuencias del plagio.",
+            "Realizan sus trabajos señalando la fuente o la autoría de las ideas presentadas.",
+            "Buscan información en relación con sus intereses.",
+            "Realizan diversas actividades de su interés de manera organizada y planificada."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Cuestionario de conocimientos previos sobre drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los alumnos contestan un cuestionario sobre sus conocimientos e ideas acerca del consumo de drogas. Se presentan algunas aseveraciones que son verdaderas y otras falsas para establecer sus conocimientos previos sobre el tema y considerarlos como punto de partida para las posteriores reflexiones. El cuestionario puede tener afirmaciones como: Tomar alcohol me hace más sociable; El alcohol es una droga; El alcohol es una droga legal, porque no es dañina; Se dice que la marihuana no produce adicción; Consumir drogas te hace tener más amigos; La marihuana ayuda a la concentración; Hay cosas que solo se pueden hacer bajo la influencia de las drogas; El consumo de drogas solo afecta psicológicamente; Las mujeres inician antes que los hombres el consumo de tabaco; Los hombres tienen más resistencia al alcohol que las mujeres; Las personas que fuman marihuana pueden dejar de hacerlo cuando quieran."
+        },
+        {
+          "nombre": "Reflexión sobre creencias correctas y erradas sobre drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "A partir de la actividad anterior, reflexionan acerca de las creencias correctas y erradas relacionadas con el consumo de drogas, aclarando las dudas que surjan."
+        },
+        {
+          "nombre": "Análisis de publicidad sobre alcohol",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos de cinco. Cada grupo recibe dos afiches o slogan que publiciten el consumo de alcohol. Anotan lo que más les llama la atención, considerando las imágenes y los textos. Un representante por grupo expone sus conclusiones al curso. Se anotan los aportes de cada grupo y se realiza un plenario para discutir sobre la influencia de la publicidad en el consumo de alcohol."
+        },
+        {
+          "nombre": "Buzón de preguntas sobre consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Buzón de preguntas: El docente anima a los estudiantes a realizar preguntas y expresar inquietudes sobre temas relacionados con el consumo de drogas. Las harán en forma anónima y las pondrán en un buzón. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Preparación de respuestas a preguntas del buzón",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "A partir de la actividad anterior, el docente lee las preguntas y prepara las respuestas para la próxima sesión."
+        },
+        {
+          "nombre": "Conversación sobre factores que llevan al consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Guiados por el profesor, conversan sobre los factores o circunstancias que hacen que una persona comience a consumir drogas a temprana edad, considerando que son sustancias dañinas para la salud."
+        },
+        {
+          "nombre": "Conversación sobre riesgos del consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Guiados por el profesor, conversan sobre los riesgos a los cuales se exponen las personas que consumen sustancias nocivas para la salud a temprana edad, como las drogas."
+        },
+        {
+          "nombre": "Análisis de tabla de prevalencia de consumo de tabaco",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes analizan una tabla de datos acerca de la prevalencia del consumo de tabaco en escolares. A partir de ella, responden preguntas sobre la evolución del consumo de tabaco desde el año 2003, por qué sucede esto, cómo evoluciona el consumo de tabaco desde 8° a IV medio y por qué."
+        },
+        {
+          "nombre": "Análisis de la Ley del Tabaco",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Forman grupos de cinco alumnos que reciben distintos artículos de la ley n° 19419 (Ley del tabaco) y de sus modificaciones por medio de la ley n°20660. Lo leen, comparten sus opiniones al respecto y preparan una exposición para sus compañeros."
+        },
+        {
+          "nombre": "Análisis de la Ley de Tolerancia Cero",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Forman grupos de cinco alumnos que reciben distintos artículos de la ley n° 20.580 (Ley de tolerancia cero). Lo leen, comparten sus opiniones al respecto y preparan una exposición para sus compañeros."
+        },
+        {
+          "nombre": "Reflexión sobre influencia del grupo de amigos en decisiones",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los alumnos conversan y reflexionan junto al profesor sobre cómo el grupo de amigos puede ser una influencia positiva o negativa en la toma de decisiones. El profesor les pide comentar si alguna vez han tomado una decisión influenciados por sus amigos. Analizan las situaciones comentadas y el profesor pone especial énfasis en mostrar cómo en ocasiones es mejor decir que no, aunque el costo sea alto."
+        },
+        {
+          "nombre": "Dramatización sobre presión de grupo y consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "A partir de la actividad anterior, los estudiantes dramatizan en grupos una situación sobre el consumo de drogas, en la que ceden frente a la presión del grupo, y otra en que son capaces de enfrentarse a ella y decir \"no\", señalando razones por las cuales rechaza el consumo."
+        },
+        {
+          "nombre": "Video sobre rechazo al consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Realizan un video dirigido a jóvenes de su edad, en el cual invitan a rechazar el consumo de drogas y promueven una vida sana y saludable, indicando algunas causas y consecuencias del consumo. Presentan los videos al curso y los comentan junto al profesor."
+        },
+        {
+          "nombre": "Propuesta de ideas para prevenir el consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Proponen ideas para prevenir el consumo de drogas. Las sistematizan y presentan al curso en forma creativa; por ejemplo: en afiches, videos, dramatizaciones, diapositivas, entre otras."
+        },
+        {
+          "nombre": "Clasificación de factores como causas o consecuencias del consumo de drogas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Clasifican los siguientes factores como causas o consecuencias del consumo de drogas y explican las razones de su clasificación. Un mismo factor puede ser causa o consecuencia a la vez. Los factores incluyen: aburrimiento, curiosidad, barrio inseguro, desinformación, bajo rendimiento escolar, falta de normas, falta de comunicación con la familia, inseguridad, aislamiento, cambios bruscos de ánimo, depresión, influencia del grupo de amigos, soledad, rechazo del grupo de amigos, cometer delitos, otras."
+        },
+        {
+          "nombre": "Beneficios de la actividad física para la salud",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Elaboran un listado de los beneficios que trae para la salud tener el hábito de hacer actividad física. (Educación Física y Salud)"
+        },
+        {
+          "nombre": "Debate sobre el significado del descanso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Realizan un debate acerca de lo que significa descansar. El curso se divide en dos grupos que presentan argumentos para diferentes posturas que presenta el profesor; por ejemplo: \"El verdadero descanso es no hacer nada\"; \"estar con los amigos es la mejor forma de descansar\"; \"la actividad física no descansa, ya que el cuerpo se exige mucho\"."
+        },
+        {
+          "nombre": "Lista de actividades saludables para el tiempo libre",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Junto con el docente, elaboran una lista de actividades para realizar en el tiempo libre de forma saludable. Las dividen en actividades grupales e individuales y dan ideas de cuándo y cómo realizarlas. Lo registran en su cuaderno."
+        },
+        {
+          "nombre": "Definición y práctica de la empatía",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Con una lluvia de ideas, definen lo que es actuar con empatía. Escuchan una explicación sobre lo que es y cómo se manifiesta; por ejemplo: haciendo preguntas, ofreciendo ayuda, escuchando activamente (sin interrupciones, mirando a los ojos), no centrar la conversación en el que escucha, (yo... a mí...), no dar consejos en forma inmediata, entre otras. Registran ejemplos de empatía en su cuaderno."
+        },
+        {
+          "nombre": "Práctica de escucha activa",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes practican la \"escucha activa\" como elemento fundamental de las relaciones interpersonales positivas y empáticas. Para ello, forman parejas y adoptan papeles de \"A\" y \"B\" respectivamente. \"A\" elige una anécdota para contar a \"B\" y luego intercambian roles. Mientras \"A\" cuenta su anécdota, \"B\" debe escuchar usando el parafraseo, mirando a los ojos, evitando interrupciones, asintiendo con la cabeza, entre otras. Posteriormente, comparten en plenario si se sintieron realmente escuchados por su compañero y en qué lo notaron. Concluyen junto al profesor la importancia de escuchar activamente al otro cuando nos cuenta algo y reconocen que esto es fundamental para establecer relaciones positivas con los demás. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Dramatización de respuestas empáticas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dramatizan situaciones y las analizan de acuerdo a una pauta. Al final de la sesión, escriben respuestas empáticas en su cuaderno. Se presentan ejemplos de respuestas no empáticas y se analizan, proponiendo alternativas empáticas."
+        },
+        {
+          "nombre": "Ejemplos de solidaridad",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes dan ejemplos de situaciones (propias o de otros, reales o ficticias) en las cuales se observe el valor de la solidaridad o en las que ellos hayan sido solidarios. Junto al profesor, reflexionan sobre la importancia de este valor en la amistad y en las relaciones interpersonales positivas."
+        },
+        {
+          "nombre": "Decálogo para el Buen Trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos de cuatro, escriben al menos tres o cuatro normas de convivencia que consideren importantes de respetar y que respondan a las necesidades del curso; por ejemplo: \"No hablar mal de los compañeros\", \"Respetar las diferencias individuales\", \"Escuchar sin interrumpir cuando otra persona está hablando\", etc. Luego llegan a un consenso sobre la norma que mejor represente los pensamientos del grupo; un alumno por grupo lee la norma y el profesor las anota en el pizarrón. Cuando todos han expuesto su trabajo, cada alumno vota por la norma que le parece más importante. Las 10 normas más votadas formarán un \"Decálogo para el Buen Trato\" que se escribirá en una cartulina, se pondrá en un lugar visible y quedará como documento oficial de buen trato en el curso. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Campeonatos deportivos y recreativos con buen trato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes organizan campeonatos deportivos o recreativos y concursos de acuerdo a las posibilidades del colegio y los intereses de los miembros, siendo respetuosos de las diferencias individuales, manteniendo un buen trato e integrando a todos."
+        },
+        {
+          "nombre": "Análisis de la Ley sobre Violencia Escolar",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes forman grupos y reciben el artículo n° 16 B de la ley sobre Violencia Escolar n° 20.536. Elaboran una opinión de grupo al respecto y la comunican al curso. Junto al docente, reflexionan sobre que intimidar, agredir, hostigar a otros constituye un delito penado por la ley (tanto si se ejerce en forma directa o a través de internet). Averiguan la política o protocolos que tiene el establecimiento al respecto, dirigiéndose al encargado de convivencia escolar. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión en el curso",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos, discuten acerca de las consecuencias que puede tener el agredir o ser agredido por otros, ya sea física o psicológicamente. Guiados por el docente, identifican si se dan situaciones de agresión entre compañeros en el curso, las analizan en conjunto y proponen formas de resolver los conflictos que las causan, de evitar las agresiones y de pedir ayuda cuando lo necesiten."
+        },
+        {
+          "nombre": "Aviso de ofrecimiento de ayuda",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes escriben un aviso en el cual se ofrecen para ayudar a sus compañeros en distintas áreas de acuerdo a sus posibilidades y características; por ejemplo: \"Me ofrezco para ayudar a estudiar matemática\", \"Me ofrezco para enseñar a hacer pulseras\"."
+        },
+        {
+          "nombre": "Acuerdos para el ambiente de aprendizaje",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Por medio de una lluvia de ideas, proponen ideas para respetar el ambiente de aprendizaje y así tener un buen clima que permita que todos aprendan. Se establecen acuerdos junto al docente para mantener silencio cuando sea necesario."
+        },
+        {
+          "nombre": "Definición de objetivos del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A modo de lluvia de ideas, los estudiantes definen y enumeran los objetivos del Consejo de Curso de acuerdo a su experiencia y los anotan en la pizarra. Luego, guiados por el docente, identifican las actividades propias de su organización (elección de directiva y comisiones de trabajo) y de la participación y trabajo en torno a la identificación y el logro de metas y objetivos comunes."
+        },
+        {
+          "nombre": "Definición de roles y funciones de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, el profesor pide que definan en conjunto qué es y qué hace una directiva de curso, estableciendo los diferentes roles y funciones de cada participante e incluyendo a todos los miembros del curso."
+        },
+        {
+          "nombre": "Preparación de programa para postular como directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Motivados por el profesor, se agrupan por afinidad y/o intereses comunes, dialogan, toman acuerdos y preparan un programa de trabajo que los represente para postular como directiva de curso. El programa debe incluir nombre de la lista, división de los cargos y propuestas a desarrollar durante el año, entre otros. Pueden también diseñar una pequeña \"campaña\" de elecciones. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Organización de la primera actividad del Consejo de Curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza su primera actividad, definiendo los temas a tratar (tabla de consejo), los tiempos asignados y las decisiones y acuerdos a tomar."
+        },
+        {
+          "nombre": "Encuesta de necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Realizan una encuesta para indagar las diferentes necesidades en torno a las actividades de aprendizaje del curso, o intereses en temas que se quieran trabajar, como las relaciones entre compañeros, el cumplimiento de responsabilidades, las metas académicas y de convivencia que se quieren plantear como curso para el año, entre otros. La directiva tabula la encuesta, organiza los resultados y los presenta al curso. (Matemática)"
+        },
+        {
+          "nombre": "Plan de acción para necesidades del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, se divide al curso en grupos. Cada grupo propone un plan a implementar para las necesidades observadas o para abordar los temas propuestos, lo exponen al curso, y acuerdan y organizan los planes más urgentes a implementar."
+        },
+        {
+          "nombre": "Organización de convivencias y celebraciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "El docente acompaña a la directiva de curso en la construcción de una tabla de consejo para la organización de alguna convivencia o celebración. Guiados por el presidente de curso, los alumnos proponen ideas para organizar convivencias y celebraciones, luego se organizan y se dividen responsabilidades."
+        },
+        {
+          "nombre": "Actividad de colaboración con la comunidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para colaborar con la comunidad escolar (por ejemplo: reunir fondos, alimentos, ropa u otro elemento) que vaya en beneficio de algún integrante de la comunidad educativa. Establecen responsables y tiempos."
+        },
+        {
+          "nombre": "Jornada de evaluación y afianzamiento de vínculos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una jornada para evaluar lo aprendido, valorar las experiencias vividas y afianzar los vínculos entre compañeros. Cada alumno recibe el nombre de un compañero y le prepara un pequeño regalo. Durante la jornada, se hace un plenario para agradecer a los compañeros y se entregan los regalos."
+        },
+        {
+          "nombre": "Recaudación de fondos para fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva organiza junto al curso una actividad para reunir fondos para el paseo o la convivencia de fin de año. Establecen acuerdos, responsables y tiempos."
+        },
+        {
+          "nombre": "Actividad para fomentar el buen trato en el curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "La directiva de curso, junto al profesor, organiza una actividad para fomentar el buen trato y una buena convivencia en el curso. Toman acuerdos y, luego de un tiempo, evalúan su cumplimiento."
+        },
+        {
+          "nombre": "Consulta sobre problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de las funciones que debe asumir la directiva de curso y los temas que son pertinentes de abordar en la hora de Consejo de Curso, el docente puede sugerir al presidente de curso que trate algún problema que se esté dando en el curso, relacionado con la convivencia, la disciplina, el rendimiento del curso, entre otros, y recomendarle realizar una consulta o encuesta anónima."
+        },
+        {
+          "nombre": "Resolución de problemas del curso",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "A partir de la actividad anterior, la directiva de curso tabula los resultados y el presidente los expone. Bajo la supervisión y guía del docente, los estudiantes enfrentan el problema que se está dando. Identifican cuáles son los mayores problemas y elaboran un plan para resolverlo."
+        },
+        {
+          "nombre": "Estrategias de resolución de conflictos para actividades de fin de año",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes, en forma autónoma, aplican estrategias de resolución de conflictos para analizar un problema o tomar una decisión respecto de las actividades de fin de año (por ejemplo: paseo de curso, convivencia, exámenes finales). Acuerdan poner en práctica una solución."
+        },
+        {
+          "nombre": "Balance del funcionamiento de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Cuando se considere necesario, se realiza un balance del funcionamiento de la directiva de curso: cómo se han asumido las responsabilidades, resultado de las actividades propuestas y desarrolladas, participación del curso en las actividades del establecimiento, entre otras."
+        },
+        {
+          "nombre": "Evaluación de la gestión de la directiva",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes evalúan la gestión de la directiva y el aporte del curso al mejoramiento de la convivencia escolar dentro de la comunidad educativa."
+        },
+        {
+          "nombre": "Importancia de tener metas y desafíos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Dirigidos por el profesor, conversan acerca de la importancia de tener metas y desafíos por los cuales esforzarse para alcanzarlos. Anotan conclusiones en su cuaderno."
+        },
+        {
+          "nombre": "Establecimiento de metas académicas personales",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, reflexionan individualmente sobre las metas que quieren plantearse en lo académico y escriben un listado. Luego seleccionan una de las metas (la selección se hace sobre la base de criterios como que sea alcanzable, concreta y que se pueda medir o evaluar sus avances) y establecen pasos y/o acciones que deben realizar para alcanzarla, tomando en cuenta los obstáculos que se pueden presentar en el proceso y definiendo estrategias para enfrentar esas dificultades."
+        },
+        {
+          "nombre": "Encuesta sobre organización del estudio",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En forma individual, responden una encuesta para luego, junto al profesor, analizar las respuestas en plenario, concluyendo que ciertas acciones nos ayudan a organizar mejor el estudio."
+        },
+        {
+          "nombre": "Entrevista personal de seguimiento de metas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En entrevista personal, el docente puede conversar con cada alumno y supervisar el cumplimiento de las metas planteadas."
+        },
+        {
+          "nombre": "Horario personal y distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los alumnos completan un esquema indicando las actividades que realizan diariamente y sus horarios correspondientes (aproximadamente). Luego lo conversan en parejas y analizan la forma en que distribuyen su tiempo fuera del colegio. Los compañeros se aportan ideas mutuamente. Algunos voluntarios pueden mostrar su horario al resto del curso. A partir de esto, el docente los motiva a hacer ajustes en la distribución de horarios en los casos que corresponda (distribución real versus ideal)."
+        },
+        {
+          "nombre": "Propuesta de modificación de distribución del tiempo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "A partir de la actividad anterior, los alumnos escriben al menos dos ideas que señalen lo que harán para modificar la distribución de su tiempo en caso de necesitarlo."
+        },
+        {
+          "nombre": "Autoevaluación del cumplimiento del horario",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Después de algunas semanas, los estudiantes revisan su horario personal, realizando una autoevaluación sobre su cumplimiento y utilidad para la obtención de los aprendizajes."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Al finalizar cada clase, escriben en su agenda las tareas, trabajos y evaluaciones que han sido fijadas ese día."
+        },
+        {
+          "nombre": "Reflexión sobre el valor del esfuerzo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En grupos de cuatro, cuentan experiencias vividas por ellos o por otros, en las cuales haya sido fundamental el valor del esfuerzo. Escriben cuatro razones por las que es importante esforzarse para alcanzar metas."
+        },
+        {
+          "nombre": "Responsabilidad en tareas y deberes escolares",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Los estudiantes anotan un listado de tareas y deberes escolares y reflexionan sobre si cumplen responsablemente con ellas o no. Luego proponen formas de responsabilizarse en los casos en que sea necesario de acuerdo a su reflexión."
+        },
+        {
+          "nombre": "Conductas que favorecen y dificultan el clima de aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Mediante una lluvia de ideas, señalan conductas y actitudes que favorecen y dificultan el clima de aprendizaje y el trabajo escolar. Seleccionan algunas de estas conductas que deben mantener y otras que deben esforzarse por cambiar, tomando acuerdos individuales y de curso para lograrlo."
+        },
+        {
+          "nombre": "Reflexión sobre honestidad y aprendizaje",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Conversan con el profesor sobre la importancia de ser honestos, especialmente en relación con el aprendizaje, evaluando críticamente situaciones como la copia, en las que se falta a este valor."
+        },
+        {
+          "nombre": "Trabajo colaborativo sobre tema de interés",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Agrupados por intereses afines, realizan un trabajo colaborativo de investigación sobre el tema de interés seleccionado. Preparan una disertación para el curso e invitan a sus compañeros a participar en una actividad grupal relacionada con el tema expuesto."
+        },
+        {
+          "nombre": "Identificación de intereses y desarrollo sistemático",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "El docente promueve en el curso una conversación en la que los estudiantes van señalando el tipo de actividades que les interesa realizar (por ejemplo: practicar algún deporte, participar en algún grupo de danza, desarrollar actividades de expresión dramática o musical, participar en actividades sociales, etc.). El profesor va registrando estas actividades en el pizarrón. Luego explica la relevancia de desarrollar sus intereses por medio de actividades llevadas a cabo de manera sistemática y sostenida para progresar en el desarrollo de ellas. Una vez abordado este punto, analizan la sistematicidad con la que desarrollan estas actividades e identifican cómo se puede favorecer su desarrollo sostenido y progresivo."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Autoevaluación sobre consumo de drogas y prevención",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Los estudiantes contestan un cuestionario para autoevaluarse. El profesor realizará entrevistas personales en los casos en que se requiera. El cuestionario incluye afirmaciones como: Puedo darme cuenta cuando la influencia que ejercen mis amigos sobre mí es negativa; Sé mencionar cuáles son algunos riesgos a los que se exponen las personas que consumen tabaco; Sé mencionar cuáles son algunos riesgos a los que se exponen las personas que consumen alcohol; Estoy convencido de que el consumo de drogas trae consecuencias negativas; Me interesa cultivar una vida sana; Uso mi tiempo libre en forma sana y recreativa.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican riesgos a los que se exponen los consumidores.",
+              "Reconocen la influencia (positiva o negativa) del grupo de pares en la toma de decisiones.",
+              "Reconocen los beneficios de realizar actividad física para la prevención del consumo de drogas."
+            ]
+          }
+        },
+        {
+          "titulo": "Propuesta de estrategias frente a causas de consumo de drogas",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Se presentan algunas causas (personales y/o sociales) que pueden acercar al consumo de drogas: necesidad de seguridad personal, curiosidad personal, presión de los amigos o compañeros de curso, evasión de preocupaciones personales, evasión de preocupaciones sociales. Los estudiantes entregan una propuesta o estrategias para enfrentar cada una de estas causas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Pueden elaborar una estrategia para cada una de las causas planteadas.",
+              "Proponen estrategias factibles de realizar, según su realidad y contexto.",
+              "Proponen estrategias que incluyan criterios actitudinales, como la valoración y respeto personal y de los demás, fortaleza para enfrentar problemas, etc."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de solidaridad y respeto",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se sugiere completar una pauta de autoevaluación al final de la unidad. Los estudiantes evalúan conductas como el trato respetuoso a los compañeros, mantener silencio cuando es necesario, reconocer características positivas en los demás, ofrecer ayuda a quien lo necesita y cumplir con las normas de convivencia acordadas como curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Tratan con respeto a todos sus compañeros.",
+              "Mantienen silencio cuando es necesario para no interrumpir el aprendizaje.",
+              "Pueden reconocer características positivas en los demás.",
+              "Ofrecen ayuda a quien lo necesita.",
+              "Cumplen con las normas de convivencia que han acordado como curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de la participación en el Consejo de Curso",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "El docente evalúa la participación de los alumnos en las actividades de Consejo de Curso con una pauta de observación. Se recomienda que la complete al final del bimestre y comparta los resultados con los estudiantes en forma general o individual, si se requiere.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participan en el Consejo de Curso, intercambiando sus ideas.",
+              "Proponen iniciativas y acogen las de sus compañeros.",
+              "Colaboran con los proyectos de curso.",
+              "Respetan el derecho de que todos los alumnos participen en el Consejo de Curso.",
+              "Asumen responsabilidades y cumplen con los compromisos de curso en forma autónoma."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación del año escolar y de la directiva",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes preparan la jornada de final de curso y evalúan el año, respondiendo por escrito preguntas sobre el momento más significativo, lo aprendido, cómo consideran que fue su año escolar, qué mejorarían y comentarios. Luego las entregan al profesor.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Evalúan el funcionamiento de la directiva y de las actividades.",
+              "Evalúan el cumplimiento de los acuerdos de curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de organización del tiempo y metas",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes responden un cuestionario de autoevaluación que los ayude a tomar conciencia de la forma en que organizan su tiempo y evaluar si es necesario hacer algunos cambios que los favorecerían. Posteriormente, el alumno que lo necesite puede solicitar una entrevista con el profesor para que, en conjunto, busquen mejores estrategias.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se proponen metas para mejorar sus resultados académicos.",
+              "Saben definir las acciones necesarias para cumplir con sus metas.",
+              "Piensan que pueden alcanzar las metas que se propusieron.",
+              "Usan la agenda para anotar sus tareas, trabajos y pruebas.",
+              "Pueden tener un horario organizado y cumplirlo.",
+              "Creen que su tiempo está bien distribuido.",
+              "Piden ayuda para estudiar si lo necesitan.",
+              "Se ofrecen para ayudar a otros a estudiar las materias que les resultan más fáciles."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación de actitudes de esfuerzo, responsabilidad y honestidad",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes reflexionan y se autoevalúan con respecto a sus actitudes (esfuerzo, responsabilidad, honestidad). Para ello, pueden utilizar una pauta, en la cual se sugieren algunos indicadores a evaluar, pero se recomienda que el docente los adapte de acuerdo a la realidad de su curso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuando algo no les resulta, perseveran hasta lograrlo.",
+              "Dedican tiempo extra para estudiar o ejercitar las materias que les cuestan.",
+              "Entregan los trabajos y tareas a tiempo.",
+              "Cumplen con los encargos o funciones que tienen en el curso.",
+              "Hacen los trabajos ellos mismos, sin copiar la información de otros compañeros.",
+              "Cuando usan información textual de internet o libros, se preocupan de citar la fuente y/o a los autores."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

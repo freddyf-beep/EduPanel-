@@ -578,6 +578,10 @@ function formatChatHistory(history: ChatTurnInput[] = []): string {
   return turns.map((t) => `[${t.role}]: ${t.text}`).join("\n")
 }
 
+function formatContinuidad(body: LessonRequestBody): string {
+  return cleanText(body.contextoAnterior) || "Primera clase de la unidad o sin clases anteriores planificadas."
+}
+
 function sugerirNivelBloom(numeroClase: number, totalClases: number): { nivel: NivelBloom; recomendado: ObjetivoMultinivel["recomendado"] } {
   const total = Math.max(totalClases, 1)
   const ratio = numeroClase / total
@@ -651,7 +655,7 @@ function buildCrearInicialPrompt(body: LessonRequestBody): string {
   const nivelCurricular = cleanText(body.nivelCurricular) || curso
   const habilidades = normalizeList(body.habilidades)
   const actitudes = normalizeList(body.actitudes)
-  const continuity = cleanText(body.contextoAnterior)
+  const continuity = formatContinuidad(body)
   const teacherPrompt = cleanText(body.instruccionesAdicionales)
   const contextoProfesor = cleanText(body.contextoProfesor) || teacherPrompt
   const numeroClase = body.numeroClase ?? 1
@@ -678,7 +682,7 @@ ${formatOAs(body.oas)}
 - Actitudes priorizadas: ${actitudes.length > 0 ? actitudes.join("; ") : "No especificadas."}
 - Contexto de la unidad:
 ${formatUnitContext(body.unidad)}
-- Continuidad con clase anterior: ${continuity || "Primera clase de la unidad."}
+- Continuidad con clase anterior: ${continuity}
 - IDEA / CONTEXTO DEL PROFESOR (clave — todo gira en torno a esto): "${contextoProfesor || "(sin idea explícita)"}"
 
 ${OBJETIVO_CLASE_FREDDY}
@@ -818,6 +822,7 @@ CONTEXTO:
 - Curso: ${cleanText(body.curso) || "curso"}
 - Clase ${numeroClase} de ${totalClases} → recomendado: ${sugerencia.recomendado}
 - OA: ${formatOAs(body.oas)}
+- Continuidad con clase anterior: ${formatContinuidad(body)}
 - Idea del profesor: "${contextoProfesor || "(sin idea explícita)"}"
 
 ${OBJETIVO_CLASE_FREDDY}
@@ -843,10 +848,12 @@ function buildRegenerarIndicadoresPrompt(body: LessonRequestBody): string {
   const objetivoActual =
     body.estadoActual?.objetivoMultinivel?.[body.estadoActual.objetivoMultinivel.recomendado] ||
     cleanText(body.objetivoClase)
+  const continuidad = formatContinuidad(body)
 
   return `Eres un asesor pedagógico chileno. Diseña SOLO los indicadores de evaluación y la actividad de evaluación formativa para esta clase.
 
 CONTEXTO:
+- Continuidad con clase anterior: ${continuidad}
 - OA: ${formatOAs(body.oas)}
 - Objetivo de la clase: ${objetivoActual || "(no definido aún)"}
 - Idea del profesor: "${cleanText(body.contextoProfesor) || cleanText(body.instruccionesAdicionales) || "(sin idea explícita)"}"

@@ -1,0 +1,1004 @@
+[
+  {
+    "nivel": "1ro Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad, los alumnos trabajarán una serie de actividades con números que los llevarán, por una parte, a desarrollar progresivamente el sentido de cantidad y el razonamiento matemático, en particular el pensamiento crítico, y por otra, a interactuar con el mundo que los rodea, a partir de su uso en múltiples aplicaciones. Específicamente, aprenderán a contar en el ámbito hasta 50, de 1 en 1 o por agrupaciones, aprenderán a leer y representar números hasta 10 de manera concreta, pictórica y simbólica, a comparar y ordenar números, y a componer y descomponer números en este ámbito. También reconocerán, describirán, crearán y extenderán patrones con figuras, sonidos y ritmos, y con números, también en el ámbito hasta 10, usando material concreto y representaciones pictóricas y simbólicas. Es también propósito de esta unidad que los alumnos se inicien en la comparación de sucesos cotidianos, usando las unidades de longitud no estandarizadas como largo y corto; que aprendan a usar un lenguaje que les permita secuenciar eventos en el tiempo y que identifiquen órdenes de elementos, usando los números ordinales.",
+      "conocimientos_previos": [
+        "Nombre de números del uno al veinte",
+        "Conteo rotacional hasta 20",
+        "Clasificación y seriación de elementos de acuerdo a criterios comunes"
+      ],
+      "palabras_clave": [
+        "Números",
+        "contar",
+        "ordenar",
+        "patrón",
+        "igualdad",
+        "largo",
+        "corto",
+        "bajo",
+        "alto",
+        "fechas"
+      ],
+      "conocimientos": [
+        "Lectura y conteo de números",
+        "Composición y descomposición de números",
+        "Comparación y orden de números",
+        "Patrones repetitivos",
+        "Medidas no estandarizadas como largo y corto, alto y bajo",
+        "Secuencia de eventos en el tiempo"
+      ],
+      "habilidades": [
+        "Representar y comparar números, figuras geométricas, patrones repetitivos, utilizando material concreto y un lenguaje matemático inicial.",
+        "Estimar cantidades y relacionarlas con cantidades conocidas.",
+        "Comunicar procedimientos de descubrimiento, comparación y descripciones, utilizando un lenguaje claro."
+      ],
+      "actitudes": [
+        "Manifestar curiosidad e interés por el aprendizaje de las matemáticas.",
+        "Expresar y escuchar ideas de forma respetuosa.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Contar números naturales del 0 al 100, de 1 en 1, de 2 en 2, de 5 en 5 y de 10 en 10, hacia delante y hacia atrás, empezando por cualquier número menor que 100.",
+          "indicadores": [
+            "Cuentan de 1 en 1 números dados en una secuencia numérica hasta 15, partiendo de 0, cuentan hasta 20 de 2 en 2, partiendo de 0, y cuentan hasta 50 de 5 en 5 partiendo de 0.",
+            "Cuentan números de 2 en 2 y de 5 en 5, por tramos; por ejemplo, de 25 hasta 40.",
+            "Cuentan números hacia atrás de 2 en 2 y de 5 en 5 por tramos; por ejemplo, entre 50 y 30."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer números del 0 al 20 y representarlos de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Representan cantidades de manera concreta y escriben el número representado.",
+            "Leen representaciones pictóricas de números en el ámbito del 0 al 10.",
+            "Leen números entre 0 y 10."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Comparar y ordenar números del 0 al 20 de menor a mayor y/o viceversa, utilizando material concreto y/o software educativo.",
+          "indicadores": [
+            "Usan las expresiones mayor y menor para relacionar dos cantidades, utilizando como estrategia la comparación \"uno a uno\".",
+            "Ordenan cantidades en el ámbito del 0 al 20 de mayor a menor o viceversa.",
+            "Comparan cantidades en el contexto de la resolución de problemas, usando material concreto."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Componer y descomponer números del 0 al 20 de manera aditiva de forma concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Determinan más de una descomposición en dos grupos de elementos, que se pueden hacer con un conjunto con no más de 10 elementos.",
+            "Representan composiciones y descomposiciones de números de manera pictórica.",
+            "Componen y descomponen cantidades hasta 10 de manera simbólica."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Reconocer, describir, crear y continuar patrones repetitivos (sonidos, figuras, ritmos…) y patrones numéricos hasta 20, crecientes y decrecientes usando material concreto, pictórico y simbólico de manera manual y/o por medio de software educativo.",
+          "indicadores": [
+            "Identifican y describen patrones repetitivos que tienen de 1 a 3 elementos.",
+            "Reproducen un patrón repetitivo, utilizando material concreto y representaciones pictóricas.",
+            "Extienden patrones de manera concreta.",
+            "Identifican los elementos que faltan en un patrón repetitivo.",
+            "Crean patrones, utilizando material dado y/o software educativo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Usar unidades no estandarizadas de tiempo para comparar la duración de eventos cotidianos.",
+          "indicadores": [
+            "Miden con unidades no estandarizadas (aplausos, dejar caer y tomar una pelota rítmicamente, conteo de uno en uno usando un péndulo) el tiempo necesario para realizar una tarea dada.",
+            "Clasifican tareas de acuerdo al tiempo, medido con unidades no estandarizadas, que requieren para hacerlas.",
+            "Comparan eventos, usando unidades no estandarizadas de tiempo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Usar un lenguaje cotidiano para secuenciar eventos en el tiempo: días de la semana, meses del año y algunas fechas significativas.",
+          "indicadores": [
+            "Determinan en qué momento del día se realizan ciertas actividades que son propias de la rutina diaria.",
+            "Identifican en el calendario fechas de días que son significativas para el alumno, el colegio y el país.",
+            "Secuencian fechas significativas para el alumno, usando el calendario, y las comunican con un lenguaje cotidiano."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Identificar el orden de los elementos de una serie, utilizando números ordinales del primero (1º) al décimo (10º).",
+          "indicadores": [
+            "Indican, de manera oral, el orden de acciones realizadas por ellos.",
+            "Indican la posición de números ordinales hasta el décimo; por ejemplo, el puesto de una persona en una fila.",
+            "Resuelven problemas acerca de identificaciones de números ordinales."
+          ]
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "a",
+          "descripcion": "Emplear diversas estrategias para resolver problemas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "b",
+          "descripcion": "Comprobar enunciados, usando material concreto y gráfico.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "c",
+          "descripcion": "Expresar un problema con sus propias palabras.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "d",
+          "descripcion": "Describir situaciones del entorno con lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "e",
+          "descripcion": "Comunicar el resultado de descubrimientos de relaciones, patrones y reglas, entre otros, empleando expresiones matemáticas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "f",
+          "descripcion": "Explicar las soluciones propias y los procedimientos utilizados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "g",
+          "descripcion": "Aplicar modelos que involucren sumas, restas y orden de cantidades.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "h",
+          "descripcion": "Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "i",
+          "descripcion": "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para representar enunciados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "j",
+          "descripcion": "Crear un relato basado en una expresión matemática simple.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "OA 1 - Conteo de 1 en 1, de 2 en 2, de 5 en 5 y de 10 en 10",
+          "oas_asociados": [1],
+          "descripcion": "Actividades de conteo: (1) Cuentan el número de niñas y niños en el curso que tienen zapatos sin cordones, más de un hermano, zurdos o diestros. (2) Utilizan la tabla de 100 para contar números hasta 50 de 2 en 2, de 5 en 5 y de 10 en 10, diciendo los números en coro. (3) Toman un puñado de objetos de una colección (botones, conchitas, piedras, tapas, cubos) y los cuentan de 1 en 1 y de 2 en 2. (4) Forman grupos de 4 alumnos y cuentan las vocales de los nombres de los integrantes del grupo, marcando con color las vocales, asignando un cubo apilable a cada vocal, haciendo un tren con los cubos y comunicando la cantidad. (5) Cuentan los dedos de los pies y después los dedos de las manos de los alumnos en un grupo de a 3, 4 o 5, y registran de manera pictórica su conteo. (6) Cuentan el número de alumnos del curso que son el hermano mayor, el hermano menor y están entre el hermano mayor y el menor, registrando la información de manera pictórica. (7) Cuentan por tramos realizando actividad física: de 2 en 2 desde 26 al 40 saltando; de 5 en 5 desde el 30 al 45 levantando y bajando los brazos. (8) Cuentan hacia atrás de 50 a 0 saltando o brincando, jugando a \"el que pierde, paga prendas\"."
+        },
+        {
+          "nombre": "OA 3 - Lectura y representación de números del 0 al 20",
+          "oas_asociados": [3],
+          "descripcion": "Actividades: (1) Representan concretamente cualquier número del 1 al 10 con diferentes materiales como semillas, cuadrados de papel, mondadientes sin puntas, cubos u otros. (2) Representan con material concreto números entre 0 y 10 y comunican el número representado. (3) Cuentan y comunican el número representado en cada bolsa; leen los objetos y los representan de manera pictórica. (4) Realizan actividades con artistas circenses: representan pictóricamente payasos y trapecistas, representan simbólicamente los animales, cuentan y leen el número de artistas de cada grupo. (5) Leen en coro los números que hay en cajas, representan cada uno de manera pictórica y concreta. (6) Forman grupos de 5 alumnos, leen tarjetas con números representados de manera pictórica y simbólica del 1 al 10. (7) Observan animales en una jaula, cuentan y registran pictóricamente monos, patos y loros; registran simbólicamente y leen; crean un cuento a partir de la lámina. (8) Trabajan con la recta numérica: leen a coro números de 1 a 20 en una recta numérica (0 a 20) e identifican los que faltan; completan los números que faltan en tiras de papel con rectas parciales."
+        },
+        {
+          "nombre": "OA 4 - Comparación y orden de números del 0 al 20",
+          "oas_asociados": [4],
+          "descripcion": "Actividades: (1) Observan autos en láminas, los representan pictóricamente y eligen la que tiene mayor cantidad. (2) Observan abejas en colmenas y responden cuántas abejas agregarían en la colmena 1 para que tenga mayor cantidad que la colmena 2; dibujan las abejas que deben agregar. (3) En grupos de 5, cuentan la cantidad de dados en bolsas, registran pictóricamente y comunican la mayor y menor cantidad; dibujan conjuntos de objetos ordenados de mayor a menor. (4) Forman tres números dados mayores que 5 pero menores que 10 usando bloques apilables, los ordenan de mayor a menor y comunican los números formados. (5) Ordenan de menor a mayor cantidades registradas en tarjetas; cada alumno dice qué haría para ordenar tarjetas con 2, 3 y 4 círculos. (6) Observan láminas y contestan preguntas de comparación: ¿se pueden estacionar todos los autos?, ¿todos los niños tienen pelota?, ¿hay una cuchara para cada taza?, ¿cada bola de helado tiene su propio barquillo? (7) En grupos de 2, escriben sus nombres en tiras de papel cuadriculado, cortando las letras; cuentan las letras de cada nombre y comparan el total."
+        },
+        {
+          "nombre": "OA 6 - Composición y descomposición de números",
+          "oas_asociados": [6],
+          "descripcion": "Actividades: (1) Registran de manera pictórica descomposiciones hechas con material concreto (cubos). (2) Descomponen con material concreto representaciones y las registran pictóricamente. (3) Componen registrando con material concreto y luego realizan el mismo proceso de manera pictórica. (4) Registran de manera concreta representaciones pictóricas. (5) Descomponen y registran pictóricamente; luego realizan el proceso de manera concreta. (6) Componen registrando pictóricamente y luego de manera concreta. (7) Descomponen de manera concreta, luego pictórica, y por último simbólica. (8) Componen y registran de manera concreta, luego pictórica, y por último simbólica. (9) Registran descomposiciones de manera simbólica y repiten el proceso de manera pictórica y concreta. (10) Registran composiciones de manera simbólica y repiten el proceso de manera concreta y pictórica. (11) Resuelven problemas relativos a descomposiciones; registran todas las descomposiciones simbólicas posibles para el número 10."
+        },
+        {
+          "nombre": "OA 11 - Patrones repetitivos y patrones numéricos",
+          "oas_asociados": [11],
+          "descripcion": "Actividades: (1) Reproducen un patrón rítmico repetitivo dado con 2 o 3 elementos (aplausos, chasquidos, pisadas como marcha). (2) Reproducen un patrón repetitivo con material concreto (fichas, conchitas, bolitas) y comunican el patrón encontrado; reproducen con papel lustre. (3) Extienden un patrón rítmico repetitivo dado haciendo aplausos, pisadas y chasquidos. (4) Extienden un patrón repetitivo dado con material concreto usando frutas u otros elementos. (5) Extienden un patrón repetitivo representado pictóricamente en la pizarra o en software educativo. (6) Descubren patrones presentados en una tela con diseños repetitivos, en azulejos, en un papel de regalo con figuras. (7) Representan los elementos de un patrón repetitivo rítmico dado con material concreto (cubos). (8) Crean patrones de sonidos repetitivos de animales, jugando a hacer onomatopeyas. (9) Extienden una secuencia de bloques geométricos básicos, justificando la selección de bloques empleada. (10) Identifican elementos que faltan en patrones y lo comparan con su compañero."
+        },
+        {
+          "nombre": "OA 16 - Unidades no estandarizadas de tiempo",
+          "oas_asociados": [16],
+          "descripcion": "Actividades: (1) Realizan mediciones usando unidades no estandarizadas en grupos de 3: miden la cantidad de aplausos que se hacen mientras un compañero ata sus zapatos o cuando los alumnos se trasladan desde su banco a la pizarra; cuántas oscilaciones da un péndulo mientras un alumno se pone su cotona o escribe su nombre. (2) Comparan la duración de actividades escolares: determinan aquellas de larga y corta duración; miden el tiempo empleado en la lectura silenciosa de un cuento con reloj de arena; miden el tiempo empleado en dar una vuelta a la multicancha. (3) Comparan la duración de eventos usando medidas informales: qué demora menos (hacer una pelota de tenis o un dado con plasticina), qué demora más (dibujar una bandera o una casa). (4) Determinan qué evento sucede antes o después de otro evento: qué ocurre antes de llegar al colegio, qué ocurre primero después de almorzar."
+        },
+        {
+          "nombre": "OA 17 - Secuenciar eventos en el tiempo",
+          "oas_asociados": [17],
+          "descripcion": "Actividades: (1) Dan ejemplos de situaciones reales que suceden al amanecer, al mediodía y en la tarde. (2) Completan oraciones con las palabras: al amanecer, al mediodía y en la tarde. (3) Ejercitan los días de la semana de manera rítmica y a partir de cuentos; repiten rítmicamente los días de la semana; escuchan un cuento de una bruja que se demora una semana en hacer sus brujerías y descubren lo que significa su nombre. (4) Secuencian los meses del año: forman 12 grupos, cada uno construye un mes del año y dibuja las características que creen que tiene. (5) Identifican, escriben y dibujan fechas significativas: en el calendario identifican fechas de cumpleaños, el día del colegio, el 18 de septiembre."
+        },
+        {
+          "nombre": "OA 2 - Números ordinales del primero al décimo",
+          "oas_asociados": [2],
+          "descripcion": "Actividades: (1) Los alumnos, en grupos de a 10, se desplazan al mismo tiempo saltando desde la sala hasta la cancha o patio del colegio; un estudiante dice el lugar de llegada de cada alumno; los alumnos preguntan a sus compañeros el lugar en que llegaron y se autocorrigen. (2) Forman filas de a 10; se identifican de acuerdo al lugar que tienen en la fila en forma oral; el docente da instrucciones como: el tercero salta en un pie, el quinto levanta los brazos, el décimo se sienta. (3) Identifican la posición de personas, grupos u objetos: el lugar que obtuvo el colegio en un evento; la posición que obtuvieron los equipos de fútbol profesional; el lugar que tiene un cuadrado de color en una serie; identifican el lugar de animales en una hilera; indican la ubicación de cada alumno en un grupo según número de hermanos o cantidad de tíos. (4) Leen cuentos e indican el lugar en que aparecen los personajes (Blanca Nieves y los siete enanitos, Los tres chanchitos). (5) Resuelven problemas acerca de identificaciones de posición: observan cubos en círculos y completan el lugar correspondiente; dibujan estrellas de acuerdo a la posición indicada."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Observan las cantidades de fichas que hay en los vasos y contestan las siguientes preguntas: ¿En cuál de los vasos hay menos fichas? ¿Cuántas fichas hay en el vaso 1? Ordene los números que representan las cantidades que están en los vasos, de menor a mayor.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuentan cantidades de fichas de cada vaso y le asignan un número.",
+              "Comparan el número de fichas que hay en los vasos.",
+              "Ordena los vasos de menor a mayor de acuerdo al número de fichas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [11],
+          "actividad_evaluacion": "Dibujan los elementos que faltan en el patrón.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican el patrón.",
+              "Identifican los elementos que se repiten en el patrón.",
+              "Identifican el elemento que falta en un patrón.",
+              "Completan el elemento que falta en el patrón y lo dibujan."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [17],
+          "actividad_evaluacion": "El alumno registra, antes de ir al almuerzo, 3 actividades que realizó en la mañana (en un papel que, en la mitad superior, muestra un sol saliendo y en la mitad inferior, un sol escondiéndose) y 3 actividades que realizará durante la tarde, antes de irse a casa.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Secuencian las partes de un día.",
+              "Secuencian las rutinas de un día escolar.",
+              "Secuencian eventos de un día escolar."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad, los alumnos continúan el trabajo desarrollado relativo al conteo de números por agrupaciones, pero en un ámbito hasta 100 y hacia adelante y hacia atrás por tramos; la lectura y representación de números; la comparación y el ordenamiento de números; la composición y descomposición de números, siempre de manera concreta, pictórica y simbólica, pero en el ámbito hasta 20. También continúan el trabajo de reconocimiento, descripción, creación y continuación de patrones, usando material concreto y representaciones pictóricas y simbólicas, pero en el ámbito hasta 20 y con actividades en que se incrementa el nivel de razonamiento. Es propósito de esta unidad trabajar actividades relativas a estos conceptos ya tratados, pero incrementando el nivel de ellos; de esta manera, se pretende que los alumnos desarrollen aún más el sentido de cantidad y el razonamiento matemático, en particular el pensamiento crítico, y que interactúen de manera más estrecha con el mundo que los rodea, usando los números en aplicaciones más complejas. En esta unidad se profundiza el trabajo con números, haciendo agrupaciones de a 10 de manera concreta, pictórica y simbólica, con el propósito de determinar unidades y decenas en números hasta 20. Por último, se inicia al alumno en la geometría, con actividades relativas a la identificación de figuras 3D y figuras 2D y a relaciones que se dan entre estas figuras, usando material concreto.",
+      "conocimientos_previos": [
+        "Lectura y conteo de números hasta 50",
+        "Composición y descomposición de números hasta 10",
+        "Comparación y ordenamiento de números hasta 10",
+        "Patrones repetitivos hasta 10, organización del tiempo."
+      ],
+      "palabras_clave": [
+        "Números hasta 100",
+        "unidades",
+        "decenas",
+        "figuras 3D y 2D"
+      ],
+      "conocimientos": [
+        "Lectura y conteo de números hasta 100",
+        "Composición y descomposición de números hasta 20",
+        "Comparación y ordenamiento de números hasta 20",
+        "Patrones repetitivos hasta 20",
+        "Agrupaciones de números hasta 20: unidades y decenas",
+        "Identificación de figuras 3D y 2D",
+        "Relaciones entre figuras 3D y 2D"
+      ],
+      "habilidades": [
+        "Componer y descomponer cantidades.",
+        "Representar cantidades.",
+        "Representar unidades y decenas de un número.",
+        "Comparar números, figuras geométricas, mediciones de tiempo, recopilaciones de información, patrones.",
+        "Comunicar los descubrimientos, procedimientos y estrategias usadas para resolver un problema.",
+        "Describir la posición de objetos y personas con claridad."
+      ],
+      "actitudes": [
+        "Manifestar interés y curiosidad por el aprendizaje de las matemáticas.",
+        "Manifestar una actitud positiva frente a sí mismo y sus capacidades."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Contar números del 0 al 100, de 1 en 1, de 2 en 2, de 5 en 5 y de 10 en 10, hacia delante y hacia atrás, empezando por cualquier número menor que 100.",
+          "indicadores": [
+            "Cuentan de 5 en 5 y de 10 en 10 números hasta 100.",
+            "Cuentan números de 2 en 2 y de 5 en 5 por tramos hasta 100. Por ejemplo, de 2 en 2, de 5 en 5 desde 75 a 90.",
+            "Cuentan números hacia atrás por tramos de 2 en 2, de 5 en 5 y de 10 en 10. Por ejemplo, desde 85 a 70."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer números del 0 al 20 y representarlos de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Representan cantidades de 0 a 20 de manera concreta y escriben el número representado.",
+            "Leen representaciones pictóricas de números en el ámbito del 0 al 20.",
+            "Leen números entre 0 y 20."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Comparar y ordenar números del 0 al 20 de menor a mayor y/o viceversa, utilizando material concreto y/o software educativo.",
+          "indicadores": [
+            "Explican, usando material concreto, por qué una cantidad es mayor que otra cantidad.",
+            "Ordenan cantidades en el ámbito del 0 al 20 de mayor a menor o viceversa.",
+            "Comparan cantidades hasta 20 en el contexto de la resolución de problemas, usando material concreto.",
+            "Ordenan cantidades en situaciones presentadas, utilizando material de apoyo y/o software educativos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Componer y descomponer números del 0 al 20 de manera aditiva de forma concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Determinan más de dos descomposiciones en dos grupos que se pueden hacer con un conjunto de hasta 20 elementos. Por ejemplo, 4 descomposiciones.",
+            "Representan composiciones y descomposiciones de números hasta 20 de manera pictórica.",
+            "Componen y descomponen cantidades hasta 20 de manera simbólica."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Reconocer, describir, crear y continuar patrones repetitivos (sonidos, figuras, ritmos…) y patrones numéricos hasta 20, crecientes y decrecientes usando material concreto, pictórico y simbólico de manera manual y/o por medio de software educativo.",
+          "indicadores": [
+            "Identifican y describen patrones repetitivos que tienen de 1 a 4 elementos.",
+            "Reproducen un patrón repetitivo, utilizando materiales concretos y representaciones pictóricas.",
+            "Extienden patrones de manera simbólica.",
+            "Identifican los elementos que faltan en un patrón repetitivo.",
+            "Crean patrones, utilizando material dado y/o software educativo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Identificar en el entorno figuras 3D y figuras 2D y relacionarlas, usando material concreto.",
+          "indicadores": [
+            "Muestran diferencias que se dan entre dos figuras 2D.",
+            "Clasifican figuras 2D y explican el criterio de clasificación usado.",
+            "Relacionan partes de una figura 3D con partes de figuras 2D.",
+            "Reconocen en entornos cercanos figuras 3D."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Determinar las unidades y decenas en números del 0 al 20, agrupando de a 10 de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Agrupan una cantidad de objetos en decenas.",
+            "Registran con números la cantidad de elementos de un conjunto que ha sido agrupado de a 10 y los elementos restantes.",
+            "Registran de manera pictórica agrupaciones de a 10 y los elementos restantes.",
+            "Cuentan en decenas y unidades, usando bloques multibase y apilables."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Estimar cantidades hasta 20 en situaciones concretas, usando un referente.",
+          "indicadores": [
+            "Estiman cantidades de objetos, con el uso del 10 como referente.",
+            "Seleccionan entre dos estimaciones posibles la que parece más adecuada y explican la elección."
+          ]
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "a",
+          "descripcion": "Emplear diversas estrategias para resolver problemas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "b",
+          "descripcion": "Comprobar enunciados, usando material concreto y gráfico.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "c",
+          "descripcion": "Expresar un problema con sus propias palabras.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "d",
+          "descripcion": "Describir situaciones del entorno con lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "e",
+          "descripcion": "Comunicar el resultado de descubrimientos de relaciones, patrones y reglas, entre otros, empleando expresiones matemáticas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "f",
+          "descripcion": "Explicar las soluciones propias y los procedimientos utilizados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "g",
+          "descripcion": "Aplicar modelos que involucren sumas, restas y orden de cantidades.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "h",
+          "descripcion": "Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "i",
+          "descripcion": "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para representar enunciados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "j",
+          "descripcion": "Crear un relato basado en una expresión matemática simple.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "OA 1 - Conteo en ámbito hasta 100",
+          "oas_asociados": [1],
+          "descripcion": "Actividades: (1) En grupos de 3, cuentan de 5 en 5 cantidades de objetos mayores que 50 y menores que 100 (90 clips, 75 bolitas de madera de 10 en 10). (2) Cuentan cantidades de casilleros en una tabla, mayores que 50 y menores que 70, de 5 en 5, coloreando por tramos. (3) Cuentan cantidades de casilleros de 10 en 10 en forma oral y en coro a partir de un casillero dado. (4) Cuentan de 2 en 2 hacia adelante por tramos de la recta numérica, marcando con color. (5) Cuentan en contextos diversos: cantidad de cuadrados que mide el largo de una mochila en papel cuadriculado; cantidad de cuadrados del contorno de una cancha de baby fútbol. (6) Juego en grupos de 10: cada alumno pone 5 elementos en un balde; determinan la cantidad de cubos cuando el profesor interrumpa el paso del balde; se autocorrigen. (7) Cuentan hacia atrás en tablas de 100 y en tramos de rectas entre 50 y 100 (de 2 en 2 desde 98 a 82, de 5 en 5 desde 95 a 55). (8) Aplican juegos siguiendo instrucciones (El gusano): cada alumno ubica su ficha en el lugar de inicio; la ficha se desplaza de acuerdo al número del dado; gana quien llega primero a la meta. (9) Forman con material didáctico en el marco de 10 números pares e impares; indican números pares e impares de cantidades dadas; ordenan números en pares e impares."
+        },
+        {
+          "nombre": "OA 3 - Lectura y representación de números del 0 al 20",
+          "oas_asociados": [3],
+          "descripcion": "Actividades: (1) Representan concretamente cualquier número del 10 al 20 con cubos apilables en grupos de 5. (2) Cada alumno representa con material concreto números entre 10 y 20 y lo comunica a su compañero (14 con bolitas, 19 con palitos de helado, 17 con porotos). (3) En grupos de 3, cuentan y comunican el número representado en cajas (calugas, gomitas, caramelos); representan pictóricamente los caramelos. (4) Cuentan, representan y leen seres vivos en láminas: insectos (pictórico), plantas (simbólico), flores (escrito); leen las cantidades al compañero. (5) Leen en coro números en puertas y los representan pictórica y concretamente. (6) Con recortes de números del 10 al 20, crean en grupos representaciones de animales prehistóricos; cada grupo expone leyendo los números. (7) Leen por fila los números del 10 al 20 en una tabla de 20 y representan pictóricamente tres números."
+        },
+        {
+          "nombre": "OA 4 - Comparación y orden de números del 0 al 20",
+          "oas_asociados": [4],
+          "descripcion": "Actividades: (1) Representan pictóricamente cantidades en contextos diversos (bicicletas, patinetas, scooter) e identifican la de mayor y menor cantidad. (2) Resuelven problemas de comparación de cantidades (bebidas en javas): ¿cuántas botellas quitarían a la java 1 para que quede menos cantidad que en la java 2? (3) Ordenan cantidades de material concreto de menor a mayor y viceversa: registran pictóricamente cantidad de gorros en cajas; comunican la menor cantidad; ordenan de menor a mayor. (4) Ordenan de menor a mayor representaciones concretas ordenadas de mayor a menor con cubos apilables. (5) Resuelven problemas de ordenamiento de cantidades (cajas de pelotas de ping-pong): ¿cuántas pelotas hay en cada caja?, ¿en qué caja hay menos?, ¿están ordenadas de menor a mayor? (6) Ordenan cantidades de menor a mayor o viceversa con una lámina de animales: registran cantidad de animales que vuelan, en árboles, en plantas y lianas, en tierra y roca; ordenan simbólicamente."
+        },
+        {
+          "nombre": "OA 6 - Composición y descomposición de números (10 al 20)",
+          "oas_asociados": [6],
+          "descripcion": "Actividades: (1) Descomponen de manera concreta y registran pictóricamente en el ámbito de 10 a 20. (2) Descomponen con material concreto y registran pictóricamente en el ámbito del 10 al 20. (3) Componen registrando con material concreto en el ámbito del 10 al 20, luego pictóricamente. (4) Registran de manera concreta descomposiciones pictóricas en el ámbito del 10 al 20. (5) Componen registrando pictóricamente en el ámbito del 10 al 20, luego concretamente. (6) Descomponen de manera concreta, luego pictórica, y por último simbólica en el ámbito del 10 al 20. (7) Componen y registran de manera concreta, luego pictórica y simbólica en el ámbito del 10 al 20. (8) Registran composiciones de manera simbólica y repiten de manera concreta y pictórica en el ámbito del 10 al 20. (9) Descomponen de manera simbólica en dos formas en el ámbito del 10 al 20. (10) Descomponen de manera simbólica un número en tres formas en el ámbito del 10 al 20. (11) Componen de manera simbólica y descomponen de dos maneras diferentes el número compuesto."
+        },
+        {
+          "nombre": "OA 11 - Patrones repetitivos y patrones numéricos hasta 20",
+          "oas_asociados": [11],
+          "descripcion": "Actividades: (1) Identifican elementos que se repiten y faltan en patrones; realizan extensiones de patrones (patrón con caritas feliz, triste y enojado). (2) Identifican números que se repiten en el patrón 10-12-14-10-12-14; extienden el patrón dos veces; identifican elementos que faltan. (3) Identifican números en el patrón 18-16-14-12-18-16-14-12; extienden una vez más; completan elementos faltantes. (4) Expresan de manera pictórica un patrón concreto y de manera concreta un patrón pictórico. (5) Crean patrones: con tres elementos concretos (lápices de colores); con cuatro elementos pictóricos (cuadrados de colores); con tres números (17, 19, 12); con dos elementos usando el computador (letras, números, figuras geométricas)."
+        },
+        {
+          "nombre": "OA 14 - Identificación de figuras 3D y 2D",
+          "oas_asociados": [14],
+          "descripcion": "Actividades: (1) Identifican figuras 3D en la sala de clases y en el colegio. (2) Traen de la casa objetos con forma de figuras 3D. (3) Identifican figuras 2D con forma de cuadrado, rectángulo, triángulo y círculo en la sala y el colegio; recortan de revistas figuras con estas formas y en grupos forman diferentes figuras; recortan figuras de una lámina y las clasifican usando uno, dos y criterios propios. (4) Relacionan partes de figuras 3D con figuras 2D: en grupos de cuatro, reciben figuras 3D y comunican qué figura 2D corresponde a partes de figuras 3D."
+        },
+        {
+          "nombre": "OA 8 - Unidades y decenas en números del 0 al 20",
+          "oas_asociados": [8],
+          "descripcion": "Actividades: (1) Forman 10 colocando 5 fichas rojas y 5 azules en la tabla; colocando 7 fichas azules y 3 rojas. (2) Usan cubos apilables para agrupar de a 10. (3) Cuentan en grupos de 10, encerrando con una línea grupos de 10 autos y 10 cubos. (4) Realizan actividades con bloques multibase: forman 10 usando cubos; verifican las 10 unidades formadas con las barras. (5) Registran en su cuaderno con números agrupaciones de 10 elementos y los elementos sobrantes en forma pictórica y luego simbólica. (6) Cuentan barras y cubos de bloques multibase en decenas y unidades y registran pictórica y simbólicamente lo contado."
+        },
+        {
+          "nombre": "OA 5 - Estimación de cantidades hasta 20",
+          "oas_asociados": [5],
+          "descripcion": "Actividades: (1) En grupos de 4, el profesor muestra 12 imágenes en un papelógrafo durante 10 segundos; los estudiantes intentan estimar visualmente el número de imágenes; los grupos discuten formas de hacer estimaciones y las comunican. (2) Se muestran bolitas o palitos hasta 20 durante 10 segundos y estiman visualmente la cantidad. (3) Estiman visualmente la cantidad de cubos en un dibujo y luego cuentan agrupando de a 2 y de a 5 para comprobar. (4) Estiman visualmente animales en una lámina de ballenas, delfines y tiburones, usando estrategias como agrupar de a 2 o de a 5. (5) Desafío: se muestran esferas y cilindros durante 15 segundos; responden qué estiman que hay más y cuántos más estiman que hay."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [14],
+          "actividad_evaluacion": "Observe las siguientes figuras 3D. Nombre objetos de su vida cotidiana que tienen la forma de estas figuras.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Comparan figuras 3D con objetos de la vida cotidiana.",
+              "Comunican las comparaciones hechas y nombran los objetos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [8],
+          "actividad_evaluacion": "Observan los siguientes cubos apilables: ¿Cuántas decenas hay? ¿Cuántas unidades sueltas hay? ¿Cuántas unidades hay en total?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuentan las decenas y comunican.",
+              "Cuentan las unidades sueltas y comunican.",
+              "Identifican el total de unidades."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Cuentan de 2 en 2 hacia atrás, partiendo en 60 en el tramo de la recta.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cuentan de 2 en 2 hacia atrás, partiendo de 60 en la recta numérica.",
+              "Indican el número al que llegan."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad se inicia al alumno en el trabajo con adiciones y sustracciones en el ámbito hasta 10, describiendo acciones relativas a estas operaciones desde su propia experiencia. Los estudiantes harán representaciones de ellas con material concreto, pictórico y simbólico, y también usando dramatizaciones. El aprendizaje de estos conceptos permitirá a los alumnos demostrar que estas operaciones son inversas; en este sentido, lograrán construir una suma a partir de una resta y viceversa, visualizando este proceso de manera concreta y pictórica. Es fundamental en esta unidad el cálculo mental y sus múltiples estrategias, que deben estar presentes en todas las clases de matemática. Es de gran importancia el trabajo de habilidades que faciliten la resolución de problemas en contextos familiares, especialmente el representar y el usar modelos que involucren sumas y restas. La descripción y el registro de igualdades y desigualdades como equilibrio y desequilibrio ayudarán en la resolución de problemas y a afianzar adiciones y sustracciones. Finalmente se trabajará en la identificación y comparación de longitud de objetos, usando términos como largo y corto, alto y bajo; y se inicia al alumno en la recolección y el registro de datos para responder preguntas estadísticas de interés, usando tablas de conteo y pictogramas.",
+      "conocimientos_previos": [
+        "Lectura y conteo de números hasta 100",
+        "Composición y descomposición de números hasta 10",
+        "Comparación y ordenamiento de números hasta 10",
+        "Unidades y decenas hasta 20"
+      ],
+      "palabras_clave": [
+        "Conteo hacia adelante y hacia atrás",
+        "restar",
+        "cálculo mental",
+        "preguntas",
+        "tablas de conteo",
+        "pictogramas"
+      ],
+      "conocimientos": [
+        "Relación entre la adición y la sustracción",
+        "Estrategias de cálculo mental: conteo hacia delante y hacia atrás, completar 10, dobles",
+        "Unidades y decenas de un número",
+        "Comparación de objetos de acuerdo a su longitud",
+        "Registro de datos en tablas de conteo y en pictogramas"
+      ],
+      "habilidades": [
+        "Argumentar y comunicar los procedimientos y estrategias utilizadas para la resolución de una situación.",
+        "Argumentar la aplicación de una estrategia para la resolución de un problema.",
+        "Representar situaciones cotidianas con expresiones matemáticas y viceversa.",
+        "Resolver problemas, aplicando estrategias personales y aprendidas."
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Expresar y escuchar ideas de forma respetuosa.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Demostrar que comprende la adición y la sustracción de números del 0 a 20, progresivamente de 0 a 5, de 6 a 10 y de 11 a 20: usando un lenguaje cotidiano para describir acciones desde su propia experiencia; representando adiciones y sustracciones con material concreto y pictórico, de manera manual y/o usando software educativo; representando el proceso en forma simbólica; resolviendo problemas en contextos familiares; creando problemas matemáticos y resolviéndolos.",
+          "indicadores": [
+            "Representan adiciones y sustracciones con material concreto, de manera pictórica y simbólica hasta 10.",
+            "Seleccionan una adición o sustracción para resolver un problema dado.",
+            "Crean un problema con una adición o sustracción."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Demostrar que la adición y la sustracción son operaciones inversas, de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Muestran con material concreto adiciones y sustracciones que se relacionan: por ejemplo, 3 + 4 = 7 es equivalente a la igualdad 7 - 4 = 3 y a la igualdad 7 - 3 = 4.",
+            "Explican mediante ejemplos, con material concreto, que la adición es una operación inversa a la sustracción.",
+            "Realizan adiciones por medio de sustracciones y viceversa, representando estas operaciones de manera pictórica. Por ejemplo, usan la resta 13 - 5 = 8 para calcular la suma 8 + 5."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Describir y registrar la igualdad y la desigualdad como equilibrio y desequilibrio, usando una balanza en forma concreta, pictórica y simbólica del 0 al 20, usando el símbolo igual (=).",
+          "indicadores": [
+            "Determinan igualdades o desigualdades entre cantidades, usando una balanza y registran el proceso de manera pictórica.",
+            "Explican igualdades o desigualdades, usando una balanza.",
+            "Ordenan cantidades, empleando una balanza.",
+            "Resuelven problemas que involucran igualdades y/o desigualdades, usando una balanza."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Describir y aplicar estrategias de cálculo mental para las adiciones y sustracciones hasta 20: conteo hacia adelante y atrás; completar 10; dobles.",
+          "indicadores": [
+            "Cuentan mentalmente hacia delante o hacia atrás a partir de números dados.",
+            "Calculan mentalmente sumas, completando 10.",
+            "Suman y restan mentalmente en contexto de juegos.",
+            "Completan dobles para sumar y restar.",
+            "Realizan sumas y restas en el contexto de la resolución de problemas, argumentando sus resultados."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Identificar y comparar la longitud de objetos, usando palabras como largo y corto.",
+          "indicadores": [
+            "Miden la longitud de un objeto, usando unidades de medida no estandarizadas, como lápices, clips u otros.",
+            "Comparan la longitud de dos objetos, usando unidades de medida no estandarizadas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Recolectar y registrar datos para responder preguntas estadísticas sobre sí mismo y el entorno, usando bloques, tablas de conteo y pictogramas.",
+          "indicadores": [
+            "Recolectan datos acerca de situaciones sobre sí mismos y del entorno.",
+            "Formulan preguntas sobre sí mismos y los demás que pueden ser respondidas a partir de recolección de información.",
+            "Registran datos, usando bloques y tablas de conteo."
+          ]
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "a",
+          "descripcion": "Emplear diversas estrategias para resolver problemas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "b",
+          "descripcion": "Comprobar enunciados, usando material concreto y gráfico.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "c",
+          "descripcion": "Expresar un problema con sus propias palabras.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "d",
+          "descripcion": "Describir situaciones del entorno con lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "e",
+          "descripcion": "Comunicar el resultado de descubrimientos de relaciones, patrones y reglas, entre otros, empleando expresiones matemáticas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "f",
+          "descripcion": "Explicar las soluciones propias y los procedimientos utilizados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "g",
+          "descripcion": "Aplicar modelos que involucren sumas, restas y orden de cantidades.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "h",
+          "descripcion": "Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "i",
+          "descripcion": "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para representar enunciados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "j",
+          "descripcion": "Crear un relato basado en una expresión matemática simple.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "OA 9 - Adición y sustracción de números del 0 a 20",
+          "oas_asociados": [9],
+          "descripcion": "Actividades: (1) En grupos de 5, leen cuentos que involucran sumas en el ámbito del 0 a 5 y determinan la suma (María tiene 2 peluches y Camila 3; mamá come 2 frutas y papá come la misma cantidad). (2) En grupos de 5, leen cuentos que involucran sumas en el ámbito del 0 al 10 (Juan tiene 3 perritos y Javiera 4 gatos; Constanza tira 6 veces una pelota y Andrea 4 veces). (3) En grupos de 5, leen cuentos que involucran restas en el ámbito del 0 al 10 (Matías tiene 7 láminas y regala 2; Alejandra tiene 10 gallinas y se arrancaron 3). (4) Representan con cubos apilables situaciones de sumas en el ámbito del 0 al 10 (tengo 6 medallas y me gano 3 más; 5 compañeros tiran una cuerda y se incorporan 3; escriben su nombre y apellido representando cada letra con un cubo). (5) Representan pictóricamente sumas en el ámbito del 0 al 10 (Pedro tiene 5 chocolates y su amigo le regala otros, en total tiene 9; 5 compañeros tiran una cuerda y se incorporan 3). (6) Representan en forma simbólica sumas representadas con material concreto. (7) Registran el número de cuadrados en la línea correspondiente y completan la suma. (8) Registran el número de cuadrados y completan la resta."
+        },
+        {
+          "nombre": "OA 10 - Adición y sustracción como operaciones inversas",
+          "oas_asociados": [10],
+          "descripcion": "Actividades: (1) Laura apila 8 cubos: 6 rojos y 2 celestes; si quita los 6 rojos, ¿con cuántos cubos se queda?; si quita los 2 celestes, ¿con cuántos se queda? (2) Muestran con material concreto sumas y restas que se relacionan: observan globos y completan sumas y restas; observan volantines y completan. (3) Representan la suma 7+2 coloreando cuadritos con dos colores; representan la suma 2+7; colorean para representar la resta 9-2 y 9-7. (4) Completan pintando sumas y restas con cuadrados de colores. (5) Desafío: muestran de manera pictórica sumas y restas que se relacionan, como 7-5=2 se relaciona con 7=2+5; 8=3+5 se relaciona con 8-3=5."
+        },
+        {
+          "nombre": "OA 12 - Igualdad y desigualdad como equilibrio y desequilibrio",
+          "oas_asociados": [12],
+          "descripcion": "Actividades: (1) Observan balanzas y representan los cubos pintándolos; completan con \"mayor que\" o \"menor que\"; completan con el signo correspondiente (8 lápices = 8 lápices, 10 gomas = 10 gomas); completan comparando 7 y 10 sacapuntas. (2) Muestran y comunican que 7 es mayor que 4, 10 es menor que 12, 12 es igual a 12, usando elementos concretos. (3) Resuelven problemas con balanzas: ¿cuántos cubos agregarían al plato derecho para que quede con igual cantidad?; ¿cuántos cubos sacarían del plato izquierdo y pondrían en el derecho para que quede horizontal?; Desafío: ¿qué haría para que la balanza quede horizontal? Entregue dos soluciones."
+        },
+        {
+          "nombre": "OA 7 - Estrategias de cálculo mental",
+          "oas_asociados": [7],
+          "descripcion": "Actividades: (1) Cuentan hacia adelante y atrás mentalmente (desde 2 agregando 1, desde 5 agregando 2, desde 4 agregando 3; desde 2 quitando 1, desde 6 quitando 2, desde 10 quitando 3). (2) Resuelven mentalmente sumas contando hacia adelante: 4+3, 5+2, 6+4. (3) Resuelven mentalmente restas contando hacia atrás: 9-3, 10-4, 6-4. (4) Calculan mentalmente sumas completando 10: ¿cuánto le agregarían a 4 para obtener 10?, ¿cuánto le agregarían a 5 para obtener 10? (5) Calculan mentalmente sumas correspondientes a dobles de los dígitos del 1 al 5: muestran 3 dedos de una mano y 3 de la otra; calculan 4+4, 5+5. (6) Resuelven problemas con sumas y restas de manera mental en contexto de juegos: Carlos y Matías juegan a los dados, Matías dobla el número; Carlos tira 4, ¿qué número dice Matías?; Matías dice 8, ¿qué número salió en el dado?"
+        },
+        {
+          "nombre": "OA 18 - Identificar y comparar la longitud de objetos",
+          "oas_asociados": [18],
+          "descripcion": "Actividades: (1) Comparan personas de acuerdo a su altura: soy bajo/soy alto, soy alto/soy más alto, soy bajo/soy más bajo. (2) Hacen comparaciones en contextos cercanos: quién es más alto y quién es más bajo; comparan estantes; se comparan compañeras de banco. (3) Identifican en contextos cercanos el niño más alto y más bajo en una figura; identifican en su familia quién es más alto y más bajo y los dibujan. (4) Comparan objetos usando largo, más largo, corto, más corto: comparan lápices; comparan el cable del mouse con el del teclado. (5) Comparan objetos formados con cubos apilables completando con es alto, es más alto, es corto, es más corto. (6) Construyen con cubos apilables objetos altos, más altos, bajos, más bajos. (7) Construyen con cubos apilables objetos largos, más largos, cortos, más cortos. (8) Dibujan en el computador dos líneas largas de distinto tamaño y dos líneas cortas de distinto tamaño. (9) Observan animales en una lámina, los recortan y ubican del más corto al más largo. (10) Desafíos con cubos apilables: forman dos figuras de la misma longitud con 18 cubos, ¿qué pasa si se sacan dos cubos de ambas?; forman una figura de 7 cubos y otra de 11, ¿qué haría para que ambas tengan el mismo largo?"
+        },
+        {
+          "nombre": "OA 19 - Recolectar y registrar datos",
+          "oas_asociados": [19],
+          "descripcion": "Actividades: (1) En grupos de 5, recolectan información y registran datos: sobre gustos de jugos (registran en tabla de conteo el sabor, el número de cada sabor y las preferencias); sobre número de primos de cada integrante (registran en tabla de conteo); sobre los dos animales que más prefieren en el zoológico (registran en tabla de conteo y representan con cubos apilables). (2) Recolectan información sobre sabores de leche preferidos por la familia y registran con cajas. (3) Recolectan información sobre mascotas preferidas por la familia y registran completando con números. (4) Desafío: observan lámina de animales, investigan sobre animales terrestres y que vuelan, recolectan datos, registran con cubos apilables y comunican al curso."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [7],
+          "actividad_evaluacion": "Escuchan el siguiente problema presentado de manera oral. Se pide calcularlo mentalmente. Martina lleva 7 días tejiendo una bufanda y piensa que demorará al menos unos 6 días más. ¿Cuánto tiempo piensa Martina que se demorará?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Comprenden la situación que se plantea.",
+              "Representan la situación con material concreto.",
+              "Aplican la estrategia de completar 10."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [10],
+          "actividad_evaluacion": "1 Representan de manera pictórica la suma 4 + 5. 2 Calculan el valor de la suma de manera pictórica. 3 Calculan 9 - 4 de manera pictórica y 9 - 5 de manera pictórica. 4 Comunicar su resultado.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Representan de manera pictórica sumas, basándose en representaciones concretas.",
+              "Aplican la reversibilidad de la suma y la resta, representándola de manera pictórica, basándose en material concreto."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [12],
+          "actividad_evaluacion": "Observe la balanza y responda las preguntas: Identifique en qué lado (A o B) hay más cubos y comunique su resultado. ¿Qué haría para que en los lados A y B haya la misma cantidad de cubos?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican qué lado es mayor y qué lado es menor en el caso de una desigualdad.",
+              "Explican cuál es mayor y por qué y cuál es menor y por qué.",
+              "Verifican su observación con el conteo."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "1ro Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad se profundiza el trabajo con adiciones y sustracciones iniciado en la unidad anterior, extendiéndose el ámbito numérico hasta 20, y centrando estas operaciones en el contexto de la resolución de problemas. El foco de esta unidad está puesto en la resolución de problemas, habilidad que es el objetivo de la educación matemática en educación básica; en el desarrollo de las habilidades de representar y modelar que facilitan esta resolución, y en la creación de problemas en contextos matemáticos y su posterior resolución. Específicamente se trabajan problemas que involucren adiciones y sustracciones, siempre desde la perspectiva concreta, pictórica y simbólica. Este trabajo tiene como propósito, por una parte, acercar al estudiante al mundo en que vivimos, resolviendo algunos de los problemas que plantea, y por otra, afianzar estas operaciones por medio de su uso en aplicaciones. En el eje de geometría, los alumnos identifican y dibujan líneas rectas y curvas, y en el eje de datos y probabilidades se profundiza el trabajo de recolección y registro de datos iniciado en la unidad anterior para responder preguntas estadísticas sobre sí mismos y el entorno, y se inicia a los alumnos en la construcción, lectura e interpretación de pictogramas.",
+      "conocimientos_previos": [
+        "Relación entre la adición y la sustracción",
+        "Estrategias de cálculo mental para sumar y restar",
+        "Unidades y decenas de un número",
+        "Registro de datos en tablas de conteo y en pictogramas"
+      ],
+      "palabras_clave": [
+        "Líneas rectas y líneas curvas",
+        "pictogramas"
+      ],
+      "conocimientos": [
+        "Adición y sustracción por medio de la resolución de problemas",
+        "Adición y sustracción por medio de la creación de problemas y su posterior resolución",
+        "Líneas rectas y curvas",
+        "Recolección y registro de información estadística",
+        "Construcción, lectura e interpretación de pictogramas"
+      ],
+      "habilidades": [
+        "Resolver problemas que involucran adiciones y sustracciones.",
+        "Representar situaciones matemáticas o problemas con medios concretos o pictóricos.",
+        "Representar situaciones matemáticas o problemas con símbolos matemáticos.",
+        "Usar modelos en contextos de la resolución de problemas.",
+        "Argumentar y comunicar sus procedimientos en la resolución de situaciones matemáticas."
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Expresar y escuchar ideas de forma respetuosa.",
+        "Demostrar una actitud de esfuerzo y perseverancia.",
+        "Abordar de manera creativa y flexible la búsqueda de soluciones a problemas."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Demostrar que comprende la adición y la sustracción de números del 0 a 20, progresivamente de 0 a 5, de 6 a 10 y de 11 a 20: usando un lenguaje cotidiano para describir acciones desde su propia experiencia; representando adiciones y sustracciones con material concreto y pictórico, de manera manual y/o usando software educativo; representando el proceso en forma simbólica; resolviendo problemas en contextos familiares; creando problemas matemáticos y resolviéndolos.",
+          "indicadores": [
+            "Representan adiciones y sustracciones con material concreto, de manera pictórica y simbólica en el ámbito hasta 20.",
+            "Resuelven problemas que involucran sumas o restas en el ámbito hasta 20 en contextos familiares.",
+            "Crean problemas matemáticos para sumas o restas dadas en el ámbito hasta 20 con material concreto.",
+            "Crean problemas matemáticos para sumas o restas dadas en el ámbito hasta 20 de manera pictórica o simbólica en contextos matemáticos.",
+            "Resuelven problemas creados, correspondientes a sumas o restas que están representadas, por ejemplo, en material concreto o en láminas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Describir y aplicar estrategias de cálculo mental para las adiciones y sustracciones hasta 20: conteo hacia adelante y atrás; completar 10; dobles.",
+          "indicadores": [
+            "Cuentan mentalmente hacia delante o hacia atrás a partir de números dados.",
+            "Calculan mentalmente sumas, completando 10.",
+            "Suman y restan mentalmente en contexto de juegos.",
+            "Completan dobles para sumar y restar.",
+            "Realizan sumas y restas en el contexto de la resolución de problemas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Identificar y dibujar líneas rectas y curvas.",
+          "indicadores": [
+            "Reconocen líneas rectas y curvas en contextos de juegos y cuentos una figura 2D.",
+            "Completan una figura dada, utilizando líneas rectas y curvas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Recolectar y registrar datos para responder preguntas estadísticas sobre sí mismo y el entorno, usando bloques, tablas de conteo y pictogramas.",
+          "indicadores": [
+            "Recolectan y organizan datos del entorno, usando material concreto y pictórico, registros informales y tablas de conteo.",
+            "Responden preguntas, utilizando la información recolectada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Construir, leer e interpretar pictogramas.",
+          "indicadores": [
+            "Leen pictogramas que contiene información dada.",
+            "Interpretan información representada en pictogramas y responden preguntas de acuerdo a esa interpretación.",
+            "Construyen pictogramas de acuerdo a información presentada de manera concreta y pictórica y responden preguntas basados en el pictograma."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Describir la posición de objetos y personas con relación a sí mismos y a otros objetos y personas, usando un lenguaje común (como derecha e izquierda).",
+          "indicadores": [
+            "Describen la posición de objetos y personas con relación a sí mismos y a otros.",
+            "Ubican la posición de un objeto, siguiendo dos o más instrucciones de posición, ubicación y dirección, usando un punto de referencia."
+          ]
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "a",
+          "descripcion": "Emplear diversas estrategias para resolver problemas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "b",
+          "descripcion": "Comprobar enunciados, usando material concreto y gráfico.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "c",
+          "descripcion": "Expresar un problema con sus propias palabras.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "d",
+          "descripcion": "Describir situaciones del entorno con lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "e",
+          "descripcion": "Comunicar el resultado de descubrimientos de relaciones, patrones y reglas, entre otros, empleando expresiones matemáticas.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "f",
+          "descripcion": "Explicar las soluciones propias y los procedimientos utilizados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "g",
+          "descripcion": "Aplicar modelos que involucren sumas, restas y orden de cantidades.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "h",
+          "descripcion": "Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "i",
+          "descripcion": "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para representar enunciados.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA_transversal",
+          "numero": "j",
+          "descripcion": "Crear un relato basado en una expresión matemática simple.",
+          "indicadores": []
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "OA 9 - Resolución de problemas de adición y sustracción hasta 20",
+          "oas_asociados": [9],
+          "descripcion": "Actividades: (1) Determinan qué operación ayuda para resolver situaciones en el ámbito del 0 a 20: María infla 12 globos pero le faltan 5 por inflar, ¿qué debe hacer para saber el total?; Verónica lee 7 páginas una noche y 12 al otro día, ¿qué debe hacer para saber el total? (2) Determinan qué hacer para resolver problemas: Javiera cuenta 17 huevos y saca 6, ¿qué debe hacer para saber cuántos quedan?; Matías compra 16 kg de frutas, 7 kg son manzanas y el resto naranjas, ¿qué debe hacer para determinar los kg de naranjas? (3) Crean cuentos matemáticos relacionados con dibujos. (4) Crean cuentos relacionados con dibujos adicionales. (5) Expresan en lenguaje matemático representaciones pictóricas (tiras o cintas). (6) Expresan en lenguaje matemático situaciones simbólicas (un número sumado con 7 da 20; 19 restado con un número da 8; 18 es un número más 5; 17 es un número menos 12). (7) Aplican expresiones matemáticas asociadas a sumas o restas para resolver problemas: Andrea tiene 18 huevos y saca 9; Jorge está en el 3er piso y desea subir al 9°; Felipe tiene 18 autitos, 12 son azules, el resto blancos. (8) Aplican modelos asociados con sumas o restas: Cristina tiene 18 manzanas y regala, quedando con 12, ¿cuántas regaló?; Magdalena da 7 lápices y le quedan 15, ¿cuántos tenía?; Octavio pide prestado 4 lápices y su compañero se queda con 10, ¿cuántos tenía su compañero? (9) Resuelven desafíos matemáticos: pienso en un número, cuando le sumo 2 obtengo 10, cuando le sumo 3 obtengo 11, ¿cuál es?; pienso en un número, cuando le resto 3 obtengo 9, cuando le resto 2 obtengo 10, ¿cuál es?; pienso en dos números, cuando los sumo obtengo 7, cuando los resto obtengo 1, ¿cuáles son?; pienso en dos números, cuando los sumo obtengo 5, cuando los resto obtengo 5, ¿cuáles son? (10) Resuelven sumas y restas usando máquinas: ¿qué número ingresa en la máquina si sale 15?; ¿qué número ingresa en la máquina si sale 18?"
+        },
+        {
+          "nombre": "OA 7 - Estrategias de cálculo mental",
+          "oas_asociados": [7],
+          "descripcion": "Actividades: (1) Cuentan hacia adelante y atrás mentalmente: desde 2 agregando 1, desde 5 agregando 2, desde 4 agregando 3, desde 10 quitando 3. (2) Resuelven mentalmente sumas contando hacia adelante: 14+3, 15+2, 16+4. (3) Resuelven mentalmente restas contando hacia atrás: 19-3, 20-4, 16-4. (4) Calculan mentalmente sumas completando 10: ¿cuánto le agregarían a 14 para obtener 20?, ¿cuánto le agregarían a 15 para obtener 20? (5) Calculan mentalmente sumas correspondientes a dobles de los dígitos del 1 al 5: muestran 3 dedos de una mano y 3 de la otra; calculan 4+4, 5+5; resuelven problemas de dobles en contexto de juegos (Carlos y Matías juegan a los dados, Matías dobla el número)."
+        },
+        {
+          "nombre": "OA 15 - Identificar y dibujar líneas rectas y curvas",
+          "oas_asociados": [15],
+          "descripcion": "Actividades: (1) Juegan a la \"Línea loca\": representan con un cordel o lana los elementos mencionados en un cuento (montaña = línea en curva, laguna = línea cerrada, sendero recto = línea recta). (2) En el contexto del cuento Caperucita Roja, inventan una trayectoria larga y una trayectoria corta para llegar a la casa de la abuelita, usando líneas rectas y curvas. (3) Predicen qué tipo de líneas dejará el contorno de objetos (goma, sacapuntas, vaso, caja, botella, pelota de ping-pong, tapa); trazan el contorno clasificando según línea recta o curva; explican lo obtenido. (4) Reconocen líneas rectas y curvas en diferentes ilustraciones. (5) Realizan ilustraciones de objetos comunes utilizando solo líneas rectas o solo líneas curvas."
+        },
+        {
+          "nombre": "OA 19 - Recolectar y registrar datos",
+          "oas_asociados": [19],
+          "descripcion": "Actividades: (1) Responden preguntas acerca de datos recolectados del entorno (gustos de jugos naturales): recolectan información sobre jugo de manzana, naranja y frutilla; registran en pictograma; responden cuántos niños prefieren cada sabor, cuál es el más preferido; ordenan preferencias de menor a mayor. (2) Recolectan información sobre preferencias de lugares para veranear (playa, campo, cordillera); registran con cubos apilables y representan pictóricamente; responden qué lugar prefieren, qué les gusta más. (3) Recolectan y registran información sobre medio de transporte usado para llegar al colegio; registran en tabla de conteo; contestan cuál es el más usado y el menos usado. (4) Responden preguntas sobre animales salvajes preferidos (león, pantera, tigre, chita): recolectan datos en tabla; registran cantidades con figuras; contestan cuál logró primera, segunda, tercera y última preferencia. (5) Recolectan información sobre sabores de leche preferidos por la familia; registran con cajas; responden qué sabor gusta a la mayoría, cuántos no toman leche, si hay algún sabor con la misma cantidad. (6) Recolectan información sobre mascotas preferidas por la familia; completan tabla; responden qué significa que no hayan cuadraditos en tortugas, cuál sería el más vendido."
+        },
+        {
+          "nombre": "OA 20 - Construir, leer e interpretar pictogramas",
+          "oas_asociados": [20],
+          "descripcion": "Actividades: (1) Leen pictogramas y responden preguntas: pictograma de niños y niñas de un curso de 40 alumnos (¿cuántos niños más que niñas hay?); pictograma de profesores y profesoras de un colegio (¿cuántos profesores hay en total?, ¿cuántas profesoras más que profesores?). (2) Mariano lanza 10 veces una moneda; completan pictograma con los resultados; contestan si la suma representa una decena, cuántas monedas con caras agregarían para tener 16. (3) Observan lámina con 6 águilas, 7 leones y 5 tiburones; colocan nombre al pictograma y lo completan; completan cuántos leones más que tiburones, cantidad de animales que vuelan, cantidad de animales en el mar y en la tierra. (4) Interpretan pictogramas sobre medio de transporte más usado: responden cuántos alumnos respondieron la encuesta, cuál es el medio más usado, cuántos alumnos menos se transportan en metro que en bus. (5) Desafío: si el curso tiene 30 alumnos y responden 17, ¿cuántos no respondieron?; si 5 se transportan en metro, ¿cuántos en buses del Transantiago?"
+        },
+        {
+          "nombre": "OA 13 - Posición de objetos y personas (derecha/izquierda)",
+          "oas_asociados": [13],
+          "descripcion": "Actividades: (1) Se llama a 5 alumnos con su nombre en el pecho; el resto del curso pregunta ¿quién está a la derecha de...?, ¿quién está a la izquierda de...? (2) Completan situaciones con las palabras derecha-izquierda, arriba-abajo: a la izquierda de la acelga está..., a la derecha del choclo está..., arriba del pimentón está...; el caballo está... del chancho, la vaca está... del caballo, la vaca está a la... del chancho. (3) Contestan preguntas completando con delante y atrás: el chofer de un bus está... de los pasajeros; los pasajeros están... del chofer. (4) En parejas, reciben tarjetas con instrucciones que deben realizar en el patio: camine 5 pasos a su derecha y 2 hacia adelante; dé 6 saltos muy largos hacia adelante y 4 hacia atrás, coloque sus manos arriba; salte 7 veces con sus dos pies hacia la derecha, con la cabeza mirando hacia abajo; camine hacia delante, colocando su mano derecha estirada hacia adelante y su mano izquierda escondida en la espalda."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [15],
+          "actividad_evaluacion": "Se presenta las siguientes figuras 3D: un CD, un estuche y una corchetera. Se pide dibujar el contorno de las figuras en un papel; el contorno recto lo marcan con color azul y el contorno curvo, de color rojo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen lados curvos y rectos.",
+              "Registran usando líneas claramente curvas o rectas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [9],
+          "actividad_evaluacion": "Los alumnos escuchan la historia de Pedro y José. Pedro y José son amigos y coleccionan 1 álbum de fútbol. Pedro ha aportado con 8 láminas nuevas hoy y José con 7 láminas nuevas hoy. ¿Cuántas láminas nuevas tienen ahora los dos? ¿Cuántas láminas más debe aportar José para tener las mismas que Pedro?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Logran representar la situación con material concreto o en un dibujo.",
+              "Utilizan la información necesaria para responder las preguntas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [20],
+          "actividad_evaluacion": "Observe el siguiente pictograma: Frutilla, Melón, Naranja. Muestra la cantidad de vasos de jugo que consumen tres amigos en un día. Cada representa un vaso de jugo de fruta. Responden las siguientes preguntas: ¿Cuál es el sabor de jugo preferido? ¿Cuál es el sabor menos preferido? ¿Cuántos vasos de melón toman?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican la preferencia del curso.",
+              "Comparan preferencias."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,2351 @@
+[
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad los estudiantes continúan el trabajo con números naturales hasta 10 000, ampliando el ámbito numérico en las operaciones de 100 a 1 000 y la tabla de valor posicional de 1 000 a 10 000. Reconocen que el sistema decimal de números naturales y las propiedades de las operaciones se mantienen al traspasar al nuevo ámbito numérico. Siguen con la composición y descomposición de números naturales para usarlas tanto en el cálculo mental como en el entendimiento de los algoritmos de la multiplicación y la división. Comprenden el rol del 0 en la adición y del 0 y el 1 en la multiplicación y la división. Aplican los algoritmos de la multiplicación y la división en la resolución de problemas rutinarios en contextos cotidianos. Desarrollan estrategias para reconocer las operaciones adecuadas con las cuales se resuelven los problemas que involucran una o más operaciones.",
+      "palabras_clave": [
+        "Valor posicional",
+        "sumando",
+        "suma",
+        "diferencia",
+        "sustracción repetida",
+        "factor",
+        "producto",
+        "divisor"
+      ],
+      "conocimientos_previos": [
+        "Contar, leer y escribir números del 0 al 1 000",
+        "Descomponer números de 0 al 1 000",
+        "Explicar las relaciones en \"familias de operaciones\"",
+        "Identificar las unidades, decenas y unidad de mil",
+        "Comprender el concepto de la multiplicación",
+        "Vocabulario: unidades, decenas, centenas, unidades de mil, suma, resta, menor que, mayor que, igual"
+      ],
+      "conocimientos": [
+        "Numeración: sistema decimal, comparar números, ordenar números, contar números hasta 10 000",
+        "Suma y resta de números enteros de dos y de tres dígitos",
+        "Cálculo mental y estrategias de cálculo mental",
+        "Multiplicación por descomposición",
+        "Multiplicación por adición repetida",
+        "Multiplicación aplicando algoritmo de números de hasta 3 dígitos por números de 1 dígito",
+        "División por descomposición",
+        "División por sustracción repetida",
+        "División aplicando algoritmo"
+      ],
+      "habilidades": [
+        "Resolver problemas dados o creados",
+        "Transferir los procedimientos utilizados en situaciones ya resueltas a problemas similares",
+        "Traducir una situación del entorno por medio de una expresión matemática, con una ecuación o con una representación pictórica",
+        "Descubrir regularidades matemáticas (el valor posicional en el sistema decimal)",
+        "Comprobar una solución y fundamentar su razonamiento"
+      ],
+      "actitudes": [
+        "Manifestar curiosidad e interés por el aprendizaje de las matemáticas",
+        "Manifestar una actitud positiva frente a sí mismo y sus capacidades",
+        "Abordar de manera creativa y flexible la búsqueda de soluciones a problemas"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "numero": 1,
+          "tipo": "OA",
+          "descripcion": "Representar y describir números del 0 al 10 000:\n- contándolos de 10 en 10, de 100 en 100, de 1 000 en 1 000\n- leyéndolos y escribiéndolos\n- representándolos en forma concreta, pictórica y simbólica\n- comparándolos y ordenándolos en la recta numérica o tabla posicional\n- identificando el valor posicional de los dígitos hasta la decena de mil\n- componiendo y descomponiendo números naturales hasta 10 000 en forma aditiva, de acuerdo a su valor posicional",
+          "indicadores": [
+            "Expresan números en palabras y cifras.",
+            "Representan en números cantidades dadas en billetes o monedas.",
+            "Ordenan cantidades de dinero dado en billetes o en monedas de $10, $100, $1 000 y de $10 000.",
+            "Descomponen cantidades de dinero en valores de $1, $10, $100 y $1 000. Por ejemplo, $5 647 = $5 000 + 600 + 40 + 7",
+            "Leen y escriben números presentados en la tabla posicional.",
+            "Descomponen números hasta 10 000 y los ubican en la tabla posicional.",
+            "Ordenan y comparan números en la tabla posicional.",
+            "Marcan la posición de números en la recta numérica.",
+            "Identifican números en la recta numérica según la posición de su marca.",
+            "Identifican números vecinos de números dados en la recta numérica.",
+            "Identifican números que faltan en una secuencia numérica."
+          ]
+        },
+        {
+          "numero": 2,
+          "tipo": "OA",
+          "descripcion": "Describir y aplicar estrategias de cálculo mental:\n- conteo hacia delante y atrás\n- doblar y dividir por 2\n- por descomposición\n- usar el doble del doble\npara determinar las multiplicaciones hasta 10 x 10 y sus divisiones correspondientes.",
+          "indicadores": [
+            "Aplican la descomposición y el conteo en el cálculo mental para multiplicar números hasta 10 por 10.",
+            "Multiplican en el cálculo por 4, doblando el primer factor, por ejemplo: 2 · (2 · 6) = 2 · 12.",
+            "Multiplican números en el cálculo mental doblando y dividiendo por 2; por ejemplo: 25 · 6 = 50 · 3."
+          ]
+        },
+        {
+          "numero": 3,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprende la adición y la sustracción de números hasta 1 000:\n- usando estrategias personales para realizar estas operaciones\n- descomponiendo los números involucrados\n- estimando sumas y diferencias\n- resolviendo problemas rutinarios y no rutinarios que incluyan adiciones y sustracciones\n- aplicando los algoritmos, progresivamente, en la adición de hasta 4 sumandos y en la sustracción de hasta un sustraendo",
+          "indicadores": [
+            "Suman y restan números mentalmente, descomponiéndolos de acuerdo a su valor posicional. Por ejemplo: 5 400 + 3 200 = 5 000 + 3 000 + 400 + 200 = 8 600.",
+            "Usan dinero en el algoritmo de la adición y de la sustracción con y sin reserva.",
+            "Estiman sumas y restas, usando más de una estrategia.",
+            "Aplican el algoritmo de la adición y de la sustracción en la resolución de problemas rutinarios.",
+            "Aplican el algoritmo de la adición y de la sustracción en la resolución de problemas monetarios.",
+            "Resuelven problemas rutinarios y no rutinarios que involucran adiciones y sustracciones de más de dos números."
+          ]
+        },
+        {
+          "numero": 4,
+          "tipo": "OA",
+          "descripcion": "Fundamentar y aplicar las propiedades del 0 y del 1 en la multiplicación y la propiedad del 1 en la división.",
+          "indicadores": [
+            "Aplican la propiedad del 1 en la multiplicación, empleando secuencias de ecuaciones; por ejemplo: 2 · _ = 8, 2 · _ = 6, 2 · _ = 4, 2 · _ = 2",
+            "Explican con sus propias palabras la propiedad del 1 de manera concreta, pictórica y simbólica.",
+            "Descubren la propiedad del 0 en la multiplicación, empleando secuencias de ecuaciones hasta llegar a 0; por ejemplo: 3 · _ = 9, 3 · _ = 6, 3 · _ = 3, 3 · _ = 0",
+            "Explican con sus propias palabras la propiedad del 0 de manera concreta, pictórica y simbólica.",
+            "Muestran y explican de manera concreta, pictórica y simbólica la repartición de elementos por 1 o por sí mismo."
+          ]
+        },
+        {
+          "numero": 5,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprende la multiplicación de números de tres dígitos por números de un dígito:\n- usando estrategias con o sin material concreto\n- utilizando las tablas de multiplicación\n- estimando productos\n- usando la propiedad distributiva de la multiplicación respecto de la suma\n- aplicando el algoritmo de la multiplicación\n- resolviendo problemas rutinarios",
+          "indicadores": [
+            "Descomponen números de tres dígitos en centenas, decenas y unidades.",
+            "Multiplican cada centena, decena y unidad por el mismo factor.",
+            "Aplican la propiedad distributiva de la multiplicación respecto de la suma.",
+            "Estiman productos, usando como estrategias el redondeo de factores.",
+            "Resuelven multiplicaciones usando el algoritmo de la multiplicación.",
+            "Resuelven problemas rutinarios de la vida diaria, aplicando el algoritmo de la multiplicación."
+          ]
+        },
+        {
+          "numero": 6,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprende la división con dividendos de dos dígitos y divisores de un dígito:\n- usando estrategias para dividir con o sin material concreto\n- utilizando la relación que existe entre la división y la multiplicación\n- estimando el cociente\n- aplicando la estrategia por descomposición del dividendo\n- aplicando el algoritmo de la división",
+          "indicadores": [
+            "Representan pictóricamente o con material concreto divisiones de dos dígitos por un dígito, descomponiendo el dividendo en sumandos.",
+            "Estiman el cociente de una división, aplicando diferentes estrategias: redondeo del dividendo, relación entre multiplicación y división como operaciones inversas, descomposición en pasos arbitrarios",
+            "Resuelven problemas rutinarios de la vida diaria, aplicando el algoritmo de la división."
+          ]
+        },
+        {
+          "numero": 7,
+          "tipo": "OA",
+          "descripcion": "Resolver problemas rutinarios y no rutinarios en contextos cotidianos que incluyen dinero, seleccionando y utilizando la operación apropiada.",
+          "indicadores": [
+            "Seleccionan la operación y la estrategia de resolución de un problema.",
+            "Resuelven problemas que requieren sustracciones.",
+            "Resuelven problemas rutinarios y no rutinarios, que requieran adiciones, sustracciones, multiplicaciones o divisiones, usando dinero en algunos de ellos.",
+            "Resuelven problemas cuya resolución requiere una combinación de operaciones."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Comunicar números de espectadores",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Comunican el número de espectadores de un partido de fútbol o de un concierto, usando para su información medios escritos, orales o visuales."
+        },
+        {
+          "nombre": "Lectura en voz alta de textos con cifras",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Leen en alta voz textos, artículos, documentos u otros, en los cuales aparecen números en cifras."
+        },
+        {
+          "nombre": "Completar formulario de un recibo",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Completan el formulario de un recibo, indicando en cifras y palabras un monto que esté entre $5 000 y $10 000.\n\nREPRESENTAR (Historia, Geografía y Ciencias Sociales)\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)"
+        },
+        {
+          "nombre": "Escribir número ganador de rifa",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Escriben en cifras el número ganador de una rifa que comunica un animador."
+        },
+        {
+          "nombre": "Comunicar números de pesa digital",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Comunican en palabras los números que aparecen en la pantalla de una pesa digital, que representa el peso de la mercadería en gramos."
+        },
+        {
+          "nombre": "Preguntar precio de viaje en bus",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "\"Preguntan\" por un teléfono virtual el precio de un viaje en bus e informan y anotan el precio entregado."
+        },
+        {
+          "nombre": "Contar dinero para Teletón",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cuentan concretamente el dinero juntado en el curso para una Teletón, comunican el monto en palabras y lo escriben en cifras."
+        },
+        {
+          "nombre": "Representar dinero ahorrado con material concreto",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Representan en forma concreta, con dinero de cartón, el monto de dinero ahorrado por el curso para un paseo, lo comunican en forma oral y lo escriben en cifras."
+        },
+        {
+          "nombre": "Comparar precios de etiquetas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Comparan y comunican precios que aparecen en las etiquetas de ropa o de otros artículos en catálogos o vitrinas."
+        },
+        {
+          "nombre": "Sacar fichas de dinero y ordenar por valor posicional",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Sacan al azar, de una bolsa, fichas de distintos valores de dinero. Ordenan y apilan el monto según el valor posicional. Después suman mentalmente los valores, leen la suma en alta voz y escriben el número correspondiente al monto."
+        },
+        {
+          "nombre": "Descomponer cantidades de dinero en fichas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Sacan al azar tarjetas con cantidades de dinero en pesos hasta 10 000 y las descomponen en fichas de 1 000, 100, 10 y 1 peso. Ponen la cantidad de fichas en un \"tablero de dinero\", que corresponde a la descomposición de la cantidad de dinero que aparece en la tarjeta. Por ejemplo: $4 756. Tablero de dinero: UM 4, C 7, D 5, U 6"
+        },
+        {
+          "nombre": "Pintar tabla de dinero según valor posicional",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Repiten la actividad anterior, pero en vez de trabajar concretamente con fichas, utilizan lápices de colores y pintan en una \"tabla de dinero\" las cantidades que corresponden al valor posicional. Tablero de dinero: UM 4, C 7, D 5, U 6"
+        },
+        {
+          "nombre": "Descomponer números en tabla de valor posicional",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Repiten la actividad con números y, en vez de trabajar pictóricamente y pintar los valores en la \"tabla de dinero\", descomponen mentalmente el número y ponen las cifras correspondientes en una \"tabla de valor posicional\". Tabla del valor posicional. UM C D U: 8 1 3 7, 2 0 9 8, 7 6 0"
+        },
+        {
+          "nombre": "Estimar marcas en huincha de medir",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "MODELAR\nAplicar, seleccionar, modificar y evaluar modelos que involucren números naturales y la ubicación en la recta numérica. (OA i)\n\nEstiran en el piso de la sala 10 m de una huincha (como se usa en deporte). Estiman la cantidad de las marcas más pequeñas, contando las marcas que caben en un centímetro, las medianas que caben en un metro y, por último, cuentan las marcas más grandes que caben en diez metros."
+        },
+        {
+          "nombre": "Marcar posiciones en huincha con banderitas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Marcan con palitos y banderitas las posiciones de centenas y miles en una huincha de medir. Sacan al azar números hasta 10 000, por ejemplo, 7 116 de una bolsa, leen el número en voz alta, toman un palito con una banderita, anotan el número en ella y la ubican en la huincha de medir."
+        },
+        {
+          "nombre": "Identificar número en huincha y escribir en tabla posicional",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Identifican en la huincha un número dado, como 3 237, lo leen en voz alta y lo escriben con cifras en su cuaderno o en una tabla de valor posicional."
+        },
+        {
+          "nombre": "Identificar números vecinos en recta numérica",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nIdentifican números vecinos de números marcados en la recta numérica."
+        },
+        {
+          "nombre": "Nombrar números faltantes en secuencia",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Nombran números que faltan en una secuencia de números; por ejemplo: 3 956, 3 957, __, __, 3 960."
+        },
+        {
+          "nombre": "Dibujar segmento de recta numérica y marcar número",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Dibujan en sus cuadernos de matemática un segmento de la recta numérica; por ejemplo: de 6 500 a 6 700. Marcan en forma aproximada 6 652."
+        },
+        {
+          "nombre": "Identificar números con flecha en recta numérica",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Identifican números con una flecha en un segmento de la recta numérica.\n\nObservaciones al docente:\nLas actividades reflejan el concepto del \"COPISI\"; es recomendable empezar de manera concreta, seguir con actividades pictóricas y terminar con actividades simbólicas."
+        },
+        {
+          "nombre": "Conteo de múltiplos hacia adelante y atrás",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Cuentan hacia adelante y atrás múltiplos de 2 a 10, partiendo por cualquier múltiplo correspondiente a las tablas de multiplicación; por ejemplo: 7, 14, 21, 28, 35, 42, 49, 56, 63 y 70; 60, 54, 48, 42, 36, 30, 24, 18, 12, 6\n\nARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas -patrones como los múltiplos- y comunicarlos a otros. (OA e)"
+        },
+        {
+          "nombre": "Doblar y dividir por 2 números",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Resuelven oralmente los siguientes ejercicios: doblar por 2 los números 6, 25, 46, ...; dividir por 2 los números 24, 56, 88, ...."
+        },
+        {
+          "nombre": "Calcular multiplicaciones y divisiones por descomposición",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Calculan multiplicaciones y las divisiones correspondientes desde 5 a 9 veces un número de las tablas de multiplicación y sus divisiones correspondientes, usando la descomposición más conveniente; por ejemplo: 7 · 8, 9 · 4, 6 · 7, 63 : 9, 48 : 6, 81 : 9\n\nObservaciones al docente:\nSe espera que el alumno aplique la distributividad en el cálculo oral; por ejemplo: 7 · 8 = (5 · 8) + (2 · 8) = 40 + 16 = ? y 48 : 6 = (24 : 6) + (24 : 6) = 4 + 4 = ?"
+        },
+        {
+          "nombre": "Usar doble del doble para multiplicar por 4, 6, 8 y 10",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Usan el doble del doble para resolver multiplicaciones de cálculo mental cuando multiplican por 4, 6, 8 y 10; por ejemplo: 6 · 8, 4 · 9, 10 · 7 y otros."
+        },
+        {
+          "nombre": "Aplicar estrategias mentales de multiplicación",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Aplican estrategias mentales de la multiplicación; por ejemplo doblar, triplicar, multiplicar por 4 y/o por 10 con los números 14, 33, 27."
+        },
+        {
+          "nombre": "Redondear números de la vida diaria",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Redondean números de la vida diaria, como precios, espectadores de un evento, alturas de montañas, entre otros."
+        },
+        {
+          "nombre": "Estimar sumas y restas con cálculo mental",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Estiman números en sumas y restas, aplicando estrategias de cálculo mental y escrito. Por ejemplo: $353 + $615\n\nObservaciones al docente:\nSe sugiere que el alumno haga una estimación del posible resultado de la adición $353 + $615. Para esto, primero redondea 353 a 350 y 615 a 620 y estima luego que el resultado debe ser aproximadamente 970.\n\nREPRESENTAR\nUtilizar formas de representación con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)"
+        },
+        {
+          "nombre": "Juntar fichas de distinto valor y registrar adición",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "MODELAR\nAplicar, seleccionar, modificar modelos que involucren las cuatro operaciones con números naturales. (OA i)\n\nJuntan dos cantidades de fichas de distinto valor con formas diferentes para cada posición y registran pictóricamente la adición; por ejemplo: 352 + 131"
+        },
+        {
+          "nombre": "Modelar con monedas adición con reserva",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Modelan con monedas la actividad anterior con cantidades que hacen necesaria la reserva en la adición; por ejemplo: al sumar 128 + 256."
+        },
+        {
+          "nombre": "Modelar con monedas sustracción sin reserva",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Modelan con monedas la sustracción sin reserva con los siguientes números: 875 – 263."
+        },
+        {
+          "nombre": "Calcular adiciones y sustracciones de representaciones pictóricas",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "MODELAR\nExpresar, a partir de representaciones pictóricas y expresiones dadas, acciones y situaciones cotidianas en lenguaje matemático. (OA j)\n\nCalculan las adiciones y sustracciones representadas de manera pictórica de los ejercicios anteriores en algoritmos."
+        },
+        {
+          "nombre": "Resolver problemas de adición y sustracción de la vida diaria",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados (OA a)\n\nResuelven problemas de la vida diaria que hacen necesarias adiciones o sustracciones. (Historia, Geografía y Ciencias Sociales)\n\na) Paulina, la hermana mayor de Andrea, empaca una encomienda para el cumpleaños de ella. El peso máximo de una encomienda exprés es de 500g. Con una pesa digital controla el peso total de los regalos para Andrea, los cuales son: 1 chal de 238g, 1 foto de las últimas vacaciones de 17g, 1 barra de chocolate de 113g, sobre de la encomienda 46g. Calcule el peso total de la encomienda. ¿Cuántos gramos faltan para el peso máximo?\n\nb) Cristóbal compra 2 pancitos de pan integral y los echa en una bolsa. Al pesarlos, la vendedora le indica un precio de $326. Cristóbal paga con $500 a la cajera. Calcule el vuelto que debe recibir Cristóbal.\n\nc) Un avión empieza la fase del descenso y está acercándose al aeropuerto de Santiago de Chile. La pantalla en la cabina muestra cada treinta segundos la altitud actual sobre el nivel de la pista de aterrizaje. Recién muestra una altitud de 920m y treinta segundos después aparece una altitud de 680m. ¿Cuántos metros de altitud ha perdido el avión?"
+        },
+        {
+          "nombre": "Explicar multiplicación como adición repetitiva",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Explican la multiplicación como adición repetitiva del mismo número. (Repaso) Completan los espacios de color.\nEjemplo: 13 + 13 + 13 + 13 + 13; sumando: 5; multiplicación: 5 · 13; producto: 65"
+        },
+        {
+          "nombre": "Explicar función del 1 en multiplicación por adiciones repetitivas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\n\nExplican la función del 1 en la multiplicación, mediante adiciones repetitivas; por ejemplo: 5 · 1 =, 14 · 1 =, 25 · 1 = y formulan una regla con sus propias palabras."
+        },
+        {
+          "nombre": "Explicar función del 1 por secuencia de ecuaciones",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Explican la función del 1 en la multiplicación por una secuencia de ecuaciones; por ejemplo: por medio de las multiplicaciones: 2 x _ = 8, 2 x _ = 6, 2 x _ = 4, 2 x _ = 2. Repiten de igual forma con 3 · 4 hasta 3 · 1"
+        },
+        {
+          "nombre": "Explicar función del 0 en multiplicación por secuencia de ecuaciones",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Explican la función del 0 en la multiplicación, por medio de una secuencia de ecuaciones con una incógnita; por ejemplo, con las multiplicaciones: 3 x _ = 15, 3 x _ = 12, 3 x _ = 9, 3 x _ = 6, 3 x _ = 3, 3 x _ = 0. Ejercitan con otros números: 4 · 5 hasta 4 · 0. Formulan una regla con sus propias palabras."
+        },
+        {
+          "nombre": "Repasar función del divisor y repartición",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "MODELAR\nAplicar, seleccionar, modificar modelos que involucren las cuatro operaciones con números naturales. (OA i)\n\nRepasan, en forma concreta y pictórica, la función del divisor. Resuelven en forma concreta, pictórica y simbólica, cuánto se recibe al repartir 15 en partes iguales. Ejemplo 1: 15 : 3 = ; Ejemplo 2: 15 : 15 = ; Ejemplo 3: 15 : 1 =\n\nObservaciones al docente:\nSe sugiere que el docente pida a sus alumnos que averigüen qué pasa: si se reparte una cantidad de objetos entre la misma cantidad de personas (Respuesta: cada una recibe una unidad); si se reparte una cantidad de objetos a una persona sola (Respuesta: ella recibe todo)"
+        },
+        {
+          "nombre": "Comprobar igualdad en ecuaciones simples de división",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\n\nComprueban la igualdad en ecuaciones simples. Por ejemplo: 18 : 3 = ; 10 : _ = 5; 24 : 8 = ; _ : _ = 4"
+        },
+        {
+          "nombre": "Comprobar igualdad en ecuaciones con 1 en la división",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Comprueban la igualdad en ecuaciones simples con números faltantes que incluyen 1 en la división. 36 : 1 = ; 21 : _ = 21; _ : 1 = 5"
+        },
+        {
+          "nombre": "Descomponer números en forma multiplicativa",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Descomponen números en forma multiplicativa. Por ejemplo: descomponiendo en factores y sumandos: 240 = _ · 50 + _ · 10 o 240 = _ · 20 + _ · 10; descomponiendo según sus valores posicionales: 247 = _ · 100 + _ · 10 + _ · 1"
+        },
+        {
+          "nombre": "Escribir algoritmo de multiplicación sin traspaso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nEscriben el siguiente algoritmo de la multiplicación por números de un dígito, que involucra la descomposición en unidades, decenas y centenas: 231 · 3, 342 · 2, 112 · 4\n\nObservaciones al docente:\nSe comienza con multiplicaciones en las cuales no se produce ningún traspaso. Por ejemplo: 231 · 3: 3 · 1 = 3, 3 · 30 = 90, 3 · 200 = 600 = 693"
+        },
+        {
+          "nombre": "Multiplicación con traspaso con fichas de dinero",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "a) Resuelven y explican la siguiente adición repetitiva con traspaso de decenas a centenas, en forma concreta, pictórica y simbólica, usando la cantidad mínima de fichas de $1 000, $100, $10 y $1. 142 + 142 + 142 + 142 = _\n\nb) Escriben el siguiente algoritmo de la multiplicación con canje de un dígito, que involucra la descomposición en unidades, decenas y centenas. Por ejemplo: 142 · 4: 4 · 2 = 8, 4 · 40 = 160, 4 · 100 = 400 = 568"
+        },
+        {
+          "nombre": "Estimar productos en situaciones cotidianas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "c) Estiman, basados en situaciones de la vida cotidiana, el producto de un número de 2 o 3 dígitos por un número de un dígito. Por ejemplo: hacer compras con una lista de útiles y estimar el precio de 7 cuadernos de matemáticas de $495 cada uno; estimar el perímetro de una plaza de la forma de un cuadrado con 154 m de largo. (Historia, Geografía y Ciencias Sociales)\n\nd) Multiplican mentalmente números de 2 dígitos por un número de un dígito, utilizando varias estrategias. Por ejemplo: 46 · 7, 35 · 4"
+        },
+        {
+          "nombre": "Resolver problemas de multiplicación con 2 o 3 dígitos",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nResuelven problemas que involucran la multiplicación de números con 2 o 3 dígitos por un número de 1 dígito. Por ejemplo: Henry, el amigo de correspondencia de Cristián, quien vive en Coyhaique, Patagonia chilena, pescó una trucha que pesó 2 libras en su pesa inglesa. Para saber el peso en gramos, Cristián encontró en internet que una libra inglesa equivale a 453 g. Calcule, usando el algoritmo de la multiplicación, el peso de la trucha en gramos. (Ciencias Naturales; Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Calcular gasto en lechugas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "La señora Pérez compra 6 lechugas en la feria para la semana. Una lechuga cuesta $525. ¿Cuánto gasta en lechugas?"
+        },
+        {
+          "nombre": "Calcular litros de bebida para fiesta",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Una botella de bebida contiene 750 ml. Para una fiesta del curso compraron 9 botellas. ¿Cuántos litros pueden tomar los alumnos del curso? Recuerde que 1 000 ml equivalen a 1 litro."
+        },
+        {
+          "nombre": "Calcular kilogramos de manzanas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En un supermercado venden bolsas con manzanas, cada bolsa pesa 655 g. La Sra. Berta lleva 5 bolsas. ¿Cuántos kilogramos debe llevar a la casa?"
+        },
+        {
+          "nombre": "Realizar divisiones descomponiendo en decenas y unidades",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nRealizan divisiones, descomponiendo los números en decenas y unidades. 39 : 3, 86 : 2, 48 : 4, 96 : 3\n\nObservaciones al docente:\nRepresentan una división simple con material concreto, como fichas o dinero de $10 y $1. Por ejemplo: 39 : 3 = 30 : 3 + 9 : 3 = 10 + 3 = 13"
+        },
+        {
+          "nombre": "Elaborar algoritmo de la división por descomposición",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Elaboran el algoritmo de la división, descomponiendo en decenas y unidades. 39 = 30 + 9; 30 : 3 = 10; 9 : 3 = 3; 10 + 3 = 13"
+        },
+        {
+          "nombre": "Resolver problemas simples de división",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas. (OA c)\n\nResuelven problemas simples que involucren divisiones, usando el algoritmo de la actividad anterior: Se debe repartir 63 alumnos del 4º nivel en 3 cursos con igual número de alumnos. Con un alambre de 84 cm, se debe formar un cuadrado."
+        },
+        {
+          "nombre": "Explicar algoritmo de división descomponiendo en sumandos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Usan el ejemplo anterior para explicar el siguiente algoritmo de la división, primero descomponiendo en sumandos y luego dividiendo: 42 = 30 + 12; 30 : 3 = 10; 12 : 3 = 4; 10 + 4 = 14"
+        },
+        {
+          "nombre": "Estimar cocientes con estrategias",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nEstiman cocientes, aplicando las estrategias: \"calcular mentalmente un cociente cercano\" o \"transformar a un divisor más fácil\". 294 : 3, 60 : 5\n\nObservaciones al docente:\nCalcular mentalmente un cociente cercano: 294 : 3 → 300 : 3 = 100\nTransformar a un divisor más fácil: 60 : 5 → 120 : 10 = 12"
+        },
+        {
+          "nombre": "Aplicar algoritmo de división a problemas de la vida diaria",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas. (OA c)\n\nAplican el algoritmo con varios ejercicios vinculados con la vida diaria, estimando anteriormente el cociente. (Ciencias Naturales; Historia, Geografía y Ciencias Sociales)\n\nEjemplo: Un colegio quiere repartir 96 alumnos en 4 cursos paralelos con el mismo número de alumnos. Estimación: 100 : 4 = 25. Algoritmo: 96 : 4 = 24.\n\na) Se quiere envasar un saco de harina de 87kg en tres porciones iguales. ¿Cuántos kilogramos de harina se echa en cada una de las bolsas?\n\nb) La recepción de un hotel tiene la forma de un cuadrado, cuyo perímetro es de 56 cm. Calcule el largo de la moldura que se necesita para cada lado del cielo de la recepción."
+        },
+        {
+          "nombre": "Calcular total y promedio de entradas de fútbol",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nEmplear diversas estrategias para resolver problemas. (OA b)\n\nEn septiembre, un club de fútbol tiene 3 partidos en su estadio. Las entradas vendidas son las siguientes: primera fecha: 307, segunda fecha: 248, tercera fecha: 415.\na) ¿Cuál es el total de las entradas vendidas en septiembre?\nb) Calcule el promedio de las entradas por partido."
+        },
+        {
+          "nombre": "Calcular metros de altura de excursionistas",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Un grupo de excursionistas está en el punto A de la subida a la cumbre B y quiere bajar al refugio que se encuentra en el punto C del mapa que muestra el perfil de un cerro.\na) ¿Cuántos metros de altura faltan para llegar a la cumbre?\nb) ¿Cuántos metros de altura en total deben superar para ir del punto A al refugio C?\n\nDatos del gráfico: altitud A = 507 m, C = 222 m, B = 872 m."
+        },
+        {
+          "nombre": "Calcular vuelto de compra escolar",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Un alumno compró un cuaderno de matemáticas de $450 y un lápiz pasta por $380. En la caja pagó con un billete de $1 000. Calcule el vuelto que recibió."
+        },
+        {
+          "nombre": "Calcular carga y peso reducido de encomienda",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Una encomienda tiene 5 cajas de 135 kg cada una.\na) Calcule la carga.\nb) Se entregan 2 cajas. ¿A qué peso bajó la carga?"
+        },
+        {
+          "nombre": "Calcular precio de un pan con vuelto",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Paula compró 3 panes de igual precio y pagó con una moneda de $500. Ella recibió $50 de vuelto. ¿Cuál fue el precio de un pan?"
+        },
+        {
+          "nombre": "Calcular cantidad de frasquitos de perfume",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Para lanzar al mercado un perfume nuevo, una perfumería quiere envasar la cantidad de 750 cm³ de perfume en frasquitos de 3 cm³. Calcule la cantidad de frasquitos que se necesita para envasar el perfume."
+        },
+        {
+          "nombre": "Comparar ofertas de pasta de dientes",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "En un supermercado hay dos ofertas de pasta de dientes, ambas por un precio de $990. La primera oferta es de 2 tubos de 190 g por $990 y la segunda es de 3 tubos de 125 g por $990.\na) ¿Cuál es la mejor oferta?\nb) Explique su solución del problema."
+        },
+        {
+          "nombre": "Calcular precio de bus para jugadores y adultos",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Una selección de hándbol juvenil de Mendoza quiere jugar en un torneo en Santiago. Para el viaje alquilaron un mini bus para los 12 jóvenes y 4 adultos. El precio total del bus fue de 840 pesos argentinos. Los adultos pagan el doble que los jugadores.\na) ¿Cuál es el precio para cada uno de los adultos?\nb) Explique el desarrollo de su solución."
+        },
+        {
+          "nombre": "Elegir tipo de bidón para envasar aceite",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Un productor de aceite de oliva quiere envasar 540 litros en bidones de un tipo. Tiene 175 bidones de 3 litros y 140 bidones de 4 litros. ¿Qué tipo de bidón debe elegir?"
+        },
+        {
+          "nombre": "Calcular postes de alumbrado en pasaje",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Un pasaje tiene un largo de 126 m. La municipalidad quiere instalar por cada 9 m un poste del alumbrado público. ¿Cuántos postes se necesitan, si en la entrada y en la salida también debe haber uno?"
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de resolución de problemas con dinero",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "OA_7: Resolver problemas rutinarios y no rutinarios en contextos cotidianos que incluyen dinero, seleccionando y utilizando la operación apropiada.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_i: Aplicar, seleccionar, modificar y evaluar modelos que involucren las cuatro operaciones con números naturales y fracciones.\n\nIndicadores de Evaluación:\n- Resuelven problemas que implican multiplicaciones.\n- Resuelven problemas que implican reparticiones en partes iguales.\n\nActividad:\nEn una pastelería confeccionan alfajores y los venden en bandejas.\n1) El día lunes confeccionaron 240 alfajores y los empacaron en bandejas de 6 alfajores. ¿Cuántas bandejas necesitaron?\n2) El día martes vendieron 45 bandejas de 4 alfajores. ¿Cuántos alfajores vendieron?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen que empacar en bandejas significa repartir el total.",
+              "Resuelven el problema con una división.",
+              "Calculan correctamente la división 240 : 6.",
+              "Comprueban el resultado con la multiplicación correspondiente.",
+              "Reconocen la operación de la multiplicación como la correcta para calcular el total de los alfajores vendidos.",
+              "Calculan correctamente la multiplicación 45 · 4.",
+              "Comprueban el resultado con la división correspondiente."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de multiplicación de tres dígitos por un dígito",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "OA_5: Demostrar que comprenden la multiplicación de números tres dígitos por números de un dígito:\n- usando estrategias con o sin material concreto\n- utilizando las tablas de multiplicación\n- estimando productos\n- usando la propiedad distributiva de la multiplicación respecto de la suma\n- aplicando el algoritmo de la multiplicación\n- resolviendo problemas rutinarios\n\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_i: Aplicar, seleccionar, modificar y evaluar modelos que involucren las cuatro operaciones con números naturales y fracciones.\n\nIndicadores de Evaluación:\n- Resuelven multiplicaciones, usando el algoritmo de la multiplicación.\n- Resuelven problemas rutinarios de la vida diaria, aplicando el algoritmo de la multiplicación.\n\nActividad:\nUn distribuidor de bebidas entrega los pedidos con su camioneta que lleva paletas con cajas de bebidas. En una caja de bebidas caben 12 botellas y en una paleta caben 8 cajas. Para la entrega de un pedido, transporta 6 paletas llenas de cajas de bebidas. Calcule la cantidad total de bebidas que transporta el camión.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Estiman en cada etapa el producto antes de realizar el algoritmo.",
+              "Calculan correctamente los productos, aplicando el algoritmo de la multiplicación.",
+              "Anotan los resultados intermedios.",
+              "Responden con una oración a la resolución del problema, comprobando si es la respuesta correcta a la pregunta."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de división con dividendos de dos dígitos",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "OA_6: Demostrar que comprende la división con dividendos de dos dígitos y divisores de un dígito:\n- usando estrategias para dividir con o sin material concreto\n- utilizando la relación que existe entre la división y la multiplicación\n- estimando el cociente\n- aplicando la estrategia por descomposición del dividendo\n- aplicando el algoritmo de la división\n\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\n\nIndicadores de Evaluación:\nResuelven problemas rutinarios de la vida diaria, aplicando el algoritmo de la división.\n\nActividad:\nLos 87 alumnos de los 3 cursos paralelos del 4° nivel básico realizan juntos un paseo didáctico al museo MIM en Santiago y quieren hacer un tur guiado por el museo. En la entrada se pide repartir los alumnos en 3 grupos con igual cantidad de alumnos. ¿Cuántos alumnos debe tener cada uno de los grupos?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Estiman el cociente antes de realizar el algoritmo.",
+              "Aplican correctamente el algoritmo de la división.",
+              "Comparan el resultado con la estimación.",
+              "Responden con una oración a la resolución del problema, comprobando si es la respuesta correcta a la pregunta."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En Geometría, los estudiantes se ubican en el espacio usando coordenadas informales para describir su posición en relación con la localización de otros objetos. Identifican y comunican trayectos de desplazamientos de un lugar a otro. Al determinar las vistas de figuras 3D y al reconocer y confeccionar redes de cubos, paralelepípedos y prismas, mejoran su percepción espacial. Con el trabajo de patrones numéricos en tablas, por un lado, se acercan en forma propedéutica al sistema cartesiano de coordenadas y, por el otro, descubren relaciones numéricas en la adición y la multiplicación. Para desenvolverse en su vida cotidiana, leen, registran y convierten mediciones del tiempo en relojes análogos y digitales; miden longitudes con unidades estandarizadas de centímetros y metros; transforman mediciones realizadas en una unidad a otra unidad en problemas cotidianos y construyen ángulos. Registran datos de experimentos lúdicos como inicio en el eje Probabilidades.",
+      "palabras_clave": [
+        "Direcciones",
+        "redes",
+        "cuadrículas",
+        "transformar unidades"
+      ],
+      "conocimientos_previos": [
+        "Posición de un objeto en un mapa informal",
+        "Relación entre figuras 3D y figuras 2D",
+        "Descripción de cuerpos como esfera, cono, cilindro, pirámide y paralelepípedo",
+        "Elaboración y descripción de patrones numéricos",
+        "Resolución pictórica de ecuaciones de un paso",
+        "Identificación de días, semanas, meses y años en el calendario",
+        "Lectura y registro del tiempo en horas, medias horas y minutos en relojes análogos y digitales",
+        "Medición de perímetros en figuras regulares e irregulares",
+        "Medición del peso en g y kg",
+        "Vocabulario: patrón, múltiplos, vértices, aristas, caras, ecuación, igualdad, longitud"
+      ],
+      "conocimientos": [
+        "Descripción de posición y desplazamiento",
+        "Determinar vistas de cubos y paralelepípedos",
+        "Reconocimiento y construcción de redes de cubos, paralelepípedos y prismas",
+        "Medición y cálculo del tiempo en relojes análogos y digitales",
+        "Conversión de unidades del tiempo",
+        "Medición de longitudes en cm y m",
+        "Transformación de mediciones de longitud de m a cm y viceversa"
+      ],
+      "habilidades": [
+        "Descubrir regularidades matemáticas como patrones y comunicarlas a otros",
+        "Comprobar una solución y fundamentar su razonamiento",
+        "Resolver problemas dados o creados",
+        "Utilizar formas de representación adecuadas, como esquemas y tablas, con lenguaje técnico específico y con los símbolos matemáticos correctos"
+      ],
+      "actitudes": [
+        "Manifestar curiosidad e interés por el aprendizaje de las matemáticas",
+        "Manifestar una actitud positiva frente a sí mismo y sus capacidades",
+        "Demostrar una actitud de esfuerzo y perseverancia"
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "numero": 15,
+          "tipo": "OA",
+          "descripcion": "Describir la localización absoluta de un objeto en un mapa simple con coordenadas informales (por ejemplo: con letra y números) y la localización relativa a otros objetos.",
+          "indicadores": [
+            "Describen e identifican posiciones de objetos en mapas o planos reales de ciudades, del metro, etc.",
+            "Describen trayectos en desplazamientos de objetos.",
+            "Ubican objetos en planos de habitaciones o construcciones.",
+            "Confeccionan un plano de búsqueda de tesoros.",
+            "Comunican el camino recorrido para llegar al colegio, usando un mapa.",
+            "Trazan trayectos en un mapa según una instrucción.",
+            "Identifican cuadrículas en un tablero de ajedrez en forma concreta y/o pictórica."
+          ]
+        },
+        {
+          "numero": 16,
+          "tipo": "OA",
+          "descripcion": "Determinar las vistas de figuras 3D, desde el frente, desde el lado y desde arriba.",
+          "indicadores": [
+            "Identifican vértices, aristas y caras en modelos o dibujos de figuras 3D.",
+            "Despliegan modelos de figuras 3D como cubos, paralelepípedos y prismas regulares.",
+            "Identifican las vistas en redes de figuras regulares 3D.",
+            "Dibujan las vistas de figuras 3D.",
+            "Dibujan las vistas de figuras 3D compuestas.",
+            "Confeccionan la red de una figura 3D de acuerdo a las vistas."
+          ]
+        },
+        {
+          "numero": 13,
+          "tipo": "OA",
+          "descripcion": "Identificar y describir patrones numéricos en tablas que involucren una operación, de manera manual y/o usando software educativo.",
+          "indicadores": [
+            "Determinan elementos faltantes en listas o tablas.",
+            "Descubren un error en una secuencia o una tabla y lo corrigen.",
+            "Identifican y describen un patrón en tablas y cuadros.",
+            "Realizan movidas en la tabla de 100, en forma concreta o pictórica.",
+            "Varían un patrón dado y lo representan en una tabla.",
+            "Usan software educativo para generar o variar patrones numéricos."
+          ]
+        },
+        {
+          "numero": 20,
+          "tipo": "OA",
+          "descripcion": "Leer y registrar diversas mediciones del tiempo en relojes análogos y digitales, usando los conceptos A.M., P.M. y 24 horas.",
+          "indicadores": [
+            "Leen, comunican y registran la hora en un reloj digital.",
+            "Leen, comunican y registran la hora en relojes análogos.",
+            "Leen horarios de su entorno.",
+            "Calculan diferencias entre horas indicadas."
+          ]
+        },
+        {
+          "numero": 21,
+          "tipo": "OA",
+          "descripcion": "Realizar conversiones entre unidades de tiempo en el contexto de la resolución de problemas: el número de segundos en un minuto, el número de minutos en una hora, el número de días en un mes y el número de meses en un año.",
+          "indicadores": [
+            "Eligen la unidad adecuada para la medición del tiempo.",
+            "Calculan tiempos de recorridos, sumando los minutos entre tramos.",
+            "Calculan horas de término de un evento.",
+            "Convierten medidas de tiempo: segundos en un minuto, minutos en una hora, días en un mes y meses en un año."
+          ]
+        },
+        {
+          "numero": 22,
+          "tipo": "OA",
+          "descripcion": "Medir longitudes con unidades estandarizadas (m, cm) y realizar transformaciones entre estas unidades (m a cm y viceversa) en el contexto de la resolución de problemas.",
+          "indicadores": [
+            "Estiman longitudes de objetos de la sala de clase y comprueban la estimación con una regla o huincha.",
+            "Eligen la unidad adecuada para medir la longitud de objetos.",
+            "Convierten longitudes en unidades adecuadas (m a cm y viceversa).",
+            "Suman y restan longitudes en cm y m.",
+            "Miden el perímetro de objetos y lo expresan en cm o m."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Identificar posiciones en tablero de ajedrez",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Identifican posiciones de cuadrículas en una tabla de ajedrez, con coordenadas que consisten en una letra desde la a hasta la h y un número de 1 a 8. Por ejemplo: la posición de la cuadrícula con la marca fucsia (D, 2). Identifican las cuadrículas de las siguientes marcas: gris, negra y rosada.\n\nMODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)"
+        },
+        {
+          "nombre": "Identificar ubicaciones en mapas reales",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nIdentifican en mapas reales de ciudades la ubicación de edificios, plazas, monumentos, etc., y la expresan como un par con letra y número. Por ejemplo: a) ¿En qué cuadrante se encuentra la marca rosada con el punto negro? b) ¿En qué cuadrante se ubica la plaza, con un árbol? (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Describir trayectos en mapas",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Describen y comunican trayectos posibles de una marca a otra marca en mapas; por ejemplo: del al 5 cuadras hacia la derecha y 3 cuadras hacia arriba."
+        },
+        {
+          "nombre": "Marcar trayectos en un mapa",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Marcan en un mapa trayectos dados; por ejemplo: de la \"Esquina Caupolicán hasta Arturo Prat: 5 cuadras a la izquierda y cuatro cuadras a la derecha\"."
+        },
+        {
+          "nombre": "Registrar ubicación de edificios en mapas",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Reconocen la ubicación de edificios, plazas, monumentos, etc. en mapas y la registran en un par de letras y números. Por ejemplo, parque en (A,2)."
+        },
+        {
+          "nombre": "Identificar ubicación y extensión de edificio en plano",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nREPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nIdentifican y comunican la ubicación y la extensión de un edificio en un plano, usando las coordenadas."
+        },
+        {
+          "nombre": "Marcar ubicación y extensión de edificio según coordenadas",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nMarcan en un plano la ubicación y la extensión de un edificio según las coordenadas; por ejemplo: (H,5) → (H,7) y (I,7) → (I,8)"
+        },
+        {
+          "nombre": "Descubrir tesoro siguiendo pistas",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nDescubren un \"tesoro\" escondido, siguiendo las pistas dadas, partiendo desde la palmera, pasando por un barco y luego por una playa hasta ubicar el tesoro protegido por un delfín. Registran las coordenadas de la trayectoria y el posible lugar en que se encuentra el tesoro."
+        },
+        {
+          "nombre": "Reconocer extremos de área en mapa",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Desafío\nReconocen y comunican los extremos de la ubicación de un área en un mapa. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Identificar vértices, aristas y caras en cubos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico y con los símbolos matemáticos correctos. (OA l)\n\nIdentifican vértices, aristas y caras en cubos, denominando: a) los vértices con P, Q, R, S, T, U, V, W; b) las aristas con a, b, c, d, e, f, g, h, i, j, k, l; c) las caras con A, B, C, D, E, F"
+        },
+        {
+          "nombre": "Describir trayecto más corto en prisma",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nDescriben el trayecto más corto que toma una mosca para llegar del punto A al punto B y a continuación lo trazan en el prisma."
+        },
+        {
+          "nombre": "Dibujar vistas de cubos o paralelepípedos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nDibujan, a partir de las medidas de a, b, c, las vistas de frente, de arriba y de lado de cubos o paralelepípedos."
+        },
+        {
+          "nombre": "Dibujar vistas de prismas triangulares",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Dibujan las vistas de prismas triangulares de frente, de arriba y de lado, como en la actividad 3."
+        },
+        {
+          "nombre": "Dibujar vistas de figuras compuestas",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Desafío\nDibujan, como en la actividad 3, las vistas de figuras compuestas de cubos y prismas rectangulares, usando cuadrículas."
+        },
+        {
+          "nombre": "Descubrir regularidades en sucesiones de números",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\nRESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nDescubren y explican la regularidad en sucesiones de números y las completan:\na) 2 5 10 17 ? 37 50 65\nb) 0 3 8 15 24 35 ? ? ?\nc) 1 2 4 7 11 16 ? ? ?\nd) 1 0 1 0 1 ? ? ? ?"
+        },
+        {
+          "nombre": "Descubrir números incorrectos en sucesiones",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Descubren números incorrectos en la sucesión de números siguiente:\na) 0 1 4 9 15 25 36 47 64\nb) 4 11 18 24 24 32 39 45 53\nc) 5 8 13 21 29 40 54 68 85"
+        },
+        {
+          "nombre": "Descubrir patrón en formación de números",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Descubren y explican el patrón en la formación de números; por ejemplo:\na) 101001 . . .\nb) 102003 . . ."
+        },
+        {
+          "nombre": "Identificar regularidad con fósforos",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Identifican y explican la regularidad en el número total de fósforos o palitos usados en cada paso de la secuencia de triángulos. ¿Cuántos fósforos o palitos se usarán en la figura?"
+        },
+        {
+          "nombre": "Marcar patrones numéricos en tablas",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\n\na) Marcan en una tabla de 100 los múltiplos de 5. ¿Qué números marcó?\nb) Marcan en la tabla de 100 los múltiplos de 9. Describa lo que observe.\nc) Escriben los números que aparecen en la tabla del 100 en la diagonal trazada y explican el patrón encontrado. ¿Qué característica tienen los números de este patrón?"
+        },
+        {
+          "nombre": "Determinar números en recta numérica con patrón de recorrido",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Determinan números en una recta numérica, que siguen un patrón de recorrido, comenzando en un punto dado, como el número 15 y llega al 24.\na) ¿Cuál es el patrón?\nb) ¿Cuáles son los 3 próximos números?"
+        },
+        {
+          "nombre": "Leer y comunicar la hora en reloj didáctico",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas con un lenguaje específico y con los símbolos matemáticos correctos. (OA l)\n\nLeen y comunican la hora puesta por un compañero en un reloj didáctico, usando A.M. y P.M."
+        },
+        {
+          "nombre": "Poner una hora dada en reloj didáctico",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Ponen una hora dada en un reloj didáctico. Identifican 1/2 h, 1/4 h, 3/4 h con los minutos correspondientes."
+        },
+        {
+          "nombre": "Expresar hora de la tarde en modo 24 h",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Expresan la hora de la tarde comunicada en modo de 12 h, en modo de 24 h. Ejemplo: 11 h = 23 h"
+        },
+        {
+          "nombre": "Leer y comunicar hora en reloj digital",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Leen y comunican la hora que aparece en un reloj digital del modo 12 h y del modo 24 h. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Transformar horas entre reloj análogo y digital",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Transforman horas indicadas en un reloj análogo a uno digital y viceversa. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Calcular tiempo transcurrido entre horas",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nCalculan el tiempo transcurrido respecto de la hora de partida y de la hora de llegada de acuerdo al horario de la tabla. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Calcular hora de llegada",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Calculan la hora de llegada respecto de la hora de partida y el tiempo transcurrido, por ejemplo, en ir y venir al colegio o a la casa de un amigo. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Calcular duración de actividades",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Calculan la hora del tiempo transcurrido en actividades como un partido de fútbol, la duración de una película, la duración de un evento escolar del colegio, la ida al policlínico u otros, registrando el comienzo y el final. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Poner hora en despertador",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Ponen en un despertador la hora correcta y la hora en que deben despertar para ir a clases, levantarse para ir al recreo u otros. (Repetir varios días). (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Leer y comunicar informaciones de horarios",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Leen y comunican informaciones que aparecen en horarios, por ejemplo, de medios de transporte, entre otros. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Argumentar unidad de tiempo adecuada",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\n\nArgumentan que un período de tiempo se debe expresar en unidades adecuadas. Por ejemplo: El tiempo de espera en una consulta médica no se comunica en segundos, el tiempo de carrera de 50 m no se mide en minutos, etc. Indican en la tabla la unidad de tiempo adecuada por actividad y miden y registran el tiempo transcurrido."
+        },
+        {
+          "nombre": "Indicar tiempos de recorrido entre paraderos",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas con un lenguaje específico y con los símbolos matemáticos correctos. (OA l)\n\nIndican los tiempos registrados del recorrido de un bus entre 3 paraderos, y lo expresan en horas y minutos (en áreas rurales, entre 2 paraderos)."
+        },
+        {
+          "nombre": "Confeccionar horarios a base de datos",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Confeccionan horarios a base de datos sobre actividades que realizan diariamente."
+        },
+        {
+          "nombre": "Calcular días de vacaciones",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nCalculan los días de las vacaciones basadas en la fecha del último y primer día de clases."
+        },
+        {
+          "nombre": "Calcular tiempo hasta próximo partido",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Calculan los meses, las semanas y los días que faltan hasta el próximo partido de su equipo de fútbol preferido."
+        },
+        {
+          "nombre": "Resolver problemas de conversión de hora",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Resuelven problemas de la conversión de la hora o de períodos de tiempos; por ejemplo: El reloj muestra el tiempo que falta para el despegue de un cohete: 01:24:10. Las primeras dos cifras indican las horas restantes, las segundas dos cifras los minutos restantes y las últimas dos cifras los segundos restantes. Calculan los minutos que faltan para el despegue. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Indicar longitudes de referencia de objetos comunes",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nIndican longitudes de referencia de objetos comunes, como alturas de sillas, mesas, puertas y pisos de un edificio, de una cancha de fútbol, etc. Por ejemplo: el piso de un edificio es más alto/bajo que ..."
+        },
+        {
+          "nombre": "Estimar longitudes de objetos del entorno",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Estiman longitudes de objetos de su entorno, como: a) la altura de edificios; b) de pisos; c) distancias largas, como de la casa a la panadería."
+        },
+        {
+          "nombre": "Medir longitudes eligiendo unidad",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Miden longitudes y deciden previamente la unidad de medición que se usará, como: a) la huella de algunos compañeros de curso en la arena o la tierra; b) el perímetro de la mesa del profesor o la propia; c) una ventana o una puerta de la sala de clases."
+        },
+        {
+          "nombre": "Medir distancias en planos y convertir a longitud real",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\nREPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nMiden en cm distancias en planos de, por ejemplo, casas, departamentos, y convierten la medida tomada en la longitud real; por ejemplo: en este plano, el largo del living y del comedor = 4 cm (escala: 1cm corresponde a 1m). (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Medir distancias grandes con huincha",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nMiden distancias grandes; como el largo y el ancho de la multicancha o el patio del colegio usando una huincha de medir; por ejemplo: una de la construcción. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Medir distancias con los pies",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Miden distancias con los pies, suman las longitudes y convierten las medidas en cm y m."
+        },
+        {
+          "nombre": "Medir lados de figuras 2D y calcular perímetro",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nMiden los lados de figuras 2D conocidas y calculan el perímetro; por ejemplo: calculadora, hoja de trabajo, tarjeta, boleta, bloc de dibujo, etc."
+        },
+        {
+          "nombre": "Comparar perímetro de tapa de cuaderno con libro",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nComparan el perímetro de la tapa de un cuaderno con el perímetro del libro de Matemática."
+        },
+        {
+          "nombre": "Calcular alto de pila de cuadernos",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nEmplear diversas estrategias para resolver problemas. (OA b)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\na) La profesora quiere apilar todos los cuadernos de matemática de los alumnos del curso en un solo montón. Este día había 36 alumnos en la clase. Cada cuaderno tiene un alto de 2 cm. ¿Cuál es el alto de esta pila de cuadernos?\nb) ¿En qué lugar conviene apilar los cuadernos? Argumentan acerca de sus respuestas.\nc) Tres alumnos se ofrecen a llevar los cuadernos a la sala de profesores. ¿Qué alto tiene cada una de las 3 pilas?"
+        },
+        {
+          "nombre": "Resolver problema de distancia ante tsunami",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Resuelven problemas que involucren actitudes apropiadas en caso de una emergencia; por ejemplo: la ocurrencia de un tsunami. (Historia, Geografía y Ciencias Sociales)\n\nUn grupo de turistas está en una embarcación a una distancia de 4 500 m de la costa. Se alertó un posible tsunami. Cerca de la costa, la ola del tsunami aumenta su altitud. Por esta razón, el capitán de la embarcación decidió desplazarse mar adentro, donde la altura de la ola del tsunami es baja. Se consideran como seguras las zonas en el mar que tienen una distancia de la costa de 5 600 m o mayor. Calculan la distancia que tiene que desplazarse la embarcación para llegar a zona segura."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de medición de longitudes y transformaciones",
+          "oas_evaluados": [
+            22
+          ],
+          "actividad_evaluacion": "OA_22: Medir longitudes con unidades estandarizadas (m, cm) y realizar transformaciones (m a cm y viceversa) en contextos de la resolución de problemas.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_l: Identificar regularidades en expresiones numéricas y geométricas.\n\nIndicadores de Evaluación:\nMiden el perímetro de objetos y lo expresan en cm o m.\n\nActividad:\nEl paralelepípedo tiene las siguientes medidas: a = 9 cm, b = 4 cm y c = 3 cm. Determine el trazado más corto entre los puntos rojos indicados en las caras al recorrer las aristas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Demuestran que encuentra el trazado más corto entre dos puntos.",
+              "Marcan una línea de conexión entre los puntos.",
+              "Miden las distancias entre los vértices.",
+              "Indican el total."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de patrones numéricos en tablas",
+          "oas_evaluados": [
+            13
+          ],
+          "actividad_evaluacion": "OA_21 (sic): Identificar y describir patrones numéricos en tablas que involucren una operación, de manera manual y/o usando software educativo.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_l: Identificar regularidades en expresiones numéricas y geométricas.\n\nIndicadores de Evaluación:\n- Identifican y describen un patrón en tablas y cuadros.\n- Varían un patrón dado y lo representan en una tabla.\n\nActividad:\na) Ubique los múltiplos del 11 en la tabla de 100 y\nb) Trace en ella el trayecto que resulta, uniendo el primer múltiplo con el último.\nc) ¿Cuál regularidad observa? Explique la regularidad, usando la tabla de 100.\nDesafío:\nd) Varíe la regla del patrón del 11 para formar la diagonal del 9.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Demuestran qué significa avanzar en la fila y avanzar en la columna: descomponen la adición de 11 en la adición de 10 seguido por la adición de 1.",
+              "Demuestran que comprenden que la adición de 9 se puede remplazar por la adición de 10 seguido por la sustracción de 1.",
+              "Grafican el trayecto de un número a otro en la tabla de 100."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de medición del tiempo en relojes",
+          "oas_evaluados": [
+            20
+          ],
+          "actividad_evaluacion": "OA_20: Leer y registrar diversas mediciones del tiempo en relojes análogos y digitales, usando los conceptos A.M., P.M. y 24 horas.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\n\nIndicadores de Evaluación:\nCalculan diferencias entre horas indicadas.\n\nActividad:\nUn vuelo entre Santiago e Iquique tiene una duración de 2 1/2 horas. La partida a las 11.45 P.M. en Santiago. ¿A qué hora aterriza el avión en Iquique?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Calculan correctamente la diferencia entre horas indicadas.",
+              "Indican correctamente horas de llegada de un vuelo, sumando la cantidad de horas a la hora de partida.",
+              "Aplican correctamente el concepto A.M. y P.M."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad se amplía el ámbito de las fracciones y se llega del concreto al más abstracto. Los alumnos identifican las fracciones como números que pueden representar partes de un entero. Conocen más fracciones, las comparan y las ubican en la recta numérica. Modelan y realizan adiciones y sustracciones para profundizar la imaginación de las fracciones como número fraccionario. Reconocen fracciones propias e impropias como resultado de adiciones y las convierten en números mixtos. Con la resolución de problemas de la vida cotidiana que involucren fracciones y números mixtos, se acostumbran más y más al concepto de los números fraccionarios. Resuelven ecuaciones de un paso por el concepto de la operación inversa entre adición y sustracción. En Geometría, descubren la línea de simetría y el patrón con el cual se reconocen y dibujan figuras simétricas. Realizan reflexiones, traslaciones y rotaciones por el conteo de las cuadrículas que llevan a la imagen de la figura original, preparando en forma propedéutica las construcciones con regla y compás. Aprenden el concepto de un ángulo que mide la apertura entre dos rayos que tienen un vértice en común. Identifican y agrupan ángulos según sus tamaños. Comprenden la función de un transportador, reconociendo que el ángulo no se cambia en el transporte. Comparan, miden y construyen ángulos con el transportador para adquirir las destrezas que se requieren en construcciones con compás y regla.",
+      "palabras_clave": [
+        "Número mixto",
+        "número decimal",
+        "décima",
+        "centésima",
+        "milésima",
+        "línea de simetría",
+        "trasladar",
+        "reflejar",
+        "rotar",
+        "medir",
+        "transportar",
+        "ángulos"
+      ],
+      "conocimientos_previos": [
+        "Fracciones de uso común: 1/2, 1/3, 2/3, 1/4, 3/4",
+        "Tabla de 10 x 10",
+        "Describir y registrar patrones numéricos",
+        "Resolver ecuaciones de un paso por comprobación de la igualdad",
+        "Reconocer figuras trasladadas, reflejadas o rotadas, identificando y estimando ángulos con ángulos de referencia de 45º y 90º",
+        "Vocabulario: denominador, numerador, múltiplos, recta numérica, expresión, ecuación, igualdad"
+      ],
+      "conocimientos": [
+        "Fracciones 1/2, 1/3, 1/4, 1/5, 1/6, 1/8, 1/10, 1/12, 1/100",
+        "Fracciones propias, impropias y números mixtos",
+        "Suma y resta de fracciones con igual denominador",
+        "Ecuaciones de un paso, aplicando las operaciones inversas de adición y sustracción",
+        "Traslación, rotación y reflexión de figuras 2D",
+        "Ángulos de 0º a 360º"
+      ],
+      "habilidades": [
+        "Transferir los procedimientos utilizados en situaciones ya resueltas a problemas similares.",
+        "Utilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico, aplicando los símbolos matemáticos correctos.",
+        "Transferir una situación de un nivel de representación a otro (por ejemplo: de lo concreto a lo pictórico y de lo pictórico a lo simbólico, y viceversa).",
+        "Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.",
+        "Descubrir regularidades matemáticas.",
+        "Hacer deducciones matemáticas."
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Expresar y escuchar ideas de forma respetuosa.",
+        "Abordar de manera creativa y flexible la búsqueda de soluciones a problemas."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "numero": 8,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprende las fracciones con denominador 100, 12, 10, 8, 6, 5, 4, 3, 2:\n- explicando que una fracción representa la parte de un todo o de un grupo de elementos y un lugar en la recta numérica\n- describiendo situaciones en las cuales se puede usar fracciones\n- mostrando que una fracción puede tener representaciones diferentes\n- comparando y ordenando fracciones (por ejemplo: 1/100, 1/8, 1/5, 1/4, 1/2) con material concreto y pictórico",
+          "indicadores": [
+            "Reconocen fracciones unitarias en figuras geométricas regulares.",
+            "Registran la parte que corresponde a una fracción unitaria en figuras geométricas regulares.",
+            "Resuelven pictóricamente situaciones de la vida cotidiana que involucran la repartición de un objeto en partes iguales e identifican las partes como fracciones unitarias.",
+            "Identifican fracciones unitarias en la recta numérica.",
+            "Marcan posiciones de fracciones unitarias en la recta numérica.",
+            "Reconocen que, entre dos fracciones unitarias, la fracción con el mayor denominador representa la fracción menor."
+          ]
+        },
+        {
+          "numero": 9,
+          "tipo": "OA",
+          "descripcion": "Resolver adiciones y sustracciones de fracciones con igual denominador (denominadores 100, 12, 10, 8, 6, 5, 4, 3, 2), de manera concreta y pictórica, en el contexto de la resolución de problemas.",
+          "indicadores": [
+            "Descomponen pictóricamente, con material concreto y además con software educativo, fracciones propias en fracciones unitarias.",
+            "Descubren el algoritmo de la adición de fracciones unitarias.",
+            "Realizan uniones pictóricas de fracciones propias con el mismo denominador para verificar el algoritmo de la adición de fracciones.",
+            "Descomponen en partes iguales la parte de una figura que representa una fracción propia y quitan una o más de las partes.",
+            "Descubren el algoritmo de la sustracción de fracciones propias.",
+            "Resuelven problemas de la vida diaria que involucran la adición y la sustracción de fracciones propias de igual denominador."
+          ]
+        },
+        {
+          "numero": 10,
+          "tipo": "OA",
+          "descripcion": "Identificar, escribir y representar fracciones propias y los números mixtos hasta el 5, de manera concreta, pictórica y simbólica en el contexto de la resolución de problemas.",
+          "indicadores": [
+            "Reconocen en figuras geométricas la fracción propia que es representada por una parte marcada.",
+            "Marcan en figuras geométricas la parte que corresponde a una fracción propia.",
+            "Verifican que una fracción propia puede ser representada de diferentes maneras en cuadrículas.",
+            "Identifican fracciones propias en la recta numérica.",
+            "Marcan fracciones propias en la recta numérica.",
+            "Identifican números mixtos en la recta numérica.",
+            "Marcan números mixtos en la recta numérica.",
+            "Comparan y ordenan números mixtos hasta el 5.",
+            "Usan números mixtos en contextos de la vida diaria."
+          ]
+        },
+        {
+          "numero": 14,
+          "tipo": "OA",
+          "descripcion": "Resolver ecuaciones e inecuaciones de un paso, que involucren adiciones y sustracciones, comprobando los resultados en forma pictórica y simbólica del 0 al 100, aplicando las relaciones inversas entre la adición y la sustracción.",
+          "indicadores": [
+            "Modelan ecuaciones con una balanza, real o pictóricamente; por ejemplo: x + 2 = 4.",
+            "Modelan inecuaciones con una balanza real que se encuentra en desequilibrio; por ejemplo: 2 + x < 7.",
+            "Modelan ecuaciones e inecuaciones de un paso, concreta o pictóricamente, con una balanza y además con software educativo.",
+            "Resuelven adivinanzas de números que involucran adiciones y sustracciones."
+          ]
+        },
+        {
+          "numero": 17,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprende una línea de simetría:\n- identificando figuras simétricas 2D\n- creando figuras simétricas 2D\n- dibujando una o más líneas de simetría en figuras 2D\n- usando software geométrico",
+          "indicadores": [
+            "Reconocen simetrías en la naturaleza.",
+            "Reconocer simetrías en el arte, la arquitectura, etc.",
+            "Identifican la línea de plegar con la línea de simetría.",
+            "Confeccionan figuras simétricas mediante plegados.",
+            "Dibujan figuras simétricas en una tabla de cuadrículas, aplicando un patrón.",
+            "Descubren, concretamente y/o usando software educativo, que figuras 2D regulares pueden tener más de una línea de simetría.",
+            "Dibujan figuras 2D con más de una línea de simetría."
+          ]
+        },
+        {
+          "numero": 18,
+          "tipo": "OA",
+          "descripcion": "Trasladar, rotar y reflejar figuras 2D.",
+          "indicadores": [
+            "Reconocen la reflexión por medio de figuras 2D con una línea de simetría.",
+            "Reconocen la rotación 180º en figuras 2D con dos líneas de simetría.",
+            "Realizan traslaciones, rotaciones y reflexiones en una tabla de cuadrículas.",
+            "Usan software educativo."
+          ]
+        },
+        {
+          "numero": 19,
+          "tipo": "OA",
+          "descripcion": "Construir ángulos con el transportador y compararlos.",
+          "indicadores": [
+            "Reconocen los ángulos de 90º y 180º en figuras del entorno.",
+            "Confeccionan con dos cintas un transportador simple para medir ángulos.",
+            "Usan un transportador simple para identificar ángulos 90º y 180º.",
+            "Miden ángulos de entre 0º y 180º con el transportador.",
+            "Construyen ángulos entre 0º y 180º con el transportador.",
+            "Miden y construyen ángulos de entre 180º a 360º.",
+            "Estiman ángulos y comprueban la estimación realizada."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Registrar partes de figuras en fracciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nRegistran partes de una figura 2D en fracciones. Por ejemplo: la parte de color del triángulo grande."
+        },
+        {
+          "nombre": "Colorear fracción y argumentar sobre mitad del triángulo",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nREPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\na) Colorean 1/4 del triángulo.\nb) Argumentan si es posible marcar la mitad del triángulo."
+        },
+        {
+          "nombre": "Colorear un cuarto del rectángulo de tres formas diferentes",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nColorean en tres formas diferentes un cuarto del rectángulo."
+        },
+        {
+          "nombre": "Registrar fracción de partes coloreadas",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Registran como fracción la parte de color de cada uno de los rectángulos."
+        },
+        {
+          "nombre": "Determinar parte faltante en instalación de programa",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nDeterminan la parte que falta en el proceso de la instalación de un programa en el computador. Registran la parte faltante con una fracción. (Barra del progreso de la instalación del programa)"
+        },
+        {
+          "nombre": "Repartir barra de chocolate según regla",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nEmplear diversas estrategias para resolver y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar. (OA b)\nMODELAR\nExpresar a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático. (OA j)\n\nDesafío\nResuelven el problema siguiente: Repartir una barra de chocolate entre tres personas A, B y C según la siguiente regla: B recibe el doble del A y C recibe el triple de A. Marcan en el rectángulo las partes que reciben A, B y C."
+        },
+        {
+          "nombre": "Trazar segmento de recta numérica y marcar fracciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "MODELAR\nAplicar modelos que involucran fracciones y la ubicación en la recta numérica. (OA i)\n\nTrazan el segmento de la recta numérica entre 0 y 1, el cual se extiende por la longitud de 20 cuadrículas, de acuerdo a las siguientes instrucciones:\na) Marcan con color en la recta numérica las posiciones de las siguientes fracciones: 1/2, 1/4, 1/5\nb) Responden la pregunta: ¿adónde se desplazan las posiciones de las fracciones si se aumenta el valor del denominador?"
+        },
+        {
+          "nombre": "Identificar fracciones en figuras 2D",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nIdentifican fracciones en las figuras 2D; por ejemplo: registran como fracción la parte de color."
+        },
+        {
+          "nombre": "Colorear fracciones en rectángulos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Colorean las siguientes fracciones 3/4, 2/3, 5/6, 5/8, 7/12 en rectángulos de 4 por 6 cuadrículas."
+        },
+        {
+          "nombre": "Identificar y sumar fracciones en rectángulo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nEn el rectángulo están marcados en color dos partes iguales.\na) Indique la fracción que representa cada una de las partes coloreadas.\nb) ¿Qué fracción representan las dos partes coloreadas juntas?"
+        },
+        {
+          "nombre": "Componer rectángulo con figuras y expresar adición",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nLa figura de color gris y la figura fucsia representan una parte igual del rectángulo grande al lado izquierdo.\na) Identifique la fracción que corresponde a ambas figuras.\nb) Forme un rectángulo con la parte gris oscura y la parte fucsia, trasladando un cuadradito de lugar.\nc) ¿Qué parte del rectángulo grande es el rectángulo de la figura obtenida?\nd) Represente la composición de las figuras gris oscuro y la figura fucsia con una adición de las fracciones correspondientes.\ne) ¿Qué le llama la atención? Formule la propiedad en la adición con sus palabras."
+        },
+        {
+          "nombre": "Colorear fracciones y registrar total pintado",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\na) Colorean 2/5 del rectángulo con un color a elección, luego colorean en el mismo rectángulo 1/5 usando otro color. Registran el total pintado con una fracción.\nb) Colorean con dos colores un nuevo rectángulo del mismo tamaño de tal manera que se obtengan 4/5."
+        },
+        {
+          "nombre": "Sustraer fracciones con triángulo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nMODELAR\nAplicar, seleccionar, modificar y evaluar modelos que involucran las cuatro operaciones con números naturales y fracciones. (OA i)\n\nEl triángulo de color representa una parte del triángulo blanco.\na) ¿A qué fracción del triángulo blanco corresponde el triángulo de color?\nb) Si se quita un triángulo del triángulo de color, ¿qué fracción del triángulo blanco es la figura obtenida?\nc) ¿Por qué la descomposición de triángulo de color corresponde a la sustracción de fracciones?\nd) Desafío: Explican la sustracción de fracciones."
+        },
+        {
+          "nombre": "Sumar fracciones con igual denominador",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\n\nSuman las siguientes fracciones:\na) 1/8 + 5/8\nb) 2/9 + 5/9\nc) 1/6 + 5/6\nd) 1/12 + 7/12"
+        },
+        {
+          "nombre": "Sustraer fracciones con igual denominador",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Sustraen las siguientes fracciones:\na) 5/6 - 4/6\nb) 4/5 - 2/5\nc) 2/3 - 1/3\nd) 7/8 - 3/8"
+        },
+        {
+          "nombre": "Anotar fracción que completa igualdad en adición",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Anotan en las cuadrículas la fracción que corresponde para cumplir la igualdad:\na) 2/9 + _ = 7/9\nb) 1/5 + _ = 4/5\nc) 2/6 + _ = 5/6"
+        },
+        {
+          "nombre": "Anotar fracción que completa igualdad en sustracción",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Anotan en las cuadrículas la fracción correcta para cumplir la igualdad:\na) 7/8 - _ = 5/8\nb) 5/12 - _ = 4/12\nc) 4/5 - _ = 1/5"
+        },
+        {
+          "nombre": "Resolver problema con fracciones de círculo",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nMODELAR\nAplicar, seleccionar, modificar y evaluar modelos que involucran las cuatro operaciones con números naturales y fracciones. (OA i)\n\nDesafío\nEl círculo se divide en las partes A, B, C y D. A es igual a las partes B, C y D juntas. B es igual a las partes C y D juntas.\na) ¿Qué fracción representa la parte C?\nb) Represente la suma de las partes B y D en fracciones del mismo denominador.\nc) ¿Qué fracción representa la parte restante, si se quita una parte igual a D de A?"
+        },
+        {
+          "nombre": "Unir trozos de chocolate y calcular fracción",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "¿Qué parte del chocolate se obtiene, si se unen los siguientes trozos? Calculan con las fracciones correspondientes.\na) Si se unen A y B, se obtiene _ del chocolate.\nb) Si se unen B y C, se obtiene....\nc) Si se unen A y C, se obtiene....\nd) Si se unen A, B y C, se obtiene.... del chocolate. ¿Qué parte falta para tener el chocolate entero?"
+        },
+        {
+          "nombre": "Identificar fracciones que corresponden a partes marcadas",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "MODELAR\nExpresar, a partir de representaciones pictóricas, situaciones en lenguaje matemático. (OA j)\n\nIdentifican en figuras regulares las fracciones que corresponden a las partes marcadas."
+        },
+        {
+          "nombre": "Marcar en figuras partes que corresponden a fracciones",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nMarcan en figuras regulares las partes que corresponden a fracciones; por ejemplo: 9/16, 3/4"
+        },
+        {
+          "nombre": "Reconocer fracciones impropias y convertir a números mixtos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "MODELAR\nExpresar, a partir de representaciones pictóricas, situaciones en lenguaje matemático. (OA j)\n\nReconocen fracciones impropias en figuras y las convierten en números mixtos; por ejemplo: 5/4 = 1 + 1/4 = 1 1/4"
+        },
+        {
+          "nombre": "Colorear áreas correspondientes a números mixtos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nColorean en una tabla las áreas que corresponden a números mixtos, por ejemplo 1 5/9."
+        },
+        {
+          "nombre": "Colorear unión de áreas marcadas como números mixtos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Colorean en tablas, en forma pictórica, los números mixtos que corresponden a la unión de áreas marcadas; por ejemplo: 1 2/8 + 1 3/8 = 2 5/8"
+        },
+        {
+          "nombre": "Expresar peso de alimentos con números mixtos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Expresan y registran el peso de alimentos en unidades estandarizadas con números mixtos; por ejemplo: 2 kg + 1/4 kg = _ kg"
+        },
+        {
+          "nombre": "Leer medidas en números mixtos en cintas de regalo",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "En cintas de regalo, con reglas o huinchas, leen las medidas que corresponden en números mixtos dados; por ejemplo: 1 1/2 m, 1 3/4 m, etc."
+        },
+        {
+          "nombre": "Marcar números mixtos en huinchas",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Ponen en reglas o huinchas marcas (perritos de ropa) que corresponden a números mixtos hasta el 5; por ejemplo: 1 1/2 m."
+        },
+        {
+          "nombre": "Resolver ecuaciones simples de adición con recta numérica",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nResuelven ecuaciones simples que involucran adiciones y determinan el número que falta, usando la recta numérica; por ejemplo:\na) 24 + _ = 60\nb) _ + 75 = 100"
+        },
+        {
+          "nombre": "Resolver ecuaciones simples de sustracción con recta numérica",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\n\nResuelven ecuaciones simples que involucran sustracciones, determinando el número que falta, usando la recta numérica; por ejemplo:\na) 80 - _ = 23\nb) _ - 19 = 51"
+        },
+        {
+          "nombre": "Experimentar con balanza para lograr equilibrio",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Realizan experimentos sencillos con una balanza de barra o un balancín simple para lograr equilibrio con varios objetos. Agregan o sacan la misma cantidad de objetos iguales en ambos lados y comunican su observación.\n\nMODELAR\nExpresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático. (OA j)"
+        },
+        {
+          "nombre": "Determinar objeto desconocido para equilibrar balanza",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Determinan con una balanza, en forma pictórica y simbólica, cuánto debe pesar el objeto desconocido, para que la balanza quede equilibrada."
+        },
+        {
+          "nombre": "Crear adivinanzas con números incógnitos",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Crean adivinanzas con los números incógnitos: resuelven las ecuaciones, aplicando la operación inversa; lo representan en forma pictórica en la recta numérica; comprueban la solución en la recta numérica.\na) Se busca un número con la siguiente propiedad: \"Si lo aumenta por 23, resulta el número 47\": _ + 23 = 47\nb) ¿Qué número es? \"Si se disminuye por 15, la diferencia es 13\": _ - 15 = 13"
+        },
+        {
+          "nombre": "Formular ecuaciones con sucesor y antecesor",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Formulan ecuaciones que involucren los términos \"sucesor\" y \"antecesor\"; por ejemplo:\na) ¿Qué número es, si el tercer sucesor es 42?: _ + 3 = 42\nb) ¿Qué número es, si el segundo antecesor es 56?: _ - 2 = 56"
+        },
+        {
+          "nombre": "Resolver problemas cotidianos con ecuaciones de un paso",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Resuelven problemas de la vida cotidiana, modelando las resoluciones con ecuaciones de un paso, y comprueban la solución.\na) Para hornear un queque, el horno requiere una temperatura de 220 ºC. El termómetro indica la temperatura de 175 ºC. ¿Cuántos grados debe subir la temperatura para llegar a la temperatura deseada? 175 ºC + _ = 220 ºC\nb) Por un corte de electricidad, la temperatura de un refrigerador llega a 13 ºC. La temperatura deseada es 4 ºC. Elabore una ecuación para la resolución del problema."
+        },
+        {
+          "nombre": "Resolver problemas con ecuaciones de un paso y decimales",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Resuelven problemas, modelando las soluciones con ecuaciones de un paso que involucran números decimales; por ejemplo:\na) En el triple salto, un atleta logró el largo total de 16,00 m. Se conoce el largo del primero y del último salto: el primero es de 6,20 m y el último es de 5,00 m. Completan la ecuación con una incógnita para calcular el largo del segundo salto. (Educación Física y Salud) 6,20 m + _ + 5,00 m = 16,00 m\nb) Se requiere pintar una reja de 21 m de largo. Se pintó una parte de 8,50 m de la reja y se quiere terminar el trabajo. ¿Cuántos metros de la reja falta pintar?"
+        },
+        {
+          "nombre": "Modelar inecuaciones de un paso",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Modelan y resuelven inecuaciones de un paso en forma concreta o pictórica, manteniendo la igualdad. 2 + 1 < 9, 2 + 2 < 9, 2 + 3 < 9. ¿Cuánto pueden pesar, en unidades, los objetos que se agreguen a las dos unidades del lado izquierdo para que la balanza siga en desequilibrio? 2 + 5 < 9, 2 + 6 < 9"
+        },
+        {
+          "nombre": "Descubrir simetría con espejito en la naturaleza",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nDescubrir regularidades matemáticas y comunicarlas a otros. (OA e)\n\nDescubren la simetría, buscándola con un espejito. Trazan la línea de simetría en fotos o dibujos de la naturaleza. Por ejemplo: Eligen, de una colección de fotos de paisajes, plantas o animales, aquellas que tienen una línea de simetría. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Identificar simetría en reflexión de paisajes",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Identifican la simetría por medio de una foto que muestra la reflexión de un paisaje u objeto que se refleja en la superficie de un lago o un río, trazando la línea de simetría. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Colorear y completar figuras simétricas",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\na) Colorean para que la figura se vea simétrica.\nb) Completan la figura para que sea simétrica.\nc) Comprueban reflexiones de figuras 2D con un espejo o con una tabla de cristal acrílico."
+        },
+        {
+          "nombre": "Elaborar figuras simétricas con plegados",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "MODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nDescubren que la reflexión se puede modelar con plegados. Elaboran figuras simétricas plegando y/o recortando con papel. (Artes Visuales)"
+        },
+        {
+          "nombre": "Identificar simetría en señales de tránsito",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Identifican la simetría en las señales de tránsito y trazan las líneas de simetría. (Las letras no cuentan.) (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Comprobar simetría doblando figuras",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "MODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nComprueban si una figura es reflejada, doblándola a lo largo de la línea de simetría y haciendo coincidir las dos mitades.\n\nObservaciones al docente:\nSe recomienda realizar el siguiente desafío: entregarle al estudiante también figuras en forma de rombos, paralelogramos u otras que parecen que tiene línea de simetría y no la tienen."
+        },
+        {
+          "nombre": "Identificar propiedades de la reflexión",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "MODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nIdentifican y explican algunas propiedades de la reflexión, como la distancia de la figura y la imagen con respecto al eje, con ayuda de una línea de simetría."
+        },
+        {
+          "nombre": "Realizar reflexiones en cuadrículas",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nRealizan reflexiones con respecto a un eje de simetría y aplican las propiedades, contando las cuadrículas."
+        },
+        {
+          "nombre": "Contar líneas de simetría en la naturaleza",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Cuentan las líneas de simetría en dibujos o fotos de la naturaleza. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Trazar más de una línea de simetría en la naturaleza",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Identifican y trazan más de una línea de simetría en formas de la naturaleza como flores y cristales de nieve, entre otros. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Elaborar figuras simétricas con más de una línea de simetría",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nElaboran figuras simétricas con más de una línea de simetría (Artes Visuales)"
+        },
+        {
+          "nombre": "Identificar figuras trasladadas en pisos con baldosas",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "MODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nIdentifican figuras trasladadas en fotos de pisos con baldosas, etc., las marcan o colorean con diferentes colores. (Artes Visuales)"
+        },
+        {
+          "nombre": "Trasladar figuras siguiendo un patrón",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nMODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nTrasladan figuras marcadas en cuadrículas una o más veces, siguiendo un patrón; por ejemplo: 4 hacia la derecha, 3 hacia arriba."
+        },
+        {
+          "nombre": "Indicar patrón de traslación desde posición original",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Indican el patrón de la traslación a partir de la posición original y la posición final de una figura."
+        },
+        {
+          "nombre": "Reflejar figura 2D con eje dado",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Traspasan estas figuras a su cuaderno o a una hoja cuadriculada, reflejan una figura 2D con un eje dado y reconocen las propiedades, como la distancia de la figura y la imagen con respecto al eje, entre la figura original y la figura final."
+        },
+        {
+          "nombre": "Trazar ejes de simetría en figuras simétricas",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nResuelven los siguientes problemas geométricos: trazan ejes de simetría en figuras simétricas. a) figura 1, b) figura 2"
+        },
+        {
+          "nombre": "Indicar centro de rotación en figuras",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Indican y explican el centro de rotación en figuras. (Ciencias Naturales; Artes Visuales)\n\nObservaciones al docente:\nSe sugiere realizar la siguiente actividad: Rotan figuras en 90° con un centro de rotación que pertenece a la misma figura. La cuadrícula en mayúsculas la rotan a cuadrículas en minúsculas A a a; B a b, para ello se recorta la figura en cartulina y se fija con el dedo la figura en un vértice. Los alumnos repiten la acción con otras formas similares."
+        },
+        {
+          "nombre": "Rotar figuras y trazar en papel cuadriculado",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\nMODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nRotan figuras recortadas en cartulina con la forma del ejemplo. Repiten la acción con formas similares y trazan la figura inicial y la figura final rotada en papel cuadriculado."
+        },
+        {
+          "nombre": "Repetir rotaciones sucesivas de una figura",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Repiten rotaciones sucesivas de una figura igual al ejemplo en su cuaderno."
+        },
+        {
+          "nombre": "Aplicar traslación, reflexión y rotación coloreando mandalas",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Aplican las propiedades de traslación, reflexión y rotación, coloreando mandalas y/o dibujando figuras simétricas en su cuaderno o en papel cuadriculado o contando las cuadrículas. (Artes Visuales)"
+        },
+        {
+          "nombre": "Determinar ángulos con herramienta simple",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "MODELAR\nIdentificar regularidades en expresiones numéricas y geométricas. (OA k)\n\nDeterminan ángulos de objetos de la sala de clases con una herramienta simple, como la que aparece a continuación.\n\nObservaciones al docente:\nPara la herramienta para medir ángulos se necesita el siguiente material: 2 tiras semitransparentes firmes (tapas de carpetas, micas u otros), marcar con flecha (dos colores) y un agujero; tornillo de mariposa."
+        },
+        {
+          "nombre": "Indicar ángulos de 90°, 180° y 360° en cuaderno",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Indican en el cuaderno de matemáticas ángulos de 90º, 180º y 360º, utilizando la herramienta de la actividad 1."
+        },
+        {
+          "nombre": "Usar herramienta para construir ángulos",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nUsan la herramienta de la actividad 1 para construir ángulos de 90º, 270º (180º, 360º) en el cuaderno de matemática."
+        },
+        {
+          "nombre": "Construir ángulos de 45°, 135°, 225° y 315°",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Construyen con la herramienta de la actividad 1 ángulos de 45º, 135º, 225º y 315º, utilizando las líneas diagonales de las cuadrículas."
+        },
+        {
+          "nombre": "Colorear áreas entre flechas de ángulos",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas con los símbolos matemáticos correctos. (OA l)\n\nColorean las áreas entre las flechas de ángulos de 45º, 90º, 135º, 180º, 225º, 270º y 315º en forma separada, para visualizar el concepto ángulo."
+        },
+        {
+          "nombre": "Explicar y aplicar uso del transportador",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nExplican y aplican el uso del transportador con ayuda de la herramienta de la actividad 1 para medir y construir ángulos como los del dibujo."
+        },
+        {
+          "nombre": "Construir ángulos entre 0° y 180° con transportador",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nConstruyen ángulos entre 0º y 180º usando el transportador."
+        },
+        {
+          "nombre": "Identificar ángulos en objetos del entorno",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nIdentifican y registran en diferentes objetos del entorno, ángulos menor que 90°, mayor de 90° y menor de 180°."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de adición de fracciones con igual denominador",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "OA_8 (sic): Resolver adiciones y sustracciones de fracciones con igual denominador (denominadores 100, 12, 10, 8, 6, 5, 4, 3, 2), de manera concreta y pictórica, en el contexto de la resolución de problemas.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_k: Identificar regularidades en expresiones numéricas y geométricas.\n\nIndicadores de Evaluación:\n- Descubren el algoritmo de la adición de fracciones unitarias.\n- Realizan uniones pictóricas de fracciones propias con el mismo denominador para verificar el algoritmo de la adición de fracciones.\n\nActividad:\n1) Muestre la adición de las fracciones 3/8 y 6/8 en papel transparente con cuadrículas en las figuras A y B.\n2) Muestre el resultado en la figura C, sobreponiendo las figuras A y B a la figura C.\n3) Registre el resultado en un número mixto en forma pictórica y simbólica.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Representan correctamente fracciones en áreas.",
+              "Unen las áreas coloreadas parciales.",
+              "Representan la unión de los dos resultados parciales en forma pictórica.",
+              "Registran la adición de dos fracciones en forma pictórica y simbólica como un número mixto."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de ecuaciones e inecuaciones de un paso",
+          "oas_evaluados": [
+            14
+          ],
+          "actividad_evaluacion": "OA_14: Resolver ecuaciones e inecuaciones de un paso, que involucren adiciones y sustracciones, comprobando los resultados en forma pictórica y simbólica del 0 al 100, aplicando las relaciones inversas entre la adición y la sustracción.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_l: Identificar regularidades en expresiones numéricas y geométricas.\nOA_j: Expresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático.\n\nIndicadores de Evaluación:\nResuelven adivinanzas de números que involucran adiciones y sustracciones.\n\nActividad:\nLa temperatura ideal para guardar una torta de frutilla en el refrigerador es de 7°C. El termómetro del refrigerador indica una temperatura de 13°C en el interior del refrigerador. ¿Cómo se debe cambiar la temperatura? Calcule el resultado con una ecuación.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce que la temperatura debe bajar.",
+              "Identifica \"bajar\" con \"sustraer\".",
+              "Formula la ecuación con una incógnita.",
+              "Resuelve la ecuación para comprobar la igualdad.",
+              "Registra el resultado con una frase."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de líneas de simetría en figuras 2D",
+          "oas_evaluados": [
+            17
+          ],
+          "actividad_evaluacion": "OA_17: Demostrar que comprenden una línea de simetría:\n- dibujando una o más líneas de simetría en figuras 2D\n\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\nOA_l: Identificar regularidades en expresiones numéricas y geométricas.\n\nIndicadores de Evaluación:\n- Identifican la línea de plegar con la línea de simetría.\n- Dibujan figuras simétricas en una tabla de cuadrículas.\n\nActividad:\n1) ¿Cuáles de las figuras C a F son simétricas? Explique por qué.\n2) Dibuje un triángulo simétrico.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Dibujan las líneas de simetría en las figuras y explican por qué las figuras son simétricas, usando papel cuadriculado o doblando la figura.",
+              "Dibujan un triángulo con sus vértices en papel cuadriculado y aplican la propiedad de la simetría."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "4to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad, los estudiantes continúan el trabajo con fracciones y descubren los números decimales a partir de los números mixtos, en forma pictórica y simbólica. Identifican fracciones y números mixtos y profundizan el entendimiento de las fracciones y los números decimales como representantes de cantidades parciales y enteras. Realizan adiciones y sustracciones de números decimales y verifican que el sistema decimal ya conocido tiene una continuación hacia números inferiores al número uno. Con el conocimiento y la confección de gráficos de línea, aumentan la variedad de representar datos y pueden elegir favorablemente entre las representaciones. Realizan experimentos no predecibles y hacen sus primeras experiencias intuitivas con el azar. Con los experimentos, se acercan al método de trabajo de investigación y aprenden a organizarse en el trabajo en grupos. En Medición, pasan de la dimensión de las líneas a las dimensiones del área y del espacio. Reconocen que la medición de áreas y volúmenes se realiza favorablemente por la comparación con cuadritos y cubitos de referencia. Aprenden a estimar y medir áreas y volúmenes de su entorno en unidades razonables.",
+      "palabras_clave": [
+        "Valor posicional",
+        "décima",
+        "centésima",
+        "número mixto",
+        "número decimal",
+        "gráfico de línea",
+        "evento",
+        "experimento",
+        "metro cuadrado",
+        "metro cúbico"
+      ],
+      "conocimientos_previos": [
+        "Sumar y sustraer fracciones propias",
+        "Números mixtos",
+        "Tabla de posición de valores",
+        "Recta numérica",
+        "Gráficos de barra simple, pictogramas",
+        "Medición de longitudes en unidades estandarizadas de cm y m",
+        "Vocabulario: numerador, denominador, fracción, unidades, sistema decimal, tablas"
+      ],
+      "conocimientos": [
+        "Números decimales hasta la centésima",
+        "Sumas y restas de números decimales hasta la centésima",
+        "Datos en gráficos de línea",
+        "Experimentos no predecibles y la frecuencia absoluta de eventos",
+        "Áreas de cuadrados y rectángulos",
+        "Volúmenes de cubos y paralelepípedos"
+      ],
+      "habilidades": [
+        "Transferir los procedimientos utilizados en situaciones ya resueltas a problemas similares",
+        "Utilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico, aplicando los símbolos matemáticos correctos",
+        "Transformar una situación de un nivel de representación a otro",
+        "Comprobar una solución y fundamentar su razonamiento",
+        "Verificar un modelo"
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Expresar y escuchar ideas de forma respetuosa.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "numero": 11,
+          "tipo": "OA",
+          "descripcion": "Describir y representar decimales (décimos y centésimos):\n- representándolos en forma concreta, pictórica y simbólica, de manera manual y/o con software educativo\n- comparándolos y ordenándolos hasta la centésima",
+          "indicadores": [
+            "Identifican números decimales en contextos de la vida diaria; por ejemplo: resultados deportivos, distancias, peso.",
+            "Subdividen concretamente un cuadrado entero en 10 filas iguales y marcan partes que corresponden a una o más décimas.",
+            "Reconocen que un número mixto puede ser representado por un número decimal; por ejemplo: 1 3/10 a 1,3.",
+            "Subdividen un cuadrado entero en 100 cuadrículas y marcan partes que corresponden a décimos y centésimos.",
+            "Reconocen la igualdad entre las siguientes fracciones y sus pares decimales: 1/10 = 0,1; 3/100 = 0,01; 3/10 = 0,5; 1/5 = 0,2; 1/4 = 0,25.",
+            "Usan software educativo para reconocer y representar decimales.",
+            "Leen y expresan correctamente números decimales hasta la centésima; por ejemplo: 2,43 a \"dos coma cuatro tres\".",
+            "Transforman una longitud expresada en metros y centímetros en una longitud expresada en metros con un número decimal y viceversa; por ejemplo: 4 m 83 cm a 4,83 m, 3,26 m a 3 m 26 cm.",
+            "Marcan números decimales en reglas o huinchas.",
+            "Identifican números decimales en segmentos de la recta numérica."
+          ]
+        },
+        {
+          "numero": 12,
+          "tipo": "OA",
+          "descripcion": "Resolver adiciones y sustracciones de decimales, empleando el valor posicional hasta la centésima en el contexto de la resolución de problemas.",
+          "indicadores": [
+            "Modelan la adición sin y con traspaso de dos números decimales en cuadrículas.",
+            "Amplían el algoritmo de la adición hasta la centésima.",
+            "Modelan la sustracción sin y con traspaso en cuadrículas.",
+            "Amplían el algoritmo de la sustracción hasta la centésima.",
+            "Resuelven problemas que involucran adiciones y sustracciones con números de decimales."
+          ]
+        },
+        {
+          "numero": 27,
+          "tipo": "OA",
+          "descripcion": "Leer e interpretar pictogramas y gráficos de barra simple con escala y comunicar sus conclusiones.",
+          "indicadores": [
+            "Leen e interpretan pictogramas y gráficos de revistas y diarios.",
+            "Extraen información numérica publicada en libros, diarios y revistas, de resultados de encuestas.",
+            "Representan información en tablas y gráficos para comunicar conclusiones."
+          ]
+        },
+        {
+          "numero": 26,
+          "tipo": "OA",
+          "descripcion": "Realizar experimentos aleatorios lúdicos y cotidianos, y tabular y representar mediante gráficos de manera manual y/o con software educativo.",
+          "indicadores": [
+            "Realizan experimentos con dados cúbicos u de otra forma regular como tetraedro, dodecaedro, etc.",
+            "Extraen naipes al azar, con y sin devolver.",
+            "Pesan piedritas de un saco de gravilla y determinan la frecuencia absoluta de las masas de 5 g, 10 g, etc.",
+            "Reconocen que los resultados de experimentos lúdicos no son predecibles.",
+            "Realizan repeticiones de un mismo experimento, determinan la frecuencia absoluta y la representan en gráfico.",
+            "Usan software educativo para simular experimentos aleatorios."
+          ]
+        },
+        {
+          "numero": 25,
+          "tipo": "OA",
+          "descripcion": "Realizar encuestas, analizar los datos y comparar con los resultados de muestras aleatorias, usando tablas y gráficos.",
+          "indicadores": [
+            "Realizan encuestas de su interés; por ejemplo: actividades en su tiempo libre, preferencias de tipo de música, club de fútbol, etc.",
+            "Comparan los resultados de sus encuestas con otros cursos del colegio, con resultados publicados en diarios y revistas, etc."
+          ]
+        },
+        {
+          "numero": 23,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprenden el concepto de área de un rectángulo y de un cuadrado:\n- reconociendo que el área de una superficie se mide en unidades cuadradas\n- seleccionando y justificando la elección de la unidad estandarizada (cm2 y m2)\n- determinando y registrando el área en cm2 y m2 en contextos cercanos\n- construyendo diferentes rectángulos para un área dada (cm2 y m2) para mostrar que distintos rectángulos pueden tener la misma área\n- usando software geométrico",
+          "indicadores": [
+            "Reconocen que una cuadrícula es un medio para comparar áreas.",
+            "Determinan el área de rectángulos y cuadrados mediante el conteo de cuadrículas.",
+            "Confeccionan concretamente, en cuadrículas, rectángulos de diferentes formas, pero que tienen igual cantidad de cuadrados.",
+            "Usan software educativo para componer o descomponer figuras compuestas de cuadrados o rectángulos.",
+            "Calculan el área de figuras formadas por rectángulos y cuadrados.",
+            "Estiman áreas de su entorno en unidades de cm2 y m2."
+          ]
+        },
+        {
+          "numero": 24,
+          "tipo": "OA",
+          "descripcion": "Demostrar que comprenden el concepto de volumen de un cuerpo:\n- seleccionando una unidad no estandarizada para medir el volumen de un cuerpo\n- reconociendo que el volumen se mide en unidades de cubos\n- midiendo y registrando el volumen en unidades de cubo\n- usando software geométrico",
+          "indicadores": [
+            "Reconocen que un cubito es una unidad apta para comparar el volumen de dos cuerpos al contar los cubitos que caben, usando software educativo.",
+            "Construyen cubos de 1 m3 para reconocer unidad del volumen.",
+            "Estiman el volumen de objetos o de espacios de su entorno como cajas, maletas, salas de clases, piscinas, edificios, etc.",
+            "Eligen unidades para medir y expresar el volumen de figuras 3D.",
+            "Miden el volumen de figuras 3D, empleando jarros graduados.",
+            "Estiman y comprueban el volumen de objetos irregulares, sumergiéndolos en un vaso graduado."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Representar fracciones decimales en cuadrícula",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nSe sugiere la siguiente introducción al tema: Dibujan un cuadrado, cuyos lados corresponden a 10 cuadrículas del cuaderno, y marcan 10 filas del ancho de una cuadrícula.\na) Muestran que una fila, como parte del cuadrado entero, corresponde a la fracción 1/10.\nb) Marcan partes que corresponden a otras fracciones propias con el denominador 10. Por ejemplo: 3/10"
+        },
+        {
+          "nombre": "Representar fracción centésima en cuadrícula",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Colorean partes que corresponden a las fracciones; por ejemplo 4/100, 17/100."
+        },
+        {
+          "nombre": "Unir cuadrado entero con filas y representar como número mixto",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Unen en forma concreta, doblando papel cuadriculado, y pictórica, un cuadrado entero con filas, modelan la unión como la suma de un número entero con una fracción de denominador 10 y, finalmente, la convierten en un número mixto; por ejemplo: 1 cuadrado entero + 3/10 del cuadrado entero."
+        },
+        {
+          "nombre": "Representar 3/10 en papel cuadriculado",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Representan en papel cuadriculado en forma concreta y pictórica 3/10."
+        },
+        {
+          "nombre": "Representar 4/100 en papel cuadriculado",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Representan en papel cuadriculado en forma concreta y pictórica 4/100. Colorean las partes que forman las fracciones como 4/100, 17/100."
+        },
+        {
+          "nombre": "Representar unión de entero y centésima",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Representan la unión de 1 y 17/100 en papel cuadriculado en forma concreta y pictórica."
+        },
+        {
+          "nombre": "Representar unión de entero, décima y centésima",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Representan la unión de 1, 2/10 y 7/100 en papel cuadriculado en forma concreta y pictórica."
+        },
+        {
+          "nombre": "Registrar simbólicamente representaciones",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Registran en forma simbólica las representaciones de los ejercicios anteriores.\n\nObservaciones al docente:\nSe sugiere los siguientes pasos: Elaborar una tabla en donde se identifique la unidad de mil (UM), la centena (C), la decena (D), unidad (U), la décima (d) y la centésima (c). Seleccionan números mixtos para representar en la tabla (por ejemplo: 1 9/10 o 2 63/100). Representan los números seleccionados en la tabla, indicando la cantidad de UM, C, D, U, d y c."
+        },
+        {
+          "nombre": "Extender tabla de valores a décimos y centésimos",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Extienden la tabla de valores hacia unidades más pequeñas que la unidad: décimo (1/10) y centésimo (1/100).\na) Anotan números mixtos en la tabla extendida de valor posicional, como: 1 2/10; 1 7/100; 1 25/100.\nb) Leen y escriben números que están en la tabla.\n\nSe introduce la escritura decimal partiendo de una fracción: 1/10 = 0,1; 1/100 = 0,01; 3/10 = 0,3; 7/100 = 0,07; 42/100 = 0,42. Reconocen la igualdad entre las siguientes fracciones y números decimales: 1/2 = 0,5; 1/4 = 0,25; 1/5 = 0,2."
+        },
+        {
+          "nombre": "Transformar números mixtos a decimales",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Transforman números mixtos a números decimales, como 2 4/10, 1 3/10 y 1 4/100, 1 7/100."
+        },
+        {
+          "nombre": "Leer y comunicar números decimales",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Leer y comunicar correctamente los números decimales; por ejemplo: 2,39 a \"dos coma tres nueve\"."
+        },
+        {
+          "nombre": "Transformar fracciones a decimales y viceversa",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Transforman fracciones con los denominadores 10 o 100 a números decimales y viceversa; por ejemplo: 1/10, 1/100, 3/10, 7/100, 42/100; y 0,36, 0,09, 0,4, 0,01."
+        },
+        {
+          "nombre": "Componer y descomponer números decimales",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Componen y descomponen un número decimal en unidades y fracciones con los denominadores 10 o 100; por ejemplo: 2 + 3/10 + 6/100; 3 + 72/100; 4,81."
+        },
+        {
+          "nombre": "Comparar, transformar y ordenar cantidades con decimales",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Comparan, transforman y ordenan cantidades de la vida cotidiana, usando números decimales:\na) Transforman longitudes expresadas en metros y centímetros, en longitudes expresadas en un número decimal; por ejemplo: la estatura de personas: 1 m 78 cm = 1,78 m.\nb) Ordenan cantidades de alimentos, como frutas, carne, etc., según el peso expresado en números mixtos o números decimales, como 2 kg 315 g, 1 kg 500 g, 3 kg 25 g.\nc) Estiman la estatura de compañeros de curso, miden y expresan la estatura en números decimales.\nd) Ordenan de menor a mayor una secuencia de temperaturas en el transcurso de un día de invierno; por ejemplo: mañana 7,6°, mediodía 12,9°, tarde 9,4° y noche 5,7°."
+        },
+        {
+          "nombre": "Calcular y graficar suma de decimales",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas con los símbolos matemáticos correctos. (OA m)\n\nCalculan y grafican la suma de 1,32 + 1,47.\n\nObservaciones al docente:\nSe espera el siguiente resultado. Unen, en forma concreta o pictórica, cuadrados enteros, filas y cuadrículas, y modelan el proceso de la unión de las figuras con la adición de números decimales, como 1,32 + 1,47 = 2,79."
+        },
+        {
+          "nombre": "Calcular y representar suma con traspaso",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Calculan y representan en forma pictórica y simbólica la suma de 1,20 + 1,65 (con traspaso)."
+        },
+        {
+          "nombre": "Identificar decimales hasta décima como centésima",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Identifican qué números decimales hasta la décima también pueden ser expresados hasta la centésima; por ejemplo 1,4 = 1,40, y lo explican en forma concreta o pictórica."
+        },
+        {
+          "nombre": "Calcular y representar restas de decimales",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Calculan y representan en forma pictórica y simbólica las restas, como 2,89 – 1,54 y 2,41 – 1,27 (sin y con traspaso)."
+        },
+        {
+          "nombre": "Elaborar algoritmo de adición y sustracción de decimales",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "MODELAR\nAplicar, seleccionar, modificar modelos que involucren operaciones con números naturales y fracciones. (OA i)\n\nElaboran, a base del algoritmo de la adición y sustracción de números naturales, el algoritmo de la sustracción de números decimales. Explican la similitud entre ambos procesos."
+        },
+        {
+          "nombre": "Resolver problemas cotidianos con adiciones y sustracciones de decimales",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nResuelven problemas cotidianos que involucran adiciones y sustracciones con números decimales; por ejemplo:\na) A mediodía hubo una temperatura de 29,7 ºC que bajó en la tarde en 8,5 ºC. Calculan la temperatura de la tarde.\nb) Calculan el peso total de las maletas de una familia que quiere viajar en bus, auto o avión.\nc) Calculan la diferencia entre temperatura máxima y mínima de un día o mes.\nd) Calculan el peso total de los ingredientes principales para preparar un queque, cuyos ingredientes están dados en fracciones y números decimales; por ejemplo: 1/4 kg de mantequilla, 3/4 kg de harina, 1,2 kg de manzanas.\ne) Calculan el peso de un perro que no quiere subirse a una pesa. Se pesa el dueño del perro solo y después se pesa junto con el perro en sus brazos. Por ejemplo: El peso del dueño del perro es 72,9 kg; junto con el perro, pesan 106,4 kg."
+        },
+        {
+          "nombre": "Revisar diarios o revistas registrando gráficos",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Revisan diarios o revistas registrando la cantidad de gráficos presentes en ellos. Luego los ordenan según el tipo conocido como gráficos de barra simple o pictograma."
+        },
+        {
+          "nombre": "Unir pictograma con ciudad correspondiente",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Los dibujos representan el número de personas que practican equitación en diferentes ciudades. Unen con una línea cada dibujo con la ciudad correspondiente. (Ciudad A: 402, Ciudad B: 327, Ciudad C: 155, Ciudad D: 218, Ciudad E: 83)"
+        },
+        {
+          "nombre": "Interpretar pictograma de lluvia",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Observan, interpretan y comunican en forma escrita el siguiente pictograma que representa la cantidad de lluvia caída en regiones del norte al sur. Averiguan las precipitaciones por región y registran sobre la nube la región correspondiente. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Interpretar gráfico de calificaciones de salto largo",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nInterpretan el siguiente gráfico: Calificaciones de salto largo de un alumno obtenidas en 6 controles.\na) ¿Cuál salto fue el mejor?\nb) ¿En qué salto obtuvo la nota 4?\nc) ¿Qué más observan? (Educación Física y Salud)"
+        },
+        {
+          "nombre": "Interpretar gráfico de deporte preferido",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nREPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nInterpretan y responden las preguntas basados en el gráfico de barra: Deporte preferido de alumnos de 4º básico.\na) ¿Cuál es el deporte favorito de los 4° básicos?\nb) ¿Cuántos alumnos fueron encuestados?\nc) ¿Cuántos alumnos no practican ningún deporte?\nd) Compare el número de alumnos que juegan vóleibol con el número de alumnos que juegan handbol.\ne) ¿Cuál es el deporte que menos prefieren? (Educación Física y Salud)"
+        },
+        {
+          "nombre": "Completar gráfico de frutas favoritas",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Completan el gráfico con las siguientes informaciones. Las barras corresponden a una encuesta entre los alumnos de un colegio sobre las frutas favoritas. Manzanas barra fucsia, Plátanos barra rosada, Uvas barra blanca, Ciruelas barra gris, Naranjas barra negra.\na) Registran el tipo de fruta en la barra correspondiente.\nb) Explican la escala aplicada.\nc) Indican la cantidad que hay de cada fruta.\nd) Comparan las barras entre sí y comunican sus observaciones."
+        },
+        {
+          "nombre": "Comunicar datos de gráfico de ríos de Chile",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Longitudes aproximadas en km de algunos ríos de Chile: Loa, Elqui, Mapocho, Calle Calle, Palena, Choapa. Comunican datos extraídos del gráfico expuesto. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Interpretar pictograma de láminas coleccionadas",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Láminas coleccionadas por algunos alumnos. Cada dibujo = 20 láminas (Juan, Ana, Pía, Pablo, Sara, Pepe). Responden las siguientes preguntas:\na) ¿Cuántas coleccionaron los estudiantes en total?\nb) ¿Cuántas láminas más tiene Pablo que Ana?\nc) ¿Cuántas láminas menos tiene Pepe que Pía?"
+        },
+        {
+          "nombre": "Extraer información sobre seguridad vial",
+          "oas_asociados": [
+            27
+          ],
+          "descripcion": "Extraen y comunican informaciones relacionadas con la seguridad vial en Chile. (Historia, Geografía y Ciencias Sociales)\na) Indican, por edad, la cantidad de niños lesionados en accidentes de tránsito.\nb) Describen y comunican con sus propias palabras el desarrollo de los números de los niños lesionados en relación con la edad."
+        },
+        {
+          "nombre": "Argumentar si resultado de evento es predecible",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nArgumentan, basándose en varios ejemplos, si el resultado de un evento único es predecible o no. Luego repiten los experimentos muchas veces (10, 100, 200, ....); por ejemplo: lanzan dados, lanzan monedas, sacan bolas de distintos colores de una bolsa, encuentran la cantidad de la letra \"b\" en un párrafo, tabulan los resultados de todo el curso en una tabla de cotejo en común y lo grafican en un gráfico de barra simple."
+        },
+        {
+          "nombre": "Lanzar tapas plásticas y registrar resultados",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nTrabajan en grupos y lanzan al aire una cantidad de tapas de plástico de bebidas y registran si las tapas caen mostrando el nombre o el hueco. Representan los resultados en gráficos de barra simple frente al curso."
+        },
+        {
+          "nombre": "Repetir lanzamiento de tapas con doble cantidad",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "Repiten el lanzamiento de tapas de plástico de bebidas con el doble de la cantidad de lanzamientos, registran los resultados en una tabla de conteo y los representan en un gráfico en barras simple. Presentan las frecuencias absolutas en un gráfico de barra simple. Argumentan si hay alguna relación con el experimento anterior."
+        },
+        {
+          "nombre": "Girar ruedas de fortuna y registrar resultados",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "Giran ruedas de fortuna, registran y representan los resultados de los eventos en gráficos de barra simple."
+        },
+        {
+          "nombre": "Pesar piedras de maicillo y representar resultados",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "Pesan al azar piedras de maicillo y registran la cantidad de piedras con 0 g a 5 g / 5 g a 10 g / etc. en tablas de conteo. Representan los resultados en gráficos de barra simples."
+        },
+        {
+          "nombre": "Jugar Carrera con compras",
+          "oas_asociados": [
+            26
+          ],
+          "descripcion": "MODELAR\nExpresar, a partir de representaciones pictóricas y explicaciones dadas, acciones y situaciones cotidianas en lenguaje matemático. (OA j)\nARGUMENTAR Y COMUNICAR\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\n\nJuegan la \"Carrera con compras\" con la siguiente regla: Dos jugadores A y B corren una carrera para llegar antes a la meta. En cada turno lanzan una moneda. Si sale \"cara\", avanza un casillero y si sale \"sello\", avanza dos casilleros.\n\nCada jugador parte con 390 pesos repartidos en tres monedas de a 100 pesos, 1 de 50 pesos y 4 de a 10 pesos. En diferentes lugares se puede pasar a comprar un vehículo. La bicicleta cuesta 60 pesos, la motoneta 140 pesos, la moto 200 pesos, el automóvil 260 pesos y el súper auto 300 pesos. El jugador también puede vender los vehículos para cambiarlos por uno nuevo. En ese caso, el precio de la recompra es la mitad del de venta. Por otra parte, una bicicleta avanza el doble más rápido que a pie, la motoneta es tres veces más rápida que a pie, la moto es cuatro veces más rápido, el auto es cinco veces más rápido y el súper auto seis veces más rápido que a pie.\n\nEl juego modela situaciones de la vida diaria en las cuales se hace necesario tomar decisiones, considerando el azar que puede influir en las consecuencias de la decisión tomada."
+        },
+        {
+          "nombre": "Realizar encuestas sobre zurdos en el curso",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nRealizan encuestas en el 4° básico para saber cuántos zurdos hay en el curso. Comparan los datos recopilados con resultados publicados en internet, libros, encuestas o datos entregados por el profesor. Sacan conclusiones sobre si hay o no coincidencia entre su encuesta y los resultados \"externos\". (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Realizar encuestas sobre actividades después de clase",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "Realizan encuestas en su curso para saber qué actividades realizan después de clase. Comunican y comparan sus datos. Preparan una documentación y la representan con gráficos elaborados manualmente o usando el computador. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Realizar encuestas sobre medios de transporte al colegio",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "Realizan encuestas en su curso (o varios cursos) sobre los medios de transporte del viaje de la casa al colegio. Preparan una publicación en la revista anual o un diario mural del colegio. Colaboran con la asignatura de Ciencias Naturales en forma interdisciplinaria en temas relativos al medioambiente. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Realizar encuesta sobre duración del viaje al colegio",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "Realizan una encuesta paralela a la encuesta realizada en la actividad 3, para conocer la duración del viaje al colegio. Analizan y comparan los resultados de ambas encuestas y sacan conclusiones. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Realizar encuesta sobre consumo de frutas y verduras",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "Realizan una encuesta en su nivel del colegio para recoger datos sobre la cantidad de frutas y verduras que consumen por día. Analizan y comparan los resultados con datos publicados en fuentes oficiales. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Analizar y comparar datos y gráficos",
+          "oas_asociados": [
+            25
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\n\nAnalizan y comparan datos y gráficos obtenidos en los ejercicios 1 al 5 y sacan conclusiones."
+        },
+        {
+          "nombre": "Comparar medidas arbitrarias con cm2",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nComparan medidas arbitrarias con la unidad estandarizada de 1cm2 para medir un área y fundamentan la necesidad de tener medidas estandarizadas."
+        },
+        {
+          "nombre": "Calcular área de rectángulo contando cuadrículas",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nCalculan el área de un rectángulo, contando las cuadrículas, y lo expresan en cm2."
+        },
+        {
+          "nombre": "Indicar forma alternativa de calcular área",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nResolver problemas dados o creados. (OA a)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nIndican, en forma concreta y pictórica, de qué otra forma se puede remplazar el conteo de las cuadrículas para calcular el área de un rectángulo y lo registran en forma simbólica. (Rectángulo de 5 cm por 3 cm)"
+        },
+        {
+          "nombre": "Calcular área de cuadrado aplicando procedimiento",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nCalculan el área de un cuadrado aplicando el procedimiento usado en la actividad 3."
+        },
+        {
+          "nombre": "Calcular áreas de figuras compuestas",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Calculan áreas de figuras compuestas de rectángulos y cuadrados."
+        },
+        {
+          "nombre": "Representar rectángulos con igual área",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nRepresentan en forma pictórica y simbólica diferentes rectángulos con el área de 24 cm2."
+        },
+        {
+          "nombre": "Comparar área y perímetro de rectángulos con igual área",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nComparan el área y el perímetro de diferentes rectángulos con la misma área de, por ejemplo, 36 cm2, y comunican sus observaciones.\n\nObservaciones al docente:\nSe espera que los alumnos descubran que hay un rectángulo (que es el cuadrado) que tiene el perímetro más chico.\nPosibles rectángulos de 36 cm2: 1 cm · 36 cm (p = 74 cm), 2 cm · 18 cm (p = 40 cm), 3 cm · 12 cm (p = 30 cm), 4 cm · 9 cm (p = 26 cm), 6 cm · 6 cm (p = 24 cm, cuadrado)."
+        },
+        {
+          "nombre": "Representar metro cuadrado y estimar áreas grandes",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "REPRESENTAR\nUtilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos. (OA l)\n\nRepresentan en forma concreta el área de un metro cuadrado para obtener la percepción de su tamaño al estimar áreas grandes."
+        },
+        {
+          "nombre": "Calcular baldosas necesarias para piso de sala",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nResuelven problemas que requieren la medición de áreas; por ejemplo: calcular la cantidad de baldosas que se usaron o que se necesitan para el piso de una sala. Ejemplo: La sala tiene la forma de un rectángulo: 5 m de largo y 4 m de ancho. Las baldosas son cuadradas con el lado de 10 cm."
+        },
+        {
+          "nombre": "Rellenar cajas con objetos iguales",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\nRellenan cajas, moldes u otros recipientes con objetos iguales, como pelotas de ping-pong, gomas de borrar, sacapuntas u otros para determinar la cantidad de elementos necesarios."
+        },
+        {
+          "nombre": "Comparar medidas arbitrarias con unidad de cubo",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Comparan, para medir un volumen, medidas arbitrarias con una unidad óptima, como un cubo, y fundamentan su elección."
+        },
+        {
+          "nombre": "Medir volumen contando cubos",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Miden el volumen de las siguientes figuras, contando los cubos."
+        },
+        {
+          "nombre": "Calcular cubos faltantes para cubo completo",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\nARGUMENTAR Y COMUNICAR\nComprobar una solución y fundamentar su razonamiento. (OA g)\n\n¿Cuántos cubos faltan para que sea un cubo completo?"
+        },
+        {
+          "nombre": "Construir figuras 3D según instrucciones",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "RESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nDesafío: Siga las instrucciones para construir estas figuras 3D."
+        },
+        {
+          "nombre": "Construir diferentes figuras 3D con cubos",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "ARGUMENTAR Y COMUNICAR\nEscuchar el razonamiento de otros para enriquecerse y para corregir errores. (OA h)\nComprobar una solución y fundamentar su razonamiento. (OA g)\nRESOLVER PROBLEMAS\nTransferir los procedimientos utilizados en situaciones ya resueltas a problemas similares. (OA c)\n\nConstruyen diferentes figuras 3D con una cantidad de cubos dados, como 12, 17, 45, 53 u otros."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de adiciones y sustracciones de decimales",
+          "oas_evaluados": [
+            12
+          ],
+          "actividad_evaluacion": "OA_12: Resolver adiciones y sustracciones de decimales, empleando el valor posicional hasta la centésima, en el contexto de la resolución de problemas.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\n\nIndicadores de Evaluación:\nResuelven problemas que involucran adiciones y sustracciones con números de decimales.\n\nActividad:\nSe necesitan en una obra dos tablas de exactamente 1,12 m y 2,35 m cada una. Las tablas que venden en la barraca miden 5 m. ¿Cuántos metros sobran?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Comprenden el problema.",
+              "Identifican las operaciones que tienen que hacer: suma y resta.",
+              "Resuelven las operaciones, respetando la tabla."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de experimentos aleatorios",
+          "oas_evaluados": [
+            26
+          ],
+          "actividad_evaluacion": "OA_26: Realizar experimentos aleatorios lúdicos y cotidianos, y tabular y representar mediante gráficos de manera manual y/o con software educativo.\nOA_l: Utilizar formas de representación adecuadas, como esquemas y tablas, con un lenguaje técnico específico y con los símbolos matemáticos correctos.\nOA_n: Transferir una situación de nivel de representación a otro.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\n\nIndicadores de Evaluación:\n- Realizan repeticiones de un mismo experimento, registran los resultados obtenidos y los representan en gráficos.\n- Reconocen que los resultados de experimentos lúdicos no son predecibles.\n\nActividad:\n- Lanzan 10 tapas plásticas de bebida y anotan el resultado: nombre (n) o hueco (h).\n- Repiten el lanzamiento con series de 10, 20, 30, 40 y 50 lanzamientos e indican los resultados obtenidos de base (b) y de punta (p).\n- Representan los resultados en un gráfico de barras simple.\n- Comparan los resultados. ¿Qué les llama la atención?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Organizan y reparten de manera justa las tareas dentro su grupo.",
+              "Hacen rotaciones en las tareas.",
+              "Experimentan y registran los resultados con exactitud.",
+              "Expresan y escuchan ideas de forma respetuosa.",
+              "Eligen un gráfico adecuado.",
+              "Conjeturan una tendencia en los resultados."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de concepto de volumen",
+          "oas_evaluados": [
+            24
+          ],
+          "actividad_evaluacion": "OA_24: Demostrar que comprenden el concepto de volumen de un cuerpo.\nOA_b: Emplear diversas estrategias para resolver problemas y alcanzar respuestas adecuadas, como la estrategia de los 4 pasos: entender, planificar, hacer y comprobar.\nOA_g: Comprobar una solución y fundamentar su razonamiento.\n\nIndicadores de Evaluación:\nEstiman y comprueban el volumen de objetos irregulares, sumergiéndolos en un vaso graduado.\n\nActividad:\nMide y registra el volumen de la siguiente figura.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican la unidad de cubo para medir volumen.",
+              "Cuentan los cubos de la figura en total."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  }
+]

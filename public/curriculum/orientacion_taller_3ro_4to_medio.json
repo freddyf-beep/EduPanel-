@@ -1,0 +1,386 @@
+[
+  {
+    "nivel": "3ro Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Parte 1: Un viaje hacia mí mismo",
+      "proposito": "Este apartado está enfocado en lograr que los estudiantes logren reconocer en sí mismos aquellas variables que pueden impactar su toma de decisiones y definición de metas de vida. Entre estas variables personales se encuentran su personalidad, sus valores, intereses, capacidades y condiciones. Se busca que los estudiantes puedan hacer un ejercicio de reflexión y de análisis crítico personal, pensando en quiénes son y cómo han llegado a serlo y la manera que esto se relaciona con sus planes a futuro.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Valorar sus características personales.",
+        "Reflexionar sobre variables personales que pueden afectar el logro del proyecto de vida personal.",
+        "Compartir sus motivaciones, valores e intereses y relacionarlos con la proyección laboral.",
+        "Integración y síntesis de distintas fuentes de información para encontrar variables personales.",
+        "Auto apreciación realista de sus características personales y logros a la fecha."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 1,
+          "descripcion": "Conocer y valorar sus características personales sobre las que se construye su proyecto de vida y la manera en cómo estas se relacionan con la toma de decisiones vocacional.",
+          "indicadores": [
+            "Reflexionar acerca de sí mismo identificando capacidades, fortalezas y aspectos por mejorar.",
+            "Examinar sus características personales y reconocer cómo éstas pueden correlacionarse con determinados caminos posibles en su proyecto de vida.",
+            "Explorar e indagar sus propios intereses.",
+            "Realizar un recuento de sus características personales jerarquizando las más relevantes al momento de desarrollar un proyecto vital.",
+            "Mostrar apertura al diálogo y reflexión sobre sus variables personales siendo receptivo al aporte de adultos o pares significativos.",
+            "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando a años plazo las decisiones vocacionales que tomarán.",
+            "Reconocer la importancia de reflexionar sobre aspectos personales periódicamente."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Administración Test de Holland",
+          "oas_asociados": [1],
+          "descripcion": "En la primera clase de este taller, se sugiere empezar dando un recuento de los contenidos principales que serán abordados. Luego, se propone la administración del test de Holland, el cual es un test de intereses que permitirá iniciar el proceso de exploración por parte de los estudiantes. El docente hace una breve introducción del taller de Proyecto de Vida, enfatizando que será una oportunidad para conocerse y pensar en su futuro de manera responsable. Explicar brevemente la Teoría que hay a la base del Test de Holland. Se hace entrega del test de Holland, que los estudiantes deberán responder de manera individual (existen portales donde el test puede ser contestado de manera electrónica). Una vez que lo hayan respondido, lo deben corregir según la pauta. Se pide que los estudiantes formen grupos de tres, para que puedan conversar y discutir sobre las siguientes interrogantes: ¿De qué manera los resultados del test ayudan a conocerme mejor? ¿Qué tan suficientes serán los resultados obtenidos para definir trayectorias de vida? ¿En qué tipo de trabajos creo que puedo desarrollarme mejor? ¿Algún aspecto del resultado obtenido que me haya llamado la atención o me preocupe? Para el cierre de la clase el docente puede señalar cómo el test de Holland es un instrumento que ayuda a tomar conciencia de ciertas características de nosotros mismos, pero que no es la única fuente de información que se debe reflexionar para conocerse mejor y tomar decisiones vocacionales. Se enfatiza en la importancia de ir tomando nota y registrando los trabajos realizados a lo largo de todo el taller en el portafolio, de manera que se pueda hacer una síntesis luego de terminado el mismo. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Administración de Cuestionario de Autoconocimiento",
+          "oas_asociados": [1],
+          "descripcion": "En la segunda clase de este taller, se propone la administración de un cuestionario de autoconocimiento, de manera de seguir potenciando el proceso de exploración de las variables personales de los estudiantes. Se hace una breve introducción a la clase y se dispone el ambiente para la actividad, enfatizando que será una oportunidad para conocerse y pensar en su futuro de manera responsable. El docente explica la importancia de entender la propia historia para poder proyectarse a futuro y tomar decisiones que sean coherentes con quiénes son y con lo que quieren lograr. Se hace entrega del cuestionario, que los estudiantes deberán responder de manera individual. Se debe recalcar la importancia de que se responda de manera consciente y en silencio, ya que podrá ser una herramienta de utilidad en su proceso de toma de decisiones vocacional. El cuestionario incluye preguntas sobre datos personales, intereses, motivaciones, valores, habilidades, aspectos personales, proyección futura y contexto social. Luego, se les pide a los estudiantes que se junten en parejas y que compartan las respuestas a las preguntas número 26 y 27, generando un diálogo que permita que los estudiantes se retroalimenten entre sí. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Elaboración de Currículum Vitae",
+          "oas_asociados": [1],
+          "descripcion": "Esta actividad busca que los estudiantes logren conocer sus logros y competencias, presentándolas en el formato de currículum vitae. Esto permitirá el plasmar de manera organizada y visual algunos aspectos personales, de manera de pensarse a sí mismos en términos de sus proyecciones académicas y laborales. El saber elaborar un currículum vitae será de utilidad en el futuro, cuando se les requiera para algún trabajo o estudio. En esta actividad se les pide a los estudiantes que elaboren un Currículum Vitae, de manera que puedan visualizar su recorrido escolar y extra curricular, destacando qué aspectos le pueden servir para postular a un trabajo. Algunos de los elementos que podrían ser incluidos son: Habilidades, destrezas, experiencias, intereses. Se propone que el docente ayude a que los estudiantes logren identificar qué competencia, destreza o habilidad, se puede rescatar de las distintas actividades que presentan en el currículum. Luego, los estudiantes comparten su CV en parejas y cada uno escucha atentamente a su compañero y le aporta una reflexión, retroalimentando lo que escuchó. Posteriormente, se les pide que elaboren una carta motivacional de no más de una plana en la que se explicite por qué sería un buen candidato para estudiar una carrera o para obtener cierto trabajo, enumerando competencias, características personales, valores, motivaciones, intereses. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Valores y Proyecto de vida (Valoras UC)",
+          "oas_asociados": [1],
+          "descripcion": "Esta actividad busca que los estudiantes puedan reflexionar críticamente sobre las opciones valóricas que inspiran y sustentan sus sueños de futuro y que son base de su proyecto vital. Esto permite evaluar la coherencia que existe entre nuestros planes y el tipo de persona que deseamos llegar a ser. La actividad propuesta por Valoras UC se puede encontrar en el siguiente enlace: http://valoras.uc.cl/images/centro-recursos/estudiantes/ValoresEticaYDesarrolloSocioemocional/Herramientas/Formacion-en-valores_Valores-y-proyecto-vida.pdf"
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Reflexionar acerca de sí mismo identificando capacidades, fortalezas y aspectos por mejorar.",
+          "Examinar sus características personales y reconocer cómo éstas pueden correlacionarse con determinados caminos posibles en su proyecto de vida.",
+          "Explorar e indagar sus propios intereses.",
+          "Realizar un recuento de sus características personales jerarquizando las más relevantes al momento de desarrollar un proyecto vital.",
+          "Mostrar apertura al diálogo y reflexión sobre sus variables personales siendo receptivo al aporte de adultos o pares significativos.",
+          "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando a años plazo las decisiones vocacionales que tomarán.",
+          "Reconocer la importancia de reflexionar sobre aspectos personales periódicamente."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  },
+  {
+    "nivel": "3ro Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Parte 2: En diálogo con mis oportunidades",
+      "proposito": "El propósito de esta segunda parte del taller es que los estudiantes consideren las variables externas que pueden influir en la toma de decisión vocacional. Esto considera conocer la oferta laboral y educacional existente en el presente y reconocer la realidad personal de cada uno, analizando las posibilidades de seguir uno u otro camino. Esta información permitirá tomar una decisión informada y realista, que se ajuste a la realidad de cada uno. Es relevante que los estudiantes puedan explorar de manera autónoma y luego reflexionar junto con el apoyo del docente.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Pensar con perseverancia y proactividad en los obstáculos posibles que limiten las posibilidades de realizar lo decidido.",
+        "Informarse con responsabilidad y desde distintas fuentes los datos necesarios para un buen discernimiento.",
+        "Valorar el esfuerzo y planificación sistemática en el logro de sus objetivos para la proyección futura."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 2,
+          "descripcion": "Integrar en el proceso de decisión vocacional variables externas a la persona como oportunidades laborales y de continuación de estudios, requisitos de ingreso, ofertas y variables económicas.",
+          "indicadores": [
+            "Explorar de manera activa ocupaciones y estudios posibles desde distintas fuentes de información, en función de sus intereses, motivaciones, valores y proyección personal.",
+            "Identificar competencias, conocimientos y habilidades necesarias para ocupaciones o estudios de interés.",
+            "Conocer fuentes de información sobre becas, préstamos de estudio, condiciones laborales, que faciliten la exploración vocacional.",
+            "Analizar dificultades y satisfacciones asociadas a determinadas decisiones vocacionales, en el área personal, social y económica."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Trabajo de Investigación",
+          "oas_asociados": [2],
+          "descripcion": "Esta actividad busca que los estudiantes puedan explorar sobre opciones de continuación de estudios, considerando las variables más relevantes para ellos. Este ejercicio les permitirá tomar decisiones informadas, considerando distintas fuentes de información y teniendo una visión realista de lo que cada programa de estudio ofrece y exige. En caso de que el grupo de estudiantes o alguno de ellos haya planificado insertarse directamente en el mundo laboral, se recomienda realizar el mismo ejercicio con la exploración de la ocupación y sus características principales. Para realizar esta actividad se propone la elaboración de una tabla comparativa entre tres mallas curriculares de programas de interés, considerando contenidos, horarios, aranceles, duración de la carrera, carga académica semestral y anual, requisitos de entrada, inserción laboral, necesidad de estudios de continuación y otras variables que sean significativas para cada estudiante. En la sala de computación, de manera individual o en parejas, cada estudiante elige tres estudios universitarios o técnicos que le interese conocer más en profundidad. Luego, en grupo de 4-5 estudiantes cada uno relata lo investigado y responde una pregunta final: ¿Qué nueva información es relevante para mi toma de decisiones vocacional luego de realizada esta investigación? Finalmente, el profesor le pide a cada grupo exponer cómo fue la experiencia de investigar y ordenar la información. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Experiencia en el mundo laboral",
+          "oas_asociados": [2],
+          "descripcion": "Se le propone al estudiante buscar a algún adulto que ejerza un oficio o profesión que les interese. Solicitar seguirlo por un día y tomar notas de la experiencia. Llenar un formulario de observación que debe ser entregado posteriormente en clases y presentado al curso. En esta experiencia se trata que el estudiante se inserte en el mundo laboral desde una posición de observador, sin realizar tareas, y pueda tomar conciencia de cómo se realiza un trabajo que es de su interés. Se debe hacer entrega de las instrucciones y del formulario de observación con una semana de anticipación al menos. Las preguntas del formulario son: ¿Qué hace la persona en su trabajo? ¿Qué habilidades necesita para hacerlo bien? ¿Qué conocimientos son importantes? ¿Qué habilidades socio-emocionales utiliza en este trabajo? ¿Me proyecto haciendo algo similar? ¿Qué tendría que desarrollar en mí? También se fija un objetivo personal de desarrollo que prepare al estudiante para su decisión profesional. En la clase, se verifica que los estudiantes hayan logrado realizar la actividad y se les invita a exponer la información a modo de mesa de discusión con sus compañeros, para compartir reflexiones y conclusiones. Duración: una hora pedagógica (más el tiempo de observación externa)."
+        },
+        {
+          "nombre": "Entrevista en profundidad",
+          "oas_asociados": [2],
+          "descripcion": "Realizar una entrevista a un adulto a quién admire, relacionados con su ocupación o profesión. Se sugiere que los estudiantes puedan analizar aspectos relacionados al ejercicio de la ocupación, aspectos prácticos tales como horarios, salarios, carga laboral y aspectos personales, como balance trabajo-familia, satisfacción laboral, dificultades percibidas en ese trabajo, percepción de satisfacción laboral, entre otras. Esta actividad supone una profundización de la actividad anterior, donde los estudiantes podrán dirigir la entrevista a las interrogantes o intereses surgidos. Con al menos una semana de anticipación, se le entregan las instrucciones a los estudiantes para que realicen una entrevista abordando: aspectos de la ocupación (¿Qué hace? ¿Qué requisitos se deben cumplir para ejercer? ¿Qué habilidades, competencias o destrezas hacen falta? ¿Te permite un desarrollo profesional?), aspectos prácticos (¿Cómo es la jornada laboral? ¿Cómo es la carga laboral? ¿Qué tan difícil es conseguir trabajo? ¿Análisis inversión de tiempo y de ganancias?), y aspectos personales (¿Es un trabajo que permite realizar otras actividades? ¿Pueden mantener una vida personal y familiar saludable? ¿Te hace feliz? ¿Qué dificultades son propias de este trabajo?). Luego, los estudiantes completan un diagrama con aspectos positivos y negativos de la ocupación en las áreas de desarrollo profesional, desarrollo personal, aspectos prácticos y otros. Finalmente se realiza una reflexión grupal comentando sobre la importancia de conocer de primera fuente nuestras preferencias para entender mejor de qué se tratan y si realmente son congruentes con quiénes somos y a dónde queremos llegar en la vida. Duración: una hora pedagógica (más la realización de la entrevista externa)."
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Explorar de manera activa ocupaciones y estudios posibles desde distintas fuentes de información, en función de sus intereses, motivaciones, valores y proyección personal.",
+          "Identificar competencias, conocimientos y habilidades necesarias para ocupaciones o estudios de interés.",
+          "Conocer fuentes de información sobre becas, préstamos de estudio, condiciones laborales, que faciliten la exploración vocacional.",
+          "Analizar dificultades y satisfacciones asociadas a determinadas decisiones vocacionales, en el área personal, social y económica."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  },
+  {
+    "nivel": "3ro Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Parte 3: Toma de decisiones",
+      "proposito": "El propósito de la tercera parte del taller es desarrollar habilidades de toma de decisiones informadas y responsables, en cuanto al proyecto de vida de cada uno. Esta toma de decisiones deberá considerar los aspectos trabajados en las partes uno y dos del taller, a saber, las variables personales y las variables externas. Se busca que los estudiantes entiendan el proceso de toma de decisiones y cómo éste puede ayudarlos a lograr sus metas relacionadas con su proyecto de vida.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Ejercitar de forma autónoma la toma de decisiones mediante ejercicios retrospectivos y futuros.",
+        "Trabajar con responsabilidad en la toma de decisión como un paso importante en la construcción de un proyecto de vida.",
+        "Responsabilidad por las propias acciones y decisiones y las implicancias que tiene para sí mismo y para otros."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 3,
+          "descripcion": "Comprender el proceso de toma de decisión vocacional ejercitando el establecimiento de metas que integren sus intereses y posibilidades.",
+          "indicadores": [
+            "Conocer el proceso de toma de decisiones y aplicarlo en el desarrollo de su propio proyecto de vida.",
+            "Desarrollar habilidades de toma de decisiones informada y responsable en relación al proyecto de vida.",
+            "Identificar temas contingentes relacionados con la vida laboral y realizar un análisis crítico de los mismos.",
+            "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando las consecuencias de sus decisiones."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Proceso de toma de decisiones",
+          "oas_asociados": [3],
+          "descripcion": "Esta actividad tiene como objetivo que los estudiantes tomen consciencia de las decisiones que ya han tomado, creando una instancia que permita aprender de dicha experiencia. Esto se logrará por medio de un análisis del proceso de toma de decisiones. El docente explica el esquema de toma de decisiones (Definir problema, Imaginar opciones, Valorar consecuencias, Tomar decisión, Plan de acción, Prever resultados, Evaluar resultados), enfatizando que la toma de decisiones es un proceso continuo, no una acción aislada. Luego se realiza un ejercicio grupal con alguna situación real para construir el proceso entre todos. Posteriormente se les pide a los estudiantes que analicen una decisión que hayan tomado basándose en dicho esquema y contesten: ¿Qué paso del esquema requería una mayor profundización de la que le entregué? ¿Cómo pude haberlo hecho? ¿El considerar este esquema, cambiaría mi decisión? ¿Cómo cambiaría? ¿Busqué ayuda? ¿Fue algo positivo o negativo? Si volviera a vivir esta experiencia ¿Qué podría hacer mejor? ¿Me costó decidir? ¿Por qué sí o por qué no? ¿Qué dificultades personales y contextuales encontré en esta toma de decisión? En el cierre, el docente resalta la importancia de considerar todas estas variables al tomar decisiones relevantes para nuestra vida, conectando con las decisiones vocacionales. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Análisis de casos",
+          "oas_asociados": [3],
+          "descripcion": "Actividad grupal que busca que los estudiantes puedan analizar una decisión tomada por un tercero (caso hipotético) según el esquema de toma de decisiones. Se forman grupos de 4 o 5 estudiantes para analizar casos hipotéticos. El docente hace entrega a cada grupo un caso donde se haya tomado una decisión. Cada grupo deberá analizar dicha decisión según el esquema de toma de decisiones. Deberán idear una decisión alternativa, que pueda ser más favorable para los actores involucrados. Al finalizar, el docente dirige la reflexión para que cada grupo pueda comentar sobre el trabajo realizado, considerando qué aspecto de la toma de decisiones fue el que falló, qué alternativas serían más positivas, variables personales y contextuales que consideraron, consecuencias a futuro de las decisiones, personas a las cuales se podría pedir ayuda, etc. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Decidiendo hoy",
+          "oas_asociados": [3],
+          "descripcion": "El estudiante se sitúa en el hipotético escenario de que en este momento tiene que tomar una decisión profesional, elegir continuidad de estudios universitarios o técnicos, o entrar al mundo laboral. El docente explica que la presente actividad busca poner a los estudiantes en la situación hipotética que hoy tienen que decidir qué harán luego de terminada la escolaridad. Se alienta a que recuerden la información obtenida en las clases anteriores y sobre el proceso de toma de decisiones. En primera instancia, se les pide que analicen su opción usando el esquema de toma de decisiones. Luego, se les pide que completen un esquema que abarca cuatro áreas: Emociones (qué siento frente al tener qué decidir: miedo, alegría, inseguridad, desafío, etc.), Información (¿qué información me falta para tomar una buena decisión?), Preparación (¿qué debo hacer para acercarme a lograr la decisión?) y Alternativa (¿cuál puede ser mi segunda opción en caso de no resultar lo que he decidido?). La reflexión final pone en manifiesto que la toma de decisiones vocacional debe considerar muchas variables, y que es importante reconocer aquellos aspectos que requieren seguir trabajando para que sea un proceso coherente con el sentido de vida de cada uno. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Recopilando información",
+          "oas_asociados": [3],
+          "descripcion": "En esta actividad, se busca que los estudiantes usen la información obtenida en la actividad anterior para analizar qué aspectos necesitan profundizar para tomar una decisión vocacional consciente y coherente con ellos mismos. El docente hace referencia a la actividad realizada en la clase anterior, mostrando que esta será una instancia para pensar de manera concreta cómo pueden resolver aquellos aspectos que les dificultaron la toma de decisiones. Se les pide a los estudiantes que tomen el trabajo realizado en la clase anterior y realicen un análisis considerando las siguientes interrogantes: ¿Qué aspectos emocionales me dificultaron la toma de decisión? ¿Qué información relevante necesito para tomar una mejor decisión? ¿Qué acciones concretas puedo realizar para acercarme a la decisión? ¿Qué alternativas tengo en caso de que mi decisión inicial no haya sido la correcta para mí? Luego de contestadas dichas preguntas, los estudiantes deberán hacer un plan de acción para lograr solucionar aquellos obstáculos que encontraron en la toma de decisión. Finalmente, el docente invita a que los estudiantes compartan con los compañeros sobre las estrategias que se proponen para resolver los obstáculos en la toma de decisiones vocacional, logrando una retroalimentación entre compañeros y una síntesis de estrategias de utilidad para todos. Duración: una hora pedagógica."
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Conocer el proceso de toma de decisiones y aplicarlo en el desarrollo de su propio proyecto de vida.",
+          "Desarrollar habilidades de toma de decisiones informada y responsable en relación al proyecto de vida.",
+          "Identificar temas contingentes relacionados con la vida laboral y realizar un análisis crítico de los mismos.",
+          "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando las consecuencias de sus decisiones."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  },
+  {
+    "nivel": "4to Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Parte 1: Un viaje hacia mí mismo",
+      "proposito": "Este apartado está enfocado en lograr que los estudiantes logren reconocer en sí mismos aquellas variables que pueden impactar su toma de decisiones y definición de metas de vida. Entre estas variables personales se encuentran su personalidad, sus valores, intereses, capacidades y condiciones. Se busca que los estudiantes puedan hacer un ejercicio de reflexión y de análisis crítico personal, pensando en quiénes son y cómo han llegado a serlo y la manera que esto se relaciona con sus planes a futuro.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Valorar sus características personales.",
+        "Reflexionar sobre variables personales que pueden afectar el logro del proyecto de vida personal.",
+        "Compartir sus motivaciones, valores e intereses y relacionarlos con la proyección laboral.",
+        "Integración y síntesis de distintas fuentes de información para encontrar variables personales.",
+        "Auto apreciación realista de sus características personales y logros a la fecha."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 1,
+          "descripcion": "Conocer y valorar sus características personales sobre las que se construye su proyecto de vida y la manera en cómo estas se relacionan con la toma de decisiones vocacional.",
+          "indicadores": [
+            "Reflexionar acerca de sí mismo identificando capacidades, fortalezas y aspectos por mejorar.",
+            "Examinar sus características personales y reconocer cómo éstas pueden correlacionarse con determinados caminos posibles en su proyecto de vida.",
+            "Explorar e indagar sus propios intereses.",
+            "Realizar un recuento de sus características personales jerarquizando las más relevantes al momento de desarrollar un proyecto vital.",
+            "Mostrar apertura al diálogo y reflexión sobre sus variables personales siendo receptivo al aporte de adultos o pares significativos.",
+            "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando a años plazo las decisiones vocacionales que tomarán.",
+            "Reconocer la importancia de reflexionar sobre aspectos personales periódicamente."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Administración Test de Holland",
+          "oas_asociados": [1],
+          "descripcion": "En la primera clase de este taller, se sugiere empezar dando un recuento de los contenidos principales que serán abordados. Luego, se propone la administración del test de Holland, el cual es un test de intereses que permitirá iniciar el proceso de exploración por parte de los estudiantes. El docente hace una breve introducción del taller de Proyecto de Vida, enfatizando que será una oportunidad para conocerse y pensar en su futuro de manera responsable. Explicar brevemente la Teoría que hay a la base del Test de Holland. Se hace entrega del test de Holland, que los estudiantes deberán responder de manera individual (existen portales donde el test puede ser contestado de manera electrónica). Una vez que lo hayan respondido, lo deben corregir según la pauta. Se pide que los estudiantes formen grupos de tres, para que puedan conversar y discutir sobre las siguientes interrogantes: ¿De qué manera los resultados del test ayudan a conocerme mejor? ¿Qué tan suficientes serán los resultados obtenidos para definir trayectorias de vida? ¿En qué tipo de trabajos creo que puedo desarrollarme mejor? ¿Algún aspecto del resultado obtenido que me haya llamado la atención o me preocupe? Para el cierre de la clase el docente puede señalar cómo el test de Holland es un instrumento que ayuda a tomar conciencia de ciertas características de nosotros mismos, pero que no es la única fuente de información que se debe reflexionar para conocerse mejor y tomar decisiones vocacionales. Se enfatiza en la importancia de ir tomando nota y registrando los trabajos realizados a lo largo de todo el taller en el portafolio, de manera que se pueda hacer una síntesis luego de terminado el mismo. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Administración de Cuestionario de Autoconocimiento",
+          "oas_asociados": [1],
+          "descripcion": "En la segunda clase de este taller, se propone la administración de un cuestionario de autoconocimiento, de manera de seguir potenciando el proceso de exploración de las variables personales de los estudiantes. Se hace una breve introducción a la clase y se dispone el ambiente para la actividad, enfatizando que será una oportunidad para conocerse y pensar en su futuro de manera responsable. El docente explica la importancia de entender la propia historia para poder proyectarse a futuro y tomar decisiones que sean coherentes con quiénes son y con lo que quieren lograr. Se hace entrega del cuestionario, que los estudiantes deberán responder de manera individual. Se debe recalcar la importancia de que se responda de manera consciente y en silencio, ya que podrá ser una herramienta de utilidad en su proceso de toma de decisiones vocacional. El cuestionario incluye preguntas sobre datos personales, intereses, motivaciones, valores, habilidades, aspectos personales, proyección futura y contexto social. Luego, se les pide a los estudiantes que se junten en parejas y que compartan las respuestas a las preguntas número 26 y 27, generando un diálogo que permita que los estudiantes se retroalimenten entre sí. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Elaboración de Currículum Vitae",
+          "oas_asociados": [1],
+          "descripcion": "Esta actividad busca que los estudiantes logren conocer sus logros y competencias, presentándolas en el formato de currículum vitae. Esto permitirá el plasmar de manera organizada y visual algunos aspectos personales, de manera de pensarse a sí mismos en términos de sus proyecciones académicas y laborales. El saber elaborar un currículum vitae será de utilidad en el futuro, cuando se les requiera para algún trabajo o estudio. En esta actividad se les pide a los estudiantes que elaboren un Currículum Vitae, de manera que puedan visualizar su recorrido escolar y extra curricular, destacando qué aspectos le pueden servir para postular a un trabajo. Algunos de los elementos que podrían ser incluidos son: Habilidades, destrezas, experiencias, intereses. Se propone que el docente ayude a que los estudiantes logren identificar qué competencia, destreza o habilidad, se puede rescatar de las distintas actividades que presentan en el currículum. Luego, los estudiantes comparten su CV en parejas y cada uno escucha atentamente a su compañero y le aporta una reflexión, retroalimentando lo que escuchó. Posteriormente, se les pide que elaboren una carta motivacional de no más de una plana en la que se explicite por qué sería un buen candidato para estudiar una carrera o para obtener cierto trabajo, enumerando competencias, características personales, valores, motivaciones, intereses. Duración: dos horas pedagógicas."
+        },
+        {
+          "nombre": "Valores y Proyecto de vida (Valoras UC)",
+          "oas_asociados": [1],
+          "descripcion": "Esta actividad busca que los estudiantes puedan reflexionar críticamente sobre las opciones valóricas que inspiran y sustentan sus sueños de futuro y que son base de su proyecto vital. Esto permite evaluar la coherencia que existe entre nuestros planes y el tipo de persona que deseamos llegar a ser. La actividad propuesta por Valoras UC se puede encontrar en el siguiente enlace: http://valoras.uc.cl/images/centro-recursos/estudiantes/ValoresEticaYDesarrolloSocioemocional/Herramientas/Formacion-en-valores_Valores-y-proyecto-vida.pdf"
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Reflexionar acerca de sí mismo identificando capacidades, fortalezas y aspectos por mejorar.",
+          "Examinar sus características personales y reconocer cómo éstas pueden correlacionarse con determinados caminos posibles en su proyecto de vida.",
+          "Explorar e indagar sus propios intereses.",
+          "Realizar un recuento de sus características personales jerarquizando las más relevantes al momento de desarrollar un proyecto vital.",
+          "Mostrar apertura al diálogo y reflexión sobre sus variables personales siendo receptivo al aporte de adultos o pares significativos.",
+          "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando a años plazo las decisiones vocacionales que tomarán.",
+          "Reconocer la importancia de reflexionar sobre aspectos personales periódicamente."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  },
+  {
+    "nivel": "4to Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Parte 2: En diálogo con mis oportunidades",
+      "proposito": "El propósito de esta segunda parte del taller es que los estudiantes consideren las variables externas que pueden influir en la toma de decisión vocacional. Esto considera conocer la oferta laboral y educacional existente en el presente y reconocer la realidad personal de cada uno, analizando las posibilidades de seguir uno u otro camino. Esta información permitirá tomar una decisión informada y realista, que se ajuste a la realidad de cada uno. Es relevante que los estudiantes puedan explorar de manera autónoma y luego reflexionar junto con el apoyo del docente.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Pensar con perseverancia y proactividad en los obstáculos posibles que limiten las posibilidades de realizar lo decidido.",
+        "Informarse con responsabilidad y desde distintas fuentes los datos necesarios para un buen discernimiento.",
+        "Valorar el esfuerzo y planificación sistemática en el logro de sus objetivos para la proyección futura."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 2,
+          "descripcion": "Integrar en el proceso de decisión vocacional variables externas a la persona como oportunidades laborales y de continuación de estudios, requisitos de ingreso, ofertas y variables económicas.",
+          "indicadores": [
+            "Explorar de manera activa ocupaciones y estudios posibles desde distintas fuentes de información, en función de sus intereses, motivaciones, valores y proyección personal.",
+            "Identificar competencias, conocimientos y habilidades necesarias para ocupaciones o estudios de interés.",
+            "Conocer fuentes de información sobre becas, préstamos de estudio, condiciones laborales, que faciliten la exploración vocacional.",
+            "Analizar dificultades y satisfacciones asociadas a determinadas decisiones vocacionales, en el área personal, social y económica."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Trabajo de Investigación",
+          "oas_asociados": [2],
+          "descripcion": "Esta actividad busca que los estudiantes puedan explorar sobre opciones de continuación de estudios, considerando las variables más relevantes para ellos. Este ejercicio les permitirá tomar decisiones informadas, considerando distintas fuentes de información y teniendo una visión realista de lo que cada programa de estudio ofrece y exige. En caso de que el grupo de estudiantes o alguno de ellos haya planificado insertarse directamente en el mundo laboral, se recomienda realizar el mismo ejercicio con la exploración de la ocupación y sus características principales. Para realizar esta actividad se propone la elaboración de una tabla comparativa entre tres mallas curriculares de programas de interés, considerando contenidos, horarios, aranceles, duración de la carrera, carga académica semestral y anual, requisitos de entrada, inserción laboral, necesidad de estudios de continuación y otras variables que sean significativas para cada estudiante. En la sala de computación, de manera individual o en parejas, cada estudiante elige tres estudios universitarios o técnicos que le interese conocer más en profundidad. Luego, en grupo de 4-5 estudiantes cada uno relata lo investigado y responde una pregunta final: ¿Qué nueva información es relevante para mi toma de decisiones vocacional luego de realizada esta investigación? Finalmente, el profesor le pide a cada grupo exponer cómo fue la experiencia de investigar y ordenar la información. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Experiencia en el mundo laboral",
+          "oas_asociados": [2],
+          "descripcion": "Se le propone al estudiante buscar a algún adulto que ejerza un oficio o profesión que les interese. Solicitar seguirlo por un día y tomar notas de la experiencia. Llenar un formulario de observación que debe ser entregado posteriormente en clases y presentado al curso. En esta experiencia se trata que el estudiante se inserte en el mundo laboral desde una posición de observador, sin realizar tareas, y pueda tomar conciencia de cómo se realiza un trabajo que es de su interés. Se debe hacer entrega de las instrucciones y del formulario de observación con una semana de anticipación al menos. Las preguntas del formulario son: ¿Qué hace la persona en su trabajo? ¿Qué habilidades necesita para hacerlo bien? ¿Qué conocimientos son importantes? ¿Qué habilidades socio-emocionales utiliza en este trabajo? ¿Me proyecto haciendo algo similar? ¿Qué tendría que desarrollar en mí? También se fija un objetivo personal de desarrollo que prepare al estudiante para su decisión profesional. En la clase, se verifica que los estudiantes hayan logrado realizar la actividad y se les invita a exponer la información a modo de mesa de discusión con sus compañeros, para compartir reflexiones y conclusiones. Duración: una hora pedagógica (más el tiempo de observación externa)."
+        },
+        {
+          "nombre": "Entrevista en profundidad",
+          "oas_asociados": [2],
+          "descripcion": "Realizar una entrevista a un adulto a quién admire, relacionados con su ocupación o profesión. Se sugiere que los estudiantes puedan analizar aspectos relacionados al ejercicio de la ocupación, aspectos prácticos tales como horarios, salarios, carga laboral y aspectos personales, como balance trabajo-familia, satisfacción laboral, dificultades percibidas en ese trabajo, percepción de satisfacción laboral, entre otras. Esta actividad supone una profundización de la actividad anterior, donde los estudiantes podrán dirigir la entrevista a las interrogantes o intereses surgidos. Con al menos una semana de anticipación, se le entregan las instrucciones a los estudiantes para que realicen una entrevista abordando: aspectos de la ocupación (¿Qué hace? ¿Qué requisitos se deben cumplir para ejercer? ¿Qué habilidades, competencias o destrezas hacen falta? ¿Te permite un desarrollo profesional?), aspectos prácticos (¿Cómo es la jornada laboral? ¿Cómo es la carga laboral? ¿Qué tan difícil es conseguir trabajo? ¿Análisis inversión de tiempo y de ganancias?), y aspectos personales (¿Es un trabajo que permite realizar otras actividades? ¿Pueden mantener una vida personal y familiar saludable? ¿Te hace feliz? ¿Qué dificultades son propias de este trabajo?). Luego, los estudiantes completan un diagrama con aspectos positivos y negativos de la ocupación en las áreas de desarrollo profesional, desarrollo personal, aspectos prácticos y otros. Finalmente se realiza una reflexión grupal comentando sobre la importancia de conocer de primera fuente nuestras preferencias para entender mejor de qué se tratan y si realmente son congruentes con quiénes somos y a dónde queremos llegar en la vida. Duración: una hora pedagógica (más la realización de la entrevista externa)."
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Explorar de manera activa ocupaciones y estudios posibles desde distintas fuentes de información, en función de sus intereses, motivaciones, valores y proyección personal.",
+          "Identificar competencias, conocimientos y habilidades necesarias para ocupaciones o estudios de interés.",
+          "Conocer fuentes de información sobre becas, préstamos de estudio, condiciones laborales, que faciliten la exploración vocacional.",
+          "Analizar dificultades y satisfacciones asociadas a determinadas decisiones vocacionales, en el área personal, social y económica."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  },
+  {
+    "nivel": "4to Medio",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Parte 3: Toma de decisiones",
+      "proposito": "El propósito de la tercera parte del taller es desarrollar habilidades de toma de decisiones informadas y responsables, en cuanto al proyecto de vida de cada uno. Esta toma de decisiones deberá considerar los aspectos trabajados en las partes uno y dos del taller, a saber, las variables personales y las variables externas. Se busca que los estudiantes entiendan el proceso de toma de decisiones y cómo éste puede ayudarlos a lograr sus metas relacionadas con su proyecto de vida.",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [
+        "Ejercitar de forma autónoma la toma de decisiones mediante ejercicios retrospectivos y futuros.",
+        "Trabajar con responsabilidad en la toma de decisión como un paso importante en la construcción de un proyecto de vida.",
+        "Responsabilidad por las propias acciones y decisiones y las implicancias que tiene para sí mismo y para otros."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "META",
+          "numero": 3,
+          "descripcion": "Comprender el proceso de toma de decisión vocacional ejercitando el establecimiento de metas que integren sus intereses y posibilidades.",
+          "indicadores": [
+            "Conocer el proceso de toma de decisiones y aplicarlo en el desarrollo de su propio proyecto de vida.",
+            "Desarrollar habilidades de toma de decisiones informada y responsable en relación al proyecto de vida.",
+            "Identificar temas contingentes relacionados con la vida laboral y realizar un análisis crítico de los mismos.",
+            "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando las consecuencias de sus decisiones."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Proceso de toma de decisiones",
+          "oas_asociados": [3],
+          "descripcion": "Esta actividad tiene como objetivo que los estudiantes tomen consciencia de las decisiones que ya han tomado, creando una instancia que permita aprender de dicha experiencia. Esto se logrará por medio de un análisis del proceso de toma de decisiones. El docente explica el esquema de toma de decisiones (Definir problema, Imaginar opciones, Valorar consecuencias, Tomar decisión, Plan de acción, Prever resultados, Evaluar resultados), enfatizando que la toma de decisiones es un proceso continuo, no una acción aislada. Luego se realiza un ejercicio grupal con alguna situación real para construir el proceso entre todos. Posteriormente se les pide a los estudiantes que analicen una decisión que hayan tomado basándose en dicho esquema y contesten: ¿Qué paso del esquema requería una mayor profundización de la que le entregué? ¿Cómo pude haberlo hecho? ¿El considerar este esquema, cambiaría mi decisión? ¿Cómo cambiaría? ¿Busqué ayuda? ¿Fue algo positivo o negativo? Si volviera a vivir esta experiencia ¿Qué podría hacer mejor? ¿Me costó decidir? ¿Por qué sí o por qué no? ¿Qué dificultades personales y contextuales encontré en esta toma de decisión? En el cierre, el docente resalta la importancia de considerar todas estas variables al tomar decisiones relevantes para nuestra vida, conectando con las decisiones vocacionales. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Análisis de casos",
+          "oas_asociados": [3],
+          "descripcion": "Actividad grupal que busca que los estudiantes puedan analizar una decisión tomada por un tercero (caso hipotético) según el esquema de toma de decisiones. Se forman grupos de 4 o 5 estudiantes para analizar casos hipotéticos. El docente hace entrega a cada grupo un caso donde se haya tomado una decisión. Cada grupo deberá analizar dicha decisión según el esquema de toma de decisiones. Deberán idear una decisión alternativa, que pueda ser más favorable para los actores involucrados. Al finalizar, el docente dirige la reflexión para que cada grupo pueda comentar sobre el trabajo realizado, considerando qué aspecto de la toma de decisiones fue el que falló, qué alternativas serían más positivas, variables personales y contextuales que consideraron, consecuencias a futuro de las decisiones, personas a las cuales se podría pedir ayuda, etc. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Decidiendo hoy",
+          "oas_asociados": [3],
+          "descripcion": "El estudiante se sitúa en el hipotético escenario de que en este momento tiene que tomar una decisión profesional, elegir continuidad de estudios universitarios o técnicos, o entrar al mundo laboral. El docente explica que la presente actividad busca poner a los estudiantes en la situación hipotética que hoy tienen que decidir qué harán luego de terminada la escolaridad. Se alienta a que recuerden la información obtenida en las clases anteriores y sobre el proceso de toma de decisiones. En primera instancia, se les pide que analicen su opción usando el esquema de toma de decisiones. Luego, se les pide que completen un esquema que abarca cuatro áreas: Emociones (qué siento frente al tener qué decidir: miedo, alegría, inseguridad, desafío, etc.), Información (¿qué información me falta para tomar una buena decisión?), Preparación (¿qué debo hacer para acercarme a lograr la decisión?) y Alternativa (¿cuál puede ser mi segunda opción en caso de no resultar lo que he decidido?). La reflexión final pone en manifiesto que la toma de decisiones vocacional debe considerar muchas variables, y que es importante reconocer aquellos aspectos que requieren seguir trabajando para que sea un proceso coherente con el sentido de vida de cada uno. Duración: una hora pedagógica."
+        },
+        {
+          "nombre": "Recopilando información",
+          "oas_asociados": [3],
+          "descripcion": "En esta actividad, se busca que los estudiantes usen la información obtenida en la actividad anterior para analizar qué aspectos necesitan profundizar para tomar una decisión vocacional consciente y coherente con ellos mismos. El docente hace referencia a la actividad realizada en la clase anterior, mostrando que esta será una instancia para pensar de manera concreta cómo pueden resolver aquellos aspectos que les dificultaron la toma de decisiones. Se les pide a los estudiantes que tomen el trabajo realizado en la clase anterior y realicen un análisis considerando las siguientes interrogantes: ¿Qué aspectos emocionales me dificultaron la toma de decisión? ¿Qué información relevante necesito para tomar una mejor decisión? ¿Qué acciones concretas puedo realizar para acercarme a la decisión? ¿Qué alternativas tengo en caso de que mi decisión inicial no haya sido la correcta para mí? Luego de contestadas dichas preguntas, los estudiantes deberán hacer un plan de acción para lograr solucionar aquellos obstáculos que encontraron en la toma de decisión. Finalmente, el docente invita a que los estudiantes compartan con los compañeros sobre las estrategias que se proponen para resolver los obstáculos en la toma de decisiones vocacional, logrando una retroalimentación entre compañeros y una síntesis de estrategias de utilidad para todos. Duración: una hora pedagógica."
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Conocer el proceso de toma de decisiones y aplicarlo en el desarrollo de su propio proyecto de vida.",
+          "Desarrollar habilidades de toma de decisiones informada y responsable en relación al proyecto de vida.",
+          "Identificar temas contingentes relacionados con la vida laboral y realizar un análisis crítico de los mismos.",
+          "Reflexionar sobre la vida que quieren llevar en el futuro, proyectando las consecuencias de sus decisiones."
+        ]
+      },
+      "ejemplos_evaluacion": []
+    }
+  }
+]

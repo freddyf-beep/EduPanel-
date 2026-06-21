@@ -1,0 +1,1823 @@
+[
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "Se espera que, en esta unidad, los estudiantes inicien el trabajo con múltiplos de números naturales, con números primos y compuestos, y que los utilicen en la resolución de problemas que involucran estos conceptos. También se inician en el trabajo con razones y porcentajes, conceptos que les permitirán comprender en forma más profunda las fracciones y los decimales, y que les proveerán herramientas para resolver problemas en contextos cotidianos, en particular del área económica. Se extiende el trabajo de fracciones propias a todo tipo de fracciones positivas y a los números mixtos. Se espera que los alumnos comprendan las fracciones positivas, los números mixtos y los números decimales por medio de adiciones y sustracciones con fracciones, decimales y números mixtos, con multiplicaciones y divisiones entre decimales y números naturales, con representaciones de ellos en cuadrículas, en el círculo y en la recta numérica, en el contexto de la resolución de problemas.",
+      "conocimientos_previos": [
+        "Descomposición de números.",
+        "Concepto de fracción propia.",
+        "Adiciones y sustracciones con fracciones propias.",
+        "Concepto de decimal.",
+        "Adiciones y sustracciones de fracciones propias y decimales."
+      ],
+      "palabras_clave": [
+        "Número primo",
+        "múltiplo",
+        "pictórico",
+        "simbólico",
+        "razón",
+        "porcentaje",
+        "números mixtos",
+        "fracciones impropias"
+      ],
+      "conocimientos": [
+        "Determinación de múltiplos.",
+        "Descomposición en factores primos.",
+        "Concepto de razón.",
+        "Concepto de porcentaje.",
+        "Adiciones y sustracciones con fracciones.",
+        "Caracterización de números mixtos.",
+        "Multiplicación de números naturales por decimales.",
+        "División de decimales por números naturales."
+      ],
+      "habilidades": [
+        "Reconocer e identificar los datos esenciales de un problema matemático.",
+        "Resolver problemas, aplicando variedades de estrategias como la estrategia de los cuatro pasos.",
+        "Comunicar de manera escrita y verbal razonamientos matemáticos.",
+        "Aplicar, seleccionar, modificar y evaluar modelos que involucren las cuatro operaciones.",
+        "Usar representaciones y estrategias para comprender problemas e información matemática."
+      ],
+      "actitudes": [
+        "Abordar de manera flexible y creativa la búsqueda de soluciones a problemas.",
+        "Manifestar una actitud positiva frente a sí mismo y sus capacidades.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Demostrar que comprende los factores y múltiplos: determinando los múltiplos y factores de números menores de 100; identificando números primos y compuestos; resolviendo problemas que involucran múltiplos.",
+          "indicadores": [
+            "Explican por medio de ejemplos qué es un múltiplo de un número e identifican múltiplos en secuencias numéricas.",
+            "Determinan múltiplos de números.",
+            "Determinan todos los factores de un número dado.",
+            "Explican qué es un número primo y dan ejemplos.",
+            "Identifican los factores de un número dado y explican la estrategia usada. Por ejemplo, diagramas, árboles, división por números primos.",
+            "Explican qué es un número compuesto y dan ejemplos.",
+            "Calculan el mínimo común múltiplo entre números naturales.",
+            "Resuelven problemas que involucran factores y múltiplos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Realizar cálculos que involucren las cuatro operaciones en el contexto de la resolución de problemas, utilizando la calculadora en ámbitos superiores a 10 000.",
+          "indicadores": [
+            "Estiman la solución de un problema que involucra sumas y restas y verifican la estimación, resolviéndolo.",
+            "Estiman la solución de un problema que involucra multiplicaciones y divisiones y verifican la estimación, resolviéndolo.",
+            "Determinan lo razonable de una respuesta para un problema.",
+            "Realizan cálculos con la calculadora en el contexto de la resolución de problemas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Demostrar que comprende el concepto de razón de manera concreta, pictórica, simbólica y/o usando software educativo.",
+          "indicadores": [
+            "Dan una representación pictórica de una razón.",
+            "Describen la razón de una representación concreta o pictórica de ella.",
+            "Expresan una razón de múltiples formas, como 3:5, o 3 es a 5.",
+            "Identifican y describen razones en contextos reales.",
+            "Explican la razón como parte de un todo. Por ejemplo, para un conjunto de 6 autos y 8 camionetas, explican las razones: 6:8, 6:14, 8:14.",
+            "Identifican razones equivalentes en el contexto de la resolución de problemas.",
+            "Resuelven problemas que involucran razones, usando tablas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Demostrar que comprende el concepto de porcentaje de manera concreta, pictórica, simbólica y/o usando software educativo.",
+          "indicadores": [
+            "Explican el porcentaje como una parte de 100.",
+            "Explican el porcentaje como una razón de consecuente 100.",
+            "Usan materiales concretos o representaciones pictóricas para ilustrar un porcentaje.",
+            "Expresan un porcentaje como una fracción o un decimal.",
+            "Identifican y describen porcentajes en contextos cotidianos, y lo registran simbólicamente.",
+            "Resuelven problemas que involucran porcentajes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Demostrar que comprende las fracciones y números mixtos: identificando y determinando equivalencias entre fracciones impropias y números mixtos, usando material concreto y representaciones pictóricas de manera manual y/o software educativo; representando estos números en la recta numérica.",
+          "indicadores": [
+            "Demuestran, usando modelos, que una fracción impropia representa un número mayor que 1.",
+            "Expresan fracciones impropias como números mixtos.",
+            "Expresan números mixtos como fracciones impropias.",
+            "Identifican en la recta numérica fracciones impropias y los números mixtos correspondientes.",
+            "Ubican un conjunto de fracciones, que incluyan fracciones impropias y números mixtos, en la recta numérica y explican la estrategia usada para determinar la posición.",
+            "Identifican fracciones equivalentes en la recta numérica.",
+            "Resuelven problemas relativos a la identificación de fracciones y números mixtos en la recta numérica."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Resolver adiciones y sustracciones de fracciones propias e impropias y números mixtos con numeradores y denominadores de hasta dos dígitos.",
+          "indicadores": [
+            "Suman y restan fracciones de manera pictórica.",
+            "Suman y restan fracciones mentalmente, amplificando o simplificando.",
+            "Suman y restan fracciones de manera escrita, amplificando o simplificando.",
+            "Explican procedimientos para sumar números mixtos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Demostrar que comprende la multiplicación y la división de decimales por números naturales de un dígito, múltiplos de 10 y decimales hasta la milésima de manera concreta, pictórica y simbólica.",
+          "indicadores": [
+            "Multiplican un número decimal hasta el décimo por un número natural: de manera pictórica, transformando a fracción de denominador 10 el decimal; transformando a fracción de denominador 10 el decimal y expresando la multiplicación como suma de fracciones; usando estimaciones para ubicar la coma. Por ejemplo, 2,3 · 7 es aproximadamente 16, y como 23 · 7 = 161 entonces 2,3 · 7 = 16,1.",
+            "Dividen, por escrito, un número decimal hasta el décimo por un número natural, usando estimaciones para ubicar la coma. Por ejemplo, para dividir 3,5:5, estiman que el resultado está entre 0 y 1 y como 35:5=7, entonces 3,5:7=0,7.",
+            "Explican estrategias para multiplicar y dividir un número decimal hasta el milésimo por un número natural."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Resolver problemas rutinarios y no rutinarios que involucren adiciones y sustracciones de fracciones propias, impropias, números mixtos o decimales hasta la milésima.",
+          "indicadores": [
+            "Identifican qué operaciones son necesarias para resolver un problema y lo resuelven.",
+            "Interpretan números representados como fracciones o decimales en el contexto de problemas.",
+            "Suman y restan las fracciones o los decimales involucrados en el problema.",
+            "Verifican si el número decimal o la fracción obtenida como resultado es pertinente con el enunciado del problema."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Explicación de números primos y compuestos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Explican por medio de ejemplos: qué es un número primo; qué es un número compuesto. A continuación: dan las diferencias que existen entre números primos y compuestos; indagan en libros o en internet acerca de por qué el número 1 no es primo y argumentan respecto de las indagaciones realizadas."
+        },
+        {
+          "nombre": "Preguntas sobre números primos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Responden preguntas acerca del concepto de número primo, como: ¿será cierto que todos los números impares son primos?; ¿existirá algún número primo terminado en 0?; ¿será cierto que todos los números primos son impares?; ¿será cierto que todos los números terminados en 1 son primos? Justifican sus respuestas y argumentan acerca de ellas."
+        },
+        {
+          "nombre": "Identificación de números primos en tabla de 100",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Identifican números primos de una y dos cifras y lo justifican. Por ejemplo, colorean los números primos en la tabla del 1 al 100 y justifican los números coloreados."
+        },
+        {
+          "nombre": "Descomposición en factores primos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Realizan descomposiciones en forma multiplicativa y prima de números naturales. Por ejemplo: descomponen de una manera multiplicativa el número 24; descomponen de dos maneras multiplicativas el número 12; descomponen de tres maneras multiplicativas el número 36; descomponen 15 en factores primos; descomponen 12 en tres factores primos; descomponen 24 en cuatro factores primos; descomponen en factores primos el número 60; explican por qué un número par distinto a 2 se puede descomponer en más de un factor distinto a 1; explican cómo encontrar todas las descomposiciones multiplicativas posibles de un número, usando la descomposición en factores primos."
+        },
+        {
+          "nombre": "Problemas con números primos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Resuelven problemas que involucran el concepto de número primo. Por ejemplo: en una clase de 37 estudiantes, el profesor propone formar grupos con igual cantidad de integrantes. ¿Podrá hacerlo?, ¿por qué?; se desea descomponer un número de dos cifras en dos sumandos. ¿Se puede hacer siempre esa descomposición?"
+        },
+        {
+          "nombre": "Exploración de múltiplos con material concreto",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Exploran múltiplos, usando material concreto. Por ejemplo, frente a la situación: En una estación, el bus del recorrido A sale cada 8 minutos, mientras que el bus del recorrido B sale cada 12 minutos. Si salen al mismo tiempo, ¿después de cuántos minutos se vuelven a encontrar buses del recorrido A y del recorrido B? Cortan tiras de papel de ancho 1 cm y largo 8 cm y tiras de 1 cm de ancho y 12 cm de largo; colocan tiras de 6 cm y de 12 cm, una al lado de la otra de manera horizontal con inicio común; encuentran lugares donde los extremos de las tiras estén alineados y registran los centímetros de encuentro."
+        },
+        {
+          "nombre": "Cálculo de múltiplos de números",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Calculan múltiplos de números. Por ejemplo: calculan los múltiplos de 2 y 3; calculan los múltiplos de 6, 9 y 15."
+        },
+        {
+          "nombre": "Operaciones con múltiplos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Realizan operaciones con los múltiplos de números. Por ejemplo: calculan la intersección entre los múltiplos de 12 y 18; calculan la intersección entre los múltiplos de 5, 15 y 20."
+        },
+        {
+          "nombre": "Cálculo del mínimo común múltiplo",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Calculan el mínimo común múltiplo de dos números naturales. Por ejemplo, calculan el mínimo común múltiplo entre 6 y 8. Con este propósito: determinan los conjuntos de múltiplos de 6 y de los múltiplos de 8; determinan la intersección entre los conjuntos de los múltiplos de 6 y de 8; determinan el elemento menor de la intersección anterior."
+        },
+        {
+          "nombre": "Explicación del concepto de múltiplo",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Explican el concepto de un múltiplo: calculando los múltiplos de 18 y verificando que esos múltiplos son múltiplos de 6; verificando que el conjunto de los múltiplos de un número par son números pares; verificando que el conjunto del 1 es el conjunto de los números naturales."
+        },
+        {
+          "nombre": "Problemas sobre múltiplos en contextos cotidianos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Resuelven problemas en contextos matemáticos y cotidianos acerca de múltiplos de números. Por ejemplo: ¿cuál es la suma entre el quinto múltiplo de 3 y el sexto múltiplo de 5?; el octavo múltiplo de un número es 48, ¿cuál es el tercer múltiplo de este número?; una persona debe tomar 3 medicamentos: el primero cada 3 horas, el segundo cada 4 horas y el tercero cada 6 horas. Si tomó los tres medicamentos simultáneamente a las 8:00 A.M., ¿a qué hora volverá a tomar los tres medicamentos juntos?"
+        },
+        {
+          "nombre": "Identificación de operaciones para resolver problemas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Identifican las operaciones necesarias para resolver problemas. Por ejemplo: Macarena recién ha empezado a trabajar y desea saber la cantidad de dinero que tendrá en 30 años de cotizaciones en su AFP para su jubilación. Ella tiene un sueldo de $600 000, y la décima parte de esa cantidad es para esas cotizaciones; una empresa fabrica 100 pares de zapatos de distintos modelos diariamente. Se trabaja de lunes a viernes. Si vende cada par de zapatos en promedio a $15 000, ¿qué operación hay que hacer para saber la cantidad de dinero que recibe la empresa por concepto de venta en un año?"
+        },
+        {
+          "nombre": "Determinación de incógnitas en problemas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Determinan qué se quiere resolver en un problema cuando se conocen las operaciones del problema. Por ejemplo, un vendedor de una automotriz vende 10 autos de un tipo en $120 990 000. Realiza las operaciones: Primero resuelve 120 990 000 : 10. A continuación multiplica este resultado por 2. ¿Qué obtiene el vendedor con estos cálculos? Comunican sus resultados y evalúan las estrategias de sus compañeros."
+        },
+        {
+          "nombre": "Evaluación de estrategias para resolver problemas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Frente a más de una estrategia para resolver un problema, determinan cuál es la adecuada, resolviendo. Por ejemplo, ¿cuál de las dos estrategias es más razonable de aplicar para calcular la cantidad de pasajeros que se trasladan diariamente por la línea 1 del metro de Santiago? Estrategia 1: Calcular el promedio de las personas que caben en un carro del metro y multiplicarlo por la cantidad de trenes que transitan diariamente por esa línea. Estrategia 2: Calcular el promedio de las personas que caben en un carro del metro, multiplicarlo por la cantidad de carros que tiene un tren y multiplicar esa cantidad por el número de trenes que transitan diariamente por esa línea."
+        },
+        {
+          "nombre": "Formulación de estrategias para problemas con operaciones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Formulan estrategias para resolver problemas que involucren cálculos con adiciones, sustracciones, multiplicaciones o divisiones. Por ejemplo, una estrategia para resolver el siguiente problema: Hace 2 años Marta ganó $350 000 000 en el Kino. Si invirtió su dinero en un negocio que le da ganancias por $4 000 000 mensualmente ¿cuánto dinero tiene hoy en total?"
+        },
+        {
+          "nombre": "Uso de la calculadora en problemas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Utilizan la calculadora para realizar cálculos en contextos de resolución de problemas. Por ejemplo, para determinar en cuánto ha variado la población de América en dos décadas consecutivas."
+        },
+        {
+          "nombre": "Problemas matemáticos con calculadora",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Resuelven problemas matemáticos, usando la calculadora. Por ejemplo, encuentran, utilizando la calculadora, la suma de los números que satisfacen las siguientes condiciones: la suma entre el número mayor que se puede formar con las cifras 9, 9, 5, 6, 0, 4, 2 y el número menor que se pude formar con esas cifras; la multiplicación entre el número mayor que se puede formar con las cifras 9, 8, 8, 6, 0, 5, 1 y el número menor que se pude formar con esas cifras; si a 900 500 345 le quito un número, entonces obtengo 245 por 1 009, ¿cuál es el número?"
+        },
+        {
+          "nombre": "Estimaciones en resolución de problemas",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Realizan estimaciones en el contexto de la resolución de problemas. Por ejemplo, estiman la distancia en kilómetros que hay entre la Tierra y el Sol, sabiendo que hay 8 minutos luz entre ambos y que 1 segundo luz corresponde a 300 000 kilómetros. Utilizan la calculadora para verificar su estimación. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Explicación de razones como parte de un todo",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Explican razones como parte de un todo. Por ejemplo: explican la razón 4 : 2 por medio de una situación que involucre tazas de harina y tazas de leche; explican la razón 4 : 6 por medio de una situación que involucre horas de clases de Ciencias Naturales y Matemática en el colegio."
+        },
+        {
+          "nombre": "Identificación de razones en contextos diversos",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Dan razones en contextos diversos. Por ejemplo, dan razones entre el número de instrumentos musicales que tiene una banda compuesta por 6 tambores, 9 trompetas, 12 clarinetes, 6 flautas y 4 saxofones. (Música)"
+        },
+        {
+          "nombre": "Representación pictórica de razones",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Representan de manera pictórica las siguientes razones: 2 : 3; 3 : 4; 4 : 6."
+        },
+        {
+          "nombre": "Comprensión del concepto de razón",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Demuestran comprensión acerca del concepto de razón, respondiendo preguntas como: ¿es la razón 2 : 5 lo mismo que la razón 5 : 2?; en un queque, por cada dos tazas de harina hay una taza de leche; si se desea hacer un queque más grande de manera que se triplique la cantidad de harina, ¿cuántas tazas de leche hay que agregar para que se mantenga la razón? (Tecnología)"
+        },
+        {
+          "nombre": "Determinación de razones equivalentes",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Determinan razones equivalentes. Por ejemplo, en una canasta hay 3 manzanas, 4 naranjas, 9 peras y 12 plátanos. En este conjunto de frutas determinan: la razón que hay entre manzanas y naranjas; una razón entre las otras frutas que sea equivalente a la que hay entre manzanas y naranjas."
+        },
+        {
+          "nombre": "Representación de razones equivalentes",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Representan razones equivalentes. Por ejemplo, en una cuadrícula representan una razón equivalente a 2 : 5."
+        },
+        {
+          "nombre": "Completar tablas de razones",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Completan tablas de valores que están en una razón dada. Por ejemplo, conociendo que una persona se desplaza 2 kilómetros cada 20 minutos, completan la tabla correspondiente. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Resolución de problemas con razones",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Resuelven problemas que involucran razones. Por ejemplo: en un parque de diversiones ingresan 30 personas cada 2 minutos, ¿cuántas personas ingresan al parque en 1 hora?; en una sala de cine se proyectan tres películas cada cinco horas. Si el cine proyecta películas durante 15 horas, ¿cuántas películas proyecta diariamente?"
+        },
+        {
+          "nombre": "Explicación del significado de porcentaje",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Explican el significado de porcentaje a través de una actividad sobre libros de matemática en una biblioteca. Una biblioteca tiene 100 libros de matemática de distintas áreas, cuya cantidad está dada por colores. Expresan como razón la cantidad de libros de cada área respecto del total de libros; escriben el porcentaje que representa la cantidad de libros de cada área respecto del total de libros; explican el porcentaje de libros de cada una de estas áreas por medio de las razones expresadas."
+        },
+        {
+          "nombre": "Relación entre porcentajes, fracciones y decimales",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Relacionan porcentajes con fracciones y decimales. Por ejemplo, en cuadrículas de 100, escriben el porcentaje, el decimal y la fracción correspondiente a la región coloreada."
+        },
+        {
+          "nombre": "Escritura de porcentajes como fracción y decimal",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Escriben los siguientes porcentajes como fracción y decimal, haciendo representaciones en cuadrículas: 25%; 75%; 35%; 55%."
+        },
+        {
+          "nombre": "Porcentajes como fracción y decimal en mínima expresión",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Escriben los siguientes porcentajes como fracción y decimal en su mínima expresión, representándolos en cuadrículas: 72%; 45%; 20%; 40%."
+        },
+        {
+          "nombre": "Representación de porcentajes en la recta numérica",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Representan en la recta numérica porcentajes y sus fracciones y decimales correspondientes. Por ejemplo, en el segmento de la recta que se ha dividido en cuatro partes iguales, representan los porcentajes 25%, 50% y 75%, las fracciones 1/4, 1/2 y 3/4 y los decimales 0,25, 0,5 y 0,75. Sacan conclusiones respecto de estas representaciones."
+        },
+        {
+          "nombre": "Cálculo del porcentaje de un número",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Explican con ejemplos cómo se encuentra el porcentaje de un número. Por ejemplo: como se encuentra el 25% de 80; como se encuentra el 20% de 60; como se encuentra el 75% de 12."
+        },
+        {
+          "nombre": "Expresión de fracciones en porcentaje",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Acerca del concepto de porcentaje contestan preguntas como: como 2/4 = 1/2 y como 1/2 equivale al 50%, ¿cómo expresa 1/4 en porcentaje?; como 3/5 = 60/100, ¿cómo expresa 1/5 en porcentaje?"
+        },
+        {
+          "nombre": "Identificación de porcentajes en contextos cotidianos",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Identifican y describen porcentajes en contextos cotidianos. Por ejemplo: identifican porcentajes en publicidades en diarios y revistas; describen porcentajes en informaciones económicas que aparecen en noticiarios de la televisión. (Historia, Geografía y Ciencias Sociales)"
+        },
+        {
+          "nombre": "Relación entre fracciones impropias y números mixtos",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Explican con ejemplos la relación que hay entre fracciones impropias y números mixtos. Por ejemplo, determinando el número de rosado, de gris y de fucsia que está representado en cuadrículas."
+        },
+        {
+          "nombre": "Conversión entre fracciones impropias y números mixtos",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Escriben fracciones impropias como números mixtos, y números mixtos como fracción y lo representan en forma pictórica. Por ejemplo: utilizan el hecho que 2 1/5 corresponde a 2 enteros y 1/5, es decir, que corresponde a 2 + 1/5, para expresar este número mixto como fracción impropia. Utilizando la estrategia anterior: escriben como número mixto 4/3; escriben como número mixto 5/2; escriben 3 1/3 como fracción; escriben 1 1/3 como fracción."
+        },
+        {
+          "nombre": "Expresión de fracciones como números mixtos usando división",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Calculan el cociente y el resto de divisiones como 12 : 7 y 9 : 2, y utilizan estos números para expresar como número mixto las fracciones 12/7 y 9/2, explicando el razonamiento seguido."
+        },
+        {
+          "nombre": "Ubicación de fracciones impropias y números mixtos en la recta numérica",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Ubican fracciones impropias y números mixtos en la recta numérica, explicando estrategias empleadas, haciendo demostraciones y justificaciones. Por ejemplo: ubican fracciones impropias como 3/2 y 9/4 en la recta numérica y explican la estrategia usada; ubican números mixtos como 1 1/4 y 2 1/3 en la recta numérica y explican la estrategia usada."
+        },
+        {
+          "nombre": "Problemas de ubicación en la recta numérica",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Resuelven problemas acerca de ubicaciones de fracciones impropias y números mixtos en la recta numérica. Por ejemplo: en el tramo de la recta, la distancia entre 1 y 2 es cuatro veces la distancia entre A y 2, y la distancia entre B y 2 es la mitad de la distancia que hay entre 2 y 3. ¿Qué números están representados en A y en B? Se incluyen diversos problemas de ubicación, comparación y equivalencia de fracciones en la recta numérica."
+        },
+        {
+          "nombre": "Suma de números mixtos con igual denominador",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Expresan números mixtos en adiciones de fracciones de igual denominador. Por ejemplo: expresan 2 1/6 en adiciones de 1/6; expresan 3 2/3 en adiciones de 1/3; expresan 4 2/5 en adiciones de 2/5. Suman de manera pictórica y simbólica números mixtos cuya parte fraccionaria tiene el mismo denominador. Por ejemplo: 2 1/2 + 3 1/2; 3 1/4 + 1 3/4 + 2 1/4."
+        },
+        {
+          "nombre": "Suma y resta de números mixtos con distinto denominador",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Suman y restan números mixtos con parte fraccionaria de igual y distinto denominador, convirtiendo la parte fraccionaria a fracciones de igual denominador. Por ejemplo: 2 1/2 + 2 1/4; 1 1/3 + 3 2/4 + 2 2/3; 5 1/3 + 4 1/2 - 3 2/3; 1 3/4 + 3 2/5 - 2 1/2."
+        },
+        {
+          "nombre": "Estimación de sumas de números mixtos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Comprueban estimaciones de sumas de números mixtos. Por ejemplo: Angélica mezcla 2 1/2 tazas de harina con 1 1/3 tazas de azúcar para hacer un queque. ¿Cuántas tazas de la mezcla estima usted que tiene Angélica? Angélica estima que tiene 4 tazas de mezcla. Usan la recta numérica para estimar que este resultado es correcto. (Tecnología)"
+        },
+        {
+          "nombre": "Cálculo mental de sumas y restas de fracciones",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Calculan mentalmente sumas y restas de fracciones, transformando las fracciones a fracciones equivalentes del mismo numerador de manera pictórica y amplificando. Por ejemplo: 12/3 + 9/4; 2/3 + 5/4; 7/3 + 7/4 + 3/2. También calculan mentalmente sumas y restas convirtiendo a fracciones equivalentes de denominador igual, simplificando o amplificando, como 2/3 - 2/6 y 2/5 + 4/10 - 3/15."
+        },
+        {
+          "nombre": "Suma y resta de fracciones impropias como números mixtos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Suman y restan fracciones impropias, transformándolas a números mixtos. Por ejemplo: 5/3 - 7/6; 7/5 + 12/10 - 31/15."
+        },
+        {
+          "nombre": "Operaciones combinadas con fracciones y números mixtos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Resuelven operaciones combinadas entre fracciones propias, impropias y números mixtos, transformando las fracciones y números mixtos involucrados en fracciones de igual denominador. Por ejemplo: 2 1/3 + 12/9 - 4/3; 7/4 - 1 1/6 + 2 1/3. También transformando las fracciones involucradas en números mixtos: 3 2/3 - 2 1/4 + 7/2; 4 1/5 + 8/3 - 10/4."
+        },
+        {
+          "nombre": "Desafío de suma y resta en recta numérica",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Desafío: El tramo entre 0 y 2 de la recta numérica se ha dividido en tres partes iguales, el tramo entre 2 y 4 se ha dividido en 4 partes iguales, y el tramo entre 4 y 6 se ha dividido en dos partes iguales. Representan una estimación de A + B en el tramo y encuentran el valor exacto de la suma; representan una estimación de A + C - B y encuentran el valor exacto."
+        },
+        {
+          "nombre": "Multiplicación de enteros por decimales con material concreto",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven multiplicaciones de enteros por decimales, usando material concreto y empleando la recta numérica: 25 · 0,4; 8 · 0,2; 27 · 0,3; 5 · 1,4. Describiendo el procedimiento usado."
+        },
+        {
+          "nombre": "División de decimales por enteros con recta numérica",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven divisiones entre decimales y enteros, empleando la recta numérica: 0,4 : 4; 0,8 : 100. Explican el procedimiento usado."
+        },
+        {
+          "nombre": "División de decimales por múltiplos de 10",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven las siguientes divisiones por múltiplos de 10: 1,8 : 10; 0,1 : 100. Respecto de estas divisiones, explican el procedimiento seguido en la recta numérica."
+        },
+        {
+          "nombre": "Divisiones con paréntesis",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven divisiones, resolviendo los paréntesis: (1,8 : 2) : 9; (5,4 : 6) : 10. Argumentan acerca de por qué se debe resolver primero los paréntesis, y qué pasaría en esas divisiones si no hubiera paréntesis."
+        },
+        {
+          "nombre": "Desafío de operaciones con decimales en recta numérica",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Desafío: El tramo de la recta está dividido en 16 partes iguales, donde A, B, C, D están expresados como decimales. Usando el tramo, explican por qué: B : A = B; C está contenido 1,5 veces en D. Determinan cuáles afirmaciones son verdaderas o falsas: C : A = 0,6; B : C = 0,375; (A : C) : D = 0,7."
+        },
+        {
+          "nombre": "Multiplicación de enteros por decimales e intercambio de estrategias",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven multiplicaciones de enteros por decimales: 250 · 0,40; 50 · 0,24. Comunicando sus procedimientos a sus compañeros e intercambiando estrategias."
+        },
+        {
+          "nombre": "Regularidades en multiplicaciones de decimales",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Identifican regularidades en multiplicaciones: 1 · 0,1; 10 · 0,1; 100 · 0,1; 1 · 0,01; 10 · 0,01; 100 · 0,01; 1 · 0,001; 10 · 0,001; 100 · 0,001. Usando los resultados, calculan: 0,5 · 0,75; 0,25 · 0,032."
+        },
+        {
+          "nombre": "Divisiones de decimales en recta numérica",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El tramo entre 0 y 1 se ha dividido en 12 partes iguales, donde A, B, D están expresados como decimales. Identifican divisiones de números decimales por números naturales, usando A, B y C, de manera que estas operaciones tengan resultados con cifras hasta la milésima, comunicando el razonamiento."
+        },
+        {
+          "nombre": "Problemas rutinarios con adiciones y sustracciones de fracciones",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Resuelven problemas rutinarios usando adiciones y sustracciones de números mixtos en contextos cotidianos. Por ejemplo: en una convivencia del colegio Luis consumió 1 litro y 1/4 de bebida, mientras que Juan consumió 1/8 de bebida más que Luis. ¿Cuánto consumió Juan?; Camila y Javiera compraron tres chocolates, Javiera consumió 1 3/4 chocolate y Camila 1 1/8. ¿Cuánto chocolate quedó sin consumir?"
+        },
+        {
+          "nombre": "Problemas rutinarios con decimales en contextos cotidianos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Resuelven problemas rutinarios relativos a adiciones y sustracciones de decimales hasta la milésima en contextos cotidianos. Por ejemplo: Patricio compra en un supermercado 0,75 kilogramos de pan, 0,275 kilogramos de queso y 0,432 kilogramos de jamón. ¿Cuánto pesan estos tres productos?; Cristián, alumno de 6° básico, mide 0,2 metros más que Camilo. Si Camilo mide 1 metro y 62 centímetros, ¿cuánto mide Cristián?"
+        },
+        {
+          "nombre": "Desafío con fracciones y decimales en compras",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Desafío: Resuelven problemas rutinarios relativos a adiciones y sustracciones de fracciones propias o impropias y decimales hasta la milésima en contextos cotidianos. Por ejemplo, en un supermercado Bernardita compró 0,875 kilogramos de jamón de una marca y 456 gramos de jamón de otra marca, además compró 50 gramos de queso de una marca más que los 0,775 kilogramos que compró de otra marca. ¿Cuántos gramos de queso compró menos que de jamón?"
+        },
+        {
+          "nombre": "Problemas matemáticos con fracciones y decimales",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Resuelven problemas rutinarios relativos a adiciones y sustracciones de fracciones propias o impropias y decimales en contextos matemáticos. Por ejemplo: ¿qué número natural agregaría al numerador y quitaría al denominador de la fracción 2/15 para que quede igual a una fracción impropia que esté entre 13/3 y 5?; ¿qué fracción agregaría a 0,235 para que quede 0,001 unidades mayor que 0,245?"
+        },
+        {
+          "nombre": "Problema de ampliación con microscopio",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Leen un párrafo sobre la observación de una hormiga en el microscopio en clase de Ciencias y resuelven problemas: Si la hormiga mide de largo aproximadamente 0,4 cm, ¿cuál era la longitud cuando se amplió al doble?, ¿al triple?, ¿al cuádruple?; si se amplía 3,5 veces su tamaño, ¿de qué longitud (largo) se veía la hormiga luego de la ampliación? (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Problema de fracciones con chocolates",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Resuelven problemas relativos a sumas de fracciones: Camila se come la cuarta parte de una caja de 24 chocolates, Francisca la mitad del resto, y Carlos la mitad de lo que queda, ¿qué fracción de los bombones se comen Carlos y Francisca?"
+        },
+        {
+          "nombre": "Problema con decimales: encontrar número entre valores",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Resuelven problemas que implican sumar o restar decimales positivos y evaluar el resultado. Determinan el número que resuelve: ¿Qué número sumado con 0,02 es menor que 0,07 y mayor que 0,05? Muestran tres posibilidades y evalúan la solución en función del enunciado."
+        },
+        {
+          "nombre": "Desafío de notas con gráfico circular",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Desafío: Las notas de Matemática de un nivel se registran en un gráfico circular: el primer semestre corresponde al ángulo 144°; el segundo semestre corresponde al ángulo 144°; la nota del examen corresponde al ángulo restante. ¿A qué decimal corresponden las notas sin el examen? ¿A qué decimal corresponde la nota del primer semestre menos la nota del examen?"
+        },
+        {
+          "nombre": "Problema de carrera de 400 metros planos",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "En una carrera de 400 metros planos, un atleta se ha demorado 12 segundos en recorrer la cuarta parte de la carrera y 6 segundos en recorrer un quinto del tramo que resta. Si en el tramo que le resta para terminar la carrera se demoró 24 segundos, ¿en qué fracción de la carrera se demoró los 24 segundos? (Educación Física y Salud)"
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "1 Determinan el mínimo común múltiplo entre los números 18 y 24: calculando múltiplos de 18 y 24; marcando los múltiplos que se repiten; identificando el menor de los múltiplos que se repiten.\n2 Explican que el menor de los múltiplos que se repiten es el mínimo común múltiplo entre 18 y 24.\n3 Aplican el procedimiento anterior para determinar el mínimo común múltiplo entre 8 y 12.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Calculan correctamente múltiplos de números.",
+              "Identifican múltiplos comunes.",
+              "Explican correctamente el significado de mínimo común múltiplo entre dos números.",
+              "Aplican correctamente el algoritmo anterior para calcular el mínimo común múltiplo."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            3
+          ],
+          "actividad_evaluacion": "1 Observan las siguientes figuras y encuentran las razones entre: a triángulos y hexágonos; b hexágonos y cuadrados.\n2 Escriben dos razones equivalentes a las razones encontradas en a y en b de 1.\n3 Resuelven el siguiente problema: Francisco observa que su papá está preparando una mezcla de cemento con arena para hacer un radier. Por cada palada de cemento, echa 3 paladas de arena. Sabe, además, que de cada saco de cemento se obtienen 15 paladas de cemento. Si ocupa un saco de cemento para hacer el radier, ¿cuántas paladas de arena necesita?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Calculan correctamente razones entre cantidades dadas de objetos.",
+              "Escriben razones equivalentes a razones dadas.",
+              "Determina cantidades que están en una razón dada en el contexto de la resolución de problemas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "1 Escriben las siguientes razones como porcentajes: a 32 de 100; b 30 a 100; c 48 : 100.\n2 Explican los porcentajes anteriores, dando un ejemplo.\n3 Resuelven el siguiente problema: En un cumpleaños, el 50% de las bebidas son jugos. Si hay 12 bebidas, ¿cuántas bebidas no son jugos?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Expresan razones de consecuente 100 como porcentajes.",
+              "Explican conversiones de razones a porcentajes por medio de ejemplos.",
+              "Aplican correctamente porcentajes para calcular cantidades en el contexto de la resolución de problemas."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Se espera que, en esta unidad, los estudiantes profundicen el trabajo con patrones iniciado en los cursos anteriores y que inicien el trabajo con aspectos más formales del álgebra, como las generalizaciones. En el contexto de los patrones, el foco de la unidad está puesto en identificar regularidades de valores dados en tablas; en este sentido, se espera que los alumnos establezcan relaciones entre estos valores, que formulen reglas y que las usen para descubrir valores desconocidos en estas tablas. Respecto del álgebra, el foco está puesto en la representación de generalizaciones, usando expresiones con letras y ecuaciones.",
+      "conocimientos_previos": [
+        "Cálculos de áreas y perímetros.",
+        "Formulación de reglas en patrones.",
+        "Propiedad conmutativa.",
+        "Patrones."
+      ],
+      "palabras_clave": [
+        "Tablas",
+        "valores en tablas",
+        "generalizaciones",
+        "propiedad conmutativa",
+        "expresión algebraica",
+        "variable"
+      ],
+      "conocimientos": [
+        "Identificación de regularidades en tablas.",
+        "Cálculo de valores desconocidos en tablas.",
+        "Generalización de expresiones, empleando letras.",
+        "Generalización de expresiones, empleando ecuaciones."
+      ],
+      "habilidades": [
+        "Traducir expresiones de lenguaje natural a lenguaje matemático y viceversa.",
+        "Modelar matemáticamente situaciones cotidianas organizando datos, identificando patrones o regularidades, usando simbología matemática para expresarlas.",
+        "Imaginar una situación y expresarla por medio de modelos matemáticos."
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Abordar de manera flexible y creativa la búsqueda de soluciones a problemas.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Demostrar que comprenden la relación entre los valores de una tabla y aplicarla en la resolución de problemas sencillos: identificando patrones entre los valores de la tabla; formulando una regla con lenguaje matemático.",
+          "indicadores": [
+            "Establecen relaciones que se dan entre los valores dados en una tabla, usando lenguaje matemático.",
+            "Crean representaciones pictóricas de las relaciones que se dan en una tabla de valores.",
+            "Usando la relación entre los valores de una tabla, predicen los valores de un término desconocido y verifican la predicción.",
+            "Formulan una regla que se da entre los valores de dos columnas de números en una tabla de valores.",
+            "Identifican elementos desconocidos en una tabla de valores.",
+            "Describen patrones en una tabla de valores dados.",
+            "Crean una tabla de valores para registrar información y destacar un patrón cuando se resuelve un problema."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Representar generalizaciones de relaciones entre números naturales, usando expresiones con letras y ecuaciones.",
+          "indicadores": [
+            "Escriben y explican la fórmula para encontrar el perímetro de un rectángulo.",
+            "Escriben y explican la fórmula para encontrar el área de un rectángulo.",
+            "Usan letras para generalizar la propiedad conmutativa de la adición y la multiplicación.",
+            "Describen la relación entre los valores en una tabla, usando una expresión en que intervienen letras.",
+            "Representan la regla de un patrón, usando una expresión en que intervienen letras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Resolver ecuaciones de primer grado con una incógnita, utilizando estrategias como: usar una balanza; usar la descomposición y la correspondencia 1 a 1 entre los términos en cada lado de la ecuación y aplicando procedimientos formales de resolución.",
+          "indicadores": [
+            "Determinan soluciones de ecuaciones que involucran sumas, agregando objetos hasta equilibrar una balanza.",
+            "Expresan números en una forma que involucre adiciones o sustracciones con números. Por ejemplo: expresan 17 en la forma 2 · 8 + 1, o 25 en la forma 3 · 9 - 2.",
+            "Expresan números en una forma que involucre adiciones o sustracciones con números y con incógnitas. Por ejemplo: expresan 19 en la forma 4 · x + 3.",
+            "Resuelven ecuaciones, descomponiendo de acuerdo a una forma dada y haciendo una correspondencia 1 a 1. Por ejemplo: resuelven la ecuación 5 · x + 4 = 39, expresando 39 en la forma 5 · x + 4, y mediante correspondencia 1 a 1 determinan el valor de x.",
+            "Aplican procedimientos formales, como sumar o restar números a ambos lados de una ecuación, para resolver ecuaciones."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Traducción de reglas a lenguaje matemático",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Usan lenguaje matemático para expresar las reglas: \"cinco más\", \"cuatro menos\". A continuación las aplican para calcular los elementos que siguen en las secuencias: 4, 9, ... y 100, 96, ..."
+        },
+        {
+          "nombre": "Descubrimiento de reglas en secuencias de figuras",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Descubren una regla posible en una secuencia de figuras formadas con cuadrados. Registran los resultados en una tabla usando la regla descubierta. Expresan en lenguaje matemático la regla descubierta (por ejemplo, n · n)."
+        },
+        {
+          "nombre": "Descubrimiento de reglas en tablas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Descubren una regla en una tabla de entrada y salida. Por ejemplo, para entradas 10, 11, 23, 34, 48 y salidas 1, 2, 5, 7, 12. De acuerdo a la regla descubierta, determinan la salida cuando las entradas son 27 y 38."
+        },
+        {
+          "nombre": "Descripción de relaciones en tablas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Describen una relación que se da entre los números en una tabla y la expresan en lenguaje matemático. Por ejemplo, para la tabla: 1->3, 3->7, 8->17, 14->29, 43->87. (Regla posible: 2n + 1)."
+        },
+        {
+          "nombre": "Creación de situaciones a partir de modelos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Imaginan una situación cuyos datos los expresan en una tabla y que correspondan al modelo 3n + 1."
+        },
+        {
+          "nombre": "Creación de tablas a partir de expresiones",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Dados los números que tienen la forma 4n + 1, se pide encontrar una tabla cuyos datos corresponden a esos números."
+        },
+        {
+          "nombre": "Completar tablas de valores usando reglas",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Observan una tabla de valores, descubren una relación entre los números, la expresan en lenguaje matemático y completan los espacios de la tabla usando la regla. Por ejemplo: 5->25, __->30, 7->35, 8->__, __->45."
+        },
+        {
+          "nombre": "Problema de recaudación de azúcar",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "En un sexto año los alumnos deciden hacer una colecta para recaudar azúcar. Las cantidades por semana son: 15 Kg, 30 Kg, 45 Kg, 60 Kg, 75 Kg... Encuentran la regla, la expresan en lenguaje matemático y calculan la cantidad en la semana 10 usando la expresión matemática."
+        },
+        {
+          "nombre": "Problema de cría de conejos",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "El papá de Javier decide criar conejos. Al empezar tienen 2 conejos; a los 3 meses tienen 4; a los 6 meses tienen 8; a los 9 meses tienen 16. ¿Cuántos conejos tendrán al cabo de dos años si la tendencia se mantiene? Completan tabla, encuentran regla, expresan en lenguaje matemático y responden. (Ciencias Naturales)"
+        },
+        {
+          "nombre": "Evaluación de expresiones con variables",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Evalúan la expresión 2 · n cuando n es un número natural. Sustituyen n = 1, 2, 3, 4... e indagan qué representan los números obtenidos. Concluyen que 2 · n y 2 · n - 1 corresponden a los modelos de números pares e impares respectivamente."
+        },
+        {
+          "nombre": "Evaluación de expresiones con letras",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Completan una tabla evaluando expresiones como a + b + c, a · b + c, 2a + b, para valores dados de a, b y c."
+        },
+        {
+          "nombre": "Modelos para perímetros de rectángulos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Determinan los perímetros de rectángulos que resultan de dibujar un rectángulo de ancho a y largo 2 · a. Determinan el perímetro cuando a = 1, 2, 3. Determinan el modelo que representa el perímetro y lo evalúan."
+        },
+        {
+          "nombre": "Evaluación de expresiones en contextos geométricos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Evalúan expresiones en contextos geométricos. En un triángulo de lados a + 4, a - 3, a + 5, evalúan los lados cuando a = 5 y a = 8. Determinan el perímetro y el modelo que lo representa."
+        },
+        {
+          "nombre": "Modelación de situaciones con dinero",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Imaginan una situación referida a dinero y la expresan mediante una ecuación. Generalizan ese tipo de situaciones. Por ejemplo: a + x = b, con b > a como modelo para determinar cuánto dinero agregar a la cantidad a para comprar un producto que vale b."
+        },
+        {
+          "nombre": "Modelación de situaciones en contexto matemático",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Imaginan una situación en contexto matemático y la expresan mediante una ecuación. Generalizan ese tipo de situaciones. Por ejemplo: 2x + a = b como modelo generalizado para determinar números cuyo doble más una cantidad conocida da otra cantidad conocida."
+        },
+        {
+          "nombre": "Término general de secuencias numéricas",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Determinan el término general de secuencias numéricas cuando se conoce la regla. Por ejemplo: determinan el término general de la secuencia 3, 6, 9, 12, 15, 18, 21... en que la regla es sumar 3."
+        },
+        {
+          "nombre": "Generalización de la propiedad conmutativa",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Realizan generalizaciones de la propiedad conmutativa. Por ejemplo: generalizan igualdades con sumas como 2 + 3 = 3 + 2, 4 + 5 = 5 + 4... y con multiplicaciones como 2 · 3 = 3 · 2, 5 · 4 = 4 · 5... usando letras."
+        },
+        {
+          "nombre": "Traducción de lenguaje cotidiano a lenguaje matemático",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Traducen a lenguaje matemático enunciados en lenguaje cotidiano: \"la suma entre un número y cinco es el doble de seis\"; \"la diferencia entre el doble de un número y cinco corresponde al triple de cuatro\"; \"la suma entre la mitad de un número y ocho equivale al cociente entre el número y seis\"."
+        },
+        {
+          "nombre": "Traducción de lenguaje matemático a lenguaje cotidiano",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Traducen las siguientes expresiones dadas en lenguaje matemático a lenguaje cotidiano: 3 · x + 5 = 8; 1/2 · x - 3 · 4 = 7; (x - 1) / 2 = 3 · x - 4."
+        },
+        {
+          "nombre": "Desafío: suma y producto de dos números",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Desafío: Resuelven el problema \"encontrar los números que satisfacen: la suma de dos números es 20 y su producto es 91\". Expresan en lenguaje matemático, evalúan ecuaciones con posibles soluciones y verifican."
+        },
+        {
+          "nombre": "Resolución de ecuaciones con balanza",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Resuelven ecuaciones que involucran sumas, usando una balanza. Por ejemplo: x + 5 = 18; 10 = x + 7. Colocan objetos en una balanza equilibrada y agregan hasta equilibrar; cuentan lo agregado y asignan a la incógnita."
+        },
+        {
+          "nombre": "Ecuaciones con incógnita duplicada usando balanza",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Resuelven ecuaciones que involucran sumas donde la incógnita está duplicada, usando una balanza. Por ejemplo, resuelven 2x + 1 = 15. Forman 2 grupos con igual cantidad y agregan al lado izquierdo hasta equilibrar."
+        },
+        {
+          "nombre": "Transformación de números en formas dadas",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Transforman números en formas dadas. Por ejemplo, transforman 19 en la forma \"2 por un número más 1\", \"3 por un número más 1\", \"4 por un número más 3\". También transforman 28 en \"3 por un número más 1\" y \"2 por un número menos 6\"."
+        },
+        {
+          "nombre": "Correspondencia 1 a 1 en ecuaciones",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Determinan el valor de la incógnita mediante la correspondencia \"1 a 1\" en ecuaciones como: 3 · 4 + 5 = 3 · x + 5; 5 · x + 6 = 5 · x + 6; 3 · 4 - 8 = 3 · 4 - x; 2 · x + 9 = 2 · 18 + 9."
+        },
+        {
+          "nombre": "Resolución de ecuaciones con estrategias combinadas",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Resuelven ecuaciones como: 27 = 3 · x; 2x - 6 = 18; 3 · x + 5 = 8; 13 = 2 · x - 1; 17 - 2x = 9. Aplican estrategias de descomposición y correspondencia 1 a 1."
+        },
+        {
+          "nombre": "Suma y resta del mismo número en igualdades",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Dadas igualdades con números, suman y restan el mismo número a ambos lados y obtienen resultados. Por ejemplo: en 5 = 5 suman diferentes números a ambos lados; en 9 = 9 restan diferentes números. Generalizan los resultados."
+        },
+        {
+          "nombre": "Suma y resta en igualdades con variables",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "En igualdades con números y variables, suman y restan el mismo número a ambos lados. Por ejemplo: x + 5 = 7, restan 5 a ambos lados; x - 7 = 9, suman 7 a ambos lados. Generalizan los resultados."
+        },
+        {
+          "nombre": "Resolución formal de ecuaciones",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Resuelven ecuaciones aplicando procedimientos formales de resolución: x - 1 = 4; 7 = x + 3; x + 4 = 15. Utilizan técnicas como sumar o restar números a ambos lados de la ecuación."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            10
+          ],
+          "actividad_evaluacion": "1 En la siguiente tabla: Entrada 1->1, 2->4, 3->9, 4->16, 5->25: a identificar regularidades que se dan entre los valores de las columnas; b dar una regla para el patrón observado; c determinar el valor de salida cuando la entrada es 8 y el valor de entrada cuando la salida es 100.\n2 Un atleta registra un tiempo de 10 segundos en los 100 metros planos, 21 segundos en los 200 metros planos, 33 segundos en los 300 metros planos, etc. Si se sigue esa tendencia, ¿cuál es el tiempo en los 800 metros planos? Crean una tabla, identifican regularidades, determinan el patrón, la regla y calculan el tiempo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican regularidades en tablas.",
+              "Determinan patrones y reglas de ellos.",
+              "Determinan valores desconocidos en tablas, aplicando reglas.",
+              "Crean tablas para registrar información en el contexto de la resolución de problemas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            10
+          ],
+          "actividad_evaluacion": "1 Dados rectángulos de dimensiones 1cm x 2cm, 2cm x 4cm, 4cm x 6cm, registran los valores en una tabla y responden: ¿Qué relación hay entre el largo y el ancho de los rectángulos anteriores?\n2 En el rectángulo se da la misma relación. Calcula el ancho sabiendo que el largo es 2a.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Registran valores dados en una tabla.",
+              "Identifican la relación que se da entre los lados de un rectángulo, usando la tabla.",
+              "Generalizan la relación encontrada."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [
+            11
+          ],
+          "actividad_evaluacion": "1 Expresar 17 en la forma: 4x + 1; 3x + 2; 5x - 3.\n2 Resolver las ecuaciones: 3x + 7 = 31; 18 = 4x - 2. a Usando una balanza. b Expresando 31 en la forma 3x + 7 y 18 en la forma 4x - 2. c Haciendo correspondencia 1 a 1 en las expresiones formadas en b.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Descomponen números en formas dadas.",
+              "Resuelven ecuaciones equilibrando una balanza.",
+              "Hacen correspondencias 1 a 1 en descomposiciones dadas en ecuaciones para identificar el valor de la incógnita."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "Se espera que, en esta unidad, los estudiantes extiendan el trabajo con áreas de superficie en figuras 2D a áreas de superficies de cubos y paralelepípedos. Se espera también que profundicen el trabajo con volúmenes iniciado en cuarto básico, generando expresiones que permitan calcular volúmenes en paralelepípedos. Es propósito de esta unidad que los estudiantes profundicen el concepto de ángulo, construyéndolos mediante transportador o con regla y compás, también mediante la identificación de ángulos congruentes en rectas paralelas cortadas por una transversal o mediante ángulos opuestos por el vértice. Se espera que construyan triángulos de manera manual, por ejemplo, con regla y compás, o con procesadores geométricos, a partir de la medida de sus lados y/o ángulos interiores. Es propósito de esta unidad también que apliquen conocimientos sobre transformaciones isométricas adquiridos desde los primeros niveles en la construcción de teselados.",
+      "conocimientos_previos": [
+        "Traslaciones, rotaciones y reflexiones de figuras 2D.",
+        "Traslación de ángulos.",
+        "Concepto de volumen.",
+        "Cálculo de áreas de rectángulos.",
+        "Concepto de ángulo."
+      ],
+      "palabras_clave": [
+        "Área de una superficie",
+        "cálculo de volúmenes",
+        "paralelepípedo",
+        "cubo",
+        "construcción de figuras",
+        "construcción de ángulos",
+        "construcción de triángulos"
+      ],
+      "conocimientos": [
+        "Concepto de área de superficie.",
+        "Cálculo de áreas de superficies en paralelepípedos.",
+        "Cálculo de volúmenes en paralelepípedos.",
+        "Construcción de ángulos.",
+        "Determinación de ángulos en rectas paralelas cortadas por una transversal.",
+        "Identificación de ángulos opuestos por el vértice.",
+        "Realización de teselados."
+      ],
+      "habilidades": [
+        "Reconocer e identificar los datos esenciales de un problema matemático.",
+        "Comprender y evaluar estrategias de resolución de otros.",
+        "Usar representaciones y estrategias para comprender mejor problemas e información matemática."
+      ],
+      "actitudes": [
+        "Manifestar un estilo de trabajo ordenado y metódico.",
+        "Abordar de manera flexible y creativa la búsqueda de soluciones a problemas.",
+        "Demostrar una actitud de esfuerzo y perseverancia.",
+        "Expresar y escuchar ideas de forma respetuosa."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Estimar y medir ángulos, usando el transportador y expresando las mediciones en grados.",
+          "indicadores": [
+            "Explican la manera en que se miden ángulos con un transportador.",
+            "Explican qué es un grado sexagesimal por medio de ejemplos, usando el transportador.",
+            "Describen el procedimiento usado para estimar ángulos con un transportador."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Construir ángulos agudos, obtusos, rectos, extendidos y completos con instrumentos geométricos o software geométrico.",
+          "indicadores": [
+            "Dibujan un círculo y registran ángulos agudos, rectos y obtusos en él, utilizando un transportador.",
+            "Construyen un ángulo recto y lo toman como referencia para determinar ángulos agudos y obtusos.",
+            "Construyen ángulos agudos, rectos u obtusos que sumen 180° con un transportador o con procesadores geométricos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Construir y comparar triángulos de acuerdo a la medida de sus lados y/o sus ángulos con instrumentos geométricos o software geométrico.",
+          "indicadores": [
+            "Comparan la longitud de sus lados de acuerdo a la medida de sus ángulos interiores opuestos.",
+            "Construyen triángulos en que se conoce la longitud de sus lados, usando instrumentos geométricos o procesadores geométricos.",
+            "Construyen triángulos en que se conoce la longitud de uno de sus lados y la medida de sus ángulos interiores, usando instrumentos geométricos o procesadores geométricos.",
+            "Clasifican triángulos y explican el criterio de clasificación.",
+            "Comparan triángulos, usando la clasificación dada."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Realizar teselados de figuras 2D, usando traslaciones, reflexiones y rotaciones.",
+          "indicadores": [
+            "Explican el concepto de teselado por medio de ejemplos.",
+            "Reconocen teselados regulares en contextos diversos. Por ejemplo, reconocen teselados construidos con cuadrados en patios del colegio, en el piso del baño o la cocina de sus casas.",
+            "Reconocen teselados semirregulares en contextos diversos. Por ejemplo: reconocen teselados construidas con cuadrados y triángulos equiláteros en obras de arte.",
+            "Realizan teselados regulares, aplicando traslaciones.",
+            "Realizan teselados semirregulares, aplicando reflexiones. Por ejemplo: cubren una región del plano con 2 cuadrados y 3 triángulos equiláteros y reproducen ese teselado, aplicando reflexiones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Demostrar que comprenden el concepto de área de una superficie en cubos y paralelepípedos, calculando el área de sus redes (plantillas) asociadas.",
+          "indicadores": [
+            "Ilustran y explican el concepto de área de una superficie en figuras 3D.",
+            "Demuestran que el área de redes asociadas a cubos y paralelepípedos corresponde al área de la superficie de estas figuras 3D.",
+            "Dan procedimientos para calcular áreas de superficies de cubos y paralelepípedos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Calcular la superficie de cubos y paralelepípedos, expresando el resultado en cm2 y m2.",
+          "indicadores": [
+            "Calculan áreas de redes asociadas a cubos y paralelepípedos.",
+            "Comparan las áreas de las caras de paralelepípedos y las áreas de las caras de cubos.",
+            "Determinan áreas de las superficies de cubos a partir de la medida de sus aristas.",
+            "Resuelven problemas relativos a áreas de superficies de cubos y paralelepípedos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Identificar los ángulos que se forman entre dos rectas que se cortan (pares de ángulos opuestos por el vértice y pares de ángulos complementarios).",
+          "indicadores": [
+            "Identifican los ángulos opuestos por el vértice que se forman entre dos rectas que se cortan.",
+            "Demuestran, usando rotaciones, que los ángulos opuestos por el vértice tienen igual medida.",
+            "Verifican, usando transportador, que los ángulos opuestos por el vértice tienen igual medida.",
+            "Identifican ángulos en rectas que se cortan en figuras del entorno."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Calcular ángulos en rectas paralelas cortadas por una transversal y en triángulos.",
+          "indicadores": [
+            "Identifican ángulos de igual medida que se forman en rectas paralelas cortadas por una transversal y demuestran esta igualdad, usando traslaciones.",
+            "Identifican ángulos suplementarios en un sistema de rectas paralelas cortadas por una transversal.",
+            "Identifican rectas paralelas en polígonos y calculan ángulos interiores de estos polígonos.",
+            "Resuelven problemas relativos a cálculos de ángulos en paralelogramos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Demostrar, de manera concreta, pictórica y simbólica, que la suma de los ángulos interiores de un triángulo es 180º y de un cuadrilátero es 360º.",
+          "indicadores": [
+            "Trazan rectas paralelas a los lados de triángulos y que pasan por el vértice opuesto.",
+            "Usan traslaciones para formar 180º con los ángulos interiores de triángulos.",
+            "Explican por qué la suma de los ángulos interiores de un triángulo es 180º.",
+            "Usan resultados acerca de la suma de ángulos interiores en triángulos para demostrar que la suma de ángulos interiores en un cuadrilátero es 360º. Por ejemplo: trazan una diagonal en un cuadrilátero y aplican resultados de la suma de los ángulos interiores en triángulos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Calcular el volumen de cubos y paralelepípedos, expresando el resultado en cm3, m3 y mm3.",
+          "indicadores": [
+            "Explican, por medio de ejemplos, el concepto de volumen.",
+            "Descubren una fórmula para calcular el volumen de cubos y paralelepípedos.",
+            "Determinan volúmenes de cubos y paralelepípedos, conociendo información relativa a sus aristas.",
+            "Resuelven problemas relativos a volúmenes de cubos y paralelepípedos conociendo información relativa a áreas de superficies de estas figuras 3D."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Medición de ángulos con transportador",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Describen la manera que emplean para medir los ángulos 90°, 45°, 135°. Responden preguntas sobre la ubicación del transportador en un círculo y la manera de medir ángulos a partir de un punto."
+        },
+        {
+          "nombre": "Explicación del grado sexagesimal",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Explican qué es un grado sexagesimal, midiendo 1° con un transportador. Responden preguntas como: ¿cuántas veces debes replicar 1° para obtener el ángulo 12°?; ¿cuántas veces en 90° está replicado 1°?"
+        },
+        {
+          "nombre": "Medición y suma de ángulos",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Miden con un transportador 30° y 45° y los utilizan para medir: 30° + 45°; 30° + 30°; 60° + 45°; 105° + 30° + 45°."
+        },
+        {
+          "nombre": "Estimación de ángulos",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Resuelven problemas relativos a estimaciones de ángulos, describiendo el procedimiento usado. Estiman ángulos dados en figuras y calculan complementos y suplementos."
+        },
+        {
+          "nombre": "Trazados con transportador en el plano",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Realizan trazados en el plano, utilizando el transportador, describiendo el procedimiento usado. Por ejemplo, trazan un segmento perpendicular a una recta que pase por un punto dado."
+        },
+        {
+          "nombre": "Trazados en triángulos",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Realizan trazados en triángulos y describen procedimientos. Por ejemplo, trazan un segmento perpendicular al lado AB del triángulo ABC que pase por el vértice C."
+        },
+        {
+          "nombre": "Construcción de rectas paralelas con transportador",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Realizan actividades referidas a construcciones de rectas paralelas, utilizando un transportador. Explican mediante ejemplos cuándo dos rectas son paralelas y construyen rectas paralelas que pasen por puntos dados."
+        },
+        {
+          "nombre": "Identificación de lados paralelos en cuadriláteros",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Identifican lados paralelos en cuadriláteros. Por ejemplo, identifican en un cuadrilátero en una cuadrícula los lados que son paralelos y responden: ¿Por qué cree que este cuadrilátero se llama paralelogramo?"
+        },
+        {
+          "nombre": "Trazados en cuadriláteros con transportador",
+          "oas_asociados": [
+            20
+          ],
+          "descripcion": "Realizan trazados en cuadriláteros, empleando un transportador. Por ejemplo, trazan un segmento perpendicular al lado AB de un paralelogramo que pase por el vértice D."
+        },
+        {
+          "nombre": "Construcción de ángulos con transportador",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Describen la manera en que construyen ángulos agudos, rectos y obtusos con un transportador. Por ejemplo: describen cómo construyen un ángulo de 130° con un transportador."
+        },
+        {
+          "nombre": "Construcción de ángulos con referencia al ángulo recto",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Usan el transportador para construir un ángulo recto, a continuación construyen tomándolo como referencia: un ángulo menor que 90° con regla y compás; un ángulo mayor que 90° con regla y compás."
+        },
+        {
+          "nombre": "Registro de ángulos en el círculo",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "En el círculo registran, usando un transportador: seis ángulos agudos de igual medida; cinco ángulos agudos de distinta medida; siete ángulos (tres de igual medida y cuatro de igual medida)."
+        },
+        {
+          "nombre": "Construcción de ángulos en semicírculo",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "En el círculo construyen un semicírculo. Luego registran, usando un transportador, un ángulo agudo, uno recto y uno obtuso de manera que el ángulo restante sea agudo, recto u obtuso. También registran cinco ángulos agudos, dos obtusos de igual medida, un recto y dos agudos de igual medida."
+        },
+        {
+          "nombre": "Construcción de ángulos con regla y compás",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Describen la manera en que construyen ángulos agudos, rectos y obtusos con instrumentos geométricos. Por ejemplo: describen cómo construyen 60° con regla y compás. Formulan estrategias para construir 120° usando regla y compás."
+        },
+        {
+          "nombre": "Construcción de rectas perpendiculares y paralelas",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Trazan rectas perpendiculares a rectas dadas, usando transportador o un software geométrico. También trazan rectas paralelas a rectas dadas. Muestran la manera en que hicieron los trazados a sus compañeros y evalúan los de ellos."
+        },
+        {
+          "nombre": "Construcción de triángulos con regla y compás",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Construyen triángulos con regla y compás, conociendo sus tres lados. Por ejemplo: construyen un triángulo de lados 10 cm, 10 cm y 5 cm; un triángulo equilátero de 8 cm; un triángulo de lados 5 cm, 6 cm y 7 cm. Registran los pasos de manera comprensible y ordenada."
+        },
+        {
+          "nombre": "Construcción de triángulos por ángulos interiores",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Construyen triángulos con un transportador, conociendo la medida de sus ángulos interiores. Por ejemplo: triángulos de ángulos 50°, 50° y 80°; de ángulos 30°, 60° y 90°; de ángulos 50°, 60° y 70°. Registran los pasos de manera comprensible y ordenada."
+        },
+        {
+          "nombre": "Construcción de triángulos por lados y ángulos",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Construyen triángulos con regla y transportador, teniendo información de lados y ángulos interiores. Por ejemplo: conociendo dos lados de 6 cm y 8 cm y el ángulo entre ellos de 40°; conociendo un lado de 10 cm y ángulos de 60° y 50°."
+        },
+        {
+          "nombre": "Comparación de lados según ángulos en triángulos",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Comparan la longitud de los lados de un triángulo de acuerdo a la medida de sus ángulos interiores. Descubren que a menor o mayor ángulo interior sus lados opuestos son respectivamente menor o mayor."
+        },
+        {
+          "nombre": "Desigualdad triangular",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Determinan resultados acerca de desigualdades entre la medida de los lados. Argumentan acerca de por qué no es posible que se den ciertos triángulos. Descubren que la suma de las longitudes de dos lados tiene que ser mayor que la longitud del tercer lado."
+        },
+        {
+          "nombre": "Comparación y clasificación de triángulos",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Comparan triángulos de acuerdo a la medida de sus lados y/o ángulos. Clasifican triángulos según tengan sus tres lados distintos, dos lados iguales o tres lados iguales. También clasifican según sus ángulos interiores: tres distintos, dos iguales y uno distinto, tres iguales."
+        },
+        {
+          "nombre": "Teselados regulares con material concreto",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Teselan el plano solamente con polígonos regulares de un tipo: usando cuadrados, triángulos equiláteros o hexágonos regulares hechos de material concreto; usando regla y compás o procesadores geométricos."
+        },
+        {
+          "nombre": "Teselados semirregulares con cuadrados y triángulos",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Usan cuadrados y triángulos equiláteros para realizar teselados. Muestran que con dos cuadrados y tres triángulos equiláteros se pueden realizar dos teselados. Realizan estos teselados con regla, compás y transportador, y también con procesadores geométricos. (Artes Visuales)"
+        },
+        {
+          "nombre": "Condición para teselar el plano",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Determinan la condición que deben cumplir los ángulos de cuadrados, triángulos equiláteros y hexágonos regulares para que puedan teselar el plano."
+        },
+        {
+          "nombre": "Aplicación de transformaciones isométricas en teselados",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Aplican traslaciones para teselar el plano con cuadrados. Aplican rotaciones para teselar el plano con triángulos equiláteros. Construyen un teselado con hexágonos regulares, aplicando reflexiones y rotaciones."
+        },
+        {
+          "nombre": "Explicación del concepto de superficie de figuras 3D",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Explican el concepto de superficie de una figura 3D. Construyen cubos de diferentes aristas (5 cm y 10 cm) y paralelepípedos de diversas dimensiones. Calculan áreas de redes asociados a cubos, cuadriculando un cuadrado y multiplicando por 6."
+        },
+        {
+          "nombre": "Cálculo de áreas de redes de paralelepípedos",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Calculan áreas de redes asociadas a paralelogramos. Identifican los rectángulos congruentes, calculan sus áreas y efectúan las operaciones correspondientes. También calculan el área de cada rectángulo individualmente."
+        },
+        {
+          "nombre": "Construcción de cubos a partir de sus redes",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Construyen cubos a partir de sus redes y demuestran que el área de estas redes corresponde al área de la superficie de estos cubos."
+        },
+        {
+          "nombre": "Características de paralelepípedos por áreas de caras",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Dan características de un paralelepípedo basado en las áreas de sus caras. Construyen una red y sacan conclusiones acerca de los valores de las áreas de los rectángulos o cuadrados presentes."
+        },
+        {
+          "nombre": "Descubrimiento de fórmulas para áreas de cubos y paralelepípedos",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Comunican estrategias para calcular áreas de superficies de cubos y paralelepípedos. Descubren fórmulas para calcular estas áreas. Dibujan redes, calculan áreas y comparan superficies de cubos y paralelepípedos."
+        },
+        {
+          "nombre": "Determinación de áreas de cubos por sus aristas",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Determinan áreas de la superficie de un cubo a partir de la medida de sus aristas. Por ejemplo, el área de la superficie de un cubo de arista 4 cm, expresando esta área en cm2."
+        },
+        {
+          "nombre": "Medición y cálculo de áreas de paralelepípedos",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Miden el largo, el ancho y el alto de un paralelepípedo y calculan las áreas de sus caras y determinan el área de su superficie. Por ejemplo, el área de un libro de 30 cm de largo, 20 cm de ancho y 3 cm de alto."
+        },
+        {
+          "nombre": "Problemas de áreas de cubos en contextos geométricos",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Resuelven problemas en contextos geométricos relativos a áreas de superficie de cubos. Por ejemplo: determinan las aristas de un cubo cuya superficie es 24 cm2; determinan el área de la superficie de un cubo cuya suma de aristas es 36 cm."
+        },
+        {
+          "nombre": "Problemas cotidianos de áreas de paralelepípedos",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Resuelven problemas en contextos cotidianos relativos a áreas de superficie de paralelepípedos. Por ejemplo: determinan la cantidad mínima de papel de regalo para envolver un regalo de 8 cm, 6 cm y 5 cm; determinan los cm2 necesarios para construir un paralelepípedo de 1 m, 3 m y 4 m."
+        },
+        {
+          "nombre": "Problema no rutinario de área de dormitorio",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Resuelven problemas no rutinarios. Por ejemplo, en un dormitorio, el largo mide el doble del ancho y éste el doble del alto (números naturales). Si el área del piso es 32 m2, ¿cuántos m2 tiene que pintar en paredes y techo si tiene una ventana de 2 m de largo y 1 m de alto?"
+        },
+        {
+          "nombre": "Secuencias de áreas de cubos",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Resuelven problemas relativos a áreas de superficies de cubos en contextos matemáticos. Por ejemplo: si las aristas de cuatro cubos forman la secuencia 2, 4, 6, 8, ¿qué secuencia forman las áreas de sus superficies?; si las aristas de cubos difieren en 1 cm, ¿en qué cantidad difieren las áreas de las superficies?"
+        },
+        {
+          "nombre": "Identificación de ángulos opuestos por el vértice",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Identifican los ángulos opuestos por el vértice que se forman entre dos rectas que se cortan. Usan figuras con segmentos que se cortan y calculan expresiones con ángulos. Usan transportador para verificaciones."
+        },
+        {
+          "nombre": "Ángulos en rectas paralelas cortadas por transversal",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Identifican ángulos de igual medida en rectas paralelas cortadas por una transversal y demuestran usando traslaciones. Demuestran igualdades de ángulos específicos."
+        },
+        {
+          "nombre": "Ángulos opuestos por el vértice en paralelogramos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Prolongan los lados de un paralelogramo e identifican ángulos opuestos por el vértice. También identifican ángulos opuestos por el vértice en las diagonales de un paralelogramo."
+        },
+        {
+          "nombre": "Comprobación de suma de ángulos interiores en triángulos",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Construyen un triángulo equilátero y un triángulo rectángulo y comprueban que la suma de los ángulos interiores es 180°. Construyen un triángulo de lados distintos con regla y compás, miden sus ángulos y comprueban la suma."
+        },
+        {
+          "nombre": "Demostración de suma de ángulos interiores con traslaciones",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Realizan pasos para demostrar la suma de ángulos interiores: trazan un segmento paralelo a la base que pase por el vértice opuesto; prolongan los lados; trasladan los ángulos convenientemente para demostrar que suman 180°."
+        },
+        {
+          "nombre": "Demostración de suma de ángulos interiores en cuadriláteros",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Demuestran que la suma de los ángulos interiores en un cuadrilátero es 360°. Trazan una diagonal en el cuadrilátero y usan el resultado de la suma de ángulos interiores en triángulos para deducir el resultado."
+        },
+        {
+          "nombre": "Desafío: suma de ángulos en hexágonos",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Desafío: Resuelven problemas relativos a sumas de ángulos interiores en polígonos, como hexágonos. Trazan una diagonal para dividir el hexágono en dos cuadriláteros y aplican el valor de la suma de ángulos interiores de un cuadrilátero."
+        },
+        {
+          "nombre": "Identificación de rectas paralelas en el entorno",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Describen rectas que son paralelas y muestran características a través de ejemplos. Identifican rectas paralelas en contextos diferentes: bancos, escritorio, estantes, pizarrón, y objetos fuera de la sala."
+        },
+        {
+          "nombre": "Identificación de lados paralelos en figuras",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Identifican lados paralelos en un paralelogramo y un trapecio. También identifican líneas paralelas en un paralelepípedo ABCDEFGH. Justifican sus identificaciones."
+        },
+        {
+          "nombre": "Ángulos entre rectas paralelas y transversal",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Trazan dos líneas paralelas y una transversal. Identifican por lo menos ocho ángulos que se forman. También identifican ocho ángulos suplementarios, los marcan con colores y verifican con transportador."
+        },
+        {
+          "nombre": "Relaciones entre ángulos en rectas paralelas",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Establecen 10 relaciones entre los ángulos formados por dos rectas paralelas cortadas por una transversal. Por ejemplo: a = f y a + b + g + u = 360°."
+        },
+        {
+          "nombre": "Cálculo de ángulos en paralelogramos",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Calculan todos los ángulos interiores y exteriores de un paralelogramo ABCD cuando el ángulo DAB mide 65°, justificando los procedimientos empleados."
+        },
+        {
+          "nombre": "Problemas de cálculo de ángulos en triángulos",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Resuelven problemas relativos a cálculos de ángulos en triángulos: triángulo con ángulo de 35° y otro de 75°; triángulo rectángulo con ángulo de 60°; triángulo con dos ángulos iguales y el distinto de 80°."
+        },
+        {
+          "nombre": "Desafío de ángulos en triángulo",
+          "oas_asociados": [
+            21
+          ],
+          "descripcion": "Desafío: En un triángulo con un ángulo de 60°, donde alfa = 2 · beta. ¿Cuál es la medida de alfa y beta?"
+        },
+        {
+          "nombre": "Cálculo de volumen de cubos",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Explican cómo se calcula el volumen de un cubo cuando se conoce la medida de su arista y cuando se conoce el área de su superficie. Calculan volúmenes de cubos de aristas 5 cm, 10 cm, 15 cm y obtienen conclusiones y fórmulas."
+        },
+        {
+          "nombre": "Cálculo de volumen de paralelepípedos",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Calculan el volumen de paralelepípedos de diversas dimensiones y obtienen conclusiones acerca de la operación empleada y la fórmula general para un paralelepípedo de aristas a, b y c."
+        },
+        {
+          "nombre": "Volumen de cubos a partir del área de superficie",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Calculan el volumen de cubos, conociendo las áreas de sus superficies. Por ejemplo: calculan el volumen de un cubo de área 150 cm2 y de uno de área 96 cm2."
+        },
+        {
+          "nombre": "Variación del volumen al duplicar aristas",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Varían las medidas de las aristas de cubos y sacan conclusiones respecto de lo que ocurre con sus volúmenes. Por ejemplo: calculan volúmenes de cubos de aristas 5 cm, 10 cm, 20 cm y 40 cm, y analizan qué pasa cuando las aristas se duplican."
+        },
+        {
+          "nombre": "Regularidades en secuencias de áreas y volúmenes",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Descubren regularidades en secuencias de áreas de cubos y sacan conclusiones respecto de lo que ocurre con sus volúmenes. Construyen cubos de área 6 cm2, 24 cm2, 54 cm2 y 96 cm2, descubren regularidades y calculan volúmenes."
+        },
+        {
+          "nombre": "Problemas no rutinarios de volúmenes",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Resuelven problemas no rutinarios relativos a cálculos de volúmenes de cubos y paralelepípedos. Por ejemplo: ¿Qué dimensiones podría tener un papel para envolver un regalo en caja cúbica de volumen aproximado 27,5 cm3?"
+        },
+        {
+          "nombre": "Desafío: volumen de paralelepípedo formado por recortes",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Desafío: Se tiene una superficie rectangular de cartón de 12 cm de largo por 10 cm de ancho. En los vértices se recortan cuadrados de lado 2 cm. Calcular el volumen del paralelepípedo que se forma al realizar los dobleces correspondientes."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            21
+          ],
+          "actividad_evaluacion": "1 Identifican ángulos que son iguales en la figura de dos rectas paralelas cortadas por una transversal.\n2 Observan la figura con ángulos y una recta en 70° y basados en la información calculan: la medida de los ángulos beta, phi y delta; alfa + beta; beta - phi. Responden: ¿es posible formar un ángulo de 360º con los ángulos de la figura?; ¿cuánto se debe quitar a beta para obtener delta?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican correctamente ángulos iguales en rectas paralelas cortadas por una transversal.",
+              "Calculan correctamente ángulos entre rectas paralelas cortadas por una transversal.",
+              "Demuestran comprensión acerca de ángulos entre rectas paralelas cortadas por una transversal, contestando correctamente las preguntas formuladas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            19
+          ],
+          "actividad_evaluacion": "1 Calculan el volumen de un paralelepípedo usando las medidas mostradas. Si cada arista aumenta en 1 m: ¿cuál es el nuevo volumen? ¿en cuánto aumentó?\n2 Un cubo tiene área de superficie 216 cm2: ¿Cuál es el área de cada cara? ¿Cuánto mide la arista? ¿Cuál es su volumen?\n3 Si el área de cada cara aumenta en 13 cm2: ¿Cuál es la nueva área de cada cara? ¿Cuál es el valor de su arista? ¿Cuál es el volumen? ¿En qué cantidad aumentó el volumen?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Calculan el volumen de un cubo cuando conocen su arista.",
+              "Determinan el valor de la arista de un cubo cuando conocen su superficie.",
+              "Determinan crecimientos en el volumen de cubos cuando conocen variaciones en su arista."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [
+            14
+          ],
+          "actividad_evaluacion": "Dadas las figuras de lados de igual medida: hexágono regular, triángulo equilátero, rombo, responden las preguntas, demostrando el teselado que se puede realizar, usando regla y compás: a ¿Es posible hacer un teselado con el hexágono y el triángulo? b ¿Es posible hacer un teselado con el hexágono y el rombo? c ¿Es posible hacer un teselado con el cuadrado y el rombo?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican correctamente las figuras 2D con las que se puede hacer un teselado, empleando más de una de ellas.",
+              "Argumentan respuestas acerca de la realización de teselados, usando regla y compás."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad se profundiza lo que los estudiantes han aprendido en cursos anteriores con respecto a estadística (datos). En datos, se trabaja con la lectura y la interpretación de gráficos de barra doble y de gráficos circulares. A partir de esta interpretación, los alumnos responden preguntas y resuelven problemas. Paralelamente, se continúa el trabajo con el azar iniciado en 5º básico. De esta manera, los alumnos predicen y conjeturan acerca de la posibilidad de ocurrencia de un evento mediante la realización de experimentos con dados y monedas.",
+      "conocimientos_previos": [
+        "Tablas simples.",
+        "Gráficos de línea y de una barra.",
+        "Posibilidad de ocurrencia de eventos."
+      ],
+      "palabras_clave": [
+        "Gráficos circulares",
+        "gráficos de barras dobles",
+        "datos",
+        "conjunto de datos",
+        "experimentos lúdicos",
+        "interpretar información",
+        "leer información",
+        "evento"
+      ],
+      "conocimientos": [
+        "Leer información en gráficos de barra doble y gráficos circulares.",
+        "Interpretar información en gráficos de barra doble y gráficos circulares.",
+        "Predecir resultados de eventos a partir de experimentos con dados y monedas."
+      ],
+      "habilidades": [
+        "Reconocer e identificar los datos esenciales de un problema matemático.",
+        "Usar estrategias y representaciones para comprender mejor problemas e información matemática.",
+        "Imaginar una situación y expresarla por medio de modelos matemáticos.",
+        "Identificar un error, explicar su causa y corregirlo.",
+        "Documentar el proceso de aprendizaje, registrándolo en forma estructurada y comprensible."
+      ],
+      "actitudes": [
+        "Abordar de manera flexible y creativa la búsqueda de soluciones a problemas.",
+        "Manifestar una actitud positiva frente a sí mismo y sus capacidades.",
+        "Demostrar una actitud de esfuerzo y perseverancia."
+      ],
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Leer e interpretar gráficos de barra doble y circulares y comunicar sus conclusiones.",
+          "indicadores": [
+            "Muestran que cada parte de un gráfico circular es un porcentaje de un todo.",
+            "Explican por medio de ejemplos que los gráficos de barras dobles muestran dos tipos de información. Por ejemplo, las temperaturas altas y bajas en distintas ciudades que se produjeron en un día.",
+            "Interpretan información presentada en gráficos de barras dobles.",
+            "Interpretan información presentada en gráficos circulares en términos de porcentaje."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Conjeturar acerca de las tendencias de resultados obtenidos en repeticiones de un mismo experimento con dados, monedas u otros, de manera manual y/o usando software educativo.",
+          "indicadores": [
+            "Describen un diagrama de árbol por medio de ejemplos.",
+            "Enumeran resultados posibles de lanzamientos de monedas o dados con ayuda de un diagrama de árbol. Por ejemplo, al lanzar tres veces una moneda, o una vez dos dados.",
+            "Realizan de manera repetitiva experimentos con monedas para conjeturar acerca de las tendencias de los resultados.",
+            "Conjeturan acerca de porcentajes de ocurrencia de eventos relativos a lanzamientos de monedas o dados."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Comparar distribuciones de dos grupos, usando diagramas de puntos y de tallo y hojas.",
+          "indicadores": [
+            "Usan diagramas de puntos para responder preguntas.",
+            "Construyen diagramas de puntos para obtener distribuciones de valores de resultados.",
+            "Construyen diagramas de puntos para comparar distribuciones.",
+            "Construyen diagramas de tallo y hojas para obtener distribuciones de valores de resultados.",
+            "Construyen diagramas de tallo y hojas para comparar distribuciones."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Lectura de gráficos de barras dobles",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Leen e interpretan información presentada en gráficos de barras dobles. Por ejemplo, interpretan los resultados de una prueba de Matemática con detalle de cada pregunta. Responden preguntas sobre qué situación representa el gráfico, qué representan las barras, si los datos son exactos o aproximados, y analizan resultados por pregunta."
+        },
+        {
+          "nombre": "Interpretación de gráfico de juego entre dos amigos",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Leen e interpretan la información correspondiente al puntaje de Alberto y Francisco en cuatro partidas de cartas. Responden preguntas sobre la situación representada, el significado de las barras, el puntaje máximo posible y comparaciones entre jugadores."
+        },
+        {
+          "nombre": "Representación de datos como fracciones en un círculo",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Usan fracciones para hallar partes de círculos que representen categorías. Por ejemplo, a 40 alumnos se les preguntó su deporte favorito: 20 votaron fútbol, 10 tenis y 10 otros deportes. Dibujan un círculo y representan estos datos en forma de fracción."
+        },
+        {
+          "nombre": "Interpretación de gráfico circular de restaurante",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "Un restaurante ofrece carne de pollo, vacuno, cerdo y pescado. El gráfico muestra porcentajes de preferencias de 80 clientes. Responden: ¿qué porcentaje comió pescado?; si al otro día van 100 clientes y se mantienen los porcentajes, ¿cuántas personas piden cerdo?"
+        },
+        {
+          "nombre": "Interpretación de gráfico circular de clubes de fútbol",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "El gráfico representa los gustos de alumnos de tres cursos de 6° básico por clubes de fútbol T, B, F, G y K. Responden: ¿qué porcentaje prefiere el equipo B?; ¿qué porcentaje representan T, G y F?; si son 100 alumnos, ¿qué cantidad prefiere cada club?"
+        },
+        {
+          "nombre": "Estimación de porcentajes en gráfico circular",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "En un supermercado se venden arándanos, frambuesas, fresas y moras. Respecto del gráfico: ¿de qué manera se podría estimar el porcentaje de personas que consume cada fruta?; ¿cuáles son esos porcentajes?; si 1 000 personas compran en un día, ¿cuántas prefieren cada fruta?"
+        },
+        {
+          "nombre": "Interpretación de gráfico circular de actividad física",
+          "oas_asociados": [
+            24
+          ],
+          "descripcion": "El gráfico muestra resultados de una encuesta sobre cuántos días a la semana hacen deporte: Nunca 6, Una vez 16, Dos veces 11, Tres veces 6, Cuatro veces y más 4. Identifican categorías, número de alumnos por categoría y responden preguntas. Resuelven: Si tuviera que seleccionar a 6 estudiantes para representar al colegio en una prueba de Educación Física, ¿a quiénes seleccionaría? ¿Por qué? (Educación Física y Salud)"
+        },
+        {
+          "nombre": "Diagrama de árbol para visualizar posibilidades",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Usan un diagrama de árbol para visualizar posibilidades en experimentos. Por ejemplo: visualizan todas las posibilidades al lanzar tres monedas y al lanzar dos dados, usando un diagrama de árbol, y las registran."
+        },
+        {
+          "nombre": "Juego de cuadrícula con monedas",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Juegan a adivinar a qué color se llegará en una cuadrícula según la regla: si sale cara (C) se desplaza a la derecha; si sale sello (S) se desplaza hacia arriba. Determinan porcentajes de posibilidades de llegar a colores con diferentes números de lanzamientos y hacen conjeturas."
+        },
+        {
+          "nombre": "Conjeturas sobre lanzamiento de dados",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Conjeturan acerca de las veces que saldrá un número al lanzar un dado: 6 veces, 12 veces, 60 veces, 120 veces, 1 200 veces. Determinan fracciones correspondientes a las conjeturas."
+        },
+        {
+          "nombre": "Conjeturas sobre probabilidades con dados",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Conjeturan acerca de la posibilidad, expresada en fracciones, de que: salga un número par al lanzar un dado; salga un número impar; salga un número primo; sean 2 y 12 las sumas de los números al lanzar dos dados."
+        },
+        {
+          "nombre": "Conjeturas sobre lanzamiento de monedas",
+          "oas_asociados": [
+            23
+          ],
+          "descripcion": "Conjeturan acerca de las veces que saldrá cara o sello al lanzar varias veces una moneda: 2 veces, 10 veces, 100 veces, 1 000 veces. Determinan las fracciones conjeturadas para cara y sello al lanzar una moneda."
+        },
+        {
+          "nombre": "Construcción de diagramas de tallo y hojas",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Explican los pasos para construir un diagrama de tallo y hojas con datos dados: ordenar en orden creciente, escribir título y rotular columnas, escribir decenas bajo el tallo y unidades en las hojas."
+        },
+        {
+          "nombre": "Lectura de diagramas de tallo y hojas",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Usan diagramas de tallo y hojas para encontrar el dato menor y el mayor. Por ejemplo, usan un diagrama con el número de preguntas correctas de 15 alumnos en una prueba de Matemática de 45 preguntas."
+        },
+        {
+          "nombre": "Interpretación de diagrama de tallo y hojas de goles",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "En un diagrama de tallo y hojas están representados los goles anuales de un jugador de fútbol profesional en doce años. Determinan la diferencia entre el año con más y menos goles y el total de goles marcados."
+        },
+        {
+          "nombre": "Completar diagrama de tallo y hojas",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Los alumnos encuestan a 20 personas sobre horas semanales de televisión. Completan un diagrama de tallo y hojas con los datos recolectados."
+        },
+        {
+          "nombre": "Comparación de distribuciones con diagramas",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Usan una tabla con edades de 10 familiares de Fabián y Carla. Ordenan los datos, los representan en diagrama de tallo y hojas y los comparan usando las representaciones anteriores."
+        },
+        {
+          "nombre": "Interpretación de diagramas de puntos",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Un diagrama de puntos muestra las distribuciones de frecuencias de puntos de 20 mujeres y 20 hombres en un concurso. Responden preguntas comparativas entre ambos grupos."
+        },
+        {
+          "nombre": "Comparación de distribuciones con tablas de datos",
+          "oas_asociados": [
+            22
+          ],
+          "descripcion": "Comparan distribuciones dadas en tablas acerca de dos grupos, construyendo diagramas de puntos y de tallo y hojas. Por ejemplo, comparan las cantidades de mascotas de los niveles A y B de un colegio. (Ciencias Naturales)"
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            23
+          ],
+          "actividad_evaluacion": "1 Lanzan dos dados. Al respecto: a Formulan una estrategia para determinar todas las posibilidades de números que salen al tirar dos dados; b Determinan todas las posibilidades que se dan para que la suma de los números que salen sea 7; c Determinan cuál o cuáles son las sumas que menos se dan de los dados que salen y cuál o cuáles son las sumas que más se dan.\n2 Tiran al aire: a Cinco monedas y registran cuántas veces sale cara y cuántas sale sello; b Diez monedas y registran; c Repiten el experimento 15, 20, 30 veces; d Contestan preguntas sobre tendencias al lanzar 500 veces una moneda y sobre fracciones de caras y sellos respecto del total de tiradas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Formulan estrategias que permiten determinar correctamente las posibilidades que se dan al tirar dos dados.",
+              "Determinan correctamente posibilidades de sumas que se dan al tirar dos dados, y las que dan la menor y la mayor suma posible.",
+              "Registran correctamente resultados que dan al lanzar monedas.",
+              "Formulan conjeturas acerca de tendencias de caras y sellos que salen al lanzar monedas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            24
+          ],
+          "actividad_evaluacion": "El gráfico circular muestra las ventas de una distribuidora de arroz, azúcar, aceite y fideos en un día. a ¿Qué porcentaje de fideos vendió la distribuidora? b ¿Qué parte aproximadamente fue la venta de aceite respecto de la venta de azúcar? ¿Qué porcentaje aproximadamente representa la venta de azúcar? c Si la venta de arroz ese día fue de 250 kilogramos, ¿cuántos kilogramos aproximadamente se vendió de azúcar?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Determinan correctamente los porcentajes de ventas de arroz y fideos y aproximan los de aceite y azúcar.",
+              "Usan correctamente los porcentajes para determinar cantidades de kilogramos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [
+            22
+          ],
+          "actividad_evaluacion": "Se tiene un diagrama de tallo y hojas con tallo 2: 0 0 1 9; tallo 3: 7 8 8 9 9; tallo 4: 0 1 5 5 5 7; tallo 5: 1 1 2 3 4 5. Se pide: 1 a Ordenar los datos en orden creciente; b Identificar el dato menor, el mayor y el que se encuentre en el punto medio después de haberlos ordenado de manera creciente, explicando la forma en que se procedió y argumentando al respecto; c Encontrar el dato que más se repite. 2 Inventar un problema en contextos cercanos donde los datos tomados estén dados en el diagrama.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ordenan correctamente datos en un diagrama de tallo y hojas.",
+              "Identifican posiciones de los datos en un diagrama de tallo y hojas.",
+              "Explican procedimientos para identificar posiciones en diagramas de tallo y hojas.",
+              "Inventan problemas relativos a datos dados en diagramas de tallo y hojas.",
+              "Demuestran comprensión acerca de los diagramas de tallo y hojas al formular preguntas atingentes."
+            ]
+          }
+        }
+      ],
+      "adecuaciones_dua": {}
+    }
+  }
+]

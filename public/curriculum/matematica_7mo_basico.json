@@ -1,0 +1,981 @@
+[
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad, los estudiantes toman el primer contacto con los números negativos. Reconocen que son necesarios para expresar cantidades de la vida diaria, como temperaturas bajo cero grados, deudas, niveles bajo del mar, etc. Trabajan diferentes representaciones y realizan las dos operaciones básicas: adición y sustracción números enteros. Incluyen la adición y sustracción de fracciones, la multiplicación y la división de fracciones y números decimales. Para que entiendan estas operaciones, se continúa con el trabajo concreto que ha caracterizado a la educación básica, considerando las nociones de «operador» y «repartición» para la multiplicación y la división de fracciones. Usan diferentes estrategias para resolver problemas que involucren números enteros. Se amplía el concepto de porcentaje como referente universal para expresar y comparar partes de un todo y como operador para determinar partes del todo. Los estudiantes se aproximan a la noción de potencia, comenzando con potencias de base diez y exponente natural; también se introduce el exponente negativo, pero como notación y de manera inicial. La noción de potencia con todas sus propiedades se trabaja de manera progresiva de 7° básico a 2° medio. Se espera que utilicen este concepto para expresar números grandes (eventualmente pequeños), con lo cual se dan los indicios de la notación científica.",
+      "conocimientos_previos": [
+        "Adición y sustracción de números naturales.",
+        "Adición y sustracción de fracciones.",
+        "Adición y sustracción de decimales.",
+        "Razón."
+      ],
+      "palabras_clave": [
+        "Números enteros negativos",
+        "adición y sustracción de números enteros negativos",
+        "multiplicación y división de fracciones",
+        "multiplicación y división de decimales",
+        "porcentaje",
+        "base",
+        "exponente",
+        "notación científica"
+      ],
+      "conocimientos": [
+        "Adición y sustracción de números enteros.",
+        "Multiplicación y división de fracciones.",
+        "Multiplicación y división de decimales.",
+        "Porcentaje.",
+        "Potencias de base 10 y exponente natural."
+      ],
+      "habilidades": [
+        "Resolver problemas utilizando estrategias tales como: destacar la información dada; usar un proceso de ensayo y error sistemático; aplicar procesos reversibles; descartar información irrelevante; usar problemas similares. (OA a)",
+        "Usar modelos, realizando cálculos, estimaciones y simulaciones, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)",
+        "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para enunciados y situaciones en contextos diversos (tablas, gráficos, recta numérica, entre otros). (OA k)",
+        "Representar y ejemplificar, utilizando analogías, metáforas y situaciones familiares para resolver problemas. (OA m)"
+      ],
+      "actitudes": [
+        "OA A: Abordar de manera flexible y creativa la búsqueda de soluciones a problemas de la vida diaria, de la sociedad en general, o propios de otras asignaturas.",
+        "OA C: Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales.",
+        "OA D: Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Mostrar que comprenden la adición y la sustracción de números enteros: Representando los números enteros en la recta numérica. Representándolas de manera concreta, pictórica y simbólica. Dándole significado a los símbolos + y – según el contexto (por ejemplo: un movimiento en una dirección seguido de un movimiento equivalente en la posición opuesta no representa ningún cambio de posición). Resolviendo problemas en contextos cotidianos.",
+          "indicadores": [
+            "Relacionan cantidades de la vida diaria con números enteros; por ejemplo: en el ámbito de temperaturas, cuentas corrientes, niveles de profundidad en el mar o en minas subterráneas, cargas eléctricas, líneas de tiempo, superávit y déficit, balances financieros, etc.",
+            "Posicionan y representan números enteros positivos y enteros negativos en escalas, como la recta numérica y en diagramas, como en termómetros.",
+            "Explican la adición y la sustracción de números enteros con procesos reales de la vida diaria; por ejemplo: aumento y baja de temperaturas, depósito y retiro de dinero en cuentas, etc.",
+            "Representan la adición de números enteros de manera concreta (rebajar una deuda, reducir un déficit, disminuir la profundidad, etc.), pictórica (recta numérica) y simbólica.",
+            "Distinguen entre el signo de números enteros y el símbolo de la adición o la sustracción.",
+            "Resuelven problemas en contextos cotidianos, de manera mental y de manera algebraica."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Explicar la multiplicación y la división de fracciones positivas: Utilizando representaciones concretas, pictóricas y simbólicas. Relacionándolas con la multiplicación y la división de números decimales.",
+          "indicadores": [
+            "Explican la regla de la multiplicación de fracciones, utilizando representaciones pictóricas.",
+            "Aplican la regla de la multiplicación de fracciones en ejercicios rutinarios.",
+            "Representan la división de una fracción por otra fracción con material concreto o en la recta numérica.",
+            "Aplican las reglas de la división de fracciones en ejercicios rutinarios.",
+            "Establecen la relación entre la multiplicación de un número decimal (fracción) por un número natural.",
+            "Descubren la «regla» de división entre números decimales (amplificar el divisor para tener un número natural).",
+            "Representan concretamente la división por un número decimal; por ejemplo: determinar cuántos vasos de 0,25 l se necesita para repartir el contenido de una botella de 0,75 l."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Resolver problemas que involucren la multiplicación y la división de fracciones y de decimales positivos de manera concreta, pictórica y simbólica (de forma manual y/o con software educativo).",
+          "indicadores": [
+            "Descubren el efecto que tienen los factores 10, 100 y 1 000 en la multiplicación y la división de números decimales.",
+            "Utilizan diferentes metáforas (como repartición, cubrimiento) para describir la división entre fracciones.",
+            "Resuelven problemas que involucran la división de números decimales o la multiplicación de fracciones, de manera concreta, pictórica y simbólica.",
+            "Crean problemas de la vida cotidiana que se modelan y se resuelven con operaciones matemáticas en el ámbito de números enteros y fracciones.",
+            "Identifican procedimientos de la vida diaria con operaciones matemáticas; por ejemplo: agregar y reducir con sumar y restar, repartir con dividir, etc.",
+            "Crean problemas a partir de datos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Mostrar que comprenden el concepto de porcentaje: Representándolo de manera pictórica. Calculando de varias maneras. Aplicándolo a situaciones sencillas.",
+          "indicadores": [
+            "Representan el porcentaje de manera concreta, pictórica y simbólica.",
+            "Relacionan porcentajes conocidos con sus respectivas divisiones; por ejemplo: calcular el 25% de un valor es lo mismo que dividirlo por 4; el 20% de un valor es lo mismo que dividirlo por 5, etc.",
+            "Calculan mentalmente el porcentaje de un valor, aplicando la estrategia de la división o de la multiplicación.",
+            "Resuelven problemas que involucran porcentajes en situaciones de la vida real (IVA, ofertas, préstamos, etc.)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Utilizar potencias de base 10 con exponente natural: Usando los términos potencia, base, exponente, elevado. Definiendo y usando el exponente 0 en el sistema decimal. Expresando números naturales en notación científica (sistema decimal). Resolviendo problemas, usando la notación científica.",
+          "indicadores": [
+            "Representan potencias de base 10 de manera concreta, pictórica y simbólica.",
+            "Reconocen potencias como productos de factores iguales, identificando la base y el exponente.",
+            "Transforman potencias de base 10 en números naturales y viceversa.",
+            "Descomponen números en potencias de base 10.",
+            "Identifican los valores posicionales del sistema decimal como potencias y completan tablas posicionales.",
+            "Describen la relación entre los números escritos en sistema métrico decimal y su notación científica.",
+            "Resuelven problemas que involucra notación científica."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad OA 1: Números enteros en la vida diaria",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes describen situaciones en las cuales se utilizan números enteros negativos; por ejemplo: temperaturas, pisos de los estacionamientos subterráneos, tableros de ascensor que indican los pisos, cuentas corrientes, niveles sobre y debajo el nivel del mar, superávit-déficit, etc. Leen e identifican situaciones que representan números enteros. Crean juegos con puntos a favor o en contra. Presentan imágenes que tengan mediciones con números negativos. Relacionan una situación de la vida cotidiana con medidas que se escriben con números negativos."
+        },
+        {
+          "nombre": "Actividad OA 1: Zona horaria y números enteros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Analizan situaciones que involucran números enteros positivos y negativos; por ejemplo: la zona horaria en nuestro planeta. El mapa muestra los husos y las zonas horarias. Los alumnos responden preguntas sobre diferencia horaria entre países e interpretan el signo negativo en el mapa. Relación con Historia, Geografía y Ciencias Sociales OA C y OA D de 7° básico."
+        },
+        {
+          "nombre": "Actividad OA 1: Comparación y orden de números enteros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes comparan situaciones en que puedan establecer un orden de números enteros; por ejemplo: en juegos, problemas de deuda o temperaturas. Crean un tablero en que cada número escrito en la celda es la altura con respecto al nivel del mar. Ordenan datos como deudas o temperaturas. Representan la escala de un termómetro «acostado» e identifican temperaturas."
+        },
+        {
+          "nombre": "Actividad OA 1: Adición en la recta numérica",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Analizan representaciones de la adición de números enteros usando la recta numérica. Generalizan el uso de signos en la adición, apoyándose con una recta numérica. Reconocen el inverso aditivo en una recta numérica. Completan con el número entero necesario para que se cumpla la igualdad. Escriben para cada recta un problema asociado a la vida diaria."
+        },
+        {
+          "nombre": "Actividad OA 1: Estados de cuenta bancaria",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "A un cliente le llega un estado de cuenta. Completan las casillas sombreadas en la tabla, ayudados por las informaciones del saldo actual, de las transacciones y de los saldos finales en una cuenta bancaria. Resuelven problemas asociados a lo cotidiano como saldos bancarios, cambios de temperatura, diferencias de altitud."
+        },
+        {
+          "nombre": "Actividad OA 1: Juego de cartas con enteros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "En grupos de 3 alumnos, participan en un juego de cartas para operar con la adición de enteros y su inverso aditivo. Las cartas se reparten de forma aleatoria, seis para cada uno. El primer jugador pone una carta y los otros dos deben poner obligatoriamente una carta cada uno, de modo que la suma de los números de las cartas anule la que puso el primer jugador."
+        },
+        {
+          "nombre": "Actividad OA 1: Crucigrama matemático",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Confeccionan un «crucigrama matemático» para operar con la adición de enteros. El crucigrama tiene el mismo resultado si se suman los números que están escritos de manera horizontal (fila) que si se suman los que están escritos de manera vertical (columna). Crean un crucigrama con 8 números y lo intercambian con sus compañeros."
+        },
+        {
+          "nombre": "Actividad OA 2: Multiplicación de fracciones en cuadrícula",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes utilizan la representación pictórica mediante una cuadrícula para mostrar la multiplicación de fracciones. Dividen un papel cuadriculado para multiplicar una fracción por un número natural. Completan y contestan oraciones sobre división de fracciones. Utilizan la recta numérica para explicar la división."
+        },
+        {
+          "nombre": "Actividad OA 3: Multiplicación por 10, 100, 1000",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Resuelven problemas sobre qué ocurre cuando se multiplica un decimal por el número natural 10, 100, 1 000. Completan una tabla y responden preguntas sobre la posición de la coma. Crean una lluvia de ideas relacionadas con las operaciones, los números y los verbos relacionados con acciones matemáticas."
+        },
+        {
+          "nombre": "Actividad OA 3: Problemas de peso en planetas",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Resuelven problemas sobre el peso en diferentes planetas (Urano, Saturno y Marte) usando multiplicación de decimales. Formulan preguntas a partir de situaciones dadas y sus posibles resultados. Resuelven problemas de repartición de medicinas, bebidas, paneles de construcción."
+        },
+        {
+          "nombre": "Actividad OA 3: División de decimales",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Representan el desplazamiento de la coma en divisiones por números decimales mediante las fracciones correspondientes. Resuelven problemas de adoquinado de un patio rectangular. Completan secuencias de multiplicación sucesiva de decimales."
+        },
+        {
+          "nombre": "Actividad OA 4: Representación pictórica del porcentaje",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Representan de manera pictórica el concepto de porcentaje; dividen un cuadrado en 100 partes, representan distintos porcentajes y escriben qué significa. Crean un mural con los porcentajes más utilizados (10%, 20%, 25%, 50%, 75%). Escriben la secuencia que representa la relación entre porcentaje de forma pictórica y su representación simbólica, sea en fracción o decimal."
+        },
+        {
+          "nombre": "Actividad OA 4: Cálculo mental de porcentajes",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Realizan cálculo mental de porcentajes; por ejemplo: calcular el 50% del precio de un abrigo que cuesta $17 000 es lo mismo que dividir por 2. Resuelven utilizando cálculo mental diversos porcentajes. Determinan el porcentaje del avance de la descarga de un programa. Resuelven problemas con IVA."
+        },
+        {
+          "nombre": "Actividad OA 5: Potencias de base 10 y zoom satelital",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Con programas geográficos de internet, se puede ver imágenes de la Tierra tomados por satélites. Además, tienen un zoom para aumentar el tamaño por factores de 10. El factor de aumentos después de varios pasos se puede expresar por potencias de 10. Escriben como potencia el factor total después de varios pasos de aumento. Completan la tabla de valores posicionales del sistema decimal."
+        },
+        {
+          "nombre": "Actividad OA 5: Cálculo de áreas y volúmenes con potencias",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Calculan y expresan el área de cuadrados y el volumen de cubos con potencias. Escriben números naturales con potencias de base 10. Usan la notación científica para escribir números grandes. Investigan la historia del Universo en años y comentan sobre los beneficios de escribir en potencias de base diez."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Adición y sustracción de números enteros",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "Los estudiantes consideran información sobre profundidades en el mar (Océano Pacífico 11 022 m, Océano Atlántico 9 219 m, Océano Índico 7 455 m, Mar del Norte 6 857 m). Responden preguntas sobre diferencias entre los puntos más profundos y la diferencia entre la montaña más alta del mundo (Everest, 8 848 m) y el punto más profundo del océano. Comentan con sus compañeros el resultado y la forma de expresarlo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Usan adecuadamente el dibujo presentado.",
+              "Traspasan la información a números enteros negativos o positivos según corresponda.",
+              "Calculan la diferencia entre dos números enteros negativos.",
+              "Consideran los cuatro puntos más profundos para realizar las diferencias propuestas en la primera pregunta.",
+              "Al responder la segunda pregunta, reconocen que la diferencia entre un número positivo y un número negativo es lo mismo que la suma de los números.",
+              "Expresan sus respuestas de formas variadas, utilizando enteros positivos e indicando con palabras qué es bajo el nivel del mar o empleando el signo menos para indicar metros bajo el nivel del mar."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Concepto de porcentaje",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Trabajo en pares/en grupo. Cada botella contiene una mezcla de fruta y de agua. Los alumnos determinan la cantidad de fruta en cm³ que contiene cada una de las botellas presentadas en la figura (Frutoso, Néctar, Diluído, Muy diluído). Calculan la cantidad de fruta en cm³ que hay en las botellas de jugo de ½ litro y de 1½ litros. Comparan con botellas de jugos de frutas del supermercado y comentan con sus compañeros.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Expresan la cantidad de frutas en cm³.",
+              "Realizan cálculos mentales o algebraicos, según sea el caso.",
+              "Ordenan la información de manera adecuada para considerar todos los casos que se plantean en el ejercicio.",
+              "Calculan el porcentaje, combinando información de botellas de un litro para transferirla a las botellas de medio litro.",
+              "Averiguan información sobre el porcentaje de fruta de botellas de jugo de fruta del supermercado, determinando cuál es el porcentaje más común entre ellas y la relación entre el precio y el porcentaje."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Multiplicación y división de fracciones",
+          "oas_evaluados": [
+            2,
+            3
+          ],
+          "actividad_evaluacion": "Los alumnos responden preguntas: ¿Cuántos vasos de ¼ de litro se puede llenar con 2½ litros de jugo de frutas? ¿Cuántas mesas de ½ m de largo caben en una pieza (pegadas a una de las paredes) que mide 3½ m? Hay que vaciar 2½ litros de jugo de frutas en botellas de ¾ de litro. ¿Cuántas botellas se necesita?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican la operación involucrada en el problema.",
+              "Consideran las tres formas de resolver el problema: concreta, pictórica y simbólica.",
+              "Multiplican o dividen de manera adecuada.",
+              "Explican el uso de la operación elegida y la forma de resolver el problema."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad, los estudiantes toman el primer contacto con la noción de variable y lo hacen por medio de generalizaciones de cantidades; por ejemplo: el doble de una cantidad desconocida. Reconocen que las expresiones algebraicas son una nueva forma de expresarse y que tienen su equivalente en el lenguaje natural hablado. Se comienza con un lenguaje simbólico que usarán en argumentaciones y demostraciones en cursos superiores. La reducción de términos semejantes se hace para que puedan resolver problemas mediante sistemas de ecuaciones en cursos superiores, para lo cual trabajan con expresiones algebraicas sencillas. Además, se espera que comprendan la proporcionalidad directa e inversa, utilizando diferentes formas de representación, identificando diferencias en contextos cotidianos, considerando situaciones en que hay una relación y cuando la situación cumple con las condiciones de proporcionalidad. También profundizan en el trabajo con ecuaciones; en 5º básico, las ecuaciones e inecuaciones solo se ejercitaron de manera concreta en el ámbito de los números naturales, pero no se incluyó un tratamiento simbólico. En esta unidad, se aumenta el ámbito numérico y su tratamiento algebraico simbólico; por ende, se amplía el lenguaje matemático. Asimismo, usan diferentes representaciones para resolver problemas que pueden modelarse por medio de ecuaciones e inecuaciones.",
+      "conocimientos_previos": [
+        "Suma y sustracción de números enteros.",
+        "Operaciones de fracciones y de decimales positivos.",
+        "Ecuaciones e inecuaciones sencillas en N.",
+        "Concepto de porcentaje.",
+        "Potencias de base 10 y exponente natural."
+      ],
+      "palabras_clave": [
+        "Variable",
+        "argumentación",
+        "expresión algebraica",
+        "reducción de expresiones algebraicas",
+        "proporcionalidad directa",
+        "proporcionalidad inversa",
+        "ecuaciones e inecuaciones"
+      ],
+      "conocimientos": [
+        "Expresiones algebraicas.",
+        "Reducción de expresiones algebraicas.",
+        "Proporciones directas e inversas.",
+        "Ecuaciones e inecuaciones lineales de la forma ax = b; x/a = b (a, b y c ∈ N; a ≠ 0); ax < b; ax > b; x/a < b; x/a > b (a, b y c ∈ N; a ≠ 0)."
+      ],
+      "habilidades": [
+        "Evaluar procedimientos y comprobar resultados propios y de otros, de un problema matemático. (OA b)",
+        "Explicar y fundamentar: soluciones propias y los procedimientos utilizados; resultados mediante definiciones, axiomas, propiedades y teoremas. (OA e)",
+        "Seleccionar y ajustar modelos para resolver problemas asociados a ecuaciones e inecuaciones de la forma ax + b >, <, = c, con a, b, c ∈ N, comparando dependencias lineales. (OA i)",
+        "Evaluar la pertinencia de modelos: en relación con el problema presentado; considerando sus limitaciones. (OA j)",
+        "Relacionar y contrastar información entre distintos niveles de representación. (OA l)"
+      ],
+      "actitudes": [
+        "OA C: Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales.",
+        "OA E: Mostrar una actitud crítica al evaluar las evidencias e informaciones matemáticas y valorar el aporte de los datos cuantitativos en la comprensión de la realidad social.",
+        "OA F: Usar de manera responsable y efectiva las tecnologías de la comunicación en la obtención de información, dando crédito al trabajo de otros y respetando la propiedad y la privacidad de las personas."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Utilizar el lenguaje algebraico para generalizar relaciones entre números, para establecer y formular reglas y propiedades y construir ecuaciones.",
+          "indicadores": [
+            "Representan patrones de manera pictórica y simbólica.",
+            "Relacionan expresiones algebraicas con patrones dados.",
+            "Expresan patrones geométricos con términos algebraicos; por ejemplo: «tres unidades al norte (n) y dos unidades al este (e)» con 3n + 2e, relacionando con puntos y gráficas en el plano cartesiano.",
+            "Relacionan expresiones del lenguaje natural con términos algebraicos; por ejemplo: «el doble de…» o «la mitad de…» con 2x o x/2, etc.",
+            "Representan expresiones algebraicas sencillas de manera concreta (metáfora de máquinas), pictórica (medidas de figuras) y simbólica.",
+            "Resuelven problemas de la vida cotidiana que pueden ser resueltos con ecuaciones."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Reducir expresiones algebraicas, reuniendo términos semejantes para obtener expresiones de la forma ax + by + cz; (a, b, c ∈ Z).",
+          "indicadores": [
+            "Representan la adición y la sustracción de variables por la unión y la separación de símbolos pictóricos.",
+            "Representan la conmutatividad y la asociatividad de la adición en forma concreta o pictórica.",
+            "Reducen expresiones algebraicas en perímetros de figuras geométricas.",
+            "Aplican la conmutatividad y la asociatividad de la adición para reducir expresiones algebraicas."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Demostrar que comprenden las proporciones directas e inversas: Realizando tablas de valores para relaciones proporcionales. Graficando los valores de la tabla. Explicando las características de la gráfica. Resolviendo problemas de la vida diaria y de otras asignaturas.",
+          "indicadores": [
+            "Reconocen cambios en la vida cotidiana que se desarrollan en forma directamente proporcional.",
+            "Completan y elaboran tablas de valores que pertenecen a proporcionalidades directas.",
+            "Confeccionan gráficos que pertenecen a proporcionalidades directas.",
+            "Reconocen cambios en la vida cotidiana que se desarrollan en forma inversamente proporcional.",
+            "Explican la diferencia entre proporcionalidad directa e inversa.",
+            "Reconocen la proporcionalidad directa e inversa en tablas de valores, gráficos y situaciones reales.",
+            "Resuelven problemas mediante la proporcionalidad correspondiente."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Modelar y resolver problemas diversos de la vida diaria y de otras asignaturas, que involucran ecuaciones e inecuaciones lineales de la forma: ax = b; x/a = b (a, b y c ∈ Z; a ≠ 0); ax < b; ax > b; x/a < b; x/a > b (a, b y c ∈ N; a ≠ 0).",
+          "indicadores": [
+            "Representan transformaciones equivalentes mediante modelos concretos de balanzas: agregar o sacar objetos.",
+            "Resuelven ecuaciones e inecuaciones en ejercicios rutinarios, aplicando transformaciones equivalentes.",
+            "Modelan situaciones de la vida diaria con ecuaciones de la forma ax = b o x/a = b, a ≠ 0.",
+            "Modelan situaciones de la vida diaria con inecuaciones de la forma ax < b; ax > b; x/a < b; x/a > b, a ≠ b, a ≠ 0.",
+            "Representan la solución de las ecuaciones o inecuaciones en la recta numérica."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad OA 6: Expresiones algebraicas desde el mapa",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En el mapa, las calles que van de abajo hacia arriba tienen la dirección sur-norte y las calles que van de izquierda a derecha tienen dirección oeste-este. El desplazamiento de un lugar al otro se representa mediante un término algebraico. Elaboran los términos algebraicos en las dos variables para desplazamientos entre diferentes puntos."
+        },
+        {
+          "nombre": "Actividad OA 6: Entradas de fútbol y restaurantes",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Para un partido del fútbol en Chile, se dispone de tres tipos de entradas. Elaboran una expresión algebraica que determina los ingresos totales por la venta de entradas. En diversos restaurantes, el menú tiene cuatro platos y cada uno ofrece una variedad de ofertas; elaboran una expresión algebraica que determina el total de las ofertas."
+        },
+        {
+          "nombre": "Actividad OA 6: El doble y la mitad",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Representan el concepto de «el doble» y «la mitad», de manera concreta, en lenguaje natural y en lenguaje simbólico. Dibujan un objeto cualquiera y también dibujan un tercio de este. Representan «el triple de una cantidad cualquiera» de manera pictórica y simbólica. Expresan de manera simbólica diversas expresiones como «cualquier número disminuido en 12» o «triplique un número cualquiera»."
+        },
+        {
+          "nombre": "Actividad OA 6: Encomiendas y máquinas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Un servicio de encomiendas prepara un encargo para diversos eventos. Traducen el dibujo a una expresión algebraica. Elaboran una expresión matemática para un encargo de 485 regalos iguales. Completan los dibujos de máquinas de ingreso y egreso con términos verbales, los términos matemáticos respectivos y los egresos que resultan."
+        },
+        {
+          "nombre": "Actividad OA 6: Tablas de doble entrada",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Elaboran términos en dos variables vinculados con situaciones de la vida cotidiana. Confeccionan tablas de doble entrada para cada situación y calculan varios resultados, como el promedio de los ingresos mensuales, la diferencia entre temperatura máxima y mínima, la cuenta total de un almuerzo con propina, el precio final de una venta con descuento."
+        },
+        {
+          "nombre": "Actividad OA 7: Reducción de términos semejantes",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Resuelven problemas con objetos redondos, triángulos y cuadrángulos. Elaboran tres expresiones algebraicas que representan la cantidad de los objetos iguales. Reducen términos semejantes al calcular el perímetro de figuras geométricas. Usan paréntesis en expresiones algebraicas. Expresan el volumen del paralelepípedo."
+        },
+        {
+          "nombre": "Actividad OA 8: Proporcionalidad directa – Aleaciones y tablas",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Un latón es una aleación metálica de zinc con cobre. Para confeccionar una tubería de latón, una fábrica combina 4 partes de zinc en 21 partes de cobre. Resuelven problemas de proporcionalidad. Determinan si frases sobre relaciones son verdaderas o falsas. Dados una tabla y un dibujo, redactan la relación que existe entre ambos en una frase y grafican los valores."
+        },
+        {
+          "nombre": "Actividad OA 8: Proporcionalidad inversa",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Relacionan cada cambio con el efecto resultante si la relación es inversa (unen con flechas). Identifican y corrigen el error en un gráfico que representa la relación entre el largo y el ancho de rectángulos con área de 12 cm². Deciden si la relación entre la cantidad de postes del alumbrado público y la distancia entre ellos es inversamente proporcional."
+        },
+        {
+          "nombre": "Actividad OA 8: Gráficos y tablas de proporcionalidad",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Elaboran, completan y corrigen tablas de valores directamente proporcionales (pasas y precio, minutos y cobro por celular). Dada una tabla con factores de multiplicación, ponen una columna entre números, determinan el factor constante y grafican los valores. Resuelven problemas con gráficos de relación masa-largo de alambre."
+        },
+        {
+          "nombre": "Actividad OA 9: Balanzas y ecuaciones",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Usan balanzas para resolver ecuaciones que se pueden representar por medio de una balanza en equilibrio. Para diversas balanzas, expresan la masa en términos algebraicos y determinan la masa de las cajitas y la cantidad de bolitas que deben estar dentro de ellas. Relacionan las variaciones de la balanza con operaciones aritméticas en las ecuaciones."
+        },
+        {
+          "nombre": "Actividad OA 9: Ecuaciones en la recta numérica",
+          "oas_asociados": [
+            9
+          ],
+          "descripcion": "Resuelven ecuaciones mediante operaciones inversas a la adición y a la multiplicación. Usan la recta numérica: ponen una ficha encima de un número de la recta numérica y determinan concretamente la cantidad de saltos realizados. Resuelven ecuaciones con procedimientos formales (transformaciones equivalentes). Resuelven problemas de paseo de curso, viaje en avión."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Lenguaje algebraico y patrones",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Sebastián está haciendo un trabajo con cajas de cartón y decide ponerlas de tal forma que se vea como una escalera de peldaños separados. Los estudiantes completan una tabla de cantidad de cajas, caras que no se ven y caras que se ven. Representan en un diagrama de barras la cantidad de caras. Determinan la regla en que aumentan las caras no visibles. Encuentran una expresión algebraica que permita determinar las caras no visibles cuando se tiene x cajas de cartón.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Utilizan representaciones pictóricas (propias) para la secuencia de peldaños.",
+              "Completan la tabla de manera adecuada y aplican diferentes estrategias para lograrlo.",
+              "Transitan desde la representación pictórica (propias o de los gráficos) a una simbólica.",
+              "Determinan la regla de manera intuitiva o algebraica.",
+              "Reconocen que una caja de cartón tiene 6 caras, que dos están ocultas y 4 siempre se ven.",
+              "Utilizan la observación anterior para determinar la expresión algebraica.",
+              "Utilizan el gráfico para encontrar relaciones y visualizarlas en el gráfico."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Proporcionalidad directa e inversa",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes clasifican diversas situaciones y representaciones en proporcionales directas, proporcionales inversas y relaciones. Se presentan situaciones como: 2 kg de manzanas cuestan $..., tiempo de trabajo y remuneraciones, gráficos de precios, etc. Responden en las situaciones que se plantean como preguntas y argumentan sobre su clasificación.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Realizan cálculos apropiados para la clasificación.",
+              "Determinan las situaciones o representaciones que corresponden a relaciones.",
+              "Argumentan con las definiciones correspondientes y, en algunos casos, utilizan el sentido común o experiencias propias.",
+              "Reconocen de manera inmediata el gráfico correspondiente a la proporcionalidad directa."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Modelar con ecuaciones",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "En el norte del país hay muchas plantaciones de uvas. Las plantas se disponen en filas y normalmente en una misma fila hay la misma cantidad de plantas. Los estudiantes explican cómo podrían determinar la cantidad de plantas en una plantación donde hay 18 filas plantadas. Encuentran condiciones sobre los datos presentados para que pueda encontrar un número determinado de plantas. Cambian información con su compañero y concluyen sobre la cantidad de plantas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Determinan condiciones sobre los datos e infieren que el problema puede tener varios resultados.",
+              "Encuentran la ecuación asociada al problema, agregando que depende de la cantidad de plantas que haya (alcancen) en una fila.",
+              "Deciden sobre el largo de una fila, kilómetro, 200 metros, 1½ kilómetro.",
+              "Utilizan diferentes medios para encontrar la medida del intervalo entre planta y planta.",
+              "Utilizan la información obtenida para determinar un número de plantas para esa viña.",
+              "Intercambian información e ideas para resolver el problema.",
+              "Obtienen un intervalo posible y cercano a la realidad, sobre la cantidad de plantas que podrían existir en una viña con 18 filas."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "En esta unidad, los estudiantes descubren relaciones entre la suma de ángulos interiores y exteriores de polígonos y conjeturan sobre el área de superficies de triángulos, paralelogramos y trapecios. Trabajan con el círculo y descubren de manera experimental la relación entre el diámetro y el perímetro, encontrando una estimación de pi (aproximadamente 3) por medio de mediciones concretas. Usan este nuevo conocimiento en la fórmula del área del círculo, en la resolución de problemas relacionados con geometría y en contexto con la construcción, el diseño y otros temas de la vida real. El conocimiento de pi se trata como constante en las fórmulas del perímetro y el área de un círculo. Los estudiantes comprenden que la circunferencia es un lugar geométrico, cuya característica radica en los puntos que están a igual distancia del centro; emplean este concepto para construir rectas perpendiculares, paralelas, puntos medios y bisectrices con regla y compás, y triángulos y cuadriláteros congruentes. También se incorpora la noción de vectores representados en el plano cartesiano por medio de juegos de posición; como usarán este concepto frecuentemente, el primer acercamiento debe ser progresivo y lúdico.",
+      "conocimientos_previos": [
+        "Construcción de triángulos.",
+        "Área de superficie de cubos y paralelepípedos.",
+        "Traslaciones, reflexiones y rotaciones.",
+        "Ángulos agudos, obtusos, rectos extendidos y completos.",
+        "Suma de los ángulos interiores de un triángulo.",
+        "Suma de los ángulos interiores de un cuadrilátero."
+      ],
+      "palabras_clave": [
+        "Suma de ángulos",
+        "polígonos",
+        "paralelogramos",
+        "trapecios",
+        "pi",
+        "perímetro del círculo",
+        "áreas de superficies",
+        "construcción",
+        "vectores"
+      ],
+      "conocimientos": [
+        "Área de triángulos, paralelogramos y trapecios.",
+        "Perímetro del círculo.",
+        "Área del círculo.",
+        "Vectores."
+      ],
+      "habilidades": [
+        "Fundamentar conjeturas, dando ejemplos y contraejemplos. (OA f)",
+        "Evaluar la argumentación de otros, dando razones. (OA g)",
+        "Describir relaciones y situaciones matemáticas de manera verbal y usando símbolos. (OA d)",
+        "Explicar y fundamentar: soluciones propias y los procedimientos utilizados; resultados mediante definiciones, axiomas, propiedades y teoremas. (OA e)",
+        "Usar modelos, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)"
+      ],
+      "actitudes": [
+        "OA C: Demostrar interés, esfuerzo, perseverancia y rigor frente a la resolución de problemas y la búsqueda de nuevas soluciones para problemas reales.",
+        "OA D: Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas.",
+        "OA B: Demostrar curiosidad, interés por resolver desafíos matemáticos, con confianza en las propias capacidades, incluso cuando no se consigue un resultado inmediato."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Descubrir relaciones que involucran ángulos exteriores o interiores de diferentes polígonos.",
+          "indicadores": [
+            "Reconocen polígonos en las caras y en las secciones de poliedros y de prismas, en cruces de varillas, sombras, etc.",
+            "Verbalizan reglas para obtener polígonos regulares.",
+            "Estiman la suma de los ángulos interiores en polígonos y verifican los resultados, midiéndolos.",
+            "Muestran geométricamente, mediante la descomposición en triángulos, el patrón de la suma de los ángulos interiores en polígonos.",
+            "Determinan la medida del ángulo del centro de un polígono regular para encontrar la medida del ángulo interior mediante la construcción de un triángulo.",
+            "Aplican el concepto de ángulo interior de polígonos a situaciones concretas o pictóricas.",
+            "Resuelven problemas geométricos, aplicando el patrón de la suma de ángulos interiores y exteriores."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Mostrar que comprenden el círculo: Describiendo las relaciones entre el radio, el diámetro y el perímetro del círculo. Estimando de manera intuitiva el perímetro y el área de un círculo. Aplicando las aproximaciones del perímetro y del área en la resolución de problemas geométricos de otras asignaturas y de la vida diaria. Identificándolo como lugar geométrico.",
+          "indicadores": [
+            "Identifican la línea del ecuador, paralelos y meridianos en modelos esféricos.",
+            "Miden el diámetro y el perímetro de objetos redondos, como vasos con forma cilíndrica, latas, corchos, etc.",
+            "Calculan el cociente entre el perímetro y el diámetro de una circunferencia y comparan el resultado con π.",
+            "Aplican la fórmula P = d • π en ejercicios rutinarios y no rutinarios, para resolver problemas que involucran perímetros de círculos, como ecuador, paralelos y meridianos.",
+            "Estiman el área del círculo entre 2r² y 4r², descubriendo que también resulta el mismo valor aproximado de a ≈ r² • 3.",
+            "Aplican la fórmula A = r² • π (con π ≈ 3,14) en ejercicios rutinarios y en la solución de problemas que involucran áreas de círculos.",
+            "Resuelven problema de la vida diaria que implican el cálculo de área de un círculo; por ejemplo: los cultivos en círculos para el ahorro de agua."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Construir objetos geométricos de manera manual y/o con software educativo: Líneas, como las perpendiculares, las paralelas, las bisectrices y alturas en triángulos y cuadriláteros. Puntos, como el punto medio de un segmento, el centro de gravedad, el centro del círculo inscrito y del circunscrito. Triángulos y cuadriláteros congruentes.",
+          "indicadores": [
+            "Aplican la propiedad del círculo como lugar geométrico para resolver problemas concretos; por ejemplo: la cobertura de una radioemisora, etc.",
+            "Construyen la recta perpendicular a un punto en una recta y reconocen que la recta perpendicular a un punto fuera de ella, tiene la distancia mínima entre el punto y la recta.",
+            "Experimentan, concretamente o en forma pictórica, que doblando dos veces en dirección perpendicular, se continúa paralelamente a la dirección original, y aplican esto para construir paralelas de una recta.",
+            "Construyen la altura en un triángulo isósceles, observando que lo divide en dos triángulos simétricos, y aplican este procedimiento para construir bisectrices.",
+            "Aplican la construcción para resolver problemas de la vida diaria, mediante líneas perpendiculares, paralelas, bisectriz, triángulos y cuadriláteros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Desarrollar y aplicar la fórmula del área de triángulos, paralelogramos y trapecios.",
+          "indicadores": [
+            "Dibujan cuadriláteros a partir de un triángulo dado.",
+            "Reconocen que el área de un triángulo se obtiene por dividir un cuadrilátero por una de sus diagonales.",
+            "Transforman paralelogramos en rectángulos de la misma altura por medio de recortes o dibujos, reconociendo que se mantiene la medida del área.",
+            "Formulan verbal y simbólicamente la regla para calcular el área de paralelogramos.",
+            "Descomponen concreta o pictóricamente un paralelogramo en dos triángulos con el mismo contenido, verificando que el área de un triángulo se calcula como medio paralelogramo con la misma base y altura.",
+            "Recortan o dibujan dos trapecios iguales y confeccionan o dibujan un paralelogramo con la misma altura y el doble del área, obteniendo la fórmula del área de un trapecio.",
+            "Resuelven problemas geométricos y de la vida cotidiana, cuya resolución requiere calcular áreas de triángulos, paralelogramos y trapecios."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Identificar puntos en el plano cartesiano, usando pares ordenados y vectores de forma concreta (juegos) y pictórica.",
+          "indicadores": [
+            "Construyen segmentos y figuras en los cuatro cuadrantes del plano cartesiano, usando coordenadas enteras.",
+            "Dibujan figuras 2D a partir de los pares de coordenadas dadas, y leen y comunican las coordenadas de figuras 2D dadas en el sistema de coordenadas.",
+            "Conjeturan la forma y la ubicación de figuras 2D (rectángulo, cuadrado, paralelogramo y trapecio) a partir de los cuatro pares de coordenadas dadas, y las verifican pictóricamente.",
+            "Dibujan figuras 2D y descubren que las formas se mantienen si se traslada el sistema, aunque las coordenadas se cambian."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad OA 10: Reconocimiento de polígonos",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Reconocen polígonos de 4, 5 y 8 lados en cruces de varillas. Pintan de diferente color los polígonos encontrados. Dibujan un polígono cualquiera en el patio del colegio, miden los ángulos exteriores del polígono, conjeturan sobre el valor de la suma de todos los ángulos exteriores. Dividen polígonos regulares en triángulos para conjeturar sobre la suma de los ángulos interiores."
+        },
+        {
+          "nombre": "Actividad OA 10: Embaldosados y figuras cóncavas/convexas",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Copian un embaldosado y marcan la figura que se compone de seis lados. Responden preguntas sobre la suma de ángulos en los vértices. Comparan figuras cóncavas y convexas, determinando la suma de ángulos exteriores. Con varillas o piezas de mecano, reproducen figuras y experimentan modificando los ángulos."
+        },
+        {
+          "nombre": "Actividad OA 10: Triángulos desde diferentes construcciones",
+          "oas_asociados": [
+            10
+          ],
+          "descripcion": "Construyen un triángulo que pasa por tres puntos mediante trazos, rayos y rectas. Comprueban que los ángulos interiores de un triángulo suman 180°, doblando un papel. Comprueban la suma de los ángulos exteriores con procesador geométrico."
+        },
+        {
+          "nombre": "Actividad OA 11: Descubriendo el círculo",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Descubren en globos de plumavit propiedades de la circunferencia y del círculo. Colocan y fijan con alambre plastificado un perímetro alrededor de un globo de plumavit. Proyectan el globo con un retroproyector e identifican el círculo en la sombra proyectada. Determinan experimentando con una cinta delgada de cartón la parte máxima que puede caber en el círculo y lo identifican con el diámetro."
+        },
+        {
+          "nombre": "Actividad OA 11: Experimento perímetro-diámetro",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Efectúan un experimento para determinar la relación entre perímetro y diámetro de un círculo. Tienden un pedazo de lana alrededor de objetos de la vida diaria (tapas, platos, vasos, corchos). Miden el diámetro y anotan las medidas en una tabla. Calculan el cociente entre perímetro y diámetro y lo redondean a la unidad. Elaboran la fórmula de aproximación para determinar el perímetro en dependencia del diámetro."
+        },
+        {
+          "nombre": "Actividad OA 11: Estimación del área del círculo",
+          "oas_asociados": [
+            11
+          ],
+          "descripcion": "Estiman el área de un círculo del radio r con el área r². Dibujan en papel milimetrado un cuadrado, dibujan un cuarto de un círculo inscrito y cuentan las cuadrículas. Estiman el área comparando con cuadrado inscrito y circunscrito. Resuelven problemas de etiquetas adhesivas circulares y ruedas de auto."
+        },
+        {
+          "nombre": "Actividad OA 12: Construcciones con regla y compás",
+          "oas_asociados": [
+            12
+          ],
+          "descripcion": "Resuelven problemas con radioemisoras (cobertura circular). Resuelven problema del tsunami y propagación de ondas. Construyen la mediatriz de un segmento, la perpendicular a una recta, la altura en un triángulo isósceles, la bisectriz de un ángulo. Aplican construcciones para resolver problemas de la vida real (división de territorios, frontera marítima)."
+        },
+        {
+          "nombre": "Actividad OA 13: Área de triángulos, paralelogramos y trapecios",
+          "oas_asociados": [
+            13
+          ],
+          "descripcion": "Argumentan sobre la validez de que determinadas figuras tienen siempre igual área. Determinan el área de un triángulo rectángulo a partir de un rectángulo. Determinan el área de un trapecio cualquiera formando rectángulos y triángulos rectángulos. Determinan el área de un paralelogramo cualquiera formando rectángulos y triángulos. Resuelven problemas de mesas con forma de trapecio."
+        },
+        {
+          "nombre": "Actividad OA 14: Plano cartesiano y vectores",
+          "oas_asociados": [
+            14
+          ],
+          "descripcion": "Leen y escriben las coordenadas de diversas figuras regulares 2D dibujadas en un sistema cartesiano de coordenadas. Conjeturan sobre las figuras 2D que representan las coordenadas dadas. Anotan las coordenadas de dos figuras 2D que tienen formas idénticas y conjeturan sobre el desplazamiento. Aplican un vector para mostrar en forma pictórica y simbólica el desplazamiento de la figura 2D."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Círculo – Área del CD",
+          "oas_evaluados": [
+            11
+          ],
+          "actividad_evaluacion": "Los alumnos miden el diámetro del círculo interior y del círculo completo de un CD. Calculan el área de la superficie del CD. Aumentan el diámetro del CD en 200 unidades y calculan el área del CD gigante. Estiman la cantidad de personas que podrían sentarse alrededor de este CD gigante. Estiman la cantidad de gente que podría estar dentro del círculo del CD gigante. Comparan los resultados y las estimaciones obtenidas con sus compañeros.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Utilizan las herramientas adecuadas para obtener la medida del CD o buscan la información en los medios correspondientes.",
+              "Calculan el área del CD, restando el área del círculo pequeño.",
+              "Aumentan el diámetro, considerando la razón en que se encuentra el círculo pequeño con respecto al grande.",
+              "Mantienen la unidad lineal al aumentar el diámetro en 200 unidades.",
+              "Calculan el área del CD gigante.",
+              "Calculan el perímetro del CD gigante.",
+              "Estiman qué cantidad de gente se podría sentar alrededor del CD gigante, basados en información obtenida en el medio (miden una silla, el ancho de una persona, etc.).",
+              "Consideran la razón entre el círculo pequeño del CD para determinar el perímetro del círculo pequeño del CD gigante.",
+              "Estiman la cantidad de gente que podría estar dentro del círculo pequeño del CD gigante.",
+              "Utilizan la información que obtuvieron antes para sus estimaciones y comprobaciones.",
+              "Comparan con sus compañeros para encontrar la mejor solución o un intervalo en que la mayoría coincida."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Área de triángulos, paralelogramos y trapecios",
+          "oas_evaluados": [
+            13
+          ],
+          "actividad_evaluacion": "Dibujan triángulos de áreas: 2 cm², 3.5 cm², 8 cm², 12.5 cm². Dibujan paralelogramos y trapecios de 14 cm², 27 cm², 32 cm². Dibujan paralelogramos y trapecios que tienen diversas alturas y áreas. Resuelven problemas para determinar el área necesaria para construir casas de variadas formas; por ejemplo: de forma hexagonal. Construyen casas de variadas formas, compuestas por triángulos, trapecios o paralelogramos.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen la conveniencia de dibujar cuadrados o rectángulos y su diagonal para obtener el dibujo pedido.",
+              "Identifican los triángulos dibujados anteriormente en los paralelogramos para dibujar de manera rápida y efectiva.",
+              "Reproducen trapecios a partir de paralelogramos de las mismas áreas y viceversa.",
+              "Relacionan el aumento de la altura con la disminución del lado basal (y viceversa) para mantener el área de paralelogramos; infieren sobre los efectos de esta relación en el trapecio.",
+              "Calculan el área de figuras compuestas por triángulos, trapecios y paralelogramos.",
+              "Proyectan casas y calculan el área necesaria para construirlas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Plano cartesiano y vectores",
+          "oas_evaluados": [
+            14
+          ],
+          "actividad_evaluacion": "Los alumnos marcan los ejes del plano cartesiano sobre la imagen presentada, ubican el origen y determinan las unidades de medida del plano. Identifican los puntos de coordenadas del término de las hélices, del centro de la hélice y de otros puntos del molino de viento. Dibujan un pez a la izquierda del molino y debajo del agua. Dibujan una gaviota volando en el cielo a la derecha del molino. Dibujan animales que pueden estar ubicados en los puntos (0, -3), (-4, 0), (-100, 0), (-5, -6) y (-5, 7).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ubican el eje x a nivel del mar y el eje y de manera adecuada a la situación: podría ser sobre el molino.",
+              "Ubican el origen en la intersección entre los ejes x e y.",
+              "Determinan las unidades de los ejes en metros o km; en esta elección, estiman la medida de los molinos de viento.",
+              "Identifican los puntos del molino de viento de acuerdo a su posición.",
+              "Dibujan de manera adecuada los diferentes animales y justifican la elección de algunos de ellos, según la profundidad del mar."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Matemática",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "En esta unidad, los estudiantes realizan sus propias encuestas y las aplican de manera censal (a toda la clase) o utilizan formas aleatorias de elegir a ciertos compañeros de la clase o del colegio, determinando el porcentaje de ciertas características por medio del muestreo. Representan los datos obtenidos mediante tablas de frecuencias absolutas y relativas, incluyen los histogramas y continúan utilizando los gráficos aprendidos en el curso anterior. Trabajan con diferentes datos y representan la información con diferentes gráficos; eligen el adecuado, dependiendo de la pregunta estadística. Además, resuelven problemas que involucren medidas de tendencia central y comparan muestras de dos poblaciones. Para ello, usan las representaciones adecuadas e incluyen coincidencias y diferencias en la comparación. También efectúan experimentos aleatorios concretos para concluir, de manera inicial, sobre la probabilidad de un evento. Asimismo, utilizan la probabilidad obtenida de manera teórica y la probabilidad obtenida de manera experimental de eventos equiprobables y no equiprobables, y los comparan.",
+      "conocimientos_previos": [
+        "Diagramas de punto, tallo y hoja.",
+        "Comparación de dos grupos.",
+        "Conocimiento intuitivo de tendencia de eventos.",
+        "Gráficos de barra doble y circulares."
+      ],
+      "palabras_clave": [
+        "Encuestas",
+        "censo",
+        "aleatorio",
+        "muestreo",
+        "frecuencias absolutas",
+        "frecuencias relativas",
+        "histogramas",
+        "datos categóricos",
+        "medidas de tendencia central",
+        "media",
+        "moda",
+        "mediana",
+        "rango",
+        "experimentos aleatorios",
+        "equiprobables",
+        "no equiprobables"
+      ],
+      "conocimientos": [
+        "Muestreo.",
+        "Frecuencia absoluta.",
+        "Frecuencia relativa.",
+        "Medidas de tendencia central (media, mediana, moda).",
+        "Rango.",
+        "Probabilidad teórica de un evento."
+      ],
+      "habilidades": [
+        "Describir relaciones y situaciones matemáticas de manera verbal y usando símbolos. (OA d)",
+        "Fundamentar conjeturas, dando ejemplos y contraejemplos. (OA f)",
+        "Usar modelos, realizando cálculos, estimaciones y simulaciones, tanto manualmente como con ayuda de instrumentos, para resolver problemas de otras asignaturas y de la vida diaria. (OA h)",
+        "Relacionar y contrastar información entre distintos niveles de representación. (OA l)",
+        "Elegir y utilizar representaciones concretas, pictóricas y simbólicas para enunciados y situaciones en contextos diversos (tablas, gráficos, entre otros). (OA k)"
+      ],
+      "actitudes": [
+        "OA D: Trabajar en equipo, en forma responsable y proactiva, ayudando a los otros, considerando y respetando los aportes de todos, y manifestando disposición a entender sus argumentos en las soluciones de los problemas.",
+        "OA F: Usar de manera responsable y efectiva las tecnologías de la comunicación en la obtención de información, dando crédito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+        "OA E: Mostrar una actitud crítica al evaluar las evidencias e informaciones matemáticas y valorar el aporte de los datos cuantitativos en la comprensión de la realidad social."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Estimar el porcentaje de algunas características de una población desconocida por medio del muestreo.",
+          "indicadores": [
+            "Infieren sobre la composición de una población pequeña (botellita opaca con 5 bolitas de dos colores, por ejemplo) mediante un muestreo aleatorio reiterado (de una bolita por vez, a través de una ventanita, por ejemplo).",
+            "Plantean temas que interesen a los alumnos para realizar encuestas entre los estudiantes del 7° nivel del colegio; infieren porcentajes representativos de la muestra y luego comparan con la realidad.",
+            "Identifican las muestras aleatorias y no aleatorias a base de ejemplos dados.",
+            "Elaboran modelos para el muestreo aleatorio en la población del 7° nivel del colegio.",
+            "Analizan las muestras obtenidas para ver coincidencias o diferencias.",
+            "Conjeturan acerca de los resultados posibles de experimentos aleatorios y comparan la conjetura con la realidad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Representar datos obtenidos en una muestra mediante tablas de frecuencias absolutas y relativas, utilizando gráficos apropiados, de manera manual y/o con software educativo.",
+          "indicadores": [
+            "Confeccionan tablas de frecuencias absolutas y relativas de los datos obtenidos en las muestras.",
+            "Elaboran el gráfico más conveniente para representar los datos; por ejemplo: el gráfico de tallo y hojas si se representan muestras opuestas, como alumnos y alumnas, fumadores y no fumadores, etc.",
+            "Sacan datos de los gráficos y los registran en tablas, diferenciando entre la frecuencia relativa y la absoluta.",
+            "Cambian de un gráfico a otro; por ejemplo: de un gráfico de barras a un gráfico de líneas, etc.",
+            "Verbalizan y comunican información presentada en gráficos.",
+            "Plantean, realizan y documentan encuestas, elaborando escalas categóricas de varios temas de interés."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Mostrar que comprenden las medidas de tendencia central y el rango: Determinando las medidas de tendencia central para realizar inferencias sobre la población. Determinando la medida de tendencia central adecuada para responder un problema planteado. Utilizándolos para comparar dos poblaciones. Determinando el efecto de un dato que es muy diferente a los otros.",
+          "indicadores": [
+            "Descubren que distribuciones muy dispersas y distribuciones homogéneas pueden tener la misma mediana.",
+            "Reconocen la importancia del valor mínimo, del valor máximo y del recorrido para describir oportunamente una distribución de datos cuantitativos.",
+            "Muestran que la mediana no se altera si hay variaciones grandes en los valores extremos.",
+            "Analizan situaciones y determinan cuál es la medida de tendencia central para efectuar las comparaciones e inferencias sobre la o las poblaciones.",
+            "Describen la inferencia que se puede obtener de un grupo de datos que es muy diferente a otro en una muestra.",
+            "Visualizan la medida de tendencia central y el rango en los gráficos correspondientes."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Explicar las probabilidades de eventos obtenidos por medio de experimentos de manera manual y/o con software educativo: Estimándolas de manera intuitiva. Utilizando frecuencias relativas. Relacionándolas con razones, fracciones o porcentaje.",
+          "indicadores": [
+            "Mediante experimentos, estiman la probabilidad de un evento, registrando las frecuencias relativas.",
+            "Establecen la probabilidad de un evento mediante razones, fracciones o porcentajes, sea haciendo un experimento o por medio de un problema.",
+            "Antes del experimento, estiman la probabilidad de ocurrencia y verifican su estimación, usando frecuencias relativas.",
+            "Elaboran, con material concreto (como dados y monedas), experimentos aleatorios con resultados equiprobables y no equiprobables.",
+            "Realizan los experimentos aleatorios con numerosas repeticiones, determinan las frecuencias absolutas relativas y representan los resultados mediante gráficos.",
+            "Analizan y comunican si se cumple aproximadamente la equiprobabilidad."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Comparar las frecuencias relativas de un evento obtenidas al repetir un experimento de forma manual y/o con software educativo, con la probabilidad obtenida de manera teórica, usando diagramas de árbol, tablas o gráficos.",
+          "indicadores": [
+            "Determinan la probabilidad de manera teórica y luego comparan con la probabilidad de realizar el experimento.",
+            "Determinan la probabilidad de un experimento, usando gráficos, diagramas de árbol o tablas.",
+            "Comparan la probabilidad de un evento según un muestreo, su frecuencia relativa y un gráfico adecuado.",
+            "Determinan la probabilidad de un problema mediante diagramas de árbol.",
+            "Calculan la probabilidad de un evento de manera teórica."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad OA 15: Muestreo – Encuestas y juegos",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Resuelven un problema de una empresa de buses que registra pasajeros. Planifican y realizan encuestas en el entorno del colegio. Participan en un juego de dados (lanzan un dado, si sale el 6 ganan un punto). Eligen alumnos del curso por medio de una tómbola de números. Determinan de manera experimental la probabilidad de sumar 6 u 8 cuando se lanzan dos dados."
+        },
+        {
+          "nombre": "Actividad OA 15: Frecuencias y gráficos",
+          "oas_asociados": [
+            15
+          ],
+          "descripcion": "Lanzan un dado 60 veces y completan una tabla de frecuencias. Hacen un gráfico circular y un gráfico de barra con los datos de la tabla. Comparan la cantidad de veces que sale cada número. Juegan a la ruleta y determinan la probabilidad de caer en uno de los sectores rojos. Lanzan dados «arreglados» y conjeturan sobre su composición."
+        },
+        {
+          "nombre": "Actividad OA 16: Tablas de frecuencias",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Abordan preguntas estadísticas y probabilísticas mediante un juego con dados en grupos. Se miden todos los alumnos de la clase y completan una tabla de frecuencias absolutas y relativas. Elaboran un gráfico de barras. Resuelven problemas con gráficos de doble barra sobre ventas mensuales y actividades extraprogramáticas."
+        },
+        {
+          "nombre": "Actividad OA 16: Encuestas y gráficos",
+          "oas_asociados": [
+            16
+          ],
+          "descripcion": "Los alumnos del 7A y del 7B hicieron una encuesta sobre el modo en que se transportan de la casa al colegio. Leen los datos y calculan las frecuencias relativas. Elaboran un gráfico circular. Analizan críticamente información presentada en gráficos (mejora en la PSU)."
+        },
+        {
+          "nombre": "Actividad OA 17: Medidas de tendencia central",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Analizan tablas de SMS mensuales de dos alumnos. Determinan valores máximos, mínimos, el rango, la mediana y la media. Determinan la mediana del número de alumnos en un curso. Analizan resultados de lanzamiento de bala de Cristián. Elaboran una tabla de frecuencias con condiciones específicas sobre mediana, mínimo, recorrido y media."
+        },
+        {
+          "nombre": "Actividad OA 17: Tiempo de viaje en bicicleta",
+          "oas_asociados": [
+            17
+          ],
+          "descripcion": "Catalina va todos los días en bicicleta al colegio. Para estimar qué tiempo necesita para el viaje, registra horas de salida y llegada durante dos semanas. Representan la distribución de las horas del viaje mediante un gráfico de barras. Conjeturan sobre la medida adecuada para representar la distribución de estos datos. Calculan las medias centrales y comparan la mediana con la media."
+        },
+        {
+          "nombre": "Actividad OA 18: Experimentos aleatorios",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Realizan experimentos aleatorios (trompo con forma de hexágono, chinches, bolitas, tetraedro) y determinan su probabilidad de forma intuitiva. Confeccionan una rueda de la fortuna con un disco CD. Lanzan chinches y calculan frecuencias relativas acumuladas. Sacan bolitas de colores de un balde y comparan frecuencias relativas con conjeturas previas."
+        },
+        {
+          "nombre": "Actividad OA 18: Frecuencias de vocales y consonantes",
+          "oas_asociados": [
+            18
+          ],
+          "descripcion": "Eligen varios artículos de libros, revistas o diarios para determinar las frecuencias relativas de vocales y consonantes. Conjeturan acerca de las frecuencias relativas de ambos tipos de letras. Determinan las frecuencias relativas y las comparan con la conjetura. Conjeturan acerca de frecuencias relativas de cifras en artículos de revistas técnicas o económicas."
+        },
+        {
+          "nombre": "Actividad OA 19: Probabilidad teórica vs. experimental",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Elaboran una tabla de posibles eventos para el lanzamiento de dos dados. Lanzan chinches y calculan frecuencias relativas acumuladas. Sacan clips de colores de una bolsa, conjeturan sobre las frecuencias relativas. Efectúan una encuesta entre dos poblaciones. Comparan dos muestras representadas por un gráfico de doble barra sobre agua caída en dos regiones."
+        },
+        {
+          "nombre": "Actividad OA 19: Diagramas de árbol",
+          "oas_asociados": [
+            19
+          ],
+          "descripcion": "Se lanza primero un dado y después una moneda. Se registra el resultado como un par ordenado de un número y una letra. Elaboran un árbol de eventos si se realiza el lanzamiento de un dado y una moneda. Determinan el número total de las ocurrencias del lanzamiento de un dado."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1: Probabilidad – Rueda de la fortuna",
+          "oas_evaluados": [
+            18
+          ],
+          "actividad_evaluacion": "En algunos colegios se hacen fiestas o «kermesse» para que cada clase o nivel junte dinero para los paseos de fin de año. Los 7º básico se decidieron este año por la rueda de la fortuna y pusieron algunas condiciones para pintarla: Pintarla para que la probabilidad de ganar sea de 1/5. Para que exista un premio de consuelo en los casilleros de color verde: Pintan verde para que el jugador tenga un 10% de probabilidad de tener un premio de consuelo. Con todas estas condiciones, se preguntan: ¿Cuál es la probabilidad de que no existan ganadores?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Deciden sobre el color que es ganador, el color con premio de consuelo y los colores sin premio.",
+              "Pintan la rueda de la fortuna de manera adecuada para que la probabilidad de ganar sea 1/5.",
+              "Reconocen que el 10% de probabilidades de premio de consuelo está relacionado con 1/10 de probabilidad de ocurrencia.",
+              "Relacionan lo anterior con pintar 1/10 del círculo con el color del premio de consuelo.",
+              "Calculan la probabilidad de no ganar nada y pintan de manera adecuada."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2: Muestreo – Alumnos zurdos",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "¿Cuántos alumnos zurdos hay en mi colegio? Los estudiantes: estiman el porcentaje de los zurdos; planifican una encuesta; recogen los datos; calculan el porcentaje de los alumnos zurdos; representan el resultado con un gráfico adecuado; comparan el resultado con el porcentaje de los zurdos en Chile.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Realizan una estimación razonable a base de la experiencia que tienen los alumnos.",
+              "Reconocen que es inadecuado encuestar todos los alumnos del colegio.",
+              "Buscan una forma adecuada de muestreo.",
+              "Reparten las diferentes tareas dentro su grupo.",
+              "Calculan el porcentaje de zurdos y lo redondean.",
+              "Eligen un gráfico circular para la representación.",
+              "Utilizan una fuente de información para obtener el porcentaje de zurdos en el país.",
+              "Comentan posibles diferencias con el porcentaje nacional."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3: Medidas de tendencia central – Hotel",
+          "oas_evaluados": [
+            17
+          ],
+          "actividad_evaluacion": "En un hotel se registró los días de estadía de los huéspedes por el período de un mes. El resultado se representa en una tabla. Los estudiantes: completan la tabla con las frecuencias acumuladas; determinan la media y la moda; determinan la mediana; confeccionan un gráfico de barras y marcan la media y la mediana; responden si se cambiaría la mediana al no considerar las estadías que sobrepasan los 7 días (sin cálculo).",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Calculan correctamente las frecuencias acumuladas.",
+              "Buscan y aplican un patrón para determinar la media.",
+              "Determinan la posición de la mediana y su valor.",
+              "Eligen adecuadamente las dimensiones del gráfico de barras.",
+              "Ponen exactamente las marcas de la media y de la mediana.",
+              "Reconocen que la mediana no cambia, porque la cantidad de estadías sobre 7 días está al margen de la distribución."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

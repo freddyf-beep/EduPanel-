@@ -1,0 +1,1112 @@
+[
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Educación Física",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "La unidad tiene dos propósitos principales. Primero, se espera que los estudiantes apliquen, combinen y ajusten sus habilidades motrices específicas en, al menos, un deporte individual y uno de oposición. Segundo, que apliquen una variedad de estrategias y tácticas para resolver un problema durante la práctica de algún juego o deporte. A lo largo de este proceso, se pretende que identifiquen y manejen los principios de frecuencia, intensidad, duración y tipo de ejercicio para desarrollar la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad, lo que tendrá efectos positivos en su condición física. Asimismo, se busca que practiquen actividad física de forma segura y responsable. Esto implica usar ropa adecuada, hidratarse, realizar un calentamiento, efectuar actividad física acompañados, entre otros. Por último, se espera que demuestren disposición a practicar y promover la actividad física en su comunidad y en su entorno.",
+      "conocimientos_previos": [
+        "Reglas básicas de los deportes individuales y de oposición",
+        "intensidad",
+        "tipo de ejercicio",
+        "calentamiento",
+        "medidas de seguridad",
+        "conceptos de resistencia cardiovascular, fuerza, flexibilidad y velocidad",
+        "entornos cercanos para la práctica de actividad física"
+      ],
+      "palabras_clave": [
+        "Condición física",
+        "deportes individuales y de oposición",
+        "frecuencia",
+        "intensidad",
+        "tiempo",
+        "tipo de actividad",
+        "promoción",
+        "vida activa saludable"
+      ],
+      "conocimientos": [
+        "Reglas de deportes individuales y de oposición",
+        "Estrategias y tácticas del juego",
+        "Procedimientos de seguridad",
+        "Efectos de la práctica regular de actividad física en la calidad de vida"
+      ],
+      "habilidades": [
+        "Ajustar y combinar las habilidades motrices específicas de locomoción, manipulación y estabilidad",
+        "Aplicar y combinar las habilidades motrices de locomoción, manipulación y estabilidad en deportes individuales y oposición",
+        "Mantener el equilibrio en una posición estática y dinámica en diferentes actividades deportivas",
+        "Ejecutar secuencias de movimientos que demuestren dominio y control corporal"
+      ],
+      "actitudes": [
+        "OA E: Demostrar y asumir responsabilidad por su salud, buscando mejorar su condición física y practicando actividades físicas y/o deportivas en forma regular",
+        "OA B: Promover la participación de todos en las actividades físicas, valorando la diversidad de las personas, sin discriminar por características como altura, peso, color de piel, origen, condición física, discapacidades, etc.",
+        "OA D: Apreciar la práctica regular de actividades físicas y deportivas como fuente de bienestar, recreación y crecimiento en lo personal y social",
+        "OA A: Demostrar respeto por los demás al participar en actividades físicas y/o deportivas; por ejemplo: aplicar el principio de juego limpio, llegar a acuerdos, jugar en forma cooperativa, aceptar el resultado y manejar el triunfo, entre otros",
+        "OA B: Promover la participación de todos en las actividades físicas, valorando la diversidad de las personas, sin discriminar por características como altura, peso, color de piel, origen, condición física, discapacidades, etc.",
+        "OA C: Trabajar en equipo, asumiendo responsablemente roles y tareas, colaborando con otros y aceptando consejos y críticas",
+        "OA D: Apreciar la práctica regular de actividades físicas y deportivas como fuente de bienestar, recreación y crecimiento en lo personal y social",
+        "OA E: Demostrar y asumir responsabilidad por su salud, buscando mejorar su condición física y practicando actividades físicas y/o deportivas en forma regular",
+        "OA F: Demostrar iniciativa en la promoción de una vida activa y los deportes, con sus compañeros y en la comunidad escolar",
+        "OA G: Cuidar el medio ambiente, la infraestructura y los materiales utilizados durante la práctica de actividad física y/o deportiva"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando: Frecuencia. Intensidad. Tiempo de duración. Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": [
+            "Ejecutan un test para valorar su condición física con respecto a velocidad, fuerza, resistencia y flexibilidad, respetando las diferencias individuales",
+            "Seleccionan y aplican en su plan de entrenamiento, actividades físicas que desarrollan la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad",
+            "Ejecutan una sesión de ejercicios, considerando los principios de frecuencia, intensidad y tiempo de duración y el tipo de ejercicio",
+            "Ejecutan en su plan de entrenamiento, actividades físicas que son de su interés",
+            "Registran los días que realizaron ejercicio físico, detallando la frecuencia, el tiempo, la intensidad y el tipo de ejercicio practicado",
+            "Se proponen metas para mejorar la resistencia por medio de la práctica regular de actividades físicas de mediana a larga duración",
+            "Describen los efectos que han percibido luego de seguir un plan de entrenamiento de resistencia a nivel cardiovascular"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad, como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": [
+            "Realizan un calentamiento para preparar al organismo antes de cualquier esfuerzo físico mayor",
+            "Participan regularmente en una variedad de actividades físicas de intensidad moderada a vigorosa, en distintos espacios, como al aire libre, en el patio de la escuela, en las instalaciones de la comunidad (centros de recreación, piscinas, parques), entre otros",
+            "Toman agua para mantenerse hidratados",
+            "Plantean preguntas como ¿tomo la cantidad necesaria de agua al momento de realizar actividad física? ¿consumo los alimentos adecuados que me proporcionan la energía suficiente para realizar actividad física?",
+            "Describen los efectos positivos para el bienestar, de la práctica regular de variadas actividades físicas; por ejemplo: reduce el estrés, aumenta la interacción social, entre otros",
+            "Usan y cuidan los implementos y aparatos de la clase de Educación Física y Salud",
+            "Mencionan aquellos cambios conductuales que produce el consumo de drogas y alcohol, y cómo afectan a la práctica de algún deporte o actividad física"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Aplicar, combinar y ajustar las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos: Un deporte individual (atletismo, gimnasia artística, entre otros). Un deporte de oposición (tenis, bádminton, entre otros). Un deporte de colaboración (escalada, vóleibol duplas, entre otros). Un deporte de oposición/colaboración (básquetbol, hándbol, hockey, entre otros). Una danza (folclórica, moderna, entre otras).",
+          "indicadores": [
+            "Combinan, aplican y ajustan las habilidades motrices específicas en deportes individuales o de oposición, al desplazarse hacia diferentes lados, hacer un saque, responder a un golpe, saltar largo, etc.",
+            "Corren de manera continua, manteniendo el control de su cuerpo",
+            "Ejecutan saltos a distintas velocidades y direcciones, utilizando los brazos para mejorar la acción motriz",
+            "Manipulan implementos de diferentes tamaños y los lanzan o ubican en diferentes posiciones durante el juego",
+            "Mantienen el equilibrio en diferentes actividades deportivas; por ejemplo: caminan sobre una viga de equilibrio, realizan giros en un pie, andan en skate, caminan en zancos, entre otros",
+            "Ejecutan giros, volteos, rodadas y diversas posiciones estáticas, manteniendo el control de su cuerpo, en actividades deportivas como gimnasia, atletismo, entre otros",
+            "Ajustan los tiempos y espacios al manipular implementos cuando ejecutan una acción motriz"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: ubicar la pelota lejos de un contrincante, utilizar los espacios para recibir un objeto sin oponentes, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros), entre otros.",
+          "indicadores": [
+            "Seleccionan y aplican estrategias y tácticas en deportes individuales",
+            "Ubican la pelota lejos de un contrincante; seleccionan cuándo y cómo pasar el balón en situación de ataque; despejan áreas de juego; estudian el movimiento del adversario para programar su golpe, entre otros",
+            "Evalúan la efectividad de la selección de determinadas estrategias aplicadas en situaciones de juego para mejorar la ejecución",
+            "Proponen alternativas para mejorar la ejecución motriz de manera individual"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Participar en una variedad actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo: Integrarse en talleres de actividades físicas y/o deportivas extraprogramáticas que se desarrollan en su comunidad y/o entorno. Asumir variados roles en la participación y promoción de una vida activa. Utilizar los entornos cercanos para realizar alguna actividad física y/o deportiva (plazas, parques, entre otros).",
+          "indicadores": [
+            "Utilizan los entornos cercanos para realizar actividad física y/o deportiva",
+            "Participan, dentro de su comunidad, en talleres extraprogramáticos que incentiven la práctica regular de actividad física",
+            "Por medio de la práctica regular, identifican los beneficios de la actividad física para la salud",
+            "Muestran evidencias de que participan regularmente en una variedad de actividades físicas fuera del horario escolar",
+            "Demuestran confianza y seguridad al asumir diferentes roles en la promoción de una vida activa"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Resistencia cardiovascular",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se ubican en parejas, a una distancia de unos dos metros, detrás de una línea establecida por el docente; conviene intentar que todos trabajen a la vez. A la señal del profesor, deben realizar salidas a distancias de 20 a 30 metros (la distancia se puede ajustar según la realidad del espacio), debiendo regresar al punto de inicio por medio de una caminata rápida. Es importante respetar las características físicas del grupo. Pueden realizar distintos tipos de salidas. Luego responden preguntas relacionadas, como ¿qué tipo de actividad física estás realizando?, ¿cuáles son los valores de frecuencia cardiaca que debes tener para trabajar entre un 50% y 60% de intensidad?"
+        },
+        {
+          "nombre": "Fuerza",
+          "oas_asociados": [3],
+          "descripcion": "Organizados en parejas, se ubican uno detrás del otro. El compañero de atrás toma un elástico (si no se cuenta con un elástico, puede ser una cámara de rueda de bicicleta o una cuerda) y lo pasa alrededor del compañero que está delante suyo, a la altura de la cintura. A la señal del docente, el primero avanza elevando las rodillas, mientras el segundo controla el avance, tirando del elástico. Luego se invierten los roles. Responden preguntas como ¿qué ocurre en tu carrera cuando elevas las rodillas?"
+        },
+        {
+          "nombre": "Flexibilidad",
+          "oas_asociados": [3],
+          "descripcion": "Todos los estudiantes se sientan con las rodillas extendidas y juntas en un lugar seguro y libre de obstáculos. Desplazan sus manos en dirección a los tobillos hasta el punto máximo que puedan alcanzar, evitando flectar las rodillas, y se mantienen en esa posición durante al menos 30 segundos, respirando relajadamente. Repiten dos a tres veces y luego responde preguntas como ¿por qué sienten tanto dolor cuando hacen este ejercicio?"
+        },
+        {
+          "nombre": "Velocidad",
+          "oas_asociados": [3],
+          "descripcion": "Los alumnos se ubican en una fila detrás de una línea determinada por el docente. A la señal, deben correr a máxima velocidad en un tramo aproximado de diez metros, incorporando a su técnica de carrera todas las correcciones que se les ha indicado. Luego regresan al punto de partida y repiten la acción. El descanso entre cada carrera puede variar entre 2 y 3 minutos, dependiendo las características físicas del grupo. Pueden realizar varias repeticiones, aunque no más de 10 por sesión."
+        },
+        {
+          "nombre": "Principios de entrenamiento y condición física",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se ubican en parejas. Uno debe saltar una cuerda durante tres minutos, que serán contabilizados por el compañero. Al finalizar, el compañero le mide la frecuencia cardiaca, que debe estar entre un 50 a 75% de la frecuencia cardiaca máxima. Previamente, los estudiantes por medio de la fórmula de Karvonen (que permite calcular el esfuerzo físico) determinan las pulsaciones que deben alcanzar para trabajar entre un 50% a 75%. Para poder calcular la intensidad del esfuerzo por medio de la fórmula, se requieren los siguientes datos: la frecuencia cardiaca máxima teórica (220 – la edad del individuo), la frecuencia cardiaca en reposo y la intensidad con la se planificará el ejercicio. La fórmula es: (FC Máxima Teórica – FC Reposo x Intensidad) + FC Reposo."
+        },
+        {
+          "nombre": "Glosario de conceptos",
+          "oas_asociados": [3],
+          "descripcion": "Fuera del horario escolar, los alumnos deben elaborar un glosario con los conceptos y palabras clave, como intensidad, frecuencia, tiempo de ejercicio, recuperación, progresión y principios de entrenamiento. Esta actividad también se sugiere para aquellos estudiantes que no pueden realizar la clase práctica."
+        },
+        {
+          "nombre": "Atletismo: circuito de vallas",
+          "oas_asociados": [1, 2],
+          "descripcion": "Profesor y alumnos organizan juntos un circuito de tres estaciones o más. Frente a cada estación se ubican, máximo, cinco estudiantes. En la primera estación se instalan cuatro vallas, siguiendo una curva imaginaria: los estudiantes deben saltarlas, alternado los pies. A cinco metros se ubica la segunda estación: cuatro minivallas que deben pasar con saltos, pero tocándose los glúteos con los talones. En la tercera estación hay cinco minivallas que tienen que pasar con grandes saltos; luego vuelven al punto de inicio. La actividad dura diez minutos. El descanso entre cada ejercicio no debe ser mayor a 3 min. Si son muchos estudiantes, se sugiere organizar más estaciones."
+        },
+        {
+          "nombre": "Atletismo: circuito con tacos humanos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El docente instala varios circuitos que contengan distintas estaciones y los estudiantes ejecutan la actividad de manera continua. La primera estación es una salida de tacos (utilizar a los compañeros como tacos humanos). A unos cinco metros se ubica la segunda estación, donde deberán pasar una valla. En la tercera estación, saltan en skipping seis a ocho minivallas. Cuando terminan, vuelven a la posición inicial. El descanso dependerá de la condición física de cada estudiante. Los alumnos responden preguntas como ¿qué dificultades te presenta este circuito?"
+        },
+        {
+          "nombre": "Gimnasia artística: saltos en banco sueco",
+          "oas_asociados": [1, 2],
+          "descripcion": "En cuartetos, los estudiantes se ubican junto a un banco sueco o algo similar como una tapa de cajón. Los estudiantes saltan en forma alternada de lado a lado, manteniendo las manos sobre el banco y elevando las caderas de modo que las caderas queden más altas que los hombros. Cada cuarteto ejecuta los saltos al menos cinco veces."
+        },
+        {
+          "nombre": "Gimnasia artística: carretilla",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes se ubican en parejas sobre una colchoneta y uno sostiene al compañero desde los tobillos (carretilla). Este último mantiene las manos en el suelo y eleva las caderas hasta alinearlas con los hombros, manteniendo piernas y tronco en ángulo recto; luego vuelve a la posición inicial. Después se invierten los roles; repiten varias veces la tarea. Además, responden preguntas como ¿qué parte de tu musculatura debes fijar para sostener tu cuerpo?"
+        },
+        {
+          "nombre": "Gimnasia artística: ascenso de pared",
+          "oas_asociados": [1, 2],
+          "descripcion": "Ubicados junto a una pared, apoyan las manos en el suelo, ascienden la pared con los pies y luego bajan: para ello, se acercan y se alejan del muro con las manos. El docente aprovecha de corregir la ejecución, solicitando repetir las veces que estime conveniente."
+        },
+        {
+          "nombre": "Tenis: frontón individual",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes se ubican frente a una pared, a una distancia de tres metros (el docente fija una línea en el suelo para orientarlos), con una pelota de tenis o similar. A la señal, golpean la pelota con una paleta, dando un bote que golpee entre el suelo y la pared (como un frontón) y sigue haciéndolo: la pelota debe mantenerse en movimiento el máximo tiempo posible."
+        },
+        {
+          "nombre": "Tenis: golpeo sin detener la pelota",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes se ubican libremente en un espacio delimitado por el docente. A la señal, golpean la pelota de tenis o similar con una paleta para que rebote en el suelo, sin cogerla ni detenerla."
+        },
+        {
+          "nombre": "Bádminton: elaboración de plumilla",
+          "oas_asociados": [1, 2],
+          "descripcion": "Antes de la clase de Educación Física y Salud, cada estudiante confecciona una plumilla para el juego del bádminton. Para eso, debe tener un globo, un puñado de arroz, papel y un elástico. Rellenan el globo con arroz y le atan en la boquilla el papel con el elástico."
+        },
+        {
+          "nombre": "Bádminton: golpeo de plumilla",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes se ubican libremente en el espacio con la plumilla que han elaborado. A la señal del docente, deben golpearla con una mano o alternando ambas manos. La pueden lanzar de un lugar a otro, elevar para que pase por encima de un elástico, cuerda o red ubicada a diferentes alturas, etc."
+        },
+        {
+          "nombre": "Bádminton: pases en parejas",
+          "oas_asociados": [1, 2],
+          "descripcion": "Organizados en parejas, se ubican a una distancia de unos tres metros entre sí con una plumilla y se la lanzan mutuamente, utilizando las manos como paletas y evitando que se caiga. Van contando el número de golpes que da cada pareja. Luego responden preguntas como ¿cuántos golpes lograron dar antes de que se cayera la plumilla?, ¿cómo podemos mejorar la calidad del golpe?"
+        },
+        {
+          "nombre": "Seguridad: ruta segura en bicicleta",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes establecen una ruta segura por la cual puedan desplazarse desde su hogar hasta la escuela en bicicleta; para ello, por ejemplo, identifican las calles que tienen ciclovías en la ruta, lugares conocidos, áreas verdes, espacios que cuenten con una señalización adecuada, entre otros. El profesor les pide que registren las alternativas de recorrido y que recorran la ruta con algún amigo o familiar durante el fin de semana."
+        },
+        {
+          "nombre": "Calentamiento: trote con variaciones",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes se ubican en una fila en un extremo de la cancha. A la señal del docente, comienzan a desplazarse con un trote suave hacia el otro extremo; el profesor puede ir pidiéndoles que aumenten la velocidad o incorporan movimientos de hombros, brazos u otras variantes. Cuando llegan al otro extremo de la cancha, les da una pausa de 30, que será más larga si el trabajo aumenta de velocidad. La actividad puede durar entre cinco y diez minutos."
+        },
+        {
+          "nombre": "Promoción: hidratación y alimentos",
+          "oas_asociados": [4, 5],
+          "descripcion": "El docente les pide que busquen información relativa a la hidratación y que elaboren un cuadro donde comparen los alimentos que contengan agua, según su composición y señalan cuales son los indicados para hidratarse sobre todo en los días de calor."
+        },
+        {
+          "nombre": "Plan de entrenamiento cardiovascular",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes elaboran y ejecutan un plan de entrenamiento cardiovascular. Deben recorrer tres kilómetros al menos cuatro veces por semana durante un mes, a una frecuencia cardiaca de entre 50% y 75%, según la fórmula de Karvonen. Tienen que registrar el tiempo que demoran en la ejecución, el promedio de la frecuencia cardiaca y su índice de percepción de esfuerzo. Al completar el mes, grafican sus resultados y verifican si, al recorrer la distancia establecida, disminuyeron los tiempos, su frecuencia cardiaca y su percepción de esfuerzo."
+        },
+        {
+          "nombre": "Investigación: talleres deportivos en la localidad",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los alumnos investigan y registran los talleres deportivos que se desarrollan en su localidad. Luego, en la clase, comentan brevemente sobre las alternativas que puede aprovechar fuera del horario escolar."
+        },
+        {
+          "nombre": "Investigación: efectos del consumo de drogas y alcohol",
+          "oas_asociados": [4, 5],
+          "descripcion": "En grupos de 5 o 6 integrantes y fuera del horario escolar, los alumnos investigan en diversas fuentes (libros, internet, etc.) los efectos que produce el consumo de drogas y alcohol en el organismo. Cada grupo elabora una historia referente a una persona que consume drogas, orientados por preguntas planteadas por el docente; por ejemplo: ¿cómo se inició?, ¿cómo cambió su comportamiento?, ¿podría la práctica de ejercicios y deportes prevenir el consumo? Un representante de cada grupo expone su historia. Luego el curso identifica las coincidencias y diferencias entre los relatos. Para finalizar, proponen medidas de prevención y detallan cómo la actividad física regular puede ser una herramienta para la prevención y el buen uso del tiempo libre."
+        },
+        {
+          "nombre": "Caminata familiar",
+          "oas_asociados": [4, 5],
+          "descripcion": "En conjunto con su familia, el estudiante organiza una caminata a un cerro o parque cercano a su hogar, que cuente con las condiciones de seguridad necesarias. Luego registran la hora, el día y cuánto tiempo se demoró en realizar la actividad; debe agregar algún registro fotográfico, un relato, entre otros, para demostrar su participación."
+        },
+        {
+          "nombre": "Registro de alimentación diaria",
+          "oas_asociados": [4],
+          "descripcion": "El profesor consulta a sus estudiantes por la alimentación diaria, y les pregunta si su alimentación está acorde con los macro y micronutrientes que se consideran alimentación saludable. Les solicita llevar un registro de su alimentación diaria y compararla con la guía de alimentación sana para la población chilena."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de condición física",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Los siguientes son test de medición individual de los alumnos que sirven para readecuar la planificación del año (no debe ser calificado). Todo el curso trabaja por estaciones y el profesor elige algunos líderes que pueden ayudar en el proceso; también puede pedir que colaboren aquellos estudiantes que ese día no participan en la clase. Esta actividad no debería durar más de una clase. 1. Test de marcha de 6 minutos. El docente explica previamente el recorrido: se traza un trayecto lineal de quince metros y se marca cada metro. Un alumno ejecuta la tarea mientras su compañero registra la distancia que logra recorrer en ese lapso. Cada alumno evalúa su frecuencia cardiaca al inicio y al final de los 6 minutos y registran la distancia recorrida. 2. Test de musculatura abdominal. El estudiante se recuesta sobre la colchoneta de espaldas y con las rodillas flectadas en 90º; sus piernas deben estar separadas al ancho de sus caderas y sus brazos, extendidos a los lados. Los dedos medios de las manos tocan una cinta adhesiva que marca el inicio. A 10 centímetros hay otra marca que el alumno debe alcanzar con sus manos al flexionar el tronco. En el retorno, la cabeza y las escápulas deben tocar la colchoneta. Se selecciona el estímulo auditivo correspondiente (metrónomo con 50 batidas por minuto, que indicarán cuándo realizar la flexión y cuándo realizar el retorno). A la señal, el estudiante inclina el tronco hacia las rodillas, deslizando las manos sobre las marcas establecidas en la colchoneta, y completa el ciclo cuando vuelve a la posición inicial. Tiene que hacer abdominales cortos hasta que ya no pueda completar un abdominal al ritmo del estímulo sonoro. Tendría que efectuar unas 25 flexiones en 1 minuto (parámetro de alta exigencia). Conviene que el alumno registre esta información. 3. Test de coordinación. Cada estudiante repite una secuencia de saltos con una cuerda: 4 saltos a pies juntos, 4 saltos a pies juntos cruzando la cuerda alternadamente, 4 saltos con el pie derecho y 4 saltos con el pie izquierdo. Repiten la secuencia 2 veces. 4. Luego analizan sus resultados, que les servirán para elaborar y mejorar su plan de trabajo anual.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan un test de caminata por un periodo de seis minutos",
+              "Registran la cantidad de metros recorridos en seis minutos",
+              "Registran el número de abdominales ejecutados correctamente, contados por un compañero, y relacionan sus resultados con este estándar: 25 flexiones en 1 minuto",
+              "Repiten las dos secuencias de saltos con cuerda y registran el tiempo en que logró ejecutar la tarea",
+              "Comparan sus resultados con registros anteriores y establecen medidas para mejorar su condición física"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de carrera de velocidad",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "En un espacio plano y sin pendiente, se demarca una pista en línea recta de cuarenta metros, siendo los 10 primeros metros para alcanzar la máxima velocidad y los 30 metros restantes para mantener su máxima velocidad. Hay que registrar con un cronómetro los tiempos que demora cada alumno en cubrir los 10 primeros metros y los 40 metros. Para ello, el docente cuenta con la ayuda de los mismos estudiantes y de los eximidos de esa clase. Cada alumno averigua sus registros para mejorar sus desempeños y crear una nueva estrategia para correr.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan una carrera a máxima velocidad según sus condiciones personales",
+              "Registran el tiempo personal alcanzado en la carrera",
+              "Se desplazan en forma lineal sin estorbar a los compañeros",
+              "Respetan el rol de sus compañeros en la toma del tiempo",
+              "Respetan la intervención del profesor al momento de corregir la técnica de la carrera"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de saltos con cuerda y equilibrio",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Cada estudiante ejecuta las siguientes acciones en un espacio de 20 metros marcado con dos conos: Salta con una cuerda 6 veces a pies juntos en el lugar. Avanza hasta el otro cono, saltando alternadamente con la cuerda sin que esta se enrede. Al llegar al otro extremo, gira saltando sin perder el ritmo. Salta en el lugar nuevamente 6 veces con un pie y otro, alternándolos sin rebote. Saltando alternadamente con uno y otro pie, retorna al punto de partida.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Saltan con ambos pies y con uno y otro alternadamente, sin perder la coordinación con la cuerda",
+              "Demuestran coordinación al momento de saltar la cuerda",
+              "Controlan su cuerpo en situación de equilibrio dinámico",
+              "Demuestran coordinación y flexibilidad durante el salto"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Educación Física",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Esta unidad tiene dos propósitos principales. En primer lugar, se espera que los estudiantes combinen, apliquen y ajusten sus habilidades motrices específicas en, al menos, un deporte de colaboración y uno de oposición/colaboración. En segundo lugar, se pretende que trabajen en equipo, tomen decisiones, implementen estrategias y apliquen reglas y principios específicos de las actividades deportivas. Asimismo, se espera que manejen los principios de frecuencia, intensidad, duración y tipo de ejercicio para desarrollar la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad, lo que tendrá efectos positivos en su condición física. Además, se busca que practiquen actividad física de forma segura y responsable. Esto implica usar ropa adecuada, hidratarse permanentemente y de acuerdo a sus necesidades, realizar un calentamiento, hacer actividad física acompañados, entre otros. Por último, se pretende que demuestren disposición a practicar y promover la actividad física en su comunidad y en su entorno.",
+      "conocimientos_previos": [
+        "Reglas básicas de los deportes de colaboración y oposición/colaboración",
+        "intensidad",
+        "tipo de ejercicio",
+        "calentamiento",
+        "medidas de seguridad",
+        "conceptos de resistencia cardiovascular, fuerza, flexibilidad y velocidad",
+        "entornos cercanos para la práctica de actividad física"
+      ],
+      "palabras_clave": [
+        "Deportes de colaboración y oposición/colaboración",
+        "intensidad",
+        "frecuencia",
+        "tiempo",
+        "tipo de actividad",
+        "promoción",
+        "vida activa saludable",
+        "resistencia cardiovascular",
+        "fuerza",
+        "flexibilidad",
+        "velocidad",
+        "trabajo en equipo"
+      ],
+      "conocimientos": [
+        "Reglas de deportes de colaboración y oposición/colaboración",
+        "Estrategias y tácticas de los deportes",
+        "Principios de frecuencia, intensidad, tiempo y tipo de ejercicio",
+        "Estrategias de promoción para una vida activa",
+        "Medidas de seguridad para la práctica deportiva"
+      ],
+      "habilidades": [
+        "Aplicar habilidades específicas de manipulación en deportes de colaboración y oposición/colaboración",
+        "Usar y combinar las habilidades específicas de locomoción en deportes de colaboración y oposición/colaboración",
+        "Utilizar los principios de frecuencia, intensidad, tiempo de duración y tipo de ejercicio para elaborar una rutina de ejercicio",
+        "Aplicar estrategias y tácticas individuales y grupales en deportes de colaboración y oposición/colaboración"
+      ],
+      "actitudes": [
+        "OA C: Trabajar en equipo, asumiendo responsablemente roles y tareas, colaborando con otros y aceptando consejos y críticas",
+        "OA E: Demostrar y asumir responsabilidad por su salud, buscando mejorar su condición física y practicando actividades físicas y/o deportivas en forma regular",
+        "OA B: Promover la participación de todos en las actividades físicas, valorando la diversidad de las personas, sin discriminar por características como altura, peso, color de piel, origen, condición física, discapacidades, etc.",
+        "OA A: Demostrar respeto por los demás al participar en actividades físicas y/o deportivas; por ejemplo: aplicar el principio de juego limpio, llegar a acuerdos, jugar en forma cooperativa, aceptar el resultado y manejar el triunfo, entre otros",
+        "OA C: Trabajar en equipo, asumiendo responsablemente roles y tareas, colaborando con otros y aceptando consejos y críticas",
+        "OA D: Apreciar la práctica regular de actividades físicas y deportivas como fuente de bienestar, recreación y crecimiento en lo personal y social",
+        "OA F: Demostrar iniciativa en la promoción de una vida activa y los deportes, con sus compañeros y en la comunidad escolar",
+        "OA G: Cuidar el medio ambiente, la infraestructura y los materiales utilizados durante la práctica de actividad física y/o deportiva"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando: Frecuencia. Intensidad. Tiempo de duración. Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": [
+            "Practican actividades físicas que desarrollan la resistencia cardiovascular, fuerza muscular, flexibilidad y velocidad",
+            "Desarrollan la fuerza, utilizando su propio peso corporal o con materiales adecuados a su edad",
+            "Utilizan los principios de frecuencia, intensidad, tiempo de duración y tipo de ejercicio para elaborar una rutina de ejercicios",
+            "Monitorean y comparan su frecuencia cardiaca antes, durante y después de practicar un ejercicio de resistencia",
+            "Ejecutan actividades físicas de mediana a larga duración para mejorar la resistencia",
+            "Ejecutan un test para evaluar la mejora de su condición física"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad, como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": [
+            "Realizan un calentamiento para preparar el organismo antes de un esfuerzo físico mayor",
+            "Practican regularmente en una variedad de actividades físicas de intensidad moderada a vigorosa en utilizando diferentes espacios; por ejemplo: al aire libre, en el patio de la escuela, en las instalaciones de la comunidad (centros de recreación, piscinas, parques), entre otros",
+            "Mantienen un registro periódico de la actividad física que realizan diariamente",
+            "Evalúan por medio de un test cuanto ha mejorado su condición física",
+            "Explican los efectos positivos que han obtenido a partir de la práctica regular de actividad física",
+            "Llevan a cabo una autoevaluación de las opciones nutricionales que eligen y que contribuyen a la salud"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Aplicar, combinar y ajustar las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos: Un deporte individual (atletismo, gimnasia artística, entre otros). Un deporte de oposición (tenis, bádminton, entre otros). Un deporte de colaboración (escalada, vóleibol duplas, entre otros). Un deporte de oposición/colaboración (básquetbol, hándbol, hockey, entre otros). Una danza (folclórica, moderna, entre otras).",
+          "indicadores": [
+            "Utilizan, combinan y ajustan una variedad de habilidades motrices específicas durante juegos duales y de equipo; por ejemplo: corren para alcanzar y golpear un implemento móvil; corren para interceptar la trayectoria de un rival o implemento",
+            "Aplican y combinan las habilidades motrices específicas de locomoción en deportes de colaboración y oposición/colaboración",
+            "Aplican habilidades específicas de manipulación en deportes de colaboración y oposición/colaboración",
+            "Manipulan objetos mientras se desplazan (driblear con una y otra mano)",
+            "Aplican el reglamento y las reglas específicas en el juego y los deportes (básquetbol, vóleibol, hándbol)",
+            "Aplican técnicas de marcha y de orientación en actividades en el medio natural",
+            "Aplican las normas específicas de las actividades del medio natural, como no dejar rastro"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: ubicar la pelota lejos de un contrincante, utilizar los espacios para recibir un objeto sin oponentes, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros), entre otros.",
+          "indicadores": [
+            "Seleccionan y aplican tácticas y estrategias individuales y grupales en deportes de colaboración/oposición",
+            "Se desmarcan para recibir un balón en situación de juego",
+            "Bloquean a un oponente, ubican la pelota lejos de un contrincante, entre otros",
+            "Aplican el sistema de juego acordado para enfrentar el partido",
+            "Reciben y entregan el balón en una situación de marca",
+            "Planifican la trayectoria de la ruta y avance en una actividad de escalada o excursionismo"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Participar en una variedad actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo: Integrarse en talleres de actividades físicas y/o deportivas extraprogramáticas que se desarrollan en su comunidad y/o entorno. Asumir variados roles en la participación y promoción de una vida activa. Utilizar los entornos cercanos para realizar alguna actividad física y/o deportiva (plazas, parques, entre otros).",
+          "indicadores": [
+            "Realizan actividades físicas utilizando los entornos cercanos",
+            "Promueven una vida activa entre sus compañeros",
+            "Participan fuera del horario escolar en actividades físicas y/o deportivas que se desarrollan en su comunidad",
+            "Presentan evidencias de su participación en alguna actividad física durante el fin de semana",
+            "Asumen variados roles en la participación de una variedad de actividades físicas",
+            "Aceptan la ayuda de otros durante la práctica de actividad física",
+            "Establecen relaciones de confianza con el grupo durante la práctica actividad física",
+            "Incentivan la práctica con su ejemplo y con la ayuda a los demás para lograr la tarea motriz"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Resistencia cardiovascular",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se organizan en parejas. Uno de cada pareja se ubica en filas (o sea, uno al lado del otro) enfrentadas a una distancia de veinte metros aproximadamente. A la señal, se desplazan los alumnos de un lado hacia el frente por medio de un trote. Cuando lleguen al otro lado, sale el otro grupo. Deben agregar cambios; por ejemplo: ir a hacia adelante, atrás y salir hacia el otro extremo, hacer desplazamientos laterales a un lado y al otro lado y cruzar hacia el frente, ir hacia adelante y atrás volviendo a la línea de salida para cruzar al frente otra vez, hacer fintas y cruzar. La idea es que los estudiantes propongan nuevas formas de salir. El otro integrante de cada pareja registra la frecuencia cardiaca de su compañero al inicio, a los cinco y a los diez minutos."
+        },
+        {
+          "nombre": "Fuerza muscular: salto de vallas",
+          "oas_asociados": [3],
+          "descripcion": "Se forman hileras de, máximo, cinco estudiantes. Frente a cada hilera se ubican cuatro vallas a una altura adecuada al grupo (unos 50 cm). A la señal, el primero debe saltar las vallas a pies juntos. Luego comienza el siguiente, hasta que todos hayan pasado. La actividad dura unos cinco minutos; se puede repetir seis veces al menos, permitiendo un descanso para la recuperación total entre cada repetición."
+        },
+        {
+          "nombre": "Fuerza muscular: saltos en aros",
+          "oas_asociados": [3],
+          "descripcion": "Profesor y alumnos distribuyen todos los aros disponibles en un sector de la multicancha de un modo similar al que muestra la imagen (si no tienen aros, se puede marcar espacios similares con una tiza en el piso). Los estudiantes trabajan en parejas: el que va adelante ingresa al aro y realiza un tipo de salto, y su compañero lo imita y agrega un salto diferente. El primer alumno entra nuevamente, ejecuta su salto más el del compañero e incorpora uno nuevo, y así sucesivamente hasta que logren cruzar toda la superficie de aros, memorizando cada uno de los saltos efectuados por ambos."
+        },
+        {
+          "nombre": "Flexibilidad: empuje de pared",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes, de pie y con las manos apoyadas en la pared, mantienen la pierna derecha extendida y la izquierda flectada, simulando empujar la pared. Mantienen la posición por treinta segundos al menos y luego hacen lo mismo con la otra pierna. Esta actividad se puede realizar al inicio de cada clase. Los alumnos responden preguntas como ¿qué músculo está trabajando?, ¿qué otro ejercicio puedo hacer para ese mismo músculo?"
+        },
+        {
+          "nombre": "Velocidad: cuatro esquinas",
+          "oas_asociados": [3],
+          "descripcion": "Se forman grupos de cinco estudiantes. Se marcan cuatro esquinas (con conos u otros elementos), un jugador se ubica en cada esquina y el quinto se sitúa al centro. Cuando éste dé la señal, todos deben cambiarse de ubicación, tratando de ubicarse en una de las esquinas que esta libre. Si lo logra, se cambian los roles. Para que trabaje todo el curso a la vez, se pueden formar varios espacios con 4 esquinas en la cancha; de lo contrario, varios equipos usan un mismo lugar y mientras unos se recuperan, los otros trabajan."
+        },
+        {
+          "nombre": "Principios de entrenamiento y condición física",
+          "oas_asociados": [3],
+          "descripcion": "Al inicio de la clase, el docente pregunta a los estudiantes qué podrían hacer para mejorar su condición física, qué elementos se deben considerar al realizar un esfuerzo físico y qué adaptaciones pueden ocurrir en el organismo a raíz de la práctica regular de ejercicio. Conviene que el profesor les pregunte periódicamente sobre estos temas, sin hacer distinciones entre hombres y mujeres. Planifican un entrenamiento por un mes, donde incluyen ejercicios de resistencia y fuerza. Luego, por medio de gráficos, pueden mostrar las mejoras que han obtenido a partir del ejercicio físico sobre su condición física."
+        },
+        {
+          "nombre": "Andinismo: mapas y orientación",
+          "oas_asociados": [1, 2],
+          "descripcion": "Se forman grupos de cuatro estudiantes. El profesor entrega a cada grupo un mapa previamente diseñado por él a partir del espacio disponible para la clase: se trata de una representación esquemática de un lugar con diferentes obstáculos que obstruyen el libre desplazamiento, con una ruta a seguir; por ejemplo: paredes, graderías, escalas, etc. Deben quedar claramente expresados y se denominarán referencias fijas del espacio. Los alumnos resuelven la tarea, utilizando los referentes fijos. Posteriormente, el profesor les entrega un mapa muy similar, pero sin algunos de los referentes fijos: quedan solamente los referentes del suelo. El propósito del ejercicio será resolver el mapa con menos elementos de referencia, de modo similar a lo que ocurre en una caminata. Los grupos pueden efectuar este ejercicio caminando y corriendo. Se recomienda utilizar todos los materiales de que se disponga."
+        },
+        {
+          "nombre": "Escalada: subir y bajar pendientes",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor busca un lugar con pendiente que esté cerca de la escuela para que los alumnos puedan subir y bajar, caminando, trotando, corriendo con o sin pesos en la espalda, en los hombros, en las piernas, etc. Para monitorear a cada estudiante, se puede variar la velocidad del desplazamiento, cambiar los objetos a transportar (cuidando que no sean excesivamente pesados), etc."
+        },
+        {
+          "nombre": "Escalada: nudos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor solicita a los estudiantes que traigan diferentes tipos de cuerdas de sus casas para que aprendan a hacer diferentes nudos. En esta ocasión, les corresponde el as de guía. Asimismo, responden preguntas como ¿qué tipo de cuerdas utilizan los escaladores para subir la montaña? ¿cuáles son sus características y dimensiones?"
+        },
+        {
+          "nombre": "Básquetbol: pases en círculo",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes forman grupos de seis integrantes con un balón, incluyendo a los alumnos con necesidades educativas especiales (NEE). Cinco jugadores forman un círculo y el sexto se coloca en el centro. Uno de los alumnos que está en el círculo toma el balón, y lo lanza a al compañero que está en el centro, cambiando de lugar con él. A medida que logren la tarea, podrán aumentar la distancia entre ellos."
+        },
+        {
+          "nombre": "Básquetbol: dribling en diagonales",
+          "oas_asociados": [1, 2],
+          "descripcion": "Profesor y alumnos disponen conos que delimitan un cuadrado de quince metros de lado aproximadamente. Los estudiantes se forman en cuatro grupos de cinco integrantes, formando una hilera detrás de cada cono. Los primeros de cada hilera tienen un balón de básquetbol y a la señal, salen botando el balón en dirección a los que están en diagonal. Al llegar a ellos, pasan el balón al primero de esa hilera y se colocan al final. Deben tener mucho cuidado de no chocar con los otros compañeros cuando se reúnen al centro: es un trabajo importante para que aprendan a esquivar a otro, utilizando la visión periférica. Se puede aumentar la velocidad y complejidad del ejercicio, pasando una pelota a los últimos integrantes de cada hilera para que hagan rebotes a la derecha o izquierda; de esta manera, todos los estudiantes estarán en movimiento."
+        },
+        {
+          "nombre": "Hockey: conducción entre obstáculos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor distribuye al curso en hileras. Frente a cada hilera, coloca pequeños obstáculos (una banca, una barra en el piso u otro). El primer alumno de cada hilera tiene un bastón de hockey o similar y debe intentar conducir una pelota de tenis entre los obstáculos de ida y vuelta; luego entrega los implementos al compañero siguiente. Deben repetirlo unas cuatro veces. El docente puede ir agregando variantes, como las formas de conducir, incluir más obstáculos, entre otros."
+        },
+        {
+          "nombre": "Vóleibol: golpe de antebrazo y dedos",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes, organizados en grupos de tres integrantes, realizan pases con golpe de antebrazo y golpe de dedos, tratando de enviar el balón al compañero que se encuentra pegado a la red (si no se cuenta con red, se puede reemplazar con un elástico amarrado a postes o árboles). El que está junto a la red tiene la función de levantador y debe cambiarse de un lado a otro de la red para ayudar a los dos compañeros; tienen que rotar cada 5 minutos. Esta tarea debe realizarse de forma colaborativa y competitiva: es decir, ayudar al compañero en primera instancia, entregando un pase alto para darle el tiempo necesario para llegar al balón. Además, responden preguntas como ¿cuál es la función del levantador en la cancha de juego?"
+        },
+        {
+          "nombre": "Vóleibol: pases de dedos en parejas",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes se ubican en parejas frente a frente con una red o un elástico en medio, a 1,80 metros de altura. A la señal, realizan pases de golpe de dedos durante cinco minutos. Luego hacen la mayor cantidad de pases en un minuto sin que el balón se caiga; se felicita a la o las parejas que logren la tarea."
+        },
+        {
+          "nombre": "Vóleibol: golpes de antebrazo en parejas",
+          "oas_asociados": [1, 2],
+          "descripcion": "Repiten la actividad anterior, pero con golpes de antebrazo. Variaciones posibles: incorporar varias canchas en un mismo espacio o cambiar la dirección de la cancha (a lo largo o a lo ancho). Responden preguntas como ¿cuáles son las lesiones más comunes de los voleibolistas?"
+        },
+        {
+          "nombre": "Hándbol: ataque en inferioridad numérica",
+          "oas_asociados": [1, 2],
+          "descripcion": "Se forman dos equipos: uno de dos jugadores (atacante) y otro de tres jugadores más un arquero (defensor). El equipo atacante debe anotar y el equipo defensor, evitar que lo haga, respetando ambos grupos las reglas del este deporte. El equipo atacante tiene que resolver la situación de inferioridad numérica, algo habitual en un partido real. Como variantes, se puede asignar un límite de tiempo para finiquitar la jugada, limitar la cantidad de pases o delimitar la zona de movimiento de los defensores. Si no se cuenta con arcos, se puede utilizar conos."
+        },
+        {
+          "nombre": "Calentamiento: movilidad articular",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes ejecutan una serie de ejercicios de movilidad articular al inicio de cada sesión. Pueden ser dirigidos por distintos compañeros. Se sugiere el orden que muestra la imagen, pero se puede cambiar e incorporar otros ejercicios."
+        },
+        {
+          "nombre": "Seguridad: planificación de actividad física",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes planifican una actividad física y/o deportiva que realizarán durante el fin de semana. Posteriormente, registran las medidas de precaución que adoptaron el día que hicieron la actividad; por ejemplo: Consumir un desayuno saludable. Usar rodilleras. Usar casco si anduvieron bicicleta. Utilizar reflectante o alguna ropa de color intenso si salieron a correr. Mantener un botella con agua para hidratarse."
+        },
+        {
+          "nombre": "Investigación: lesiones deportivas",
+          "oas_asociados": [4, 5],
+          "descripcion": "Fuera del horario escolar, los alumnos investigan cuáles son las lesiones más comunes en la actividad física y/o deportiva de su interés y cómo evitar peligros innecesarios. El docente selecciona a algunos y exponen su trabajo al inicio de cada clase brevemente para no modificar la práctica debido a la presentación. Pueden utilizar diferentes medios tecnológicos que los propios expositores buscan, instalan y guardan. Además, responden preguntas como ¿qué hacer en caso de que uno de sus compañeros tenga una hemorragia nasal después de un golpe?"
+        },
+        {
+          "nombre": "Promoción: cruzando el río",
+          "oas_asociados": [4, 5],
+          "descripcion": "Se forman grupos de cuatro a cinco estudiantes. Se trazan dos líneas paralelas al suelo a una distancia de unos diez metros, lo que representan las dos orillas de un río que cada jugador tendrá que cruzar sobre el barco móvil formado por dos cartones. Los equipos se ubican en hileras, la mitad en una de las orillas, el resto en la otra. A la señal, el primer jugador de equipo coloca uno de los cartones en el suelo, pone los dos pies encima, coloca el otro cartón en dirección a la orilla opuesta, coloca los pies, recoge el primer cartón y lo coloca delante para ir desplazándose, y así sucesivamente. Cuando coloque el pie en la otra orilla, el primero de esa hilera, toma los cartones y cruza el río de la misma manera, así hasta el último jugador. Gana aquel equipo que logre cruzar a todos sus integrantes."
+        },
+        {
+          "nombre": "Promoción: intereses de actividad física",
+          "oas_asociados": [4, 5],
+          "descripcion": "El profesor explica a los estudiantes la importancia de practicar actividad física de forma regular. Luego les pregunta ¿qué actividad física o deportes les gusta practicar?, ¿cuál de esas actividades físicas o deportes les gusta en especial?, ¿qué actividades hacen de forma regular?, ¿qué actividad física o deportiva han realizado en esta semana? Así puede conocer qué actividades practican fuera del horario de clases."
+        },
+        {
+          "nombre": "Registro de alimentación y actividad física",
+          "oas_asociados": [4, 5],
+          "descripcion": "Fuera del horario escolar, los estudiantes registran los alimentos que consumen el día de la clase de Educación Física y Salud, y las actividades físicas que realizan ese día. Antes de terminar la clase, el docente les pregunta qué alimentos saludables consumieron ese día y qué actividades de las que practicaron en la clase pueden formar parte de una rutina de ejercicios."
+        },
+        {
+          "nombre": "Promoción: caminata familiar",
+          "oas_asociados": [4, 5],
+          "descripcion": "Fuera del horario escolar, los alumnos promueven una caminata familiar un día de fin de semana en que se aproveche de usar el entorno natural; para ello, pueden crear un afiche, un mural, un video, volantes, dípticos, etc., en donde se detalle la hora, lugar de encuentro, implementos requeridos, entre otros."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Registro de actividad física y autoevaluación",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Durante un mes, los estudiantes se proponen realizar actividad física de forma permanente (caminar, correr, subir escaleras, entre otras). 1. Practican en su tiempo libre una variedad de actividades físicas en diferentes entornos. 2. Registran las actividades que efectúan durante un mes; por ejemplo: Cantidad de cuadras caminadas en su desplazamiento diario (por semana). Cantidad de metros corridos. ¿Cuántas veces subió escaleras? ¿En qué tipo de juegos y actividades físicas participó? 3. Registran cuánto tiempo estuvieron sin practicar actividad física de intensidad moderada a vigorosa (horas de sueño, horas sentados en la escuela, horas en el computador, etc.). 4. Elaboran un gráfico que muestre los resultados obtenidos y sugieren estrategias para disminuir los tiempos en los cuales estuvieron inactivos.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Practican en su tiempo libre una variedad de actividades físicas en diferentes entornos",
+              "Registran la cantidad de cuadras que recorren en su desplazamiento diario",
+              "Anotan la cantidad de tiempo que estuvieron sin realizar una actividad física de intensidad moderada a vigorosa",
+              "Llevan este control por medio de registros y lo presentan cuando el docente lo pide",
+              "Analizan la información y entregan un informe graficado de la cantidad de actividad física realizada y la cantidad de tiempo de inactividad",
+              "Analizan su situación personal y proponen alternativas para mejorar",
+              "Entregan los criterios solicitados por el docente en la fecha indicada"
+            ]
+          }
+        },
+        {
+          "titulo": "Estrategias y tácticas en hándbol",
+          "oas_evaluados": [2],
+          "actividad_evaluacion": "Los estudiantes se organizan en grupos para jugar tres partidos de hándbol (balonmano). Durante el juego; Seleccionan y aplican estrategias para abordar los problemas que les impone el juego. Solo se permite caminar un máximo de tres pasos con la pelota en la mano. No pueden darse autopases. Se autorregulan en la aplicación de las normas propias del juego (salida del balón, faltas, entre otros). Resuelven situaciones con sus compañeros. Aplican en cada partido las nuevas estrategias que les están dando resultado; si no, las modifican.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Caminan un máximo de tres pasos con la pelota en las manos",
+              "No realizan autopases",
+              "Aplican las normas establecidas para el juego",
+              "Usan las habilidades motrices para cumplir con la tarea propuesta, como botear, dar los tres pasos y botear, lanzar con una mano",
+              "Entregan el balón a los compañeros mejor ubicados",
+              "Aplican estrategias defensivos en el área de juego",
+              "Toman decisiones durante el juego",
+              "Muestran una actitud del trabajo en equipo"
+            ]
+          }
+        },
+        {
+          "titulo": "Resistencia cardiovascular y frecuencia cardiaca",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Los estudiantes se organizan en parejas. Uno de cada pareja se ubica en filas (o sea, uno al lado del otro) enfrentadas a una distancia de veinte metros aproximadamente. A la señal, se desplazan los alumnos de un lado hacia el frente por medio de un trote. Cuando lleguen al otro lado, sale el otro grupo. Deben agregar cambios; por ejemplo: ir a hacia adelante, atrás y salir hacia el otro extremo, hacer desplazamientos laterales a un lado y al otro lado y cruzar hacia el frente, ir hacia adelante y atrás volviendo a la línea de salida para cruzar al frente otra vez, hacer fintas y cruzar. La idea es que los estudiantes propongan nuevas formas de salir. El otro integrante de cada pareja registra la frecuencia cardiaca de su compañero al inicio, a los cinco y a los diez minutos. Luego comparan sus resultados y proponen formas de mejorar la resistencia cardiovascular.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan un trote por un periodo de tiempo determinado",
+              "Agregan cambios de ritmo y dirección durante el trote",
+              "Proponen modificaciones a la actividad",
+              "Miden la intensidad por medio de la frecuencia cardiaca",
+              "Proponen formas de mejorar la resistencia cardiovascular"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Educación Física",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "La unidad tiene dos propósitos principales: que los estudiantes combinen, apliquen y ajusten sus habilidades motrices específicas en, al menos, un deporte de oposición/colaboración, y que usen esas habilidades en una danza. Asimismo, se espera que sigan desarrollando la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad, aplicando los principios de frecuencia, intensidad, duración y tipo de ejercicio a efectuar, lo cual tendrá efectos positivos en su condición física. También se busca que practiquen actividad física de forma segura y responsable. Esto implica usar ropa adecuada, hidratarse, realizar un calentamiento, hacer actividad física acompañados, entre otros. Además, se pretende que demuestren disposición a practicar y promover la actividad física en su comunidad y en su entorno.",
+      "conocimientos_previos": [
+        "Reglas básicas de los deportes de oposición/colaboración",
+        "habilidades expresivas motrices",
+        "danza",
+        "espacio",
+        "tiempo",
+        "planos",
+        "coordinación",
+        "principio de intensidad",
+        "tipo de ejercicio",
+        "calentamiento",
+        "medidas de seguridad",
+        "conceptos de resistencia cardiovascular, fuerza, flexibilidad y velocidad"
+      ],
+      "palabras_clave": [
+        "Danza educativa",
+        "deportes de oposición/colaboración",
+        "intensidad",
+        "frecuencia",
+        "tiempo",
+        "tipo de actividad",
+        "promoción",
+        "vida activa saludable",
+        "resistencia cardiovascular",
+        "fuerza",
+        "flexibilidad",
+        "velocidad"
+      ],
+      "conocimientos": [
+        "Danza, folclore",
+        "Relación entre espacio, tiempo y altura",
+        "Reglas básicas de deportes de oposición/colaboración",
+        "Estrategias de promoción para una vida activa"
+      ],
+      "habilidades": [
+        "Utilizar las habilidades de manipulación en deportes de oposición/colaboración; por ejemplo: efectuar un golpe con el antebrazo en el vóleibol, hacer un pase de pecho en el básquetbol, entre otros",
+        "Aplicar las habilidades motrices y coordinativas en un baile nacional, según el contexto",
+        "Utilizar los conceptos de espacio, tiempo y alturas para coordinar desplazamientos y ritmos en un baile de parejas",
+        "Acoger las opiniones de los compañeros y del profesor –quienes han efectuado una observación crítica de su desempeño– para autoevaluarse y así mejorar su condición física, y considerar la corrección derivada de su propio análisis"
+      ],
+      "actitudes": [
+        "OA A: Demostrar respeto por los demás al participar en actividades físicas y/o deportivas; por ejemplo: aplicar el principio de juego limpio, llegar a acuerdos, jugar en forma cooperativa, aceptar el resultado y manejar el triunfo, entre otros",
+        "OA F: Demostrar iniciativa en la promoción de una vida activa y los deportes, con sus compañeros y en la comunidad escolar",
+        "OA C: Trabajar en equipo, asumiendo responsablemente roles y tareas, colaborando con otros y aceptando consejos y críticas",
+        "OA B: Promover la participación de todos en las actividades físicas, valorando la diversidad de las personas, sin discriminar por características como altura, peso, color de piel, origen, condición física, discapacidades, etc.",
+        "OA D: Apreciar la práctica regular de actividades físicas y deportivas como fuente de bienestar, recreación y crecimiento en lo personal y social",
+        "OA E: Demostrar y asumir responsabilidad por su salud, buscando mejorar su condición física y practicando actividades físicas y/o deportivas en forma regular",
+        "OA G: Cuidar el medio ambiente, la infraestructura y los materiales utilizados durante la práctica de actividad física y/o deportiva"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando: Frecuencia. Intensidad. Tiempo de duración. Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": [
+            "Practican actividades físicas que desarrollan la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad",
+            "Mantienen el registro de su frecuencia cardiaca durante el periodo del entrenamiento",
+            "Se autoevalúan en cuanto a la mejoría de su condición física, considerando la escala de percepción de esfuerzo",
+            "Usan calzado adecuado durante la práctica de actividad física y se duchan al terminarla",
+            "Identifican mecanismos de prevención de enfermedades asociadas a una baja condición física y a una alimentación poco saludable",
+            "Para mejorar su condición física, se autoevalúan, acogiendo la información entregada por sus compañeros y el profesor tras una observación crítica de su desempeño"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad, como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": [
+            "Participan regularmente en una variedad de actividades físicas de intensidad moderada a vigorosa en diferentes entornos",
+            "Ejecutan un calentamiento específico según la actividad física que van a realizar",
+            "Ejecutan acciones para mejorar su condición física fuera de la escuela; por ejemplo: caminan y trotan todos los días, utilizando la frecuencia cardiaca como parámetro de intensidad",
+            "Recopilan información sobre la salud y la calidad de vida de los chilenos en diferentes medios de comunicación",
+            "Entienden la importancia de que existan normas de comportamiento en la clase de Educación Física y Salud (ser puntual, respetar las reglas de la clase, respetar a sus pares y profesores) y las aplican"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Aplicar, combinar y ajustar las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos: Un deporte individual (atletismo, gimnasia artística, entre otros). Un deporte de oposición (tenis, bádminton, entre otros). Un deporte de colaboración (escalada, vóleibol duplas, entre otros). Un deporte de oposición/colaboración (básquetbol, hándbol, hockey, entre otros). Una danza (folclórica, moderna, entre otras).",
+          "indicadores": [
+            "Aplican, combinan y ajustan las habilidades de manipulación en deportes de oposición/colaboración; por ejemplo: efectuar un golpe con el antebrazo en el vóleibol, hacer un pase de pecho en el básquetbol, entre otros",
+            "Ajustan la forma de ejecutar la habilidad motriz según el contexto del juego o deporte",
+            "Demuestran una variedad de acciones motrices durante la práctica de un deporte de oposición/colaboración; por ejemplo: recoger un balón, recibir un pase en fútbol, básquetbol o hockey, patear un balón",
+            "Participan en coreografías y creaciones artísticas individuales y grupales, usando las habilidades motrices específicas",
+            "Demuestran control y ritmo en la ejecución de una danza nacional o internacional",
+            "Utilizan y combinan una variedad de movimientos a diferentes velocidades para ejecutar y crear movimientos rítmicos en bailes y danzas",
+            "Aplican y ajustan las habilidades de coordinación en un baile nacional o internacional, según el contexto"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: ubicar la pelota lejos de un contrincante, utilizar los espacios para recibir un objeto sin oponentes, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros), entre otros.",
+          "indicadores": [
+            "Aplican tácticas individuales en juegos de colaboración y oposición",
+            "Planean tácticas grupales en situaciones de juego",
+            "Ejecutan y seleccionan la forma de resolver un problema durante un juego colectivo",
+            "Seleccionan la forma de desmarcarse para recibir un balón en situación de juego",
+            "Utilizan el espacio y el tiempo para coordinar el desplazamiento y ritmo en un baile de parejas",
+            "Ejecutan pases, evitando que sean interceptados por un contrincante"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Participar en una variedad actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo: Integrarse en talleres de actividades físicas y/o deportivas extraprogramáticas que se desarrollan en su comunidad y/o entorno. Asumir variados roles en la participación y promoción de una vida activa. Utilizar los entornos cercanos para realizar alguna actividad física y/o deportiva (plazas, parques, entre otros).",
+          "indicadores": [
+            "Participan dentro de su comunidad en talleres donde se incentive la práctica regular de actividad física",
+            "Utilizan los entornos cercanos para realizar actividad física y/o deportiva",
+            "Reconocen los beneficios para la salud de la práctica regular de actividad física",
+            "Asumen variados roles durante la participación de una variedad de actividades físicas y/o deportivas",
+            "Identifican estrategias de participación para la promoción de la práctica regular de actividad física",
+            "Identifican los factores que influyen en la práctica de actividad física (accesibilidad, precio, clima, infraestructura e interés personal)",
+            "Participan en diferentes actividades en que se promueva la práctica de actividad física, como el día mundial de la actividad física, entre otros"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Resistencia cardiovascular",
+          "oas_asociados": [3],
+          "descripcion": "Se colocan dos conos a una distancia de unos cinco metros. Detrás de cada cono se ubica una hilera de tres estudiantes. A la señal, el primero corre hacia el cono que está enfrente y vuelve a su lugar; de inmediato sale el segundo, efectúa la misma carrera y luego le toca al tercero. Completan 10 veces el mismo recorrido, descansan alrededor de 30 a 45 segundos y reinician la actividad (se sugiere repetir unas 6 veces). Hay que procurar que el espacio no esté resbaloso y que los mismos estudiantes lleven la cuenta de su trabajo. Se puede modificar la distancia hasta ocho metros."
+        },
+        {
+          "nombre": "Fuerza muscular",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se organizan en parejas. Uno se ubica detrás de su compañero y lo toma de la cintura. A la señal, el que está atrapado intenta soltarse, empujando con sus piernas (mientras su captor trata de impedírselo). Cuando lo consigue, cambian de roles. Hay que advertirles que no suelten al compañero para evitar que este se caiga."
+        },
+        {
+          "nombre": "Flexibilidad",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se sientan en el suelo con las piernas extendidas y juntas. Inclinando tronco y cabeza y extendiendo los brazos, intentan tomarse los tobillos sin flectar las rodillas. Mantienen la posición por 30 segundos al menos y repiten dos o tres veces durante una sesión de trabajo."
+        },
+        {
+          "nombre": "Velocidad",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se ubican frente a frente a una distancia de treinta metros. A la señal, corren a máxima velocidad hacia su compañero. Luego, al llegar al extremo, sale el siguiente. La recuperación debe durar alrededor de 30 a 45 segundos. Repiten la actividad tres veces, al menos."
+        },
+        {
+          "nombre": "Principios de entrenamiento: fartlek",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se organizan en cuartetos y trazan cuadrados de diez por diez metros (un cuadrado por cada grupo); se señala algunos sectores de dichos cuadrados en que los estudiantes deberán correr más rápido y otros en que tendrán que hacerlo más lento, al estilo de un fartlek. Cada alumno se ubica en una esquina de su cuadrado y comienzan a entrenar a la señal del docente. La idea es que todos trabajen simultáneamente; se debe respetar el nivel de cada estudiante. Es importante que monitoreen su esfuerzo físico por medio de la frecuencia cardiaca y trabajen a un 50% o 60% de ella, según la fórmula de Karvonen."
+        },
+        {
+          "nombre": "Básquetbol: driblar y robar balones",
+          "oas_asociados": [1, 2],
+          "descripcion": "Cada estudiante tiene un balón que pueda botear. Deben driblar, desplazándose por un área delimitada previamente; tendrán que conservar su balón y, a la vez, obtener el de los compañeros. Quienes pierden su balón, deben recuperarlo y volver a jugar."
+        },
+        {
+          "nombre": "Básquetbol: driblar con lanzamiento al aro",
+          "oas_asociados": [1, 2],
+          "descripcion": "El curso se divide en dos y cada grupo se posiciona en una mitad de la cancha. Cada estudiante debe driblar el balón e intentar tocar el balón de los compañeros. Quienes lo pierdan, tienen que recuperarlo, correr hasta la otra mitad de cancha y realizar un lanzamiento al aro; una vez que logran obtener el punto, vuelven a su área de juego."
+        },
+        {
+          "nombre": "Hockey: conducción con obstáculos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor organiza y ubica en el suelo una serie de objetos livianos, como conos, balones medicinales, aros y otros. Los estudiantes conducen una pelota de tenis con el bastón de hockey sin tocar los objetos dispuestos en el suelo. Al finalizar el recorrido, hacen un golpe a un arco confeccionado con conos."
+        },
+        {
+          "nombre": "Vóleibol: golpe de antebrazos después de bote",
+          "oas_asociados": [1, 2],
+          "descripcion": "Organizados en parejas, el alumno A le lanza el balón al alumno B, hacia la derecha o la izquierda. B espera que la pelota dé un bote y la devuelve con un golpe de antebrazos. Luego hacen el golpe sin el bote."
+        },
+        {
+          "nombre": "Vóleibol: mini partido con dos consignas",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los alumnos se organizan en grupos de 4 integrantes para jugar un mini vóleibol. Habrá dos consignas: la primera indica que el primer golpe debe de ser de antebrazos. Luego de un rato, la segunda ordena que el primer golpe sea de antebrazos y el segundo, de dedos. El profesor debe dividir el espacio para que todos los alumnos puedan jugar simultáneamente."
+        },
+        {
+          "nombre": "Hándbol: sobrepasar defensa y lanzar al arco",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes forman parejas, menos uno, que se ubica en medio de dos conos y actúa como defensa y otro como portero. Las parejas se dan pases utilizando sólo tres pasos; el jugador que se encuentre frente al defensa debe intentar sobrepasarlo y realizar un lanzamiento al arco sin ser obstaculizado por el defensa. Los goles se cuentan por pareja. Aquel alumno que no convierta el gol, se convierte en defensa y el defensa pasa a ser la pareja del otro compañero. Se pueden ubicar en diferentes posiciones de la zona de ataque para que trabajen al mismo tiempo varios estudiantes."
+        },
+        {
+          "nombre": "Hándbol: sobrepasar defensa y tocar conos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El docente ubica dos conos frente al arco en la línea de 9m. Un defensa se sitúa entre ambos conos. Frente a él, los demás alumnos se forman en una hilera e intentan sobrepasar al defensa. Luego tratan tocar uno de los dos conos con la pelota: el que toca un cono, obtiene un punto; el que no, reemplaza al defensa. Se sugiere trabajar en las dos zonas de la cancha y evitar interrupciones."
+        },
+        {
+          "nombre": "Danzas: exploración de música chilena",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor pondrá música chilena (cueca, música del norte, del sur, de Isla de Pascua, música de raíz indígena, entre otros) y pide a los alumnos que sientan y expresen la música de la forma que deseen, para que descubran cuáles son los ritmos suaves y fuertes, detecten la cantidad de compases musicales y expliquen el fundamento de la letra de la canción. Luego de conectarse con la música, comienzan a repetir desplazamientos básicos de cada una de las canciones y entre todos construyen una frase de movimiento que aprenden y memorizan. El profesor insiste en que deben respetar el trabajo de los compañeros y los bailes nacionales."
+        },
+        {
+          "nombre": "Danzas: investigación y coreografía de baile",
+          "oas_asociados": [1, 2],
+          "descripcion": "Investigan sobre el baile que más les ha gustado, buscando su música, la zona de la que proviene, la vestimenta correspondiente y las características del baile. A partir de esos conocimientos y asesorados por el docente, crean una coreografía hombres y mujeres y la presentan para ser evaluados; la presentación debe incluir los trajes respectivos. En esta actividad se debe respetar las características propias del baile y las condiciones particulares de los bailadores. Es importante considerar tiempos fuera del horario escolar para practicar la coreografía."
+        },
+        {
+          "nombre": "Seguridad: primeros auxilios",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes responden a preguntas como ¿qué medidas de seguridad se deben adoptar al momento de un accidente? Pueden responder mantener la calma, evitar agravar la situación, aplicar primeros auxilios básicos, dar aviso y evacuar."
+        },
+        {
+          "nombre": "Calentamiento: recorrido con obstáculos",
+          "oas_asociados": [4, 5],
+          "descripcion": "El docente ubica diferentes obstáculos de diferentes tamaños y dimensiones en el espacio del que dispone. Los estudiantes deben realizar un recorrido, trotando y traspasando cada uno de los obstáculos por arriba, por abajo, saltando, caminando etc., de acuerdo a las posibilidades que le ofrecen los aparatos. Este trabajo debe durar aproximadamente 6 minutos. Se pide a los estudiantes que respeten los turnos y los ritmos de todos. Después de este trabajo, registran su frecuencia cardiaca."
+        },
+        {
+          "nombre": "Promoción: búsqueda de zapatillas",
+          "oas_asociados": [4, 5],
+          "descripcion": "Se forman grupos de cinco a seis jugadores. Los equipos se ubican en hileras, unos junto a otros, en la línea de salida establecida previamente. A una distancia de unos diez metros, se coloca un cono. Previamente, los estudiantes se quitaron sus zapatillas y las ubicaron alrededor del cono. A la señal, el primero de cada grupo se dirige al montón de zapatos de su equipo, toma los suyos, se los pone y se dirige rápidamente hacia la hilera; sale el siguiente a repetir la acción de buscar sus zapatillas y ponérselas. Gana el primer equipo cuyos integrantes se hayan puesto sus zapatillas."
+        },
+        {
+          "nombre": "Bitácora de actividad física semanal",
+          "oas_asociados": [4, 5],
+          "descripcion": "Fuera del horario escolar, los alumnos elaboran una bitácora de las actividades físicas que realizan durante la semana, especificando el tipo de ejercicio, el tiempo y la intensidad del esfuerzo. Luego responden preguntas como: ¿su frecuencia cardiaca de reposo ha disminuido?, ¿se siente menos cansado al término de la actividad? Además, pueden recomendar a sus compañeros que practiquen las que más les interesaron."
+        },
+        {
+          "nombre": "Promoción: mural de vida activa",
+          "oas_asociados": [4, 5],
+          "descripcion": "Para ayudar a los estudiantes en su escuela a promover un estilo de vida activo y saludable, los alumnos diseñan –usando diversos medios tecnológicos– un mural que explique las actividades alternativas que se pueden practicar fuera del horario escolar. Luego lo instalan en un lugar visible en el ingreso del establecimiento."
+        },
+        {
+          "nombre": "Investigación: beneficios de la actividad física",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes investigan, registran y guardan toda la información que encuentren sobre los beneficios que otorga la actividad física y aquellas iniciativas que promueven una vida activa saludable. Entre otros, pueden explorar en el Programa Elige Vivir Sano, el Instituto de Nutrición, Tecnología y Alimentos de la Universidad de Chile (INTA), el Instituto Nacional del Deporte (IND), los municipios y diversos medios de comunicación (radio, televisión, diarios y otros) que entregan permanentemente a la comunidad mensajes y antecedentes al respecto. Luego, participan de alguna actividad propuesta por alguna institución durante el fin de semana."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de resistencia cardiovascular",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Los alumnos trotan libremente durante unos 12 minutos, utilizando todo el espacio disponible de su escuela y a una intensidad de entre 50% y 60% de la frecuencia cardiaca. Antes de iniciar el recorrido, hacen un calentamiento específico. Se controlan la frecuencia cardiaca antes de empezar y luego de terminar la actividad. Registran los datos de la frecuencia cardiaca obtenidos cada cinco minutos y la distancia recorrida (en metros). Al finalizar, proponen cambios a su plan de entrenamiento para mejorar su resistencia.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan un calentamiento específico antes del trote",
+              "Mantienen el control de la intensidad, revisando su frecuencia cardiaca",
+              "Registran la intensidad por medio de la frecuencia cardiaca y se adecuan de manera personal a lo solicitado",
+              "Demuestran interés en superarse y proponen cambios a su plan de entrenamiento"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de coreografía de baile nacional",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Los estudiantes, en grupos, crean una coreografía de algún baile del país y la presentan al curso. Durante la preparación y la ejecución del baile, deben considerar los siguientes criterios: Sincronización de los movimientos con la música. Control del cuerpo al ejecutar los movimientos. Ritmo y coordinación durante el baile. Variados movimientos a diferentes velocidades. Además, deben buscar la música correspondiente y usar vestimentas simples que sean propias de ese baile.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan la coreografía de forma sincronizada y con control del cuerpo",
+              "Seleccionan variados movimientos para llevar a cabo el baile",
+              "Danzan coordinadamente y con ritmo",
+              "Se presentan con vestimentas simples correspondientes al baile seleccionado"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de calentamiento dirigido",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "El curso se divide en cuatro grupos. Cada grupo efectúa un calentamiento durante unos 10 a 15 minutos, incluyendo las siguientes actividades: Desplazamiento. Flexibilidad. Movilidad articular de los miembros superiores e inferiores y del tronco. Actividades individuales y/o grupales. Cada integrante del grupo debe sugerir, al menos, una actividad para el calentamiento. Al finalizar, reflexionan sobre su respectiva participación; por ejemplo: propuse actividades, participé de forma activa, motivé a mis compañeros, etc.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Ejecutan e incorporan las actividades físicas solicitadas para el calentamiento; por ejemplo: actividades individuales y grupales, de desplazamientos, de flexibilidad y de movilidad articular, etc.",
+              "Respetan el tiempo asignado a cada integrante del grupo para proponer su actividad",
+              "Sugieren variadas actividades para incorporar al calentamiento",
+              "Participan de forma activa y reflexionan sobre su participación durante la actividad"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Educación Física",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "La unidad tiene dos propósitos principales. Por una parte, se espera que los estudiantes combinen, apliquen y ajusten sus habilidades motrices específicas en, al menos, un deporte de oposición/colaboración; por otro lado, se busca que trabajen en equipo, tomen decisiones, implementen estrategias y apliquen las reglas y los principios específicos de las actividades deportivas. Asimismo, al igual que en las unidades anteriores, se pretende que manejen los principios de frecuencia, intensidad, duración y tipo de ejercicio para desarrollar la resistencia cardiovascular, la fuerza muscular, la flexibilidad y la velocidad, lo que tendrá efectos positivos en su condición física. Además, se busca que practiquen actividad física de forma segura y responsable; esto implica usar ropa adecuada, hidratarse, realizar un calentamiento, hacer actividad física acompañados, etc. Y también se espera que demuestren disposición a practicar y promover la actividad física en su comunidad y en su entorno.",
+      "conocimientos_previos": [
+        "Habilidades motrices básicas y específicas",
+        "reglas básicas de los deportes de oposición/colaboración",
+        "principio de intensidad",
+        "tipo de ejercicio",
+        "calentamiento",
+        "medidas de seguridad",
+        "conceptos de resistencia cardiovascular, fuerza, flexibilidad, velocidad",
+        "entornos cercanos para la práctica de actividad física"
+      ],
+      "palabras_clave": [
+        "Deportes de oposición/colaboración",
+        "intensidad",
+        "frecuencia",
+        "tiempo",
+        "tipo de actividad",
+        "promoción",
+        "vida activa saludable",
+        "resistencia cardiovascular",
+        "fuerza",
+        "flexibilidad",
+        "velocidad"
+      ],
+      "conocimientos": [
+        "Reglas de deportes de oposición/colaboración",
+        "Principios de frecuencia, intensidad, tiempo y tipo de ejercicio",
+        "Estrategias de promoción para una vida activa",
+        "Medidas de seguridad para la práctica de actividad física"
+      ],
+      "habilidades": [
+        "Utilizar las habilidades motrices especializadas en los deportes de colaboración y oposición, entregando pases a los compañeros mejor ubicados en el juego",
+        "Utilizar las habilidades de manipulación en deportes de oposición/colaboración; por ejemplo: efectuar un golpe con el antebrazo en el vóleibol, hacer un pase de pecho en el básquetbol, entre otros",
+        "Promover el trabajo en equipo para lograr las tareas motrices"
+      ],
+      "actitudes": [
+        "OA A: Demostrar respeto por los demás al participar en actividades físicas y/o deportivas; por ejemplo: aplicar el principio de juego limpio, llegar a acuerdos, jugar en forma cooperativa, aceptar el resultado y manejar el triunfo, entre otros",
+        "OA G: Cuidar el medio ambiente, la infraestructura y los materiales utilizados durante la práctica de actividad física y/o deportiva",
+        "OA F: Demostrar iniciativa en la promoción de una vida activa y los deportes, con sus compañeros y en la comunidad escolar",
+        "OA B: Promover la participación de todos en las actividades físicas, valorando la diversidad de las personas, sin discriminar por características como altura, peso, color de piel, origen, condición física, discapacidades, etc.",
+        "OA C: Trabajar en equipo, asumiendo responsablemente roles y tareas, colaborando con otros y aceptando consejos y críticas",
+        "OA D: Apreciar la práctica regular de actividades físicas y deportivas como fuente de bienestar, recreación y crecimiento en lo personal y social",
+        "OA E: Demostrar y asumir responsabilidad por su salud, buscando mejorar su condición física y practicando actividades físicas y/o deportivas en forma regular"
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Desarrollar la resistencia cardiovascular, la fuerza muscular, la velocidad y la flexibilidad para alcanzar una condición física saludable, considerando: Frecuencia. Intensidad. Tiempo de duración. Tipo de ejercicio (correr, andar en bicicleta, realizar trabajo de fuerza, ejercicios de flexibilidad, entre otros).",
+          "indicadores": [
+            "Ejecutan un test de condición física para determinar registros personales y verificar sus avances",
+            "Aplican los principios de frecuencia, intensidad, duración y tipo de ejercicio en su entrenamiento durante las vacaciones",
+            "Aplican y demuestran aquellos ejercicios que mejoran su condición física",
+            "Ejecutan ejercicios que permita trabajar aquellos elementos más deficientes de su condición física",
+            "Verifican si han cumplido las metas propuestas para mejorar la resistencia mediante actividades de mediana a larga duración"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Practicar regularmente una variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad, como realizar al menos 30 minutos diarios de actividades físicas de su interés, evitar el consumo de drogas, tabaco y alcohol, ejecutar un calentamiento, aplicar reglas y medidas de seguridad, hidratarse con agua de forma permanente, entre otras.",
+          "indicadores": [
+            "Participan y se inscriben en nuevas actividades físicas que mejoran su condición física, como corridas y cicletadas",
+            "Durante la práctica de actividad física, se mantienen dentro de los límites establecidos; por ejemplo: andan en bicicleta en ciclovías, respetan las normas de un juego libre, permanecen conectados con el líder en las salidas a terreno, entre otros",
+            "Por medio de un juego, reconocen los efectos que produce el consumo de drogas, tabaco y alcohol en el organismo y la condición física",
+            "Llevan botellas con agua y se mantienen hidratados"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Aplicar, combinar y ajustar las habilidades motrices específicas de locomoción, manipulación y estabilidad en, al menos: Un deporte individual (atletismo, gimnasia artística, entre otros). Un deporte de oposición (tenis, bádminton, entre otros). Un deporte de colaboración (escalada, vóleibol duplas, entre otros). Un deporte de oposición/colaboración (básquetbol, hándbol, hockey, entre otros). Una danza (folclórica, moderna, entre otras).",
+          "indicadores": [
+            "Utilizan, combinan y ajustan las habilidades motrices específicas de los deportes de colaboración y oposición, entregando pases a los compañeros mejor ubicados en el juego, entre otros",
+            "Seleccionan, ajustan y utilizan las habilidades motrices específicas en deportes de colaboración y oposición/colaboración; por ejemplo: fintean, marcan a un adversario, se desplazan sin caerse y con la vista al frente, driblean un objeto con una y otra mano, evitando mirar el objeto",
+            "Utilizan y ajustan las habilidades de manipulación en deportes de oposición/colaboración; por ejemplo: conducir una pelota con un bastón en hockey, efectuar un golpe con el antebrazo en el vóleibol, hacer un pase de pecho en el básquetbol, entre otros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes; por ejemplo: ubicar la pelota lejos de un contrincante, utilizar los espacios para recibir un objeto sin oponentes, aplicar un sistema de juego (uno contra uno, tres contra tres, entre otros), entre otros.",
+          "indicadores": [
+            "Seleccionan cuándo y cómo pasar el balón en situación de ataque",
+            "Realizan pases, evitando que un contrincante intercepte el balón",
+            "Elaboran y aplican tácticas grupales en el juego; por ejemplo: se organizan con sus compañeros para quitar la pelota a los contrincantes; se distribuyen en posiciones de juego para atrapar al adversario",
+            "Aplican y seleccionan la forma de resolver una situación durante un juego colectivo; por ejemplo: cuando entregan y reciben un balón mientras están marcados por un compañero",
+            "Despejan áreas de juego y juegan con el compañero mejor ubicado para evitar acciones del contrincante",
+            "Bloquean a un oponente para permitir la jugada de un compañero",
+            "Buscan la forma de desmarcarse para recibir un balón durante un juego",
+            "Aplican el sistema de juego acordado para enfrentar el partido"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Participar en una variedad actividades físicas y/o deportivas de su interés y que se desarrollan en su comunidad escolar y/o en su entorno; por ejemplo: Integrarse en talleres de actividades físicas y/o deportivas extraprogramáticas que se desarrollan en su comunidad y/o entorno. Asumir variados roles en la participación y promoción de una vida activa. Utilizar los entornos cercanos para realizar alguna actividad física y/o deportiva (plazas, parques, entre otros).",
+          "indicadores": [
+            "Participan en actividades físicas que se desarrollen en su comunidad y que incentiven la práctica regular de actividad física",
+            "Promueven la práctica regular de actividad física y deportiva mediante campañas motivacionales al interior de la escuela (murales, afiches, entre otros)",
+            "Proponen soluciones a los conflictos que se generan en el grupo debido a la actividad desarrollada",
+            "Ejercen sus habilidades de liderazgo en el entorno escolar y de acuerdo al contexto",
+            "En una asamblea de promoción de actividad física, se atreven a defender sus planteamientos con ideas fundamentadas",
+            "Experimentan nuevas situaciones que demandan un comportamiento positivo, como cambio de grupo, cambio de juego o de actividades"
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Resistencia cardiovascular: escalera de pasos",
+          "oas_asociados": [3],
+          "descripcion": "Se marcan diferentes distancias en el suelo, formando una escalera de varios pasos para crear una carrera continua sin muchas variaciones en las zancadas. Los estudiantes corren de manera continua durante unos 8 minutos y luego descansan. Deben preocuparse de tener el cuerpo ligeramente inclinado hacia adelante, con los brazos flexionados y moviéndose en oposición a las piernas."
+        },
+        {
+          "nombre": "Fuerza muscular: estaciones de saltos",
+          "oas_asociados": [3],
+          "descripcion": "Se forman estaciones de saltos variados y el curso se divide en cinco grupos, cuidando que todos queden incluidos. Cada grupo ejecuta diversos tipos de salto, desde diferentes alturas y en distintas direcciones (hacia arriba, adelante, atrás), desde un trampolín, etc.; por ejemplo: salto hacia arriba con las piernas extendidas y juntas, salto tipo ovillo, salto en extensión, salto con piernas extendidas y separadas (formando una V), correr por una línea y saltar sobre el trampolín. Cada grupo realiza un tipo de salto durante cinco minutos y a la señal, rotan para practicar otra modalidad."
+        },
+        {
+          "nombre": "Flexibilidad",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes, sentados con las piernas juntas, intentan tocar las puntas de sus zapatillas y mantienen la posición por 30 segundos, sin doblar las rodillas. Cada vez intentan llegar más lejos, sin flectar las rodillas."
+        },
+        {
+          "nombre": "Velocidad: carrera desde sentado",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se organizan en una fila (uno al lado del otro) y se sientan. A la señal del docente, se levantan y corren hacia el otro extremo (más o menos 10 metros) lo más rápido posible; descansan 30 segundos y repiten. Se puede modificar la posición de inicio."
+        },
+        {
+          "nombre": "Principios de entrenamiento: frecuencia cardiaca",
+          "oas_asociados": [3],
+          "descripcion": "Los estudiantes se ubican en parejas. Uno de ellos cuenta el tiempo y el otro se evalúa la frecuencia cardiaca, hace la mayor cantidad posible de sentadillas durante un minuto, vuelve a revisar su frecuencia cardiaca y registra los valores obtenidos. Pueden agregar saltos, evaluar la frecuencia cardiaca y verificar qué actividad fue más intensa. Además, responden preguntas como ¿qué factores afectan la frecuencia cardiaca?, ¿qué diferencias existen entre las frecuencias cardiacas? Con los datos obtenidos, pueden hacer gráficos que permitan comparar las frecuencias cardiacas alcanzadas."
+        },
+        {
+          "nombre": "Básquetbol: pases en desplazamiento",
+          "oas_asociados": [1, 2],
+          "descripcion": "Todos los estudiantes tienen un balón (que dé bote), se desplazan dando botes con la pelota por un área delimitada previamente y, al encontrarse con un compañero, ejecutan un pase, intercambiando el balón. Los pases pueden ser de pique (o rebote), de pecho u otros. Puede intentarse algunas variantes, como pinchar el balón de los compañeros u otras."
+        },
+        {
+          "nombre": "Hándbol: pases en aros",
+          "oas_asociados": [1, 2],
+          "descripcion": "Cada integrante de un equipo se colocará al interior de unos aros dispersos por el espacio y se deberá pasar una pelota, tratando de que el otro equipo (desplazamiento libre) no se la quite. El objetivo es realizar la cantidad de pases determinados por el profesor, que irá aumentando el número de 5 a 10. Cuando un equipo no consigue dar un pase, se hará cambio. Luego intercambian los equipos rivales. Los estudiantes pueden proponer estrategias de juego para completar la tarea con éxito."
+        },
+        {
+          "nombre": "Fútbol: conducción en cuadrado",
+          "oas_asociados": [1, 2],
+          "descripcion": "Con cuatro conos, se arma un cuadrado de unos 10 metros. Los alumnos se organizan en cuartetos y cada jugador se ubica en una esquina con un balón. Al silbato del docente, conducen el balón con los pies alrededor del cuadrado. Si un jugador es sobrepasado, debe aumentar su ritmo de trabajo."
+        },
+        {
+          "nombre": "Fútbol: pases por portales",
+          "oas_asociados": [1, 2],
+          "descripcion": "Existen dos equipos dentro de un espacio determinado; algunos conos ubicados en el suelo de manera estratégica, forman unos portales. Cada equipo debe tratar de darse pases por dentro de los portales, mientras el otro equipo trata de impedirlo, robando el balón. Al dar tres pases válidos (por dentro de los portales), logran un punto. El equipo con más puntos gana."
+        },
+        {
+          "nombre": "Fútbol: juego con todos incluidos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El profesor propone aplicar todo lo aprendido por medio del mismo juego anterior: estimula a los estudiantes para que se organicen en equipos y trabajen todos, sin discriminar a ningún compañero. Para ello, permanece atento a la forma en que se agrupan."
+        },
+        {
+          "nombre": "Rugby: pases laterales y hacia atrás",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los estudiantes juegan a los pases en dirección hacia los lados y para atrás. Todos deben recibir el balón y luego repetir."
+        },
+        {
+          "nombre": "Rugby: fintar marca del defensa",
+          "oas_asociados": [1, 2],
+          "descripcion": "Un alumno sostiene el balón con sus manos. En el centro de la cancha se ubica un defensor que debe evitar que el jugador con la pelota avance. El defensor sólo puede desplazarse lateralmente. El jugador con el balón fintea la marca del defensa. Variantes: Agregar un defensor más a la línea de marcaje. Agregar más líneas de marcaje. Agregar más atacantes, de forma que puedan darse pases entre sí (respetando las reglas del rugby: pases hacia atrás)."
+        },
+        {
+          "nombre": "Rugby: diez pases consecutivos",
+          "oas_asociados": [1, 2],
+          "descripcion": "El curso se divide en dos equipos. El que tiene el balón debe darse pases hasta completar consecutivamente diez; de lograrlo, obtienen un punto. La dificultad del juego radica en que el equipo adversario les hace una marca personal, por lo que deben desmarcarse para ejecutar correctamente los pases. Si el equipo que marca roba el balón, se intercambian los roles. Solo pueden robar la pelota cuando se encuentra en el aire; es decir, se debe interceptar el pase. Variantes: Aumentar o disminuir la cantidad de pases. Exigir o no la ejecución técnica correcta del pase y lanzamiento. Dependiendo del nivel en que se encuentren los estudiantes, se puede utilizar distintos tipos de balón (uno de fútbol o hándbol es más fácil de manipular debido a su forma)."
+        },
+        {
+          "nombre": "Hockey: confección de sticks y partido",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los alumnos confeccionan palos de hockey (sticks) con diarios y tubos de PVC. Después, el profesor les enseña a manejar el stick y a conducir la pelota u otro objeto adecuado. El curso se divide en dos equipos e inicia un partido, utilizando arcos de fútbol y un aro de gimnasia: se dan pases y trasladan el aro, arrastrándolo por el suelo. El objetivo es convertir un gol en el arco contrario, sin levantar el palo del suelo. Gana el equipo que logra convertir algún gol."
+        },
+        {
+          "nombre": "Hockey: pases sobre obstáculo",
+          "oas_asociados": [1, 2],
+          "descripcion": "Los alumnos se organizan en parejas, separados por un obstáculo pequeño (una banca, una barra en el piso u otro). Cada pareja maneja una pelota de tenis, tratando de elevarla sobre el obstáculo y entregarla al compañero sin levantar el palo de hockey."
+        },
+        {
+          "nombre": "Calentamiento: tocar espaldas",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes se ubican libremente en el espacio delimitado previamente. A la señal, deben tocar la mayor cantidad de espaldas, evitando ser tocados; el tiempo de ejecución es un minuto. Cada alumno cuenta las veces que ha tocado un compañero; si lo tocan a él, resta un punto."
+        },
+        {
+          "nombre": "Seguridad: peligros en la actividad física",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes investigan en sitios web, libros, revistas, diarios u otros, sobre los peligros subjetivos (su condición física y experiencia) y objetivos (clima, radiación solar, oscuridad, etc.) con los que se pueden encontrar al practicar actividad física, y proponen medidas de seguridad para disminuir los riesgos."
+        },
+        {
+          "nombre": "Promoción: posta con preguntas sobre drogas y alcohol",
+          "oas_asociados": [4, 5],
+          "descripcion": "El curso se divide en grupos de 6 compañeros y se instalan dos conos a una distancia de 20 metros. Cada grupo recibe una pelota que tiene 6 preguntas pegadas. Uno a uno, cada estudiante recorre la distancia entre cono y cono con el balón en la mano; para poder entregarlo al compañero que está ubicado en la hilera de enfrente para que este continúe la posta, despega una pregunta y la responde. Ejemplos de preguntas: ¿qué debes hacer si te ofrecen droga?; ¿qué consecuencias puede traer consumir alcohol?"
+        },
+        {
+          "nombre": "Plan de entrenamiento basado en trote",
+          "oas_asociados": [4, 5],
+          "descripcion": "Los estudiantes planifican un entrenamiento basado en el trote; en su calendario, agregan el tiempo y la intensidad a la cual van a ejecutar la actividad. Luego de efectuar el entrenamiento, registran los datos obtenidos y responden preguntas como ¿han sentido en qué han mejorado?, ¿sienten que son más resistentes?, ¿qué adaptaciones puede haber ocurrido en el ámbito cardiovascular? Luego, realizan gráficos y cuadros donde representen los tiempos e intensidades de su entrenamiento."
+        },
+        {
+          "nombre": "Mural semanal de vida activa",
+          "oas_asociados": [4, 5],
+          "descripcion": "Cada semana, una pareja busca información en distintos medios de comunicación los beneficios de una vida activa y se encarga de colocar recortes, comentarios, links, etc. al respecto en la sala de clases. Efectúan esta actividad durante toda la semana y fuera del horario escolar."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluación de manejo de bastón en hockey",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "En un espacio delimitado con conos, los alumnos conducen una pelota por el recorrido –que ha sido trazado previamente– con el stick que ellos mismos elaboraron con anterioridad. Deben demostrar cómo manejan el bastón: Al conducir y trasladar la pelota. Cuando dan un pase, lanzan y transportan una pequeña pelota. Al conducir entre obstáculos dispuestos con diferentes alturas y dificultades. Al lanzar al arco, llegando cerca de él.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Demuestran un buen manejo y conducción entre obstáculos",
+              "Mantienen la posición corporal, sin levantar el stick del suelo",
+              "Elaboran palos de hockey de acuerdo a las instrucciones recibidas"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de condición física y carrera continua",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Organizados en grupos de 6 integrantes, buscan en el colegio un espacio físico donde puedan correr de manera continua y sin dificultades durante 8 minutos. Ayudados por una cintra métrica, diseñan el recorrido y establecen los metros que tiene el trayecto trazado. Durante ese lapso, mantienen un ritmo permanente y miden, con la ayuda de un compañero, la cantidad de metros que fueron capaces de recorrer. Miden la intensidad de su esfuerzo por medio de su frecuencia cardiaca, la registran y comparan con sus compañeros. Luego explican probables razones por las cuales su frecuencia cardiaca difiere de la de sus compañeros.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Mantienen la carrera durante el periodo de tiempo establecido",
+              "Calculan los metros que recorrieron en los 8 minutos",
+              "Miden su frecuencia cardiaca durante la actividad",
+              "Comparan los resultados personales con sus compañeros al término de la actividad",
+              "Identifican factores por los que las frecuencias cardiacas alcanzadas en las actividades pueden ser distintas de las de sus compañeros"
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluación de participación en cicletada y promoción",
+          "oas_evaluados": [5],
+          "actividad_evaluacion": "Los alumnos participan en una cicletada en su comuna. Previamente y fuera de su horario escolar, elaboran un video (o puede ser otro tipo de registro con medios tecnológicos) en que: Registran imágenes relevantes de todos los protocolos para participar en la actividad. Identifican y demuestran todas las medidas de seguridad que se debe considerar antes de participar. Utilizan distintas maneras para promocionar una cicletada. Elaboran un mensaje claro, simple y que estimule la participación. Durante la participación en la cicletada, mantienen registros de su participación, y luego muestran aquellas acciones que les llamaron su atención durante su participación.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participan en una cicletada fuera de su horario escolar",
+              "Utilizan su tiempo libre para desarrollar la tarea",
+              "Durante la participación, registran situaciones que les hayan llamado la atención",
+              "Identifican medidas de seguridad de los sujetos que practican deporte en la calle (como andar en bicicleta)",
+              "Las imágenes seleccionadas son coherentes con el público objetivo",
+              "Entregan el trabajo de acuerdo a las instrucciones de elaboración y tiempo",
+              "Utilizan un lenguaje adecuado",
+              "Su video (o presentación) genera un impacto positivo entre sus compañeros debido a su diseño y contenido"
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

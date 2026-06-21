@@ -1,0 +1,678 @@
+[
+  {
+    "nivel": "2do Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "Durante esta unidad, se espera que los estudiantes reconozcan y valoren la pertenencia a su familia y a su curso, y tomen conciencia de las formas en que dan y reciben cariño en los distintos ámbitos en los cuales se desenvuelven. Por otra parte, se espera que identifiquen sus características, habilidades y gustos, para ir adquiriendo un autoconcepto realista que los lleve a construir una autoestima positiva. En forma transversal se trabajan los objetivos de Convivencia, Trabajo escolar y Vida saludable y autocuidado.",
+      "palabras_clave": [
+        "Pertenencia",
+        "familia",
+        "curso",
+        "cariño",
+        "gustos",
+        "habilidades",
+        "convivencia",
+        "aprendizaje",
+        "responsabilidad",
+        "hábitos",
+        "rutinas",
+        "limpieza",
+        "orden",
+        "cuidado",
+        "autocuidado",
+        "alimentación",
+        "descanso",
+        "recreación",
+        "actividad física"
+      ],
+      "conocimientos_previos": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "numero": 7,
+          "tipo": "OA",
+          "descripcion": "Reconocer, describir y valorar sus grupos de pertenencia (familia, curso, pares), las personas que los componen y sus características, y participar activamente en ellos (por ejemplo, ayudando en el orden de la casa y sala de clases).",
+          "indicadores": [
+            "Describen las actividades que realizan los miembros de su familia.",
+            "Proponen ideas para colaborar en las tareas de la casa o con los miembros de su familia.",
+            "Señalan algunas características distintivas de su familia.",
+            "Distinguen la contribución que realiza hacia su familia cada uno de los miembros que la componen.",
+            "Señalan intereses y características del curso al cual pertenecen (por ejemplo: que son solidarios, esforzados, inquietos, curiosos, etc.).",
+            "Señalan actividades que les gusta realizar con los compañeros de su curso.",
+            "Nombran y señalan la función que cumplen diferentes personas dentro del establecimiento escolar.",
+            "Colaboran y/o ayudan a sus compañeros.",
+            "Cumplen con sus responsabilidades y compromisos adquiridos con el curso."
+          ]
+        },
+        {
+          "numero": 3,
+          "tipo": "OA",
+          "descripcion": "Observar, describir y valorar las expresiones de afecto y cariño, que dan y reciben, en los ámbitos familiar, escolar y social (por ejemplo, compartir tiempo, escuchar a los demás, dar y recibir ayuda).",
+          "indicadores": [
+            "Dibujan y nombran situaciones en las que reciben cariño en su ámbito familiar.",
+            "Describen algunas formas de expresar cariño por parte de profesores y compañeros (por ejemplo: brindar ayuda, corregir cuando se equivoca, compartir, invitar y acoger en juegos u otras actividades, etc.).",
+            "Identifican similitudes y diferencias en el cuidado y la atención que reciben en el establecimiento y en sus hogares.",
+            "Expresan la importancia que tiene para ellos el cuidado y la atención que reciben en sus familias y en el colegio.",
+            "Señalan aquellas prácticas de expresión de afecto y cariño por las que tienen mayor preferencia.",
+            "Proponen formas de dar cariño y agradecer a los miembros de su familia, de su curso y su establecimiento.",
+            "Dan ejemplos de conductas de ayuda y colaboración con las cuales pueden expresar su preocupación hacia los otros."
+          ]
+        },
+        {
+          "numero": 1,
+          "tipo": "OA",
+          "descripcion": "Observar, describir y valorar sus características personales, sus habilidades e intereses.",
+          "indicadores": [
+            "Nombran características positivas de sí mismos.",
+            "Dan ejemplos de características de su personalidad que los distinguen de otras personas (por ejemplo: se reconocen como tranquilos o inquietos, colaboradores, impacientes, etc.).",
+            "Nombran algunas de sus habilidades y señalan de qué manera sus habilidades contribuyen en el desarrollo de actividades de distinto tipo.",
+            "Ofrecen ayuda a sus compañeros a partir de sus habilidades.",
+            "Identifican habilidades que otras personas (padres y/o apoderados, profesores, amigos y compañeros) reconocen en ellos.",
+            "Distinguen entre actividades que les gusta y no les gusta realizar.",
+            "Jerarquizan actividades de acuerdo a su gusto por ellas.",
+            "Mencionan aquellos aspectos de sus actividades favoritas que los atraen y los hacen disfrutar de ellas."
+          ]
+        },
+        {
+          "numero": 5,
+          "tipo": "OAT",
+          "descripcion": "Manifestar actitudes de solidaridad y respeto, que favorezcan la convivencia, como: utilizar formas de buen trato (por ejemplo: saludar, despedirse, pedir por favor); actuar en forma respetuosa (por ejemplo: escuchar, respetar turnos, rutinas y pertenencias); compartir con los pares (por ejemplo: jugar juntos, prestarse útiles, ayudar al que lo necesita).",
+          "indicadores": [
+            "Saludan y se despiden diariamente de sus profesores y compañeros.",
+            "Cumplen los turnos y rutinas escolares; por ejemplo: lugar en la fila, pedir la palabra levantando la mano, entre otras.",
+            "Acuerdan normas de convivencia y se comprometen a cumplirlas.",
+            "Respetan las responsabilidades asignadas a sus compañeros (como responsables de grupo o fila, entre otros).",
+            "Comparan conductas que favorecen o dificultan la buena convivencia.",
+            "Prestan sus útiles y ayudan a sus compañeros cuando lo necesitan.",
+            "Acogen y respetan a sus compañeros en juegos, trabajos y actividades escolares.",
+            "Proponen ideas para fomentar una buena convivencia."
+          ]
+        },
+        {
+          "numero": 8,
+          "tipo": "OAT",
+          "descripcion": "Practicar hábitos y actitudes que favorezcan el proceso de aprendizaje, como: traer y cuidar los útiles escolares; mantener el orden de la sala de clases y materiales; identificar los nuevos aprendizajes adquiridos para incentivar la motivación.",
+          "indicadores": [
+            "Identifican hábitos y actitudes que favorecen el proceso de aprendizaje.",
+            "Revisan que su estuche esté completo.",
+            "Ordenan su escritorio al finalizar el día.",
+            "Anotan sus tareas en la agenda con la ayuda del docente.",
+            "Llevan diariamente su agenda a su casa y la traen al día siguiente.",
+            "Traen diariamente a clases los cuadernos y libros correspondientes a las asignaturas del día.",
+            "Guardan materiales al término de las actividades.",
+            "Ordenan los materiales necesarios para utilizar en la jornada escolar.",
+            "Recogen y botan basura en el papelero.",
+            "Mencionan algunos de los principales conocimientos adquiridos en las asignaturas.",
+            "Identifican aquellos aprendizajes que les han despertado mayor interés."
+          ]
+        },
+        {
+          "numero": 4,
+          "tipo": "OAT",
+          "descripcion": "Identificar y practicar, en forma guiada, conductas protectoras y de autocuidado en relación a: rutinas de higiene; actividades de descanso, recreación y actividad física; hábitos de alimentación; resguardo del cuerpo y la intimidad; la entrega de información personal.",
+          "indicadores": [
+            "Establecen, acuerdan y practican rutinas de higiene.",
+            "Nombran las consecuencias de no realizar hábitos de higiene.",
+            "Identifican actividades de descanso, recreación y actividad física.",
+            "Planifican o acuerdan actividades de recreación.",
+            "Diferencian hábitos de alimentaciones saludables y no saludables.",
+            "Nombran conductas que contribuyen a cuidar sus cuerpos.",
+            "Identifican partes del cuerpo en las que les es cómodo recibir cariño y partes en las que resulta incómodo o inapropiado.",
+            "Proponen formas de rechazar manifestaciones confusas e incómodas de cariño.",
+            "Mencionan las consecuencias o peligros que puede tener compartir información personal con extraños.",
+            "Identifican maneras en las que pueden proteger información personal."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Mi familia en un dibujo",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes presentan su familia al curso por medio de un dibujo en que cada uno de sus miembros esté realizando la actividad que más lo identifica. Cada uno expone su trabajo y luego lo cuelgan en la sala para que todos puedan verlo. (Artes Visuales)"
+        },
+        {
+          "nombre": "Cooperando en las actividades familiares",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "A partir de la actividad anterior, comentan sobre las diferentes características y las actividades diarias que realizan los miembros de su familia, y proponen cómo cada uno puede cooperar con ellas cuando se lo requiera. Para finalizar, escriben en su cuaderno oraciones que describan las actividades que pueden realizar para cooperar en las actividades diarias de su familia. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Guía de pertenencia a la familia",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes completan una guía de trabajo sobre la pertenencia a la familia. Responden preguntas como las siguientes: ¿cuáles son las principales características de mi familia? ¿Qué intereses compartimos? ¿Qué nos gusta hacer juntos? Si tuviese que inventar un signo o distintivo que representara a mi familia, ¿cuál sería? Cada estudiante trabaja en forma individual y al terminar, exponen voluntariamente su trabajo. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Propuesta de evento familiar",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para realizar un 'evento' familiar (por ejemplo: una comida juntos, un paseo en bicicleta, ver una película), considerando los intereses de sus miembros y buscando que todos tengan una experiencia positiva de vida familiar. Lo anotan y dibujan en una hoja con un título como el siguiente: 'Les propongo que toda la familia tengamos un día entretenido… (haciendo un paseo en bicicleta, jugando juntos en la plaza, etc.)'. Lo llevan a sus casas como una propuesta para realizar en familia."
+        },
+        {
+          "nombre": "Las características de mi curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes trabajan con una guía de trabajo sobre 'Las características de mi curso', completando las siguientes oraciones: Mi curso es… (alegre, bullicioso, trabajador, etc.). A la mayoría de mi curso les gusta jugar a… Al curso nos gusta hacer juntos… Si tuviese que inventar un signo o distintivo que representara a mi curso, ese sería…. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Dibujo de mi curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes realizan un dibujo de su curso, mostrando a través de él los juegos o actividades que realizan como formas de recreación. Luego exponen y comparten sus trabajos. (Artes Visuales)"
+        },
+        {
+          "nombre": "Caja buzón del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Construyen entre todos una caja buzón para depositar en él dibujos y oraciones que describan las cosas, actividades y acciones o conductas de sus compañeros que los hagan sentirse bien, integrados al curso y tener ganas de venir al colegio. El docente finaliza la actividad, exponiendo los dibujos y leyendo las oraciones a todo el curso. Luego buscan en conjunto un lugar para guardarla y cada cierto tiempo recordar lo escrito. (Artes Visuales)"
+        },
+        {
+          "nombre": "Ideas para la buena convivencia en el curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes dan ideas para cooperar individualmente y como curso a que todos se sientan bien siendo parte del curso. Por ejemplo: invitar a jugar los compañeros que están solos, llamar a los que están enfermos, saludarse por las mañanas, escucharse. El docente las escribe en el pizarrón. Luego los estudiantes se dividen en grupos y cada grupo hace un dibujo de una de las ideas vertidas por el curso. Para finalizar, exponen sus trabajos en un lugar visible de la sala."
+        },
+        {
+          "nombre": "Entrevista a funcionarios del establecimiento",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Guiados por el docente, elaboran una lista con los nombres de las personas adultas que conocen en el establecimiento. Posteriormente se dividen en grupos y cada grupo entrevista a diferentes funcionarios del establecimiento para conocer cuáles son sus funciones y cómo colaboran en el funcionamiento del colegio. Por ejemplo: secretaria, inspector, profesores, director. Finalizan la actividad exponiendo el resultado de sus entrevistas al curso."
+        },
+        {
+          "nombre": "Responsabilidades del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes elaboran y escriben una lista de las responsabilidades comunes que hay en el curso (por ejemplo: mantener la sala limpia, ordenar los materiales). Luego eligen alguna de ellas y se comprometen a cumplirla durante una semana. Esto se repite semanalmente para que todos puedan realizar distintas tareas que aportan a la organización y el buen funcionamiento del curso."
+        },
+        {
+          "nombre": "¿Cuándo siento el afecto y cariño de mi familia?",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes piensan y responden la siguiente pregunta, dibujando y/o escribiendo en una hoja: ¿Cuándo sienten el afecto y cariño de sus padres y familia? Luego, guiados por el docente, comentan y comparten voluntariamente sus trabajos. El docente guarda los trabajos en una carpeta."
+        },
+        {
+          "nombre": "Entrevista a la familia sobre el cariño",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "A partir de la actividad anterior, realizan una entrevista a sus padres y/o miembros de su familia para saber de qué forma ellos sienten que les expresan su cariño. Registran las respuestas, dibujándolas y/o escribiéndolas, y las comentan en la siguiente clase."
+        },
+        {
+          "nombre": "Periodistas del cariño en el colegio",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes comentan de acuerdo a su conocimiento y experiencia, qué hace un periodista. Luego el docente los invita a ser periodistas en el colegio y descubrir durante la semana las situaciones en las que reciben el cariño y el cuidado de profesores y/o compañeros. En la siguiente sesión, cada alumno elegirá una de las situaciones observadas para dibujarla y describirla con una oración. Algunos voluntarios muestran su trabajo al curso."
+        },
+        {
+          "nombre": "Comentar y dibujar situaciones de cariño en el colegio",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "En grupo de cuatro estudiantes, comentan las situaciones en que reciben cariño y cuidado en su colegio y las dibujan. Un representante le cuenta al curso la conversación del grupo."
+        },
+        {
+          "nombre": "Ficha de expresiones de afecto en situaciones escolares",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes reciben una ficha de trabajo con varias ilustraciones de situaciones escolares; por ejemplo: una profesora abrochando los zapatos de un niño, un asistente de la educación haciendo aseo, un compañero ayudando a otro. Identifican en cada ilustración la forma de expresar afecto, comentan cómo pueden agradecerlo y lo escriben en su cuaderno."
+        },
+        {
+          "nombre": "Compartir formas de recibir cariño",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "En grupos de cinco estudiantes, comentan, describen y registran las distintas formas en que han recibido cariño de los otros. Un representante de cada grupo lo comenta al curso."
+        },
+        {
+          "nombre": "Buzón del cariño en el establecimiento",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes elaboran un buzón y piden a otras personas del establecimiento poner por escrito formas en que expresan cariño a los demás. Cuando el buzón esté lleno, el docente abre la caja y lee los papelitos. Comentan y reflexionan sobre lo que descubrieron."
+        },
+        {
+          "nombre": "El cariño en las noticias",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Con ayuda de padres y apoderados, los estudiantes identifican situaciones y/o conductas que reflejen la expresión de cariño y cuidado por los demás en noticias de la televisión, diarios y otras fuentes de comunicación directas e indirectas. Llevan al colegio dibujos, recortes de noticias y/o alguna narración que represente o ejemplifique la situación escogida. Guiados por el docente, comparten el trabajo realizado."
+        },
+        {
+          "nombre": "Practicar formas de demostrar cariño",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes elaboran una lista de formas en las que ellos pueden demostrar preocupación o cariño por otros. Cada alumno elige una de estas formas para practicarla durante la semana y la anota en su cuaderno. Al terminar la semana, el curso evalúa cómo resultó la actividad."
+        },
+        {
+          "nombre": "Cajita del afecto",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes construyen una cajita para coleccionar objetos que representen para ellos el afecto y el cariño recibido de otros; por ejemplo: dibujos, fotos, regalos u otros. La guardan en un lugar privado de la casa o el colegio para abrirla cuando necesiten recordar el cariño que les expresan los otros. (Artes Visuales)"
+        },
+        {
+          "nombre": "Gráfico de frutas favoritas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "El docente inicia la actividad, invitando a los estudiantes a dibujar su fruta favorita en un cuadrado de papel. Luego completa un gráfico pictórico con las preferencias de los estudiantes. Después de comentar los datos obtenidos sobre las preferencias del curso, cierra la actividad reforzando la idea de que todos somos distintos y podemos tener gustos distintos."
+        },
+        {
+          "nombre": "Collage-retrato de sí mismos",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Con revistas y recortes traídos de su casa, los estudiantes elaboran un collage-retrato de sí mismos. Por el reverso de la hoja, escriben cuáles son sus características físicas preferidas."
+        },
+        {
+          "nombre": "Camiseta de papel: quién soy",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Luego de modelar la actividad frente a los estudiantes, el profesor entrega a cada alumno el formato de una camiseta de papel de tamaño natural para que la completen en forma individual con la siguiente información: nombre, en la parte superior; una palabra que los describa, en el centro; palabras que indiquen sus intereses, en las mangas; algo que muy probablemente nadie sabe de ellos, en la parte inferior. Una vez completada la información y decorada la camiseta, los alumnos la pegan sobre su ropa y juegan a las camisetas musicales. El juego consiste en moverse según lo que la música les sugiere alrededor de la sala. Cuando la música se detiene, los estudiantes toman de la mano al compañero que se encuentre más cerca y comparten un aspecto de los descritos en la camiseta. Tras repetir el juego en varias ocasiones, el docente cierra la actividad, pidiendo la participación de voluntarios que comparten un aspecto que llamó su atención de los miembros del curso. Las camisetas son exhibidas en un mural de la sala de clases. (Artes Visuales)"
+        },
+        {
+          "nombre": "Juego de agruparse por similitudes y diferencias",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "En el patio, juegan a agruparse de acuerdo a similitudes y diferencias físicas. Se juntan dentro de uno de cinco círculos numerados y dibujados en el suelo del patio, de acuerdo a las instrucciones que va dando el docente. Por ejemplo: todos los que tengan el pelo largo, en el círculo 1; ahora todos los hombres en el 2; ahora todos los que tienen los ojos de color café en el 3, etc. Los estudiantes observan cómo se distribuyen y se tienen que ir cambiando de círculo, según las características. Finalizan la actividad, comentando cómo se tuvieron que ir moviendo, las diferencias entre ellos y las dificultades que tuvieron. (Educación Física y Salud)"
+        },
+        {
+          "nombre": "Exposición de habilidades",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cada estudiante trae desde su casa un objeto que represente o pueda expresar alguna de sus habilidades físicas (pelota de fútbol, libro, cordel para saltar, trompo, buzo de gimnasia, música para bailar, hula-hula, entre otros). Con estos objetos se organiza una exposición de sus habilidades en el curso. Para finalizar, cada alumno reflexiona y escribe en su cuaderno lo que aprendió de la experiencia. Al finalizar se invita a los alumnos a compartir voluntariamente lo escrito."
+        },
+        {
+          "nombre": "Ficha de gustos personales",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes reciben una ficha en la que completan oraciones relacionadas con sus gustos. Ejemplos de frases a completar: Lo que más me gusta comer es… A mí no me gusta comer… A lo que más gusta jugar es… No me gusta jugar a… Lo que más me gusta del colegio es… Lo que más me cuesta hacer es…"
+        },
+        {
+          "nombre": "Jerarquizar actividades favoritas",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Dibujan al menos tres actividades que disfrutan haciendo, jerarquizándolas desde las que más les gusta realizar a las que menos les gusta realizar. Comparten sus trabajos y comentan las diferencias."
+        },
+        {
+          "nombre": "Entrevista a la familia sobre mis habilidades",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes realizan una entrevista a sus padres o apoderados a partir de las siguientes preguntas: ¿qué es lo que mejor hago en la casa? ¿qué cosas observan ustedes que hago con más facilidad? ¿qué observan ustedes que me gusta hacer? Escriben las respuestas en su cuaderno y voluntariamente las comparten con el curso. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Aviso publicitario de habilidades",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Identifican y seleccionan una de sus habilidades y luego elaboran un aviso publicitario para ofrecer su colaboración para diversas actividades del curso en la que puedan expresar su habilidad. Por ejemplo: para dibujar, para ayudar en la lectura de cuentos, para ayudar en tareas de matemáticas, para cantar y/o contar chistes en un acto o celebración, entre otras. El docente finaliza la actividad invitando a pegar su aviso en un diario mural especialmente construido para ello, e invitándolos a buscar la ayuda que necesitan en los avisos publicados por sus pares. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Moverse por preferencias",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "El profesor invita a los estudiantes a moverse por la sala frente a distintas opciones (como helado de vainilla o chocolate, vacaciones en la playa o en el campo, matemáticas o arte, entre otras), dependiendo de su preferencia. El profesor cierra la actividad, haciendo notar los distintos grupos que se formaron según sus preferencias en determinadas situaciones y la importancia de valorar a cada miembro del curso con sus diferencias individuales."
+        },
+        {
+          "nombre": "Descripción familiar de cada estudiante",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "De tarea, los estudiantes piden a sus padres, apoderados o hermanos que los describan brevemente y por escrito, señalando sus principales características físicas, habilidades y gustos."
+        },
+        {
+          "nombre": "Adivinar quién es",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "A partir de la tarea, los estudiantes traen la descripción realizada por sus familias y el docente las lee en voz alta para que intenten adivinar de quién se trata."
+        },
+        {
+          "nombre": "Tarjeta de regalo para el compañero de banco",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes elaboran una tarjeta de regalo para su compañero de banco. En ella deben dibujar y escribir lo que más aprecian de su compañero; por ejemplo: su alegría y buena voluntad para ayudarlo, que es entusiasta y siempre está alegre, entre otras. Luego se entregan las tarjetas y voluntariamente pueden compartirla o expresar lo que sintieron al recibirla."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "Se pide a los alumnos que completen oraciones, dibujando o escribiendo, para luego compartir voluntariamente sus trabajos con el resto del curso. 1 Lo que más me gusta de mi familia es… 2 La responsabilidad que tengo en mi casa es… 3 En mi familia yo colaboro en… 4 En el curso yo participo en… 5 En el curso yo colaboro en… 6 Lo que más me gusta de mi curso es…",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            3
+          ],
+          "actividad_evaluacion": "En grupo de cuatro estudiantes, comentan las situaciones en que reciben cariño y cuidado en su colegio y las dibujan. Un representante le cuenta al curso la conversación del grupo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Comentan sobre las situaciones en que reciben cariño en el colegio.",
+              "Comentan sobre las situaciones en que reciben cuidado en el colegio.",
+              "Realizan un dibujo representativo de lo conversado.",
+              "Explican a sus compañeros lo realizado."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "Los estudiantes elaboran un álbum, pegando recortes de revistas o dibujos para representar sus gustos e intereses. Para ello deben considerar: portada, cuatro páginas interiores, cuatro gustos o intereses (uno en cada página), explicación de cada gusto o interés.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Incorpora una portada.",
+              "Incorpora cuatro páginas interiores.",
+              "Escoge cuatro gustos o intereses.",
+              "Distribuye un gusto o interés por cada página.",
+              "Explica cada gusto o interés."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "2do Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "Durante el segundo semestre, se espera que los estudiantes identifiquen sus emociones y las de los demás, reconociendo diversas formas de expresarlas. Se continúa entregando herramientas para que establezcan y promuevan relaciones interpersonales positivas que favorezcan la convivencia, y desarrollen habilidades para enfrentar y solucionar conflictos comunes de la vida diaria. Junto con esto, se propone que continúen fortaleciendo hábitos de trabajo y rutinas de aprendizaje escolar, y también rutinas que favorezcan una vida saludable y el cuidado de su cuerpo e intimidad.",
+      "palabras_clave": [
+        "Emociones (alegría, tristeza, rabia, miedo)",
+        "conflictos",
+        "convivencia",
+        "hábitos",
+        "aprendizaje",
+        "responsabilidad",
+        "higiene",
+        "rutinas",
+        "alimentación",
+        "descanso",
+        "actividad física"
+      ],
+      "conocimientos_previos": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "numero": 2,
+          "tipo": "OA",
+          "descripcion": "Identificar emociones experimentadas por ellos y por los demás (por ejemplo, pena, rabia, miedo, alegría) y distinguir diversas formas de expresarlas.",
+          "indicadores": [
+            "Identifican el tipo de emoción experimentada ante situaciones que hayan resultado importantes para ellos.",
+            "Comparan las sensaciones, deseos y pensamientos que sienten frente a emociones como rabia, miedo, alegría y pena.",
+            "Identifican emociones experimentadas por otros ante situaciones determinadas.",
+            "Reconocen diversos tipos de situaciones que pueden generar una emoción determinada.",
+            "Representan gráficamente emociones, utilizando dibujos de expresiones faciales.",
+            "Realizan mímicas que expresan emociones por medio de expresiones faciales y corporales (pena, rabia, alegría y miedo).",
+            "Proponen diversas formas de expresar para diferentes emociones, utilizando su rostro, su voz o su cuerpo."
+          ]
+        },
+        {
+          "numero": 6,
+          "tipo": "OA",
+          "descripcion": "Identificar conflictos que surgen entre pares y practicar formas de solucionarlos, como escuchar al otro, ponerse en su lugar, buscar un acuerdo, reconciliarse.",
+          "indicadores": [
+            "Reconocen conflictos entre pares que se manifiestan en su curso y en su vida personal.",
+            "Identifican la causa que genera alguno de los conflictos cotidianos que se dan en su entorno.",
+            "Guiados por el docente, aplican pasos previamente aprendidos para resolver problemas entre pares que surgen en su vida cotidiana.",
+            "Buscan soluciones ante conflictos, considerando tanto las implicancias para sí mismos como para los otros involucrados.",
+            "Mediante el diálogo, generan soluciones ante conflictos con otros, reconociendo aquello que cada uno concede y que cada uno obtiene.",
+            "Piden ayuda a un adulto o a un tercero en caso de necesitarlo para solucionar un conflicto."
+          ]
+        },
+        {
+          "numero": 5,
+          "tipo": "OAT",
+          "descripcion": "Manifestar actitudes de solidaridad y respeto, que favorezcan la convivencia, como: utilizar formas de buen trato (por ejemplo: saludar, despedirse, pedir por favor); actuar en forma respetuosa (por ejemplo: escuchar, respetar turnos, rutinas y pertenencias); compartir con los pares (por ejemplo: jugar juntos, prestarse útiles, ayudar al que lo necesita).",
+          "indicadores": [
+            "Saludan y se despiden diariamente de sus profesores y compañeros.",
+            "Cumplen los turnos y rutinas escolares; por ejemplo: lugar en la fila, pedir la palabra levantando la mano, entre otras.",
+            "Acuerdan normas de convivencia y se comprometen a cumplirlas.",
+            "Respetan las responsabilidades asignadas a sus compañeros (como responsables de grupo o fila, entre otros).",
+            "Comparan conductas que favorecen o dificultan la buena convivencia.",
+            "Prestan sus útiles y ayudan a sus compañeros cuando lo necesitan.",
+            "Acogen y respetan a sus compañeros en juegos, trabajos y actividades escolares.",
+            "Proponen ideas para fomentar una buena convivencia."
+          ]
+        },
+        {
+          "numero": 8,
+          "tipo": "OAT",
+          "descripcion": "Practicar hábitos y actitudes que favorezcan el proceso de aprendizaje, como: traer y cuidar los útiles escolares; mantener el orden de la sala de clases y materiales; identificar los nuevos aprendizajes adquiridos para incentivar la motivación.",
+          "indicadores": [
+            "Identifican hábitos y actitudes que favorecen el proceso de aprendizaje.",
+            "Revisan que su estuche esté completo.",
+            "Ordenan su escritorio al finalizar el día.",
+            "Anotan sus tareas en la agenda con la ayuda del docente.",
+            "Llevan diariamente su agenda a su casa y la traen al día siguiente.",
+            "Traen diariamente a clases los cuadernos y libros correspondientes a las asignaturas del día.",
+            "Guardan materiales al término de las actividades.",
+            "Ordenan los materiales necesarios para utilizar en la jornada escolar.",
+            "Recogen y botan basura en el papelero.",
+            "Mencionan algunos de los principales conocimientos adquiridos en las asignaturas.",
+            "Identifican aquellos aprendizajes que les han despertado mayor interés."
+          ]
+        },
+        {
+          "numero": 4,
+          "tipo": "OAT",
+          "descripcion": "Identificar y practicar, en forma guiada, conductas protectoras y de autocuidado en relación a: rutinas de higiene; actividades de descanso, recreación y actividad física; hábitos de alimentación; resguardo del cuerpo y la intimidad; la entrega de información personal.",
+          "indicadores": [
+            "Establecen, acuerdan y practican rutinas de higiene.",
+            "Nombran las consecuencias de no realizar hábitos de higiene.",
+            "Identifican actividades de descanso, recreación y actividad física.",
+            "Planifican o acuerdan actividades de recreación.",
+            "Diferencian hábitos de alimentaciones saludables y no saludables.",
+            "Nombran conductas que contribuyen a cuidar sus cuerpos.",
+            "Identifican partes del cuerpo en las que les es cómodo recibir cariño y partes en las que resulta incómodo o inapropiado.",
+            "Proponen formas de rechazar manifestaciones confusas e incómodas de cariño.",
+            "Mencionan las consecuencias o peligros que puede tener compartir información personal con extraños.",
+            "Identifican maneras en las que pueden proteger información personal."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Caras de emociones en palito de helado",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "El docente pide a los estudiantes dibujar o recortar de revistas cuatro caras que expresen sentimientos distintos, y que las peguen en un palito de helado. Una vez realizados los dibujos, se hace una puesta en común; el profesor los invita a identificar los sentimientos que expresan, basándose en las características faciales que distinguen a cada una. Para cerrar la actividad, el docente guía una conversación entre los alumnos en que reconozcan los rasgos físicos que acompañan a las distintas emociones y las características físicas que les permiten identificarlas."
+        },
+        {
+          "nombre": "Observar rostros que expresan emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes observan diferentes fotos y láminas de rostros que expresan diversas emociones básicas; por ejemplo: miedo, alegría, vergüenza, rabia y pena. Señalan algunas reacciones físicas asociadas a ellas, como llanto, sonrisa, sonrojarse. Finalizan la actividad, registrando en sus cuadernos las emociones y dibujando las expresiones físicas de cada una de ellas. (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Juego 'Esta es la emoción'",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la actividad realizada con las caras que expresan distintas emociones, el docente les pide sacar el material fabricado y comenta que van a jugar a 'Esta es la emoción'. Explica que el juego consiste en escuchar distintas situaciones de la vida diaria y levantar la tarjeta que representa la emoción más adecuada a la situación, exclamando ¡esta es la emoción! y justificando su elección. Luego de presentar cada situación, les pide señalar si están de acuerdo o no con el estudiante seleccionado para responder, explicando sus razones para el acuerdo o desacuerdo."
+        },
+        {
+          "nombre": "Dibujar expresiones faciales según enunciados",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes reciben una ficha de trabajo con distintos enunciados: estoy enojado, estoy contento, estoy triste, estoy cansado, siento miedo, estoy preocupado, siento vergüenza, entre otros. Frente a cada uno de ellos, dibujan las expresiones faciales que corresponden."
+        },
+        {
+          "nombre": "Relatar ocasiones de cada emoción",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la actividad anterior, frente a cada enunciado, los estudiantes relatan por escrito alguna ocasión en que se hayan sentido así."
+        },
+        {
+          "nombre": "Registro diario de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Cada estudiante tiene una hoja de registro de sus emociones, en la cual anota diariamente cómo se siente al iniciar el día o al terminarlo. Al finalizar la semana, comentan voluntariamente su trabajo."
+        },
+        {
+          "nombre": "Completar oraciones sobre expresión de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes reciben una ficha de trabajo, en la cual deben completar oraciones relacionadas con la expresión de sus emociones. Por ejemplo: Cuando siento alegría, la expreso… Cuando siento pena, la expreso… Cuando siento rabia, la expreso… Cuando siento miedo, lo expreso… Concluyen junto al profesor que todos tenemos diferentes formas de expresar lo que sentimos."
+        },
+        {
+          "nombre": "Descubrir emociones en retratos",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Observan diferentes imágenes de retratos y descubren qué emoción pueden estar mostrando las personas retratadas. El docente lo escribe en la pizarra y los estudiantes lo copian en su cuaderno. (Artes Visuales)"
+        },
+        {
+          "nombre": "Adivinar emociones con mímica",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes juegan a adivinar emociones a partir de mímicas que las representen. Al término de cada actuación, escriben las manifestaciones corporales que les permitieron adivinar (como gestos de la cara, posición del cuerpo)."
+        },
+        {
+          "nombre": "Representar emociones con recortes",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes forman grupos de cuatro y el docente les asigna una emoción que deben representar con recortes de revistas pegados en un papelógrafo. Muestran su trabajo al curso."
+        },
+        {
+          "nombre": "Canciones sobre emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes escuchan canciones sobre distintas emociones, las comentan y aprenden. (Música)"
+        },
+        {
+          "nombre": "Cuentos sobre expresión de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes leen cuentos relacionados con la expresión de emociones y los comentan junto al profesor."
+        },
+        {
+          "nombre": "Caracterizar un conflicto interpersonal",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes caracterizan junto al profesor un problema y/o conflicto interpersonal. Señalan ejemplos de problemas que hayan ocurrido en el curso y comentan cómo se han resuelto. Lo escriben en su cuaderno."
+        },
+        {
+          "nombre": "Analizar un problema de convivencia paso a paso",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Junto con el profesor, eligen un problema de convivencia; por ejemplo: 'a un niño no lo dejaron jugar a la pelota en el recreo' o 'a una niña las compañeras no la invitan a jugar'. Luego, guiados por el docente, analizan las situaciones a partir de las siguientes preguntas: Definir del problema ¿Qué sucede? → Analizar el problema ¿Por qué pasa esto? → Generar alternativas de solución ¿Qué puedo hacer para resolverlo? → Evaluar alternativas de solución ¿Cuál de estas soluciones es mejor? → Elegir la alternativa más adecuada. → Implementar la opción elegida ¿Cómo voy a aplicar la solución que escogí? → Evaluar la solución ¿Cómo podría resultar? Luego los invita a diseñar en conjunto los pasos para la solución que cumpla con los criterios mencionados. El docente cierra la actividad, colgando el cartel en un lugar visible de la sala para ser utilizado para resolver conflictos."
+        },
+        {
+          "nombre": "Ficha de reflexión sobre un problema personal",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Cada uno de los estudiantes reflexiona en torno a un problema personal y la manera de solucionarlo, apoyándose en una ficha entregada por el profesor. Analizan el problema de acuerdo a las siguientes preguntas: ¿Cuál es el problema? ¿Qué tengo que hacer? ¿De cuántas maneras puedo hacerlo? ¿Cuál es la mejor solución? ¿Qué tal lo hice? (Lenguaje y Comunicación)"
+        },
+        {
+          "nombre": "Cuento con conflicto: causas y soluciones",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes escuchan un cuento en el cual se presente un conflicto para el o los personajes. Junto al docente, determinan las causas y posibles soluciones al problema. Dibujan la situación y una posible solución."
+        },
+        {
+          "nombre": "Entrevista personal para analizar un problema",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En entrevista personal con el docente, los estudiantes comentan en forma voluntaria alguna situación problemática que estén viviendo. La analizan, usando los pasos aprendidos, y acuerdan un nuevo encuentro para ver cómo resultó la solución planeada."
+        },
+        {
+          "nombre": "Conversar en familia sobre resolución de problemas",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes llevan de tarea una pregunta para conversar con sus padres o apoderados sobre la resolución de problemas. Esta puede ser ¿cómo resolvemos los problemas en esta familia? Registran la respuesta y la comentan voluntariamente en la próxima sesión."
+        },
+        {
+          "nombre": "Dibujar los pasos para resolver un problema",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos, los estudiantes dibujan los pasos aprendidos para enfrentar un problema y exponen sus trabajos en la sala de clases para remitirse a ellos cada vez que sea necesario."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            2
+          ],
+          "actividad_evaluacion": "Los estudiantes reciben una ficha de trabajo con distintos enunciados: estoy enojado, estoy contento, estoy triste, estoy cansado, siento miedo, estoy preocupado, siento vergüenza. Dibujan frente a cada uno de ellos, las expresiones faciales que les corresponden.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se considerará logrado si existe coherencia entre la afirmación y los dibujos en todos los casos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "En grupos, analizan e identifican una situación de conflicto frecuente entre ellos y dibujan y escriben en conjunto los pasos a seguir para resolverlo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican un conflicto frecuente de su vida cotidiana.",
+              "Proponen y aplican correctamente los pasos aprendidos para resolver el conflicto."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

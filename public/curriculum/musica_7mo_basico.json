@@ -1,0 +1,772 @@
+[
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1: Conociendo nuestra herencia musical",
+      "proposito": "La primera unidad tiene como objetivo que los y las estudiantes conozcan algunas influencias de la música europea presentes en el folclor latinoamericano y cómo estos elementos se han mezclado con aquellos de origen americano y afro, constituyendo la base de la música folclórica, en tanto influencias musicales y culturales. Se espera que puedan conocer y comprender elementos constitutivos de la música latinoamericana, así como reconocer y valorar la diversidad de expresiones artísticas y musicales en diferentes tiempos y lugares. Por otro lado, las influencias europeas en la música americana no solo se podrán evidenciar en aspectos musicales sino también en el lenguaje, la expresión corporal (danzas), elementos visuales, usos y funciones de la música en sus espacios culturales específicos, modos de transmisión y de aprendizaje, entre otros, lo que permitirá una comprensión más global del fenómeno musical, sus productos y sus procesos culturales, y la relación de la música con otras áreas de aprendizaje. El desarrollo de las habilidades musicales estará enfocado tanto a la escucha de música diversa como a su interpretación vocal e instrumental y a la reflexión.",
+      "conocimientos_previos": [
+        "Interpretación vocal e instrumental.",
+        "Integración de la música con otras áreas de expresión artística.",
+        "Integración de la música con otras asignaturas."
+      ],
+      "palabras_clave": [
+        "Folclor",
+        "estilos musicales",
+        "influencias musicales",
+        "décimas",
+        "romance"
+      ],
+      "conocimientos": [
+        "Música latinoamericana.",
+        "Características estilísticas evidentes en la música escuchada."
+      ],
+      "habilidades": [
+        "Ejercitación musical (voz e instrumentos).",
+        "Expresión musical.",
+        "Capacidad de trabajo en equipo.",
+        "Capacidad de reflexionar sobre la música y su relación con otras áreas."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar curiosidad, interés y disfrute por los sonidos y las músicas (o diferentes manifestaciones musicales).",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos, mediante diversas formas de expresión musical con confianza, empatía y preparación.",
+        "Reconocer y valorar las diversas manifestaciones musicales, sus contextos, miradas y estilos a partir de lo propio.",
+        "Reconocer la dimensión trascendente y espiritual del arte y la música para el ser humano.",
+        "Demostrar interés por establecer relaciones e integrar la música con otras artes, otras asignaturas y con la vida misma.",
+        "Demostrar generosidad, reconociendo los aportes individuales al servicio de una construcción musical colectiva y los aportes del colectivo al desarrollo individual.",
+        "Reconocer el valor del trabajo responsable y a conciencia, tanto en los procesos como en los resultados musicales, desarrollando la autonomía y la autocrítica.",
+        "Demostrar la capacidad para trabajar en grupo de una manera inclusiva, con honestidad y compromiso, respetando la diversidad.",
+        "Reconocer y valorar la música existente y las experiencias adquiridas, así como la experimentación e innovación como aspectos fundamentales y complementarios del aprendizaje y el crecimiento musical."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Reconocer sentimientos, sensaciones e ideas al escuchar manifestaciones y obras musicales de Chile y el mundo, presentes en la tradición oral, escrita y popular, manifestándolos a través de medios verbales, visuales, sonoros y corporales.",
+          "indicadores": [
+            "Aplican experiencias, habilidades y conocimientos desarrollados en sus observaciones.",
+            "Demuestran interés por medio de gestos o actitudes corporales (lenguaje no verbal) al escuchar música.",
+            "Demuestran comprensión del propósito expresivo de la música escuchada por medio de movimientos corporales.",
+            "Relacionan lo escuchado con otras obras y/o manifestaciones musicales conocidas.",
+            "Manifiestan opiniones personales ante lo escuchado incorporando sensaciones e ideas propias con fundamento.",
+            "Recrean de forma grupal manifestaciones musicales de diverso origen incorporando elementos del contexto en el que se originan.",
+            "Opinan acerca de lo que escuchan incorporando en su reflexión los conocimientos musicales desarrollados.",
+            "Opinan acerca de lo que escuchan relacionando con sus propias experiencias musicales.",
+            "Demuestran interés al escuchar una misma pieza en varias oportunidades."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Cantar y tocar repertorio diverso, desarrollando habilidades tales como precisión rítmica y melódica, expresividad, conciencia de fraseo y dinámica, entre otros, fortaleciendo el interés por el hacer musical individual y grupal.",
+          "indicadores": [
+            "Participan de actividades musicales de grupo.",
+            "Demuestran concentración al cantar y tocar.",
+            "Demuestran precisión en los comienzos y finales de una obra musical.",
+            "Cantan con entusiasmo demostrando una actitud de confianza.",
+            "Cantan con seguridad demostrando una actitud de confianza.",
+            "Tocan instrumentos musicales con precisión rítmica y melódica, demostrando una actitud de confianza y seguridad.",
+            "Participan de actividades musicales con interés y dedicación, siguiendo las indicaciones de quien dirige al cantar y tocar."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Reconocer el rol de la música en la sociedad, considerando sus propias experiencias musicales, contextos en que surge y las personas que la cultivan.",
+          "indicadores": [
+            "Reflexionan acerca de la importancia del papel que cada cual juega en el quehacer musical.",
+            "Relacionan obras escuchadas con su propio quehacer musical y/o sus experiencias.",
+            "Relacionan y comparan manifestaciones musicales con experiencias personales o del entorno cercano.",
+            "Reconocen y valoran significados y simbolismos propios de una cultura en la música escuchada.",
+            "Demuestran una actitud de respeto hacia lo nuevo y/o desconocido.",
+            "Relacionan las manifestaciones y obras musicales escuchadas con otras músicas conocidas.",
+            "Identifican actores que participan en la música escuchada en diversas culturas.",
+            "Describen roles de los diferentes actores que participan de la música a partir de lo escuchado e interpretado.",
+            "Identifican el papel de la música en otros tiempos y lugares."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan décimas tales como Décimas al agua de Natalia Contesse o Décimas a la viola de Nano Stern. Sobre un papel pueden plasmar el diseño de la melodía. Luego realizan ese diseño con las manos y brazos. Ponen atención al instrumento acompañante y \"cantan con las manos\"."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan décimas cantadas por cantores populares como, por ejemplo, Chincolito de Rauco, y luego, Décimas a la viola de Stern. Los alumnos y las alumnas, junto con el docente, elaboran una tabla comparativa de semejanzas y diferencias entre ambas canciones. Cada estudiante escribe cuál canción le llamó más la atención, o le interesó más, y fundamenta."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "A partir de las mismas décimas, y con ayuda de su profesora o profesor, los y las estudiantes pueden: analizar los versos y la rima. Hacer un plano de cómo se trabaja el texto en las décimas. Identificar características rítmicas, melódicas y formales. Escuchar una nueva décima y compararla con las anteriores."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan Contrapunto entre el diablo y la muerte. Hacer notar las diferencias de voz entre el cantor popular y el cantante profesional. Reflexionar en torno a cómo se retroalimentan los diferentes músicos (popular, académico)."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "A partir de la actividad anterior, se puede mostrar a los y las estudiantes un tensón medieval y luego la improvisación de un hip-hopero. Identifican los instrumentos y la tecnología usada en cada caso (el hip-hop generalmente tienen parlantes y un playback)."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan un romance antiguo, como Los pelegrinitos, y expresan sus opiniones libremente; luego lo hacen respondiendo preguntas como las siguientes: ¿a qué época creen que corresponde esta música? ¿Qué información de época podemos extraer del texto? ¿Por qué un poeta como García Lorca recopilaría poemas y canciones si las podía inventar?"
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan cuecas tradicionales, como La consentida, Los ríos de Chile, Los lagos de Chile, El diablo se fue a bañar, Atención calcetineras, La huillincana, Gancho de albahaca, Tate callao, entre otras. Se propone a las alumnas y los alumnos que compartan lo que les sugiere esta música, y también lo que saben acerca de ella. Una vez que se han expresado en forma libre, la profesora o el profesor irá afinando o dirigiendo la conversación hacia aspectos más puntuales, como el posible origen de esta música, sus características musicales y de contexto, relación entre texto y música, temática del texto, humor, entre otros."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "A partir de las cuecas escuchadas, revisan el texto y la rima y analizan la estructura. Una vez definida, comparan con una cueca de otro autor y comentan."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "En grupos, crean una cueca con un tema o título, por ejemplo: alguna situación de su diario vivir. Una descripción de la clase de música. \"Cueca de las mochilas\". \"Cueca de las tareas\". \"Cueca del recreo\"."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan el Vals de Colombes de Eduardo Carrasco (Quilapayún), en el que usando sonidos propios (zampoñas) se recrea un organillo, que si bien tiene origen europeo se ha transformado en un objeto típico de plazas y lugares de reunión en Chile. A partir de la actividad anterior escuchan otros tipos de vals y reflexionan: Respecto de su propósito ¿se vincula al baile o a la escucha? ¿Qué instrumentos intervienen y cómo? ¿Son siempre los mismos, o van variando? ¿Se incorporan voces? ¿Hay juegos de dinámica (intensidad)? ¿Hay juegos con el tempo? ¿De qué lugar y época se imaginan que es? ¿Para qué ocasiones se tocaría ese vals?"
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música de algún pueblo originario, relacionada con una ceremonia o ritual, como la música ceremonial Difuntos o Pachallampe. Comentan qué sonidos escuchan y cómo son utilizados en esta música. Buscan relaciones entre lo escuchado y algún fin específico que este pueblo pueda tener con esta expresión."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Cantan la canción Décimas al agua de Contesse o Décimas a la viola de Stern. Junto con el aprendizaje de aspectos rítmicos y melódicos, se contextualizan las obras y se proponen modos de interpretar que se relacionen con las experiencias y conocimientos de los y las jóvenes. Lo relacionan con décimas que hayan escuchado anteriormente. Analizan la morfología de la décima (versos, rimas). En grupos pequeños, crean una décima y la musicalizan. El tema puede ser libre o propuesto por su profesora o profesor."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Conocen el Romance de la doncella guerrera. El o la docente contextualiza las costumbres de la época. Se puede abordar el canto de este romance de varias maneras, por ejemplo: Leer el texto en voz alta y disipar dudas de redacción y vocabulario. Notar el ritmo y la rima (versos octosílabos con rima asonante en los versos pares). Comentar el argumento de esta narración y los aspectos en que se parece y en que se diferencia de la vida de hoy. Comentar el modo de narrar, en el cual se repiten las ideas, y comprender que esto responde a técnicas para la memorización. Aprender la melodía y cantar. Cantar con acompañamiento armónico. A partir de este romance los y las estudiantes, en grupos, crean un acompañamiento rítmico, ambientaciones sonoras y reflexionan respecto de la efectividad, originalidad y compromiso en un trabajo de este tipo."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Se invita a montar el romance en forma cantada, instrumentada y actuada. Con ayuda del profesor o la profesora se organizan los ensayos y se representan los diferentes personajes. Es posible que cada personaje sea cantado por un grupo de estudiantes. Se pueden incluir otros personajes. Podrían sugerir vestuario y escenografía y montar una representación para otro curso o para la comunidad educativa."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Escuchan un nuevo vals y analizan",
+          "oas_evaluados": [
+            1,
+            7
+          ],
+          "actividad_evaluacion": "Los y las estudiantes escuchan un nuevo vals, como por ejemplo el Scherzo en 3/8 del segundo movimiento de la sinfonía nº 2 de Mahler, Resurrección (si siguen auditivamente los bajos, en pizzicato, es muy fácil reconocer la métrica), o una versión orquestada del vals de Toru Takemitsu que aparece en la película La cara de otro dirigida por Hiroshi Teshigahara. Se les pide que: Describan las características de vals que identifican en la obra escuchada. Comparen con algún vals que hayan escuchado y establezcan semejanzas y diferencias musicales. Compartan opiniones por medio de preguntas como: ¿Este vals es solo para escuchar, bailar o ambas? Fundamente. Invéntele un título a la obra, fundamentando su propuesta.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Describen una obra interpretada aplicando los conocimientos musicales desarrollados.",
+              "Presentan argumentos con fundamentos técnicos.",
+              "Entregan argumentos consistentes entre sí.",
+              "Presentan argumentos coherentes con la obra interpretada.",
+              "Aplican en su argumentación conocimientos aprendidos en la asignatura."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2: Polifonía y creaciones",
+      "proposito": "En esta unidad el desarrollo de las habilidades musicales estará orientado a la interpretación musical integrando otros instrumentos musicales, tales como los electrónicos y folclóricos, enfatizando en la experimentación de variaciones y adaptaciones como parte de un trabajo creativo y utilizando elementos de estilo ya abordados en la unidad anterior. Además, por medio de la audición y la interpretación se conocerán algunos posibles orígenes de la música popular. Del mismo modo, se plantea esta segunda unidad como un momento en el que se pueden ir esbozando proyectos a más largo plazo que permitan integrar la música con otras expresiones artísticas y/o asignaturas.",
+      "conocimientos_previos": [
+        "Identificación de características de estilo evidentes en la música escuchada.",
+        "Interpretación musical individual y grupal."
+      ],
+      "palabras_clave": [
+        "Polifonía",
+        "música popular",
+        "creación musical",
+        "variaciones",
+        "adaptaciones",
+        "ambientaciones sonoras",
+        "acompañamientos"
+      ],
+      "conocimientos": [
+        "Aplicación de características de estilo en la interpretación musical.",
+        "Incursión en la creación musical."
+      ],
+      "habilidades": [
+        "Exploración sonora.",
+        "Improvisación musical.",
+        "Expresión musical y creativa.",
+        "Capacidad de trabajo en equipo y autoevaluación."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar curiosidad, interés y disfrute por los sonidos y las músicas (o diferentes manifestaciones musicales).",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos, mediante diversas formas de expresión musical con confianza, empatía y preparación.",
+        "Reconocer y valorar las diversas manifestaciones musicales, sus contextos, miradas y estilos a partir de lo propio.",
+        "Reconocer la dimensión trascendente y espiritual del arte y la música para el ser humano.",
+        "Demostrar interés por establecer relaciones e integrar la música con otras artes, otras asignaturas y con la vida misma.",
+        "Demostrar generosidad, reconociendo los aportes individuales al servicio de una construcción musical colectiva y los aportes del colectivo al desarrollo individual.",
+        "Reconocer el valor del trabajo responsable y a conciencia, tanto en los procesos como en los resultados musicales, desarrollando la autonomía y la autocrítica.",
+        "Demostrar la capacidad para trabajar en grupo de una manera inclusiva, con honestidad y compromiso, respetando la diversidad.",
+        "Reconocer y valorar la música existente y las experiencias adquiridas, así como la experimentación e innovación como aspectos fundamentales y complementarios del aprendizaje y el crecimiento musical."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Identificar conscientemente los elementos del lenguaje musical y los procedimientos compositivos evidentes en la música escuchada, interpretada y creada.",
+          "indicadores": [
+            "Relacionan los elementos rítmicos, melódicos, armónicos o texturas de una obra con su propósito expresivo.",
+            "Relacionan los procedimientos musicales de una obra con su propósito expresivo.",
+            "Analizan el contexto en el que surge una música determinada y su relación con los elementos musicales que la conforman.",
+            "Describen de manera verbal elementos del lenguaje musical y procedimientos compositivos de la tradición europea presentes en el folclor chileno y/o latinoamericano.",
+            "Describen elementos musicales en manifestaciones populares y/o de pueblos originarios (rituales, ceremonias, fiestas, entre otras).",
+            "Explican con fluidez su repertorio musical o interpretado."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Interpretar a una y más voces repertorio diverso, incorporando como apoyo el uso de medios de registro y transmisión.",
+          "indicadores": [
+            "Comparten y disfrutan su interpretación musical.",
+            "Utilizan diversos medios tecnológicos en su interpretación musical.",
+            "Utilizan partituras tradicionales como guía al cantar y tocar música.",
+            "Interpretan repertorio vocal e instrumental con precisión rítmica y melódica.",
+            "Aplican la audición interna al interpretar música.",
+            "Realizan anotaciones personales en partituras para recordar aspectos de la interpretación (dinámicas, expresividad, etc.)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Improvisar y crear música dando énfasis a ambientaciones sonoras libres, acompañamientos rítmicos, melódicos y/o armónicos simples.",
+          "indicadores": [
+            "Crean acompañamientos rítmicos para canciones interpretadas.",
+            "Crean patrones rítmicos y melódicos simples aplicando conocimientos desarrollados.",
+            "Aplican lo aprendido en la interpretación vocal e instrumental a sus creaciones.",
+            "Participan de actividades de improvisación y creación con interés y compromiso.",
+            "Crean música u obras musicales sencillas basadas en estímulos diversos."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Reconocer fortalezas y áreas de crecimiento personal en la audición, interpretación, creación y reflexión.",
+          "indicadores": [
+            "Identifican aspectos técnicos de su interpretación vocal e instrumental para su crecimiento.",
+            "Expresan, con respeto y responsabilidad, su opinión acerca del desempeño musical de sus compañeros y compañeras.",
+            "Proponen aspectos actitudinales para la mejora de situaciones específicas relacionadas con el quehacer musical del curso.",
+            "Demuestran una actitud empática y constructiva hacia sí mismo/a y hacia su curso.",
+            "Aplican conocimientos desarrollados en sus argumentos.",
+            "Analizan cómo las fortalezas de otros aportan al quehacer musical propio.",
+            "Analizan cómo el trabajo personal interviene y aporta al quehacer musical de otros.",
+            "Comentan con respeto y fundamento acerca de las presentaciones de sus compañeros y compañeras."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Reconocer el rol de la música en la sociedad, considerando sus propias experiencias musicales, contextos en que surge y las personas que la cultivan.",
+          "indicadores": [
+            "Identifican diferentes actores que participan en obras o manifestaciones musicales escuchadas u observadas.",
+            "Reflexionan acerca de la importancia del papel que cada cual juega en el quehacer musical.",
+            "Relacionan obras escuchadas con su propio quehacer musical y/o sus experiencias.",
+            "Reflexionan sobre los diversos roles que cumple la música en la sociedad.",
+            "Identifican el papel de la música en otros tiempos y lugares.",
+            "Relacionan los elementos musicales con el contexto en el que surge esa música."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan tarqueadas y sikuriadas. Identifican los instrumentos utilizados y describen sus timbres por medio de comparaciones. Se sugiere escuchar una con instrumentos andinos y luego una música de carnaval y procesiones (con bronces y tambores)."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan fragmentos de música (o alguna obra completa) del grupo chileno Los Jaivas, como un ejemplo de música de raíz popular. Comentan acerca de lo que les sugiere esta música. Analizan los fragmentos que escucharon guiados por preguntas como ¿qué instrumentos poseen?, ¿qué tipo de música es?, ¿qué diferencias tiene con la música rock o pop comercial?, ¿en qué se diferencia de la música folclórica o indígena?, ¿qué elementos de nuestra herencia musical podemos encontrar en esta música?"
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Observan y escuchan fragmentos de la obra Alturas de Machu Picchu, reconociendo en esta el encuentro de tres elementos culturales y artísticos diversos: la ciudad inca, la poesía de Neruda y la música de Los Jaivas. Reflexionan sobre el rol de difusión del patrimonio musical del país y del continente que cumplen los artistas que fusionan música popular con raíces folclóricas e indígenas."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música medieval polifónica de los siglos XII al XIV, vocal y/o instrumental. Comentan en qué ocasiones han escuchado ese tipo de música. Escuchan Ma fin est mon commencement (Mi fin es mi comienzo) de Machaut. Comentan lo que les sugiere la música, de qué época se imaginan que es, qué tipo de personas la cantaban y en qué ocasiones. Intercambian opiniones y el o la docente puede ir añadiendo datos interesantes y significativos."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Percuten primero en forma separada, y luego en conjunto, los ejercicios rítmicos con imitaciones y alternancias de figuras en las voces. Se motiva a los y las estudiantes a buscar timbres interesantes y variados para realizarlos."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Una vez que tienen muy seguro el canto al unísono, la mitad del curso canta una de las frases como ostinato mientras los demás cantan la canción completa. Luego lo hacen al revés. Si el curso tiene mucha seguridad, intentan cantar en canon a dos, luego a tres y luego a cuatro voces."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Se invita a los y las estudiantes a crear una frase musical simple de entre tres y cinco alturas, y luego tocarla en retrogradación. Pueden hacer la prueba de tocarlas simultáneamente. A partir de este material y esta técnica, se les motiva a crear una obra en la que se utilice este recurso (en forma melódica o rítmica) y ponerle un título que entregue una pista sobre lo que se está haciendo."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Cantan y acompañan armónicamente canciones populares de otras épocas o secciones de ellas (chilenas o de otro lugar). Por ejemplo, Penas juveniles de Luis Dimas, o El baile de los que sobran de Los Prisioneros, u otras en las que se repita un patrón armónico simple, de modo que las alumnas y los alumnos lo identifiquen y lo puedan tocar (o cantar el bajo)."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Sobre la base del patrón armónico ya aprendido, se invita a improvisar y/o crear nuevas melodías para tocar y o cantar. Adaptar o crear un nuevo acompañamiento a la canción."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "El o la docente invita a sus estudiantes a percutir ♩♫♩♩. Luego les pide que busquen diferentes sonoridades en las cuales repetir el patrón rítmico. A partir de esta experimentación se invita a alumnos y alumnas a agruparse de a cuatro a seis personas y crear una composición basada en este patrón. Los y las jóvenes pueden elegir los instrumentos convencionales o no convencionales, de altura determinada o de altura no determinada."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Actividad de interpretación: aprenden a tocar/cantar estas dos melodías de Beethoven. El curso se divide en dos grupos (tres grupos en el caso que haya uno que toque instrumentos armónicos para hacer los acordes). Una vez resueltos los aspectos técnicos, cada estudiante podrá decir o escribir qué ideas, sensaciones o emociones le provoca esta música. Posteriormente escuchan la obra identificando las melodías, los cambios de timbres, de dinámica, etcétera."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Preparan y presentan un canon de dos o más voces",
+          "oas_evaluados": [
+            4,
+            5,
+            6
+          ],
+          "actividad_evaluacion": "En grupos pequeños preparan un canon de dos o más voces. Para su presentación se les pedirá: Que aparezca la canción completa al unísono. Que se cante una versión con al menos dos voces. Crear un final definido.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Demuestran cohesión grupal en la interpretación.",
+              "Presentan seguridad rítmica en la interpretación.",
+              "Presentan seguridad melódica en la interpretación.",
+              "Se expresan en coherencia con la interpretación.",
+              "Presentan una propuesta musical completa y articulada."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3: Los sonidos expresan",
+      "proposito": "En esta unidad se espera que el alumnado continúe profundizando sus conocimientos y habilidades musicales sobre la base del repertorio abordado, el cual se irá complejizando en la medida de sus avances. Esto puede operar en dos niveles diferentes: por un lado, se puede abordar un repertorio más complejo en sus elementos constructivos formales, melódicos, armónicos, rítmicos, estructurales, etcétera. Por otro, la complejidad puede corresponder a la adición de recursos expresivos en la interpretación de la música, es decir, profundizar en el uso de dinámicas, agógicas, fraseo y articulaciones. Mientras el primer nivel apunta a las habilidades de cantar y tocar música, el segundo avanza en las habilidades de expresión, sin embargo, ambos niveles no son excluyentes entre sí. Del mismo modo, se pretende que los y las estudiantes puedan conocer y comprender cómo la música ha tenido un rol importante en el proceso de hominización a lo largo de la historia, así como en la formación de culturas y civilizaciones en diversos contextos. Las actividades que se llevarán a cabo pueden plantearse perfectamente como proyectos grupales, los cuales permitirán que los y las estudiantes desarrollen habilidades y actitudes relacionadas con el compartir y la capacidad para el trabajo colaborativo, así como proponerse difundir su trabajo musical a la comunidad.",
+      "conocimientos_previos": [
+        "Aplicación de características de estilo al cantar y tocar música.",
+        "Creación musical."
+      ],
+      "palabras_clave": [
+        "Recursos expresivos en la música (dinámica, agógica, fraseo, articulaciones)",
+        "forma musical",
+        "interpretación musical"
+      ],
+      "conocimientos": [
+        "Elementos del lenguaje musical.",
+        "Creación musical."
+      ],
+      "habilidades": [
+        "Reflexión personal y grupal.",
+        "Comunicación y difusión del quehacer musical.",
+        "Improvisación musical.",
+        "Capacidad de trabajo en equipo."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar curiosidad, interés y disfrute por los sonidos y las músicas (o diferentes manifestaciones musicales).",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos, mediante diversas formas de expresión musical con confianza, empatía y preparación.",
+        "Reconocer y valorar las diversas manifestaciones musicales, sus contextos, miradas y estilos a partir de lo propio.",
+        "Reconocer la dimensión trascendente y espiritual del arte y la música para el ser humano.",
+        "Demostrar interés por establecer relaciones e integrar la música con otras artes, otras asignaturas y con la vida misma.",
+        "Demostrar generosidad, reconociendo los aportes individuales al servicio de una construcción musical colectiva y los aportes del colectivo al desarrollo individual.",
+        "Reconocer el valor del trabajo responsable y a conciencia, tanto en los procesos como en los resultados musicales, desarrollando la autonomía y la autocrítica.",
+        "Demostrar la capacidad para trabajar en grupo de una manera inclusiva, con honestidad y compromiso, respetando la diversidad.",
+        "Reconocer y valorar la música existente y las experiencias adquiridas, así como la experimentación e innovación como aspectos fundamentales y complementarios del aprendizaje y el crecimiento musical."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Reconocer sentimientos, sensaciones e ideas al escuchar manifestaciones y obras musicales de Chile y el mundo, presentes en la tradición oral, escrita y popular, manifestándolos a través de medios verbales, visuales, sonoros y corporales.",
+          "indicadores": [
+            "Se expresan corporalmente de forma libre al escuchar música de tradición oral, escrita y popular.",
+            "Registran sus percepciones acerca de la música escuchada.",
+            "Representan por medios visuales lo que les sugiere la música escuchada utilizando diferentes técnicas.",
+            "Opinan frente a lo escuchado incorporando sensaciones e ideas propias con fundamento.",
+            "Opinan acerca de lo que escuchan incorporando en su reflexión los conocimientos musicales desarrollados.",
+            "Incorporan en sus opiniones antecedentes del contexto de la música escuchada.",
+            "Demuestran interés por medio de gestos o actitudes corporales (lenguaje no verbal) al escuchar música.",
+            "Demuestran interés al escuchar una misma pieza en varias oportunidades."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Identificar conscientemente los elementos del lenguaje musical y los procedimientos compositivos evidentes en la música escuchada, interpretada y creada.",
+          "indicadores": [
+            "Relacionan los elementos melódicos de una obra con su propósito expresivo.",
+            "Demuestran comprensión del propósito expresivo de la música escuchada por medio de movimientos corporales.",
+            "Analizan el contexto en el que surge una música determinada y su relación con los elementos musicales que la conforman.",
+            "Describen una obra escuchada, interpretada o creada aplicando los conocimientos musicales y procedimientos compositivos desarrollados.",
+            "Siguen una partitura y/o musicogramas tradicionales al escuchar música.",
+            "Proponen ideas para graficar algunos aspectos musicales de una obra (alturas, melodías, procedimientos compositivos, etc.).",
+            "Describen elementos musicales en manifestaciones populares y/o de pueblos originarios (rituales, ceremonias, fiestas, entre otras).",
+            "Grafican elementos del lenguaje musical que escuchan en obras y manifestaciones musicales utilizando signos no convencionales.",
+            "Distinguen elementos del lenguaje musical en una obra escrita de forma tradicional.",
+            "Grafican una obra musical por medio de signos y partituras no convencionales de creación personal.",
+            "Presentan y explican con fluidez su repertorio musical."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Cantar y tocar repertorio diverso, desarrollando habilidades tales como precisión rítmica y melódica, expresividad, conciencia de fraseo y dinámica, entre otros, fortaleciendo el interés por el hacer musical individual y grupal.",
+          "indicadores": [
+            "Participan de actividades musicales en grupo.",
+            "Demuestran precisión en los comienzos y finales de una obra musical.",
+            "Cantan con seguridad demostrando una actitud de confianza.",
+            "Tocan instrumentos musicales con seguridad y precisión rítmica y melódica, demostrando una actitud de confianza.",
+            "Siguen indicaciones de un director o directora al cantar y tocar.",
+            "Prestan atención al quehacer musical propio y de otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Improvisar y crear música dando énfasis a ambientaciones sonoras libres, acompañamientos rítmicos, melódicos y/o armónicos simples.",
+          "indicadores": [
+            "Experimentan con distintas sonoridades de su entorno con un fin determinado.",
+            "Acompañan canciones interpretadas con instrumentos musicales u objetos sonoros.",
+            "Crean acompañamientos rítmicos para canciones interpretadas.",
+            "Incorporan a sus creaciones lo aprendido en la interpretación vocal e instrumental.",
+            "Participan de actividades de improvisación y creación con interés y compromiso.",
+            "Improvisan en forma melódica a partir de un bajo armónico dado.",
+            "Crean introducciones a obras musicales interpretadas.",
+            "Crean interludios a obras musicales interpretadas."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música inspirada en raíces chilenas, como por ejemplo uno de los Tres aires chilenos (idealmente el 1 o el 3) de E. Soro. Como primera audición puede animar a sus estudiantes a: Reconocer el origen del compositor a partir de lo que escuchan. Describir los elementos musicales que identifican para fundamentar sus opiniones. Una vez realizado esto, invitarlos a ponerle un título a la pieza. Luego comparar las propuestas con el nombre original y contextualizar con antecedentes del compositor, su época, sus inquietudes musicales y su aporte a la música chilena."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Comparan la pieza escuchada de Soro con otra de algún compositor nacionalista, de otro lugar y otra cultura, por ejemplo, E. Grieg, A. Dvorak. A continuación podrían escuchar música folclórica de procedencia de los compositores para aproximarse a sus características."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan En las estepas del Asia central de A. Borodin. A partir de esta obra se pueden realizar las siguientes actividades: Identificar las dos melodías principales. Crear un musicograma para seguir la música. Presentar sus musicogramas al curso, y a partir de estos notar aspectos nuevos de la audición. Crear un dibujo lineal en acuarela o témpera o una coreografía para cada línea melódica. Comentar cómo el compositor basa su obra en dos melodías y qué recursos utiliza para variarlas."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música andina, por ejemplo, la canción Paloma del grupo Arak Pacha. Comparten en el curso lo que les sugiere lo escuchado y lo relacionan con su contexto. A partir de la misma audición, identifican timbres característicos de esta música reconociendo los instrumentos utilizados. Analizan el texto de la canción y buscan vincularlo con elementos del lenguaje musical. Comparten sus descubrimientos o sugerencias. Dibujan de manera individual lo que la canción representa de acuerdo a sus sonoridades."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música de fusión latinoamericana, como la Canción del último hombre del grupo chileno Congreso (disco Fuegos del hielo). A partir de la audición, y sin información adicional, comentan su apreciación sobre esta música. El o la docente guiará la conversación, de modo de llegar a enfocarse en los siguientes aspectos: ¿Creen que el texto es importante en esta canción? ¿Por qué? ¿Pueden recordarla? ¿Creen que la música y el sonido resaltan el mensaje del texto? ¿Por qué? ¿Sin el texto, esta música tendría algún significado parecido? ¿A quién se le canta?"
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "En grupos, los alumnos y las alumnas elaboran una partitura no convencional sobre un repertorio trabajado, incluyendo signos o símbolos que identifiquen fraseos y articulaciones definidos por cada uno. Comparten con el resto del curso sus elecciones e interpretación."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Los y las estudiantes reciben una tarjeta escrita con un propósito expresivo que tendrán como referencia para interpretar una obra musical. A medida que un grupo interpreta la canción con el propósito detallado en la tarjeta, el resto del curso intentará adivinar a qué emoción, estado y/o situación se refiere. Justifican sus opiniones con argumentos musicales escuchados en la interpretación."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Observan una imagen y analizan sus formas, colores y otros aspectos, transfiriendo las ideas visuales en musicales. Acuerdan qué recursos utilizarán para interpretar musicalmente la imagen observada. Improvisan con la voz las decisiones tomadas. Presentan al curso y comentan."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Interpretan la canción tradicional La Aurora de manera vocal y/o instrumental. Una vez que se sientan seguros en la interpretación, una alumna o un alumno toma el rol de director, quien después de haber revisado la canción, define qué elementos expresivos utilizará para dirigir al grupo. Por ejemplo, podrá sugerir cambios de intensidad, agógica, entre otros."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "En grupos crean una obra musical con sonidos y movimientos corporales. La obra deberá expresar alguna idea o tema consensuado en el grupo. Ponen título a su obra y la presentan al curso. Realizan la audición de manifestaciones musicales de pueblos originarios, y a partir de ello inventan una situación en la que tengan que efectuar acciones como \"agradecer\", \"pedir\", \"sanar\", etc."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Con tubos de PVC crean zampoñas y luego exploran su sonoridad. Se les propone variar el ataque, jugar con la intensidad, probar formas de cortar o de variar el sonido (por ejemplo, pronunciando rrr con la lengua: frullato), tocar en lugares con distinta acústica, entre otros."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Hacen ejercicios rítmicos a dos voces en los que se les pide: Percutir cada línea por separado. Buscar sonoridades corporales y/o instrumentales interesantes. Ensayar las dos voces juntas sin perder el pulso. Ensayar las dos voces juntas intentando escuchar lo que hace el otro grupo. Crear una conversación rítmica nueva, motivados por el o la docente."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Cantan/tocan música escrita en homofonía, como por ejemplo el arreglo de la canción Minka. Es recomendable que alumnas y alumnos tengan la posibilidad de identificar esta textura en forma auditiva y visual para su comprensión."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Los y las estudiantes eligen un lugar de Chile. A partir de sugerencias dadas por el o la docente crean una ambientación sonora en la cual deberá haber dos ideas contrastantes/complementarias (como en el caso de la obra de Borodin) y otros elementos sonoros que la acompañen. Trabajan sus ideas en grupos y las presentan al curso."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Experimentan la textura imitativa a partir de la preparación de una obra contrapuntística, como por ejemplo El rabel. Aprenden voz por voz; si han trabajado una canción homofónica, comparan. La segunda voz puede ser octavada."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Crean ambientaciones sonoras con zampoñas (Historias del viento, Un rito inca, Tensión y calma)",
+          "oas_evaluados": [
+            3,
+            5
+          ],
+          "actividad_evaluacion": "Utilizando las zampoñas elaboradas o bien otros instrumentos u objetos que consideren necesarios, crean ambientaciones sonoras, como por ejemplo: Historias del viento: aquí pueden explorar las posibilidades que brinda la zampoña construida así como otros objetos y sonidos, tales como botellas o silbidos, o pueden buscar sonidos de aire en instrumentos que no sean de viento. Un rito inca: a partir del sonido de las zampoñas describir musicalmente un rito nortino (puede ser creado por los alumnos y las alumnas basándose en sus experiencias y conocimientos de la sociedad inca, así como también incorporar sonidos y ritmos que identifiquen a esa cultura). Tensión y calma: para proponer un tema abstracto a partir de las mismas sonoridades, deben crear momentos de tensión y calma utilizando principalmente los sonidos de las zampoñas e incorporando silencios de diferentes duraciones como recurso compositivo. Presentan sus trabajos al curso y comentan. Los registran con medios audiovisuales para evaluar y autoevaluar el trabajo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Manifiestan interés por la propuesta musical.",
+              "Demuestran concentración en el trabajo que realizan.",
+              "Se expresan con seguridad en la interpretación.",
+              "Usan con pertinencia los recursos musicales.",
+              "Presentan una interpretación cohesionada.",
+              "Demuestran una estructura clara en la propuesta musical presentada.",
+              "Demuestran originalidad en su propuesta musical.",
+              "Respetan el trabajo musical del grupo.",
+              "Demuestran atención a los comienzos y finales de una obra.",
+              "Demuestran mayor fluidez y expresividad en su interpretación.",
+              "Participan de actividades musicales en grupo con rigurosidad y compromiso.",
+              "Demuestran interés en la experimentación con diversas sonoridades."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "7mo Básico",
+    "asignatura": "Música",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4: Compartiendo experiencias",
+      "proposito": "Esta última unidad se plantea como un cierre y/o resumen en donde convergen los conocimientos, habilidades y actitudes desarrolladas durante el año. Por lo mismo, es muy enriquecedor que los y las estudiantes tengan la posibilidad de compartir su trabajo musical con el resto de la comunidad escolar, y ello necesitará de una preparación especial. En ese momento los y las jóvenes podrán aplicar lo aprendido por medio del repertorio, el cual podrán interpretar, explicar y comunicar a una audiencia más amplia. El contexto de cierre del proceso anual permite plantearse también actividades más complejas e integradoras, como el desarrollo de proyectos grupales o individuales que combinen lo trabajado durante el año con un enfoque creativo, permitiendo al alumnado aplicar lo aprendido de una manera novedosa y personal.",
+      "conocimientos_previos": [
+        "Creación musical."
+      ],
+      "palabras_clave": [
+        "Proyecto",
+        "difusión"
+      ],
+      "conocimientos": [
+        "Elaboración de proyectos musicales.",
+        "Aplicación de elementos del lenguaje musical en la interpretación musical."
+      ],
+      "habilidades": [
+        "Comunicación y difusión del quehacer musical.",
+        "Expresión musical y creativa.",
+        "Capacidad de trabajo en equipo, autoevaluación, coevaluación."
+      ],
+      "actitudes": [
+        "Demostrar disposición a desarrollar curiosidad, interés y disfrute por los sonidos y las músicas (o diferentes manifestaciones musicales).",
+        "Demostrar disposición a comunicar sus percepciones, ideas y sentimientos, mediante diversas formas de expresión musical con confianza, empatía y preparación.",
+        "Reconocer y valorar las diversas manifestaciones musicales, sus contextos, miradas y estilos a partir de lo propio.",
+        "Reconocer la dimensión trascendente y espiritual del arte y la música para el ser humano.",
+        "Demostrar interés por establecer relaciones e integrar la música con otras artes, otras asignaturas y con la vida misma.",
+        "Demostrar generosidad, reconociendo los aportes individuales al servicio de una construcción musical colectiva y los aportes del colectivo al desarrollo individual.",
+        "Reconocer el valor del trabajo responsable y a conciencia, tanto en los procesos como en los resultados musicales, desarrollando la autonomía y la autocrítica.",
+        "Demostrar la capacidad para trabajar en grupo de una manera inclusiva, con honestidad y compromiso, respetando la diversidad.",
+        "Reconocer y valorar la música existente y las experiencias adquiridas, así como la experimentación e innovación como aspectos fundamentales y complementarios del aprendizaje y el crecimiento musical."
+      ],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Reconocer sentimientos, sensaciones e ideas al escuchar manifestaciones y obras musicales de Chile y el mundo, presentes en la tradición oral, escrita y popular, manifestándolos a través de medios verbales, visuales, sonoros y corporales.",
+          "indicadores": [
+            "Aplican experiencias, habilidades y conocimientos desarrollados en sus observaciones.",
+            "Manifiestan opiniones personales ante lo escuchado incorporando sentimientos, sensaciones e ideas propias con fundamento.",
+            "Opinan acerca de lo que escuchan incorporando en su reflexión los conocimientos musicales desarrollados."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Identificar conscientemente los elementos del lenguaje musical y los procedimientos compositivos evidentes en la música escuchada, interpretada y creada.",
+          "indicadores": [
+            "Describen una obra escuchada, interpretada o creada, aplicando los conocimientos musicales y los procedimientos compositivos trabajados.",
+            "Proponen ideas para graficar algunos aspectos musicales de una obra (alturas, melodías, procedimientos compositivos, etc.).",
+            "Diferencian frases en una melodía escuchada e interpretada.",
+            "Describen el propósito expresivo de una obra musical a partir de lo que les sugiere su armonía.",
+            "Analizan el contexto en el que surge una música determinada y su relación con los elementos musicales que la conforman.",
+            "Siguen una partitura y/o musicogramas tradicionales al escuchar música.",
+            "Asocian signos de escritura musical convencional con lo escuchado siguiendo una partitura.",
+            "Comparan diferentes tipos de escritura musical (partituras)."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Cantar y tocar repertorio diverso, desarrollando habilidades tales como precisión rítmica y melódica, expresividad, conciencia de fraseo y dinámica, entre otros, fortaleciendo el interés por el hacer musical individual y grupal.",
+          "indicadores": [
+            "Cantan repertorio diverso aplicando las habilidades y los conocimientos desarrollados.",
+            "Tocan repertorio diverso aplicando las habilidades y los conocimientos desarrollados.",
+            "Cantan fluidamente siguiendo una base rítmica.",
+            "Cantan y tocan a más de una voz comprendiendo aspectos rítmicos y melódicos.",
+            "Interpretan repertorio diverso aplicando características propias de algún estilo definido.",
+            "Tocan instrumentos del folclor americano.",
+            "Cantan música relacionada con manifestaciones de pueblos originarios y del folclor americano.",
+            "Tocan música relacionada con manifestaciones de pueblos originarios.",
+            "Demuestran concentración durante su interpretación musical.",
+            "Demuestran atención a los comienzos y finales de una obra.",
+            "Demuestran fluidez y expresividad en su interpretación.",
+            "Participan de actividades musicales en grupo con rigurosidad y compromiso.",
+            "Siguen indicaciones de un director o directora al cantar y tocar."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Interpretar a una y más voces repertorio diverso, incorporando como apoyo el uso de medios de registro y transmisión.",
+          "indicadores": [
+            "Aplican la memoria auditiva al interpretar música.",
+            "Utilizan como apoyo partituras tradicionales y no tradicionales en su interpretación musical.",
+            "Registran la música que practican utilizando diversos sistemas de notación: clave americana o cifrado, mapas de acordes, tablaturas u otros.",
+            "Utilizan partituras para comprender el sentido de la música.",
+            "Recurren a diversos medios para presentar su trabajo musical (partituras, grabaciones, presentaciones digitales, entre otros).",
+            "Presentan y explican su repertorio musical."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Reconocer fortalezas y áreas de crecimiento personal en la audición, interpretación, creación y reflexión.",
+          "indicadores": [
+            "Identifican aspectos técnicos por desarrollar en su interpretación vocal e instrumental.",
+            "Se expresan con respeto y responsabilidad acerca del desempeño musical de sus compañeros y compañeras.",
+            "Reconocen situaciones que posibilitan y/o dificultan su quehacer musical y el de su curso.",
+            "Opinan demostrando una actitud empática y constructiva hacia sí mismos y hacia su curso.",
+            "Aceptan diferencias de opinión.",
+            "Identifican sus dificultades y sugieren alternativas para mejorar.",
+            "Reflexionan respecto de su capacidad de escuchar activamente.",
+            "Explican su quehacer musical de forma novedosa, con ejemplos y/o comparaciones musicales."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Reconocer el rol de la música en la sociedad, considerando sus propias experiencias musicales, contextos en que surge y las personas que la cultivan.",
+          "indicadores": [
+            "Identifican diferentes actores que participan de la música en la sociedad a partir de la música interpretada.",
+            "Identifican diferentes actores que participan en obras o manifestaciones musicales escuchadas u observadas.",
+            "Identifican el papel de la música en otros tiempos y lugares.",
+            "Relacionan los elementos musicales de una música con el contexto en el que surge.",
+            "Aplican en sus opiniones los conocimientos desarrollados."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan canciones inspiradas en sonidos de animales, como El grillo, de J. Desprez o Contrapunto bestiale alla mente de Il festino, de A. Banchieri. Luego pueden escuchar Oiseaux exotiquez: Le mirle noire de O. Messiaen, el concierto Il gardelino para flauta y orquesta de A. Vivaldi o The nightingale (El ruiseñor), de W. Byrd, entre otras. Comentan las distintas formas de escuchar la naturaleza en épocas y contextos variados."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan obras inspiradas en sonidos del entorno, por ejemplo, El amolador de la compositora venezolana A. Izarra. Identifican timbres, alturas y recursos musicales utilizados para hacer esa descripción (giros melódicos, rítmica, elementos reiterativos, entre otros). Luego las comparan con otras obras relacionadas con esta temática, conociendo así algunas de las diferentes miradas de compositores a los elementos extramusicales. Se sugieren, por ejemplo, la obra para orquesta Tren de Caipira de H. Villalobos, Pacific 231 de A. Honneger, el Poema sinfónico para 100 metrónomos de G. Ligety."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan cuecas tradicionales (como las mencionadas en la unidad 1), cuecas bravas o cuecas interpretadas con instrumentos electrónicos, como Rotativo de Los Porfiados de la Cueca. Analizan semejanzas y diferencias."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Se propone a los y las estudiantes que escriban una crítica musical para una revista especializada, donde deben hacer una comparación entre dos cuecas escuchadas. Tienen libertad para realizarla pero el texto debe hacer alusión a aspectos musicales, literarios y de contexto. Leen y comentan sus trabajos, destacando fortalezas y proponiendo soluciones para las áreas de crecimiento."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan música para guitarra sola de compositores chilenos o latinoamericanos y descubren recursos idiomáticos (recursos propios del instrumento), así como influencias de diferentes épocas y estilos como por ejemplo: Suite Modo Tonal de S. Vera-Rivera, Cristalino de H. Salinas, Algop-6 de P. Aranda, Preludio n° 2 de G. Matthey, Interludio I (Como un tango), Interludio II (Casi el silencio), Interludio III (Llamados), de C. Morales."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Los y las estudiantes ejercitan una canción que tocan/cantan para lograr seguridad y fluidez interpretativa, por ejemplo, la canción Campos naturales con arreglo de R. Cortés. A partir de la actividad anterior, los y las estudiantes podrán crear una introducción que aluda a sonidos de la naturaleza."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "A partir del quodlibet Swing low, los estudiantes podrán: Trabajar la interpretación por separado. Incorporar elementos de estilo de este tipo de música. Fortalecer la pronunciación del inglés, aprovechando los recursos tímbricos de las palabras. Unir el quodlibet."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Ejercitan produciendo una vocal asignada por el o la docente (u otro fonema) siguiendo las indicaciones de dinámica. Se sugiere utilizar gestos claros (por ejemplo, la mano cerca del cuerpo para piano y gestos más grandes y más lejos del cuerpo para forte). Abordar primero intensidades contrastantes y luego graduales, partiendo desde el silencio y llegando al silencio (cero). Una vez que los alumnos sigan claramente las indicaciones se podrá escribir en la pizarra los reguladores. La profesora o el profesor dirige una improvisación con estos elementos primero al unísono y luego separando al curso por filas. Los alumnos y las alumnas reflexionan sobre la importancia de la intensidad en la música."
+        },
+        {
+          "nombre": "Actividad",
+          "oas_asociados": [],
+          "descripcion": "Escuchan alguna obra donde se evidencie un juego de intensidades, por ejemplo, el Allegro con brío de la Sinfonía nº 25 de W.A. Mozart. Después de esta primera audición puede pedir a sus estudiantes que marquen las intensidades de un fragmento de este movimiento con gestos acordados. A partir de esta actividad los alumnos y las alumnas pueden hacer un mapa sonoro de la intensidad del fragmento trabajado."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Proyecto cueca: crean y presentan una nueva cueca",
+          "oas_evaluados": [
+            4,
+            6
+          ],
+          "actividad_evaluacion": "En grupos, los y las estudiantes eligen una de las cuecas tradicionales escuchadas y trabajadas en la unidad 1, como base para crear una nueva cueca, cuidando de mantener su estructura. Inventan un título y un texto nuevo. Cada grupo practica su cueca y, con ayuda de la profesora o el profesor, o algún estudiante que toque guitarra, la ensayan y presentan al curso. Pueden incorporar la danza y/o expresión corporal a sus presentaciones.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Presentan argumentos técnicos para explicar su quehacer musical.",
+              "Presentan argumentos coherentes con su quehacer musical.",
+              "Aplican conocimientos aprendidos en la asignatura en su argumentación.",
+              "Demuestran creatividad en su presentación al curso.",
+              "Registran la música que practican utilizando diversos sistemas de notación: clave americana o cifrado, mapas de acordes, tablaturas u otros.",
+              "Utilizan diversos medios para presentar su trabajo musical (partituras, grabaciones, presentaciones digitales, entre otros).",
+              "Presentan y explican su repertorio musical.",
+              "Explican su quehacer musical de forma novedosa a otros."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

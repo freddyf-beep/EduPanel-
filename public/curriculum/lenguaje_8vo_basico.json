@@ -1,0 +1,3136 @@
+[
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "Epopeya",
+      "horas": "36 horas pedagogicas",
+      "semestre": 1,
+      "proposito": "El proposito de esta unidad es que los estudiantes lean diversos textos con caracter de epopeya para que reflexionen sobre ellos desde diversos puntos de vista. Se espera que complementen sus indagaciones con lecturas de textos no literarios que les ayuden a entender la obra o a profundizar algun tema que les haya llamado la atencion, especialmente en el marco del tema 'Epopeya'. Con esto se pretende que los alumnos, siempre desde la lectura, el analisis y la interpretacion de las obras literarias, conozcan las caracteristicas de las epopeyas y descubran que influencias han tenido en la literatura posterior y en la vision de mundo que tenemos hoy. Se busca que ejerciten las estrategias de comprension para que desarrollen una postura reflexiva frente al texto, identifiquen cuales son sus dificultades y pongan en practica acciones que los ayuden a solucionarlas. Tambien se busca que aprendan a resumir y a hacerse preguntas sobre lo leido para profundizar su comprension de los textos. En escritura, los estudiantes elaboran textos para comunicar lo que han aprendido a partir de sus lecturas literarias y de las investigaciones bibliograficas que han realizado. Para esto, aprenden a procesar y organizar la informacion recopilada para no hacer una mera reproduccion de lo leido, sino una version propia. Durante esta unidad, siguen profundizando las habilidades referidas al proceso de escritura que han adquirido en anos anteriores, y se enfatizan las habilidades de recopilacion de informacion, organizacion de ideas y evaluacion de la pertinencia de la informacion incorporada. En comunicacion oral, los estudiantes usan el dialogo para llevar a cabo diferentes propositos, especialmente para compartir analisis e interpretaciones de sus lecturas y para comunicar lo aprendido con las investigaciones realizadas. Al dialogar, se espera que tomen conciencia de la manera en que participan en un grupo; en particular, si usan argumentos para fundamentar sus afirmaciones y si son hablantes que muestran apertura a las ideas de otros.",
+      "actitudes": [
+        "OA B",
+        "OA F"
+      ],
+      "lecturas_sugeridas": [
+        "Anonimo - 'Cantos 80-83, 87, 89, 91, 93, 105, 110, 130, 131-136, 138, 156, 160, 161, 168-171, 173-174, 176-177, 180, 270, 289' en El cantar de Rolando",
+        "Anonimo - 'Aventura II: Sigfrido', 'Aventura IV: Como combatio a los sajones', 'Aventura XVI: La muerte de Sigfrido' en La Cancion de los Nibelungos",
+        "Anonimo - 'Cantar I: Destierro del Cid (tiradas 1-5, 14-19, 34-40)', 'Cantar III: La afrenta de Corpes (tiradas 149-152)' en Poema de Mio Cid",
+        "Anonimo - 'La muerte de Grendel' en Beowulf",
+        "Alonso de Ercilla - 'Canto V' en La Araucana",
+        "Alessandro Baricco - Homero, Iliada",
+        "Homero - 'Canto I: La colera de Aquiles', 'Canto XX: Combate de los dioses', 'Canto XXIV: Rescate del cuerpo de Hector' en La Iliada",
+        "Virgilio - 'Libro II' en La Eneida"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Los estudiantes repasan los cantos de El cantar de Roldan leidos en clases. Contestan preguntas sobre los temas del fragmento, caracteristicas de la epopeya con citas del texto, y aspectos de la sociedad presentes en el fragmento.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Para corregir las preguntas, el docente debe otorgar mayor puntaje a la ejemplificacion que a la respuesta correcta. No se busca tanto una correcta definicion de los temas, caracteristicas o memorizacion de los aspectos de la sociedad, sino que se espera que los estudiantes puedan extraerlos del poema."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            16
+          ],
+          "actividad_evaluacion": "El docente evalua la habilidad de los estudiantes para planificar la escritura revisando el organizador que los alumnos completaron antes de redactar sus textos.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "El docente considera los mismos aspectos senalados en el organizador para evaluar las planificaciones. Al margen, anota observaciones generales y hace sugerencias que les sirvan al momento de escribir. Los alumnos consideran las sugerencias del docente para escribir sus textos. En la evaluacion final, el profesor toma en cuenta el progreso entre la planificacion y la escritura de la version final."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion formativa de planificaciones de escritura (OA 16) antes de la redaccion final",
+          "Evaluacion sumativa de comprension de epopeya con enfasis en ejemplificacion (OA 6)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "La violencia en las epopeyas",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 2,
+          "titulo": "Vision del honor",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 3,
+          "titulo": "La epopeya y la literatura y el cine de hoy",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 4,
+          "titulo": "Analisis de una epopeya",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 5,
+          "titulo": "Analisis de un fragmento de La cancion de Roldan",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 6,
+          "titulo": "Comparacion entre Mio Cid y Aquiles",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 7,
+          "titulo": "Diferencias entre el Cid y Sigfrido",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 8,
+          "titulo": "El sentido del deber del Cid",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 9,
+          "titulo": "Toma de apuntes de una exposicion",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 10,
+          "titulo": "Analisis de una novela",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 11,
+          "titulo": "Caracteristicas de las epopeyas",
+          "oa": "OA 6"
+        },
+        {
+          "numero": 12,
+          "titulo": "Elementos en comun de las epopeyas",
+          "oa": "OA 6"
+        },
+        {
+          "numero": 13,
+          "titulo": "Transformacion de un fragmento de epopeya en obra de teatro",
+          "oa": "OA 6"
+        },
+        {
+          "numero": 14,
+          "titulo": "Interpretacion de un texto",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 15,
+          "titulo": "El Senor de los Anillos y la II Guerra Mundial",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 16,
+          "titulo": "Comparacion entre diversas epopeyas y sus personajes principales",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 17,
+          "titulo": "Investigacion en biblioteca",
+          "oa": "OA 11"
+        },
+        {
+          "numero": 18,
+          "titulo": "Investigaciones y datos sobre la guerra de Troya",
+          "oa": "OA 11"
+        },
+        {
+          "numero": 19,
+          "titulo": "Analisis de un articulo informativo",
+          "oa": "OA 11"
+        },
+        {
+          "numero": 20,
+          "titulo": "Descripcion de un buen lector",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 21,
+          "titulo": "Caracteristicas de un resumen bien logrado",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 22,
+          "titulo": "Jerarquizar la informacion",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 23,
+          "titulo": "Identificacion de las ideas principales de un texto",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 24,
+          "titulo": "Preguntas durante la lectura",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 25,
+          "titulo": "Lectura reflexiva, monitoreo y revision de la comprension",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 26,
+          "titulo": "Informe de progreso en las estrategias",
+          "oa": "OA 12"
+        },
+        {
+          "numero": 27,
+          "titulo": "Articulo informativo sobre el contexto de una epopeya",
+          "oa": "OA 14"
+        },
+        {
+          "numero": 28,
+          "titulo": "Redaccion de reportajes epicos",
+          "oa": "OA 14"
+        },
+        {
+          "numero": 29,
+          "titulo": "Conversacion con otro sobre lo que se va a escribir",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 30,
+          "titulo": "Redaccion para generar ideas",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 31,
+          "titulo": "Organizacion de las ideas",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 32,
+          "titulo": "Mejora de algunos aspectos del dialogo",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 33,
+          "titulo": "Comentarios en pareja a partir de un texto",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 34,
+          "titulo": "Conversacion en torno a un tema de las lecturas",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 35,
+          "titulo": "15 minutos de lectura en la sala",
+          "oa": "OA 1"
+        },
+        {
+          "numero": 36,
+          "titulo": "Lecturas tematicas",
+          "oa": "OA 1"
+        },
+        {
+          "numero": 37,
+          "titulo": "Lectura con un invitado",
+          "oa": "OA 1"
+        },
+        {
+          "numero": 38,
+          "titulo": "Dia del Comic",
+          "oa": "OA 1"
+        }
+      ],
+      "nombre_unidad": "Unidad 1",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 12,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 1
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "Experiencias del amor",
+      "horas": "36 horas pedagogicas",
+      "semestre": 1,
+      "proposito": "El proposito de esta unidad es que los estudiantes lean una variedad de textos que aborden el tema de las experiencias del amor. En lectura, se busca que analicen e interpreten en clases narraciones y poemas que toquen este tema y que puedan reflexionar, con la guia del docente, sobre las diversas perspectivas y las distintas maneras que el ser humano tiene de experimentar el amor, considerando las caracteristicas de la epoca y la cultura. En investigacion, se busca que profundicen en diversos aspectos de las obras leidas y que conozcan el contexto en que fueron originadas, para que de esta manera enriquezcan sus interpretaciones. Ademas, ponen en practica sus habilidades de busqueda, manejo y sintesis de la informacion, y continuan desarrollando las actitudes y habilidades necesarias para favorecer el trabajo en equipo. En esta unidad se enfatiza la comunicacion de ideas por medio de la oralidad; los alumnos preparan y presentan exposiciones orales para dar a conocer los hallazgos de sus investigaciones. De esta forma, ejercitaran sus habilidades comunicativas orales, con atencion a los requerimientos propios de contextos formales y academicos.",
+      "actitudes": [
+        "OA F",
+        "OA G",
+        "OA H"
+      ],
+      "lecturas_sugeridas": [
+        "Poesia trovadoresca (traducciones de Carlos Alvar): Guillermo de Poitiers, Jaufre Rudel, Marcabru, Bernart de Ventadorn, Arnaut Daniel",
+        "Anonimo coreano - 'El bigote del tigre'",
+        "Dante Alighieri - 'Infierno, canto V: Paolo y Francesca' en La Divina Comedia",
+        "Braulio Arenas - 'Dibujo'",
+        "Joseph Bedier - Tristan e Isolda",
+        "Giovanni Boccaccio - 'Quinta jornada, narracion novena: El halcon' y 'Cuarta jornada, narracion octava' en Decameron",
+        "Ernesto Cardenal - 'Epigrama: Al perderte yo a ti...' y 'Epigrama: Te doy Claudia...'",
+        "Ruben Dario - 'Caso'",
+        "Miguel de Cervantes - 'Capitulos XII y XIII: episodio de la pastora Marcela' en Don Quijote de la Mancha",
+        "Luis de Gongora - 'Letrilla: la mas bella nina de nuestro lugar' y 'Lloraba la nina'",
+        "Juana de Ibarbourou - 'Despecho'",
+        "Garcilaso de la Vega - 'Egloga I'",
+        "Francisco de Quevedo - 'Definiendo el amor'",
+        "Felix Lope de Vega - 'Soneto 126: Desmayarse, atreverse...'",
+        "Oscar Hahn - 'Consejo de ancianos'",
+        "Ibn Hazm de Cordoba - 'I. Esencia del amor', 'II. Sobre las senales del amor' en El collar de la paloma",
+        "Pablo Neruda - 'Tu risa', 'La rama robada', 'El dano', 'El pozo', 'El monte y el rio', 'Pelleas y Melisanda'",
+        "O'Henry - 'El regalo de los reyes magos', 'La ultima hoja'",
+        "Alexander Pushkin - La hija del capitan",
+        "Edmond Rostand - Cyrano de Bergerac",
+        "Alfred Tennyson - 'La dama de Shalott'",
+        "Oscar Wilde - 'El ruisenor y la rosa'"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes leen y analizan poemas de la unidad, respondiendo preguntas sobre lenguaje figurado, recursos poeticos e interpretacion.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la capacidad de analizar el lenguaje poetico, identificar figuras literarias y formular interpretaciones coherentes basadas en el texto."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            25
+          ],
+          "actividad_evaluacion": "Los estudiantes realizan una investigacion sobre un tema relacionado con las lecturas y presentan sus hallazgos en una exposicion oral.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la delimitacion del tema, seleccion de fuentes confiables, organizacion de la informacion, calidad de la presentacion oral y uso de material de apoyo."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de exposiciones orales con pauta (OA 23)",
+          "Evaluacion del proceso de investigacion (OA 25)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Las mujeres en la Edad Media",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 2,
+          "titulo": "El amor es quimica",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 3,
+          "titulo": "Diversas experiencias del amor",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 4,
+          "titulo": "Canto V de La Divina Comedia, la historia de Francesca y Paolo",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 5,
+          "titulo": "El ruisenor y la rosa",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 6,
+          "titulo": "Comparacion de 'La ultima hoja' de O'Henry y 'La dama de Shalott' de Tennyson",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 7,
+          "titulo": "'El regalo de los reyes magos' de O'Henry y 'El halcon' de Giovanni Boccaccio",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 8,
+          "titulo": "Episodio de la pastora Marcela",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 9,
+          "titulo": "'La dama de Shalott' y la influencia del amor cortes",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 10,
+          "titulo": "Analisis del 'Soneto 126' de Lope de Vega",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 11,
+          "titulo": "Trabajo sobre 'Egloga I' de Garcilaso de la Vega",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 12,
+          "titulo": "El collar de la paloma y el contexto Al-Andaluz",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 13,
+          "titulo": "Presentacion de 'Pelleas y Melisanda'",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 14,
+          "titulo": "'Pelleas y Melisanda' y el Canto V de La Divina Comedia",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 15,
+          "titulo": "El destino en Tristan e Isolda",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 16,
+          "titulo": "El bigote del tigre",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 17,
+          "titulo": "Interpretacion entre pares",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 18,
+          "titulo": "Discutir una interpretacion de 'La dama de Shalott'",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 19,
+          "titulo": "Ejercicio de exposiciones breves",
+          "oa": "OA 23"
+        },
+        {
+          "numero": 20,
+          "titulo": "Uso de conectores en una exposicion",
+          "oa": "OA 23"
+        },
+        {
+          "numero": 21,
+          "titulo": "Uso de una pauta para preparar la exposicion",
+          "oa": "OA 23"
+        },
+        {
+          "numero": 22,
+          "titulo": "Presentacion de una anecdota",
+          "oa": "OA 23"
+        },
+        {
+          "numero": 23,
+          "titulo": "Organizacion de una investigacion en grupo",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 24,
+          "titulo": "Investigacion sobre un tema a eleccion",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 25,
+          "titulo": "Mi autor favorito",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 26,
+          "titulo": "Investigacion sobre el contexto de una obra literaria",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 27,
+          "titulo": "Comparacion entre dos textos literarios",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 28,
+          "titulo": "Lecturas sobre el contexto historico del El collar de la paloma",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 29,
+          "titulo": "Los amores de un rey",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 30,
+          "titulo": "Fichas de investigacion",
+          "oa": "OA 26"
+        },
+        {
+          "numero": 31,
+          "titulo": "Visita semanal a la biblioteca",
+          "oa": "OA 1"
+        },
+        {
+          "numero": 32,
+          "titulo": "Feria del libro",
+          "oa": "OA 1"
+        },
+        {
+          "numero": 33,
+          "titulo": "Poemas compartidos",
+          "oa": "OA 1"
+        }
+      ],
+      "nombre_unidad": "Unidad 2",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 2
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "Relatos de misterio",
+      "horas": "30 horas pedagogicas",
+      "semestre": 1,
+      "proposito": "Esta unidad tiene como centro la lectura de relatos de misterio. A partir de la lectura de cuentos y fragmentos de novelas de este genero, se busca que los estudiantes analicen e interpreten las obras, poniendo especial atencion a la manera en que los autores construyen el suspenso y la intriga. Se espera que los alumnos aprendan a identificar los elementos propios del genero policial y de misterio y que reflexionen sobre las motivaciones de los personajes y la estructura de este tipo de relatos. En escritura, los estudiantes producen textos de caracter persuasivo, como cartas al director y criticas literarias, en los cuales deben presentar una afirmacion, respaldarla con evidencia e informacion pertinente y mantener la coherencia tematica. En comunicacion oral, trabajan en la comprension de textos orales y audiovisuales, analizando los textos y las imagenes, y demostrando que comprenden las posturas que se exponen.",
+      "actitudes": [
+        "OA B",
+        "OA C",
+        "OA D"
+      ],
+      "lecturas_sugeridas": [
+        "Arthur Conan Doyle - 'La banda de lunares', 'Escandalo en Bohemia', 'El paciente interno' en Las aventuras de Sherlock Holmes",
+        "Edgar Allan Poe - 'Los crimenes de la calle Morgue', 'La carta robada'",
+        "Agatha Christie - 'Diez negritos'",
+        "Guy de Maupassant - 'El Horla'",
+        "Horacio Quiroga - 'El almohadon de plumas', 'La gallina degollada'",
+        "Julio Cortazar - 'Casa tomada'",
+        "Rodolfo Walsh - 'En defensa propia'",
+        "Maurice Leblanc - Arsene Lupin, caballero ladron",
+        "Emile Gaboriau - El caso Lerouge",
+        "Wilkie Collins - La piedra lunar",
+        "Pablo de Santis - El enigma de Paris",
+        "Carlos Schlaen - Los casos de Anita Demare"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            9
+          ],
+          "actividad_evaluacion": "Los estudiantes leen un texto argumentativo y luego escriben una carta al director expresando su opinion fundamentada sobre el tema.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la capacidad de distinguir hechos de opiniones, la presentacion de una afirmacion clara, la inclusion de evidencias pertinentes y la coherencia tematica."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            3
+          ],
+          "actividad_evaluacion": "Los estudiantes analizan un cuento de misterio identificando los elementos del genero y formulando una interpretacion.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la identificacion de elementos propios del genero, la descripcion de personajes y sus motivaciones, y la formulacion de una interpretacion coherente."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de textos persuasivos (OA 15) con enfasis en argumentacion",
+          "Evaluacion de comprension de textos argumentativos (OA 9)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Investigacion sobre los origenes del genero policial",
+          "oa": "OA 2, OA 11"
+        },
+        {
+          "numero": 2,
+          "titulo": "Elementos del relato policial",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 3,
+          "titulo": "Analisis de un cuento policial",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 4,
+          "titulo": "Comparacion de detectives",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 5,
+          "titulo": "El metodo deductivo",
+          "oa": "OA 3, OA 8"
+        },
+        {
+          "numero": 6,
+          "titulo": "Interpretacion de un relato de misterio",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 7,
+          "titulo": "Lectura de textos argumentativos",
+          "oa": "OA 9"
+        },
+        {
+          "numero": 8,
+          "titulo": "Analisis de una columna de opinion",
+          "oa": "OA 9"
+        },
+        {
+          "numero": 9,
+          "titulo": "Carta al director",
+          "oa": "OA 15"
+        },
+        {
+          "numero": 10,
+          "titulo": "Critica literaria",
+          "oa": "OA 15"
+        },
+        {
+          "numero": 11,
+          "titulo": "Planificacion de la escritura de un texto persuasivo",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 12,
+          "titulo": "Revision entre pares",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 13,
+          "titulo": "Uso de modos verbales en textos persuasivos",
+          "oa": "OA 19"
+        },
+        {
+          "numero": 14,
+          "titulo": "Analisis de un documental o reportaje audiovisual",
+          "oa": "OA 21"
+        },
+        {
+          "numero": 15,
+          "titulo": "Debate sobre un tema relacionado con las lecturas",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 16,
+          "titulo": "Discusion sobre la justicia en los relatos leidos",
+          "oa": "OA 22"
+        }
+      ],
+      "nombre_unidad": "Unidad 3",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 3
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "Naturaleza",
+      "horas": "28 horas pedagogicas",
+      "semestre": 1,
+      "proposito": "Esta unidad tiene como centro una mirada a la naturaleza. A partir de la lectura de diversos textos literarios, se busca que el alumno explore las distintas visiones que se tienen de ella. La interpretacion que hagan los estudiantes es crucial para este fin, ya que muchos de los textos contienen simbolos y alegorias que se deben encontrar e interpretar para dar significado al texto. Los estudiantes aprenderan a usar tanto la escritura como el dialogo para reflexionar y dar sentido a sus lecturas. En el proceso de escritura, se enfocan a recopilar informacion para sustentar sus argumentos y organizarlos antes de escribir, adecuar el registro para que apoye la argumentacion y procurar coherencia y cohesion en el texto, tanto a nivel textual como oracional. En comunicacion oral, trabajan en la comprension de textos orales, analizando los textos y las imagenes, y demostrando que comprenden las posturas que se exponen.",
+      "actitudes": [
+        "OA A",
+        "OA C",
+        "OA D"
+      ],
+      "lecturas_sugeridas": [
+        "Ciro Alegria - 'La paz por la fuerza'",
+        "Vicente Aleixandre - 'Las aguilas'",
+        "Juan Bosch - 'Dos pesos de agua'",
+        "Jorge Carrera Andrade - 'Version de la tierra'",
+        "Elicura Chihuailaf - 'Circulo', 'Piedra'",
+        "Charles Darwin - 'Capitulo XIV: capitulo sobre el sur de Chile, terremotos y volcanes' en Viaje de un naturalista alrededor del Mundo en el navio de S.M. Beagle",
+        "Alonso de Ercilla - 'Canto I: versos 41 a 64' en La Araucana",
+        "Juana de Ibarbourou - 'La higuera'",
+        "Baldomero Fernandez - 'Setenta balcones y ninguna flor'",
+        "Nicolas Guillen - 'Calor'",
+        "Oscar Hahn - 'De cirios y de lirios'",
+        "Vicente Huidobro - 'Eramos los elegidos del sol'",
+        "Juan Ramon Jimenez - 'Iba tocando mi flauta'",
+        "Antonio Machado - 'A un olmo seco', 'Las moscas'",
+        "Gabriela Mistral - 'Valle de Elqui', 'Tres arboles', 'El espino', 'Volcan Osorno'",
+        "Pablo Neruda - 'Oda a la alcachofa', 'Oda al mar', 'Oda al tiempo'",
+        "Nicanor Parra - 'Defensa del arbol', 'Oda a unas palomas', 'Se canta al mar'",
+        "Tecayehuatzin - 'Solo las flores son nuestra riqueza'",
+        "Cesar Vallejo - 'La arana'",
+        "William Wordsworth - 'Vague solo como una nube' en Baladas liricas"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes leen en parejas la poesia 'La arana' de Cesar Vallejo. Contestan preguntas sobre los versos, lenguaje figurado y elementos sonoros. Realizan una representacion pictorica, coreografica o digital de la arana interpretando lo que significa en el poema.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Las preguntas escritas y el trabajo de representacion tienen igual ponderacion. En la representacion se evalua: mostrar caracteristicas de la arana, hacer una interpretacion de lo que significa en el poema y transmitir un estado de animo relacionado con lo que se comunica en el poema."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "Los estudiantes escriben un texto argumentativo sobre un tema relacionado con la naturaleza y el medio ambiente, aplicando el proceso de escritura.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la presentacion de una afirmacion clara, inclusion de evidencias, coherencia tematica, uso de conectores, vocabulario preciso y aplicacion del proceso de escritura (planificacion, revision, reescritura)."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de analisis poetico con representacion creativa (OA 4)",
+          "Evaluacion del proceso de escritura de texto argumentativo (OA 15, OA 16)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Paisajes chilenos y poetas",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 2,
+          "titulo": "Naturaleza y emociones",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 3,
+          "titulo": "Analisis de una narracion sobre naturaleza",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 4,
+          "titulo": "Analisis de poemas sobre naturaleza",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 5,
+          "titulo": "Simbolos de la naturaleza en la poesia",
+          "oa": "OA 4"
+        },
+        {
+          "numero": 6,
+          "titulo": "Interpretacion de textos sobre naturaleza",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 7,
+          "titulo": "Lectura de textos no literarios sobre naturaleza",
+          "oa": "OA 11"
+        },
+        {
+          "numero": 8,
+          "titulo": "Texto argumentativo sobre un tema medioambiental",
+          "oa": "OA 15"
+        },
+        {
+          "numero": 9,
+          "titulo": "Planificacion y revision del texto argumentativo",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 10,
+          "titulo": "Uso de oraciones complejas",
+          "oa": "OA 17"
+        },
+        {
+          "numero": 11,
+          "titulo": "Analisis de documental sobre naturaleza",
+          "oa": "OA 21"
+        },
+        {
+          "numero": 12,
+          "titulo": "Debate sobre temas medioambientales",
+          "oa": "OA 22"
+        }
+      ],
+      "nombre_unidad": "Unidad 4",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripcion no disponible",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 4
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "La comedia",
+      "horas": "32 horas pedagogicas",
+      "semestre": 2,
+      "proposito": "Esta unidad tiene como centro el estudio de la comedia teatral. A partir de la lectura de textos dramaticos del genero comico, se busca que los estudiantes conozcan las caracteristicas de la comedia y las comparen con otros generos dramaticos ya estudiados. Se espera que analicen los recursos que utilizan los autores para producir humor, identifiquen los tipos de personajes propios de la comedia y comprendan el contexto social en que surgen estas obras. En escritura, los estudiantes elaboran textos creativos y expresan su creatividad por medio de la escritura de obras dramaticas breves. Ademas, continuan desarrollando las habilidades del proceso de escritura y la aplicacion de reglas ortograficas y gramaticales. En comunicacion oral, los estudiantes trabajan en la dramatizacion de textos y en la expresion oral para comunicar temas de su interes.",
+      "actitudes": [
+        "OA A",
+        "OA D",
+        "OA E"
+      ],
+      "lecturas_sugeridas": [
+        "Aristofanes - Las avispas",
+        "Moliere - El avaro, El enfermo imaginario, Las preciosas ridiculas",
+        "William Shakespeare - Sueno de una noche de verano, La comedia de las equivocaciones",
+        "Tito Maccio Plauto - Anfitrion, El soldado fanfarron",
+        "Oscar Wilde - La importancia de llamarse Ernesto",
+        "Miguel Mihura - Tres sombreros de copa",
+        "Anton Chejov - El oso, La peticion de mano",
+        "Jorge Diaz - El velero en la botella, El naufrago",
+        "Egon Wolff - Los invasores",
+        "Alejandro Sieveking - La remolienda",
+        "Sergio Vodanovic - El delantal blanco"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluacion 1",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la identificacion de caracteristicas del genero comico, el analisis de recursos humoristicos, y la formulacion de una interpretacion coherente basada en evidencia textual."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluacion 2",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la creatividad, la aplicacion de las caracteristicas del genero comico, el uso adecuado de la ortografia y puntuacion, y la aplicacion del proceso de escritura."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de analisis de comedia (OA 5, OA 7, OA 8)",
+          "Evaluacion de escritura creativa con proceso (OA 13, OA 16, OA 20)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Introduccion al genero comico",
+          "oa": "OA 5, OA 7"
+        },
+        {
+          "numero": 2,
+          "titulo": "Recursos del humor en la comedia",
+          "oa": "OA 5, OA 7"
+        },
+        {
+          "numero": 3,
+          "titulo": "Analisis de una comedia clasica",
+          "oa": "OA 5"
+        },
+        {
+          "numero": 4,
+          "titulo": "Comparacion entre comedia clasica y moderna",
+          "oa": "OA 5, OA 7"
+        },
+        {
+          "numero": 5,
+          "titulo": "Los personajes en la comedia",
+          "oa": "OA 5"
+        },
+        {
+          "numero": 6,
+          "titulo": "Interpretacion de una comedia",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 7,
+          "titulo": "La comedia como critica social",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 8,
+          "titulo": "Escritura creativa de una escena comica",
+          "oa": "OA 13"
+        },
+        {
+          "numero": 9,
+          "titulo": "Planificacion y revision de la escena comica",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 10,
+          "titulo": "Revision de ortografia y puntuacion",
+          "oa": "OA 20"
+        },
+        {
+          "numero": 11,
+          "titulo": "Puesta en escena: dramatizacion",
+          "oa": "OA 23, OA 24"
+        },
+        {
+          "numero": 12,
+          "titulo": "Exposicion sobre el contexto historico de una comedia",
+          "oa": "OA 23"
+        }
+      ],
+      "nombre_unidad": "Unidad 5",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 13,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 20,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 5
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "El mundo descabellado",
+      "horas": "30 horas pedagogicas",
+      "semestre": 2,
+      "proposito": "Esta unidad tiene como centro la lectura de textos que presentan mundos absurdos o descabellados, como los relatos de humor absurdo, la literatura del sinsentido y los textos que cuestionan la logica habitual. A partir de la lectura de obras literarias de diversos generos, se busca que los estudiantes analicen como los autores construyen estos mundos, que reflexionen sobre las reglas que los rigen y que comparen estas realidades ficticias con el mundo real. En escritura, los estudiantes elaboran textos para explicar un tema, poniendo en practica sus habilidades de busqueda de informacion, organizacion y redaccion. En comunicacion oral, se busca que los estudiantes dialoguen constructivamente para debatir o explorar ideas, manteniendo el foco y fundamentando sus posturas de manera pertinente.",
+      "actitudes": [
+        "OA A",
+        "OA B",
+        "OA D"
+      ],
+      "lecturas_sugeridas": [
+        "Lewis Carroll - Alicia en el pais de las maravillas, A traves del espejo",
+        "Edward Lear - Limericks seleccionados",
+        "Franz Kafka - 'Un artista del hambre', 'Ante la ley'",
+        "Julio Cortazar - 'Instrucciones para subir una escalera', 'Preambulo a las instrucciones para dar cuerda a un reloj' en Historias de cronopios y de famas",
+        "Saki (H.H. Munro) - 'El contador de historias', 'La ventana abierta'",
+        "Maria Elena Walsh - Cuentopos de Gulubu",
+        "Gianni Rodari - Cuentos por telefono",
+        "Luigi Malerba - 'El perro y el gato'",
+        "Italo Calvino - 'El vizconde demediado', 'El baron rampante', 'El caballero inexistente'",
+        "Adolfo Bioy Casares - 'En memoria de Paulina'",
+        "Elena Poniatowska - 'El recado'",
+        "Jorge Luis Borges - 'El libro de arena', 'El Aleph'",
+        "Macedonio Fernandez - 'El zapallo que se hizo cosmos'"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluacion 1",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la identificacion de los elementos que construyen el mundo descabellado, el analisis de los personajes y sus motivaciones, y la formulacion de una interpretacion coherente que relacione el texto con el mundo real."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluacion 2",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la presentacion clara del tema, inclusion de informacion documentada, organizacion en parrafos, progresion tematica, uso de conectores, vocabulario preciso y aplicacion del proceso de escritura."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de interpretacion de textos absurdos (OA 3, OA 8)",
+          "Evaluacion de articulo informativo con proceso de escritura (OA 14, OA 16)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Mundos absurdos en la literatura",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 2,
+          "titulo": "El humor absurdo y el sinsentido",
+          "oa": "OA 2"
+        },
+        {
+          "numero": 3,
+          "titulo": "Analisis de un cuento de mundo descabellado",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 4,
+          "titulo": "Comparacion entre el mundo real y el mundo descabellado",
+          "oa": "OA 3"
+        },
+        {
+          "numero": 5,
+          "titulo": "Interpretacion de un texto absurdo",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 6,
+          "titulo": "El sinsentido como critica social",
+          "oa": "OA 8"
+        },
+        {
+          "numero": 7,
+          "titulo": "Lectura de textos no literarios sobre el absurdo",
+          "oa": "OA 11"
+        },
+        {
+          "numero": 8,
+          "titulo": "Articulo informativo sobre el genero del absurdo",
+          "oa": "OA 14"
+        },
+        {
+          "numero": 9,
+          "titulo": "Planificacion y revision del articulo",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 10,
+          "titulo": "Uso de recursos de correferencia",
+          "oa": "OA 18"
+        },
+        {
+          "numero": 11,
+          "titulo": "Debate sobre la logica y el absurdo en la literatura",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 12,
+          "titulo": "Discusion sobre la interpretacion de textos absurdos",
+          "oa": "OA 22"
+        }
+      ],
+      "nombre_unidad": "Unidad 6",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 6
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "titulo": "Medios de comunicacion",
+      "horas": "36 horas pedagogicas",
+      "semestre": 2,
+      "proposito": "Esta unidad tiene como centro el estudio de los medios de comunicacion y el desarrollo de una actitud critica frente a ellos. A partir de la lectura y analisis de diversos textos de los medios de comunicacion (noticias, reportajes, textos publicitarios, redes sociales), se busca que los estudiantes aprendan a analizar y evaluar estos textos, distinguiendo entre hechos y opiniones, identificando los propositos explicitos e implicitos y analizando la presencia de estereotipos y prejuicios. En escritura, los estudiantes elaboran textos con el proposito de explicar y persuadir, integrando informacion de diversas fuentes. En comunicacion oral, se busca que los estudiantes dialoguen constructivamente y se expresen frente a una audiencia de manera clara y adecuada a la situacion.",
+      "actitudes": [
+        "OA A",
+        "OA E",
+        "OA H"
+      ],
+      "lecturas_sugeridas": [
+        "Noticias y reportajes de diversos medios de comunicacion (prensa escrita, television, radio, internet)",
+        "Textos publicitarios de diversos soportes (avisos publicitarios impresos, comerciales de television, publicidad en internet)",
+        "Cartas al director de diarios y revistas",
+        "Columnas de opinion sobre temas de actualidad",
+        "Textos de redes sociales (blogs, Twitter, Facebook, etc.)",
+        "Documentales y reportajes audiovisuales"
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Evaluacion 1",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la capacidad de distinguir hechos de opiniones, identificar propositos del texto, detectar estereotipos y prejuicios, analizar imagenes y graficos, y comparar distintas fuentes."
+            ]
+          }
+        },
+        {
+          "titulo": "Evaluacion 2",
+          "oas_evaluados": [],
+          "actividad_evaluacion": "",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Se evalua la presentacion de una afirmacion clara, inclusion de evidencias pertinentes, mantencion de la coherencia tematica, y uso apropiado de los modos verbales."
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Evaluacion de analisis critico de medios (OA 10)",
+          "Evaluacion de textos persuasivos (OA 9, OA 15)"
+        ]
+      },
+      "objetivos_aprendizaje_transversales": [
+        {
+          "oa": "OA A",
+          "descripcion": "Manifestar disposicion a formarse un pensamiento propio, reflexivo e informado, mediante una lectura critica y el dialogo con otros.",
+          "indicadores": [
+            "Manifiestan su opinion con respecto a diferentes aspectos de los textos y el mundo que los rodea, y las fundamentan.",
+            "Comentan las interpretaciones hechas por sus companeros sobre los textos leidos sin descalificarlas.",
+            "Hacen preguntas sobre lugares y acontecimientos que no conocen y que aparecen mencionados en las lecturas o en la clase.",
+            "Hacen preguntas y comentarios, por motivacion propia, para profundizar en un tema."
+          ]
+        },
+        {
+          "oa": "OA B",
+          "descripcion": "Manifestar una disposicion a reflexionar sobre si mismo y sobre las cuestiones sociales y eticas que emanan de las lecturas.",
+          "indicadores": [
+            "Comparan actitudes de los personajes con las propias.",
+            "Comentan aspectos de sus vidas para compararlas con las de un texto literario.",
+            "Manifiestan una postura frente a alguna situacion social que se describe en una lectura literaria o en los medios de comunicacion.",
+            "Manifiestan su postura sobre la forma en que se describe a algun grupo de la sociedad en un texto.",
+            "Manifiestan acuerdo o desacuerdo con la manera en que un personaje enfrenta un dilema en una narracion y lo fundamentan.",
+            "Buscan la opinion de otras personas para aclarar la propia al conversar sobre diferentes situaciones presentes en los textos leidos."
+          ]
+        },
+        {
+          "oa": "OA C",
+          "descripcion": "Interesarse por comprender las experiencias e ideas de los demas, utilizando la lectura y el dialogo para el enriquecimiento personal y para la construccion de buenas relaciones con los demas.",
+          "indicadores": [
+            "Preguntan a otros sobre su postura u opinion frente a un tema.",
+            "Identifican cuales son las experiencias o dilemas a los que se enfrentan los personajes de los textos leidos y explican por que son momentos importantes para la vida de esas personas.",
+            "Comentan aspectos de los textos leidos que los han hecho reflexionar sobre algun ambito de sus vidas o de la relacion que tienen con otros.",
+            "Hacen preguntas sobre las relaciones que se establecen entre personas en otras culturas y en otras epocas."
+          ]
+        },
+        {
+          "oa": "OA D",
+          "descripcion": "Valorar la diversidad de perspectivas, creencias y culturas, presentes en su entorno y el mundo, como manifestacion de la libertad, creatividad y dignidad humana.",
+          "indicadores": [
+            "Expresan interes por conocer las opiniones, creencias y culturas de otros companeros y otras personas, ya sea a traves del contacto directo o a traves de la lectura.",
+            "Explican el aporte que significa vivir en una sociedad diversa, en la cual los integrantes pueden expresarse libremente y ser respetados.",
+            "Muestran respeto a la diversidad con la cual conviven diariamente en la manera en que se refieren a otros.",
+            "Expresan desacuerdo cuando alguien ha hecho algun comentario que discrimina a otro por algun motivo.",
+            "Investigan sobre otras culturas que aparecen mencionadas en los textos leidos, ya sea sobre culturas de otras epocas o del mundo actual."
+          ]
+        },
+        {
+          "oa": "OA E",
+          "descripcion": "Valorar las posibilidades que da el discurso hablado y escrito para participar de manera proactiva, informada y responsable en la vida de la sociedad democratica.",
+          "indicadores": [
+            "Explican de que manera un texto ha cambiado la manera en que ven el mundo.",
+            "Describen como un discurso, ya sea de personajes publicos o de personas que los rodean, ha influido en ellos.",
+            "Explican el valor de la escritura para cambiar algunos aspectos del mundo que los rodea y mencionan algun ejemplo.",
+            "Usan la escritura para manifestar su opinion, por ejemplo, en el mural del establecimiento, cartas a un diario, mural de la municipalidad, periodico escolar, etc."
+          ]
+        },
+        {
+          "oa": "OA F",
+          "descripcion": "Valorar la evidencia y la busqueda de conocimientos que apoyen sus aseveraciones.",
+          "indicadores": [
+            "Buscan informacion en fuentes para respaldar sus opiniones.",
+            "Citan la fuente de la que obtuvieron la informacion, ya sean lecturas, conversaciones, videos, entre otros.",
+            "Explican que ideas son propias y cuales han adquirido en conversaciones con otros, en lecturas, etc.",
+            "Conocen y respetan las leyes de derecho de autor y explican cual es su sentido."
+          ]
+        },
+        {
+          "oa": "OA G",
+          "descripcion": "Realizar tareas y trabajos de forma rigurosa y perseverante, entendiendo que los logros se obtienen solo despues de un trabajo prolongado.",
+          "indicadores": [
+            "Realizan investigaciones, buscando informacion y seleccionandola de manera rigurosa.",
+            "Planifican sus trabajos en diferentes etapas y distribuyen las tareas en el tiempo, terminando cada una de las etapas.",
+            "Muestran preocupacion por los detalles de sus trabajos y dedican tiempo para preparar la comunicacion de los resultados.",
+            "Revisan lo hecho y continuan mejorandolo hasta que estan satisfechos del resultado."
+          ]
+        },
+        {
+          "oa": "OA H",
+          "descripcion": "Trabajar colaborativamente, usando de manera responsable las tecnologias de la comunicacion, dando credito al trabajo de otros y respetando la propiedad y la privacidad de las personas.",
+          "indicadores": [
+            "Cumplen con sus obligaciones y acuerdos al trabajar en grupos.",
+            "Ofrecen ayuda a otros en la realizacion de tareas o trabajos.",
+            "Usan las tecnologias de la informacion, haciendose responsables de los comentarios que hacen en las redes sociales, correos electronicos, blogs, etc. y demostrando respeto por todas las personas aludidas.",
+            "Trabajan en equipo a distancia y emplean las herramientas que ofrecen los medios digitales para llevar a cabo sus trabajos en grupo, por ejemplo, documentos en linea, correos electronicos, etc."
+          ]
+        }
+      ],
+      "objetivos_aprendizaje_completos": [
+        {
+          "numero": 1,
+          "eje": "Lectura",
+          "descripcion": "Leer habitualmente para aprender y recrearse, y seleccionar textos de acuerdo con sus preferencias y propositos."
+        },
+        {
+          "numero": 2,
+          "eje": "Lectura",
+          "descripcion": "Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias y otros textos que forman parte de nuestras herencias culturales, abordando los temas estipulados para el curso y las obras sugeridas para cada uno."
+        },
+        {
+          "numero": 3,
+          "eje": "Lectura",
+          "descripcion": "Analizar las narraciones leidas para enriquecer su comprension, considerando, cuando sea pertinente: el o los conflictos de la historia; los personajes, su evolucion en el relato y su relacion con otros personajes; la relacion de un fragmento de la obra con el total; el narrador, distinguiendolo del autor; personajes tipo, simbolos y topicos literarios presentes en el texto; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; la disposicion temporal de los hechos; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 4,
+          "eje": "Lectura",
+          "descripcion": "Analizar los poemas leidos para enriquecer su comprension, considerando, cuando sea pertinente: como el lenguaje poetico que emplea el autor apela a los sentidos, sugiere estados de animo y crea imagenes; el significado o el efecto que produce el uso de lenguaje figurado en el poema; el efecto que tiene el uso de repeticiones en el poema; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 5,
+          "eje": "Lectura",
+          "descripcion": "Analizar los textos dramaticos leidos o vistos, para enriquecer su comprension, considerando, cuando sea pertinente: el conflicto y sus semejanzas con situaciones cotidianas; los personajes principales y como sus acciones y dichos conducen al desenlace; personajes tipo, simbolos y topicos literarios; los prejuicios, estereotipos y creencias presentes en el relato y su conexion con el mundo actual; las caracteristicas del genero dramatico; la diferencia entre obra dramatica y obra teatral; elementos en comun con otros textos leidos en el ano."
+        },
+        {
+          "numero": 6,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender fragmentos de epopeya, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 7,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender comedias teatrales, considerando sus caracteristicas y el contexto en el que se enmarcan."
+        },
+        {
+          "numero": 8,
+          "eje": "Lectura",
+          "descripcion": "Formular una interpretacion de los textos literarios leidos o vistos, que sea coherente con su analisis, considerando: su experiencia personal y sus conocimientos; un dilema presentado en el texto y su postura personal acerca del mismo; la relacion de la obra con la vision de mundo y el contexto historico en el que se ambienta y/o en el que fue creada."
+        },
+        {
+          "numero": 9,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos con finalidad argumentativa como columnas de opinion, cartas y discursos, considerando: la postura del autor y los argumentos e informacion que la sostienen; la diferencia entre hecho y opinion; con que intencion el autor usa diversos modos verbales; su postura personal frente a lo leido y argumentos que la sustentan."
+        },
+        {
+          "numero": 10,
+          "eje": "Lectura",
+          "descripcion": "Analizar y evaluar textos de los medios de comunicacion, como noticias, reportajes, cartas al director, textos publicitarios o de las redes sociales, considerando: los propositos explicitos e implicitos del texto; una distincion entre los hechos y las opiniones expresados; presencia de estereotipos y prejuicios; la suficiencia de informacion entregada; el analisis e interpretacion de imagenes, graficos, tablas, mapas o diagramas, y su relacion con el texto en el que estan insertos; similitudes y diferencias en la forma en que distintas fuentes presentan un mismo hecho."
+        },
+        {
+          "numero": 11,
+          "eje": "Lectura",
+          "descripcion": "Leer y comprender textos no literarios para contextualizar y complementar las lecturas literarias realizadas en clases."
+        },
+        {
+          "numero": 12,
+          "eje": "Lectura",
+          "descripcion": "Aplicar estrategias de comprension de acuerdo con sus propositos de lectura: resumir; formular preguntas; analizar los distintos tipos de relaciones que establecen las imagenes o el sonido con el texto escrito (en textos multimodales); identificar los elementos del texto que dificultan la comprension y buscar soluciones."
+        },
+        {
+          "numero": 13,
+          "eje": "Escritura",
+          "descripcion": "Expresarse en forma creativa por medio de la escritura de textos de diversos generos (por ejemplo, cuentos, cronicas, diarios de vida, cartas, poemas, etc.), escogiendo libremente: el tema; el genero; el destinatario."
+        },
+        {
+          "numero": 14,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de explicar un tema, textos de diversos generos (por ejemplo, articulos, informes, reportajes, etc.) caracterizados por: una presentacion clara del tema; la presencia de informacion de distintas fuentes; la inclusion de hechos, descripciones, ejemplos o explicaciones que desarrollen el tema; una progresion tematica clara, con especial atencion al empleo de recursos anaforicos; el uso de imagenes u otros recursos graficos pertinentes; un cierre coherente con las caracteristicas del genero; el uso de referencias segun un formato previamente acordado."
+        },
+        {
+          "numero": 15,
+          "eje": "Escritura",
+          "descripcion": "Escribir, con el proposito de persuadir, textos breves de diversos generos (por ejemplo, cartas al director, editoriales, criticas literarias, etc.), caracterizados por: la presentacion de una afirmacion referida a temas contingentes o literarios; la presencia de evidencias e informacion pertinente; la mantencion de la coherencia tematica."
+        },
+        {
+          "numero": 16,
+          "eje": "Escritura",
+          "descripcion": "Planificar, escribir, revisar, reescribir y editar sus textos en funcion del contexto, el destinatario y el proposito: recopilando informacion e ideas y organizandolas antes de escribir; adecuando el registro; incorporando informacion pertinente; asegurando la coherencia y la cohesion del texto; cuidando la organizacion a nivel oracional y textual; usando conectores adecuados; usando un vocabulario variado y preciso; reconociendo y corrigiendo usos inadecuados; corrigiendo la ortografia y mejorando la presentacion; usando eficazmente las herramientas del procesador de textos."
+        },
+        {
+          "numero": 17,
+          "eje": "Escritura",
+          "descripcion": "Usar adecuadamente oraciones complejas: manteniendo un referente claro; conservando la coherencia temporal; ubicando el sujeto, para determinar de que o quien se habla."
+        },
+        {
+          "numero": 18,
+          "eje": "Escritura",
+          "descripcion": "Construir textos con referencias claras: usando recursos de correferencia como deicticos y nominalizacion, sustitucion pronominal y elipsis, entre otros; analizando si los recursos de correferencia utilizados evitan o contribuyen a la perdida del referente, cambios de sentido o problemas de estilo."
+        },
+        {
+          "numero": 19,
+          "eje": "Escritura",
+          "descripcion": "Conocer los modos verbales, analizar sus usos y seleccionar el mas apropiado para lograr un efecto en el lector, especialmente al escribir textos con finalidad persuasiva."
+        },
+        {
+          "numero": 20,
+          "eje": "Escritura",
+          "descripcion": "Escribir correctamente para facilitar la comprension al lector: aplicando todas las reglas de ortografia literal y acentual; verificando la escritura de las palabras cuya ortografia no esta sujeta a reglas; usando correctamente punto, coma, raya y dos puntos."
+        },
+        {
+          "numero": 21,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Comprender, comparar y evaluar textos orales y audiovisuales tales como exposiciones, discursos, documentales, noticias, reportajes, etc., considerando: su postura personal frente a lo escuchado; los temas, conceptos o hechos principales; el contexto; prejuicios expresados; distincion entre hechos y opiniones; diferentes puntos de vista; relaciones entre imagenes, texto y sonido; relaciones entre lo escuchado y los temas y obras estudiados durante el curso."
+        },
+        {
+          "numero": 22,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Dialogar constructivamente para debatir o explorar ideas: manteniendo el foco; demostrando comprension de lo dicho por el interlocutor; fundamentando su postura de manera pertinente; formulando preguntas o comentarios que estimulen o hagan avanzar la discusion; negociando acuerdos con los interlocutores; reformulando sus comentarios para desarrollarlos mejor; considerando al interlocutor para la toma de turnos."
+        },
+        {
+          "numero": 23,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Expresarse frente a una audiencia de manera clara y adecuada a la situacion para comunicar temas de su interes: presentando informacion fidedigna y que denota una investigacion previa; siguiendo una progresion tematica clara; recapitulando la informacion mas relevante; usando un vocabulario variado y preciso; usando conectores adecuados; usando material visual que apoye lo dicho."
+        },
+        {
+          "numero": 24,
+          "eje": "Comunicacion Oral",
+          "descripcion": "Usar conscientemente los elementos que influyen y configuran los textos orales: comparando textos orales y escritos para establecer las diferencias; demostrando dominio de los distintos registros; utilizando estrategias que permiten cuidar la relacion con el otro, especialmente al mostrar desacuerdo; utilizando un volumen, una velocidad y una diccion adecuados al proposito y a la situacion."
+        },
+        {
+          "numero": 25,
+          "eje": "Investigacion",
+          "descripcion": "Realizar investigaciones sobre diversos temas para complementar sus lecturas o responder interrogantes relacionadas con el lenguaje y la literatura: delimitando el tema de investigacion; aplicando criterios para determinar la confiabilidad de las fuentes consultadas; usando los organizadores y la estructura textual para encontrar informacion de manera eficiente; evaluando si los textos entregan suficiente informacion; descartando fuentes que no aportan a la investigacion; organizando en categorias la informacion encontrada; registrando la informacion bibliografica de las fuentes consultadas; elaborando un texto oral o escrito bien estructurado que comunique sus hallazgos."
+        },
+        {
+          "numero": 26,
+          "eje": "Investigacion",
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos escuchados o leidos para satisfacer propositos como estudiar, hacer una investigacion, recordar detalles, etc."
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "numero": 1,
+          "titulo": "Analisis de noticias",
+          "oa": "OA 10"
+        },
+        {
+          "numero": 2,
+          "titulo": "Comparacion de fuentes sobre un mismo hecho",
+          "oa": "OA 10"
+        },
+        {
+          "numero": 3,
+          "titulo": "Analisis de textos publicitarios",
+          "oa": "OA 10"
+        },
+        {
+          "numero": 4,
+          "titulo": "Estereotipos en los medios de comunicacion",
+          "oa": "OA 10"
+        },
+        {
+          "numero": 5,
+          "titulo": "Analisis de una columna de opinion",
+          "oa": "OA 9"
+        },
+        {
+          "numero": 6,
+          "titulo": "Carta al director",
+          "oa": "OA 15"
+        },
+        {
+          "numero": 7,
+          "titulo": "Articulo informativo sobre un tema de actualidad",
+          "oa": "OA 14"
+        },
+        {
+          "numero": 8,
+          "titulo": "Planificacion y revision de textos",
+          "oa": "OA 16"
+        },
+        {
+          "numero": 9,
+          "titulo": "Uso de modos verbales en textos persuasivos",
+          "oa": "OA 19"
+        },
+        {
+          "numero": 10,
+          "titulo": "Analisis de un reportaje audiovisual",
+          "oa": "OA 21"
+        },
+        {
+          "numero": 11,
+          "titulo": "Debate sobre un tema de actualidad",
+          "oa": "OA 22"
+        },
+        {
+          "numero": 12,
+          "titulo": "Exposicion sobre un tema investigado en los medios",
+          "oa": "OA 23"
+        },
+        {
+          "numero": 13,
+          "titulo": "Analisis de registros del habla en los medios",
+          "oa": "OA 24"
+        },
+        {
+          "numero": 14,
+          "titulo": "Investigacion sobre un tema de actualidad",
+          "oa": "OA 25"
+        },
+        {
+          "numero": 15,
+          "titulo": "Sintesis de informacion de medios",
+          "oa": "OA 26"
+        }
+      ],
+      "nombre_unidad": "Unidad 7",
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 9,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 10,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 19,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 23,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        },
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Descripción no disponible en el documento fuente.",
+          "indicadores": []
+        }
+      ],
+      "numero_unidad": 7
+    }
+  }
+]

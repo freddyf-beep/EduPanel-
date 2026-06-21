@@ -190,6 +190,23 @@ export function resolveTipoCurricular(curso: string, tipos: CursoTipoMap): TipoC
   return tipos[curso] ?? "oficial"
 }
 
+function resolveCursoKey(curso: string, keys: string[]): string | null {
+  if (!curso || keys.length === 0) return null
+
+  if (keys.includes(curso)) return curso
+
+  const prefijo = keys.find(k => curso.startsWith(k) || k.startsWith(curso))
+  if (prefijo) return prefijo
+
+  const grado = curso.match(/^(\d+)\s*[°º]/)?.[1]
+  if (grado) {
+    const gradoKey = keys.find(k => k.match(/^(\d+)\s*[°º]/)?.[1] === grado)
+    if (gradoKey) return gradoKey
+  }
+
+  return null
+}
+
 /**
  * Returns the curriculum level for a course (and optionally a subject).
  * Uses asignaturaMapping first, then falls back to the course default.
@@ -199,9 +216,15 @@ export function resolveTipoCurricular(curso: string, tipos: CursoTipoMap): TipoC
 export function resolveNivel(curso: string, mapping: NivelMapping, asignatura?: string): string | null {
   if (asignatura) {
     const asignaturaMapping = getNivelAsignaturaMapping(mapping)
-    if (asignaturaMapping[curso]?.[asignatura]) return asignaturaMapping[curso][asignatura]
+    const cursoKeys = Object.keys(asignaturaMapping).filter(k => asignaturaMapping[k]?.[asignatura])
+    const cursoKey = resolveCursoKey(curso, cursoKeys)
+    if (cursoKey) return asignaturaMapping[cursoKey][asignatura]
   }
-  return mapping[curso] ?? null
+
+  const cursoKey = resolveCursoKey(curso, Object.keys(mapping))
+  if (cursoKey) return mapping[cursoKey]
+
+  return null
 }
 
 /**

@@ -1,0 +1,516 @@
+[
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad se promueve que las y los estudiantes construyan una visión positiva y a la vez integrada de sí mismos, considerando los diversos ámbitos de su vida. Para esto, se busca que tomen conciencia de sus propias características, intereses, anhelos y metas. De esta forma, sobre la base del reconocimiento y la elaboración de estos aspectos, esta unidad pretende contribuir a la construcción de una visión elaborada de sí mismo. Como parte de este proceso, en la unidad se contempla también el reconocimiento y desarrollo de la sexualidad y sus distintas dimensiones y la manera en que esta se expresa en sus vidas. Considerando que las y los estudiantes en este nivel se encuentran en la etapa de la adolescencia y los cambios asociados a ella, esto último resulta de especial importancia.",
+      "conocimientos_previos": [],
+      "palabras_clave": ["Identidad", "pubertad", "adolescencia", "metas y propósitos personales", "sexualidad y sus dimensiones"],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 1,
+          "descripcion": "Construir, en forma individual y colectiva, representaciones positivas de sí mismos, incorporando sus características, motivaciones, intereses y capacidades, considerando las experiencias de cambio asociadas a la pubertad y adolescencia.",
+          "indicadores": [
+            "Jerarquizan sus características personales según la valoración personal que hacen de ellas.",
+            "Reconocen formas en las que pueden desarrollar sus características personales positivas.",
+            "Proyectan sus características personales a etapas próximas de su vida.",
+            "Analizan de qué forma sus motivaciones contribuyen al desarrollo de sus capacidades y habilidades.",
+            "Distinguen los intereses y motivaciones que han plasmado en actividades concretas de aquellas que todavía no se muestran tan claramente."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Analizar, considerando sus experiencias e inquietudes, la importancia que tiene para el desarrollo personal la integración de las distintas dimensiones de la sexualidad, el cuidado del cuerpo y la intimidad, discriminando formas de relacionarse en un marco de respeto y el uso de fuentes de información apropiadas para su desarrollo personal.",
+          "indicadores": [
+            "Distinguen las formas en que se expresa la afectividad humana en los ámbitos corporal y social y las reconocen en su vida.",
+            "Diferencian las distintas expresiones de la sexualidad y las relacionan con los grados de intimidad de una relación.",
+            "Explican el aporte que representa la integración de las dimensiones de la sexualidad al desarrollo afectivo y bienestar personal.",
+            "Analizan críticamente situaciones de su entorno cercano en las que el cuerpo se trata como objeto sexual.",
+            "Reconocen, entre las fuentes de información que están a su alcance, aquellas que aportan a su desarrollo integral y las características que las distinguen.",
+            "Describen formas de cuidado de sí mismo y del otro en relaciones presenciales y virtuales, distinguiendo conductas violentas o disruptivas de la intimidad."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "La verdadera imagen",
+          "oas_asociados": [1],
+          "descripcion": "El o la docente inicia la actividad planteando al curso la pregunta: ¿Qué creen ustedes que es tener una buena imagen, o una imagen positiva? Las y los estudiantes responden mediante una lluvia de ideas. Posteriormente, se presentan imágenes de personas reconocidas como ejemplos de superación, valoradas por sus aportes a la comunidad en diversos campos, o con cuerpos perfectos según la evaluación social. Se invita a la reflexión individual y grupal sobre los cambios experimentados en el cuerpo, en las relaciones con los demás y el efecto de las imágenes en la percepción de sí mismos. Se recomienda cerrar con el video 'Si pudieras cambiar una sola parte de tu cuerpo, ¿qué cambiarías?'."
+        },
+        {
+          "nombre": "Lo mejor de mí",
+          "oas_asociados": [1],
+          "descripcion": "El o la docente subraya que todas las personas poseemos virtudes físicas y psicológicas que debemos conocer y potenciar para crecer. Cada estudiante escribe en una hoja 'LO MEJOR DE MÍ' con una lista de virtudes que reconocen en sí mismos (mínimo tres), un ejemplo cotidiano donde aplican una virtud y cómo la han ido desarrollando. Luego intercambian con un compañero o compañera, quien complementa con otras cualidades observadas. Al reverso, cada uno elabora un afiche que promocione la mejor virtud de su compañero o compañera. Se realiza un plenario y se cierra con el video 'Mujeres se describen a sí mismas en un retrato hablado'."
+        },
+        {
+          "nombre": "En busca de la felicidad",
+          "oas_asociados": [1],
+          "descripcion": "Actividad basada en la película 'En busca de la felicidad'. Se invita a reflexionar sobre las motivaciones, intereses y capacidades del protagonista mediante preguntas como: ¿De qué o quiénes depende el logro de los objetivos del protagonista?, ¿Qué es para ti la felicidad?, ¿Qué opinas de la frase 'La felicidad es del interior, no del exterior; por lo tanto, no depende de lo que tenemos, sino de lo que somos'? Las y los estudiantes escriben sus reflexiones analizándose como protagonistas de su propia película, considerando el logro de sus sueños en relación con sus características, motivaciones, intereses y capacidades."
+        },
+        {
+          "nombre": "Evaluando el OA",
+          "oas_asociados": [1],
+          "descripcion": "El o la docente hace un breve resumen indicando el OA trabajado y recaba impresiones de los estudiantes. Se recomienda aplicar una evaluación formativa del OA correspondiente utilizando instrumentos de evaluación sugeridos al final de la unidad u otros pertinentes."
+        },
+        {
+          "nombre": "Buzón",
+          "oas_asociados": [2],
+          "descripcion": "Actividad de diagnóstico para identificar dudas y consultas sobre sexualidad. Las y los estudiantes escriben de manera anónima preguntas que quieran resolver sobre aspectos que involucra la sexualidad. El o la docente revisa las preguntas, las agrupa por temas y entrega aclaraciones en otra clase, focalizándose en aquellas que guardan relación directa con el OA de la unidad."
+        },
+        {
+          "nombre": "Editor por un día",
+          "oas_asociados": [2],
+          "descripcion": "Las y los estudiantes se organizan en grupos de cinco integrantes y se transforman imaginariamente en editores de un diario encargados de responder cartas de suscriptores. Se entregan tres casos que abordan situaciones como infidelidad en el pololeo, juegos de contacto físico entre compañeros, y sentimientos no correspondidos. Cada grupo elabora una respuesta y se realiza un plenario donde se leen las respuestas. El o la docente cierra resaltando la importancia de la fidelidad, el respeto por el cuerpo y la contención emocional."
+        },
+        {
+          "nombre": "Movilizándonos por la equidad",
+          "oas_asociados": [2],
+          "descripcion": "Se elaboran cuatro carteles con los mensajes: 'Totalmente de acuerdo', 'Parcialmente de acuerdo', 'Estoy confuso al respecto' y 'En total desacuerdo', ubicándolos en cada esquina de la sala. El o la docente lee oraciones como 'los hombres no se deben meter en la cocina', 'las mujeres pierden su femineidad jugando al fútbol' y los estudiantes se ubican según su pensamiento. Se evalúa cómo están instalados los estereotipos de género en la sociedad y se reflexiona sobre respeto y equidad de género."
+        },
+        {
+          "nombre": "Pololeo... ¿Más que amigos?",
+          "oas_asociados": [2],
+          "descripcion": "Mediante lluvia de ideas se responde ¿Qué es el pololeo? y se entrega su definición. Se exponen imágenes de parejas en diversas situaciones y se plantean preguntas sobre cuidado del cuerpo, espacio de intimidad y formas de relacionarse en un marco de respeto. Se completa un cuadro comparativo entre 'pololeo sano' y 'pololeo tóxico' y se cierra destacando señales de alerta en relaciones de pareja y la importancia de no normalizar situaciones dañinas."
+        },
+        {
+          "nombre": "¿Es tiempo?",
+          "oas_asociados": [2],
+          "descripcion": "Se introduce el tema del embarazo adolescente, comentando las nuevas sensaciones del despertar sexual. Las y los estudiantes forman grupos y se ponen imaginariamente en el lugar de una pareja de jóvenes que se entera de que serán padres, respondiendo: ¿Qué cosas pensarías si supieras que estás esperando un bebé a esta edad? Se analizan las diferencias entre lo que piensan hombres y mujeres frente a la situación. Se cierra consultando sobre formas de prevenir el embarazo adolescente y lugares seguros para informarse."
+        },
+        {
+          "nombre": "¿A quien no-da sida?",
+          "oas_asociados": [2],
+          "descripcion": "El o la docente escribe y lee el enunciado: 'Existiendo tanta información disponible en internet, redes u otros, para prevenir el VIH sida...' y plantea preguntas sobre por qué sigue siendo un problema en Chile, qué medidas se pueden adoptar para prevenir y qué dificultades puede traer al proyecto de vida. Se genera un espacio de conversación abierto y respetuoso. Se cierra consultando sobre lugares donde realizarse el examen y personas o instituciones que brindan ayuda."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Autoevaluación de representaciones positivas de sí mismo",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Se propone desarrollar esta evaluación durante la actividad 1 del OA 1, la que consiste en construir de forma individual y colectiva representaciones positivas de sí mismo. Se sugiere evaluar a través de una autoevaluación y puesta en común de los resultados, con retroalimentación del docente. Los estudiantes completan una escala de autoevaluación donde identifican cambios en su cuerpo, aspectos positivos y negativos de los cambios físicos, cambios en relaciones con los demás y formas de fortalecer su autoimagen.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifica los cambios que ha tenido su cuerpo en el último tiempo.",
+              "Reconoce aspectos positivos y negativos de sus cambios físicos.",
+              "Identifica los cambios en su relación con los demás.",
+              "Reconoce efectos positivos y negativos de esos cambios.",
+              "Analiza si las imágenes presentadas tienen un efecto en su autopercepción.",
+              "Identifica formas para fortalecer la imagen que tiene de sí mismo."
+            ]
+          }
+        },
+        {
+          "titulo": "Rúbrica de desempeño OA 1",
+          "oas_evaluados": [1],
+          "actividad_evaluacion": "Se sugiere evaluar el desempeño de las y los estudiantes durante el desarrollo de las actividades de aprendizaje del OA 1 a través de una rúbrica. La pauta no está asociada a una actividad en particular, sino que se recomienda mantener un cuaderno de observaciones para completar la rúbrica. Se evalúan aspectos como: discriminación de cualidades según valoración, identificación de situaciones donde se manifiestan intereses y motivaciones, reconocimiento de cómo se pueden desarrollar sus capacidades, y reconocimiento de intereses plasmados y no plasmados en acciones concretas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Discrimina en sus cualidades entre las que más valora y las que menos por el aporte que traen a su vida.",
+              "Describe situaciones o hechos concretos en las que se manifiestan sus intereses y motivaciones personales.",
+              "Identifica cómo se pueden desarrollar sus cualidades o capacidades.",
+              "Reconoce tanto un interés o motivación que ha plasmado a través de alguna acción concreta como aquellos que aún no logra hacer."
+            ]
+          }
+        },
+        {
+          "titulo": "Escala de apreciación: pololeo sano vs. pololeo tóxico",
+          "oas_evaluados": [2],
+          "actividad_evaluacion": "Se desarrolla al completar la actividad 1 del OA 2, que consiste en identificar las características de un pololeo sano versus un pololeo tóxico, completando un cuadro comparativo. La evaluación es individual y grupal mediante una escala de apreciación. Las y los estudiantes se imaginan conociendo nuevas personas y se autoaplican una escala para identificar si podrían reconocer en una relación de pareja: respeto y confianza, responsabilidad y compromiso, resolución de diferencias mediante diálogo, y dependencia excesiva.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Distingue las formas en que se expresa la afectividad humana en los ámbitos corporal y social, reconociéndolas en su vida.",
+              "Diferencia las distintas expresiones de la sexualidad relacionándolas con los grados de intimidad de una relación.",
+              "Explica las contribuciones que tiene la integración de las dimensiones de la sexualidad al desarrollo afectivo y bienestar personal.",
+              "Analiza críticamente situaciones de su entorno cercano en las que el cuerpo se trata como objeto sexual.",
+              "Reconoce entre las fuentes de información aquellas que aportan a su desarrollo integral.",
+              "Describe formas de cuidado de sí mismo y del otro en relaciones presenciales y virtuales, distinguiendo conductas violentas o disruptivas de la intimidad."
+            ]
+          }
+        },
+        {
+          "titulo": "Escala de apreciación: estereotipos de género",
+          "oas_evaluados": [2],
+          "actividad_evaluacion": "Se desarrolla al completar la actividad 3 del OA 2, en la que el docente lee oraciones vinculadas a estereotipos de género y los estudiantes se ubican en esquinas según su grado de acuerdo. Se sugiere que los estudiantes se autoapliquen una escala de apreciación con afirmaciones sobre estereotipos de género y luego compartan con un compañero o compañera, argumentando sus decisiones. La escala incluye afirmaciones como: 'pienso que está bien que los hombres peleen', 'me cuido de personas que tratan mal a los demás', 'considero que las mujeres tienen que portarse como señoritas', entre otras.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Distingue las formas en que se expresa la afectividad humana en los ámbitos corporal y social, reconociéndolas en su vida.",
+              "Diferencia las distintas expresiones de la sexualidad relacionándolas con los grados de intimidad de una relación.",
+              "Explica las contribuciones que tiene la integración de las dimensiones de la sexualidad al desarrollo afectivo y bienestar personal.",
+              "Analiza críticamente situaciones de su entorno cercano en las que el cuerpo se trata como objeto sexual.",
+              "Reconoce entre las fuentes de información aquellas que aportan a su desarrollo integral.",
+              "Describe formas de cuidado de sí mismo y del otro en relaciones presenciales y virtuales, distinguiendo conductas violentas o disruptivas de la intimidad."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad se busca que las y los estudiantes reconozcan la importancia del bienestar y el autocuidado para sus vidas, entendiendo que esto involucra no solo cuidarse de riesgos o amenazas, sino también la promoción de un estilo de vida saludable. Como parte de esto, se busca contribuir a que adopten de manera crecientemente autónoma formas, prácticas y hábitos que favorezcan este estilo de vida, y que los desarrollen de manera activa. Junto con lo anterior, se pretende también en esta unidad contribuir a que las y los estudiantes desarrollen recursos que les ayudarán a enfrentar situaciones de riesgo a las que puedan verse expuestos.",
+      "conocimientos_previos": [],
+      "palabras_clave": ["Bienestar", "hábitos de vida saludable", "autocuidado", "conductas riesgosas", "comunicación asertiva"],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Identificar situaciones que puedan exponer a las y los adolescentes al consumo de sustancias nocivas para el organismo, conductas sexuales riesgosas, conductas violentas, entre otras problemáticas; reconociendo la importancia de desarrollar estrategias para enfrentarlas, y contar con recursos tales como la comunicación asertiva y la ayuda de personas significativas y/o especializadas, dentro o fuera del establecimiento.",
+          "indicadores": [
+            "Reconocen su vulnerabilidad ante situaciones de riesgo e identifican conductas y estrategias concretas que les ayudan a enfrentarlas.",
+            "Reconocen prácticas y conductas que disminuyen los riesgos de una relación de pololeo tóxica, embarazo precoz, contraer alguna ITS, etc.",
+            "Analizan críticamente las experiencias vividas por su grupo de pares reconociendo aquellas que les aportan a su desarrollo de aquellas que no las y los benefician o exponen a situaciones de riesgo.",
+            "Identifican a quién o dónde solicitar ayuda de acuerdo a la situación para sí o para otros."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Integrar a su vida cotidiana acciones que favorezcan el bienestar y la vida saludable en el plano personal y en la comunidad escolar, optando por una alimentación saludable, un descanso apropiado, realizando actividad física o practicando deporte, resguardando la intimidad e integridad del cuerpo, incorporando medidas de seguridad en el uso de redes sociales, entre otros.",
+          "indicadores": [
+            "Implementan iniciativas para promover de manera personal o grupal la vida saludable y las evalúan en función del bienestar que generan.",
+            "Implementan iniciativas que favorezcan el bienestar dentro del curso o del establecimiento y las evalúan en función de sus efectos en la convivencia.",
+            "Analizan cómo se vulneran los derechos de las personas en las redes sociales y la web, estableciendo las consecuencias de ello.",
+            "Identifican situaciones en las que deben recurrir a un adulto responsable para manifestar algún hecho que afecte el bienestar de algún compañero o compañera."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Rompiendo esquemas",
+          "oas_asociados": [3],
+          "descripcion": "El o la docente muestra condiciones específicas de diferentes ámbitos (familia, educación, trabajo, formas de divertirse y sexualidad) que podrían ser factores de riesgo. Las y los estudiantes se organizan en grupos de cuatro para responder preguntas de reflexión por cada ámbito, como: ¿Cómo prevenir que nos afecten negativamente las dificultades familiares?, ¿Qué hacer con la desmotivación escolar?, ¿Cómo prevenir conductas riesgosas?, ¿Cómo vivir la sexualidad de manera sana? Se cierra sobre la base de la experiencia docente en relación a la realidad de sus estudiantes."
+        },
+        {
+          "nombre": "Entre la espada y la pared",
+          "oas_asociados": [3],
+          "descripcion": "Las y los estudiantes piensan en alguna situación en la cual tomaron una decisión para evitar un riesgo pero tuvieron muchas dificultades para llevarla a cabo. Deben escribir cuál fue esa decisión y las dificultades que aparecieron. Se sugieren ejemplos como: estudiar anticipadamente, terminar una relación tóxica, hablar con los padres sobre un tema difícil, no tener relaciones sexuales, no fumar. Se reflexiona sobre estrategias para evitar situaciones de riesgo y personas que pueden ayudar."
+        },
+        {
+          "nombre": "¿Sí o no?",
+          "oas_asociados": [3],
+          "descripcion": "Se revisan los motivos que llevan a las y los jóvenes a decidir consumir o no consumir sustancias nocivas para el organismo. Se plantea la pregunta introductoria: ¿Por qué es importante reflexionar sobre el consumo de sustancias nocivas para el organismo, como drogas, alcohol y tabaco? Las y los estudiantes se organizan en grupos para comentar preguntas sobre los motivos para consumir y los motivos para decir NO al consumo. Se cierra mencionando los riesgos del consumo y la importancia de su prevención."
+        },
+        {
+          "nombre": "Mi mapa ayuda",
+          "oas_asociados": [3],
+          "descripcion": "Se busca que las y los estudiantes reconozcan las redes de apoyo a las cuales pueden acceder. En grupos, dibujan un círculo central con la palabra 'Yo' y a su alrededor registran personas, grupos o instituciones a los cuales recurren en busca de ayuda (familia, colegio, amigos, scouts, municipalidad, carabineros, bomberos, centros de salud, etc.). Se identifican personas específicas dentro de cada círculo. Se cierra destacando las redes importantes según el tipo de problemática."
+        },
+        {
+          "nombre": "La vida es dulce",
+          "oas_asociados": [4],
+          "descripcion": "Se sugiere ver el video del capítulo 4 del programa 'Qué comes' de TVN. El o la docente elabora una pauta a modo de checklist para que los estudiantes identifiquen conductas riesgosas para su salud y cómo cambiarlas. Se incluyen preguntas como: ¿Me siento identificado con alguna situación del video?, ¿Existe en mi familia alguien con una enfermedad asociada al consumo de azúcar?, ¿Hago ejercicio en forma regular?, ¿Creo tener una dieta balanceada?"
+        },
+        {
+          "nombre": "Ayudar es gratis",
+          "oas_asociados": [4],
+          "descripcion": "Las y los estudiantes observan por tres días las conductas alimenticias de los cursos inferiores, identificando lo que consumen en la colación. Con la información obtenida elaboran un díptico dirigido a padres, madres o apoderados para explicar cómo colaborar enviando colaciones saludables. Se reflexiona sobre la importancia de integrar acciones que favorezcan el bienestar y la vida saludable tanto a nivel personal como en la comunidad educativa."
+        },
+        {
+          "nombre": "Investigación privada",
+          "oas_asociados": [4],
+          "descripcion": "De manera imaginaria, las y los estudiantes se convierten en detectives privados utilizando sus cuentas en redes sociales. Seleccionan a cinco amigos de sus contactos y evalúan la vulnerabilidad de sus perfiles según la información personal accesible y el registro fotográfico. Completan una guía de trabajo sobre medidas de seguridad en redes sociales. Se cierra reflexionando sobre la responsabilidad y autocuidado respecto de la información personal en internet."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Escala de apreciación: identificación de situaciones de riesgo",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Se desarrolla al completar la actividad 2 'Entre la espada y la pared' del OA 3. Se recomienda utilizar esta autoevaluación para complementar las respuestas de los estudiantes y dar pie a una reflexión grupal. La escala incluye afirmaciones como: 'Consigo identificar cuando me presionan a conductas riesgosas', 'Elaboro un plan para enfrentar una situación de riesgo', 'Logro mantener mi decisión de rechazo ante conductas de riesgo', 'Pongo en práctica conductas que disminuyen situaciones de riesgo', entre otras.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce su vulnerabilidad ante situaciones de riesgo e identifica conductas y estrategias concretas que le ayudan a enfrentarlas.",
+              "Reconoce prácticas y conductas que disminuyen los riesgos.",
+              "Analiza críticamente las experiencias vividas por su grupo de pares.",
+              "Identifica a quién o dónde solicitar ayuda de acuerdo a la situación."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación sobre consumo de sustancias nocivas",
+          "oas_evaluados": [3],
+          "actividad_evaluacion": "Se desarrolla al completar la actividad 3 '¿Sí o no?' del OA 3. Se evalúa a través de una autoevaluación para luego efectuar una discusión grupal. El docente retroalimenta especialmente a quienes presenten dificultades. La autoevaluación contiene afirmaciones como: 'Siento la presión de mis pares por consumir drogas y alcohol', 'Me siento capaz de rechazar una invitación a una fiesta con drogas y alcohol', 'Existe ayuda para mis problemas en mi entorno', 'Tengo claro que el consumo de drogas afecta mi salud', 'Sé qué puedo hacer para enfrentar una situación de riesgo'.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce su vulnerabilidad ante situaciones de riesgo e identifica conductas y estrategias concretas que le ayudan a enfrentarlas.",
+              "Reconoce prácticas y conductas que disminuyen los riesgos.",
+              "Analiza críticamente las experiencias vividas por su grupo de pares.",
+              "Identifica a quién o dónde solicitar ayuda de acuerdo a la situación."
+            ]
+          }
+        },
+        {
+          "titulo": "Lista de cotejo: vida saludable",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Se desarrolla al completar la actividad 1 'La vida es dulce' del OA 4. La evaluación es una lista de cotejo que completará el estudiante para establecer si las condiciones de su entorno le permiten llevar una vida saludable. Incluye afirmaciones como: 'bebemos agua o jugo natural en lugar de bebidas gaseosas', 'las comidas que consumimos contienen verduras al menos cuatro veces por semana', 'salimos a caminar juntos', 'dormimos la cantidad de horas que cada uno necesita', 'hacemos ejercicios físicos en forma habitual'. Se recomienda revisar los resultados y realizar entrevistas con estudiantes para identificar medidas de apoyo.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Implementa iniciativas para promover de manera personal o grupal la vida saludable.",
+              "Implementa iniciativas que favorezcan el bienestar dentro del curso o del establecimiento.",
+              "Analiza cómo se vulneran los derechos de las personas en las redes sociales y la web.",
+              "Identifica situaciones en las que debe recurrir a un adulto responsable."
+            ]
+          }
+        },
+        {
+          "titulo": "Rúbrica de desempeño OA 4",
+          "oas_evaluados": [4],
+          "actividad_evaluacion": "Se sugiere evaluar el desempeño de los estudiantes durante el desarrollo de las actividades del OA 4 a través de una rúbrica. Se recomienda utilizar al final del OA como forma de sistematizar lo observado, con apoyo de autoevaluaciones y coevaluaciones. Se evalúan tres aspectos: práctica de hábitos de vida saludable en la escuela, conocimiento de consecuencias por vulnerar derechos de otros en internet, e identificación de adultos responsables a quienes recurrir en caso de dificultad.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Practica hábitos de vida saludable en la escuela.",
+              "Conoce consecuencias que existen por vulnerar los derechos de otros en internet (legales, psicológicas o sociales).",
+              "Identifica adultos responsables a quienes recurrir en caso de dificultad y la ayuda que solicitaría."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 3,
+      "nombre_unidad": "Unidad 3",
+      "proposito": "Esta unidad tiene como foco central las relaciones interpersonales en las que participan y que también observan las y los estudiantes. Contempla como punto central de atención las relaciones establecidas entre individuos, ya sea de manera directa (contacto cara a cara) como por medio de las redes sociales. Se busca que los y las estudiantes desarrollen y profundicen de manera creciente su compromiso con los principios de igualdad, dignidad, inclusión y no discriminación como referentes centrales para la configuración de las relaciones interpersonales. En particular, en esta unidad se pretende que desarrollen la sensibilidad de analizar estas relaciones a la luz de estos principios, que reconozcan la relevancia que estos poseen y que procuren conducir sus propias interacciones de manera consistente con estos. Como parte de este propósito, en esta unidad se busca también contribuir a que desarrollen las herramientas que les permitan enfrentar conflictos interpersonales y diferencias de manera pacífica, constructiva y atendiendo a las condiciones de las distintas partes involucradas.",
+      "conocimientos_previos": [],
+      "palabras_clave": ["Derechos", "igualdad", "dignidad", "inclusión", "discriminación", "redes sociales", "conflictos", "diálogo", "escucha activa y empática"],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Analizar sus relaciones, presenciales o virtuales a través de las redes sociales, y las de su entorno inmediato atendiendo a los derechos de las personas involucradas considerando los principios de igualdad, dignidad, inclusión y no discriminación, identificando circunstancias en las que no se ha actuado conforme a estos derechos, y reconociendo el impacto en el bienestar de quienes se vean involucrados.",
+          "indicadores": [
+            "Reconocen de qué manera sus propias acciones pueden validar, ya sea de manera activa o pasiva, relaciones dañinas entre su grupo de pares y cómo su propio actuar podría modificarse.",
+            "Reconocen el impacto emocional y social del trato denigrante o discriminatorio en quienes son objeto de este tipo de relaciones.",
+            "Proponen acciones concretas para modificar los patrones de relación del curso que pueden contribuir a favorecer el respeto y la dignidad de todos.",
+            "Distinguen derechos o principios de las personas que se pueden ver vulnerados ante el uso inadecuado de las redes sociales.",
+            "Identifican grupos que pueden ser objeto de tratos discriminatorios y describen los desafíos asociados a superar dicha situación."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Resolver conflictos y desacuerdos a través del diálogo, la escucha empática y la búsqueda de soluciones en forma respetuosa y sin violencia, reconociendo que el conflicto es una oportunidad de aprendizaje y desarrollo inherente a las relaciones humanas.",
+          "indicadores": [
+            "Reconocen y validan las distintas perspectivas bajo las cuales se puede visualizar una misma situación.",
+            "Evalúan soluciones alternativas ante situaciones de conflicto, considerando la manera en que se ajustan a los intereses y bienestar de ambas partes.",
+            "Identifican los riesgos e implicancias de situaciones en las que las diferencias o los desacuerdos no son planteados de manera clara y transparente.",
+            "Contrastan las implicancias de la resolución de conflictos mediante el diálogo y los acuerdos de las que se derivan de la resolución violenta, arbitraria o impositiva."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Cyberbully",
+          "oas_asociados": [5],
+          "descripcion": "Se proyecta la película Cyberbully (2011). El o la docente introduce el tema y propicia un ambiente de respeto. Previamente entrega preguntas para analizar las relaciones presenciales o virtuales: ¿Qué opinas sobre la frase 'si la agresión es solo verbal o por internet no podemos hacer nada'?, ¿Qué lecciones se desprenden de la relación entre la protagonista y su familia/amigas/docentes?, ¿En qué situaciones no se respetaron principios de igualdad, dignidad, inclusión y no discriminación?, ¿Tiene alguna responsabilidad la protagonista? Se cierra indicando que frente a estas situaciones se debe recurrir a un adulto responsable."
+        },
+        {
+          "nombre": "Jeremy",
+          "oas_asociados": [5],
+          "descripcion": "Se muestra el video clip 'Jeremy' del grupo Pearl Jam, que relata un hecho verídico de acoso escolar. Se rescatan impresiones con preguntas como: ¿Pudo haberse evitado la situación?, ¿Por qué este tipo de situaciones se siguen dando si sabemos cuánto afecta? Las y los estudiantes realizan una lista con características de personas acosadas y acciones concretas para ayudar. Se reflexiona sobre la responsabilidad de cada uno y las posturas pasiva, activa y cómplice frente al acoso. Se dan a conocer los protocolos del establecimiento."
+        },
+        {
+          "nombre": "Iguales en las diferencias",
+          "oas_asociados": [5],
+          "descripcion": "Se introducen imágenes sobre discapacidad y se entrega su definición. Se presentan datos del Primer Estudio Nacional sobre Discapacidad (Chile, 2004) que muestran que al 62,6% de personas con discapacidad no les ofrecen ayuda en la calle. Las y los estudiantes analizan los datos y confeccionan un eslogan que motive a la igualdad de derechos de personas con discapacidad. Se sugiere articular con Artes Visuales y sensibilizar a la comunidad educativa."
+        },
+        {
+          "nombre": "Privilegiemos el diálogo",
+          "oas_asociados": [6],
+          "descripcion": "Se explica que la libertad es algo que tensiona las relaciones adolescentes. Se entrega una lista de situaciones (permiso para moverse solos, más responsabilidades domésticas, definición de orientación sexual, oportunidades de liderazgo, etc.) para que respondan si han ganado o perdido libertad y cuáles les han presentado conflictos. Se comparten experiencias de resolución de conflictos mediante diálogo y escucha empática. Se cierra destacando que las libertades van asociadas a deberes y que entenderlo evita conflictos innecesarios."
+        },
+        {
+          "nombre": "Nada que perder, mucho que ganar",
+          "oas_asociados": [6],
+          "descripcion": "Se explican motivos comunes de conflictos en relaciones de pareja: influencia de la familia, falta de comunicación, expectativas o compromiso desigual, celos. Se divide al curso en grupos y se entregan casos de parejas con conflictos para que decidan cómo resolverlos, basándose en preguntas como: ¿Qué problemas o conflictos tiene la pareja?, ¿Cómo lo podrían resolver?, ¿A quiénes pueden recurrir? Se sugiere escenificar la resolución del conflicto y se cierra destacando la importancia de recurrir a personas significativas o especialistas."
+        },
+        {
+          "nombre": "Mirar con otros lentes",
+          "oas_asociados": [6],
+          "descripcion": "Se muestran láminas o figuras donde las y los estudiantes indican qué ven, destacando que frente a una misma situación no siempre vemos lo mismo. Se enfatiza que las percepciones son subjetivas y que reconocerlo puede evitar o resolver conflictos. Luego, en parejas, analizan situaciones asumiendo distintas interpretaciones: una que genere conflicto y otra que no. Se cierra rescatando conceptos como empatía y escucha activa."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Escala de apreciación: análisis de relaciones interpersonales",
+          "oas_evaluados": [5],
+          "actividad_evaluacion": "Se sugiere aplicar al finalizar las actividades del OA 5. Los estudiantes completan una escala con afirmaciones como: 'Animo a mis compañeros para que seamos más unidos', 'Distingo distintas formas de relación dañina entre mis compañeros', 'Respeto a mis compañeras y compañeros en el trato diario', 'Uso las redes sociales con seguridad y responsabilidad', 'Defiendo a las personas que sufren maltrato en las redes sociales', 'Evito participar de bromas hacia otros, ya sea presencial o virtualmente', 'Reconozco una situación de discriminación'. Luego se reúnen en grupos para proponer compromisos de mejora.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce cómo sus propias acciones pueden validar relaciones dañinas entre su grupo de pares.",
+              "Reconoce el impacto emocional y social del trato denigrante o discriminatorio.",
+              "Propone acciones concretas para modificar patrones de relación del curso.",
+              "Distingue derechos que se pueden ver vulnerados ante el uso inadecuado de las redes sociales.",
+              "Identifica grupos que pueden ser objeto de tratos discriminatorios."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación: compromiso con la dignidad y no discriminación",
+          "oas_evaluados": [5],
+          "actividad_evaluacion": "Se aplica en forma individual una vez concluida la actividad 'Iguales en las diferencias'. Las y los estudiantes responden en forma sincera escribiendo sí o no y realizan un compromiso para mejorar aspectos débiles. Las preguntas incluyen: '¿Modifico mis acciones en favor de relaciones basadas en el respeto y dignidad de todos y todas?', '¿Reconozco las consecuencias del trato denigrante o discriminatorio?', '¿Distingo el trato discriminatorio?', '¿Reconozco cuando un grupo o persona puede ser objeto de discriminación?', '¿Determino desafíos para superar la discriminación?'.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce cómo sus propias acciones pueden validar relaciones dañinas entre su grupo de pares.",
+              "Reconoce el impacto emocional y social del trato denigrante o discriminatorio.",
+              "Propone acciones concretas para modificar patrones de relación del curso.",
+              "Distingue derechos que se pueden ver vulnerados ante el uso inadecuado de las redes sociales.",
+              "Identifica grupos que pueden ser objeto de tratos discriminatorios y describe los desafíos para superar dicha situación."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación y coevaluación: resolución de conflictos",
+          "oas_evaluados": [6],
+          "actividad_evaluacion": "Se aplica al finalizar las actividades del OA 6 en forma de dupla para favorecer el diálogo y la escucha empática. Primero, cada estudiante analiza su nivel de logro de forma personal y luego comentan con su dupla, quien da su opinión y juntos realizan propuestas de mejora. Las afirmaciones incluyen: 'Valido diversos puntos de vista inclusive los que difieren de los míos', 'Visualizo diversas perspectivas para enfrentar una situación', 'Valoro diversas alternativas de solución a los problemas', 'Considero los intereses y el bienestar de ambas partes al resolver un conflicto', 'Reconozco las oportunidades que se presentan al resolver un conflicto'.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce y valida las distintas perspectivas bajo las cuales se puede visualizar una misma situación.",
+              "Propone soluciones alternativas ante situaciones de conflicto considerando intereses y bienestar de ambas partes.",
+              "Identifica situaciones en las que las diferencias o desacuerdos pueden generar riesgos al no ser planteados de manera clara, transparente y pacífica.",
+              "Contrasta las implicancias de la resolución de conflicto a través del diálogo y los acuerdos, de las que se derivan de la resolución violenta, arbitraria o impositiva."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "8vo Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 4,
+      "nombre_unidad": "Unidad 4",
+      "proposito": "Esta unidad se focaliza en la manera en que las y los estudiantes entienden y asumen su vinculación con los espacios o instancias sociales de las que forman parte. En particular, se busca que desarrollen el sentido de formar parte de una comunidad y que comprendan que esta tiene identidad que no se limita a la suma de los individuos que la componen, pues involucra intereses y metas compartidas. La unidad, por lo tanto, promueve el sentido de compromiso de los y las estudiantes ante situaciones cuyas repercusiones no se manifiestan exclusivamente en el plano de sus propias vidas de forma individual, sino que involucran al colectivo del que forma parte. En particular, se pretende promover el desarrollo de la comunidad de curso, el compromiso con esta, y el establecimiento de las formas propias de la convivencia democrática, como las modalidades para tomar decisiones y regular la participación de los miembros de dicha comunidad.",
+      "conocimientos_previos": [],
+      "palabras_clave": ["Comunidad", "pertenencia", "metas compartidas", "trabajo en equipo", "espacios de participación escolar", "formas democráticas de participación y toma de decisiones: debate, diálogo, elección de representantes, deliberación"],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Reconocer intereses, inquietudes, problemas o necesidades compartidas con su grupo de pertenencia, ya sea dentro del curso u otros espacios de participación, y colaborar para alcanzar metas comunes valorando el trabajo en equipo y los aportes de cada uno de sus miembros.",
+          "indicadores": [
+            "Identifican posibles tensiones entre intereses o inquietudes personales y grupales, y formas en que estas se pueden resolver.",
+            "Reconocen y priorizan intereses, inquietudes o necesidades que contribuyen a generar un sentido de unión entre los miembros del curso o grupo.",
+            "Reconocen de qué manera sus aportes y capacidades se pueden complementar con las de otros compañeros o compañeras para el logro de propósitos comunes.",
+            "Proponen y asumen compromisos con el fin de canalizar intereses y necesidades del curso o del grupo."
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Elaborar acuerdos orientados al logro de fines compartidos por el curso, utilizando para esto los espacios de participación disponibles, como Consejo de Curso, asambleas, encuentros u otros, contribuyendo democráticamente a través del diálogo, el debate y el reconocimiento de representantes democráticamente electos; respetando la diversidad de opiniones y el derecho de hombres y mujeres.",
+          "indicadores": [
+            "Reconocen distintas maneras de participar activamente en las situaciones de curso y lo hacen, entre otras formas, a través de debates, opiniones basadas en argumentos y con su voto cuando corresponda.",
+            "Deliberan sobre asuntos referidos al curso en base al diálogo y a la exposición de argumentos.",
+            "Evalúan las formas de participación en el curso en función del respeto por la diversidad de opiniones y la igualdad de derechos.",
+            "Escogen directiva y representantes de acuerdo a procedimientos de elección democráticos.",
+            "Reconocen el valor de las formas de organización democrática y justa, tanto en el curso y en su escuela, como en la sociedad en general."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "A participar",
+          "oas_asociados": [7],
+          "descripcion": "Se divide al curso en grupos de cinco o seis participantes. Se entregan materiales de escritorio y se da la consigna: 'Cada equipo construirá el mejor barco en el menor tiempo posible, el cual deberá ser capaz de moverse y trasladarse para ganar una competencia'. Tras la actividad, se reflexiona con preguntas: ¿Cómo se sintieron?, ¿Qué fue lo más fácil y difícil?, ¿Cómo se organizaron y distribuyeron roles?, ¿A qué atribuyen el éxito o fracaso? Se profundiza identificando las diferencias entre grupo de trabajo y equipo de trabajo."
+        },
+        {
+          "nombre": "La comunidad del dado",
+          "oas_asociados": [7],
+          "descripcion": "Se utiliza un dado grande con preguntas en cada cara: ¿Qué es lo que nos une como curso?, ¿Qué nos hace bien como curso?, ¿Cómo solucionamos nuestros conflictos?, ¿Qué puedo aportar al curso para que seamos más unidos?, ¿Qué nos hace mal como curso?, ¿Cómo podríamos mejorar el rendimiento académico? Cada estudiante lanza el dado y responde la pregunta. Se modera la actividad invitando a profundizar para reconocer intereses, inquietudes, problemas o necesidades compartidas."
+        },
+        {
+          "nombre": "Cadena de favores",
+          "oas_asociados": [7],
+          "descripcion": "Se proyecta la película 'Cadena de favores' (Pay It Forward, 2000). Se plantean preguntas: ¿cuál sería tu proyecto si te dieran la misma tarea?, ¿por qué cada personaje se motiva a seguir la cadena?, ¿cuál es la importancia de la solidaridad en el curso?, ¿cómo nos gustaría ayudar para que nuestro país esté mejor?, ¿cómo podría contribuir con mis habilidades a la comunidad? Se guía a reconocer problemas o necesidades compartidas y la necesidad de colaborar para alcanzar metas comunes."
+        },
+        {
+          "nombre": "Mi propuesta",
+          "oas_asociados": [7],
+          "descripcion": "Individualmente o en grupos, las y los estudiantes piensan en un espacio donde participan activamente (grupo de baile, scout, fútbol, gamers, agrupaciones estudiantiles, etc.) o imaginan uno de su interés. Señalan: intereses de su agrupación, qué quieren lograr, problemas o necesidades para lograr los objetivos, y qué aporte pueden realizar. Elaboran un plan de acción respondiendo: ¿Qué queremos lograr?, ¿Cómo podemos lograrlo?, ¿Con quiénes?, ¿Con qué elementos?, ¿En cuánto tiempo? Se incentiva llevar las propuestas a la práctica."
+        },
+        {
+          "nombre": "Iniciativa de curso",
+          "oas_asociados": [7],
+          "descripcion": "Actividad que involucra más de una sesión. Las y los estudiantes elaboran y ponen en práctica un plan de acción como curso para responder a una necesidad o interés compartido. Se discuten en grupos temas relevantes y se escoge democráticamente uno. Se define: objetivos, acciones o estrategias, distribución de tareas entre equipos. Luego se ejecuta el plan y finalmente se evalúa: logro de objetivos, cumplimiento de compromisos, trabajo colaborativo de cada equipo, y cómo el trabajo colaborativo favoreció o interfirió el logro de los objetivos."
+        },
+        {
+          "nombre": "Sensibilizando a la sociedad",
+          "oas_asociados": [8],
+          "descripcion": "Basada en la 'Guía de ejercicios para la participación adolescente' de UNICEF. Las y los estudiantes escogen un tema sobre el cual sensibilizar a la comunidad escolar, elaborando acuerdos democráticamente mediante diálogo (o votación si no hay acuerdo). Se distribuyen en cuatro grupos según medio: radio, televisión, diario/revista o redes sociales. Cada grupo elabora un comunicado con: título atractivo, presentación del grupo, introducción al tema y citas relevantes. Se cierra con conversación plenaria sobre los aprendizajes del ejercicio."
+        },
+        {
+          "nombre": "Habilidades para debatir",
+          "oas_asociados": [8],
+          "descripcion": "Basada en la 'Guía de ejercicios para la participación adolescente' de UNICEF. Se explica el concepto de libertad de expresión y la importancia de expresar inquietudes de manera clara, ordenada y argumentada. Se explican los pasos de un debate y se elige un tema de interés. Las y los estudiantes se dividen en dos grupos para preparar y llevar a cabo el debate. Se cierra con conversación plenaria sobre aprendizajes, el valor del desacuerdo y cómo comprender diversos puntos de vista."
+        },
+        {
+          "nombre": "Elección de directiva",
+          "oas_asociados": [8],
+          "descripcion": "Se desarrolla en el periodo de elección de directiva de curso. Las y los estudiantes se organizan para levantar al menos dos listas con participación equitativa de sus miembros. Definen cuántas personas conformarán la directiva y los cargos. Cada lista organiza un proyecto de trabajo que expone ante el curso. El docente decide si la votación es inmediata o se da una semana de campaña electoral. Se motiva el ejercicio de la elección democrática de representantes."
+        },
+        {
+          "nombre": "La democracia en nuestro curso",
+          "oas_asociados": [8],
+          "descripcion": "El curso se divide en dos grupos: uno describe las características que debiera tener la participación y convivencia democrática al interior del curso; el otro analiza la manera de participación y convivencia que efectivamente tiene lugar. Los representantes exponen sus conclusiones. Se contrastan las dinámicas del curso con las características de una participación democrática, identificando aspectos próximos y lejanos. Se cierra promoviendo que asuman desafíos y compromisos para fortalecer la convivencia democrática."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Autoevaluación: trabajo colaborativo para metas comunes",
+          "oas_evaluados": [7],
+          "actividad_evaluacion": "Se recomienda aplicar una vez desarrolladas las actividades del OA 7. Se evalúa la disposición de cada estudiante para trabajar colaborativamente con otros con el fin de lograr metas comunes. Se utiliza una autoevaluación con afirmaciones como: 'Propuse ideas respetando la opinión de mis compañeras y compañeros', 'Logré explicar mis puntos de vista cuando eran distintos', 'Distinguí cuáles necesidades e intereses eran compartidos por mi curso', 'Escuché atenta y respetuosamente', 'Elegí los intereses importantes para todo el curso', 'Respeté los acuerdos aun cuando se distanciaban con mis intereses'. Se sugiere comentar en pequeños grupos los resultados.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifica posibles tensiones entre intereses personales y grupales, y formas de resolverlas.",
+              "Reconoce y prioriza intereses, inquietudes o necesidades que contribuyen a generar un sentido de unión.",
+              "Reconoce de qué manera sus aportes y capacidades se pueden complementar con las de otros.",
+              "Propone y asume compromisos para canalizar intereses y necesidades del curso o grupo."
+            ]
+          }
+        },
+        {
+          "titulo": "Autoevaluación: participación democrática",
+          "oas_evaluados": [8],
+          "actividad_evaluacion": "Se busca que las y los estudiantes evalúen su participación en procesos de toma de decisiones democráticas al interior del curso. Puede desarrollarse en relación a la elección de directiva u otras situaciones de decisión colectiva. Se utiliza una escala de apreciación con afirmaciones: 'Escuché con atención y respeto las distintas posiciones', 'Busqué aportar al curso contribuyendo al desarrollo de propuestas', 'Me preocupé de presentar argumentos', 'Expresé de manera clara mis diferencias', 'Contribuí a que las distintas ideas pudiesen ser expresadas y escuchadas', 'Reconocí el aporte de ideas distintas de las propias', 'Participé en la toma de decisiones', 'Acepté y respeté las decisiones tomadas democráticamente'.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconoce distintas maneras de participar activamente a través de debates, opiniones basadas en argumentos y con su voto.",
+              "Delibera sobre asuntos del curso en base al diálogo y exposición de argumentos.",
+              "Evalúa las formas de participación en función del respeto por la diversidad de opiniones y la igualdad de derechos.",
+              "Escoge directiva y representantes de acuerdo a procedimientos de elección democráticos.",
+              "Reconoce el valor de las formas de organización democrática y justa."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

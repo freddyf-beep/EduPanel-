@@ -22,6 +22,17 @@ import {
   doc, getDoc, getDocs, setDoc, deleteDoc,
   collection, query, orderBy, serverTimestamp, where, limit
 } from "firebase/firestore"
+export {
+  ajustarClasesCronograma,
+  crearClaseCronograma,
+  normalizarTotalClasesUnidad,
+  resolverTotalClasesUnidad,
+} from "@/lib/cronograma-clases"
+import {
+  initOAsSeleccion,
+  mergeOAsSeleccion,
+  type OASeleccion,
+} from "@/lib/oa-selection"
 
 // ─── Helper: filtrar undefined recursivamente antes de setDoc ────────────────
 // Firestore rechaza undefined silenciosamente. Esto preserva FieldValue
@@ -600,6 +611,39 @@ function fallbackUnidadCurricularId(unidadId: string): string {
   if (/^unidad_\d+$/i.test(clean)) return clean.toLowerCase()
   if (/^\d+$/.test(clean)) return `unidad_${clean}`
   return clean
+}
+
+export function normalizarUnidadCurricularId(unidadId: string): string {
+  return fallbackUnidadCurricularId(unidadId)
+}
+
+export async function getUnidadCompletaConFallback(
+  asignatura: string,
+  nivel: string,
+  unidadId: string,
+  unitIndex?: number
+): Promise<Unidad | null> {
+  const candidates = Array.from(new Set([
+    unidadId,
+    fallbackUnidadCurricularId(unidadId),
+  ].map(value => value.trim()).filter(Boolean)))
+
+  for (const candidate of candidates) {
+    const unidad = await getUnidadCompleta(asignatura, nivel, candidate)
+    if (unidad) return unidad
+  }
+
+  const indexFromId = (() => {
+    if (Number.isFinite(unitIndex)) return unitIndex as number
+    const parsed = parseInt(unidadId.replace(/\D/g, ""), 10)
+    return Number.isFinite(parsed) && parsed > 0 ? parsed - 1 : null
+  })()
+
+  if (indexFromId === null) return null
+
+  const todasUnidades = await getUnidades(asignatura, nivel)
+  const byIndex = todasUnidades.find(unit => unit.numero_unidad === indexFromId + 1)
+  return byIndex?.id ? getUnidadCompleta(asignatura, nivel, byIndex.id) : null
 }
 
 function unidadCurricularIdFromPlanUnit(unit: UnidadPlan): string | undefined {
@@ -1218,66 +1262,33 @@ export async function cargarAnotacion(
 // Re-export constants for easy parsing in UI
 const DEFAULT_SUBJECT = DEFAULT_ASIGNATURA
 
-export function initOAs(unidad: Unidad, asignatura = DEFAULT_SUBJECT): OAEditado[] {
-  return (unidad.objetivos_aprendizaje || []).map(oa => ({
-    id: buildOfficialOAId(oa.numero),
-    numero: oa.numero,
-    tipo: String(oa.tipo || "").toUpperCase() === "OAT" ? "oat" : "oa",
-    descripcion: oa.descripcion,
-    seleccionado: true,
-    indicadores: (oa.indicadores || []).map((ind, i) => ({
-      id: `OA${oa.numero}_IND${i}`,
-      texto: ind,
-      seleccionado: true,
-      esPropio: false,
-    })),
-    esPropio: false,
-    tags: [asignatura],
-  }))
+export function initOAs(
+  unidad: Unidad,
+  asignatura = DEFAULT_SUBJECT,
+  options: { seleccionarPorDefecto?: boolean } = {},
+): OAEditado[] {
+  return initOAsSeleccion(
+    unidad.objetivos_aprendizaje,
+    asignatura,
+    options.seleccionarPorDefecto ?? true,
+  ) as OAEditado[]
 }
 
 export function initElems(lista: string[], tipo: "habilidades" | "conocimientos" | "actitudes"): ElementoCurricular[] {
   return lista.map((texto) => ({ id: buildOfficialElementoId(tipo, texto), texto, seleccionado: true, esPropio: false }))
 }
 
-export function mergeOAs(base: OAEditado[], saved: OAEditado[] = []): OAEditado[] {
-  const baseIds = new Set(base.map((oa) => oa.id))
-  const savedById = new Map(saved.map((oa) => [oa.id, oa]))
-
-  // 1) OAs oficiales: base con overrides del saved (descripción, seleccionado, indicadores editados)
-  const mergedBase = base.map((oa) => {
-    const existing = savedById.get(oa.id)
-    if (!existing) return oa
-    return {
-      ...oa,
-      descripcion: existing.descripcion || oa.descripcion,
-      seleccionado: existing.seleccionado,
-      // Indicadores: tomar override de saved si existe, sino mantener oficial; agregar los propios al final
-      indicadores: oa.indicadores
-        .map((ind) => existing.indicadores.find((x) => x.id === ind.id) || ind)
-        .concat(existing.indicadores.filter((x) => x.esPropio)),
-    }
-  })
-
-  // 2) OAs guardados que NO están en la base oficial actual:
-  //    - Pueden ser OAs propios del usuario (esPropio: true)
-  //    - O OAs oficiales que fueron removidos de la base oficial (cambio Mineduc)
-  //    En ambos casos PRESERVAR — marcar esPropio: true si no lo era para visibilizar
-  const huerfanos = saved.filter((oa) => !baseIds.has(oa.id)).map((oa) => ({
-    ...oa,
-    esPropio: true, // si no está en base oficial, lo tratamos como propio del usuario
-  }))
-
-  // Deduplicate por id por si acaso
-  const combined = [...mergedBase, ...huerfanos]
-  const seen = new Set<string>()
-  return combined.filter((oa) => {
-    if (seen.has(oa.id)) return false
-    seen.add(oa.id)
-    return true
-  })
+export function mergeOAs(
+  base: OAEditado[],
+  saved: OAEditado[] = [],
+  options: { conservarHuerfanosComoPropios?: boolean } = {},
+): OAEditado[] {
+  return mergeOAsSeleccion(
+    base as OASeleccion[],
+    saved as OASeleccion[],
+    options,
+  ) as OAEditado[]
 }
-
 export function mergeElementos(base: ElementoCurricular[], saved: ElementoCurricular[] = []): ElementoCurricular[] {
   const own = saved.filter((el) => el.esPropio)
   const byId = new Map(saved.map((el) => [el.id, el]))

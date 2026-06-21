@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
+  ajustarClasesCronograma,
   cargarCronogramaUnidad,
   cargarPlanificacion,
   cargarPlanCurso,
@@ -20,7 +21,11 @@ import {
   guardarPlanificacion,
   guardarVerUnidad,
   buildMatrixCellKey,
-  getUnidadCompleta,
+  getUnidadCompletaConFallback,
+  initOAs,
+  mergeOAs,
+  normalizarTotalClasesUnidad,
+  resolverTotalClasesUnidad,
 } from "@/lib/curriculo"
 import type {
   OAEditado,
@@ -39,6 +44,7 @@ import {
 import { cargarHorarioSemanal } from "@/lib/horario"
 import type { ClaseHorario } from "@/lib/horario"
 import { buildUrl, UNIT_COLORS, withAsignatura } from "@/lib/shared"
+import { preservarSeleccionLegacyOa, sanitizeOaIds } from "@/lib/oa-selection"
 import { useActiveSubject } from "@/hooks/use-active-subject"
 import { toast } from "@/hooks/use-toast"
 import { apiFetch } from "@/lib/api-client"
@@ -262,13 +268,15 @@ export function VerUnidadV3Cronograma() {
         setPlanUnit(planUnitEncontrada)
 
         let u: Unidad | null = null
+        let preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam)
         if (tipo === "oficial") {
           const nivel = resolveNivel(cursoParam, mapping, ASIGNATURA)
           if (!nivel) {
             setError(`No hay bases curriculares configuradas para "${cursoParam}" con "${ASIGNATURA}".`)
             return
           }
-          u = await getUnidadCompleta(ASIGNATURA, nivel, unidadParam)
+          preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivel)
+          u = await getUnidadCompletaConFallback(ASIGNATURA, nivel, unidadParam, unitIndex)
           if (!u) {
             setError(`Unidad no encontrada en las bases curriculares de ${nivel}.`)
             return
@@ -292,39 +300,27 @@ export function VerUnidadV3Cronograma() {
         }
         setUnidad(u)
 
-        // Selectable OAs from unit selection
-        const baseOas = guardada?.oas || []
-        // Only load the selected OAs in unit dashboard
-        const selectedOasOnly = baseOas.filter((oa: any) => oa.seleccionado)
+        const baseOas = mergeOAs(
+          initOAs(u, ASIGNATURA, { seleccionarPorDefecto: preservarLegacyOa }),
+          guardada?.oas || [],
+          { conservarHuerfanosComoPropios: preservarLegacyOa },
+        )
+        const oaIdsReferenciados = new Set(
+          (cronograma?.clases || []).flatMap((clase: ClaseCronograma) => clase.oaIds || [])
+        )
+        const selectedOasOnly = baseOas.filter((oa: any) => oa.seleccionado || oaIdsReferenciados.has(oa.id))
+        const validOaIds = new Set(baseOas.map(oa => oa.id))
         setOas(selectedOasOnly)
 
         // Handle total classes count
-        const totalC = cronograma?.totalClases || cronograma?.clases?.length || guardada?.clases || 8
+        const totalC = resolverTotalClasesUnidad(cronograma, guardada, 8)
         setClasesCount(totalC)
 
         // Setup classes cronograma
-        if (cronograma && cronograma.clases.length > 0) {
-          const saved = cronograma.clases.map((clase: ClaseCronograma) => ({
-            ...clase,
-            oaIds: Array.from(new Set(clase.oaIds || [])),
-          }))
-          if (saved.length < totalC) {
-            const extra = Array.from({ length: totalC - saved.length }, (_, i) => ({
-              numero: saved.length + i + 1,
-              fecha: "",
-              oaIds: [],
-            }))
-            setClases([...saved, ...extra])
-          } else {
-            setClases(saved.slice(0, totalC))
-          }
-        } else {
-          setClases(Array.from({ length: totalC }, (_, i) => ({
-            numero: i + 1,
-            fecha: "",
-            oaIds: [],
-          })))
-        }
+        setClases(ajustarClasesCronograma(cronograma?.clases, totalC).map(clase => ({
+          ...clase,
+          oaIds: preservarLegacyOa ? clase.oaIds : sanitizeOaIds(clase.oaIds, validOaIds),
+        })))
 
         // Derive initial starting date if available
         const firstWithDate = cronograma?.clases?.find((c: any) => c.fecha?.trim())
@@ -354,9 +350,13 @@ export function VerUnidadV3Cronograma() {
     if (!isAutoSave) setSaving(true)
     if (isAutoSave) setSaveStatus("saving_silent")
     try {
-      const clasesParaGuardar = clases.map(clase => ({
+      const preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam)
+      const validOaIds = new Set(oas.map(oa => oa.id))
+      const clasesParaGuardar = ajustarClasesCronograma(clases, clasesCount).map(clase => ({
         ...clase,
-        oaIds: Array.from(new Set(clase.oaIds || [])),
+        oaIds: preservarLegacyOa
+          ? Array.from(new Set(clase.oaIds || []))
+          : sanitizeOaIds(clase.oaIds, validOaIds),
       }))
 
       // 1. Save Cronograma document
@@ -423,20 +423,9 @@ export function VerUnidadV3Cronograma() {
 
   // Adjust total classes count
   const ajustarTotalClases = (next: number) => {
-    const safe = Math.min(60, Math.max(1, Math.round(next || 1)))
+    const safe = normalizarTotalClasesUnidad(next)
     setClasesCount(safe)
-    setClases(prev => {
-      if (prev.length < safe) {
-        const extra = Array.from({ length: safe - prev.length }, (_, i) => ({
-          numero: prev.length + i + 1,
-          fecha: "",
-          oaIds: [],
-        }))
-        return [...prev, ...extra]
-      } else {
-        return prev.slice(0, safe)
-      }
-    })
+    setClases(prev => ajustarClasesCronograma(prev, safe))
   }
 
   // Toggle OA in a class
@@ -670,7 +659,7 @@ export function VerUnidadV3Cronograma() {
       <div className="flex flex-col items-center justify-center h-64 gap-4 text-center px-6">
         <AlertCircle className="w-8 h-8 text-amber-500" />
         <p className="text-[14px] text-muted-foreground max-w-md leading-relaxed">{error || "Unidad no encontrada"}</p>
-        <Link href={buildUrl("/ver-unidad", { curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam })}
+        <Link href={buildUrl("/ver-unidad", withAsignatura({ curso: cursoParam, unidad: unidadParam, unitIdLocal: unidadLocalParam }, ASIGNATURA))}
           className="flex items-center gap-2 text-[13px] font-semibold text-primary hover:underline">
           <ChevronLeft className="w-4 h-4" /> Volver al Dashboard de la Unidad
         </Link>

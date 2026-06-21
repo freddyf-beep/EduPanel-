@@ -1,3 +1,12 @@
+## v1.1.1 - 21/06/2026
+
+- Reorganiza y normaliza los archivos de curriculo publico por asignatura y nivel, usando nombres consistentes como `*_basico` y `*_medio`.
+- Agrega curriculum publico para Matematica, Orientacion, Lenguaje, Educacion Fisica y Musica en los niveles disponibles.
+- Mejora la seleccion de OA e indicadores para conservar selecciones previas, evitar duplicados y distinguir OA propios de OA oficiales.
+- Ajusta el cronograma de clases para mantener un total de clases estable, normalizar fechas/OA y evitar perdida de asignaciones al cambiar la cantidad de clases.
+- Mejora integraciones de IA y Google Drive dentro de Ver Unidad v3 y el modal de IA.
+- Agrega pruebas unitarias para seleccion de OA y cronograma de clases.
+
 ## v1.0.1 - 08/04/2026 11:45
 
 ## v1.0.2 - 08/04/2026 12:04

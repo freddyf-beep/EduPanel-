@@ -1,0 +1,1571 @@
+[
+  {
+    "nivel": "3ro Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 1,
+      "nombre_unidad": "Unidad 1",
+      "proposito": "En esta unidad, se espera que los estudiantes puedan identificar y valorar sus características personales en diversos ámbitos para reforzar su conocimiento personal, reconociendo sus habilidades y fortalezas y proponiendo acciones concretas para mejorar en aquellos aspectos en los que se pueden superar. Por otra parte, se pretende que reconozcan y valoren la sexualidad como expresión de amor, vínculo e intimidad entre dos personas y como gestora de su propia vida.",
+      "palabras_clave": [
+        "Habilidades",
+        "fortalezas",
+        "características personales",
+        "metas",
+        "superación",
+        "sexualidad",
+        "vínculo",
+        "relación sexual",
+        "pene",
+        "testículo",
+        "pechos",
+        "vagina",
+        "menstruación"
+      ],
+      "conocimientos_previos": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "numero": 1,
+          "tipo": "OA",
+          "descripcion": "Observar, describir y valorar sus características, habilidades y fortalezas (en lo familiar, afectivo, académico y social, entre otros) y proponerse acciones concretas para los aspectos que requiera superar.",
+          "indicadores": [
+            "Reconocen y dan ejemplos de las habilidades y fortalezas que despliegan en el espacio familiar, académico y social e interpersonal.",
+            "Señalan características positivas de sí mismos frente a otros.",
+            "Señalan aportes que pueden realizar al curso a partir de sus propias cualidades.",
+            "Intercambian opiniones respecto del valor de las diferencias y aportes individuales.",
+            "Escuchan de manera respetuosa los comentarios y observaciones que otras personas realizan en torno a sus fortalezas, habilidades y desempeño.",
+            "Escriben compromisos personales para aportar al curso con sus cualidades.",
+            "Identifican aspectos que necesitan superar.",
+            "Dan ideas para superarse en diversos ámbitos."
+          ]
+        },
+        {
+          "numero": 3,
+          "tipo": "OA",
+          "descripcion": "Reconocer y valorar la sexualidad como expresión de amor, vínculo e intimidad entre dos personas y como gestora de su propia vida.",
+          "indicadores": [
+            "Reconocen que la procreación de un hijo es resultado del encuentro íntimo entre hombre y mujer.",
+            "Dan razones por las que es importante el respeto al propio cuerpo.",
+            "Dan ejemplos de distintas formas en las que dos personas que tienen una relación como pareja pueden expresar su cariño y afecto (por ejemplo: el cuidado mutuo, la lealtad y la responsabilidad por el otro).",
+            "Nombran diferencias entre una relación de pareja y otros tipos de relaciones establecidas con otras personas (por ejemplo: en función del tipo de cosas que se comparten, la confianza hacia la otra persona, la intimidad en la relación, entre otros).",
+            "Nombran responsabilidades que un padre, madre o persona responsable de la crianza de un niño tiene hacia este."
+          ]
+        },
+        {
+          "numero": 7,
+          "tipo": "OA",
+          "descripcion": "Participar en forma guiada en la comunidad escolar y en la organización del curso: proponiendo y aceptando iniciativas y asumiendo responsabilidades; respetando los derechos de los demás en la distribución de roles y responsabilidades.",
+          "indicadores": [
+            "Participan en la organización de las actividades del curso.",
+            "Aceptan propuestas e iniciativas de otros.",
+            "Proponen tareas a realizar para lograr un objetivo en común.",
+            "Proponen ideas para resolver algún problema que afecte al curso o la comunidad.",
+            "Cumplen con las responsabilidades y cargos asumidos.",
+            "Organizan las responsabilidades y actividades del curso, respetando el derecho de todos a participar.",
+            "Distribuyen roles y funciones, sin distinciones de género.",
+            "Evalúan cumplimiento de las responsabilidades."
+          ]
+        },
+        {
+          "numero": 5,
+          "tipo": "OA",
+          "descripcion": "Manifestar actitudes de solidaridad y respeto, que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo, saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Acuerdan y asumen compromisos para favorecer la convivencia.",
+            "Mencionan formas apropiadas de conducirse ante una persona que manifiesta sentimientos como tristeza, vergüenza, rabia o impotencia.",
+            "Saludan y se despiden de las personas con las que se relacionan cotidianamente.",
+            "Identifican distintos tipos de violencia en situaciones dadas.",
+            "Proponen formas de evitar o frenar la violencia.",
+            "Permiten que sus compañeros se expresen y escuchan sus opiniones e ideas.",
+            "Identifican las implicancias que tiene para las personas y para el grupo el no escuchar o respetar las ideas de otras personas.",
+            "Identifican situaciones en las que sus pares necesitan ayuda.",
+            "Prestan ayuda a otras personas en respuesta a las necesidades o dificultades que estas posean.",
+            "Identifican formas de respetar el ambiente de aprendizaje.",
+            "Asumen compromisos para respetar el ambiente de aprendizaje."
+          ]
+        },
+        {
+          "numero": 8,
+          "tipo": "OA",
+          "descripcion": "Manifestar hábitos y actitudes de esfuerzo e interés que favorezcan el aprendizaje, como: asistir puntualmente a clases y cumplir a tiempo con los trabajos pedidos; organizar su tiempo y sus útiles; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Se presentan en la sala de clases a la hora de inicio de las actividades.",
+            "Cumplen con sus responsabilidades escolares.",
+            "Entregan sus trabajos dentro del período de tiempo asignado para ello.",
+            "Se preocupan de justificar debidamente sus atrasos.",
+            "Elaboran un horario personal de estudio.",
+            "Usan la agenda para organizar sus actividades.",
+            "Guardan y ordenan sus materiales al finalizar las actividades.",
+            "Permiten que sus compañeros desarrollen y finalicen debidamente sus actividades.",
+            "Identifican e intentan superar condiciones que pueden afectar el trabajo escolar.",
+            "Identifican la copia como una conducta deshonesta.",
+            "Realizan sus pruebas y evaluaciones basados en sus propios conocimientos, sin recurrir a la copia.",
+            "Buscan información sobre temas que les interesen.",
+            "Se dan cuenta de lo que aprenden y lo aplican en diversas situaciones.",
+            "Llevan a cabo actividades recreativas que les resulten interesantes o entretenidas de manera regular."
+          ]
+        },
+        {
+          "numero": 4,
+          "tipo": "OA",
+          "descripcion": "Identificar y practicar en forma autónoma conductas protectoras y de autocuidado en relación a: rutinas de higiene; actividades de descanso, recreación y actividad física; hábitos de alimentación; resguardo del cuerpo y la intimidad; la entrega de información personal; situaciones de potencial abuso; consumo de drogas.",
+          "indicadores": [
+            "Siguen rutinas diarias de higiene (ducharse, lavarse la cara, manos y dientes).",
+            "Promueven la práctica de rutinas de higiene.",
+            "Distinguen actividades saludables de aquellas que no lo son.",
+            "Proponen actividades recreativas saludables para realizar en su tiempo libre.",
+            "Evalúan la realización de prácticas de vida saludable en su vida cotidiana.",
+            "Realizan actividades recreativas regularmente en su tiempo libre.",
+            "Identifican acciones que facilitan el descanso y la conciliación del sueño.",
+            "Explican la importancia de dormir las horas suficientes de acuerdo a su edad.",
+            "Identifican aspectos saludables y no saludables de sus propios hábitos alimenticios.",
+            "Proponen formas de mejorar sus hábitos alimenticios.",
+            "Nombran conductas que contribuyen a cuidar sus cuerpos.",
+            "Cuidan su intimidad en diversas circunstancias (baños, camarines u otros).",
+            "Reconocen situaciones de riesgo en las que se puede ver afectado el cuidado de su intimidad.",
+            "Identifican y describen situaciones en las que deben resguardar la entrega de información personal.",
+            "Describen formas de enfrentar situaciones en las que se les solicita entregar información personal e íntima que deben resguardar.",
+            "Identifican efectos de las drogas en la vida de las personas.",
+            "Reconocen situaciones de riesgo que pueden estar asociadas al consumo de sustancias.",
+            "Describen y llevan a cabo formas de evitar situaciones de riesgo asociadas al consumo de sustancias."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Collage de intereses personales",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes elaboran un collage, folleto o afiche que represente sus intereses en un ámbito en particular (por ejemplo: un collage sobre sus intereses en lo académico) que responda a las siguientes preguntas: ¿qué me gusta hacer? ¿qué cualidades que tengo me lo facilitan? ¿significa algún aporte para los demás? ¿cuál? Exponen sus trabajos al curso y los explican. Guiados por el docente, reflexionan acerca del valor que implican los diversos intereses y cualidades."
+        },
+        {
+          "nombre": "Red de cualidades con madeja de lana",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Forman una ronda y se sientan en círculo con una madeja de lana. Por turnos, la van tirando a distintos compañeros, sin soltar la lana. El alumno que recibe la madeja debe decir al curso una característica personal positiva y luego tirar la lana a otro compañero, de manera que se vaya haciendo una red. Una vez que todos han participado, se realiza la dinámica al revés, devolviendo la lana y diciendo la característica que el alumno había señalado anteriormente. Posteriormente comentan la experiencia y, guiados por el docente, reflexionan sobre las diversas cualidades que tienen las personas que están en el curso y la riqueza que ello significa para todos."
+        },
+        {
+          "nombre": "Árbol de cualidades y logros",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cada alumno dibuja un árbol. Para esto: dibujan sus raíces y en cada una escriben una de sus cualidades; en la copa dibujan frutos y en cada uno de ellos escriben algún logro en lo personal, académico y social; por ejemplo: haber aprendido algo, ganado un premio, tener un buen amigo, etc.; alrededor del tronco dibujan la buena tierra, que representa las actitudes, estrategias y comportamientos que los ayudan a tener logros; por ejemplo: 'ser esforzado', 'ser buen amigo', 'ser responsable', etc. Para finalizar, llevan el trabajo a sus casas y lo comentan con sus familias."
+        },
+        {
+          "nombre": "Identificación con un animal",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Cada estudiante escoge un animal con el cual se identifica de acuerdo a sus características personales y explica por qué lo elige. Forman grupos de acuerdo al animal que escogieron. Si alguien no tiene pareja, permanece solo. Observan que se han elegido diferentes animales de acuerdo a sus características y concluyen, con apoyo del profesor, que todas las personas se diferencian de las demás, porque son únicas e irrepetibles, aunque también comparten muchos aspectos comunes."
+        },
+        {
+          "nombre": "Compromisos de cualidades personales",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "A partir de sus características personales, cada alumno se compromete con el curso a entregar alguna cualidad que le sea distintiva. 'Yo me comprometo a entregar mi entusiasmo'. 'Mi compromiso es ser honesto'. 'En mí encontrarán perseverancia'. 'Aportaré con mi alegría'. Escriben estos compromisos en un papelógrafo y los ubican en un lugar visible de la sala para tenerlos siempre presente. Posteriormente reflexionan acerca de que el curso se fortalece y crece si todos aportan lo mejor de sí."
+        },
+        {
+          "nombre": "Compartir dificultades y buscar soluciones en grupo",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Se forman grupos de cuatro alumnos y cada uno explica a su grupo algo que le cueste realizar; por ejemplo: 'a mí me cuesta poner atención en clases', 'a mí me cuesta aprenderme las tablas de multiplicar', 'a mí me cuesta tener paciencia'. Los demás integrantes del grupo escuchan con atención y luego dan ideas a su compañero para mejorar aquello que le cuesta. Cada uno registra en su cuaderno la dificultad expresada y las ideas que le dieron sus compañeros para mejorar. Posteriormente comentan la experiencia y, guiados por el docente, reflexionan sobre la importancia de recibir ideas de otros para mejorar lo que nos cuesta."
+        },
+        {
+          "nombre": "Estrategias colectivas de superación",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "A partir de la actividad anterior y guiados por el docente, eligen algunas de las dificultades más frecuentes y buscan en conjunto estrategias para superarlas, registrándolas en un papelógrafo que luego se expone en un lugar visible."
+        },
+        {
+          "nombre": "Propuestas personales de superación",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes completan en su cuaderno lo registrado en la actividad 7, proponiendo tres formas de superar la dificultad que escribieron."
+        },
+        {
+          "nombre": "Carta a los padres pidiendo ayuda",
+          "oas_asociados": [
+            1
+          ],
+          "descripcion": "Los estudiantes escriben una carta a sus padres o apoderados, pidiéndoles ayuda para aquellos aspectos que lo necesite (académico, social, personal, entre otros)."
+        },
+        {
+          "nombre": "Ficha anónima sobre afectividad y sexualidad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes completan una ficha anónima sobre afectividad y sexualidad, en la cual expliciten qué saben de ella y escriban sus dudas. Se puede utilizar las siguientes preguntas: ¿qué sabe acerca de la sexualidad? ¿qué relación tiene la sexualidad con el amor? ¿cómo llegó usted al mundo? ¿qué dudas tiene respecto de la sexualidad? A la sesión siguiente, se propicia una conversación para responder las inquietudes de los alumnos."
+        },
+        {
+          "nombre": "Identificación de partes del cuerpo",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes observan láminas de un niño y una niña y, conforme el docente va mostrando las diversas partes del cuerpo, van diciendo sus nombres e identificando las partes íntimas de cada uno, usando los términos apropiados para ello, como pene, testículos, pechos, vagina. Dan razones por la que es importante respetar y cuidar el propio cuerpo y el de otros."
+        },
+        {
+          "nombre": "Origen de la vida",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes piensan sobre cómo creen ellos que llegaron a la vida y responden. Luego que todos expresan sus ideas y opiniones, el docente les explica que cada uno de ellos es fruto de un acto de amor entre hombre y mujer. Explica que de la unión de amor entre sus padres a través del acto sexual, surge una nueva vida. Explica la interacción que se produce en el acto sexual usando los términos apropiados para ello como pene, vagina, espermatozoides, óvulo, fecundación."
+        },
+        {
+          "nombre": "Comunicación a los padres sobre el origen de la vida",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "El docente envía una comunicación a los padres, invitándolos a tener una conversación sobre el origen de la vida con sus hijos. Pueden conversar en torno a las siguientes preguntas: ¿por qué celebramos los cumpleaños? ¿qué sintieron cuando supieron que me estaban esperando? ¿cómo fueron los meses de embarazo? ¿qué sintieron cuando yo nací? ¿quién me cuidó los primeros meses?"
+        },
+        {
+          "nombre": "Tarjeta de agradecimiento a los padres",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "A la semana siguiente, los alumnos comparten voluntariamente su experiencia y cada uno elabora una tarjeta de agradecimiento a sus padres, abuelos o apoderados por el amor, el afecto y el cuidado que reciben de ellos."
+        },
+        {
+          "nombre": "Jornada padre-hijo o madre-hija sobre sexualidad",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes participan en una jornada padre-hijo o madre-hija para hablar sobre la sexualidad. En ella, se informa a los padres sobre los temas que han estado tratando en clases y se los invita a tener una conversación con sus hijos para responder las preguntas o inquietudes que tengan."
+        },
+        {
+          "nombre": "Experiencias de padres",
+          "oas_asociados": [
+            3
+          ],
+          "descripcion": "Los estudiantes escuchan las experiencias de una madre y un padre respecto de lo que significó para ellos convertirse en padres, lo que sintieron, cómo prepararon su llegada, entre otras."
+        },
+        {
+          "nombre": "Consejo de Curso: organización del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes escuchan al docente explicar qué es el Consejo de Curso. Escriben una lista de actividades que realizarán en esta instancia (división de responsabilidades, analizar el funcionamiento del curso, organizar actividades, entre otras) y la copian en su cuaderno."
+        },
+        {
+          "nombre": "Lluvia de ideas sobre tareas de organización del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El profesor guía una lluvia de ideas para hacer un listado de las tareas en que ellos pueden colaborar en la organización del curso; por ejemplo: repartir los materiales, borrar el pizarrón, pasar la lista, abrir las ventanas durante el recreo, poner la fecha, mantener el diario mural, entre otras. Luego proponen ideas para organizarse, definiendo turnos, funciones, cargos y otros."
+        },
+        {
+          "nombre": "Lluvia de ideas sobre ayuda mutua",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El profesor guía una lluvia de ideas para hacer un listado de las acciones que pueden realizar para ayudarse mutuamente; por ejemplo: llamar al que está enfermo, ayudarse en las tareas, invitar a jugar en los recreos. Luego proponen ideas para organizarse, definiendo turnos, funciones, cargos y otros."
+        },
+        {
+          "nombre": "Organización de convivencia de curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una convivencia de curso o entre amigos. Definen la música, la decoración, las actividades que se harán en la convivencia, los alimentos que van a consumir, quiénes son los responsables de traerlos, el horario en que se va a realizar, entre otras."
+        },
+        {
+          "nombre": "Evaluación bimestral de responsabilidades",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Guiados por el docente, los estudiantes evalúan al término de cada bimestre la organización y el cumplimiento de responsabilidades, las actividades realizadas, la participación en ellas, entre otras, proponiendo en conjunto estrategias para mejorar ambos aspectos."
+        },
+        {
+          "nombre": "Organización del día de la limpieza",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar un 'día de la limpieza'. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Mejora de la convivencia escolar en Consejo de Curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes identifican aspectos que pueden mejorar en relación con la convivencia escolar. Guiados por el docente, plantean iniciativas, expresan sus percepciones, experiencias e ideas y buscan formas para darles solución, acogiendo y respetando las distintas percepciones, ideas y propuestas. Registran en su cuaderno los acuerdos."
+        },
+        {
+          "nombre": "Organización de actividad de curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una actividad de curso. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Análisis de comportamiento y rendimiento",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes, guiados por el profesor, analizan cómo va su comportamiento y rendimiento en las distintas asignaturas. Se proponen soluciones para mejorar aquellos aspectos que sean necesarios."
+        },
+        {
+          "nombre": "Organización de visitas y celebraciones del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes se organizan para visitar a los que están enfermos, recordar los cumpleaños de los alumnos del curso, ayudar en las tareas."
+        },
+        {
+          "nombre": "Organización de convivencia de fin de año",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una convivencia de fin de año. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Listado de conductas para relaciones interpersonales positivas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En grupos de cinco alumnos, elaboran un listado de conductas y/o actitudes que se ponen en práctica en las relaciones interpersonales positivas; por ejemplo: preguntar cómo está la otra persona, escucharla con atención, ser cariñoso y respetuoso, invitar a jugar, pensar cómo se siente la otra persona con lo que yo le digo o hago, dar las gracias, pedir por favor. Un representante del grupo expone el trabajo al curso y se anotan las principales ideas en el pizarrón. Cuando todos los grupos han expuesto sus ideas, seleccionan del listado general aquellas conductas o actitudes que más les parecen practicables en las relaciones que hay en el curso (al menos cinco). Las anotan en una cartulina y cada estudiante firma en ella como forma de comprometerse a practicar esas conductas o actitudes."
+        },
+        {
+          "nombre": "Evaluación de compromisos de convivencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Luego de una semana, profesor y alumnos evalúan los compromisos adquiridos y la forma en que los han llevado a cabo."
+        },
+        {
+          "nombre": "Intercambio de zapatos para entender la empatía",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos de a tres. Se intercambian los zapatos para darse cuenta de las diferencias que existen. Escuchan la explicación de que empatía es 'ponerse en el lugar del otro', imaginarse cómo se siente, cómo piensa la otra persona en una situación determinada. Junto al profesor, concluyen que todos somos diferentes y por eso hay que intentar entender el punto de vista de la otra persona."
+        },
+        {
+          "nombre": "Análisis de situaciones y empatía",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes analizan junto al docente situaciones como las siguientes: Pedro y Daniel están jugando y de pronto Pedro se va sin aviso, dejando a Daniel solo. Javiera invita a jugar a una nueva compañera y le muestra el colegio. Marta le quita la colación a Lucía. Pablo defiende a Francisco de otros compañeros mayores que lo insultaban en el patio. Registran algunas conclusiones (por ejemplo: que es bueno ponerse en el lugar de otro y pensar cómo se siente y por qué se siente de cierta forma frente a determinadas situaciones. Esto se llama empatía)."
+        },
+        {
+          "nombre": "Lectura de cuento sobre dificultades de relación",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes leen un cuento sobre niños que tienen dificultades en la relación con sus pares en un establecimiento escolar. A partir del relato, reflexionan junto al profesor acerca de los sentimientos que experimentan los personajes, las formas de resolver los conflictos que se presentan en el relato y el derecho de todos a recibir un buen trato. Registran las conclusiones en su cuaderno y hacen un dibujo del cuento."
+        },
+        {
+          "nombre": "Conversación sobre distintos puntos de vista",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes participan en una conversación en la que haya distintos puntos de vista (por ejemplo: ante partidos de fútbol). Guiados por el docente, ensayan formas respetuosas de escuchar las opiniones y expresar las ideas (por ejemplo: respondiendo 'yo no pienso igual, pero me parece válida tu idea', 'es decir, tú piensas que…', 'tu forma de ver las cosas es distinta a la mía, pero la respeto')."
+        },
+        {
+          "nombre": "Expresión de sentimientos en Consejo de Curso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes expresan cómo se sienten en el curso. Anotan en el pizarrón las expresiones y entre todos buscan soluciones o formas de ayudar a los que lo necesitan."
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos; cada uno recibe una lista de posibles situaciones de agresión y proponen acciones para frenarla o evitarla. Los grupos eligen un representante para que exponga su trabajo al curso. Luego deciden y fundamentan entre todos cuáles son las mejores formas para frenar o evitar la violencia en cada una de las situaciones. Registran en su cuaderno la tabla confeccionada grupalmente."
+        },
+        {
+          "nombre": "Buzón de comentarios sobre agresiones",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes disponen un buzón en el cual pueden depositar comentarios en caso de que hayan visto, recibido o ejercido agresiones. El buzón será revisado semanalmente por el docente, quien tomará las medidas correspondientes a nivel particular y seleccionará algunos conflictos para reflexionar sobre ellos con todo el curso."
+        },
+        {
+          "nombre": "Lista de formas de pedir ayuda ante la violencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes elaboran una lista de formas de pedir ayuda en caso de ver, recibir o ejercer violencia. Además, identifican a adultos de su confianza a quienes pedir ayuda dentro del establecimiento educacional. Registran en su cuaderno."
+        },
+        {
+          "nombre": "Observación de láminas de violencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Observan distintas láminas con imágenes de violencia (por ejemplo: guerra, una persona golpeando a otra, una persona gritando a otra). Dan razones por las cuales estas conductas dañan a otros y proponen ideas para enfrentar estas situaciones."
+        },
+        {
+          "nombre": "Visita del encargado de convivencia escolar",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes invitan al encargado de convivencia escolar del establecimiento y escuchan su experiencia en el cargo. Le plantean sus dudas e inquietudes con respecto a la convivencia."
+        },
+        {
+          "nombre": "Encargados de convivencia escolar en el recreo",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Se elige a algunos alumnos como 'encargados de convivencia escolar en el recreo'. Se les da un distintivo y su tarea será comunicar al adulto responsable del turno de patio en caso de presenciar acciones que falten a la convivencia escolar; por ejemplo: agresiones, peleas, tirar basura."
+        },
+        {
+          "nombre": "Lista de ayuda mutua y compromisos",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes elaboran una lista de situaciones en las que pueden ayudarse mutuamente y toman compromisos para prestar ayuda. Por ejemplo: llamar al compañero que está ausente, prestarse cuadernos para ponerse al día, ayudar a hacer las tareas."
+        },
+        {
+          "nombre": "Evaluación de acuerdos de convivencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes evalúan el cumplimiento de los acuerdos tomados."
+        },
+        {
+          "nombre": "Evaluación del ambiente de aprendizaje en Consejo de Curso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes evalúan el ambiente de aprendizaje que hay en la sala. Sacan conclusiones y asumen compromisos para respetar el ambiente de todos los alumnos. Se puede guiar la evaluación a partir de las siguientes preguntas: ¿qué conductas perjudican nuestro ambiente de aprendizaje? ¿somos capaces de mantener el silencio para escucharnos? ¿podemos mantener la sala limpia y ordenada?"
+        },
+        {
+          "nombre": "Autoevaluación del aporte al ambiente de aprendizaje",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes se autoevalúan en relación con su aporte al buen ambiente de aprendizaje en clases. Comparten sus resultados y, junto al docente, sacan conclusiones y asumen compromisos para respetar el ambiente de todos los alumnos."
+        },
+        {
+          "nombre": "Lista de conductas de responsabilidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Mediante una lluvia de ideas, elaboran una lista de conductas que reflejen el ser responsable en el ámbito escolar; por ejemplo: traer los materiales y libros necesarios, hacer las tareas diarias, cumplir con los horarios de la jornada escolar, justificar debidamente los atrasos. Registran el listado en su cuaderno y luego cada estudiante elige tres responsabilidades que le cueste cumplir. Para cada una de ellas, escribirá ideas de cómo mejorarlas."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Al término de la jornada, anotan en su agenda informaciones variadas, como: las tareas que les dieron durante el día, detallándolas; las pruebas que les informaron; los materiales extra que deben traer, entre otras."
+        },
+        {
+          "nombre": "Rutina de orden al término de la jornada",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Al término de la jornada, los estudiantes realizan acciones como: guardar y ordenar sus materiales en la mochila o en el lugar correspondiente en la sala; limpiar su puesto, botando papeles o suciedades del suelo o la mesa; ubicar adecuada y ordenadamente su mesa y su silla; revisar la sala y ordenarla si fuese necesario; despedirse de sus compañeros y del docente, entre otras."
+        },
+        {
+          "nombre": "Calendario semanal de pruebas y tareas",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes elaboran junto al profesor un calendario semanal de pruebas, tareas y actividades que actualizan cada semana. Lo cuelgan en la sala en un lugar visible por todos. Guiados por el docente, lo revisan durante la mañana para organizar el día o la semana, sobre la base de preguntas como ¿cuántos días necesito estudiar para estar bien preparados para la prueba X?, ¿qué día tengo que comenzar a estudiar?, ¿cuándo nos juntamos para realizar el trabajo X?, ¿es suficiente el tiempo programado para terminarlo bien?, ¿cuándo organizaremos la salida educativa al lugar X?, etc."
+        },
+        {
+          "nombre": "Horario personal de estudio",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Con ayuda del docente, elaboran un horario personal de estudio que los ayude a organizar su tiempo para mejorar el aprendizaje. Consideran para ello tiempos de descanso y recreación. Luego lo ubican en un lugar visible o de fácil acceso."
+        },
+        {
+          "nombre": "Identificación de conductas que favorecen y perjudican el aprendizaje",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Identifican conductas o situaciones que favorecen y perjudican el ambiente de aprendizaje y toman acuerdos para mejorar."
+        },
+        {
+          "nombre": "Reflexión sobre la copia como conducta deshonesta",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Guiados por su profesor, identifican la copia como una conducta deshonesta, indicando las razones de ello."
+        },
+        {
+          "nombre": "Investigación y exposición de temas de interés",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes leen y buscan información por variados medios (como revistas, diarios, entrevistas o sitios en internet) sobre temas que les interesan, como cuidados para la mascota, película preferida, lugares favoritos para descansar o realizar actividad física, experiencias de vida interesantes, entre otras. Luego: eligen un tema de su interés, escriben preguntas relevantes con respecto al tema elegido, buscan la información, exponen al curso mediante una disertación breve, clara y entretenida, y responden dudas de sus compañeros."
+        },
+        {
+          "nombre": "Planificación de actividades según intereses",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Guiados por el docente, forman grupos según sus intereses y planifican actividades para realizar durante la jornada escolar. Por ejemplo: ir a la biblioteca a buscar información sobre diferentes temas, organizar juegos deportivos, tocar instrumentos musicales, entre otros."
+        },
+        {
+          "nombre": "Estrategias para llegar puntualmente a clases",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "En grupos de a cuatro, comentan las acciones que realizan para llegar puntualmente a clases. Seleccionan las más importantes, como: hacer la mochila el día anterior, dejar el uniforme ordenado la tarde anterior, acostarse a hora adecuada la noche anterior, calcular adecuadamente el tiempo de traslado a la escuela, entre otras. Luego las comunican a los demás y seleccionan, guiados por el docente, las acciones que el curso consideró más importantes de realizar. Finalmente, revisan las acciones que se requieren para llegar puntualmente a otras actividades, como deportes, fiestas familiares, cumpleaños, citas a doctores, entre otras."
+        },
+        {
+          "nombre": "Identificación de conductas de higiene diarias",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes, junto al docente, identifican las conductas de higiene diarias que deben seguir para mantener limpio su cuerpo y las escriben en el pizarrón. Luego hacen un listado de las rutinas que deben seguir en la casa y las que deben seguir en el colegio. Las escriben en su cuaderno."
+        },
+        {
+          "nombre": "Tarjeta de rutinas de higiene para el hogar",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "A partir de la actividad anterior, elaboran una tarjeta o pequeño afiche para recordar y registrar las rutinas de higiene y aseo diarias a realizar en su casa. Lo ponen en un lugar visible de la casa."
+        },
+        {
+          "nombre": "Encuesta de actividades recreativas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes realizan una encuesta anónima entre sus compañeros sobre las principales actividades recreativas que realizan y el tiempo que le dedican. La información recopilada se organiza y comparte en clases, y reflexionan en conjunto, guiados por el docente, sobre las actividades y el tiempo que les dedican, identificando hábitos recreacionales saludables y no saludables. Escriben las conclusiones en su cuaderno. A continuación, piensan y reflexionan en conjunto sobre qué hábitos mantienen comúnmente que no son saludables y por qué (por ejemplo: cantidad de horas frente al televisor) y buscan formas de modificarlos."
+        },
+        {
+          "nombre": "Lista de actividades saludables para el tiempo libre",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes elaboran, junto con el docente, una lista de actividades para realizar en el tiempo libre de manera saludable. Luego las diferencian entre actividades recreativas individuales y grupales, dando ideas de cuándo y cómo realizarlas. Las escriben en su cuaderno."
+        },
+        {
+          "nombre": "Campeonato en el recreo para promover actividad física",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes organizan un campeonato en el recreo para promover la actividad física."
+        },
+        {
+          "nombre": "Afiches de promoción de actividad física",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Hacen afiches para promover la actividad física y los pegan en las murallas del establecimiento."
+        },
+        {
+          "nombre": "Análisis de acciones para conciliar el sueño",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes reciben tarjetas con diferentes acciones que realizan antes de acostarse a dormir, las analizan y clasifican de acuerdo a si contribuyen o no a conciliar mejor el sueño y ponen en común sus conclusiones. Por ejemplo: jugar computador, tomar un vaso de leche tibia, darse un baño caliente, comer alimentos pesados, leer un cuento, ver televisión."
+        },
+        {
+          "nombre": "Importancia de dormir horas suficientes",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Escuchan una explicación sobre la importancia de dormir las horas suficientes cada día. En grupos de dos o tres, escriben una lista de dificultades para lograrlo y proponen medidas para solucionarlas. Presentan sus conclusiones al curso."
+        },
+        {
+          "nombre": "Diseño de menú saludable semanal",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Mediante una lluvia de ideas, comentan sobre los alimentos que suelen consumir en su casa. Escuchan una explicación sobre la comida saludable y a continuación, en parejas, diseñan un 'menú saludable' para una semana. Este debe incluir al menos tres comidas diarias y alimentos de todos los niveles de la pirámide alimenticia. Cada alumno escribe su menú en una hoja de bloc y lo lleva a su casa para compartirlo con sus padres o apoderados."
+        },
+        {
+          "nombre": "Cuidado de la intimidad en rutinas diarias",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Guiados por el docente, piensan en las rutinas o actividades diarias en que deben cuidarse de no exponer su cuerpo (por ejemplo: al ir al baño, cambiarse de ropa, entre otras), identificando formas adecuadas de cuidar su intimidad (cuidando de cerrar la puerta cuando acuden al baño, mantener la puerta cerrada cuando se cambian de ropa, entre otras)."
+        },
+        {
+          "nombre": "Carteles de autocuidado de la intimidad",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes elaboran carteles para recordar rutinas de autocuidado de su intimidad y los ponen en el lugar que corresponda. Por ejemplo: en el baño, que no olviden cerrar la puerta mientras realicen sus rutinas de aseo, entre otras."
+        },
+        {
+          "nombre": "Lista de formas de recibir cariño y consentimiento",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Elaboran una lista de formas en las que habitualmente reciben cariño; por ejemplo: abrazos, besos, cariños en la cabeza. Junto al docente, comentan que estas expresiones de cariño siempre deben ser con el consentimiento del alumno y en ningún caso hacerlos sentir incómodas o confusos."
+        },
+        {
+          "nombre": "Acciones ante cariños incómodos",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Proponen ideas de acciones que podrían tomar en caso de recibir cariños confusos o incómodos; por ejemplo: contarle a un adulto, decir 'no', alejarse, pedir ayuda a un adulto. El docente explica que hay partes privadas del cuerpo que no deben ser tocadas por otros, excepto en chequeos médicos y rutinas de higiene."
+        },
+        {
+          "nombre": "Dramatización de situaciones de riesgo",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Dramatizan posibles situaciones de riesgo, mostrando cómo se pueden proteger; por ejemplo: no dar información a extraños por teléfono ni internet sin el consentimiento de los padres o apoderados, no abrir la puerta a personas desconocidas si están solos, saberse el teléfono de contacto de los padres o apoderados."
+        },
+        {
+          "nombre": "Investigación sobre drogas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En grupos de cuatro, investigan y completan una ficha sobre algunas drogas (tabaco y alcohol), indicando qué es una droga, por qué es de riesgo, ideas para promover una vida saludable sin esta sustancia y qué podemos hacer para evitar su consumo."
+        },
+        {
+          "nombre": "Carteles para promover una vida saludable sin drogas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En parejas, elaboran carteles para promover una vida saludable, sin drogas, los presentan al curso y se seleccionan los mejores, los cuales se pegan en los lugares correspondientes del establecimiento."
+        },
+        {
+          "nombre": "Análisis de situaciones de entrega de información personal",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Divididos en grupos de cuatro, analizan situaciones como: te pierdes en una calle y ves a un carabinero; te pierdes en una calle y una mujer te pide tus datos para llevarte a tu casa; vas al hospital y te piden tus datos personales; una niñita que conociste en la plaza te pide tu teléfono para que se junten otro día; un desconocido te envía una invitación por una red social; un desconocido llama a tu casa y pide la dirección para ir a dejar una carta. Especifican qué harían en cada caso y fundamentan su respuesta."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1 - Identificación de cualidades personales",
+          "oas_evaluados": [
+            1
+          ],
+          "actividad_evaluacion": "Los estudiantes seleccionan, de una lista de cualidades que se les proporciona, las siete que más lo identifican, describen dos situaciones en que las manifiesten y dos consecuencias positivas de tener esas cualidades.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifica sus cualidades.",
+              "Reconoce formas en que se manifiestan.",
+              "Reconoce consecuencias positivas de ellas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 1 - Participación en la organización del curso",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "Durante un periodo determinado, el docente observa a todos sus alumnos y registra sus observaciones en una pauta de observación que considera: participa en la organización de actividades de curso, propone iniciativas y acoge las de sus compañeros, permite la participación de todos los alumnos en las decisiones de curso, cumple con las responsabilidades que le corresponden.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participa en la organización de las actividades del curso.",
+              "Acepta propuestas e iniciativas de otros.",
+              "Cumple con las responsabilidades y cargos asumidos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2 - Propuestas para favorecer la convivencia",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Se dividen en grupos de cinco o seis alumnos y hacen una lista de ideas para favorecer la convivencia en el curso (por ejemplo: en este curso no se aceptarán sobrenombres, en este curso nadie le sacará la colación a otra persona, en este curso todos pedirán las cosas por favor, entre otras). Cada grupo presenta sus ideas al curso y entre todos votan por las diez más importantes para trabajar. Las escriben en un papelógrafo y las pegan en un lugar visible de la sala.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Proponen formas de favorecer la convivencia.",
+              "Sus propuestas son realistas.",
+              "Sus propuestas reflejan las necesidades del curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3 - Carta al rector sobre convivencia",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Los estudiantes escriben una carta al rector del establecimiento, en la cual expresen lo que han aprendido sobre la convivencia durante el año. Deben aludir a los compromisos asumidos en torno a la convivencia, a las normas que se han contemplado y su relevancia, a la manera en que se ha favorecido el respeto hacia los demás y hacia el ambiente de aprendizaje.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Acuerdan y asumen compromisos para favorecer la convivencia.",
+              "Prestan ayuda a otras personas en respuesta a las necesidades o dificultades que estas posean.",
+              "Identifican formas de respetar el ambiente de aprendizaje.",
+              "Permiten que sus compañeros se expresen y escuchan sus opiniones e ideas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 4 - Autoevaluación de responsabilidades escolares",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes anotan las diferentes tareas y responsabilidades que tienen en cada una de las asignaturas y evalúan cómo las están cumpliendo de acuerdo a una pauta de autoevaluación que considera: qué he logrado y en qué podría mejorar.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cumplen con sus responsabilidades escolares.",
+              "Entregan sus trabajos dentro del período de tiempo asignado para ello."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 5 - Exposición de tema de interés personal",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Cada estudiante selecciona un tema de su interés y prepara una exposición para presentarla al curso. Además, propone actividades que tengan relación con el tema de interés expuesto para realizar junto a sus compañeros.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Busca información sobre un tema de su interés.",
+              "Presenta al curso la información en forma creativa.",
+              "Propone actividades en relación con el tema de interés para realizar junto a sus compañeros."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 6 - Autoevaluación de responsabilidad escolar",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes se autoevalúan con respecto a la responsabilidad escolar con una pauta de autoevaluación que considera los siguientes indicadores: ¿Cumplo con mis tareas? ¿Estudio para las pruebas? ¿Traigo la agenda firmada todos los días? ¿Traigo los materiales? ¿Cumplo con mis responsabilidades de curso? ¿Cumplo con mis compromisos?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cumplen con sus responsabilidades escolares."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 7 - Horario saludable",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes observan un horario con imágenes de las actividades y rutinas que realiza un niño de enseñanza básica. En él van identificando, en conjunto, aquellas rutinas y actividades que les parecen saludables y aquellas que les parecen no saludables, explicando el porqué de su observación. Anotan las conclusiones. En grupos de tres, construyen un horario ideal de acuerdo a necesidades de estudio, recreación, alimentación y descanso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican actividades saludables para realizar en su tiempo libre.",
+              "Identifican actividades físicas para realizar en su tiempo libre.",
+              "Elaboran un horario equilibrado para un estudiante de su edad."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 8 - Autoevaluación de hábitos de tiempo libre",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes se autoevalúan en relación con sus hábitos y las actividades que realizan en su tiempo libre. Comentan la autoevaluación con sus padres.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Distinguen actividades saludables de aquellas que no lo son.",
+              "Evalúan la realización de prácticas de vida saludable en su vida cotidiana."
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "3ro Básico",
+    "asignatura": "Orientación",
+    "unidad": {
+      "numero_unidad": 2,
+      "nombre_unidad": "Unidad 2",
+      "proposito": "En esta unidad, se espera que los estudiantes identifiquen emociones experimentadas por ellos y por otros y practiquen estrategias personales de manejo emocional, en el marco de la resolución de conflictos. Es central que se trabajen situaciones cotidianas en las que exista conflicto y el docente los guíe a su resolución, evaluando y practicando diferentes alternativas para lograrlo. Transversalmente, se continúa desarrollando la participación de los alumnos en el Consejo de Curso y en su comunidad escolar y fortaleciendo el trabajo escolar organizado y planificado. También se trabaja con los estudiantes los temas de la convivencia escolar, el mantenimiento de una vida saludable y la práctica de conductas de autocuidado.",
+      "palabras_clave": [
+        "Emociones",
+        "alegría",
+        "pena",
+        "rabia",
+        "miedo",
+        "expresión de emociones",
+        "sentimientos",
+        "normas de convivencia",
+        "respeto",
+        "conflictos",
+        "acuerdos",
+        "organización",
+        "metas",
+        "superación",
+        "hábitos",
+        "esfuerzo",
+        "responsabilidad",
+        "vida saludable",
+        "rutinas de higiene",
+        "descanso",
+        "recreación"
+      ],
+      "conocimientos_previos": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "actitudes": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "numero": 2,
+          "tipo": "OA",
+          "descripcion": "Identificar y aceptar sus propias emociones y las de los demás, y practicar estrategias personales de manejo emocional (por ejemplo, esperar un tiempo, escuchar al otro y considerar su impacto en los demás).",
+          "indicadores": [
+            "Identifican emociones que han experimentado en situaciones importantes para ellos.",
+            "Describen las emociones que experimentan ante situaciones que los afectan negativa o positivamente.",
+            "Reconocen las emociones experimentadas por otros en diversas situaciones.",
+            "Comparan las emociones propias y las experimentadas por otras personas ante una misma situación.",
+            "Identifican expresiones faciales, gestuales o verbales que demuestran emociones.",
+            "Proponen diversas formas de expresar una misma emoción.",
+            "Describen consecuencias que pueden tener en otros y en sí mismos las diversas formas de expresar una misma emoción.",
+            "Señalan las consecuencias negativas que genera la expresión impulsiva de algunas emociones en ciertas ocasiones.",
+            "Distinguen entre formas apropiadas e inapropiadas de expresar emociones en una situación determinada.",
+            "Proponen formas diversas de expresar adecuadamente una emoción determinada.",
+            "Controlan la expresión inapropiada de emociones mediante estrategias como considerar las consecuencias de lo que harán, escuchar a otros, esperar un tiempo."
+          ]
+        },
+        {
+          "numero": 6,
+          "tipo": "OA",
+          "descripcion": "Resolver conflictos entre pares en forma guiada, y aplicar estrategias diversas de resolución de problemas, tales como escuchar, describir los sentimientos del otro y buscar un acuerdo que satisfaga a ambas partes.",
+          "indicadores": [
+            "Reconocen y describen las situaciones cotidianas en las cuales se generan conflictos (juego en el patio, actividades no dirigidas, trabajo en grupo, turnos de baño, filas, entre otros).",
+            "Reconocen los distintos intereses en una situación de conflicto.",
+            "Proponen distintas alternativas de solución pacífica para determinados conflictos.",
+            "Representan situaciones de conflicto y diversas soluciones pacíficas posibles con diversos medios (como dibujos o dramatizaciones).",
+            "Evalúan las alternativas de solución para un conflicto determinado, distinguiendo sus potencialidades y limitaciones.",
+            "Aplican estrategias previamente aprendidas o evaluadas para resolver conflictos que se le presentan en su vida cotidiana.",
+            "Promueven la resolución pacífica de conflictos entre compañeros y en la comunidad escolar."
+          ]
+        },
+        {
+          "numero": 7,
+          "tipo": "OA",
+          "descripcion": "Participar en forma guiada en la comunidad escolar y en la organización del curso: proponiendo y aceptando iniciativas y asumiendo responsabilidades; respetando los derechos de los demás en la distribución de roles y responsabilidades.",
+          "indicadores": [
+            "Participan en la organización de las actividades del curso.",
+            "Aceptan propuestas e iniciativas de otros.",
+            "Proponen tareas a realizar para lograr un objetivo en común.",
+            "Proponen ideas para resolver algún problema que afecte al curso o la comunidad.",
+            "Cumplen con las responsabilidades y cargos asumidos.",
+            "Organizan las responsabilidades y actividades del curso, respetando el derecho de todos a participar.",
+            "Distribuyen roles y funciones, sin distinciones de género.",
+            "Evalúan cumplimiento de las responsabilidades."
+          ]
+        },
+        {
+          "numero": 5,
+          "tipo": "OA",
+          "descripcion": "Manifestar actitudes de solidaridad y respeto, que favorezcan la convivencia, como: actuar en forma empática (poniéndose en el lugar del otro); utilizar un buen trato (por ejemplo, saludar, despedirse, pedir por favor); evitar y rechazar toda forma de violencia y discriminación, ya sea por etnia, género, religión, nacionalidad, etc.; respetar el derecho de todos a expresar opiniones y ser diferente; prestar ayuda especialmente a quien lo necesite; respetar el ambiente de aprendizaje.",
+          "indicadores": [
+            "Acuerdan y asumen compromisos para favorecer la convivencia.",
+            "Mencionan formas apropiadas de conducirse ante una persona que manifiesta sentimientos como tristeza, vergüenza, rabia o impotencia.",
+            "Saludan y se despiden de las personas con las que se relacionan cotidianamente.",
+            "Identifican distintos tipos de violencia en situaciones dadas.",
+            "Proponen formas de evitar o frenar la violencia.",
+            "Permiten que sus compañeros se expresen y escuchan sus opiniones e ideas.",
+            "Identifican las implicancias que tiene para las personas y para el grupo el no escuchar o respetar las ideas de otras personas.",
+            "Identifican situaciones en las que sus pares necesitan ayuda.",
+            "Prestan ayuda a otras personas en respuesta a las necesidades o dificultades que estas posean.",
+            "Identifican formas de respetar el ambiente de aprendizaje.",
+            "Asumen compromisos para respetar el ambiente de aprendizaje."
+          ]
+        },
+        {
+          "numero": 8,
+          "tipo": "OA",
+          "descripcion": "Manifestar hábitos y actitudes de esfuerzo e interés que favorezcan el aprendizaje, como: asistir puntualmente a clases y cumplir a tiempo con los trabajos pedidos; organizar su tiempo y sus útiles; respetar el estudio y el trabajo de otros; evitar el plagio y la copia; preguntar y buscar información sobre temas de su interés; desarrollar actividades en relación a sus propios intereses.",
+          "indicadores": [
+            "Se presentan en la sala de clases a la hora de inicio de las actividades.",
+            "Cumplen con sus responsabilidades escolares.",
+            "Entregan sus trabajos dentro del período de tiempo asignado para ello.",
+            "Se preocupan de justificar debidamente sus atrasos.",
+            "Elaboran un horario personal de estudio.",
+            "Usan la agenda para organizar sus actividades.",
+            "Guardan y ordenan sus materiales al finalizar las actividades.",
+            "Permiten que sus compañeros desarrollen y finalicen debidamente sus actividades.",
+            "Identifican e intentan superar condiciones que pueden afectar el trabajo escolar.",
+            "Identifican la copia como una conducta deshonesta.",
+            "Realizan sus pruebas y evaluaciones basados en sus propios conocimientos, sin recurrir a la copia.",
+            "Buscan información sobre temas que les interesen.",
+            "Se dan cuenta de lo que aprenden y lo aplican en diversas situaciones.",
+            "Llevan a cabo actividades recreativas que les resulten interesantes o entretenidas de manera regular."
+          ]
+        },
+        {
+          "numero": 4,
+          "tipo": "OA",
+          "descripcion": "Identificar y practicar en forma autónoma conductas protectoras y de autocuidado en relación a: rutinas de higiene; actividades de descanso, recreación y actividad física; hábitos de alimentación; resguardo del cuerpo y la intimidad; la entrega de información personal; situaciones de potencial abuso; consumo de drogas.",
+          "indicadores": [
+            "Siguen rutinas diarias de higiene (ducharse, lavarse la cara, manos y dientes).",
+            "Promueven la práctica de rutinas de higiene.",
+            "Distinguen actividades saludables de aquellas que no lo son.",
+            "Proponen actividades recreativas saludables para realizar en su tiempo libre.",
+            "Evalúan la realización de prácticas de vida saludable en su vida cotidiana.",
+            "Realizan actividades recreativas regularmente en su tiempo libre.",
+            "Identifican acciones que facilitan el descanso y la conciliación del sueño.",
+            "Explican la importancia de dormir las horas suficientes de acuerdo a su edad.",
+            "Identifican aspectos saludables y no saludables de sus propios hábitos alimenticios.",
+            "Proponen formas de mejorar sus hábitos alimenticios.",
+            "Nombran conductas que contribuyen a cuidar sus cuerpos.",
+            "Cuidan su intimidad en diversas circunstancias (baños, camarines u otros).",
+            "Reconocen situaciones de riesgo en las que se puede ver afectado el cuidado de su intimidad.",
+            "Identifican y describen situaciones en las que deben resguardar la entrega de información personal.",
+            "Describen formas de enfrentar situaciones en las que se les solicita entregar información personal e íntima que deben resguardar.",
+            "Identifican efectos de las drogas en la vida de las personas.",
+            "Reconocen situaciones de riesgo que pueden estar asociadas al consumo de sustancias.",
+            "Describen y llevan a cabo formas de evitar situaciones de riesgo asociadas al consumo de sustancias."
+          ]
+        }
+      ],
+      "actividades_sugeridas": [
+        {
+          "nombre": "Identificación de emociones a partir de un cuento",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes escuchan o leen un cuento a partir del cual identifican las emociones que experimentan los personajes y la forma en que lo expresan. Pueden guiarse por preguntas como: ¿cómo cree que se siente 'x'? ¿Cómo sabe que se siente así? ¿Cómo se sentiría usted en su lugar?, entre otras."
+        },
+        {
+          "nombre": "Diccionario de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Mediante una lluvia de ideas, nombran todas las emociones que conocen. Cada uno busca en el diccionario aquellas cuyo significado no sabe y redacta un breve párrafo en el cual se dé una situación que manifieste la emoción. Por ejemplo: 'Mi papá me felicitó, porque ordené mi pieza y ayudé a limpiar la casa. Yo me sentí muy alegre'."
+        },
+        {
+          "nombre": "Mímica de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes voluntariamente realizan la mímica corporal de una emoción que el docente le asigna para que los demás la adivinen. Deben indicar cómo identificaron la emoción y si hubo gestos específicos que les facilitaron adivinarlo (por ejemplo: mirada, posición de los ojos, de la boca, entre otros)."
+        },
+        {
+          "nombre": "Identificación de emociones en la rutina diaria",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes registran en la pizarra la rutina propia de un alumno de 3° básico en un día de colegio. Luego, entre todos, van identificando las emociones que suelen tener en cada uno de esos momentos, señalando por qué. Las registran en una ficha de trabajo. Guiados por el docente, comentan que cada uno puede experimentar distintas emociones durante el día y que también pueden experimentar emociones diferentes a las de sus compañeros."
+        },
+        {
+          "nombre": "Cómic de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Forman parejas y realizan un comic, de modo que el diálogo de los personajes exprese diferentes emociones en forma evidente. Exponen los trabajos al curso."
+        },
+        {
+          "nombre": "Ficha de reflexión sobre emociones personales",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Los estudiantes completan una ficha para reflexionar sobre sus emociones y conocer sus formas de reaccionar ante una lista de circunstancias. La ficha incluye oraciones como: 'Cuando estoy triste, yo...', 'Cuando recibo un regalo, yo...', 'Cuando llego a mi casa después del colegio, yo...', 'Cuando juego con mis amigos, yo...', 'Yo quiero mucho a...', 'Yo me enojo cuando...', 'Lo que me hace muy feliz es...', 'Mis amigos dicen que yo...', 'Mis papás dicen que yo...', 'Cuando estoy muy feliz, yo...'."
+        },
+        {
+          "nombre": "Formas apropiadas e inapropiadas de expresar emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Elaboran una lista de las posibles formas de expresar una emoción determinada a partir de varias situaciones planteadas. Luego las clasifican en formas apropiadas y no apropiadas, según el contexto en que se dan. Fundamentan su elección."
+        },
+        {
+          "nombre": "Dramatización de formas apropiadas de expresar emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la actividad anterior, seleccionan algunas situaciones y dramatizan las formas apropiadas de expresión de emociones que ellos propusieron."
+        },
+        {
+          "nombre": "Ficha de estrategias de manejo emocional",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "Completan una ficha en la que proponen formas de manejar algunas expresiones de las emociones. Por ejemplo: respirar profundo, contar hasta 10 antes de actuar, salir a caminar, esperar que la emoción se pase, conversar con alguien."
+        },
+        {
+          "nombre": "Dramatización de formas de manejo emocional",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "A partir de la actividad anterior, dramatizan las formas de manejo de la expresión de sus emociones, seleccionando algunas situaciones parecidas."
+        },
+        {
+          "nombre": "Afiches de estrategias de expresión de emociones",
+          "oas_asociados": [
+            2
+          ],
+          "descripcion": "En grupos, preparan afiches para promover estrategias de expresar las emociones en forma apropiada. Los exponen frente al curso."
+        },
+        {
+          "nombre": "Listado de conflictos frecuentes en el ámbito escolar",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos. Cada grupo identifica y hace un listado de problemas y conflictos que se les presentan con frecuencia en la rutina y ámbito escolar. Luego el grupo elige un representante para que exponga su trabajo al curso."
+        },
+        {
+          "nombre": "Propuesta de soluciones para conflictos escolares",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "A partir de la actividad anterior, escogen algún o algunos conflictos que quisieran solucionar. Para proponer alternativas de solución, se dividen en grupos de a cuatro o cinco. Exponen sus trabajos y proponen diversas maneras de solucionarlo, escogiendo en conjunto una de ellas."
+        },
+        {
+          "nombre": "Análisis guiado de un problema de convivencia",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Los estudiantes, junto al profesor, eligen un problema de convivencia; por ejemplo: 'A una niña se le perdió el monedero en la sala de clases' o 'Un alumno no hace las tareas y luego las copia de otra persona'. Guiados por el docente, analizan la situación a partir de las siguientes preguntas: Definir el problema (¿Qué sucede?), Analizar el problema (¿Por qué pasa esto?), Generar alternativas de solución (¿Qué puedo hacer para resolverlo?), Evaluar alternativas de solución (¿Cuál de estas soluciones es mejor?), Elegir la alternativa más adecuada, Implementar la opción elegida (¿Cómo voy a aplicar la solución que escogí?), Evaluar la solución (¿Cómo podría resultar?). Escriben los resultados en su cuaderno."
+        },
+        {
+          "nombre": "Dramatización de conflictos y soluciones",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Se divide el curso en grupos de tres o cuatro estudiantes y cada grupo dramatiza una situación en la que se experimente conflicto entre los compañeros. Deben proponer alternativas de resolución y ver cuál sería la mejor alternativa, anticipando las posibles consecuencias de las alternativas propuestas."
+        },
+        {
+          "nombre": "Análisis de problemas interpersonales en grupo",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "El docente entrega a cada grupo de cuatro o cinco alumnos una hoja que narre un problema interpersonal. El grupo debe identificar cuál es el problema, proponer distintas soluciones y elegir una de ellas, considerando las consecuencias que tendrán. Los grupos exponen al curso."
+        },
+        {
+          "nombre": "Afiche de pasos para la resolución de conflictos",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "En grupos de cuatro estudiantes, elaboran un afiche que contenga los pasos o las preguntas de la resolución de conflictos. Lo presentan a la clase, se elige el mejor y queda expuesto en el mural para recurrir a él cuando sea necesario."
+        },
+        {
+          "nombre": "Aplicación de resolución de conflictos en la familia",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Cada alumno copia en su cuaderno los pasos de la metodología de resolución de conflictos y lleva de tarea el aplicarla en una situación familiar con ayuda de sus padres o apoderados (por ejemplo: ante peleas entre hermanos, para definir el tiempo en que se ve televisión, para dividir las responsabilidades de la casa, entre otras)."
+        },
+        {
+          "nombre": "Aplicación de resolución de conflictos a partir de un relato",
+          "oas_asociados": [
+            6
+          ],
+          "descripcion": "Escuchan un relato de relaciones interpersonales que involucre algún conflicto entre los personajes. En forma individual, reconocen el conflicto y aplican los demás pasos de la resolución de problemas. Lo ponen en común y escriben las conclusiones en el cuaderno."
+        },
+        {
+          "nombre": "Consejo de Curso: organización del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes escuchan al docente explicar qué es el Consejo de Curso. Escriben una lista de actividades que realizarán en esta instancia (división de responsabilidades, analizar el funcionamiento del curso, organizar actividades, entre otras) y la copian en su cuaderno."
+        },
+        {
+          "nombre": "Lluvia de ideas sobre tareas de organización del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El profesor guía una lluvia de ideas para hacer un listado de las tareas en que ellos pueden colaborar en la organización del curso; por ejemplo: repartir los materiales, borrar el pizarrón, pasar la lista, abrir las ventanas durante el recreo, poner la fecha, mantener el diario mural, entre otras. Luego proponen ideas para organizarse, definiendo turnos, funciones, cargos y otros."
+        },
+        {
+          "nombre": "Lluvia de ideas sobre ayuda mutua",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "El profesor guía una lluvia de ideas para hacer un listado de las acciones que pueden realizar para ayudarse mutuamente; por ejemplo: llamar al que está enfermo, ayudarse en las tareas, invitar a jugar en los recreos. Luego proponen ideas para organizarse, definiendo turnos, funciones, cargos y otros."
+        },
+        {
+          "nombre": "Organización de convivencia de curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una convivencia de curso o entre amigos. Definen la música, la decoración, las actividades que se harán en la convivencia, los alimentos que van a consumir, quiénes son los responsables de traerlos, el horario en que se va a realizar, entre otras."
+        },
+        {
+          "nombre": "Evaluación bimestral de responsabilidades",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Guiados por el docente, los estudiantes evalúan al término de cada bimestre la organización y el cumplimiento de responsabilidades, las actividades realizadas, la participación en ellas, entre otras, proponiendo en conjunto estrategias para mejorar ambos aspectos."
+        },
+        {
+          "nombre": "Organización del día de la limpieza",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar un 'día de la limpieza'. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Mejora de la convivencia escolar en Consejo de Curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes identifican aspectos que pueden mejorar en relación con la convivencia escolar. Guiados por el docente, plantean iniciativas, expresan sus percepciones, experiencias e ideas y buscan formas para darles solución, acogiendo y respetando las distintas percepciones, ideas y propuestas. Registran en su cuaderno los acuerdos."
+        },
+        {
+          "nombre": "Organización de actividad de curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una actividad de curso. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Análisis de comportamiento y rendimiento",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes, guiados por el profesor, analizan cómo va su comportamiento y rendimiento en las distintas asignaturas. Se proponen soluciones para mejorar aquellos aspectos que sean necesarios."
+        },
+        {
+          "nombre": "Organización de visitas y celebraciones del curso",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes se organizan para visitar a los que están enfermos, recordar los cumpleaños de los alumnos del curso, ayudar en las tareas."
+        },
+        {
+          "nombre": "Organización de convivencia de fin de año",
+          "oas_asociados": [
+            7
+          ],
+          "descripcion": "Los estudiantes proponen ideas para organizar una convivencia de fin de año. Definen quiénes traerán los materiales necesarios, el horario en que se va a realizar, entre otros."
+        },
+        {
+          "nombre": "Listado de conductas para relaciones interpersonales positivas",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En grupos de cinco alumnos, elaboran un listado de conductas y/o actitudes que se ponen en práctica en las relaciones interpersonales positivas; por ejemplo: preguntar cómo está la otra persona, escucharla con atención, ser cariñoso y respetuoso, invitar a jugar, pensar cómo se siente la otra persona con lo que yo le digo o hago, dar las gracias, pedir por favor. Un representante del grupo expone el trabajo al curso y se anotan las principales ideas en el pizarrón. Cuando todos los grupos han expuesto sus ideas, seleccionan del listado general aquellas conductas o actitudes que más les parecen practicables en las relaciones que hay en el curso (al menos cinco). Las anotan en una cartulina y cada estudiante firma en ella como forma de comprometerse a practicar esas conductas o actitudes."
+        },
+        {
+          "nombre": "Evaluación de compromisos de convivencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Luego de una semana, profesor y alumnos evalúan los compromisos adquiridos y la forma en que los han llevado a cabo."
+        },
+        {
+          "nombre": "Intercambio de zapatos para entender la empatía",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos de a tres. Se intercambian los zapatos para darse cuenta de las diferencias que existen. Escuchan la explicación de que empatía es 'ponerse en el lugar del otro', imaginarse cómo se siente, cómo piensa la otra persona en una situación determinada. Junto al profesor, concluyen que todos somos diferentes y por eso hay que intentar entender el punto de vista de la otra persona."
+        },
+        {
+          "nombre": "Análisis de situaciones y empatía",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes analizan junto al docente situaciones como las siguientes: Pedro y Daniel están jugando y de pronto Pedro se va sin aviso, dejando a Daniel solo. Javiera invita a jugar a una nueva compañera y le muestra el colegio. Marta le quita la colación a Lucía. Pablo defiende a Francisco de otros compañeros mayores que lo insultaban en el patio. Registran algunas conclusiones (por ejemplo: que es bueno ponerse en el lugar de otro y pensar cómo se siente y por qué se siente de cierta forma frente a determinadas situaciones. Esto se llama empatía)."
+        },
+        {
+          "nombre": "Lectura de cuento sobre dificultades de relación",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes leen un cuento sobre niños que tienen dificultades en la relación con sus pares en un establecimiento escolar. A partir del relato, reflexionan junto al profesor acerca de los sentimientos que experimentan los personajes, las formas de resolver los conflictos que se presentan en el relato y el derecho de todos a recibir un buen trato. Registran las conclusiones en su cuaderno y hacen un dibujo del cuento."
+        },
+        {
+          "nombre": "Conversación sobre distintos puntos de vista",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes participan en una conversación en la que haya distintos puntos de vista (por ejemplo: ante partidos de fútbol). Guiados por el docente, ensayan formas respetuosas de escuchar las opiniones y expresar las ideas (por ejemplo: respondiendo 'yo no pienso igual, pero me parece válida tu idea', 'es decir, tú piensas que…', 'tu forma de ver las cosas es distinta a la mía, pero la respeto')."
+        },
+        {
+          "nombre": "Expresión de sentimientos en Consejo de Curso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes expresan cómo se sienten en el curso. Anotan en el pizarrón las expresiones y entre todos buscan soluciones o formas de ayudar a los que lo necesitan."
+        },
+        {
+          "nombre": "Análisis de situaciones de agresión",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes se dividen en grupos; cada uno recibe una lista de posibles situaciones de agresión y proponen acciones para frenarla o evitarla. Los grupos eligen un representante para que exponga su trabajo al curso. Luego deciden y fundamentan entre todos cuáles son las mejores formas para frenar o evitar la violencia en cada una de las situaciones. Registran en su cuaderno la tabla confeccionada grupalmente."
+        },
+        {
+          "nombre": "Buzón de comentarios sobre agresiones",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes disponen un buzón en el cual pueden depositar comentarios en caso de que hayan visto, recibido o ejercido agresiones. El buzón será revisado semanalmente por el docente, quien tomará las medidas correspondientes a nivel particular y seleccionará algunos conflictos para reflexionar sobre ellos con todo el curso."
+        },
+        {
+          "nombre": "Lista de formas de pedir ayuda ante la violencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes elaboran una lista de formas de pedir ayuda en caso de ver, recibir o ejercer violencia. Además, identifican a adultos de su confianza a quienes pedir ayuda dentro del establecimiento educacional. Registran en su cuaderno."
+        },
+        {
+          "nombre": "Observación de láminas de violencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Observan distintas láminas con imágenes de violencia (por ejemplo: guerra, una persona golpeando a otra, una persona gritando a otra). Dan razones por las cuales estas conductas dañan a otros y proponen ideas para enfrentar estas situaciones."
+        },
+        {
+          "nombre": "Visita del encargado de convivencia escolar",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes invitan al encargado de convivencia escolar del establecimiento y escuchan su experiencia en el cargo. Le plantean sus dudas e inquietudes con respecto a la convivencia."
+        },
+        {
+          "nombre": "Encargados de convivencia escolar en el recreo",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Se elige a algunos alumnos como 'encargados de convivencia escolar en el recreo'. Se les da un distintivo y su tarea será comunicar al adulto responsable del turno de patio en caso de presenciar acciones que falten a la convivencia escolar; por ejemplo: agresiones, peleas, tirar basura."
+        },
+        {
+          "nombre": "Lista de ayuda mutua y compromisos",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes elaboran una lista de situaciones en las que pueden ayudarse mutuamente y toman compromisos para prestar ayuda. Por ejemplo: llamar al compañero que está ausente, prestarse cuadernos para ponerse al día, ayudar a hacer las tareas."
+        },
+        {
+          "nombre": "Evaluación de acuerdos de convivencia",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "Los estudiantes evalúan el cumplimiento de los acuerdos tomados."
+        },
+        {
+          "nombre": "Evaluación del ambiente de aprendizaje en Consejo de Curso",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes evalúan el ambiente de aprendizaje que hay en la sala. Sacan conclusiones y asumen compromisos para respetar el ambiente de todos los alumnos. Se puede guiar la evaluación a partir de las siguientes preguntas: ¿qué conductas perjudican nuestro ambiente de aprendizaje? ¿somos capaces de mantener el silencio para escucharnos? ¿podemos mantener la sala limpia y ordenada?"
+        },
+        {
+          "nombre": "Autoevaluación del aporte al ambiente de aprendizaje",
+          "oas_asociados": [
+            5
+          ],
+          "descripcion": "En Consejo de Curso, los estudiantes se autoevalúan en relación con su aporte al buen ambiente de aprendizaje en clases. Comparten sus resultados y, junto al docente, sacan conclusiones y asumen compromisos para respetar el ambiente de todos los alumnos."
+        },
+        {
+          "nombre": "Lista de conductas de responsabilidad escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Mediante una lluvia de ideas, elaboran una lista de conductas que reflejen el ser responsable en el ámbito escolar; por ejemplo: traer los materiales y libros necesarios, hacer las tareas diarias, cumplir con los horarios de la jornada escolar, justificar debidamente los atrasos. Registran el listado en su cuaderno y luego cada estudiante elige tres responsabilidades que le cueste cumplir. Para cada una de ellas, escribirá ideas de cómo mejorarlas."
+        },
+        {
+          "nombre": "Uso de la agenda escolar",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Al término de la jornada, anotan en su agenda informaciones variadas, como: las tareas que les dieron durante el día, detallándolas; las pruebas que les informaron; los materiales extra que deben traer, entre otras."
+        },
+        {
+          "nombre": "Rutina de orden al término de la jornada",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Al término de la jornada, los estudiantes realizan acciones como: guardar y ordenar sus materiales en la mochila o en el lugar correspondiente en la sala; limpiar su puesto, botando papeles o suciedades del suelo o la mesa; ubicar adecuada y ordenadamente su mesa y su silla; revisar la sala y ordenarla si fuese necesario; despedirse de sus compañeros y del docente, entre otras."
+        },
+        {
+          "nombre": "Calendario semanal de pruebas y tareas",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes elaboran junto al profesor un calendario semanal de pruebas, tareas y actividades que actualizan cada semana. Lo cuelgan en la sala en un lugar visible por todos. Guiados por el docente, lo revisan durante la mañana para organizar el día o la semana, sobre la base de preguntas como ¿cuántos días necesito estudiar para estar bien preparados para la prueba X?, ¿qué día tengo que comenzar a estudiar?, ¿cuándo nos juntamos para realizar el trabajo X?, ¿es suficiente el tiempo programado para terminarlo bien?, ¿cuándo organizaremos la salida educativa al lugar X?, etc."
+        },
+        {
+          "nombre": "Horario personal de estudio",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Con ayuda del docente, elaboran un horario personal de estudio que los ayude a organizar su tiempo para mejorar el aprendizaje. Consideran para ello tiempos de descanso y recreación. Luego lo ubican en un lugar visible o de fácil acceso."
+        },
+        {
+          "nombre": "Identificación de conductas que favorecen y perjudican el aprendizaje",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Identifican conductas o situaciones que favorecen y perjudican el ambiente de aprendizaje y toman acuerdos para mejorar."
+        },
+        {
+          "nombre": "Reflexión sobre la copia como conducta deshonesta",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Guiados por su profesor, identifican la copia como una conducta deshonesta, indicando las razones de ello."
+        },
+        {
+          "nombre": "Investigación y exposición de temas de interés",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Los estudiantes leen y buscan información por variados medios (como revistas, diarios, entrevistas o sitios en internet) sobre temas que les interesan, como cuidados para la mascota, película preferida, lugares favoritos para descansar o realizar actividad física, experiencias de vida interesantes, entre otras. Luego: eligen un tema de su interés, escriben preguntas relevantes con respecto al tema elegido, buscan la información, exponen al curso mediante una disertación breve, clara y entretenida, y responden dudas de sus compañeros."
+        },
+        {
+          "nombre": "Planificación de actividades según intereses",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "Guiados por el docente, forman grupos según sus intereses y planifican actividades para realizar durante la jornada escolar. Por ejemplo: ir a la biblioteca a buscar información sobre diferentes temas, organizar juegos deportivos, tocar instrumentos musicales, entre otros."
+        },
+        {
+          "nombre": "Estrategias para llegar puntualmente a clases",
+          "oas_asociados": [
+            8
+          ],
+          "descripcion": "En grupos de a cuatro, comentan las acciones que realizan para llegar puntualmente a clases. Seleccionan las más importantes, como: hacer la mochila el día anterior, dejar el uniforme ordenado la tarde anterior, acostarse a hora adecuada la noche anterior, calcular adecuadamente el tiempo de traslado a la escuela, entre otras. Luego las comunican a los demás y seleccionan, guiados por el docente, las acciones que el curso consideró más importantes de realizar. Finalmente, revisan las acciones que se requieren para llegar puntualmente a otras actividades, como deportes, fiestas familiares, cumpleaños, citas a doctores, entre otras."
+        },
+        {
+          "nombre": "Identificación de conductas de higiene diarias",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes, junto al docente, identifican las conductas de higiene diarias que deben seguir para mantener limpio su cuerpo y las escriben en el pizarrón. Luego hacen un listado de las rutinas que deben seguir en la casa y las que deben seguir en el colegio. Las escriben en su cuaderno."
+        },
+        {
+          "nombre": "Tarjeta de rutinas de higiene para el hogar",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "A partir de la actividad anterior, elaboran una tarjeta o pequeño afiche para recordar y registrar las rutinas de higiene y aseo diarias a realizar en su casa. Lo ponen en un lugar visible de la casa."
+        },
+        {
+          "nombre": "Encuesta de actividades recreativas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes realizan una encuesta anónima entre sus compañeros sobre las principales actividades recreativas que realizan y el tiempo que le dedican. La información recopilada se organiza y comparte en clases, y reflexionan en conjunto, guiados por el docente, sobre las actividades y el tiempo que les dedican, identificando hábitos recreacionales saludables y no saludables. Escriben las conclusiones en su cuaderno. A continuación, piensan y reflexionan en conjunto sobre qué hábitos mantienen comúnmente que no son saludables y por qué (por ejemplo: cantidad de horas frente al televisor) y buscan formas de modificarlos."
+        },
+        {
+          "nombre": "Lista de actividades saludables para el tiempo libre",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes elaboran, junto con el docente, una lista de actividades para realizar en el tiempo libre de manera saludable. Luego las diferencian entre actividades recreativas individuales y grupales, dando ideas de cuándo y cómo realizarlas. Las escriben en su cuaderno."
+        },
+        {
+          "nombre": "Campeonato en el recreo para promover actividad física",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes organizan un campeonato en el recreo para promover la actividad física."
+        },
+        {
+          "nombre": "Afiches de promoción de actividad física",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Hacen afiches para promover la actividad física y los pegan en las murallas del establecimiento."
+        },
+        {
+          "nombre": "Análisis de acciones para conciliar el sueño",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes reciben tarjetas con diferentes acciones que realizan antes de acostarse a dormir, las analizan y clasifican de acuerdo a si contribuyen o no a conciliar mejor el sueño y ponen en común sus conclusiones. Por ejemplo: jugar computador, tomar un vaso de leche tibia, darse un baño caliente, comer alimentos pesados, leer un cuento, ver televisión."
+        },
+        {
+          "nombre": "Importancia de dormir horas suficientes",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Escuchan una explicación sobre la importancia de dormir las horas suficientes cada día. En grupos de dos o tres, escriben una lista de dificultades para lograrlo y proponen medidas para solucionarlas. Presentan sus conclusiones al curso."
+        },
+        {
+          "nombre": "Diseño de menú saludable semanal",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Mediante una lluvia de ideas, comentan sobre los alimentos que suelen consumir en su casa. Escuchan una explicación sobre la comida saludable y a continuación, en parejas, diseñan un 'menú saludable' para una semana. Este debe incluir al menos tres comidas diarias y alimentos de todos los niveles de la pirámide alimenticia. Cada alumno escribe su menú en una hoja de bloc y lo lleva a su casa para compartirlo con sus padres o apoderados."
+        },
+        {
+          "nombre": "Cuidado de la intimidad en rutinas diarias",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Guiados por el docente, piensan en las rutinas o actividades diarias en que deben cuidarse de no exponer su cuerpo (por ejemplo: al ir al baño, cambiarse de ropa, entre otras), identificando formas adecuadas de cuidar su intimidad (cuidando de cerrar la puerta cuando acuden al baño, mantener la puerta cerrada cuando se cambian de ropa, entre otras)."
+        },
+        {
+          "nombre": "Carteles de autocuidado de la intimidad",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Los estudiantes elaboran carteles para recordar rutinas de autocuidado de su intimidad y los ponen en el lugar que corresponda. Por ejemplo: en el baño, que no olviden cerrar la puerta mientras realicen sus rutinas de aseo, entre otras."
+        },
+        {
+          "nombre": "Lista de formas de recibir cariño y consentimiento",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Elaboran una lista de formas en las que habitualmente reciben cariño; por ejemplo: abrazos, besos, cariños en la cabeza. Junto al docente, comentan que estas expresiones de cariño siempre deben ser con el consentimiento del alumno y en ningún caso hacerlos sentir incómodas o confusos."
+        },
+        {
+          "nombre": "Acciones ante cariños incómodos",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Proponen ideas de acciones que podrían tomar en caso de recibir cariños confusos o incómodos; por ejemplo: contarle a un adulto, decir 'no', alejarse, pedir ayuda a un adulto. El docente explica que hay partes privadas del cuerpo que no deben ser tocadas por otros, excepto en chequeos médicos y rutinas de higiene."
+        },
+        {
+          "nombre": "Dramatización de situaciones de riesgo",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Dramatizan posibles situaciones de riesgo, mostrando cómo se pueden proteger; por ejemplo: no dar información a extraños por teléfono ni internet sin el consentimiento de los padres o apoderados, no abrir la puerta a personas desconocidas si están solos, saberse el teléfono de contacto de los padres o apoderados."
+        },
+        {
+          "nombre": "Investigación sobre drogas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En grupos de cuatro, investigan y completan una ficha sobre algunas drogas (tabaco y alcohol), indicando qué es una droga, por qué es de riesgo, ideas para promover una vida saludable sin esta sustancia y qué podemos hacer para evitar su consumo."
+        },
+        {
+          "nombre": "Carteles para promover una vida saludable sin drogas",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "En parejas, elaboran carteles para promover una vida saludable, sin drogas, los presentan al curso y se seleccionan los mejores, los cuales se pegan en los lugares correspondientes del establecimiento."
+        },
+        {
+          "nombre": "Análisis de situaciones de entrega de información personal",
+          "oas_asociados": [
+            4
+          ],
+          "descripcion": "Divididos en grupos de cuatro, analizan situaciones como: te pierdes en una calle y ves a un carabinero; te pierdes en una calle y una mujer te pide tus datos para llevarte a tu casa; vas al hospital y te piden tus datos personales; una niñita que conociste en la plaza te pide tu teléfono para que se junten otro día; un desconocido te envía una invitación por una red social; un desconocido llama a tu casa y pide la dirección para ir a dejar una carta. Especifican qué harían en cada caso y fundamentan su respuesta."
+        }
+      ],
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1 - Identificación de emociones a través de película o cuento",
+          "oas_evaluados": [
+            2
+          ],
+          "actividad_evaluacion": "El docente selecciona parte de una película o un video, un cuento o el fragmento de alguna obra escrita en la cual el o los protagonistas experimenten una situación que desencadene alguna emoción reconocible por los estudiantes. Expone el video, cuento u obra escrita a la clase y, luego de mostrar el fragmento en el cual se expresó la emoción, pregunta: ¿Qué emoción creen que sintieron los personajes? ¿Qué creen que pensaron en ese momento? ¿Por qué creen que sintieron esa emoción? ¿Qué piensan que puede hacer el personaje con esa emoción? ¿Cuál será el final de la historia? Se pide voluntarios para dramatizar los gestos que pudo haber expresado 'X'. Al terminar la actividad, vuelve a poner la película o retoman el cuento o la obra para conocer el final de la historia. Comentan y comparten si esperaban ese final y si lo que hizo el personaje fue lo más adecuado. Reflexionan por qué es importante reconocer las emociones y sus causas en la propia vida.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Reconocen las emociones experimentadas por otros en diversas situaciones.",
+              "Identifican expresiones faciales, gestuales o verbales que demuestran emociones."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2 - Dramatización de conflictos y soluciones",
+          "oas_evaluados": [
+            6
+          ],
+          "actividad_evaluacion": "Se divide el curso en grupos de tres o cuatro estudiantes y cada grupo dramatiza una situación en la que se experimente conflicto entre los compañeros. Deben proponer alternativas de resolución y ver cuál sería la mejor alternativa, anticipando las posibles consecuencias de las alternativas propuestas.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Exponen un conflicto cotidiano por medio de la dramatización.",
+              "Proponen alternativas de resolución para el conflicto seleccionado.",
+              "Seleccionan la mejor solución."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 1 - Participación en la organización del curso",
+          "oas_evaluados": [
+            7
+          ],
+          "actividad_evaluacion": "Durante un periodo determinado, el docente observa a todos sus alumnos y registra sus observaciones en una pauta de observación que considera: participa en la organización de actividades de curso, propone iniciativas y acoge las de sus compañeros, permite la participación de todos los alumnos en las decisiones de curso, cumple con las responsabilidades que le corresponden.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Participa en la organización de las actividades del curso.",
+              "Acepta propuestas e iniciativas de otros.",
+              "Cumple con las responsabilidades y cargos asumidos."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2 - Propuestas para favorecer la convivencia",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Se dividen en grupos de cinco o seis alumnos y hacen una lista de ideas para favorecer la convivencia en el curso (por ejemplo: en este curso no se aceptarán sobrenombres, en este curso nadie le sacará la colación a otra persona, en este curso todos pedirán las cosas por favor, entre otras). Cada grupo presenta sus ideas al curso y entre todos votan por las diez más importantes para trabajar. Las escriben en un papelógrafo y las pegan en un lugar visible de la sala.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Proponen formas de favorecer la convivencia.",
+              "Sus propuestas son realistas.",
+              "Sus propuestas reflejan las necesidades del curso."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 3 - Carta al rector sobre convivencia",
+          "oas_evaluados": [
+            5
+          ],
+          "actividad_evaluacion": "Los estudiantes escriben una carta al rector del establecimiento, en la cual expresen lo que han aprendido sobre la convivencia durante el año. Deben aludir a los compromisos asumidos en torno a la convivencia, a las normas que se han contemplado y su relevancia, a la manera en que se ha favorecido el respeto hacia los demás y hacia el ambiente de aprendizaje.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Acuerdan y asumen compromisos para favorecer la convivencia.",
+              "Prestan ayuda a otras personas en respuesta a las necesidades o dificultades que estas posean.",
+              "Identifican formas de respetar el ambiente de aprendizaje.",
+              "Permiten que sus compañeros se expresen y escuchan sus opiniones e ideas."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 4 - Autoevaluación de responsabilidades escolares",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes anotan las diferentes tareas y responsabilidades que tienen en cada una de las asignaturas y evalúan cómo las están cumpliendo de acuerdo a una pauta de autoevaluación que considera: qué he logrado y en qué podría mejorar.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cumplen con sus responsabilidades escolares.",
+              "Entregan sus trabajos dentro del período de tiempo asignado para ello."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 5 - Exposición de tema de interés personal",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Cada estudiante selecciona un tema de su interés y prepara una exposición para presentarla al curso. Además, propone actividades que tengan relación con el tema de interés expuesto para realizar junto a sus compañeros.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Busca información sobre un tema de su interés.",
+              "Presenta al curso la información en forma creativa.",
+              "Propone actividades en relación con el tema de interés para realizar junto a sus compañeros."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 6 - Autoevaluación de responsabilidad escolar",
+          "oas_evaluados": [
+            8
+          ],
+          "actividad_evaluacion": "Los estudiantes se autoevalúan con respecto a la responsabilidad escolar con una pauta de autoevaluación que considera los siguientes indicadores: ¿Cumplo con mis tareas? ¿Estudio para las pruebas? ¿Traigo la agenda firmada todos los días? ¿Traigo los materiales? ¿Cumplo con mis responsabilidades de curso? ¿Cumplo con mis compromisos?",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Cumplen con sus responsabilidades escolares."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 7 - Horario saludable",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes observan un horario con imágenes de las actividades y rutinas que realiza un niño de enseñanza básica. En él van identificando, en conjunto, aquellas rutinas y actividades que les parecen saludables y aquellas que les parecen no saludables, explicando el porqué de su observación. Anotan las conclusiones. En grupos de tres, construyen un horario ideal de acuerdo a necesidades de estudio, recreación, alimentación y descanso.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Identifican actividades saludables para realizar en su tiempo libre.",
+              "Identifican actividades físicas para realizar en su tiempo libre.",
+              "Elaboran un horario equilibrado para un estudiante de su edad."
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 8 - Autoevaluación de hábitos de tiempo libre",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes se autoevalúan en relación con sus hábitos y las actividades que realizan en su tiempo libre. Comentan la autoevaluación con sus padres.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "Distinguen actividades saludables de aquellas que no lo son.",
+              "Evalúan la realización de prácticas de vida saludable en su vida cotidiana."
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

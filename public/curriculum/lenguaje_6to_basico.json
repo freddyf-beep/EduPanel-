@@ -1,0 +1,1187 @@
+[
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 1",
+      "tiempo_estimado": "57 horas pedagógicas",
+      "proposito": "Esta unidad busca fomentar el gusto de los estudiantes por la literatura y desarrollar la creatividad y las habilidades de comprensión de obras narrativas. A partir de las lecturas se realiza la interpretación del lenguaje figurado, la escritura de narraciones y comentarios, y se aprende a estructurar de diversas maneras las intervenciones orales. Además, en esta unidad se refuerza el correcto uso de los participios irregulares, la ortografía de los verbos haber, tener e ir y la acentuación de los pronombres interrogativos.",
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella",
+        "Demostrar empatía hacia los demás, comprendiendo el contexto en el que se sitúan",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita"
+      ],
+      "lecturas_sugeridas": {
+        "descripcion": "Los estudiantes deben leer en clases al menos diez narraciones y una novela",
+        "narraciones": [
+          {
+            "titulo": "El picapedrero (cuento popular chino)",
+            "autor": "Anónimo"
+          },
+          {
+            "titulo": "El picnic de las tortugas",
+            "autor": "Anónimo"
+          },
+          {
+            "titulo": "El rey Midas",
+            "autor": "Anónimo"
+          },
+          {
+            "titulo": "La historia de Abdula, el mendigo ciego (en Las mil y una noches)",
+            "autor": "Anónimo"
+          },
+          {
+            "titulo": "La Cenicienta",
+            "autor": "Versión de los hermanos Grimm"
+          },
+          {
+            "titulo": "La Sirenita",
+            "autor": "Hans Christian Andersen"
+          },
+          {
+            "titulo": "La pata de palo",
+            "autor": "José de Espronceda"
+          },
+          {
+            "titulo": "El rescate del jefe Rojo",
+            "autor": "O'Henry"
+          },
+          {
+            "titulo": "Aventuras y orígenes de los pájaros (antología)",
+            "autor": "Sonia Montecino, Catalina Infante"
+          },
+          {
+            "titulo": "Socorro (varios cuentos)",
+            "autor": "Elsa Bornemann"
+          },
+          {
+            "titulo": "King Kong",
+            "autor": "Anthony Browne"
+          },
+          {
+            "titulo": "El cuarto de guardar",
+            "autor": "Saki"
+          }
+        ],
+        "novelas": [
+          {
+            "titulo": "Mujercitas",
+            "autor": "Louisa May Alcott"
+          },
+          {
+            "titulo": "Las aventuras del barón de Munchausen",
+            "autor": "Gottfried A. Bürger"
+          },
+          {
+            "titulo": "Momo",
+            "autor": "Michael Ende"
+          },
+          {
+            "titulo": "El jardín secreto",
+            "autor": "Frances Hodgson Burnett"
+          },
+          {
+            "titulo": "El libro de la selva",
+            "autor": "Rudyard Kipling"
+          },
+          {
+            "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+            "autor": "C. S. Lewis"
+          },
+          {
+            "titulo": "Iván el imbécil",
+            "autor": "León Tolstoi"
+          },
+          {
+            "titulo": "Tom Sawyer",
+            "autor": "Mark Twain"
+          },
+          {
+            "titulo": "Colmillo Blanco",
+            "autor": "Jack London"
+          },
+          {
+            "titulo": "El llamado de la selva",
+            "autor": "Jack London"
+          },
+          {
+            "titulo": "El jinete sin cabeza",
+            "autor": "Washington Irving"
+          },
+          {
+            "titulo": "Papaíto piernas largas",
+            "autor": "Jean Webster"
+          },
+          {
+            "titulo": "Pacha Pulai",
+            "autor": "Hugo Silva"
+          },
+          {
+            "titulo": "Matilda",
+            "autor": "Roald Dahl"
+          },
+          {
+            "titulo": "El príncipe y el mendigo",
+            "autor": "Mark Twain"
+          },
+          {
+            "titulo": "Mi querido enemigo",
+            "autor": "Jean Webster"
+          }
+        ]
+      },
+      "orientaciones_didacticas": "TRABAJO INTEGRADO DE LOS OBJETIVOS: Las actividades propuestas buscan alcanzar los Objetivos de Aprendizaje, siendo necesario integrar el trabajo relacionando temáticamente las actividades y evitando hacer actividades descontextualizadas. INTERPRETACIÓN DE TEXTOS LITERARIOS: Develar cómo las características de cada personaje (valor o cobardía, ambición o pereza) influyen en la trama y el desenlace. Analizar cómo influye el ambiente en el desarrollo de la trama. Reparar en el lenguaje que usa el escritor para describir personajes y recrear diálogos. Explicar el significado de recursos literarios (símbolos, imágenes, metáforas). IDENTIFICACIÓN DEL TEMA CENTRAL: Guiar a los estudiantes para que encuentren temas progresivamente más abstractos, enseñando que el tema se desarrolla a través de las acciones y el diálogo de los personajes. SISTEMATIZACIÓN DE LA DISCUSIÓN: Favorecer la conversación con y entre los alumnos por sobre la exposición del profesor. Al final de la clase crear un resumen o mapa conceptual de los aportes más relevantes.",
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "El docente explica cómo evaluará la habilidad para fundamentar una opinión. Modela con el cuento 'El rescate del jefe rojo' usando el formato 'opinión + ejemplo'. Luego los estudiantes escriben un comentario sobre otro cuento elegido por ellos, siguiendo esa estructura. El profesor retroalimenta como evaluación formativa.",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            4
+          ],
+          "actividad_evaluacion": "Los estudiantes leen un fragmento del cuento 'La pata de palo' (visto y discutido en clases) y escriben un comentario siguiendo la estructura 'opinión + ejemplo', explicando por qué la cita es importante para el desenlace. Se entrega una pauta de evaluación con criterios: plantea una opinión que tiene relación con el texto citado, fundamenta su opinión con ejemplos del texto, relaciona la cita con el desenlace del cuento.",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Trabajar con los estudiantes la relación lógica entre la opinión y los ejemplos",
+          "Poner en práctica el ejercicio cada vez que sea posible, motivando a los alumnos para que cada vez que den opiniones ofrezcan una fundamentación que las sustente",
+          "El docente retroalimenta como evaluación formativa"
+        ]
+      },
+      "numero_unidad": 1,
+      "actividades_sugeridas": [
+        {
+          "nombre": "Motivar la lectura de una novela mostrando un video corto antes de comenzar",
+          "oas_asociados": [],
+          "descripcion": "Antes de leer una novela, el profesor muestra una sinopsis. Comentan qué les sugiere el video: ¿De qué creen que se tratará? ¿De qué género es? ¿Quién será el personaje principal?"
+        },
+        {
+          "nombre": "Recordar los acontecimientos principales de un cuento",
+          "oas_asociados": [],
+          "descripcion": "Después de leer un cuento, los alumnos responden: ¿Cuál es la situación inicial? ¿Qué suceso inicia la acción? ¿Qué acontecimientos cambian el curso de la historia? ¿Qué hecho provoca el desenlace?"
+        },
+        {
+          "nombre": "Lectura y comentario de un relato",
+          "oas_asociados": [],
+          "descripcion": "Leen un cuento por turnos en voz alta. Luego comentan y relacionan la obra con hechos de la vida real o con otros textos que hayan leído."
+        },
+        {
+          "nombre": "Descripción del ambiente de un relato",
+          "oas_asociados": [],
+          "descripcion": "A partir de la información de un cuento leído, imaginan el lugar y la época en que transcurre la acción y describen el ambiente por escrito, ampliando con detalles inferidos."
+        },
+        {
+          "nombre": "Descripción de los personajes de una novela",
+          "oas_asociados": [],
+          "descripcion": "Elaboran una ficha de identificación de personajes con: nombre, características más relevantes, principal motivación, principales acciones que realiza y sus consecuencias para el desarrollo de la historia."
+        },
+        {
+          "nombre": "Explicación de acontecimientos de una historia",
+          "oas_asociados": [],
+          "descripcion": "Comentan acontecimientos seleccionados, mencionando la motivación del actuar de un personaje o las consecuencias de su acción, justificando con información textual del relato. El docente modela cómo responder usando el formato: acontecimiento + comentario + cita del texto."
+        },
+        {
+          "nombre": "Comparación de dos cuentos",
+          "oas_asociados": [],
+          "descripcion": "En grupos, comparan dos cuentos (ej. El picapedrero y El rey Midas) respondiendo preguntas sobre características compartidas, temas y lecciones, justificando con citas de los relatos."
+        },
+        {
+          "nombre": "Comparación de las propias costumbres y cultura con las de un texto leído",
+          "oas_asociados": [],
+          "descripcion": "Identifican diferencias culturales (cómo hablan, cómo se visten, cómo es la familia, dónde viven) y completan un cuadro comparativo con su propia cultura."
+        },
+        {
+          "nombre": "Análisis de situaciones conflictivas en una novela",
+          "oas_asociados": [],
+          "descripcion": "Seleccionan al menos tres conflictos de la novela leída y responden: ¿qué valores están en juego? ¿cómo resolvieron los personajes la situación? ¿respetaron o pasaron a llevar sus principios?"
+        }
+      ],
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo, desarrollar su imaginación y reconocer su valor social y cultural; por ejemplo: cuentos folclóricos y de autor, novelas, otros",
+          "indicadores": [
+            "Relacionan situaciones de la vida cotidiana con personajes o acciones de los textos leídos en clases o independientemente",
+            "Mencionan textos y autores que han leído y los temas que abordan",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente",
+            "Solicitan recomendaciones de textos similares a los leídos en clase",
+            "Seleccionan textos para leer por su cuenta",
+            "Recomiendan textos y autores a otros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar aspectos relevantes de las narraciones leídas para profundizar su comprensión: identificando las acciones principales del relato y explicando cómo influyen en el desarrollo de la historia, explicando las actitudes y reacciones de los personajes de acuerdo con sus motivaciones y las situaciones que viven, describiendo el ambiente y las costumbres representadas en el texto y explicando su influencia en las acciones del relato, relacionando el relato, si es pertinente, con la época y el lugar en que se ambienta, interpretando el lenguaje figurado presente en el texto, expresando opiniones sobre las actitudes y acciones de los personajes y fundamentándolas con ejemplos del texto, llegando a conclusiones sustentadas en la información del texto, comparando textos de autores diferentes y justificando su preferencia por alguno",
+          "indicadores": [
+            "Explican qué efecto tiene determinada acción en los eventos que siguen",
+            "Explican, oralmente o por escrito, por qué los personajes toman ciertas decisiones a partir de información presente en el relato",
+            "Describen a los personajes de acuerdo con las actitudes que toman en el relato y sus reacciones frente a los problemas",
+            "Explican cómo ayuda o perjudica a un personaje determinada característica",
+            "Explican qué es lo que probablemente siente el personaje en un determinado momento de la historia y qué sentirían ellos si estuvieran en su lugar",
+            "Describen o recrean visualmente el lugar donde ocurre la acción y las costumbres descritas en el relato",
+            "Relacionan hechos, costumbres y lugares del texto con la época en que se ambienta",
+            "Explican, oralmente o por escrito, expresiones de un texto leído que tengan sentido figurado",
+            "Expresan, oralmente o por escrito, una postura frente a una acción o actitud de un personaje y la fundamentan con ejemplos del texto",
+            "Elaboran una conclusión sobre algún aspecto del texto a partir de la información leída y de sus experiencias y conocimientos",
+            "Interpretan fragmentos u obras leídas en clases a través de comentarios, dibujos, dramatizaciones, historietas, videos, maquetas u otras expresiones artísticas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: relacionar la información del texto con sus experiencias y conocimientos, formular preguntas sobre lo leído y responderlas",
+          "indicadores": [
+            "Identifican la información del texto que es nueva para ellos y la que ya conocían",
+            "Comparan información de un texto leído con sus experiencias personales o conocimientos previos",
+            "Mencionan qué información no concuerda con sus conocimientos previos (si es pertinente)",
+            "Escriben preguntas al margen del texto sobre lo que no comprenden o lo que quieren profundizar"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 14,
+          "descripcion": "Escribir creativamente narraciones (relatos de experiencias personales, noticias, cuentos, etc.) que: tengan una estructura clara, utilicen conectores adecuados, tengan coherencia en sus oraciones, incluyan descripciones y diálogo (si es pertinente) que desarrollen la trama, los personajes y el ambiente",
+          "indicadores": [
+            "Escriben un cuento en que: relatan un hecho interesante, desarrollan una secuencia narrativa, mantienen la coherencia temática, describen las acciones que realizan los personajes, utilizan conectores para ordenar el relato (primero, luego, después, entonces, por eso, porque, antes de que, además, cuando, pero, etc.), mencionan al menos dos características del ambiente, describen explícitamente al menos una característica sicológica de un personaje, describen los sentimientos o los problemas de los personajes",
+            "Escriben el relato de una experiencia personal o una noticia en que: narran un hecho interesante, describen a las personas que intervienen en la acción, mantienen la coherencia temática, expresan una opinión sobre los hechos relatados"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Escribir frecuentemente para compartir impresiones sobre sus lecturas, desarrollando un tema relevante del texto leído y fundamentando sus comentarios con ejemplos",
+          "indicadores": [
+            "Escriben comentarios de al menos dos párrafos en los que: expresan una postura sobre un personaje o una situación de un texto leído, fundamentan su postura con ejemplos del texto y apuntes de su cuaderno",
+            "Escriben comentarios de al menos dos párrafos, en los que destacan qué aprendieron luego de la lectura de un texto y describen por qué es relevante esta información"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Escribir, revisar y editar sus textos para satisfacer un propósito y transmitir sus ideas con claridad. Durante este proceso: agregan ejemplos, datos y justificaciones para profundizar las ideas, emplean un vocabulario preciso y variado, y un registro adecuado, releen a medida que escriben, aseguran la coherencia y agregan conectores, editan, en forma independiente, aspectos de ortografía y presentación, utilizan las herramientas del procesador de textos para buscar sinónimos, corregir ortografía y gramática, y dar formato (cuando escriben en computador)",
+          "indicadores": [
+            "Desarrollan ideas que son relevantes para el tema",
+            "Incorporan palabras de la lectura que comentan (en el caso de la escritura de comentarios)",
+            "Utilizan un registro acorde al destinatario y al propósito del texto",
+            "Utilizan conectores y elementos de correferencia para mantener la cohesión del texto",
+            "Mejoran los textos: agregando datos, adjetivos, descripciones o ejemplos para profundizar las ideas, acortando o combinando oraciones para que el texto sea más fluido, eliminando o reubicando ideas",
+            "Aclaran sus dudas de ortografía a medida que redactan",
+            "Releen y marcan en su texto: oraciones que no se comprenden, ideas que hay que explicar mejor, párrafos en los que falta información",
+            "Reescriben sus textos: revisando la concordancia de persona y número, manteniendo un tiempo verbal coherente a lo largo de la narración, corrigiendo la ortografía literal, acentual y puntual",
+            "Adecuan el formato al propósito del texto para publicarlo",
+            "Reemplazan palabras, corrigen ortografía y gramática, y dan formato a sus textos, usando las herramientas del procesador"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 21,
+          "descripcion": "Utilizar correctamente los participios irregulares (por ejemplo, roto, abierto, dicho, escrito, muerto, puesto, vuelto) en sus producciones escritas",
+          "indicadores": [
+            "Escriben textos en los que utilizan correctamente los participios irregulares roto, abierto, dicho, escrito, muerto, puesto y vuelto",
+            "Usan correctamente los participios irregulares cuando los incorporan en sus producciones orales",
+            "Identifican errores en el uso de los participios irregulares"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Escribir correctamente para facilitar la comprensión por parte del lector, aplicando todas las reglas de ortografía literal, acentual y puntual aprendidas en años anteriores, además de: escritura de los verbos haber, tener e ir, en los tiempos más utilizados, acentuación de pronombres interrogativos y exclamativos",
+          "indicadores": [
+            "Escriben correctamente las conjugaciones de los verbos haber, tener e ir cuando los utilizan",
+            "Tildan los pronombres exclamativos e interrogativos que utilizan en sus textos",
+            "Escriben aplicando las reglas de ortografía literal, acentual y de puntuación"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Dialogar para compartir y desarrollar ideas y buscar acuerdos: manteniendo el foco en un tema, complementando las ideas de otro y ofreciendo sugerencias, aceptando sugerencias, haciendo comentarios en los momentos adecuados, mostrando acuerdo o desacuerdo con respeto, fundamentando su postura",
+          "indicadores": [
+            "Comparten sus opiniones sobre los textos leídos o escuchados en clases",
+            "Opinan sobre temas diversos, sustentando sus argumentos con ejemplos de su experiencia personal o su conocimiento previo",
+            "Hacen comentarios o preguntas que están relacionados con el tema sobre el que se dialoga",
+            "Contribuyen a la conversación con datos o ideas que amplían lo dicho por otro",
+            "Destacan ideas dichas por otros",
+            "Esperan a que el interlocutor termine una idea para complementar lo dicho",
+            "Reconocen cuando el interlocutor ha dicho algo con lo que están de acuerdo",
+            "Refutan lo dicho por otro si están en desacuerdo y fundamentan su postura con hechos, datos o ejemplos",
+            "Indican en qué están dispuestos a ceder para llegar a un acuerdo",
+            "Aceptan propuestas de otras personas",
+            "Llegan a acuerdos con el interlocutor para resolver algún problema"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 31,
+          "descripcion": "Producir textos orales espontáneos o planificados de diverso tipo para desarrollar su capacidad expresiva: narraciones (contar una historia, describir una actividad, relatar noticias, testimonios, etc.)",
+          "indicadores": [
+            "Narran un hecho, estructurando el relato en un orden que se entienda",
+            "Mantienen la coherencia temática al narrar, centrándose en un hecho o conflicto",
+            "Agregan datos interesantes a la narración, que llaman la atención del interlocutor y no desvían el tema",
+            "Adecuan su lenguaje verbal, paraverbal y no verbal a la situación comunicativa"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 2",
+      "tiempo_estimado": "56 horas pedagógicas",
+      "proposito": "Los objetivos de esta unidad buscan fomentar el gusto por la poesía a través del análisis de diferentes aspectos que permiten una mejor comprensión del texto e introducen al estudiante a la idea de que existen varias miradas e interpretaciones posibles. Lo anterior involucra la comprensión de figuras literarias, que plantean el desafío de abordar un lenguaje menos concreto, y comenzar a tomar conciencia del aporte que hace la sonoridad al texto. En cuanto a los textos no literarios, se busca ampliar el conocimiento de mundo y vocabulario, además de usarlos para formarse una opinión e investigar. Para esto último y para aprender a estudiar es necesario fortalecer la habilidad de identificar las ideas principales de un texto con diversos propósitos. En escritura, se espera que los alumnos reflexionen sobre los textos que han leído y comuniquen sus investigaciones o aprendizajes a través de la escritura de artículos informativos. Adicionalmente, se propone la aplicación del proceso de escritura. En comunicación oral, se pone énfasis en la comprensión de textos orales y se otorgan estrategias que permiten aprehender mejor el texto y registrar lo que se escucha para poder utilizar la información posteriormente con diversos propósitos. En producción oral, se espera que los estudiantes puedan comunicar lo que han aprendido y que descubran su capacidad expresiva al recitar poemas.",
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura",
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse"
+      ],
+      "lecturas_sugeridas": {
+        "descripcion": "Los estudiantes deben leer en clases al menos diez poemas y cinco textos no literarios",
+        "poemas": [
+          {
+            "titulo": "Marinero en tierra",
+            "autor": "Rafael Alberti"
+          },
+          {
+            "titulo": "Mi cuerpo es un campo de batalla",
+            "autor": "Claudio Bertoni"
+          },
+          {
+            "titulo": "La Cenicienta",
+            "autor": "Roald Dahl"
+          },
+          {
+            "titulo": "Los motivos del lobo",
+            "autor": "Rubén Darío"
+          },
+          {
+            "titulo": "Tam tam tambor, tamborileo niño",
+            "autor": "Javier España"
+          },
+          {
+            "titulo": "Santiago y Paisaje",
+            "autor": "Federico García Lorca"
+          },
+          {
+            "titulo": "La muralla",
+            "autor": "Nicolás Guillén"
+          },
+          {
+            "titulo": "Las moscas",
+            "autor": "Antonio Machado"
+          },
+          {
+            "titulo": "Castilla",
+            "autor": "Manuel Machado"
+          },
+          {
+            "titulo": "Oasis",
+            "autor": "Gabriela Mistral"
+          },
+          {
+            "titulo": "La jirafa",
+            "autor": "Gabriela Mistral"
+          },
+          {
+            "titulo": "Caperucita roja y El viejo y la muerte",
+            "autor": "Gabriela Mistral"
+          },
+          {
+            "titulo": "Oda a los calcetines",
+            "autor": "Pablo Neruda"
+          },
+          {
+            "titulo": "Las moscas y El viejo y la muerte",
+            "autor": "Félix María Samaniego"
+          },
+          {
+            "titulo": "La lengua vive en la boca",
+            "autor": "Francisco Segovia"
+          },
+          {
+            "titulo": "Casamiento de negros",
+            "autor": "Violeta Parra"
+          },
+          {
+            "titulo": "El diablo en el paraíso",
+            "autor": "Violeta Parra"
+          }
+        ]
+      },
+      "orientaciones_didacticas": "INTERPRETACIÓN DE POEMAS: Trabajar las figuras literarias desde la interpretación y no desde la definición. Es más importante que el alumno comprenda el efecto que produce una comparación, personificación o hipérbole a que memorice sus nombres. La idea es que el estudiante vivencie el lenguaje poético y lo descubra como una forma de jugar con las palabras. RECURSOS SONOROS: Que los estudiantes presten atención a la sonoridad en los poemas y comprendan que el ritmo, la rima, la aliteración y la onomatopeya son recursos que utiliza el poeta para reforzar el sentido de lo que dice. Se recomienda leer los poemas en voz alta, exagerando los recursos sonoros. LECTURA DE TEXTOS NO LITERARIOS: Enfatizar que los textos no literarios tienen propósitos comunicativos diferentes a los literarios. Los estudiantes deben aprender a identificar la información explícita e implícita, relacionar elementos gráficos con el texto y formular opiniones fundamentadas. ESCRITURA DE ARTÍCULOS INFORMATIVOS: Debe enmarcarse en proyectos que tengan sentido para los estudiantes. Enseñar explícitamente la estructura (introducción-desarrollo-cierre) y guiar a los alumnos para que aprendan a desarrollar una idea central por párrafo.",
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "En el marco de un proyecto (ej. sobre un animal salvaje), cada alumno redacta un párrafo con una idea central y dos ideas complementarias. Se evalúa con una lista de cotejo que considera: el párrafo cuenta con una oración introductoria que presenta la idea principal, las siguientes oraciones amplían y precisan la información con datos relevantes, todas las ideas complementarias se relacionan con la idea principal.",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            15
+          ],
+          "actividad_evaluacion": "Los estudiantes escriben un artículo como si fueran periodistas de una revista sobre naturaleza, respondiendo sobre un animal salvaje: ¿Qué animal es? ¿Dónde vive? ¿De qué se alimenta? ¿Cómo se reproduce? Mencione otro aspecto interesante. Se adjunta una rúbrica con criterios de estructuración, contenido, redacción y ortografía. Puntaje total: 20 puntos.",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Los estudiantes deben conocer la rúbrica con anticipación para que sepan lo que se espera de ellos",
+          "Luego de evaluar, el docente debe retroalimentar a cada alumno siguiendo los aspectos de la rúbrica",
+          "La evaluación del uso de fuentes y parafraseo debe ser más informativa que sumativa",
+          "Actividades para desarrollar el parafraseo: sustituir conceptos por sinónimos, reescribir en tercera persona un párrafo en primera persona, reescribir cambiando el vocabulario y el orden de oraciones"
+        ]
+      },
+      "numero_unidad": 2,
+      "actividades_sugeridas": [
+        {
+          "nombre": "Presentar un poema",
+          "oas_asociados": [],
+          "descripcion": "El docente selecciona varios poemas y los pone dentro de una caja. Cada grupo saca un poema y lo presenta al curso de manera creativa (actuarlo, cantarlo, recitarlo en grupo, hacer un mural, etc.)."
+        },
+        {
+          "nombre": "Maletín poético",
+          "oas_asociados": [],
+          "descripcion": "Durante todo el mes, los estudiantes buscan poemas que les gusten y los guardan en un maletín de cartulina. Pegan cada poema en una hoja y escriben un comentario al reverso. A fin de mes, entregan su maletín con al menos diez poemas seleccionados con sus respectivos comentarios."
+        },
+        {
+          "nombre": "Publicitar poemas",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes escogen su poema favorito y escriben un comentario anónimo explicando por qué es el mejor poema. Se exponen los comentarios junto a los poemas y los alumnos pegan una estrella en el que más les gusta."
+        },
+        {
+          "nombre": "Poesía popular",
+          "oas_asociados": [],
+          "descripcion": "El docente selecciona poemas de la Lira Popular, explica qué es la Lira Popular o literatura de cordel y cómo se desarrolló en Chile. Los alumnos realizan una muestra de Lira Popular ilustrada, elaborando poemas en décimas sobre temas de su interés."
+        },
+        {
+          "nombre": "Identificación de figuras literarias en un poema",
+          "oas_asociados": [],
+          "descripcion": "Leen un poema y subrayan las personificaciones, comparaciones e hipérboles. Explican qué efecto produce cada figura literaria en el lector."
+        }
+      ],
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo, desarrollar su imaginación y reconocer su valor social y cultural; por ejemplo: poemas, otros",
+          "indicadores": [
+            "Relacionan situaciones de la vida cotidiana con versos de los textos leídos en clases o independientemente",
+            "Mencionan poemas que han leído",
+            "Relacionan aspectos de un poema leído y comentado en clases con otros textos leídos previamente",
+            "Solicitan recomendaciones de textos similares a los leídos en clase",
+            "Recomiendan poemas y autores a otros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 5,
+          "descripcion": "Analizar aspectos relevantes de diversos poemas para profundizar su comprensión: explicando cómo el lenguaje poético que emplea el autor apela a los sentidos, sugiere estados de ánimo y crea imágenes en el lector, identificando personificaciones, comparaciones e hipérboles y explicando su significado dentro del poema, analizando cómo los efectos sonoros (aliteración y onomatopeya) utilizados por el poeta refuerzan lo dicho",
+          "indicadores": [
+            "Explican con sus palabras un poema leído",
+            "Expresan lo que comprendieron de un poema leído en clases a través de comentarios, dibujos, musicalizaciones u otras expresiones artísticas",
+            "Identifican los recursos sonoros que usa el poeta, por ejemplo, rima y aliteración",
+            "Relacionan palabras del poema con las emociones y las imágenes que evoca",
+            "Subrayan y explican versos en los cuales se usa el lenguaje figurado o expresiones que salgan del uso común",
+            "Subrayan personificaciones y explican qué se quiere comunicar al dar características humanas a animales o a entes inanimados",
+            "Subrayan comparaciones y explican la relación de similitud entre sus elementos",
+            "Subrayan hipérboles y las explican con sus palabras",
+            "Identifican versos que contienen aliteraciones y onomatopeyas y explican qué efecto sonoro aportan al poema"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, biografías, relatos históricos, libros y artículos informativos, noticias, etc.) para ampliar su conocimiento del mundo y formarse una opinión: extrayendo información explícita e implícita, haciendo inferencias a partir de la información del texto y de sus experiencias y conocimientos, relacionando la información de imágenes, gráficos, tablas, mapas o diagramas, con el texto en el cual están insertos, interpretando expresiones en lenguaje figurado, comparando información entre dos textos del mismo tema, formulando una opinión sobre algún aspecto de la lectura, fundamentando su opinión con información del texto o sus conocimientos previos",
+          "indicadores": [
+            "Identifican y registran las ideas relevantes de un texto leído",
+            "Explican, oralmente o por escrito, la información que han aprendido o descubierto en los textos que leen",
+            "Aluden a información implícita o explícita del texto leído al comentar o escribir",
+            "Explican información que se puede inferir del texto, pero que no se explicita en él",
+            "Resumen la información que aporta el texto discontinuo",
+            "Explican qué aporte hace el texto discontinuo al texto central",
+            "Explican, oralmente o por escrito, expresiones de un texto leído que tengan sentido figurado",
+            "Comparan, en un organizador gráfico, información presente en dos textos sobre un mismo tema",
+            "Expresan opiniones sobre la información encontrada en los textos",
+            "Escriben textos para compartir lo aprendido en la lectura"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: relacionar la información del texto con sus experiencias y conocimientos, releer lo que no fue comprendido, formular preguntas sobre lo leído y responderlas, resumir",
+          "indicadores": [
+            "Comparan información de un texto leído con sus experiencias personales o conocimientos previos",
+            "Releen fragmentos que no han comprendido",
+            "Escriben preguntas al margen del texto sobre lo que no comprenden o lo que quieren profundizar",
+            "Resumen la información más relevante en una oración por cada párrafo"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos leídos para satisfacer propósitos como estudiar, hacer una investigación, recordar detalles, etc.",
+          "indicadores": [
+            "Subrayan o registran la información relevante de un texto para distinguirla de la información accesoria",
+            "Subrayan las ideas principales de textos leídos",
+            "Parafrasean con sus palabras un texto leído",
+            "Escriben al margen del texto un resumen de cada párrafo",
+            "Completan organizadores gráficos dados por el docente con información de un texto leído",
+            "Hacen una síntesis, mediante un listado, un párrafo o un organizador gráfico, del texto leído"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema: organizando el texto en una estructura clara, desarrollando una idea central por párrafo, agregando las fuentes utilizadas",
+          "indicadores": [
+            "Eligen un tema interesante para escribir y registran información para desarrollarlo de manera documentada",
+            "Organizan el texto en una estructura clara: problema-solución o introducción-desarrollo-cierre",
+            "Desarrollan el tema en al menos tres párrafos en los que: elaboran un subtema por párrafo y lo ilustran con ejemplos, datos o explicaciones, incorporan datos, descripciones, ejemplos o reflexiones provenientes de los textos leídos, explican información relevante y acorde con el tema, incluyen palabras y expresiones específicas del tema tratado",
+            "Incorporan una bibliografía de las fuentes utilizadas, siguiendo un formato definido"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Planificar sus textos: estableciendo propósito y destinatario, generando ideas a partir de sus conocimientos e investigación, organizando las ideas que compondrán su escrito",
+          "indicadores": [
+            "Explican sobre qué van a escribir",
+            "Establecen el destinatario y el propósito de su texto",
+            "Explican cómo encontraron la información que incluirán en sus textos",
+            "Completan organizadores gráficos con la información que incluirán en sus textos",
+            "Tachan la información que no se relaciona con el tema que eligieron",
+            "Ordenan la información siguiendo un criterio establecido, como orden cronológico o temas y subtemas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Escribir, revisar y editar sus textos para satisfacer un propósito y transmitir sus ideas con claridad. Durante este proceso: agregan ejemplos, datos y justificaciones para profundizar las ideas, emplean un vocabulario preciso y variado, y un registro adecuado, releen a medida que escriben, aseguran la coherencia y agregan conectores, editan, en forma independiente, aspectos de ortografía y presentación, utilizan las herramientas del procesador de textos para buscar sinónimos, corregir ortografía y gramática, y dar formato (cuando escriben en computador)",
+          "indicadores": [
+            "Incluyen la información registrada en la organización previa",
+            "Desarrollan ideas que son relevantes para el tema",
+            "Incorporan palabras y expresiones específicas del tema tratado",
+            "Utilizan un registro acorde al destinatario y al propósito del texto",
+            "Utilizan conectores y elementos de correferencia para mantener la cohesión del texto",
+            "Mejoran los textos: agregando datos, adjetivos, descripciones o ejemplos para profundizar las ideas, acortando o combinando oraciones para que el texto sea más fluido, eliminando o reubicando ideas",
+            "Aclaran sus dudas de ortografía a medida que redactan",
+            "Releen y marcan en su texto: oraciones que no se comprenden, ideas que hay que explicar mejor, párrafos en los que falta información",
+            "Reescriben sus textos revisando la concordancia de persona y número, corrigiendo la ortografía literal, acentual y puntual",
+            "Adecuan el formato al propósito del texto para publicarlo",
+            "Reemplazan palabras, corrigen ortografía y gramática, y dan formato a sus textos usando las herramientas del procesador"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, noticias, documentales, entrevistas, testimonios, relatos, reportajes, etc.) para obtener información y desarrollar su curiosidad por el mundo: relacionando las ideas escuchadas con sus experiencias personales y sus conocimientos previos, extrayendo y registrando la información relevante, formulando preguntas al profesor o a los compañeros para comprender o elaborar una idea, o aclarar el significado de una palabra, comparando información dentro del texto o con otros textos, formulando y fundamentando una opinión sobre lo escuchado, identificando diferentes puntos de vista",
+          "indicadores": [
+            "Comparan lo escuchado con sus propias opiniones y conocimientos sobre el tema",
+            "Comentan imágenes de los textos vistos",
+            "Señalan qué aprendieron de los textos escuchados o vistos en clases",
+            "Manifiestan una opinión frente a los textos escuchados",
+            "Expresan, oralmente o por escrito, apreciaciones o conclusiones generales sobre lo escuchado o visto en clases",
+            "Completan organizadores gráficos con información del texto escuchado",
+            "Registran información de un texto escuchado que les sirva para un determinado propósito",
+            "Escriben un resumen de un texto escuchado en clases",
+            "Formulan preguntas para aclarar o profundizar aspectos del texto escuchado en clases",
+            "Relacionan, cuando es pertinente, los textos escuchados con los textos leídos en clases",
+            "Comparan información de un texto oral con un texto escrito",
+            "Emiten una opinión sobre un aspecto del texto leído y la fundamentan",
+            "Identifican diferentes opiniones si es que hay más de una en el texto",
+            "Incorporan, en sus escritos o en sus intervenciones orales, información aprendida en los textos vistos o escuchados en clases"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 31,
+          "descripcion": "Producir textos orales espontáneos o planificados de diverso tipo para desarrollar su capacidad expresiva: poemas",
+          "indicadores": [
+            "Recitan poemas de memoria con entonación y gestualidad acordes al contenido del poema",
+            "Leen en voz alta poemas de autores conocidos, poniendo énfasis en el ritmo"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 3",
+      "tiempo_estimado": "57 horas pedagógicas",
+      "proposito": "En esta unidad se busca seguir desarrollando en los estudiantes la comprensión y el gusto por la lectura de textos narrativos. En escritura, se continúan ejercitando las habilidades de escritura a través de la elaboración de comentarios de las obras leídas, para enriquecer la comprensión de los mismos y compartir impresiones. En este sentido, se espera que los estudiantes escriban usando el proceso de escritura, que se aplica con progresiva autonomía. La edición se complementa con el aprendizaje del uso de la coma en frases explicativas y en presencia de ciertos conectores. Además, los objetivos apuntan a que los alumnos sean cada vez más conscientes de los mecanismos del lenguaje oral, sus efectos y sus posibilidades, a través de la comprensión de textos orales de variada procedencia, especialmente películas y representaciones teatrales. Por otra parte, también se propone que los estudiantes comiencen a desarrollar el pensamiento crítico analizando los mensajes publicitarios, identificando para qué fueron escritos y a quiénes están dirigidos los mensajes. En producción oral, se espera que avancen en su capacidad de generar diálogos que tiendan a la construcción de conocimientos en conjunto y que monten una obra de teatro o realicen dramatizaciones breves.",
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita",
+        "Demostrar respeto por las diversas opiniones y puntos de vista, reconociendo el diálogo como una herramienta de enriquecimiento personal y social",
+        "Reflexionar sobre sí mismo, sus ideas y sus intereses para comprenderse y valorarse"
+      ],
+      "lecturas_sugeridas": {
+        "descripcion": "Los estudiantes deben leer en clases al menos diez narraciones",
+        "narraciones": [
+          {
+            "titulo": "¿Buena suerte o mala suerte? (cuento sufí)",
+            "autor": "Anónimo"
+          },
+          {
+            "titulo": "Vassilissa la sabia (cuento popular ruso)",
+            "autor": "Versión de Alexandr Afanasiev"
+          },
+          {
+            "titulo": "La nariz de plata (Cuentos italianos)",
+            "autor": "Versión de Ítalo Calvino"
+          },
+          {
+            "titulo": "El huevo de yegua (Pedro Urdemales)",
+            "autor": "Versión de Ramón Laval"
+          },
+          {
+            "titulo": "La historia de Choique y Pilmaiquén",
+            "autor": "Versión de Sonia Montecino"
+          },
+          {
+            "titulo": "El roto que engañó al diablo",
+            "autor": "Versión de Floridor Pérez"
+          }
+        ],
+        "mitos_leyendas_y_textos_sagrados": [
+          {
+            "titulo": "David y Goliat",
+            "autor": "Antiguo Testamento"
+          },
+          {
+            "titulo": "Historia de Moisés",
+            "autor": "Antiguo Testamento"
+          },
+          {
+            "titulo": "Aracné",
+            "autor": "Mito griego"
+          },
+          {
+            "titulo": "La caja de Pandora",
+            "autor": "Mito griego"
+          },
+          {
+            "titulo": "La desaparición de la ciudad de la Serena",
+            "autor": "Oreste Plath"
+          }
+        ],
+        "cuentos_de_autor": [
+          {
+            "titulo": "La reina de las nieves",
+            "autor": "Hans Christian Andersen"
+          },
+          {
+            "titulo": "La vendedora de fósforos",
+            "autor": "Hans Christian Andersen"
+          },
+          {
+            "titulo": "La gallina de los huevos de luz",
+            "autor": "Francisco Coloane"
+          },
+          {
+            "titulo": "Capítulo XXV: Donde se apunta la aventura del rebuzno (Don Quijote de la Mancha)",
+            "autor": "Miguel de Cervantes"
+          },
+          {
+            "titulo": "Rikki-tikki-tavi",
+            "autor": "Rudyard Kipling"
+          },
+          {
+            "titulo": "Felicidad clandestina",
+            "autor": "Clarice Lispector"
+          },
+          {
+            "titulo": "La casa de muñecas",
+            "autor": "Katherine Mansfield"
+          },
+          {
+            "titulo": "El papá de Simón",
+            "autor": "Guy de Maupassant"
+          },
+          {
+            "titulo": "La tortuga gigante",
+            "autor": "Horacio Quiroga"
+          },
+          {
+            "titulo": "El príncipe feliz",
+            "autor": "Oscar Wilde"
+          }
+        ]
+      },
+      "orientaciones_didacticas": "RELACIONAR LOS TEXTOS ANALIZADOS EN CLASES: Esta unidad es una excelente oportunidad para ejercitar las habilidades de comparación y relación de información. Se recomienda seleccionar textos con elementos comunes para enriquecer el análisis a través de la comparación (ej. leer un cuento y luego ver la película basada en ese texto, o comparar elementos del teatro con los del cine). RECURSOS DE LA COMUNICACIÓN ORAL: Esta unidad aborda el teatro desde la comprensión y la expresión oral, siendo una excelente oportunidad para que los estudiantes tomen conciencia de la importancia de los elementos paraverbales y no verbales en la comunicación. Las obras de teatro y películas son útiles para analizar el uso de recursos como la entonación, el volumen, los gestos, la postura, el uso del espacio, el vestuario o la música. Las actividades de producción oral, especialmente las dramatizaciones, son una oportunidad para poner en práctica lo aprendido y favorecen la capacidad de trabajo en equipo.",
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            24
+          ],
+          "actividad_evaluacion": "El docente selecciona un cuento para leer al curso en el cual se dé información sobre un personaje en más de una parte. Antes de comenzar, explica que tendrán que hacer una descripción del personaje seleccionado. Los estudiantes toman apuntes de la información que vaya apareciendo en la narración. Al final, escriben una descripción. Luego, con la ayuda del docente, hacen una recopilación en el pizarrón y revisan cuál información incluyeron y cuál les faltó.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "['Que la información que entregan los alumnos coincida con lo relatado', 'Revisar cuál información incluyeron y cuál les faltó']"
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            24
+          ],
+          "actividad_evaluacion": "Los estudiantes escuchan la narración del cuento 'La tortuga gigante' de Horacio Quiroga. Mientras escuchan, toman apuntes y luego: 1) Escriben un resumen de un párrafo. 2) Señalan al menos tres diferencias entre la ciudad de Buenos Aires y el monte. 3) Describen a los dos protagonistas. 4) Explican cómo se conocen. 5) Opinan sobre la actitud de la tortuga y qué hubieran hecho en la situación del hombre. 6) Responden si podría pasar en la vida real y por qué.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "['La información de las cuatro primeras preguntas coincide con lo relatado en el cuento', 'Las respuestas de las preguntas cinco y seis están debidamente fundamentadas']"
+            ]
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Verificar que la información que entregan los alumnos coincide con lo relatado en el cuento",
+          "Las respuestas de opinión deben estar debidamente fundamentadas",
+          "Usar la recopilación en el pizarrón para que los alumnos revisen cuál información incluyeron y cuál les faltó"
+        ]
+      },
+      "numero_unidad": 3,
+      "actividades_sugeridas": [
+        {
+          "nombre": "Imágenes para motivar la lectura",
+          "oas_asociados": [],
+          "descripcion": "Antes de leer un cuento, el docente muestra imágenes del ambiente, los personajes o las expresiones culturales presentadas en la historia para familiarizar y motivar al curso con la lectura. Después de la lectura, comentan de qué modo las imágenes se relacionan con lo narrado."
+        },
+        {
+          "nombre": "Comprensión del lenguaje figurado usado en un cuento",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes identifican y explican expresiones en lenguaje figurado encontradas en los textos leídos."
+        },
+        {
+          "nombre": "Análisis de mensajes publicitarios",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes analizan afiches publicitarios identificando: quién es el emisor, cuál es la intención del emisor y a quién está dirigido el mensaje, fundamentando cómo llegaron a esa conclusión."
+        },
+        {
+          "nombre": "Comparación de una novela con su versión cinematográfica",
+          "oas_asociados": [],
+          "descripcion": "Después de leer una novela y ver la película, los estudiantes comparan ambos formatos, señalando similitudes y diferencias en la historia, los personajes y los recursos utilizados."
+        },
+        {
+          "nombre": "Discusión con actas",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes discuten en grupos sobre aspectos de un texto y un secretario registra las opiniones en un acta. Los comentarios deben ser fundamentados con ejemplos del texto."
+        },
+        {
+          "nombre": "Organización de una feria de novelas",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes se disfrazan de un personaje de la novela que están leyendo. Preparan un afiche y una presentación corta. Convierten la sala en una feria donde otros miembros del colegio pueden visitarla y preguntar sobre los libros."
+        },
+        {
+          "nombre": "Ensayo y representación de una obra dramática",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes ensayan un fragmento de una representación, asignan personajes, memorizan diálogos y preparan escenografía y vestuario. El día de la presentación, el profesor evalúa con una pauta que considera entonación, volumen de la voz y uso del espacio, y retroalimenta destacando fortalezas y aspectos a mejorar."
+        }
+      ],
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 3,
+          "descripcion": "Leer y familiarizarse con un amplio repertorio de literatura para aumentar su conocimiento del mundo, desarrollar su imaginación y reconocer su valor social y cultural; por ejemplo: cuentos folclóricos y de autor, fábulas, leyendas, mitos, historietas, otros",
+          "indicadores": [
+            "Relacionan situaciones de la vida cotidiana con personajes o acciones de los textos leídos en clases o independientemente",
+            "Mencionan textos y autores que han leído y los temas que abordan",
+            "Relacionan aspectos de un texto leído y comentado en clases con otros textos leídos previamente",
+            "Solicitan recomendaciones de textos similares a los leídos en clase",
+            "Seleccionan textos para leer y fundamentan su elección",
+            "Recomiendan textos a otros"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 4,
+          "descripcion": "Analizar aspectos relevantes de las narraciones leídas para profundizar su comprensión: identificando las acciones principales del relato y explicando cómo influyen en el desarrollo de la historia, explicando las actitudes y reacciones de los personajes de acuerdo con sus motivaciones y las situaciones que viven, describiendo el ambiente y las costumbres representadas en el texto y explicando su influencia en las acciones del relato, relacionando el relato, si es pertinente, con la época y el lugar en que se ambienta, interpretando el lenguaje figurado presente en el texto, expresando opiniones sobre las actitudes y acciones de los personajes y fundamentándolas con ejemplos del texto, llegando a conclusiones sustentadas en la información del texto, comparando textos de autores diferentes y justificando su preferencia por alguno",
+          "indicadores": [
+            "Explican qué efecto tiene determinada acción en los eventos que siguen",
+            "Explican, oralmente o por escrito, por qué los personajes toman ciertas decisiones, a partir de información presente en el relato",
+            "Describen a los personajes de acuerdo con las actitudes que toman en el relato y sus reacciones frente a los problemas",
+            "Explican cómo ayuda o perjudica a un personaje determinada característica",
+            "Explican qué es lo que probablemente siente el personaje en un determinado momento de la historia y qué sentirían ellos si estuvieran en su lugar",
+            "Describen o recrean visualmente el lugar donde ocurre la acción y las costumbres descritas en el relato",
+            "Relacionan hechos, costumbres y lugares del texto con la época en que se ambienta",
+            "Explican, oralmente o por escrito, expresiones de un texto leído que tengan sentido figurado",
+            "Expresan, oralmente o por escrito, una postura frente a una acción o una actitud de un personaje y la fundamentan con ejemplos del texto",
+            "Elaboran una conclusión sobre algún aspecto del texto a partir de la información leída y de sus experiencias y conocimientos",
+            "Interpretan fragmentos u obras leídas en clases a través de comentarios, dibujos, dramatizaciones, historietas, videos, maquetas u otras expresiones artísticas",
+            "Explican cuáles son los temas o géneros (ciencia ficción, policial, aventuras, etc.) que generalmente aborda su autor favorito",
+            "Comparan el lenguaje utilizado por su autor favorito con el usado por otro",
+            "Comparan dos textos de autores distintos y señalan las principales similitudes y diferencias"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 16,
+          "descripcion": "Escribir frecuentemente para compartir impresiones sobre sus lecturas, desarrollando un tema relevante del texto leído y fundamentando sus comentarios con ejemplos",
+          "indicadores": [
+            "Escriben comentarios de al menos dos párrafos en los que: expresan una postura sobre un personaje o una situación de un texto leído, fundamentan su postura con ejemplos del texto y apuntes de su cuaderno",
+            "Escriben comentarios de al menos dos párrafos en los que destacan qué aprendieron luego de la lectura de un texto y describen por qué es relevante esa información"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Escribir, revisar y editar sus textos para satisfacer un propósito y transmitir sus ideas con claridad. Durante este proceso: agregan ejemplos, datos y justificaciones para profundizar las ideas, emplean un vocabulario preciso y variado, y un registro adecuado, releen a medida que escriben, aseguran la coherencia y agregan conectores, editan, en forma independiente, aspectos de ortografía y presentación",
+          "indicadores": [
+            "Incluyen la información registrada en la organización previa",
+            "Desarrollan ideas que son relevantes para el tema",
+            "Incorporan palabras y expresiones específicas del tema tratado",
+            "Utilizan un registro acorde al destinatario y al propósito del texto",
+            "Utilizan conectores y elementos de correferencia para mantener la cohesión del texto",
+            "Mejoran los textos: agregando datos, adjetivos, descripciones o ejemplos para profundizar las ideas, acortando o combinando oraciones para que el texto sea más fluido, eliminando o reubicando ideas",
+            "Aclaran sus dudas de ortografía a medida que redactan",
+            "Releen y marcan en su texto: oraciones que no se comprenden, ideas que hay que explicar mejor, párrafos en los que falta información",
+            "Reescriben sus textos: revisando la concordancia de persona y número, corrigiendo la ortografía literal, acentual y puntual",
+            "Adecuan el formato al propósito del texto para publicarlo"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 22,
+          "descripcion": "Escribir correctamente para facilitar la comprensión por parte del lector, aplicando todas las reglas de ortografía literal, acentual y puntual aprendidas en años anteriores, además de: coma en frases explicativas, coma en presencia de conectores que la requieren",
+          "indicadores": [
+            "Añaden coma en sus textos cuando es necesario",
+            "Explican por qué usaron coma en una determinada oración",
+            "Escriben aplicando las reglas de ortografía literal, acentual y de puntuación"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 24,
+          "descripcion": "Comprender textos orales (explicaciones, instrucciones, noticias, documentales, entrevistas, testimonios, relatos, reportajes, etc.) para obtener información y desarrollar su curiosidad por el mundo: relacionando las ideas escuchadas con sus experiencias personales y sus conocimientos previos, extrayendo y registrando la información relevante, formulando preguntas al profesor o a los compañeros para comprender o elaborar una idea, o aclarar el significado de una palabra, comparando información dentro del texto o con otros textos, formulando y fundamentando una opinión sobre lo escuchado, identificando diferentes puntos de vista",
+          "indicadores": [
+            "Comparan lo escuchado con sus propias opiniones y conocimientos sobre el tema",
+            "Comentan imágenes de los textos vistos",
+            "Señalan qué aprendieron de los textos escuchados o vistos en clases",
+            "Manifiestan una opinión frente a los textos escuchados",
+            "Expresan, oralmente o por escrito, apreciaciones o conclusiones generales sobre lo escuchado o visto en clases",
+            "Completan organizadores gráficos con información del texto escuchado",
+            "Registran información de un texto escuchado que les sirva para un determinado propósito",
+            "Escriben un resumen de un texto escuchado en clases",
+            "Formulan preguntas para aclarar o profundizar aspectos del texto escuchado en clases",
+            "Relacionan, cuando es pertinente, los textos escuchados con los textos leídos en clases",
+            "Comparan información de un texto oral con un texto escrito",
+            "Emiten una opinión sobre un aspecto del texto leído y la fundamentan",
+            "Identifican diferentes opiniones si es que hay más de una en el texto",
+            "Incorporan, en sus escritos o en sus intervenciones orales, información aprendida en los textos vistos o escuchados en clases"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 25,
+          "descripcion": "Evaluar críticamente mensajes publicitarios: identificando al emisor, explicando cuál es la intención del emisor, identificando a quién está dirigido el mensaje (a niñas, a usuarios del metro, a adultos mayores, etc.) y fundamentando cómo llegaron a esa conclusión",
+          "indicadores": [
+            "Señalan quién es el emisor (empresa o institución anunciante) de un mensaje publicitario",
+            "Explican qué busca lograr el emisor a través del mensaje publicitario",
+            "Explican a qué público está dirigido el mensaje y fundamentan con ejemplos del texto que les permitieron llegar a esa conclusión"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 26,
+          "descripcion": "Apreciar obras de teatro, películas o representaciones: discutiendo aspectos relevantes de la historia, describiendo cómo los actores cambian sus tonos de voz y su gestualidad para expresar diversas emociones, identificando algunos recursos que buscan provocar un efecto en la audiencia (efectos de sonido, música, efectos de iluminación, etc.)",
+          "indicadores": [
+            "Comentan qué aspectos de la historia les llamaron la atención y por qué",
+            "Explican los problemas a los cuales se enfrentan los personajes y cómo se resuelven",
+            "Explican qué sentirían ellos si estuviesen en el lugar de un personaje",
+            "Explican si les gustó la actuación aludiendo al uso de la voz y de la gestualidad",
+            "Comentan qué efecto tiene en la audiencia el uso de recursos sonoros",
+            "Comparan una novela y una película ejemplificando los aspectos comparados con ejemplos de los textos"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Dialogar para compartir y desarrollar ideas y buscar acuerdos: manteniendo el foco en un tema, complementando las ideas de otro y ofreciendo sugerencias, aceptando sugerencias, haciendo comentarios en los momentos adecuados, mostrando acuerdo o desacuerdo con respeto, fundamentando su postura",
+          "indicadores": [
+            "Comparten sus opiniones sobre los textos leídos o escuchados en clases",
+            "Opinan sobre temas diversos sustentando sus argumentos con ejemplos de su experiencia personal o conocimiento previo",
+            "Hacen comentarios o preguntas que están relacionados con el tema sobre el que se dialoga",
+            "Contribuyen a la conversación con datos o ideas que amplían lo dicho por otro",
+            "Destacan ideas dichas por otros",
+            "Esperan a que el interlocutor termine una idea para complementar lo dicho",
+            "Reconocen cuando el interlocutor ha dicho algo con lo que están de acuerdo",
+            "Refutan lo dicho por otro si están en desacuerdo y fundamentan su postura con hechos, datos o ejemplos",
+            "Indican en qué están dispuestos a ceder para llegar a un acuerdo",
+            "Aceptan propuestas de otras personas",
+            "Llegan a acuerdos con el interlocutor para resolver algún problema",
+            "Buscan una solución alternativa cuando no logran llegar a acuerdos"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 31,
+          "descripcion": "Producir textos orales espontáneos o planificados de diverso tipo para desarrollar su capacidad expresiva: dramatizaciones",
+          "indicadores": [
+            "Dialogan para organizar la puesta en escena y toman en consideración las ideas y las necesidades de todos",
+            "Representan roles en obras teatrales: diciendo sus partes del diálogo de memoria y sin equivocarse, utilizando volumen, tono de voz y gestualidad acordes con las características del personaje representado, moviéndose adecuadamente por el espacio"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nivel": "6to Básico",
+    "asignatura": "Lenguaje",
+    "unidad": {
+      "nombre_unidad": "Unidad 4",
+      "tiempo_estimado": "58 horas pedagógicas",
+      "proposito": "El propósito de esta unidad es que los estudiantes ejerciten las habilidades de búsqueda de información, lectura, escritura y expresión oral en el marco de un trabajo de investigación y, además, fortalezcan su capacidad de trabajar en equipo. En el marco del desarrollo de una investigación, se incluyen también estrategias de comprensión lectora que ayudan a entender los textos utilizados o a sistematizar la información. Por otra parte, se espera que los alumnos hagan una evaluación crítica de las fuentes que usan, determinando quién es el emisor y cuál es su propósito, evaluando si la información es pertinente y si el texto aporta suficiente información para llevar a cabo la tarea que se les solicita. Otro objetivo de esta unidad es que los estudiantes busquen información en diversas fuentes y que logren sistematizarla de manera que puedan agruparla en subtemas. Se espera, además, que avancen en sus habilidades de síntesis y que puedan aplicar esta habilidad para tomar apuntes útiles de textos orales y escritos. Es también propósito de esta unidad que los estudiantes escriban artículos informativos a través de los cuales comuniquen lo que han investigado y sistematizado en diferentes fuentes orales y escritas. Para esto, deben seguir una rigurosa planificación y poner en práctica todo el proceso de escritura. Finalmente, se espera que logren exponer también oralmente y estructuren la información de manera coherente, usando fundamentos y un vocabulario amplio.",
+      "actitudes": [
+        "Demostrar interés y una actitud activa frente a la lectura, orientada al disfrute de la misma y a la valoración del conocimiento que se puede obtener a partir de ella",
+        "Demostrar disposición e interés por expresarse de manera creativa por medio de la comunicación oral y escrita",
+        "Realizar tareas y trabajos de forma rigurosa y perseverante, con el fin de desarrollarlos de manera adecuada a los propósitos de la asignatura"
+      ],
+      "lecturas_sugeridas": {},
+      "orientaciones_didacticas": "TRABAJO DE INVESTIGACIÓN: Esta unidad está centrada en el desarrollo de un trabajo de investigación. Se recomienda que el docente guíe a los estudiantes en la selección de un tema de su interés y en la búsqueda de información en diversas fuentes (internet, enciclopedias, libros, prensa). Es importante enseñar estrategias de búsqueda, como el uso de palabras clave y motores de búsqueda. EVALUACIÓN CRÍTICA DE FUENTES: Los estudiantes deben aprender a evaluar la confiabilidad de las fuentes, identificando quién es el emisor, cuál es su propósito y a quién dirige el mensaje. También deben comparar información de distintas fuentes sobre un mismo tema. SISTEMATIZACIÓN DE LA INFORMACIÓN: Enseñar a los estudiantes a organizar la información recopilada en subtemas, utilizando organizadores gráficos. Deben aprender a distinguir entre información relevante y accesoria. EXPOSICIÓN ORAL: Preparar a los estudiantes para exponer oralmente los resultados de su investigación. Trabajar aspectos como la estructura de la exposición (introducción, desarrollo, cierre), el uso de material de apoyo, el lenguaje formal, la pronunciación, el volumen, la entonación, los gestos y la postura.",
+      "ejemplos_evaluacion": [
+        {
+          "titulo": "Ejemplo 1",
+          "oas_evaluados": [
+            29
+          ],
+          "actividad_evaluacion": "El docente solicita a los estudiantes que preparen una presentación de no más de uno o dos minutos en la cual describan un objeto. Entrega una pauta y la discuten en voz alta. Cada estudiante realiza su presentación frente al profesor, quien evalúa y entrega la pauta con sugerencias y aspectos a mejorar. Luego se realiza una puesta en común explicando los errores más comunes y cómo mejorar.",
+          "criterios_evaluacion": {
+            "del_proceso": [
+              "['Entregan información relevante sobre el objeto descrito', 'Usan un vocabulario variado', 'Evitan las muletillas', 'Emplean diferentes recursos del lenguaje para describir el objeto: comparaciones, adjetivos, frases adjetivas, etc.', 'Usan conectores para dar cohesión a su discurso', 'Emplean un lenguaje no verbal adecuado a la situación']"
+            ]
+          }
+        },
+        {
+          "titulo": "Ejemplo 2",
+          "oas_evaluados": [
+            29
+          ],
+          "actividad_evaluacion": "Los alumnos preparan una exposición oral en grupo para presentar el trabajo de investigación que desarrollaron durante la unidad. Preparan material de apoyo que sirva para explicar la información o llamar la atención de la audiencia. El docente entrega previamente la pauta con que serán evaluados, la fecha y la duración de la exposición. Se recomienda que el docente aclare dudas sobre los criterios de evaluación antes de que los estudiantes expongan y que retroalimente al final de cada presentación.",
+          "criterios_evaluacion": {
+            "del_proceso": []
+          }
+        }
+      ],
+      "criterios_evaluacion": {
+        "del_proceso": [
+          "Entregar y explicar previamente la pauta con que se va a evaluar la presentación",
+          "Aclarar dudas sobre los criterios de evaluación antes de que los estudiantes expongan",
+          "Los alumnos preparan su exposición y ensayan considerando cada aspecto de la pauta",
+          "Al final de la presentación, el profesor retroalimenta al expositor para que conozca sus fortalezas y sus debilidades",
+          "Verificar que los estudiantes: entregan información relevante, usan vocabulario variado, evitan muletillas, emplean recursos del lenguaje (comparaciones, adjetivos), usan conectores para cohesión, emplean lenguaje no verbal adecuado"
+        ]
+      },
+      "numero_unidad": 4,
+      "actividades_sugeridas": [
+        {
+          "nombre": "Lectura de textos informativos y registro de información",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes leen textos no literarios sobre un tema y registran las ideas relevantes, diferenciando la información explícita de la implícita."
+        },
+        {
+          "nombre": "Comparación de noticias de distintas fuentes",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes comparan dos noticias sobre el mismo tema publicadas en distintos medios, identificando similitudes, diferencias y evaluando cuál es más completa."
+        },
+        {
+          "nombre": "Búsqueda de información en internet",
+          "oas_asociados": [],
+          "descripcion": "Guiados por el docente, los estudiantes usan un motor de búsqueda para encontrar información sobre el tema que investigan, tomando apuntes de la información relevante."
+        },
+        {
+          "nombre": "Síntesis de información mediante organizadores gráficos",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes completan organizadores gráficos con la información de los textos leídos, distinguiendo ideas principales de secundarias."
+        },
+        {
+          "nombre": "Escritura de un artículo informativo",
+          "oas_asociados": [],
+          "descripcion": "Utilizando la información recopilada durante la investigación, los estudiantes escriben un artículo informativo con estructura de introducción-desarrollo-cierre, desarrollando un subtema por párrafo y citando las fuentes utilizadas."
+        },
+        {
+          "nombre": "Preparación y ensayo de una exposición oral",
+          "oas_asociados": [],
+          "descripcion": "Los estudiantes preparan en grupo una exposición oral para presentar su trabajo de investigación. Preparan material de apoyo (power point, papelógrafo) y ensayan considerando los aspectos que serán evaluados según la pauta entregada por el docente."
+        }
+      ],
+      "conocimientos_previos": [],
+      "palabras_clave": [],
+      "conocimientos": [],
+      "habilidades": [],
+      "adecuaciones_dua": {},
+      "objetivos_aprendizaje": [
+        {
+          "tipo": "OA",
+          "numero": 6,
+          "descripcion": "Leer independientemente y comprender textos no literarios (cartas, biografías, relatos históricos, libros y artículos informativos, noticias, etc.) para ampliar su conocimiento del mundo y formarse una opinión: extrayendo información explícita e implícita, haciendo inferencias a partir de la información del texto y de sus experiencias y conocimientos, relacionando la información de imágenes, gráficos, tablas, mapas o diagramas, con el texto en el cual están insertos, interpretando expresiones en lenguaje figurado, comparando información entre dos textos del mismo tema, formulando una opinión sobre algún aspecto de la lectura, fundamentando su opinión con información del texto o sus conocimientos previos",
+          "indicadores": [
+            "Identifican y registran las ideas relevantes de un texto leído",
+            "Explican, oralmente o por escrito, la información que han aprendido o descubierto en los textos que leen",
+            "Aluden a información implícita o explícita de un texto leído al comentar o escribir",
+            "Explican información que se puede inferir del texto, pero que no se explicita en él",
+            "Resumen la información que aporta el texto discontinuo",
+            "Explican qué aporte hace el texto discontinuo al texto central",
+            "Explican, oralmente o por escrito, expresiones de un texto leído que tengan sentido figurado",
+            "Comparan, en un organizador gráfico, información presente en dos textos sobre un mismo tema",
+            "Expresan opiniones sobre la información encontrada en los textos, explicando su punto de vista a partir de conocimientos previos o de información de la lectura",
+            "Escriben textos para compartir lo aprendido en la lectura"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 2,
+          "descripcion": "Comprender textos aplicando estrategias de comprensión lectora; por ejemplo: organizar la información en esquemas o mapas conceptuales, resumir",
+          "indicadores": [
+            "Organizan información encontrada en textos, en esquemas o mapas conceptuales",
+            "Parafrasean, oralmente o por escrito, la información más importante de cada párrafo"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 7,
+          "descripcion": "Evaluar críticamente la información presente en textos de diversa procedencia: determinando quién es el emisor, cuál es su propósito y a quién dirige el mensaje, evaluando si un texto entrega suficiente información para responder una determinada pregunta o cumplir un propósito, comparando la información que se entrega sobre una misma noticia en distintas fuentes",
+          "indicadores": [
+            "Identifican al autor y explican cuál es su intención al publicar ese texto",
+            "Explican si la información presente en un texto satisface su propósito de lectura o si necesitan consultar más fuentes",
+            "Explican qué aporta el texto leído a su conocimiento sobre el tema",
+            "Comparan los titulares y el contenido de dos noticias sobre un mismo tema y comentan cuál es la más completa"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 11,
+          "descripcion": "Buscar y comparar información sobre un tema, utilizando fuentes como internet, enciclopedias, libros, prensa, etc., para llevar a cabo una investigación",
+          "indicadores": [
+            "Encuentran en internet información sobre el tema que investigan usando un motor de búsqueda",
+            "Toman apuntes de información relevante encontrada en libros, enciclopedias, prensa, etc. sobre el tema que investigan",
+            "Comparan, en organizadores gráficos, la información encontrada en diversas fuentes, agrupando la información similar que aparece en más de una fuente",
+            "Separan la información que aparece solo en una fuente"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 8,
+          "descripcion": "Sintetizar, registrar y ordenar las ideas principales de textos leídos para satisfacer propósitos como estudiar, hacer una investigación, recordar detalles, etc.",
+          "indicadores": [
+            "Subrayan o registran la información relevante de un texto para distinguirla de la información accesoria",
+            "Subrayan las ideas principales de textos leídos",
+            "Parafrasean con sus palabras un texto leído",
+            "Escriben al margen del texto un resumen de cada párrafo",
+            "Completan organizadores gráficos dados por el docente con información de un texto leído",
+            "Hacen una síntesis, mediante un listado, un párrafo o un organizador gráfico, del texto leído"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 15,
+          "descripcion": "Escribir artículos informativos para comunicar información sobre un tema: organizando el texto en una estructura clara, desarrollando una idea central por párrafo, agregando las fuentes utilizadas",
+          "indicadores": [
+            "Eligen un tema interesante para escribir y registran información para desarrollarlo de manera documentada",
+            "Organizan el texto en una estructura clara: problema-solución o introducción-desarrollo-cierre",
+            "Desarrollan el tema en al menos tres párrafos en los que: elaboran un subtema por párrafo y lo ilustran con ejemplos, datos o explicaciones, incorporan datos, descripciones, ejemplos o reflexiones provenientes de las fuentes investigadas, describen hechos relevantes y acordes con el tema investigado, incluyen palabras y expresiones específicas del tema tratado",
+            "Incorporan una bibliografía de las fuentes utilizadas, siguiendo un formato definido"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 17,
+          "descripcion": "Planificar sus textos: estableciendo propósito y destinatario, generando ideas a partir de sus conocimientos e investigación, organizando las ideas que compondrán su escrito",
+          "indicadores": [
+            "Explican sobre qué van a escribir",
+            "Establecen el destinatario y el propósito de su texto",
+            "Explican cómo encontraron la información que incluirán en sus textos",
+            "Completan organizadores gráficos con la información que incluirán en sus textos",
+            "Tachan la información que no se relaciona con el tema que eligieron o que eligen no incluir en su texto",
+            "Ordenan la información siguiendo un criterio establecido, como orden cronológico o temas y subtemas"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 18,
+          "descripcion": "Escribir, revisar y editar sus textos para satisfacer un propósito y transmitir sus ideas con claridad. Durante este proceso: agregan ejemplos, datos y justificaciones para profundizar las ideas, emplean un vocabulario preciso y variado, y un registro adecuado, releen a medida que escriben, aseguran la coherencia y agregan conectores, editan, en forma independiente, aspectos de ortografía y presentación, utilizan las herramientas del procesador de textos para buscar sinónimos, corregir ortografía y gramática, y dar formato (cuando escriben en computador)",
+          "indicadores": [
+            "Incluyen la información registrada en la organización previa",
+            "Desarrollan ideas que son relevantes para el tema",
+            "Incorporan palabras y expresiones específicas del tema tratado",
+            "Utilizan un registro acorde al destinatario y al propósito del texto",
+            "Utilizan conectores y elementos de correferencia para mantener la cohesión del texto",
+            "Mejoran los textos: agregando datos, adjetivos, descripciones o ejemplos para profundizar las ideas, acortando o combinando oraciones para que el texto sea más fluido, eliminando o reubicando ideas",
+            "Aclaran sus dudas de ortografía a medida que redactan",
+            "Releen y marcan en su texto: oraciones que no se comprenden, ideas que hay que explicar mejor, párrafos en los que falta información",
+            "Reescriben sus textos revisando la concordancia de persona y número, corrigiendo la ortografía literal, acentual y puntual",
+            "Adecuan el formato al propósito del texto para publicarlo",
+            "Reemplazan palabras, corrigen ortografía y gramática, y dan formato a sus textos usando las herramientas del procesador"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 27,
+          "descripcion": "Dialogar para compartir y desarrollar ideas y buscar acuerdos: manteniendo el foco en un tema, complementando las ideas de otro y ofreciendo sugerencias, aceptando sugerencias, haciendo comentarios en los momentos adecuados, mostrando acuerdo o desacuerdo con respeto, fundamentando su postura",
+          "indicadores": [
+            "Comparten sus opiniones sobre los textos leídos o escuchados en clases",
+            "Opinan sobre temas diversos sustentando sus argumentos con ejemplos de su experiencia personal o conocimiento previo",
+            "Hacen comentarios o preguntas que están relacionados con el tema sobre el que se dialoga",
+            "Contribuyen a la conversación con datos o ideas que amplían lo dicho por otro",
+            "Destacan ideas dichas por otros",
+            "Esperan a que el interlocutor termine una idea para complementar lo dicho",
+            "Reconocen cuando el interlocutor ha dicho algo con lo que están de acuerdo",
+            "Refutan lo dicho por otro si están en desacuerdo y fundamentan su postura con hechos, datos o ejemplos",
+            "Indican en qué están dispuestos a ceder para llegar a un acuerdo",
+            "Aceptan propuestas de otras personas",
+            "Llegan a acuerdos con el interlocutor para resolver algún problema"
+          ]
+        },
+        {
+          "tipo": "OA",
+          "numero": 29,
+          "descripcion": "Expresarse de manera clara y efectiva en exposiciones orales para comunicar temas de su interés: presentando las ideas de manera coherente y cohesiva, fundamentando sus planteamientos con ejemplos y datos, organizando las ideas en introducción, desarrollo y cierre, usando elementos de cohesión para relacionar cada parte de la exposición, utilizando un vocabulario variado y preciso y un registro formal adecuado a la situación comunicativa, reemplazando algunas construcciones sintácticas familiares por otras más variadas, conjugando correctamente los verbos, utilizando correctamente los participios irregulares, pronunciando claramente y usando un volumen audible, entonación, pausas y énfasis adecuados, usando gestos y posturas acordes a la situación, usando material de apoyo (power point, papelógrafo, objetos, etc.) de manera efectiva, exponiendo sin leer de un texto escrito",
+          "indicadores": [
+            "Realizan una exposición oral en la que: presentan información que se relaciona con el tema seleccionado, ejemplifican a través de descripciones y narraciones para enriquecer la exposición, presentan la información ordenada en introducción, desarrollo y cierre, dan cohesión a sus exposiciones orales por medio de oraciones completas y conectores adecuados (primero, en primer lugar, por un lado, por otro lado, entonces, finalmente, por último), utilizan vocabulario variado y preciso y un registro formal, emplean un volumen, pronunciación y entonación adecuados, adoptan gestos y posturas adecuadas a la situación, hacen contacto visual con la audiencia, usan material de apoyo que complemente la exposición, expresan las ideas sin leer de un texto"
+          ]
+        }
+      ]
+    }
+  }
+]

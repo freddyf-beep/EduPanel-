@@ -13,20 +13,23 @@ import {
   RefreshCw, BookOpen, Calendar, Sparkles, Bot, Blocks,
   Send, Settings2, Wand2, KeyRound, ChevronUp, Mic, MicOff,
   SlidersHorizontal, RotateCcw, BrainCircuit, Copy,
-  Save, Trash2, Paperclip, UploadCloud, ExternalLink, HardDrive,
+  Save, Trash2, UploadCloud, ExternalLink, HardDrive,
   Download, Eye, Play, AlertCircle, Info, Heart
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import {
+  ajustarClasesCronograma,
   guardarActividadClase, cargarActividadClase,
   cargarCronogramaUnidad, cargarVerUnidad,
   guardarLibroClases, cargarLibroClases,
-  getUnidadCompleta, initOAs, mergeOAs, cargarBancoActividades,
-  eliminarActividadClase
+  getUnidadCompletaConFallback, getUnidades, initOAs, mergeOAs, cargarBancoActividades,
+  eliminarActividadClase,
+  resolverTotalClasesUnidad
 } from "@/lib/curriculo"
 import type { ActividadClase, ArchivoAdjunto, OAEditado, ClaseCronograma, ActividadSugerida, EjemploEvaluacion } from "@/lib/curriculo"
 import { ASIGNATURA, UNIT_COLORS, buildUrl, linkifyText, withAsignatura } from "@/lib/shared"
+import { preservarSeleccionLegacyOa, sanitizeOaIds } from "@/lib/oa-selection"
 import { cargarNivelMapping, resolveNivel } from "@/lib/nivel-mapping"
 import { apiFetch } from "@/lib/api-client"
 import {
@@ -43,7 +46,7 @@ import {
   type StudentSummary,
 } from "@/lib/ai/pedagogical-engine"
 import { cargarEstudiantes } from "@/lib/estudiantes"
-import { IaModal } from "@/components/edu-panel/actividades/ia-modal"
+import { IaModal, type RelatedCurriculumPromptOption } from "@/components/edu-panel/actividades/ia-modal"
 import { ImportWordModal } from "@/components/edu-panel/actividades/import-word-modal"
 import { NotebookPptModal } from "@/components/edu-panel/actividades/notebook-ppt-modal"
 import { GenerarEvaluacionIaModal } from "@/components/edu-panel/actividades/generar-evaluacion-ia-modal"
@@ -72,6 +75,69 @@ const ESTADOS = [
   { key: "no_planificada", label: "No planificada", cls: "bg-background border border-border text-muted-foreground" },
   { key: "planificada", label: "Planificada", cls: "bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300" },
   { key: "realizada", label: "Realizada", cls: "bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300" },
+] as const
+
+const IA_TOOL_LINKS = [
+  {
+    name: "ChatGPT",
+    href: "https://chatgpt.com/",
+    use: "Ideas, redaccion, adaptacion de actividades y revision general de clases.",
+    kind: "Chat general",
+  },
+  {
+    name: "Claude",
+    href: "https://claude.ai/",
+    use: "Textos largos, analisis pedagogico, rubricas y mejora de instrucciones.",
+    kind: "Chat general",
+  },
+  {
+    name: "Gemini",
+    href: "https://gemini.google.com/",
+    use: "Trabajo con ecosistema Google, busqueda asistida y apoyo multimodal.",
+    kind: "Chat general",
+  },
+  {
+    name: "NotebookLM",
+    href: "https://notebooklm.google.com/",
+    use: "Analizar documentos subidos, curriculum propio, PDFs y fuentes del docente.",
+    kind: "Cuaderno con fuentes",
+  },
+  {
+    name: "Perplexity",
+    href: "https://www.perplexity.ai/",
+    use: "Investigacion con fuentes, recursos reales, canciones, videos y referencias.",
+    kind: "Busqueda con citas",
+  },
+  {
+    name: "Microsoft Copilot",
+    href: "https://copilot.microsoft.com/",
+    use: "Busqueda, apoyo cotidiano y trabajo conectado con herramientas Microsoft.",
+    kind: "Chat general",
+  },
+  {
+    name: "OpenAI Codex",
+    href: "https://chatgpt.com/codex",
+    use: "Agente para construir, revisar o automatizar software y flujos tecnicos.",
+    kind: "Agente tecnico",
+  },
+  {
+    name: "Claude Code",
+    href: "https://claude.ai/code",
+    use: "Agente de codigo con herramientas para proyectos y automatizaciones.",
+    kind: "Agente tecnico",
+  },
+  {
+    name: "Gemini CLI",
+    href: "https://github.com/google-gemini/gemini-cli",
+    use: "Agente de terminal para tareas tecnicas, archivos y flujos con herramientas.",
+    kind: "Agente tecnico",
+  },
+  {
+    name: "OpenRouter",
+    href: "https://openrouter.ai/",
+    use: "Comparar modelos y usar distintos proveedores desde una misma plataforma.",
+    kind: "Modelos/API",
+  },
 ] as const
 
 const EXTERNAL_AI_FIELDS = [
@@ -103,6 +169,39 @@ function stripRichText(value?: string) {
     .replace(/\n{3,}/g, "\n\n")
     .replace(/[ \t]{2,}/g, " ")
     .trim()
+}
+
+function preferOaIdsConFallback(primary: string[] | undefined, fallback: string[]): string[] {
+  return primary && primary.length > 0 ? primary : fallback
+}
+
+function summarizeClaseAnterior(
+  numero: number,
+  clase: ClaseCronograma | undefined,
+  actividad: ActividadClase | null,
+  oas: OAEditado[],
+) {
+  const oaById = new Map(oas.map(oa => [oa.id, oa]))
+  const oaIds = Array.from(new Set([...(clase?.oaIds || []), ...(actividad?.oaIds || [])]))
+  const oaText = oaIds
+    .map(id => {
+      const oa = oaById.get(id)
+      return oa ? `OA ${oa.numero ?? id}: ${stripRichText(oa.descripcion).slice(0, 180)}` : id
+    })
+    .filter(Boolean)
+    .join(" | ")
+  const objetivo = stripRichText(actividad?.objetivo || "")
+  const inicio = stripRichText(actividad?.inicio || "")
+  const desarrollo = stripRichText(actividad?.desarrollo || "")
+  const cierre = stripRichText(actividad?.cierre || "")
+  const actividadTexto = [inicio, desarrollo, cierre].filter(Boolean).join(" ")
+  const partes = [
+    `Clase ${numero}${clase?.fecha ? ` (${clase.fecha})` : ""}${actividad?.estado ? ` - estado: ${actividad.estado}` : ""}.`,
+    oaText ? `OA trabajados: ${oaText}.` : "",
+    objetivo ? `Objetivo trabajado: ${objetivo}.` : "",
+    actividadTexto ? `Resumen de lo realizado: ${actividadTexto.slice(0, 700)}.` : "",
+  ].filter(Boolean)
+  return partes.length ? partes.join(" ") : ""
 }
 
 function formatInlineHtml(text: string) {
@@ -374,9 +473,19 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   const [simpleMode, setSimpleMode] = useState(false)
   const [isObjectivesFloated, setIsObjectivesFloated] = useState(false)
   const [objectivesPanelHeight, setObjectivesPanelHeight] = useState<number | null>(null)
+  const [tabRecursos, setTabRecursos] = useState<"materiales" | "tics">("materiales")
+  const [nuevoMaterial, setNuevoMaterial] = useState("")
+  const [nuevoTic, setNuevoTic] = useState("")
+  const [showObjetivosMultinivel, setShowObjetivosMultinivel] = useState(false)
+  const [pedagogyPanels, setPedagogyPanels] = useState({
+    bloom: false,
+    indicadores: false,
+    evaluacion: false,
+  })
   const anchorRef = useRef<HTMLDivElement | null>(null)
   const floatingObjectivesRef = useRef<HTMLDivElement | null>(null)
   const cierreSectionRef = useRef<HTMLDivElement | null>(null)
+  const recursosSectionRef = useRef<HTMLDivElement | null>(null)
 
   // Listen to simple mode changes
   useEffect(() => {
@@ -429,6 +538,8 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   const [unidadContextoDocente, setUnidadContextoDocente] = useState("")
   const [unidadObjetivoDocente, setUnidadObjetivoDocente] = useState("")
   const [nivelCurricular, setNivelCurricular] = useState("")
+  const [contextoAnteriorPrompt, setContextoAnteriorPrompt] = useState("")
+  const [relatedCurriculumOptions, setRelatedCurriculumOptions] = useState<RelatedCurriculumPromptOption[]>([])
   const [dispHabilidades, setDispHabilidades] = useState<string[]>([])
   const [dispActitudes, setDispActitudes] = useState<string[]>([])
   const [copilotWidth, setCopilotWidth] = useState(400)
@@ -466,7 +577,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   const [showExternalImport, setShowExternalImport] = useState(false)
   const [externalJsonInput, setExternalJsonInput] = useState("")
   const [externalImportError, setExternalImportError] = useState("")
-  const [copilotTab, setCopilotTab] = useState<"chat" | "prompt">("chat")
+  const [copilotTab, setCopilotTab] = useState<"chat" | "prompt" | "tools">("chat")
   const [promptMode, setPromptMode] = useState<CopilotMode>("crear_inicial")
   const [isListening, setIsListening] = useState(false)
   const [aiConfig, setAiConfig] = useState<StoredAiConfig>(DEFAULT_AI_CONFIG)
@@ -602,6 +713,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
       nivelCurricular: nivelCurricular || cursoParam,
       duracionMinutos: 90,
       contextoProfesor: stripRichText(actividad.contextoProfesor || ideaInicial || ""),
+      contextoAnterior: contextoAnteriorPrompt,
       oas: oasSeleccionados.map(oa => ({
         numero: oa.numero,
         descripcion: oa.descripcion,
@@ -649,7 +761,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
       customPrompt: aiConfig.promptExtra,
       promptOverride: modo ? aiConfig.promptOverrides?.[modo] : undefined,
     }
-  }, [actividad, aiConfig, clases.length, cursoParam, getIndicadoresSeleccionados, ideaInicial, nivelCurricular, oasCurriculo, selectedClase, studentSummary, unidadContextoDocente, unidadData, unidadObjetivoDocente])
+  }, [actividad, aiConfig, clases.length, contextoAnteriorPrompt, cursoParam, getIndicadoresSeleccionados, ideaInicial, nivelCurricular, oasCurriculo, selectedClase, studentSummary, unidadContextoDocente, unidadData, unidadObjetivoDocente])
 
   const applyGeneratedLesson = (data: any, options?: { onlyBloom?: boolean; onlyIndicators?: boolean; detailedOnly?: boolean }) => {
     setActividad(prev => {
@@ -1005,7 +1117,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         const [crono, verUnidad, unidadCompleta] = await Promise.all([
           cargarCronogramaUnidad(ASIGNATURA, cursoParam, unidadLocalParam),
           cargarVerUnidad(ASIGNATURA, cursoParam, unidadLocalParam),
-          nivel ? getUnidadCompleta(ASIGNATURA, nivel, unidadCurricularParam).catch(() => null) : Promise.resolve(null),
+          nivel ? getUnidadCompletaConFallback(ASIGNATURA, nivel, unidadCurricularParam).catch(() => null) : Promise.resolve(null),
         ])
 
         if (cancelled) return
@@ -1013,17 +1125,40 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         setUnidadContextoDocente(verUnidad?.contextoDocente || "")
         setUnidadObjetivoDocente(verUnidad?.objetivoDocente || "")
 
-        if (crono) {
-          setClases(crono.clases)
-          if (!claseOverride) {
-            const hoy = new Date()
-            const dd = String(hoy.getDate()).padStart(2, "0")
-            const mm = String(hoy.getMonth() + 1).padStart(2, "0")
-            const yy = hoy.getFullYear()
-            const fechaHoy = `${dd}/${mm}/${yy}`
-            const claseHoy = crono.clases.find(c => c.fecha === fechaHoy)
-            if (claseHoy) setSelectedClase(claseHoy.numero)
-          }
+        const preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivel || undefined)
+        let oasDisponibles: OAEditado[] = []
+        if (oasOverride) {
+          oasDisponibles = oasOverride
+        } else {
+          const curOas = unidadCompleta
+            ? initOAs(unidadCompleta, ASIGNATURA, { seleccionarPorDefecto: preservarLegacyOa })
+            : []
+          oasDisponibles = mergeOAs(
+            curOas,
+            verUnidad?.oas || [],
+            { conservarHuerfanosComoPropios: preservarLegacyOa },
+          )
+        }
+        const validOaIds = new Set(oasDisponibles.map(oa => oa.id))
+
+        const totalClases = resolverTotalClasesUnidad(crono, verUnidad, 8)
+        const clasesNormalizadas = ajustarClasesCronograma(crono?.clases, totalClases).map(clase => ({
+          ...clase,
+          oaIds: preservarLegacyOa ? clase.oaIds : sanitizeOaIds(clase.oaIds, validOaIds),
+        }))
+        setClases(clasesNormalizadas)
+
+        const clampClase = (value: number) => Math.min(Math.max(1, value || 1), Math.max(1, clasesNormalizadas.length))
+        if (!claseOverride) {
+          const hoy = new Date()
+          const dd = String(hoy.getDate()).padStart(2, "0")
+          const mm = String(hoy.getMonth() + 1).padStart(2, "0")
+          const yy = hoy.getFullYear()
+          const fechaHoy = `${dd}/${mm}/${yy}`
+          const claseHoy = clasesNormalizadas.find(c => c.fecha === fechaHoy)
+          setSelectedClase(prev => clampClase(claseHoy?.numero || prev || claseParam))
+        } else {
+          setSelectedClase(clampClase(claseOverride))
         }
 
         if (!nivel) {
@@ -1047,17 +1182,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         }
         setDispHabilidades(finalHabs)
         setDispActitudes(finalActs)
-
-        if (oasOverride) {
-          setOasCurriculo(oasOverride)
-        } else {
-          let curOas: OAEditado[] = []
-          if (unidadCompleta) {
-            curOas = initOAs(unidadCompleta)
-          }
-          const oasCombinados = mergeOAs(curOas, verUnidad?.oas || [])
-          setOasCurriculo(oasCombinados.filter(o => o.seleccionado))
-        }
+        setOasCurriculo(oasDisponibles)
       } catch (error) {
         console.error(error)
         if (!cancelled) {
@@ -1077,10 +1202,19 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   useEffect(() => {
     cargarActividadClase(cursoParam, unidadLocalParam, selectedClase).then(data => {
       const claseData = clases.find(c => c.numero === selectedClase)
+      const preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivelCurricular)
+      const validOaIds = new Set(oasCurriculo.map(oa => oa.id))
+      const claseOaIds = preservarLegacyOa
+        ? (claseData?.oaIds || [])
+        : sanitizeOaIds(claseData?.oaIds, validOaIds)
+      const rawActividadOaIds = preferOaIdsConFallback(data?.oaIds, claseOaIds)
+      const actividadOaIds = preservarLegacyOa
+        ? rawActividadOaIds
+        : sanitizeOaIds(rawActividadOaIds, validOaIds)
       if (data) {
         setActividad({
           ...data,
-          oaIds: claseData?.oaIds || [],
+          oaIds: actividadOaIds,
         })
         setIdeaInicial(data.contextoProfesor || "")
       } else {
@@ -1088,7 +1222,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           estado: "no_planificada",
           inicio: "", desarrollo: "", cierre: "", adecuacion: "",
           objetivo: "",
-          oaIds: claseData?.oaIds || [],
+          oaIds: claseOaIds,
           habilidades: [], actitudes: [], materiales: [], tics: [], archivos: [], sincronizada: false,
           contextoProfesor: "",
         })
@@ -1096,7 +1230,85 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
       }
       ignoreNextSaveRef.current = true;
     })
-  }, [selectedClase, clases, cursoParam, unidadLocalParam])
+  }, [selectedClase, clases, cursoParam, unidadLocalParam, nivelCurricular, oasCurriculo])
+
+  useEffect(() => {
+    setPedagogyPanels({ bloom: false, indicadores: false, evaluacion: false })
+    setShowObjetivosMultinivel(false)
+  }, [selectedClase])
+
+  useEffect(() => {
+    let cancelled = false
+    async function cargarContinuidad() {
+      if (selectedClase <= 1) {
+        setContextoAnteriorPrompt("")
+        return
+      }
+
+      const desde = Math.max(1, selectedClase - 3)
+      const numeros = Array.from({ length: selectedClase - desde }, (_, index) => desde + index)
+      const resultados = await Promise.all(
+        numeros.map(async numero => {
+          const actividadAnterior = await cargarActividadClase(cursoParam, unidadLocalParam, numero).catch(() => null)
+          const claseCronograma = clases.find(clase => clase.numero === numero)
+          return summarizeClaseAnterior(numero, claseCronograma, actividadAnterior, oasCurriculo)
+        })
+      )
+
+      if (cancelled) return
+      const resumen = resultados.filter(Boolean).join("\n")
+      setContextoAnteriorPrompt(resumen)
+    }
+
+    void cargarContinuidad()
+    return () => { cancelled = true }
+  }, [selectedClase, clases, cursoParam, unidadLocalParam, oasCurriculo])
+
+  useEffect(() => {
+    let cancelled = false
+    async function cargarCurriculoRelacionado() {
+      if (!nivelCurricular) {
+        setRelatedCurriculumOptions([])
+        return
+      }
+
+      const asignaturasRelacionadas = ["Lenguaje", "Historia", "Orientacion", "Matematica"].filter(asignatura => asignatura !== ASIGNATURA)
+      const resultados = await Promise.all(
+        asignaturasRelacionadas.map(async asignatura => {
+          const unidades = await getUnidades(asignatura, nivelCurricular).catch(() => [])
+          return unidades.slice(0, 6).map(unidad => {
+            const nombre = stripRichText(unidad.nombre_unidad || `Unidad ${unidad.numero_unidad || ""}`)
+            const proposito = stripRichText(unidad.proposito || "")
+            const conocimientos = Array.isArray(unidad.conocimientos) ? unidad.conocimientos.slice(0, 4).map(String) : []
+            const habilidades = Array.isArray(unidad.habilidades) ? unidad.habilidades.slice(0, 3).map(String) : []
+            const resumen = [
+              proposito,
+              conocimientos.length ? `Conocimientos: ${conocimientos.join(", ")}` : "",
+              habilidades.length ? `Habilidades: ${habilidades.join(", ")}` : "",
+            ].filter(Boolean).join(" ")
+            const oas = (unidad.objetivos_aprendizaje || [])
+              .slice(0, 3)
+              .map((oa: any) => stripRichText(oa.descripcion || oa.texto || ""))
+              .filter(Boolean)
+              .map(texto => texto.slice(0, 180))
+
+            return {
+              id: `${asignatura}_${unidad.id}`,
+              asignatura,
+              unidad: nombre || `Unidad ${unidad.numero_unidad || ""}`,
+              resumen: resumen || "Unidad disponible sin resumen curricular detallado.",
+              oas,
+            } satisfies RelatedCurriculumPromptOption
+          })
+        })
+      )
+
+      if (!cancelled) setRelatedCurriculumOptions(resultados.flat())
+    }
+
+    void cargarCurriculoRelacionado()
+    return () => { cancelled = true }
+  }, [nivelCurricular])
 
   // Autoguardado
   const ignoreNextSaveRef = useRef(true);
@@ -1118,6 +1330,11 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     if (!isAutoSave) setSaving(true)
     try {
       const claseData = clases.find(c => c.numero === selectedClase)
+      const preservarLegacyOa = preservarSeleccionLegacyOa(cursoParam, nivelCurricular)
+      const validOaIds = new Set(oasCurriculo.map(oa => oa.id))
+      const oaIdsParaGuardar = preservarLegacyOa
+        ? (actividad.oaIds || [])
+        : sanitizeOaIds(actividad.oaIds, validOaIds)
       const actGuardada = {
         id: `${cursoParam}_${unidadLocalParam}_clase${selectedClase}`,
         asignatura: ASIGNATURA,
@@ -1125,7 +1342,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
         unidadId: unidadLocalParam,
         numeroClase: selectedClase,
         fecha: claseData?.fecha || "",
-        oaIds: actividad.oaIds || [],
+        oaIds: oaIdsParaGuardar,
         objetivo: actividad.objetivo || "",
         inicio: actividad.inicio || "",
         desarrollo: actividad.desarrollo || "",
@@ -1479,36 +1696,183 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
     }
   }
 
+  const parseRecursoRegistrado = (item: string) => {
+    const url = item.match(/https?:\/\/[^\s<>"')]+/i)?.[0] || ""
+    const label = item
+      .replace(url, "")
+      .replace(/\s*[:\-–—]\s*$/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+    return {
+      label: label || (url ? "Enlace web" : item),
+      url,
+    }
+  }
+
+  const addRecursoClase = (tipo: "materiales" | "tics") => {
+    const value = (tipo === "materiales" ? nuevoMaterial : nuevoTic).trim()
+    if (!value) return
+    setActividad(prev => ({
+      ...prev,
+      [tipo]: Array.from(new Set([...(prev[tipo] || []), value])),
+    }))
+    if (tipo === "materiales") setNuevoMaterial("")
+    else setNuevoTic("")
+  }
+
+  const removeRecursoClase = (tipo: "materiales" | "tics", index: number) => {
+    setActividad(prev => ({
+      ...prev,
+      [tipo]: (prev[tipo] || []).filter((_, itemIndex) => itemIndex !== index),
+    }))
+  }
+
+  const renderLinkedText = (item: string) => {
+    const fragments = linkifyText(item)
+    return fragments.map((fragment, index) => {
+      if (fragment.type === "link") {
+        return (
+          <a
+            key={`${fragment.href}-${index}`}
+            href={fragment.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-bold text-primary underline-offset-2 hover:underline"
+            title={fragment.href}
+            onClick={event => event.stopPropagation()}
+          >
+            {fragment.label}
+          </a>
+        )
+      }
+      return <span key={`${fragment.value}-${index}`}>{fragment.value}</span>
+    })
+  }
+
+  const renderRecursoFila = (item: string, index: number, tipo: "materiales" | "tics") => {
+    const parsed = parseRecursoRegistrado(item)
+
+    return (
+      <div key={`${tipo}_${item}_${index}`} className="flex items-center justify-between gap-2 rounded-lg bg-background px-3 py-2 text-[12px]">
+        <div className="min-w-0 flex-1 break-words leading-relaxed text-foreground">
+          {tipo === "tics" && parsed.url ? renderLinkedText(item) : <span>{item}</span>}
+          {tipo === "tics" && parsed.url && <ExternalLink className="ml-1 inline h-3 w-3 align-[-1px] text-muted-foreground" />}
+        </div>
+        <div className="flex flex-shrink-0 items-center gap-1">
+          {parsed.url && tipo !== "tics" && (
+            <button
+              type="button"
+              onClick={() => window.open(parsed.url, "_blank", "noopener,noreferrer")}
+              className="grid h-7 w-7 place-items-center rounded-lg border border-border text-muted-foreground hover:border-primary hover:text-primary"
+              title="Abrir enlace"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => removeRecursoClase(tipo, index)}
+            className="grid h-6 w-6 place-items-center text-muted-foreground hover:text-red-500"
+            title="Quitar"
+          >
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   const renderRecursosMateriales = () => {
     const archivos = actividad.archivos || []
     const nombresArchivos = new Set(archivos.map(archivo => archivo.nombre))
     const materialesTexto = (actividad.materiales || []).filter(material => !nombresArchivos.has(material))
+    const ticsTexto = actividad.tics || []
+    const activeItems = tabRecursos === "materiales" ? materialesTexto : ticsTexto
+    const draft = tabRecursos === "materiales" ? nuevoMaterial : nuevoTic
+    const setDraft = tabRecursos === "materiales" ? setNuevoMaterial : setNuevoTic
 
     return (
-      <div className="bg-card border border-border rounded-[18px] p-5.5 shadow-sm space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-[11.5px] font-extrabold text-foreground uppercase tracking-wider block">Recursos y Materiales</span>
-          <DriveSheet
-            context={driveContext}
-            title="Materiales de la clase"
-            description="Selecciona archivos desde Drive y adjuntalos a esta clase."
-            label="Elegir de Drive"
-            selectLabel="Adjuntar"
-            onSelectFile={handleAdjuntarDrive}
-            buttonClassName="h-8 px-2.5 py-1 text-[11px]"
-          />
+      <div ref={recursosSectionRef} className="bg-card border border-border rounded-[14px] overflow-hidden shadow-sm scroll-mt-6">
+        <div className="flex border-b border-border">
+          <button
+            type="button"
+            onClick={() => setTabRecursos("materiales")}
+            className={cn(
+              "flex items-center gap-1.5 px-4 py-3 text-[12px] font-semibold border-b-2 -mb-[1px] transition-colors",
+              tabRecursos === "materiales" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <Package className="w-3.5 h-3.5" /> Materiales
+          </button>
+          <button
+            type="button"
+            onClick={() => setTabRecursos("tics")}
+            className={cn(
+              "flex items-center gap-1.5 px-4 py-3 text-[12px] font-semibold border-b-2 -mb-[1px] transition-colors",
+              tabRecursos === "tics" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <Monitor className="w-3.5 h-3.5" /> TICs
+          </button>
         </div>
 
-        <div
+        <div className="p-4">
+          <div className="flex flex-col gap-1.5 mb-3">
+            {activeItems.length > 0 ? (
+              activeItems.map((item, index) => renderRecursoFila(item, index, tabRecursos))
+            ) : (
+              <p className="text-[12px] text-muted-foreground">
+                {tabRecursos === "materiales" ? "Sin materiales aun." : "Sin herramientas TIC aun."}
+              </p>
+            )}
+          </div>
+
+          <div className="flex gap-2">
+            <input
+              value={draft}
+              onChange={event => setDraft(event.target.value)}
+              onKeyDown={event => {
+                if (event.key === "Enter") {
+                  event.preventDefault()
+                  addRecursoClase(tabRecursos)
+                }
+              }}
+              placeholder={tabRecursos === "materiales" ? "Agregar material..." : "Ej: Pizarra digital, Kahoot..."}
+              className="flex-1 border-[1.5px] border-border rounded-[8px] px-3 py-2 text-[12px] outline-none focus:border-primary"
+            />
+            <button
+              type="button"
+              onClick={() => addRecursoClase(tabRecursos)}
+              disabled={!draft.trim()}
+              className="bg-primary text-white rounded-[8px] px-3 py-2 disabled:opacity-40"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3">
+            <span className="text-[11px] font-bold uppercase text-muted-foreground">Archivos adjuntos</span>
+            <DriveSheet
+              context={driveContext}
+              title="Materiales de la clase"
+              description="Selecciona archivos desde Drive y adjuntalos a esta clase."
+              label="Desde Drive"
+              selectLabel="Adjuntar"
+              onSelectFile={handleAdjuntarDrive}
+              buttonClassName="rounded-lg px-3 py-1.5 text-[11px]"
+            />
+          </div>
+
+          <div
           onDragOver={e => { e.preventDefault(); setDragArchivoActivo(true) }}
           onDragLeave={() => setDragArchivoActivo(false)}
           onDrop={e => { e.preventDefault(); setDragArchivoActivo(false); void handleSubirArchivosDrive(e.dataTransfer.files) }}
           onClick={() => driveFileInputRef.current?.click()}
           className={cn(
-            "border border-dashed rounded-[12px] p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all",
+            "mt-3 border border-dashed rounded-[12px] p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all",
             dragArchivoActivo ? "border-primary bg-primary/5" : "border-border bg-muted/10 hover:bg-muted/20"
           )}
-        >
+          >
           <UploadCloud className={cn("mb-1 h-5 w-5", subiendoDrive ? "animate-pulse text-primary" : "text-muted-foreground")} />
           <span className="text-[11.5px] font-extrabold text-foreground">
             {subiendoDrive ? "Subiendo a Google Drive..." : "Subir material a Google Drive"}
@@ -1521,9 +1885,9 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
             multiple
             onChange={e => { if (e.target.files) void handleSubirArchivosDrive(e.target.files) }}
           />
-        </div>
+          </div>
 
-        {Object.entries(uploadProgress).length > 0 && (
+          {Object.entries(uploadProgress).length > 0 && (
           <div className="space-y-1.5">
             {Object.entries(uploadProgress).map(([key, progress]) => (
               <div key={key} className="rounded-lg border border-border bg-muted/10 px-2.5 py-2">
@@ -1537,9 +1901,9 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               </div>
             ))}
           </div>
-        )}
+          )}
 
-        <div className="space-y-2">
+          <div className="space-y-2 mt-3">
           {archivos.map(f => (
             <div key={f.id} className="flex items-center justify-between gap-2 p-2.5 bg-muted/15 border-[0.5px] border-border rounded-xl shadow-sm">
               <div className="flex min-w-0 items-center gap-2">
@@ -1578,27 +1942,9 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               <span className="text-[11px] text-muted-foreground italic">Sin materiales subidos a Drive</span>
             </div>
           )}
+          </div>
         </div>
 
-        {materialesTexto.length > 0 && (
-          <div className="border-t border-border/70 pt-3">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Materiales registrados</span>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {materialesTexto.map((m, i) => (
-                <button
-                  key={`${m}_${i}`}
-                  type="button"
-                  onClick={() => setActividad(p => ({ ...p, materiales: (p.materiales || []).filter(item => item !== m) }))}
-                  className="inline-flex items-center gap-1 rounded-full border border-border bg-muted/20 px-2 py-1 text-[10.5px] font-bold text-muted-foreground hover:bg-status-red-bg hover:text-status-red-text"
-                  title="Quitar material escrito"
-                >
-                  {m}
-                  <X className="h-3 w-3" />
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     )
   }
@@ -1613,6 +1959,30 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
   const claseActualCronograma = clases.find(c => c.numero === selectedClase)
   const claseData = claseActualCronograma
   const estadoActual = ESTADOS.find(e => e.key === actividad.estado) || ESTADOS[0]
+  const pedagogyPanelOptions = [
+    {
+      key: "bloom" as const,
+      label: "Análisis Bloom",
+      icon: <BrainCircuit className="h-3.5 w-3.5" />,
+      available: !!actividad.analisisBloom?.length,
+    },
+    {
+      key: "indicadores" as const,
+      label: "Indicadores",
+      icon: <Clipboard className="h-3.5 w-3.5" />,
+      available: !!actividad.indicadoresEvaluacion?.length,
+    },
+    {
+      key: "evaluacion" as const,
+      label: "Evaluación",
+      icon: <Check className="h-3.5 w-3.5" />,
+      available: !!actividad.actividadEvaluacion,
+    },
+  ]
+
+  const togglePedagogyPanel = (key: keyof typeof pedagogyPanels) => {
+    setPedagogyPanels(prev => ({ ...prev, [key]: !prev[key] }))
+  }
 
   const handleOpenCopilot = () => {
     setShowCopilot(true)
@@ -1728,6 +2098,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
           setShowCopilot(true)
           setShowAiSettings(true)
         }}
+        relatedCurriculumOptions={relatedCurriculumOptions}
       />
       <ImportWordModal
         open={showImportWordModal}
@@ -1844,6 +2215,16 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
             {saving ? "Guardando…" : "Guardar cambios"}
           </button>
           
+          <button
+            onClick={handleBorrarClase}
+            disabled={deleting || !tieneContenidoClase}
+            className="flex items-center gap-2 rounded-xl border border-status-red-border bg-status-red-bg px-4 py-2.5 text-[13px] font-bold text-status-red-text hover:bg-status-red-bg/80 transition-colors disabled:cursor-not-allowed disabled:opacity-45"
+            title={tieneContenidoClase ? "Borrar la planificacion de esta clase" : "Esta clase no tiene contenido para borrar"}
+          >
+            <Trash2 className="w-4 h-4" />
+            {deleting ? "Borrando..." : "Borrar clase"}
+          </button>
+
           <div className="relative group">
             <button className="w-9 h-9 border border-border rounded-xl bg-card grid place-items-center text-muted-foreground hover:bg-muted/40 transition-colors flex-shrink-0">
               <SlidersHorizontal className="h-4.5 w-4.5" />
@@ -1960,6 +2341,35 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               })}
             </div>
           </div>
+
+          {!isClassesRailCollapsed && !simpleMode && (
+            <div className="mt-4 space-y-2">
+              {pedagogyPanelOptions.map(option => {
+                const active = pedagogyPanels[option.key]
+                return (
+                  <button
+                    key={option.key}
+                    type="button"
+                    onClick={() => togglePedagogyPanel(option.key)}
+                    disabled={!option.available}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-2 rounded-[12px] border px-3 py-2.5 text-left text-[11.5px] font-extrabold transition-colors",
+                      active
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground",
+                      !option.available && "cursor-not-allowed opacity-45 hover:border-border hover:text-muted-foreground"
+                    )}
+                  >
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span className={cn("text-primary", !option.available && "text-muted-foreground")}>{option.icon}</span>
+                      <span className="truncate">{option.label}</span>
+                    </span>
+                    {active ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                  </button>
+                )
+              })}
+            </div>
+          )}
 
           {hasFloatingObjectivesPanel && (
             <div
@@ -2141,7 +2551,26 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               
               {/* Bloom Multinivel Cards - Omitidas en modo simple */}
               {!simpleMode && actividad.objetivoMultinivel && (
-                <div className="mt-3.5 grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div className="border-t border-border/60 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowObjetivosMultinivel(prev => !prev)}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-2 rounded-[12px] border px-3 py-2.5 text-left text-[11.5px] font-extrabold transition-colors",
+                      showObjetivosMultinivel
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                    )}
+                  >
+                    <span className="flex min-w-0 items-center gap-2">
+                      <Target className="h-3.5 w-3.5 text-primary" />
+                      <span className="truncate">Objetivos multinivel</span>
+                    </span>
+                    {showObjetivosMultinivel ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                  </button>
+
+                  {showObjetivosMultinivel && (
+                    <div className="mt-3.5 grid grid-cols-1 gap-3 md:grid-cols-3">
                   <BloomCard
                     label="Básico"
                     nivel="BAJO"
@@ -2169,14 +2598,20 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                     onRegenerate={handleRegenerarBloom}
                     disabled={isGeneratingAI}
                   />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
             {/* Pedagogy block: Bloom, Indicadores, Evaluacion - Omitidas en modo simple */}
-            {!simpleMode && (actividad.analisisBloom?.length || actividad.indicadoresEvaluacion?.length || actividad.actividadEvaluacion) && (
+            {!simpleMode && (
+              (pedagogyPanels.bloom && actividad.analisisBloom?.length) ||
+              (pedagogyPanels.indicadores && actividad.indicadoresEvaluacion?.length) ||
+              (pedagogyPanels.evaluacion && actividad.actividadEvaluacion)
+            ) && (
               <div className="space-y-4">
-                {actividad.analisisBloom?.length ? (
+                {pedagogyPanels.bloom && actividad.analisisBloom?.length ? (
                   <PedagogySection
                     title="Análisis Bloom de los OA"
                     icon={<BrainCircuit className="h-4 w-4" />}
@@ -2204,7 +2639,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   </PedagogySection>
                 ) : null}
 
-                {actividad.indicadoresEvaluacion?.length ? (
+                {pedagogyPanels.indicadores && actividad.indicadoresEvaluacion?.length ? (
                   <PedagogySection
                     title="Indicadores de Evaluación Detallados"
                     icon={<Clipboard className="h-4 w-4" />}
@@ -2232,7 +2667,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   </PedagogySection>
                 ) : null}
 
-                {actividad.actividadEvaluacion ? (
+                {pedagogyPanels.evaluacion && actividad.actividadEvaluacion ? (
                   <PedagogySection
                     title="Actividad de Evaluación Propuesta"
                     icon={<Check className="h-4 w-4" />}
@@ -2378,10 +2813,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
               </div>
             )}
 
-            {/* Recursos y Materiales - Integrados abajo solo en modo simple */}
-            {simpleMode && (
-              renderRecursosMateriales()
-            )}
+            {renderRecursosMateriales()}
 
             {/* Sugerencias Oficiales Block - Omitido en modo simple */}
             {!simpleMode && (
@@ -2558,9 +2990,6 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                 </div>
               </div>
 
-              {/* Recursos y Materiales */}
-              {renderRecursosMateriales()}
-
               {/* Presentar y Acciones */}
               <div className="bg-card border border-border rounded-[18px] p-5.5 space-y-2 shadow-sm">
                 <span className="text-[11px] font-extrabold text-muted-foreground uppercase tracking-wider block mb-1">Presentar y Exportar</span>
@@ -2730,7 +3159,7 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
             {showAiSettings && (
               <div className="flex-shrink-0 border-b border-border bg-muted/10 px-4 py-4 space-y-3.5">
                 <span className="text-[10.5px] font-extrabold text-muted-foreground uppercase tracking-wider block">Proveedor de IA (BYOK)</span>
-                <div className="grid grid-cols-2 gap-1 rounded bg-muted/20 p-1">
+                <div className="grid grid-cols-3 gap-1 rounded bg-muted/20 p-1">
                   <button
                     onClick={() => setCopilotTab("chat")}
                     className={cn("rounded py-1 text-[11.5px] font-bold transition-colors cursor-pointer",
@@ -2747,6 +3176,15 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                   >
                     Prompts
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setCopilotTab("tools")}
+                    className={cn("rounded py-1 text-[11.5px] font-bold transition-colors cursor-pointer",
+                      copilotTab === "tools" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    Herram.
+                  </button>
                 </div>
                 <div>
                   <label className="text-[11px] font-extrabold text-muted-foreground mb-1 block">Modelo</label>
@@ -2757,6 +3195,104 @@ function VerUnidadV3ClasesInner({ cursoOverride, unidadOverride, unidadCurricula
                     className="w-full rounded border border-border bg-background px-3 py-1.5 text-[11.5px] font-medium outline-none focus:border-primary"
                   />
                 </div>
+                {copilotTab === "prompt" && (
+                  <div className="rounded-lg border border-border bg-background p-3">
+                    <div className="mb-2 flex items-center gap-2">
+                      <BrainCircuit className="h-4 w-4 text-primary" />
+                      <p className="text-[12px] font-extrabold text-foreground">Prompt editable</p>
+                    </div>
+                    <label className="mb-1 block text-[11px] font-bold text-muted-foreground">Instrucciones maestras</label>
+                    <textarea
+                      value={aiConfig.promptExtra || ""}
+                      onChange={e => setAiConfig(prev => ({ ...prev, promptExtra: e.target.value }))}
+                      className="mb-3 min-h-[68px] w-full rounded border border-border bg-background px-3 py-2 text-[12px] leading-relaxed outline-none focus:border-primary"
+                      placeholder="Ej: prioriza canciones reales, actividades breves, enfoque interdisciplinario..."
+                    />
+                    <div className="mb-2 grid grid-cols-2 gap-1 rounded bg-muted/20 p-1">
+                      {(Object.keys(PROMPT_MODE_LABELS) as CopilotMode[]).map(mode => (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => setPromptMode(mode)}
+                          className={cn("rounded px-2 py-1.5 text-[10px] font-bold transition-colors",
+                            promptMode === mode ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          {PROMPT_MODE_LABELS[mode]}
+                        </button>
+                      ))}
+                    </div>
+                    <textarea
+                      value={aiConfig.promptOverrides?.[promptMode] || promptPreview}
+                      onChange={e => setAiConfig(prev => ({
+                        ...prev,
+                        promptOverrides: {
+                          ...(prev.promptOverrides || {}),
+                          [promptMode]: e.target.value,
+                        },
+                      }))}
+                      className="min-h-[180px] w-full rounded-lg border border-border bg-slate-950 px-3 py-3 font-mono text-[11px] leading-relaxed text-slate-100 outline-none focus:border-primary"
+                    />
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => { void navigator.clipboard.writeText(aiConfig.promptOverrides?.[promptMode] || promptPreview) }}
+                        className="rounded border border-border px-2.5 py-1.5 text-[11px] font-bold text-muted-foreground hover:bg-muted/40"
+                      >
+                        <Copy className="mr-1 inline h-3.5 w-3.5" /> Copiar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setAiConfig(prev => ({
+                          ...prev,
+                          promptOverrides: {
+                            ...(prev.promptOverrides || {}),
+                            [promptMode]: "",
+                          },
+                        }))}
+                        className="rounded border border-border px-2.5 py-1.5 text-[11px] font-bold text-muted-foreground hover:bg-muted/40"
+                      >
+                        <RotateCcw className="mr-1 inline h-3.5 w-3.5" /> Automatico
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {copilotTab === "tools" && (
+                  <div className="space-y-3">
+                    <div className="rounded-lg border border-border bg-background p-3">
+                      <div className="mb-2 flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4 text-primary" />
+                        <p className="text-[12px] font-extrabold text-foreground">IA externas utiles</p>
+                      </div>
+                      <p className="text-[10.5px] leading-relaxed text-muted-foreground">
+                        Usa estas herramientas como apoyo externo para investigar, comparar recursos o trabajar con documentos. Luego puedes traer el hallazgo al contexto de la clase.
+                      </p>
+                    </div>
+                    <div className="grid max-h-72 gap-2 overflow-y-auto pr-1">
+                      {IA_TOOL_LINKS.map(tool => (
+                        <a
+                          key={tool.name}
+                          href={tool.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/40 hover:bg-muted/20"
+                        >
+                          <div className="mb-1 flex items-center justify-between gap-2">
+                            <div className="flex min-w-0 items-center gap-2">
+                              <span className="truncate text-[12px] font-extrabold text-foreground">{tool.name}</span>
+                              <span className="rounded-full bg-muted px-2 py-0.5 text-[9px] font-bold text-muted-foreground">{tool.kind}</span>
+                            </div>
+                            <ExternalLink className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground group-hover:text-primary" />
+                          </div>
+                          <p className="text-[10.5px] leading-relaxed text-muted-foreground">{tool.use}</p>
+                        </a>
+                      ))}
+                    </div>
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[10.5px] font-medium leading-relaxed text-amber-900">
+                      Las IA agenticas sirven mejor para tareas con herramientas, archivos o pasos largos. Para planificar clases, conviene usarlas como apoyo de investigacion y validar pertinencia curricular dentro de EduPanel.
+                    </div>
+                  </div>
+                )}
                 <button
                   onClick={() => saveAiConfig(aiConfig)}
                   className="w-full py-1.5 bg-primary text-white font-bold text-[11.5px] rounded hover:bg-pink-dark transition-colors cursor-pointer"
